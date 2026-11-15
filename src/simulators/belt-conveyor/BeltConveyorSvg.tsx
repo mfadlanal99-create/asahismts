@@ -3,19 +3,19 @@ import { useTheme } from '../../context/ThemeContext';
 import type {
   ConveyorTrackingInputs,
   ConveyorTrackingMetrics,
-} from './chainConveyorMath';
+} from './beltConveyorMath';
 
-interface ConveyorTrackingLabSvgProps {
+interface BeltConveyorSvgProps {
   inputs: ConveyorTrackingInputs;
   metrics: ConveyorTrackingMetrics;
   phaseOffset: number; // 0..1 animation phase
 }
 
-export function ConveyorTrackingLabSvg({
+export function BeltConveyorSvg({
   inputs,
   metrics,
   phaseOffset,
-}: ConveyorTrackingLabSvgProps) {
+}: BeltConveyorSvgProps) {
   const { pick } = useLanguage();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -77,9 +77,9 @@ export function ConveyorTrackingLabSvg({
       : '#10b981';
 
   return (
-    <div className="glass-panel overflow-hidden rounded-2xl shadow-xs">
+    <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-slate-800/80">
       {/* Clean CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50/70 px-3.5 py-2 dark:border-slate-800 dark:bg-slate-900/60">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
             {pick(
@@ -88,7 +88,7 @@ export function ConveyorTrackingLabSvg({
               'ベルトコンベヤ蛇行調整＆テイクアップ張力機構図'
             )}
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+          <span className="inline-flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-bold text-sky-800 dark:bg-sky-500/20 dark:text-sky-300">
             v = {inputs.beltSpeedMs.toFixed(1)} m/s · L/R:{' '}
             {inputs.leftTakeUpMm}/{inputs.rightTakeUpMm} mm
           </span>

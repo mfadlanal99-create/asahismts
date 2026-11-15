@@ -3,12 +3,12 @@ import './chainConveyorI18n';
 
 export const chainConveyorMeta: SimulatorMeta = {
   id: 'chain-conveyor',
-  title: 'Roller Chain Drive & Conveyor Belt Tracking',
-  shortTitle: 'Chain & Conveyor',
+  title: 'Roller Chain Drive & Wear Inspection',
+  shortTitle: 'Roller Chain Drive',
   category: 'Machine Elements',
   difficulty: 'Intermediate',
   description:
-    'Inspect ANSI roller chain pitch elongation with a 10-pitch vernier wear gauge, tune slack-side catenary sag and lubrication regimes, and correct conveyor belt mistracking using tail pulley take-up screws and training idlers.',
+    'Inspect ANSI roller chain pitch elongation with a 10-pitch vernier wear gauge, analyze polygonal chordal speed variation, and tune slack-side catenary sag and lubrication regimes.',
   iconName: 'Cog',
   accentColor: 'amber',
   explore: [
@@ -87,43 +87,6 @@ export const chainConveyorMeta: SimulatorMeta = {
           'At v = 3.62 m/s, manual brush or slow drip oiling will fling off or starve pins; select Type C Oil Bath lubrication.',
         ],
         answer: 'Target sag S = 15.0 mm; Chain speed v = 3.62 m/s requires Oil Bath lubrication',
-      },
-    },
-    {
-      title: 'Conveyor Belt Tracking Rule & Tail Pulley Take-Up Adjustment',
-      summary:
-        'A troughing or flat conveyor belt follows two fundamental physical principles: (1) the belt moves toward the end of a roller/idler that it contacts FIRST in the direction of belt travel, and (2) at a tail take-up pulley, the belt migrates toward the side with LOWER tension (shorter center distance). Off-center chute loading pushes the belt toward the lightly loaded side due to lateral material reaction forces.',
-      equations: [
-        {
-          label: 'Tail Take-Up Tension Steering Effect',
-          formula: 'Δy_takeup ≈ K_t × (x_left − x_right)',
-          note: 'Tightening the LEFT take-up screw (+x_left) stretches the left edge and shifts the belt toward the RIGHT (looser) side — and vice versa, in practice tightening the side the belt wanders TOWARD squares the pulley face so the belt contacts that side first.',
-        },
-        {
-          label: 'Training Idler Skew Steering',
-          formula: 'Δy_idler ≈ −K_α × tan(α_skew)',
-          note: 'Advancing one end of an idler forward in the direction of travel steers the belt toward that advanced end ("First Contact Rule")',
-        },
-        {
-          label: 'Off-Center Chute Loading Reaction',
-          formula: 'Δy_load ≈ −K_L × e_chute',
-          note: 'Heavy material dropped off-center (+e_chute to right) pushes the belt toward the opposite side (−y left) on troughing idlers',
-        },
-      ],
-      workedExample: {
-        title: 'Correcting Belt Mistracking Near the Tail Pulley',
-        given: [
-          'Belt wanders +28 mm toward the RIGHT side of the conveyor frame near the tail pulley',
-          'Maximum safe lateral clearance before frame rubbing = ±25 mm',
-          'Chute feed is centered (e_chute = 0 mm)',
-        ],
-        steps: [
-          'Identify fault: Belt is rubbing the right frame (+28 mm > 25 mm limit).',
-          'Apply the First-Contact / Take-Up Rule at the tail pulley: Increase right-side take-up screw extension (or reduce left-side) so the right pulley edge moves slightly backward, causing the returning belt to contact the LEFT side first and steer back to center.',
-          'Make small incremental turns (2–3 mm screw travel) and wait 3 full belt revolutions before re-measuring.',
-        ],
-        answer:
-          'Adjust tail take-up screws in 2–3 mm increments to square the tail pulley until lateral wander is within ±5 mm',
       },
     },
   ],
@@ -239,34 +202,6 @@ export const chainConveyorMeta: SimulatorMeta = {
       correctIndex: 1,
       explanation:
         'Because chain links form straight chords around a polygon of z teeth, the effective driving radius fluctuates between R and R·cos(180°/z). Below 17 teeth, chordal speed variation exceeds 1.7% and excites severe vibration.',
-    },
-    {
-      id: 'cc-quiz-4',
-      question:
-        'According to the fundamental Conveyor Belt Tracking Rule ("First Contact Rule"), how does a belt respond when one end of a carrying or training idler is skewed slightly forward in the direction of belt travel?',
-      options: [
-        'The belt steers toward the end of the roller it contacts FIRST',
-        'The belt steers toward the end of the roller it contacts LAST',
-        'Skewing an idler only changes belt speed, not lateral tracking',
-        'The belt stops immediately due to friction',
-      ],
-      correctIndex: 0,
-      explanation:
-        'When an idler is skewed at a small angle to the belt centerline, the belt tracks toward the side of the roller that it contacts first in the direction of belt travel.',
-    },
-    {
-      id: 'cc-quiz-5',
-      question:
-        'If bulk material from a loading chute consistently drops off-center toward the RIGHT side of a troughed conveyor belt, which way will the belt tend to mistrack?',
-      options: [
-        'It stays centered because troughing idlers are self-balancing',
-        'The heavy off-center load pushes the belt toward the LEFT (lightly loaded) side',
-        'The belt stretches into a V-belt',
-        'The tail pulley automatically compensates',
-      ],
-      correctIndex: 1,
-      explanation:
-        'When material loads heavily on the right inclined troughing roll, the downward gravity force on the sloped roll pushes the belt laterally toward the left (lightly loaded) side.',
     },
     {
       id: 'cc-quiz-6',

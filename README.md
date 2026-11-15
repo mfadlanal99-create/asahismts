@@ -4,11 +4,11 @@ An interactive plant reliability, diagnostic instrumentation, and mechanical mai
 
 ## Features
 
-- **35 Interactive Simulators** across **5 Engineering Categories**:
+- **40 Interactive Simulators** across **5 Engineering Categories**:
   - **Precision Measurement (4):** Vernier Caliper & Micrometer, Fits & Tolerances, Cylinder Bore Gauge, Hardness Testing
   - **Diagnostic Instruments (7):** Digital Multimeter, Clamp Meter, Megohmmeter (Insulation Tester), Laser Tachometer, IR Thermometer, Vibration Meter, Acoustic / dB Meter (with interactive drag-and-drop probes & realistic machine acoustics)
   - **Rotating Equipment (3):** Laser Shaft Alignment, Bearing Fault Diagnostics, Vibration Spectrum Analyzer
-  - **Machine Elements (16):** Bolt Torque Sequencing, Belt & Gear Drives, Gear Strength, Chain Conveyor, Rigging & Lifting, UTM Tensile Testing, Beam Bending, Weld Strength, Thermal Expansion, Coupling Alignment, Lubrication & Tribology, plus 5 foundational Maintenance Basics labs
+  - **Machine Elements (21):** Bolt Torque Sequencing, Belt & Gear Drives, Gear Strength, Roller Chain Drive, Belt Conveyor, Vibrating Feeder, Bucket Elevator, Screw Conveyor, En-Masse Chain Conveyor, Rigging & Lifting, UTM Tensile Testing, Beam Bending, Weld Strength, Thermal Expansion, Coupling Alignment, Lubrication & Tribology, plus 5 foundational Maintenance Basics labs
   - **Fluid Power (5):** Pneumatic Circuits, Hydraulic Circuits, Centrifugal Pump Curves, Valve Packing & Sealing, Air Compressor Systems
 - **4-Mode Learning Workflow:** **Simulate** (live rigs & fault injection), **Explore** (maintenance theory & standards), **Practice** (step-by-step numerical drills), and **Quiz** (competency checks with instant explanations).
 - **Trilingual UI:** Full **English**, **Indonesian (Bahasa Indonesia)**, and **Japanese (日本語)** support.

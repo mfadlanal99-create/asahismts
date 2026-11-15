@@ -2,10 +2,10 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('chain-conveyor', {
   id: {
-    title: 'Penggerak Rantai Rol & Pelacakan Sabuk Konveyor',
-    shortTitle: 'Rantai & Konveyor',
+    title: 'Penggerak Rantai Rol & Inspeksi Keausan',
+    shortTitle: 'Rantai Rol',
     description:
-      'Inspeksi perpanjangan pitch rantai rol ANSI dengan alat ukur vernier 10-pitch, atur kelendutan sisi kendur (catenary sag) dan rezim pelumasan, serta koreksi mistracking sabuk konveyor menggunakan baut take-up puli ekor dan training idler.',
+      'Inspeksi perpanjangan pitch rantai rol ANSI dengan alat ukur vernier 10-pitch, analisis variasi kecepatan kordal poligonal, serta atur kelendutan sisi kendur (catenary sag) dan rezim pelumasan.',
     explore: [
       {
         title: 'Pitch Rantai Rol ANSI/ISO & Batas Keausan Perpanjangan 3%',
@@ -82,43 +82,6 @@ registerSimulatorTranslations('chain-conveyor', {
             'Pada v = 3,62 m/s, pelumasan kuas manual atau tetes lambat akan terlempar keluar; pilih pelumasan Tipe C Rendaman Oli (Oil Bath).',
           ],
           answer: 'Target kelendutan S = 15,0 mm; Kecepatan rantai v = 3,62 m/s memerlukan pelumasan Rendaman Oli',
-        },
-      },
-      {
-        title: 'Aturan Pelacakan Sabuk Konveyor & Penyetelan Take-Up Puli Ekor',
-        summary:
-          'Sabuk konveyor mengikuti dua prinsip fisika utama: (1) sabuk bergerak menuju ujung rol/idler yang disentuhnya PERTAMA KALI dalam arah laju sabuk ("First Contact Rule"), dan (2) pada puli ekor take-up, sabuk bergeser menuju sisi dengan tegangan LEBIH RENDAH (jarak pusat lebih pendek). Pemuatan corong (chute) yang tidak di tengah mendorong sabuk ke sisi yang bermuatan lebih ringan akibat gaya reaksi lateral material.',
-        equations: [
-          {
-            label: 'Efek Kemudi Tegangan Take-Up Ekor',
-            formula: 'Δy_takeup ≈ K_t × (x_kiri − x_kanan)',
-            note: 'Mengencangkan baut take-up sisi tempat sabuk menyimpang akan meluruskan muka puli sehingga sabuk menyentuh sisi sebaliknya lebih dulu dan kembali ke tengah.',
-          },
-          {
-            label: 'Kemudi Sudut Skew Training Idler',
-            formula: 'Δy_idler ≈ −K_α × tan(α_skew)',
-            note: 'Memajukan salah satu ujung idler searah laju sabuk akan mengarahkan sabuk menuju ujung yang dimajukan tersebut ("Aturan Kontak Pertama")',
-          },
-          {
-            label: 'Reaksi Pemuatan Chute Tidak Sentris',
-            formula: 'Δy_load ≈ −K_L × e_chute',
-            note: 'Material berat yang jatuh di sisi kanan (+e_chute) mendorong sabuk ke sisi berlawanan (−y kiri) pada rol troughing miring',
-          },
-        ],
-        workedExample: {
-          title: 'Mengoreksi Mistracking Sabuk di Dekat Puli Ekor',
-          given: [
-            'Sabuk menyimpang +28 mm ke sisi KANAN rangka konveyor di dekat puli ekor',
-            'Batas aman ruang bebas lateral sebelum bergesekan dengan rangka = ±25 mm',
-            'Curahan material chute berada tepat di tengah (e_chute = 0 mm)',
-          ],
-          steps: [
-            'Identifikasi masalah: Sabuk bergesekan dengan rangka kanan (+28 mm > batas 25 mm).',
-            'Terapkan aturan penyetelan take-up di puli ekor: Tambah ulir baut take-up sisi kanan (atau kurangi sisi kiri) agar sisi kanan puli bergerak mundur sedikit, membuat sabuk menyentuh sisi KIRI lebih dulu dan kembali ke tengah.',
-            'Lakukan putaran bertahap kecil (2–3 mm gerak ulir) dan tunggu 3 putaran penuh sabuk sebelum mengukur ulang.',
-          ],
-          answer:
-            'Setel baut take-up ekor secara bertahap 2–3 mm hingga penyimpangan lateral berada dalam ±5 mm',
         },
       },
     ],
@@ -235,34 +198,6 @@ registerSimulatorTranslations('chain-conveyor', {
           'Karena mata rantai membentuk tali busur lurus di sekeliling poligon z gigi, jari-jari efektif berfluktuasi antara R dan R·cos(180°/z). Di bawah 17 gigi, variasi kecepatan kordal melampaui 1,7% dan membangkitkan getaran tinggi.',
       },
       {
-        id: 'cc-quiz-4',
-        question:
-          'Menurut Aturan Pelacakan Sabuk Konveyor ("First Contact Rule"), bagaimana respons sabuk ketika salah satu ujung rol/training idler dimiringkan sedikit maju searah laju sabuk?',
-        options: [
-          'Sabuk bergerak menuju ujung rol yang disentuhnya PERTAMA KALI',
-          'Sabuk bergerak menuju ujung rol yang disentuhnya TERAKHIR',
-          'Memiringkan idler hanya mengubah kecepatan sabuk, bukan posisi lateral',
-          'Sabuk langsung berhenti karena gesekan',
-        ],
-        correctIndex: 0,
-        explanation:
-          'Ketika idler membentuk sudut kecil terhadap garis tengah sabuk, sabuk akan bergerak ke arah sisi rol yang disentuhnya lebih dulu dalam arah laju sabuk.',
-      },
-      {
-        id: 'cc-quiz-5',
-        question:
-          'Jika material curah dari corong pemuatan (chute) terus-menerus jatuh tidak di tengah melainkan ke sisi KANAN sabuk konveyor troughing, ke arah manakah sabuk cenderung menyimpang?',
-        options: [
-          'Tetap di tengah karena rol troughing menyeimbangkan diri sendiri',
-          'Beban berat yang tidak sentris mendorong sabuk ke sisi KIRI (sisi bermuatan ringan)',
-          'Sabuk memanjang menjadi V-belt',
-          'Puli ekor otomatis mengompensasi tanpa penyetelan',
-        ],
-        correctIndex: 1,
-        explanation:
-          'Ketika material membebani rol miring sebelah kanan secara berlebih, komponen gaya gravitasi pada kemiringan rol mendorong sabuk secara lateral ke arah kiri (sisi yang bermuatan ringan).',
-      },
-      {
         id: 'cc-quiz-6',
         question:
           'Berapakah kelendutan tengah sisi kendur S yang direkomendasikan untuk penggerak rantai rol horizontal umum dengan jarak pusat C?',
@@ -279,10 +214,10 @@ registerSimulatorTranslations('chain-conveyor', {
     ],
   },
   ja: {
-    title: 'ローラチェーン伝動＆コンベヤベルト蛇行調整シミュレータ',
-    shortTitle: 'チェーン＆コンベヤ',
+    title: 'ローラチェーン伝動＆摩耗検査シミュレータ',
+    shortTitle: 'ローラチェーン',
     description:
-      '10リンクノギスゲージによるANSIローラチェーンのピッチ伸び検査、緩み側カテナリーたるみ量と潤滑方式の選定、およびテールプーリ・テイクアップねじと自動調心キャリアローラによるコンベヤベルト蛇行修正を学びます。',
+      '10リンクノギスゲージによるANSIローラチェーンのピッチ伸び検査、多角形弦運動による速度変動、および緩み側カテナリーたるみ量と潤滑方式の選定を学びます。',
     explore: [
       {
         title: 'ANSI/ISO ローラチェーンのピッチと摩耗伸び限界（3%）',
@@ -359,43 +294,6 @@ registerSimulatorTranslations('chain-conveyor', {
             'v = 3.62 m/s では刷毛塗りや遅い滴下給油では油膜切れを起こすため、C種（油浴またはスリンガ潤滑）を選定します。',
           ],
           answer: '目標たるみ量 S = 15.0 mm、速度 v = 3.62 m/s のため油浴潤滑（Oil Bath）が必要',
-        },
-      },
-      {
-        title: 'コンベヤベルト蛇行の法則とテールプーリ・テイクアップ調整',
-        summary:
-          'コンベヤベルトのトラッキング（蛇行修正）は2つの物理原則に従います：(1) ベルトは進行方向において「先に接触したローラ端」の側へ寄る（先当たりの法則）、(2) テールプーリのテイクアップ部では張力の低い側（軸間が短い側）へ寄る。またシュートからの偏荷重（片荷）はトラフ角の反力によって荷の軽い側へベルトを押し出します。',
-        equations: [
-          {
-            label: 'テールテイクアップ張力差による操舵効果',
-            formula: 'Δy_takeup ≈ K_t × (x_左 − x_右)',
-            note: 'ベルトが寄っている側のテイクアップねじを締め込むとプーリ面が傾き、反対側が先に接触して中央へ戻る。',
-          },
-          {
-            label: '調心アイドラ（トレーニングアイドラ）のスキュー角効果',
-            formula: 'Δy_idler ≈ −K_α × tan(α_skew)',
-            note: 'アイドラの一端をベルト進行方向へ前進させると、ベルトはその前進した端の側へ移動する（先当たりの法則）',
-          },
-          {
-            label: 'シュート偏荷重（片荷）による横押し反力',
-            formula: 'Δy_load ≈ −K_L × e_chute',
-            note: '右側へ偏って荷が落ちると（+e_chute）、トラフローラの傾斜反力でベルトは反対の左側（−y）へ押しやられる',
-          },
-        ],
-        workedExample: {
-          title: 'テールプーリ付近でのベルト右寄り蛇行の修正',
-          given: [
-            'テールプーリ付近でベルトがフレーム右側へ +28 mm 蛇行している',
-            'フレーム接触を防ぐ許容クリアランス限界 = ±25 mm',
-            'シュート投入位置は中央（e_chute = 0 mm）',
-          ],
-          steps: [
-            '異常判定：+28 mm > 25 mm 限界のため右側フレームと接触・摩耗中。',
-            '先当たりの法則／テイクアップ調整：右側のテイクアップねじを少し締め込む（または左側を緩める）ことで左側から先に接触させ、ベルトを中央へ戻す。',
-            '1回あたり 2〜3 mm ずつ微調整し、ベルトが3周するのを待ってから再測定する。',
-          ],
-          answer:
-            'テールテイクアップねじを 2〜3 mm 刻みで調整し、蛇行量を ±5 mm 以内に収める',
         },
       },
     ],
@@ -510,34 +408,6 @@ registerSimulatorTranslations('chain-conveyor', {
         correctIndex: 1,
         explanation:
           'チェーンリンクは z 角形の弦として巻き付くため、有効半径が R と R·cos(180°/z) の間で変動します。17歯未満では速度変動率が 1.7% を超え、激しい振動と騒音の原因になります。',
-      },
-      {
-        id: 'cc-quiz-4',
-        question:
-          'コンベヤベルトの「先当たりの法則（First Contact Rule）」によると、アイドラ（ローラ）の一端をベルト進行方向へ少し前進させた場合、ベルトはどう動きますか？',
-        options: [
-          'ベルトは進行方向で「先に接触する側」のローラ端へ寄る',
-          'ベルトは「後から接触する側」のローラ端へ寄る',
-          'アイドラを傾けてもベルト速度が変わるだけで横位置は変わらない',
-          '摩擦でベルトが即座に停止する',
-        ],
-        correctIndex: 0,
-        explanation:
-          'アイドラにわずかなスキュー角をつけると、ベルトは進行方向において最初に接触する側のローラ端に向かって舵を切ります。',
-      },
-      {
-        id: 'cc-quiz-5',
-        question:
-          'シュートからの搬送物が常にトラフ型コンベヤベルトの「右側」に偏って落下（片荷）している場合、ベルトはどちら側へ蛇行しやすくなりますか？',
-        options: [
-          'トラフローラが自動平衡するため中央に留まる',
-          '重い偏荷重が傾斜ローラを押すため、ベルトは「左側（荷の軽い側）」へ押し出される',
-          'ベルトが伸びてVベルト状になる',
-          'テールプーリが自動的に補正する',
-        ],
-        correctIndex: 1,
-        explanation:
-          '右側トラフローラに過大な荷重がかかると、傾斜面に沿う重力分力の反作用によってベルト自体は荷の軽い左側へ横移動します。',
       },
       {
         id: 'cc-quiz-6',

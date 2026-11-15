@@ -11,23 +11,17 @@ import {
   RotateCcw,
   Ruler,
   ShieldAlert,
-  Sliders,
   Wrench,
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import {
   ANSI_CHAIN_SPECS,
   evaluateChainDrive,
-  evaluateConveyorTracking,
   type AnsiChainNumber,
   type ChainDriveInputs,
   type ChainLubeMethod,
-  type ConveyorTrackingInputs,
 } from './chainConveyorMath';
 import { RollerChainLabSvg } from './RollerChainLabSvg';
-import { ConveyorTrackingLabSvg } from './ConveyorTrackingLabSvg';
-
-type SubLabId = 'roller-chain' | 'conveyor-tracking';
 
 const INITIAL_CHAIN_INPUTS: ChainDriveInputs = {
   chainCode: '#60',
@@ -38,15 +32,6 @@ const INITIAL_CHAIN_INPUTS: ChainDriveInputs = {
   wearElongationPct: 0.8,
   slackSagPct: 2.0,
   lubeMethod: 'Oil Bath',
-};
-
-const INITIAL_CONVEYOR_INPUTS: ConveyorTrackingInputs = {
-  beltSpeedMs: 1.8,
-  leftTakeUpMm: 28,
-  rightTakeUpMm: 20,
-  trainingIdlerSkewDeg: 0.0,
-  chuteOffsetMm: 0,
-  headPulleyMisalignDeg: 0.0,
 };
 
 const CHAIN_CODES: AnsiChainNumber[] = [
@@ -63,51 +48,29 @@ const LUBE_METHODS: ChainLubeMethod[] = ['Dry', 'Manual Drip', 'Oil Bath'];
 
 export function ChainConveyorSimulator() {
   const { pick } = useLanguage();
-  const [subLab, setSubLab] = useState<SubLabId>('roller-chain');
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [phaseOffset, setPhaseOffset] = useState<number>(0);
   const [travelPitches, setTravelPitches] = useState<number>(0);
 
   const [chainInputs, setChainInputs] =
     useState<ChainDriveInputs>(INITIAL_CHAIN_INPUTS);
-  const [conveyorInputs, setConveyorInputs] = useState<ConveyorTrackingInputs>(
-    INITIAL_CONVEYOR_INPUTS
-  );
 
   const chainMetrics = useMemo(
     () => evaluateChainDrive(chainInputs),
     [chainInputs]
   );
 
-  const conveyorMetrics = useMemo(
-    () => evaluateConveyorTracking(conveyorInputs),
-    [conveyorInputs]
-  );
-
   useEffect(() => {
     if (!isPlaying) return;
-    if (subLab === 'roller-chain') {
-      // Advance in pitch units proportional to linear chain speed (pitches per 35ms tick)
-      const pitchStep = Math.max(
-        0.04,
-        Math.min(0.45, chainMetrics.linearSpeedMs * 0.065)
-      );
-      const timer = window.setInterval(() => {
-        setTravelPitches((prev) => prev + pitchStep);
-      }, 35);
-      return () => window.clearInterval(timer);
-    }
-    const speedStep = Math.max(0.01, conveyorInputs.beltSpeedMs * 0.011);
+    // Advance in pitch units proportional to linear chain speed (pitches per 35ms tick)
+    const pitchStep = Math.max(
+      0.04,
+      Math.min(0.45, chainMetrics.linearSpeedMs * 0.065)
+    );
     const timer = window.setInterval(() => {
-      setPhaseOffset((prev) => (prev + speedStep) % 1);
+      setTravelPitches((prev) => prev + pitchStep);
     }, 35);
     return () => window.clearInterval(timer);
-  }, [
-    isPlaying,
-    subLab,
-    chainMetrics.linearSpeedMs,
-    conveyorInputs.beltSpeedMs,
-  ]);
+  }, [isPlaying, chainMetrics.linearSpeedMs]);
 
   function applyChainPreset(
     preset: 'optimal' | 'worn-3pct' | 'starved-tight' | 'chordal-12t'
@@ -160,103 +123,19 @@ export function ChainConveyorSimulator() {
     }));
   }
 
-  function applyConveyorPreset(
-    preset: 'centered' | 'tail-rub-right' | 'chute-off-center' | 'head-skew'
-  ) {
-    if (preset === 'centered') {
-      setConveyorInputs({
-        beltSpeedMs: 1.8,
-        leftTakeUpMm: 25,
-        rightTakeUpMm: 25,
-        trainingIdlerSkewDeg: 0.0,
-        chuteOffsetMm: 0,
-        headPulleyMisalignDeg: 0.0,
-      });
-    } else if (preset === 'tail-rub-right') {
-      setConveyorInputs({
-        beltSpeedMs: 2.2,
-        leftTakeUpMm: 36,
-        rightTakeUpMm: 18,
-        trainingIdlerSkewDeg: 0.0,
-        chuteOffsetMm: 0,
-        headPulleyMisalignDeg: 0.0,
-      });
-    } else if (preset === 'chute-off-center') {
-      setConveyorInputs({
-        beltSpeedMs: 2.0,
-        leftTakeUpMm: 25,
-        rightTakeUpMm: 25,
-        trainingIdlerSkewDeg: -0.5,
-        chuteOffsetMm: 50,
-        headPulleyMisalignDeg: 0.0,
-      });
-    } else if (preset === 'head-skew') {
-      setConveyorInputs({
-        beltSpeedMs: 2.4,
-        leftTakeUpMm: 25,
-        rightTakeUpMm: 25,
-        trainingIdlerSkewDeg: 0.0,
-        chuteOffsetMm: -20,
-        headPulleyMisalignDeg: -1.4,
-      });
-    }
-  }
-
-  function handleAutoTrackConveyor() {
-    // Center chute, square tail take-up screws, and set training idler to cancel any residual head pulley skew
-    setConveyorInputs((prev) => {
-      const avgScrew = Math.round((prev.leftTakeUpMm + prev.rightTakeUpMm) / 2);
-      const neededTrainerDeg = Number(
-        ((-prev.headPulleyMisalignDeg * 14.0) / 5.5).toFixed(1)
-      );
-      return {
-        ...prev,
-        leftTakeUpMm: avgScrew,
-        rightTakeUpMm: avgScrew,
-        chuteOffsetMm: 0,
-        trainingIdlerSkewDeg: Math.max(-4, Math.min(4, neededTrainerDeg)),
-      };
-    });
-  }
-
   return (
     <div className="space-y-5">
-      {/* Top Sub-Lab Switcher & Animation Controls */}
+      {/* Top Bar & Animation Controls */}
       <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5 shadow-xs">
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSubLab('roller-chain')}
-            className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-bold transition ${
-              subLab === 'roller-chain'
-                ? 'bg-amber-500 text-slate-950 shadow-sm'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-            }`}
-          >
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400">
             <Cog className="h-4 w-4" />
-            {pick(
-              '1. Roller Chain & 10-Pitch Wear Lab',
-              '1. Lab Rantai Rol & Aus 10-Pitch',
-              '1. ローラチェーン伝動＆10リンク摩耗ラボ'
-            )}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSubLab('conveyor-tracking')}
-            className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-bold transition ${
-              subLab === 'conveyor-tracking'
-                ? 'bg-amber-500 text-slate-950 shadow-sm'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-            }`}
-          >
-            <Sliders className="h-4 w-4" />
-            {pick(
-              '2. Conveyor Belt Tracking & Take-Up Lab',
-              '2. Lab Pelacakan Sabuk Konveyor & Take-Up',
-              '2. コンベヤベルト蛇行＆テイクアップ調整ラボ'
-            )}
-          </button>
+          </span>
+          {pick(
+            'Roller Chain Drive & 10-Pitch Wear Inspection',
+            'Penggerak Rantai Rol & Inspeksi Aus 10-Pitch',
+            'ローラチェーン伝動＆10リンク摩耗検査ラボ'
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -280,11 +159,7 @@ export function ChainConveyorSimulator() {
 
           <button
             type="button"
-            onClick={() =>
-              subLab === 'roller-chain'
-                ? setChainInputs(INITIAL_CHAIN_INPUTS)
-                : setConveyorInputs(INITIAL_CONVEYOR_INPUTS)
-            }
+            onClick={() => setChainInputs(INITIAL_CHAIN_INPUTS)}
             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -294,10 +169,9 @@ export function ChainConveyorSimulator() {
       </div>
 
       {/* =====================================================================
-          SUB-LAB 1: ROLLER CHAIN DRIVE & PITCH WEAR ELONGATION LAB
+          ROLLER CHAIN DRIVE & PITCH WEAR ELONGATION LAB
          ===================================================================== */}
-      {subLab === 'roller-chain' && (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
           {/* Left Column: 2D Canvas + 10-Pitch Vernier Gauge + Readouts */}
           <div className="space-y-4 lg:col-span-8">
             {/* Field Scenarios Bar */}
@@ -802,427 +676,6 @@ export function ChainConveyorSimulator() {
             </div>
           </div>
         </div>
-      )}
-
-      {/* =====================================================================
-          SUB-LAB 2: CONVEYOR BELT MISTRACKING & TAKE-UP TENSION LAB
-         ===================================================================== */}
-      {subLab === 'conveyor-tracking' && (
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
-          {/* Left Column: 2D Top-Down & Side Conveyor Canvas + Readouts */}
-          <div className="space-y-4 lg:col-span-8">
-            {/* Conveyor Fault Presets Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/60">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="mr-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
-                  {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => applyConveyorPreset('centered')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-emerald-700 shadow-sm ring-1 ring-emerald-200 hover:bg-emerald-50 dark:bg-slate-800 dark:text-emerald-300 dark:ring-emerald-500/30"
-                >
-                  {pick('Centered Reference', 'Sabuk Sentris', '中央正常トラッキング')}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => applyConveyorPreset('tail-rub-right')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-rose-700 shadow-sm ring-1 ring-rose-200 hover:bg-rose-50 dark:bg-slate-800 dark:text-rose-300 dark:ring-rose-500/30"
-                >
-                  {pick(
-                    'Unequal Take-Up (Right Rub)',
-                    'Take-Up Timpang (Gesek Kanan)',
-                    'テイクアップ不均等（右接触）'
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => applyConveyorPreset('chute-off-center')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-amber-700 shadow-sm ring-1 ring-amber-200 hover:bg-amber-50 dark:bg-slate-800 dark:text-amber-300 dark:ring-amber-500/30"
-                >
-                  {pick(
-                    'Off-Center Chute Load',
-                    'Beban Chute Miring',
-                    'シュート片荷による蛇行'
-                  )}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => applyConveyorPreset('head-skew')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-sky-700 shadow-sm ring-1 ring-sky-200 hover:bg-sky-50 dark:bg-slate-800 dark:text-sky-300 dark:ring-sky-500/30"
-                >
-                  {pick(
-                    'Head Frame Misalignment',
-                    'Puli Kepala Miring',
-                    'ヘッドプーリ傾き異常'
-                  )}
-                </button>
-              </div>
-
-              {Math.abs(conveyorMetrics.lateralWanderMm) > 3 && (
-                <button
-                  type="button"
-                  onClick={handleAutoTrackConveyor}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow-sm hover:bg-emerald-500"
-                >
-                  <Wrench className="h-3.5 w-3.5" />
-                  {pick('Auto-Center Belt', 'Setel Otomatis ke Tengah', 'ベルト自動センタリング')}
-                </button>
-              )}
-            </div>
-
-            <ConveyorTrackingLabSvg
-              inputs={conveyorInputs}
-              metrics={conveyorMetrics}
-              phaseOffset={phaseOffset}
-            />
-
-            {/* Belt Tracking Readout Cards */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {pick('Lateral Belt Wander', 'Penyimpangan Sabuk', 'ベルト横蛇行量')}
-                </div>
-                <div
-                  className={`mt-1 text-base font-extrabold ${
-                    conveyorMetrics.isFrameRubbing
-                      ? 'text-rose-600 dark:text-rose-400'
-                      : conveyorMetrics.trackingStatus === 'drifting'
-                        ? 'text-amber-600 dark:text-amber-400'
-                        : 'text-emerald-600 dark:text-emerald-400'
-                  }`}
-                >
-                  {conveyorMetrics.lateralWanderMm > 0 ? '+' : ''}
-                  {conveyorMetrics.lateralWanderMm.toFixed(1)} mm
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {conveyorMetrics.lateralWanderMm > 1
-                    ? pick('Drifting RIGHT (+)', 'Geser KANAN (+)', '右側へ寄り (+)')
-                    : conveyorMetrics.lateralWanderMm < -1
-                      ? pick('Drifting LEFT (−)', 'Geser KIRI (−)', '左側へ寄り (−)')
-                      : pick('Running centered', 'Tepat di tengah', '中央走行中')}
-                </div>
-              </div>
-
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {pick('Take-Up Steering', 'Efek Baut Take-Up', 'テイクアップ操舵分')}
-                </div>
-                <div className="mt-1 text-base font-extrabold text-slate-900 dark:text-slate-100">
-                  {conveyorMetrics.takeUpWanderContributionMm > 0 ? '+' : ''}
-                  {conveyorMetrics.takeUpWanderContributionMm.toFixed(1)} mm
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Δ(L−R) = {conveyorMetrics.takeUpDiffMm > 0 ? '+' : ''}
-                  {conveyorMetrics.takeUpDiffMm} mm
-                </div>
-              </div>
-
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {pick('Training Idler Steering', 'Efek Training Idler', '調心アイドラ操舵分')}
-                </div>
-                <div className="mt-1 text-base font-extrabold text-sky-600 dark:text-sky-400">
-                  {conveyorMetrics.idlerWanderContributionMm > 0 ? '+' : ''}
-                  {conveyorMetrics.idlerWanderContributionMm.toFixed(1)} mm
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Skew α = {conveyorInputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
-                  {conveyorInputs.trainingIdlerSkewDeg.toFixed(1)}°
-                </div>
-              </div>
-
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="text-xs text-slate-500 dark:text-slate-400">
-                  {pick('Edge Tensions (L / R)', 'Tegangan Tepi (Ki/Ka)', '左右ベルト張力 (L/R)')}
-                </div>
-                <div className="mt-1 text-base font-extrabold text-slate-900 dark:text-slate-100">
-                  {conveyorMetrics.leftEdgeTensionKn.toFixed(1)} /{' '}
-                  {conveyorMetrics.rightEdgeTensionKn.toFixed(1)} kN
-                </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {pick(
-                    'Belt tracks to lower tension',
-                    'Sabuk ke sisi tegangan rendah',
-                    '低張力側・先当たり側へ移動'
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Conveyor Take-Up & Idler Controls */}
-          <div className="space-y-4 lg:col-span-4">
-            <div className="glass-panel rounded-2xl p-4 shadow-xs">
-              <h3 className="mb-3 text-sm font-bold text-slate-900 dark:text-slate-100">
-                {pick(
-                  'Tail Pulley Take-Up & Tracking Controls',
-                  'Kontrol Take-Up Puli Ekor & Pelacakan',
-                  'テールテイクアップ＆蛇行調整コントロール'
-                )}
-              </h3>
-
-              {/* Left Tail Take-Up Screw (mm) */}
-              <div className="mb-3">
-                <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
-                    {pick(
-                      'Left Tail Take-Up Screw (mm)',
-                      'Baut Take-Up Ekor Kiri (mm)',
-                      '左側テール・テイクアップねじ (mm)'
-                    )}
-                  </span>
-                  <span className="font-bold text-sky-600 dark:text-sky-400">
-                    {conveyorInputs.leftTakeUpMm} mm
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={5}
-                  max={45}
-                  step={1}
-                  value={conveyorInputs.leftTakeUpMm}
-                  onChange={(e) =>
-                    setConveyorInputs((prev) => ({
-                      ...prev,
-                      leftTakeUpMm: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-sky-500"
-                />
-              </div>
-
-              {/* Right Tail Take-Up Screw (mm) */}
-              <div className="mb-4">
-                <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
-                    {pick(
-                      'Right Tail Take-Up Screw (mm)',
-                      'Baut Take-Up Ekor Kanan (mm)',
-                      '右側テール・テイクアップねじ (mm)'
-                    )}
-                  </span>
-                  <span className="font-bold text-sky-600 dark:text-sky-400">
-                    {conveyorInputs.rightTakeUpMm} mm
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={5}
-                  max={45}
-                  step={1}
-                  value={conveyorInputs.rightTakeUpMm}
-                  onChange={(e) =>
-                    setConveyorInputs((prev) => ({
-                      ...prev,
-                      rightTakeUpMm: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-sky-500"
-                />
-                <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
-                  {pick(
-                    'Tip: If belt drifts RIGHT (+mm), increase RIGHT take-up screw (or reduce LEFT) to square the tail pulley.',
-                    'Tips: Bila sabuk geser ke KANAN (+mm), tambah ulir baut KANAN (atau kurangi KIRI) untuk meluruskan puli ekor.',
-                    'ヒント: ベルトが右 (+) へ寄る場合、右側ねじを締め込む（または左を緩める）と中央へ戻ります。'
-                  )}
-                </p>
-              </div>
-
-              {/* Training Idler Skew Angle (±4°) */}
-              <div className="mb-4">
-                <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
-                    {pick(
-                      'Training Idler Skew Angle (±4°)',
-                      'Sudut Skew Training Idler (±4°)',
-                      '調心アイドラ・スキュー角 (±4°)'
-                    )}
-                  </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">
-                    {conveyorInputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
-                    {conveyorInputs.trainingIdlerSkewDeg.toFixed(1)}°
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={-4.0}
-                  max={4.0}
-                  step={0.2}
-                  value={conveyorInputs.trainingIdlerSkewDeg}
-                  onChange={(e) =>
-                    setConveyorInputs((prev) => ({
-                      ...prev,
-                      trainingIdlerSkewDeg: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
-                />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
-                  <span>−4° ({pick('Steers Left', 'Arah Kiri', '左へ操舵')})</span>
-                  <span>0° (Square)</span>
-                  <span>+4° ({pick('Steers Right', 'Arah Kanan', '右へ操舵')})</span>
-                </div>
-              </div>
-
-              {/* Off-Center Chute Loading Offset (mm) */}
-              <div className="mb-4">
-                <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
-                    {pick(
-                      'Off-Center Chute Loading Offset',
-                      'Offset Pemuatan Chute Tidak Sentris',
-                      'シュート投入位置の偏心（片荷）'
-                    )}
-                  </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">
-                    {conveyorInputs.chuteOffsetMm > 0 ? '+' : ''}
-                    {conveyorInputs.chuteOffsetMm} mm
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={-60}
-                  max={60}
-                  step={5}
-                  value={conveyorInputs.chuteOffsetMm}
-                  onChange={(e) =>
-                    setConveyorInputs((prev) => ({
-                      ...prev,
-                      chuteOffsetMm: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
-                />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
-                  <span>−60 mm (Left Load)</span>
-                  <span>0 mm (Centered)</span>
-                  <span>+60 mm (Right Load)</span>
-                </div>
-              </div>
-
-              {/* Belt Speed & Head Frame Misalignment */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {pick('Belt Speed', 'Laju Sabuk', 'ベルト速度')}
-                    </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
-                      {conveyorInputs.beltSpeedMs.toFixed(1)} m/s
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min={0.8}
-                    max={3.5}
-                    step={0.1}
-                    value={conveyorInputs.beltSpeedMs}
-                    onChange={(e) =>
-                      setConveyorInputs((prev) => ({
-                        ...prev,
-                        beltSpeedMs: Number(e.target.value),
-                      }))
-                    }
-                    className="w-full accent-amber-500"
-                  />
-                </div>
-
-                <div>
-                  <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
-                      {pick('Head Skew', 'Kemiringan Kepala', 'ヘッド傾き')}
-                    </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
-                      {conveyorInputs.headPulleyMisalignDeg > 0 ? '+' : ''}
-                      {conveyorInputs.headPulleyMisalignDeg.toFixed(1)}°
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min={-1.5}
-                    max={1.5}
-                    step={0.1}
-                    value={conveyorInputs.headPulleyMisalignDeg}
-                    onChange={(e) =>
-                      setConveyorInputs((prev) => ({
-                        ...prev,
-                        headPulleyMisalignDeg: Number(e.target.value),
-                      }))
-                    }
-                    className="w-full accent-amber-500"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Frame Rubbing & Tracking Rule Diagnostic Box */}
-            <div
-              className={`rounded-xl border p-4 ${
-                conveyorMetrics.isFrameRubbing
-                  ? 'border-rose-200 bg-rose-50/70 dark:border-rose-500/30 dark:bg-rose-950/30'
-                  : conveyorMetrics.trackingStatus === 'drifting'
-                    ? 'border-amber-200 bg-amber-50/70 dark:border-amber-500/30 dark:bg-amber-950/30'
-                    : 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-500/30 dark:bg-emerald-950/30'
-              }`}
-            >
-              <div className="mb-2 flex items-center gap-2">
-                {conveyorMetrics.isFrameRubbing ? (
-                  <ShieldAlert className="h-4 w-4 text-rose-600 dark:text-rose-400" />
-                ) : conveyorMetrics.trackingStatus === 'drifting' ? (
-                  <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                ) : (
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                )}
-                <h4 className="text-xs font-extrabold uppercase tracking-wide text-slate-900 dark:text-slate-100">
-                  {pick(
-                    'Belt Tracking Diagnostic & First-Contact Rule',
-                    'Diagnosis Pelacakan Sabuk & Aturan Kontak Pertama',
-                    'ベルト蛇行診断＆先当たりの法則'
-                  )}
-                </h4>
-              </div>
-
-              <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
-                <li>
-                  •{' '}
-                  {conveyorMetrics.isFrameRubbing
-                    ? pick(
-                        `CRITICAL: Belt lateral wander (${conveyorMetrics.lateralWanderMm.toFixed(1)} mm) exceeds ±25 mm clearance and is rubbing the ${conveyorMetrics.rubbingSide.toUpperCase()} frame rail! Edge fraying and belt splice damage imminent.`,
-                        `KRITIS: Penyimpangan sabuk (${conveyorMetrics.lateralWanderMm.toFixed(1)} mm) melampaui ruang bebas ±25 mm dan bergesekan dengan rangka ${conveyorMetrics.rubbingSide === 'right' ? 'KANAN' : 'KIRI'}!`,
-                        `危険: ベルト横蛇行量 (${conveyorMetrics.lateralWanderMm.toFixed(1)} mm) が許容限界 (±25 mm) を超え、${conveyorMetrics.rubbingSide === 'right' ? '右側' : '左側'}フレームに接触摩耗しています！`
-                      )
-                    : conveyorMetrics.trackingStatus === 'drifting'
-                      ? pick(
-                          `CAUTION: Belt is drifting ${conveyorMetrics.lateralWanderMm.toFixed(1)} mm off-center. Fine-tune tail take-up screws or training idler before frame contact occurs.`,
-                          `PERHATIAN: Sabuk bergeser ${conveyorMetrics.lateralWanderMm.toFixed(1)} mm dari garis tengah. Setel baut take-up ekor atau training idler.`,
-                          `注意: ベルトが中心から ${conveyorMetrics.lateralWanderMm.toFixed(1)} mm ずれています。フレーム接触前に微調整してください。`
-                        )
-                      : pick(
-                          `OPTIMAL: Belt tracks within ±${Math.abs(conveyorMetrics.lateralWanderMm).toFixed(1)} mm of conveyor centerline with safe edge clearance.`,
-                          `OPTIMAL: Sabuk berjalan stabil dalam ±${Math.abs(conveyorMetrics.lateralWanderMm).toFixed(1)} mm dari garis tengah konveyor.`,
-                          `正常: ベルトは中心から ±${Math.abs(conveyorMetrics.lateralWanderMm).toFixed(1)} mm 以内で安定走行しています。`
-                        )}
-                </li>
-                <li>
-                  •{' '}
-                  {Math.abs(conveyorInputs.chuteOffsetMm) >= 15
-                    ? pick(
-                        `Off-center chute load (${conveyorInputs.chuteOffsetMm > 0 ? '+' : ''}${conveyorInputs.chuteOffsetMm} mm) pushes the belt ${conveyorMetrics.chuteWanderContributionMm > 0 ? 'RIGHT' : 'LEFT'} by ${Math.abs(conveyorMetrics.chuteWanderContributionMm).toFixed(1)} mm on the troughing rolls. Center the chute deflector plate first!`,
-                        `Beban chute tidak sentris (${conveyorInputs.chuteOffsetMm > 0 ? '+' : ''}${conveyorInputs.chuteOffsetMm} mm) mendorong sabuk ke ${conveyorMetrics.chuteWanderContributionMm > 0 ? 'KANAN' : 'KIRI'} sebesar ${Math.abs(conveyorMetrics.chuteWanderContributionMm).toFixed(1)} mm. Luruskan pelat pengarah chute terlebih dahulu!`,
-                        `シュート片荷 (${conveyorInputs.chuteOffsetMm > 0 ? '+' : ''}${conveyorInputs.chuteOffsetMm} mm) によりトラフローラ上でベルトが${conveyorMetrics.chuteWanderContributionMm > 0 ? '右' : '左'}へ ${Math.abs(conveyorMetrics.chuteWanderContributionMm).toFixed(1)} mm 押されています。シュートガイド板を中央に戻してください。`
-                      )
-                    : pick(
-                        'Chute feed is well-centered over the middle troughing roll.',
-                        'Curahan material chute berada tepat di tengah rol troughing.',
-                        'シュート投入位置はトラフローラ中央に正しく調整されています。'
-                      )}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -145,9 +145,9 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
               </h2>
               <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
                 {pick(
-                  'Interactive plant reliability & mechanical maintenance suite with 35 hands-on simulators across precision measurement, diagnostic instruments, rotating equipment, machine elements, and fluid power.',
-                  'Paket keandalan pabrik & pemeliharaan mekanik interaktif dengan 35 simulator praktis di bidang pengukuran presisi, instrumen diagnostik, peralatan rotasi, elemen mesin, dan tenaga fluida.',
-                  '精密測定・診断計測器・回転機械・機械要素・流体動力の5分野35種類の実践シミュレータを備えたインタラクティブ保全訓練システム。'
+                  'Interactive plant reliability & mechanical maintenance suite with 40 hands-on simulators across precision measurement, diagnostic instruments, rotating equipment, machine elements, and fluid power.',
+                  'Paket keandalan pabrik & pemeliharaan mekanik interaktif dengan 40 simulator praktis di bidang pengukuran presisi, instrumen diagnostik, peralatan rotasi, elemen mesin, dan tenaga fluida.',
+                  '精密測定・診断計測器・回転機械・機械要素・流体動力の5分野40種類の実践シミュレータを備えたインタラクティブ保全訓練システム。'
                 )}
               </p>
             </div>

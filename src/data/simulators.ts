@@ -5,13 +5,16 @@ import { alignmentMeta } from '../simulators/alignment/alignmentMeta';
 import { beamBendingMeta } from '../simulators/beam-bending/beamBendingMeta';
 import { bearingMeta } from '../simulators/bearing/bearingMeta';
 import { bearingBasicsMeta } from '../simulators/bearing-basics/bearingBasicsMeta';
+import { beltConveyorMeta } from '../simulators/belt-conveyor/beltConveyorMeta';
 import { beltGearMeta } from '../simulators/belt-gear/beltGearMeta';
 import { boltTorqueMeta } from '../simulators/bolt-torque/boltMeta';
 import { boreGaugeMeta } from '../simulators/bore-gauge/boreGaugeMeta';
+import { bucketElevatorMeta } from '../simulators/bucket-elevator/bucketElevatorMeta';
 import { caliperMeta } from '../simulators/caliper/caliperMeta';
 import { chainConveyorMeta } from '../simulators/chain-conveyor/chainConveyorMeta';
 import { compressorMeta } from '../simulators/compressor/compressorMeta';
 import { couplingMeta } from '../simulators/coupling/couplingMeta';
+import { dragChainConveyorMeta } from '../simulators/drag-chain-conveyor/dragChainConveyorMeta';
 import { fastenersBasicsMeta } from '../simulators/fasteners-basics/fastenersBasicsMeta';
 import { fitsTolerancesMeta } from '../simulators/fits-tolerances/fitsTolerancesMeta';
 import { gearStrengthMeta } from '../simulators/gear-strength/gearStrengthMeta';
@@ -23,10 +26,12 @@ import { oilGreaseBasicsMeta } from '../simulators/oil-grease-basics/oilGreaseBa
 import { pneumaticMeta } from '../simulators/pneumatic/pneumaticMeta';
 import { pumpMeta } from '../simulators/pump/pumpMeta';
 import { riggingLiftingMeta } from '../simulators/rigging-lifting/riggingLiftingMeta';
+import { screwConveyorMeta } from '../simulators/screw-conveyor/screwConveyorMeta';
 import { thermalExpansionMeta } from '../simulators/thermal-expansion/thermalExpansionMeta';
 import { utmTestingMeta } from '../simulators/utm-testing/utmTestingMeta';
 import { valvePackingMeta } from '../simulators/valve-packing/valvePackingMeta';
 import { vbeltBasicsMeta } from '../simulators/vbelt-basics/vbeltBasicsMeta';
+import { vibratingFeederMeta } from '../simulators/vibrating-feeder/vibratingFeederMeta';
 import { vibrationMeta } from '../simulators/vibration/vibrationMeta';
 import { weldStrengthMeta } from '../simulators/weld-strength/weldStrengthMeta';
 import { multimeterMeta } from '../simulators/multimeter/multimeterMeta';
@@ -128,6 +133,46 @@ export const SIMULATOR_REGISTRY: SimulatorRegistryEntry[] = [
     Component: lazy(() =>
       import('../simulators/chain-conveyor/ChainConveyorSimulator').then(
         (m) => ({ default: m.ChainConveyorSimulator })
+      )
+    ),
+  },
+  {
+    meta: beltConveyorMeta,
+    Component: lazy(() =>
+      import('../simulators/belt-conveyor/BeltConveyorSimulator').then(
+        (m) => ({ default: m.BeltConveyorSimulator })
+      )
+    ),
+  },
+  {
+    meta: vibratingFeederMeta,
+    Component: lazy(() =>
+      import('../simulators/vibrating-feeder/VibratingFeederSimulator').then(
+        (m) => ({ default: m.VibratingFeederSimulator })
+      )
+    ),
+  },
+  {
+    meta: bucketElevatorMeta,
+    Component: lazy(() =>
+      import('../simulators/bucket-elevator/BucketElevatorSimulator').then(
+        (m) => ({ default: m.BucketElevatorSimulator })
+      )
+    ),
+  },
+  {
+    meta: screwConveyorMeta,
+    Component: lazy(() =>
+      import('../simulators/screw-conveyor/ScrewConveyorSimulator').then(
+        (m) => ({ default: m.ScrewConveyorSimulator })
+      )
+    ),
+  },
+  {
+    meta: dragChainConveyorMeta,
+    Component: lazy(() =>
+      import('../simulators/drag-chain-conveyor/DragChainConveyorSimulator').then(
+        (m) => ({ default: m.DragChainConveyorSimulator })
       )
     ),
   },
