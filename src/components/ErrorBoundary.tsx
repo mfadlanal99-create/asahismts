@@ -1,5 +1,8 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 
+const BASE_PATH = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+const HOME_URL = BASE_PATH ? `${BASE_PATH}/` : '/';
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -23,6 +26,24 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     console.error('[ErrorBoundary]', error, info.componentStack);
   }
 
+  handleReload = () => {
+    try {
+      sessionStorage.removeItem('asahi_vite_preload_retry');
+    } catch {
+      // ignore
+    }
+    window.location.reload();
+  };
+
+  handleGoHome = () => {
+    try {
+      sessionStorage.removeItem('asahi_vite_preload_retry');
+    } catch {
+      // ignore
+    }
+    window.location.href = HOME_URL;
+  };
+
   render() {
     if (this.state.error) {
       return (
@@ -37,17 +58,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <div className="mt-4 flex gap-2">
               <button
                 type="button"
-                onClick={() => window.location.reload()}
+                onClick={this.handleReload}
                 className="rounded-lg bg-[#001F6B] px-3.5 py-2 text-xs font-semibold text-white hover:bg-[#002D9C]"
               >
                 Reload Page
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  window.history.pushState(null, '', '/');
-                  this.setState({ error: null });
-                }}
+                onClick={this.handleGoHome}
                 className="rounded-lg border border-slate-300 px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
               >
                 Go Home
