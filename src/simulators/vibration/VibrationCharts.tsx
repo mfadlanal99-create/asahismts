@@ -99,9 +99,9 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                 />
                 <text
                   x={padL - 8}
-                  y={y + 3}
+                  y={y + 3.5}
                   textAnchor="end"
-                  fontSize="8"
+                  fontSize="10"
                   fontWeight="600"
                   fill={colors.textDim}
                 >
@@ -127,9 +127,9 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                 />
                 <text
                   x={x}
-                  y={padT + plotH + 15}
+                  y={padT + plotH + 16}
                   textAnchor="middle"
-                  fontSize="8"
+                  fontSize="10"
                   fontWeight="600"
                   fill={colors.textDim}
                 >
@@ -150,7 +150,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             if (h.freqHz > maxHz || h.freqHz <= 0) return null;
 
             // Clamped badge Y to guarantee zero clipping at the top
-            const badgeY = Math.max(12, py - 24);
+            const badgeY = Math.max(10, py - 26);
 
             return (
               <g key={h.order}>
@@ -161,33 +161,33 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   x2={px}
                   y2={padT + plotH}
                   stroke={h.order === 1 ? colors.primary : colors.textDim}
-                  strokeWidth="1.2"
+                  strokeWidth="1.4"
                   strokeDasharray="3 2"
                 />
                 <circle
                   cx={px}
                   cy={py}
-                  r="4"
+                  r="4.5"
                   fill={h.order === 1 ? '#06b6d4' : '#64748b'}
                   stroke="#ffffff"
-                  strokeWidth="1.2"
+                  strokeWidth="1.4"
                 />
                 {/* Pill Tag */}
                 <rect
-                  x={px - 25}
+                  x={px - 28}
                   y={badgeY}
-                  width="50"
-                  height="17"
-                  rx="3.5"
+                  width="56"
+                  height="19"
+                  rx="4"
                   fill={h.order === 1 ? (isDark ? '#083344' : '#ecfeff') : isDark ? '#1e293b' : '#f1f5f9'}
                   stroke={h.order === 1 ? '#06b6d4' : colors.axis}
-                  strokeWidth="1"
+                  strokeWidth="1.2"
                 />
                 <text
                   x={px}
-                  y={badgeY + 12}
+                  y={badgeY + 13.5}
                   textAnchor="middle"
-                  fontSize="8"
+                  fontSize="9.5"
                   fontWeight="800"
                   fill={h.order === 1 ? (isDark ? '#38bdf8' : '#0891b2') : colors.textMain}
                 >
@@ -200,18 +200,18 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
           {/* Axis Labels */}
           <text
             x={padL + plotW / 2}
-            y={chartH - 8}
+            y={chartH - 6}
             textAnchor="middle"
-            fontSize="9"
+            fontSize="10.5"
             fontWeight="700"
             fill={colors.textMain}
           >
             {pick('Frequency (Hz) / Running Speed Orders', 'Frekuensi (Hz) / Orde Kecepatan Putar', '周波数 (Hz) / 回転次数比')}
           </text>
           <text
-            transform={`rotate(-90) translate(-${padT + plotH / 2}, 14)`}
+            transform={`rotate(-90) translate(-${padT + plotH / 2}, 16)`}
             textAnchor="middle"
-            fontSize="9"
+            fontSize="10.5"
             fontWeight="700"
             fill={colors.textMain}
           >
@@ -315,13 +315,13 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             x2={critX}
             y2={phasePadT + phasePlotH}
             stroke={colors.criticalSpeedLine}
-            strokeWidth="1.5"
+            strokeWidth="1.6"
             strokeDasharray="4 2"
           />
           <text
             x={critX + 4}
-            y={padT + 11}
-            fontSize="8"
+            y={padT + 12}
+            fontSize="10"
             fontWeight="800"
             fill={colors.criticalSpeedLine}
           >
@@ -335,16 +335,16 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             return (
               <g key={ratio}>
                 <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeWidth="1" strokeDasharray="3 3" />
-                <text x={padL - 8} y={y + 3} textAnchor="end" fontSize="7.5" fontWeight="600" fill={colors.textDim}>
+                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fill={colors.textDim}>
                   {val}
                 </text>
               </g>
             );
           })}
           <text
-            transform={`rotate(-90) translate(-${padT + ampPlotH / 2}, 14)`}
+            transform={`rotate(-90) translate(-${padT + ampPlotH / 2}, 16)`}
             textAnchor="middle"
-            fontSize="8"
+            fontSize="10"
             fontWeight="800"
             fill={colors.primary}
           >
@@ -353,7 +353,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
 
           {/* Amplitude Line */}
           <path d={ampPathD} fill="none" stroke={colors.primary} strokeWidth="2.2" />
-          <circle cx={curX} cy={curAmpY} r="4" fill={colors.primary} stroke="#ffffff" strokeWidth="1.5" />
+          <circle cx={curX} cy={curAmpY} r="4.5" fill={colors.primary} stroke="#ffffff" strokeWidth="1.5" />
 
           {/* ===== LOWER PLOT: PHASE LAG (0 to 180 deg) ===== */}
           {[0, 90, 180].map((deg) => {
@@ -361,16 +361,16 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             return (
               <g key={deg}>
                 <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeWidth="1" strokeDasharray="3 3" />
-                <text x={padL - 8} y={y + 3} textAnchor="end" fontSize="7.5" fontWeight="600" fill={colors.textDim}>
+                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fill={colors.textDim}>
                   {deg}°
                 </text>
               </g>
             );
           })}
           <text
-            transform={`rotate(-90) translate(-${phasePadT + phasePlotH / 2}, 14)`}
+            transform={`rotate(-90) translate(-${phasePadT + phasePlotH / 2}, 16)`}
             textAnchor="middle"
-            fontSize="8"
+            fontSize="10"
             fontWeight="800"
             fill={colors.secondary}
           >
@@ -379,7 +379,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
 
           {/* Phase Line */}
           <path d={phasePathD} fill="none" stroke={colors.secondary} strokeWidth="2.2" />
-          <circle cx={curX} cy={curPhaseY} r="4" fill={colors.secondary} stroke="#ffffff" strokeWidth="1.5" />
+          <circle cx={curX} cy={curPhaseY} r="4.5" fill={colors.secondary} stroke="#ffffff" strokeWidth="1.5" />
 
           {/* Current RPM Vertical Cursor */}
           <line
@@ -388,7 +388,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             x2={curX}
             y2={phasePadT + phasePlotH}
             stroke={colors.textMain}
-            strokeWidth="1.2"
+            strokeWidth="1.4"
             strokeDasharray="2 2"
           />
 
@@ -400,9 +400,9 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                 <line x1={x} y1={phasePadT + phasePlotH} x2={x} y2={phasePadT + phasePlotH + 4} stroke={colors.axis} strokeWidth="1" />
                 <text
                   x={x}
-                  y={phasePadT + phasePlotH + 14}
+                  y={phasePadT + phasePlotH + 15}
                   textAnchor="middle"
-                  fontSize="7.5"
+                  fontSize="9.5"
                   fontWeight="600"
                   fill={colors.textDim}
                 >
@@ -413,9 +413,9 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
           })}
           <text
             x={padL + plotW / 2}
-            y={chartH - 6}
+            y={chartH - 4}
             textAnchor="middle"
-            fontSize="8.5"
+            fontSize="10.5"
             fontWeight="700"
             fill={colors.textMain}
           >

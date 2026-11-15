@@ -204,10 +204,10 @@ export function VibrationMachineSvg({
         <text
           x="0"
           y="0"
-          fontSize="11"
+          fontSize="12"
           fontWeight="800"
-          letterSpacing="0.08em"
-          fill={colors.textMuted}
+          letterSpacing="0.06em"
+          fill={colors.textMain}
           className="uppercase"
         >
           {pick(
@@ -250,23 +250,23 @@ export function VibrationMachineSvg({
         {/* Foundation Compliance & Rigidity Badge */}
         <g transform="translate(272, 45)">
           <rect
-            x="-140"
-            y="-8"
-            width="280"
-            height="15"
+            x="-148"
+            y="-9"
+            width="296"
+            height="18"
             rx="3"
             fill={colors.basePlateBottom}
-            fillOpacity="0.4"
+            fillOpacity="0.5"
           />
           <text
             x="0"
-            y="3"
+            y="4"
             textAnchor="middle"
-            fontSize="8.5"
+            fontSize="9.5"
             fontWeight="700"
             letterSpacing="0.04em"
             fill={colors.shaftHighlight}
-            opacity="0.9"
+            opacity="0.95"
           >
             {inputs.support === 'rigid'
               ? pick('FOUNDATION: RIGID CAST SUB-BASE (ISO 10816 CLASS II)', 'FONDASI: DASAR COR KAKU (ISO 10816 KELAS II)', '基礎構造: 高剛性鋳鉄定盤 (ISO 10816 CLASS II)')
@@ -330,11 +330,11 @@ export function VibrationMachineSvg({
 
         {/* Motor Nameplate Badge */}
         <g transform="translate(73, 80)">
-          <rect x="-35" y="-12" width="70" height="24" rx="2" fill="#0b132b" fillOpacity="0.75" stroke="#38bdf8" strokeWidth="0.8" />
-          <text x="0" y="-1" textAnchor="middle" fontSize="8.5" fontWeight="900" fill="#ffffff" letterSpacing="0.04em">
+          <rect x="-38" y="-14" width="76" height="28" rx="3" fill="#0b132b" fillOpacity="0.8" stroke="#38bdf8" strokeWidth="1" />
+          <text x="0" y="0" textAnchor="middle" fontSize="9.5" fontWeight="900" fill="#ffffff" letterSpacing="0.04em">
             AC DRIVE MOTOR
           </text>
-          <text x="0" y="8" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="#38bdf8">
+          <text x="0" y="10" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#38bdf8">
             {state.rpm} RPM • 3.0 kW
           </text>
         </g>
@@ -354,7 +354,7 @@ export function VibrationMachineSvg({
         <circle cx="29" cy="15" r="2" fill="#94a3b8" />
 
         {/* Coupling Name Callout */}
-        <text x="18" y="38" textAnchor="middle" fontSize="7" fontWeight="700" fill={colors.textDim}>
+        <text x="18" y="40" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={colors.textDim}>
           JAW COUPLING
         </text>
       </g>
@@ -402,14 +402,14 @@ export function VibrationMachineSvg({
           />
           {/* Sensor Callout Tag */}
           <g transform="translate(0, -37)">
-            <rect x="-24" y="-8" width="48" height="13" rx="2" fill={isDark ? '#0f172a' : '#ffffff'} stroke={colors.panelBorder} strokeWidth="0.8" />
-            <text x="0" y="1" textAnchor="middle" fontSize="7" fontWeight="800" fill={isDark ? '#38bdf8' : '#0284c7'}>
+            <rect x="-26" y="-9" width="52" height="15" rx="3" fill={isDark ? '#0f172a' : '#ffffff'} stroke={colors.panelBorder} strokeWidth="1" />
+            <text x="0" y="2" textAnchor="middle" fontSize="8.5" fontWeight="800" fill={isDark ? '#38bdf8' : '#0284c7'}>
               1X SENSOR
             </text>
           </g>
         </g>
 
-        <text x="35" y="105" textAnchor="middle" fontSize="7.5" fontWeight="800" fill={colors.textMain}>
+        <text x="35" y="106" textAnchor="middle" fontSize="9.5" fontWeight="800" fill={colors.textMain}>
           BEARING 1 (DE)
         </text>
       </g>
@@ -483,7 +483,7 @@ export function VibrationMachineSvg({
         {/* Reflective Tape on Shaft surface */}
         <rect x="1" y="68" width="6" height="3" fill="#ffffff" stroke="#ef4444" strokeWidth="0.6" />
 
-        <text x="4" y="2" textAnchor="middle" fontSize="7" fontWeight="800" fill={colors.textMuted}>
+        <text x="4" y="2" textAnchor="middle" fontSize="9" fontWeight="800" fill={colors.textMain}>
           KEYPHASOR
         </text>
       </g>
@@ -530,7 +530,7 @@ export function VibrationMachineSvg({
           />
         )}
 
-        <text x="0" y={-93 + orbitY * 0.5} textAnchor="middle" fontSize="7.5" fontWeight="800" fill={colors.textMain}>
+        <text x="0" y={-95 + orbitY * 0.5} textAnchor="middle" fontSize="9.5" fontWeight="800" fill={colors.textMain}>
           ROTOR DISK
         </text>
       </g>
@@ -556,7 +556,7 @@ export function VibrationMachineSvg({
         {/* Shaft Bore Bearing Ring */}
         <circle cx="35" cy="40" r="16" fill="none" stroke="#475569" strokeWidth="2.5" />
 
-        <text x="35" y="105" textAnchor="middle" fontSize="7.5" fontWeight="800" fill={colors.textMain}>
+        <text x="35" y="106" textAnchor="middle" fontSize="9.5" fontWeight="800" fill={colors.textMain}>
           BEARING 2 (NDE)
         </text>
       </g>
@@ -565,23 +565,23 @@ export function VibrationMachineSvg({
       <rect x="576" y="280" width="10" height="10" rx="3" fill="#1e293b" />
 
       {/* Orbit Amplitude On-Rig Callout Badge */}
-      <g transform="translate(260, 148)">
+      <g transform="translate(255, 144)">
         <rect
           x="0"
           y="0"
-          width="135"
-          height="42"
-          rx="6"
+          width="145"
+          height="46"
+          rx="7"
           fill={colors.panelBg}
           stroke={colors.panelBorder}
-          strokeWidth="1.2"
+          strokeWidth="1.3"
         />
-        <text x="10" y="15" fontSize="8" fontWeight="700" fill={colors.textMuted}>
+        <text x="10" y="16" fontSize="9.5" fontWeight="700" fill={colors.textMuted}>
           {pick('Radial Shaft Orbit Peak', 'Puncak Orbit Poros Radial', '軸心軌道ピーク変位')}
         </text>
-        <text x="10" y="33" fontSize="13.5" fontWeight="900" fill={colors.cableSheath}>
+        <text x="10" y="36" fontSize="15" fontWeight="900" fill={colors.cableSheath}>
           {state.displacement1xPkPkUm.toFixed(1)}{' '}
-          <tspan fontSize="9" fontWeight="700" fill={colors.textMuted}>
+          <tspan fontSize="10" fontWeight="700" fill={colors.textMuted}>
             μm p-p
           </tspan>
         </text>
@@ -596,7 +596,7 @@ export function VibrationMachineSvg({
           x="0"
           y="0"
           width="255"
-          height="200"
+          height="204"
           rx="10"
           fill={colors.panelBg}
           stroke={colors.panelBorder}
@@ -605,32 +605,32 @@ export function VibrationMachineSvg({
 
         {/* Header Bar */}
         <path
-          d="M 0 10 Q 0 0 10 0 L 245 0 Q 255 0 255 10 L 255 30 L 0 30 Z"
+          d="M 0 10 Q 0 0 10 0 L 245 0 Q 255 0 255 10 L 255 32 L 0 32 Z"
           fill={colors.panelHeader}
         />
         <text
           x="12"
-          y="19"
-          fontSize="9"
+          y="21"
+          fontSize="11"
           fontWeight="800"
-          letterSpacing="0.05em"
+          letterSpacing="0.04em"
           fill={colors.textMain}
           className="uppercase"
         >
-          {pick('Oscilloscope Orbit & ISO Severity Readout', 'Orbit Osiloskop & Tingkat Keparahan ISO', '軸心軌道スコープ・ISO評価表示')}
+          {pick('Oscilloscope Orbit & ISO Readout', 'Orbit Osiloskop & Tingkat ISO', '軸心軌道スコープ・ISO評価表示')}
         </text>
 
-        {/* Oscilloscope Circular CRT Screen (Center at X: 64, Y: 100) */}
-        <g transform="translate(64, 100)">
+        {/* Oscilloscope Circular CRT Screen (Center at X: 64, Y: 102) */}
+        <g transform="translate(64, 102)">
           {/* Phosphor CRT Dark Bezel */}
-          <circle cx="0" cy="0" r="54" fill={colors.scopeCrtBg} stroke="#1e293b" strokeWidth="2" />
+          <circle cx="0" cy="0" r="54" fill={colors.scopeCrtBg} stroke="#1e293b" strokeWidth="2.2" />
 
           {/* Graticule Grid Lines */}
           <circle cx="0" cy="0" r="50" fill="none" stroke={colors.scopeGrid} strokeWidth="1" />
-          <circle cx="0" cy="0" r="35" fill="none" stroke={colors.scopeGrid} strokeWidth="1" strokeDasharray="2 2" />
-          <circle cx="0" cy="0" r="20" fill="none" stroke={colors.scopeGrid} strokeWidth="1" strokeDasharray="2 2" />
-          <line x1="-50" y1="0" x2="50" y2="0" stroke={colors.scopeGrid} strokeWidth="1" />
-          <line x1="0" y1="-50" x2="0" y2="50" stroke={colors.scopeGrid} strokeWidth="1" />
+          <circle cx="0" cy="0" r="35" fill="none" stroke={colors.scopeGrid} strokeWidth="1" strokeDasharray="3 3" />
+          <circle cx="0" cy="0" r="20" fill="none" stroke={colors.scopeGrid} strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="-50" y1="0" x2="50" y2="0" stroke={colors.scopeGrid} strokeWidth="1.2" />
+          <line x1="0" y1="-50" x2="0" y2="50" stroke={colors.scopeGrid} strokeWidth="1.2" />
 
           {/* Orbit Dynamic Trajectory */}
           <ellipse
@@ -641,32 +641,32 @@ export function VibrationMachineSvg({
             transform={`rotate(${state.netPhaseDeg})`}
             fill="none"
             stroke={state.isoInfo.color}
-            strokeWidth="2"
+            strokeWidth="2.2"
             filter={`url(#crtGlow-${filterId})`}
           />
 
           {/* Orbit Center & Live Instantaneous Orbit Dot */}
-          <circle cx="0" cy="0" r="1.5" fill="#64748b" />
+          <circle cx="0" cy="0" r="2" fill="#64748b" />
           {isRunning && (
             <circle
               cx={orbitX}
               cy={orbitY}
-              r="3.5"
+              r="4"
               fill={state.isoInfo.color}
               filter={`url(#ledGlow-${filterId})`}
             />
           )}
 
-          {/* Cardinal Scope Axes */}
-          <text x="36" y="-36" fontSize="6.5" fontWeight="700" fill="#64748b">Y (90°)</text>
-          <text x="36" y="10" fontSize="6.5" fontWeight="700" fill="#64748b">X (0°)</text>
+          {/* Cardinal Scope Axes with Crisp Clear Font */}
+          <text x="36" y="-36" fontSize="9.5" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'}>Y (90°)</text>
+          <text x="36" y="14" fontSize="9.5" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'}>X (0°)</text>
         </g>
 
         {/* Right Digital Telemetry Display inside Console */}
-        <g transform="translate(136, 42)">
+        <g transform="translate(132, 40)">
           {/* ISO 10816 4-Segment LED Indicator Bar */}
-          <text x="0" y="0" fontSize="7.5" fontWeight="800" fill={colors.textMuted}>
-            {pick('ISO 10816/20816 ZONES:', 'ZONA ISO 10816/20816:', 'ISO 10816/20816 評価ゾーン:')}
+          <text x="0" y="0" fontSize="9" fontWeight="800" fill={colors.textMuted} letterSpacing="0.03em">
+            {pick('ISO 10816 ZONES:', 'ZONA ISO 10816:', 'ISO 評価ゾーン:')}
           </text>
           <div className="flex gap-1">
             {['A', 'B', 'C', 'D'].map((z, idx) => {
@@ -674,23 +674,23 @@ export function VibrationMachineSvg({
               const zColors = ['#10b981', '#06b6d4', '#f59e0b', '#ef4444'];
               const zColor = zColors[idx];
               return (
-                <g key={z} transform={`translate(${idx * 27}, 8)`}>
+                <g key={z} transform={`translate(${idx * 28}, 7)`}>
                   <rect
                     x="0"
                     y="0"
-                    width="23"
-                    height="16"
-                    rx="2.5"
+                    width="24"
+                    height="18"
+                    rx="3"
                     fill={isActive ? zColor : colors.panelHeader}
-                    fillOpacity={isActive ? 1 : 0.4}
+                    fillOpacity={isActive ? 1 : 0.45}
                     stroke={zColor}
-                    strokeWidth={isActive ? 1.5 : 0.8}
+                    strokeWidth={isActive ? 1.8 : 0.8}
                   />
                   <text
-                    x="11.5"
-                    y="11.5"
+                    x="12"
+                    y="13"
                     textAnchor="middle"
-                    fontSize="8"
+                    fontSize="10"
                     fontWeight="900"
                     fill={isActive ? '#ffffff' : colors.textMuted}
                   >
@@ -703,12 +703,12 @@ export function VibrationMachineSvg({
 
           {/* RMS Velocity Metric */}
           <g transform="translate(0, 48)">
-            <text x="0" y="0" fontSize="7.5" fontWeight="700" fill={colors.textMuted}>
-              {pick('RMS Velocity v_rms:', 'Kecepatan RMS v_rms:', '振動速度実効値 v_rms:')}
+            <text x="0" y="0" fontSize="9.5" fontWeight="700" fill={colors.textMuted}>
+              {pick('RMS Velocity v_rms:', 'Kecepatan RMS v_rms:', '速度実効値 v_rms:')}
             </text>
-            <text x="0" y="16" fontSize="16" fontWeight="900" fill={colors.textMain}>
+            <text x="0" y="17" fontSize="17" fontWeight="900" fill={colors.textMain}>
               {state.velocityTotalRmsMmS.toFixed(2)}{' '}
-              <tspan fontSize="9" fontWeight="700" fill={colors.textMuted}>
+              <tspan fontSize="10.5" fontWeight="700" fill={colors.textMuted}>
                 mm/s
               </tspan>
             </text>
@@ -716,63 +716,63 @@ export function VibrationMachineSvg({
 
           {/* 1X Phase Lag Angle */}
           <g transform="translate(0, 80)">
-            <text x="0" y="0" fontSize="7.5" fontWeight="700" fill={colors.textMuted}>
+            <text x="0" y="0" fontSize="9.5" fontWeight="700" fill={colors.textMuted}>
               {pick('1X Phase Lag φ:', 'Lag Sudut Fasa 1X φ:', '1X 位相遅れ角 φ:')}
             </text>
-            <text x="0" y="14" fontSize="13" fontWeight="900" fill={colors.cableSheath}>
+            <text x="0" y="15" fontSize="15" fontWeight="900" fill={colors.cableSheath}>
               {state.phaseLagDeg.toFixed(1)}°
             </text>
           </g>
 
-          {/* Condition Description Pill - bounded width to prevent any SVG edge overflow */}
-          <g transform="translate(0, 104)">
+          {/* Condition Description Pill - clearly readable */}
+          <g transform="translate(0, 105)">
             <rect
               x="-2"
               y="-10"
-              width="114"
-              height="24"
+              width="118"
+              height="28"
               rx="4"
               fill={state.isoInfo.color}
-              fillOpacity="0.12"
+              fillOpacity="0.14"
               stroke={state.isoInfo.color}
-              strokeWidth="0.8"
+              strokeWidth="1"
             />
             {state.isoZone === 'A' && (
               <>
-                <text x="5" y="1" fontSize="7" fontWeight="800" fill={state.isoInfo.color}>
+                <text x="5" y="2" fontSize="8.5" fontWeight="800" fill={state.isoInfo.color}>
                   {pick('NEWLY COMMISSIONED', 'KONDISI BARU / PRIMA', '初期稼働・極めて良好')}
                 </text>
-                <text x="5" y="10" fontSize="6.5" fontWeight="600" fill={colors.textMuted}>
+                <text x="5" y="13" fontSize="8" fontWeight="600" fill={colors.textMuted}>
                   {pick('Pristine Condition', 'Kondisi Ideal', '理想的な健全状態')}
                 </text>
               </>
             )}
             {state.isoZone === 'B' && (
               <>
-                <text x="5" y="1" fontSize="7" fontWeight="800" fill={state.isoInfo.color}>
+                <text x="5" y="2" fontSize="8.5" fontWeight="800" fill={state.isoInfo.color}>
                   {pick('ACCEPTABLE LEVEL', 'LEVEL DITERIMA', '許容運転水準')}
                 </text>
-                <text x="5" y="10" fontSize="6.5" fontWeight="600" fill={colors.textMuted}>
+                <text x="5" y="13" fontSize="8" fontWeight="600" fill={colors.textMuted}>
                   {pick('Unrestricted Operation', 'Operasi Tak Terbatas', '長期連続運転可能')}
                 </text>
               </>
             )}
             {state.isoZone === 'C' && (
               <>
-                <text x="5" y="1" fontSize="7" fontWeight="800" fill={state.isoInfo.color}>
+                <text x="5" y="2" fontSize="8.5" fontWeight="800" fill={state.isoInfo.color}>
                   {pick('RESTRICTED RUN', 'OPERASI TERBATAS', '制限運転対象')}
                 </text>
-                <text x="5" y="10" fontSize="6.5" fontWeight="600" fill={colors.textMuted}>
+                <text x="5" y="13" fontSize="8" fontWeight="600" fill={colors.textMuted}>
                   {pick('Maintenance Required', 'Perlu Pemeliharaan', '次回停止時点検要')}
                 </text>
               </>
             )}
             {state.isoZone === 'D' && (
               <>
-                <text x="5" y="1" fontSize="7" fontWeight="800" fill={state.isoInfo.color}>
+                <text x="5" y="2" fontSize="8.5" fontWeight="800" fill={state.isoInfo.color}>
                   {pick('DANGER: TRIP ALARM', 'BAHAYA: ALARM TRIP', '危険: トリップ発砲')}
                 </text>
-                <text x="5" y="10" fontSize="6.5" fontWeight="600" fill={colors.textMuted}>
+                <text x="5" y="13" fontSize="8" fontWeight="600" fill={colors.textMuted}>
                   {pick('Immediate Shutdown', 'Matikan Mesin Segera', '即時緊急停止要')}
                 </text>
               </>
@@ -786,26 +786,27 @@ export function VibrationMachineSvg({
             x="0"
             y="0"
             width="227"
-            height="28"
+            height="32"
             rx="6"
-            fill={isRunning ? (isDark ? '#064e3b' : '#dcfce7') : isDark ? '#1e293b' : '#f1f5f9'}
-            stroke={isRunning ? '#10b981' : colors.panelBorder}
+            fill={isRunning ? (isDark ? '#064e3b' : '#dcfce7') : (isDark ? '#1e293b' : '#f1f5f9')}
+            stroke={isRunning ? (isDark ? '#059669' : '#86efac') : colors.panelBorder}
             strokeWidth="1.2"
-            className="cursor-pointer transition-colors"
+            className="cursor-pointer transition-all hover:opacity-90"
             onClick={onToggleMotor}
           />
           <circle
             cx="16"
-            cy="14"
-            r="4.5"
+            cy="16"
+            r="5"
             fill={isRunning ? '#10b981' : '#64748b'}
             filter={isRunning ? `url(#ledGlow-${filterId})` : undefined}
           />
           <text
-            x="28"
-            y="18"
-            fontSize="8.5"
+            x="30"
+            y="20"
+            fontSize="10"
             fontWeight="800"
+            letterSpacing="0.02em"
             fill={isRunning ? (isDark ? '#34d399' : '#15803d') : colors.textMain}
           >
             {isRunning
@@ -832,15 +833,15 @@ export function VibrationMachineSvg({
 
         {/* Header Bar */}
         <path
-          d="M 0 10 Q 0 0 10 0 L 245 0 Q 255 0 255 10 L 255 30 L 0 30 Z"
+          d="M 0 10 Q 0 0 10 0 L 245 0 Q 255 0 255 10 L 255 32 L 0 32 Z"
           fill={colors.panelHeader}
         />
         <text
           x="12"
-          y="19"
-          fontSize="9"
+          y="21"
+          fontSize="11"
           fontWeight="800"
-          letterSpacing="0.05em"
+          letterSpacing="0.04em"
           fill={colors.textMain}
           className="uppercase"
         >
@@ -957,22 +958,22 @@ export function VibrationMachineSvg({
           })}
 
           {/* Angle Markings positioned strictly OUTSIDE disk rim (Radius = 84) to prevent any overlap */}
-          <text x="84" y="3" fontSize="7.5" fontWeight="800" fill={colors.textMuted} textAnchor="start">0°</text>
-          <text x="0" y="-81" fontSize="7.5" fontWeight="800" fill={colors.textMuted} textAnchor="middle">90°</text>
-          <text x="-84" y="3" fontSize="7.5" fontWeight="800" fill={colors.textMuted} textAnchor="end">180°</text>
-          <text x="0" y="87" fontSize="7.5" fontWeight="800" fill={colors.textMuted} textAnchor="middle">270°</text>
+          <text x="85" y="4" fontSize="10" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'} textAnchor="start">0°</text>
+          <text x="0" y="-81" fontSize="10" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'} textAnchor="middle">90°</text>
+          <text x="-85" y="4" fontSize="10" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'} textAnchor="end">180°</text>
+          <text x="0" y="88" fontSize="10" fontWeight="800" fill={isDark ? '#94a3b8' : '#475569'} textAnchor="middle">270°</text>
         </g>
 
         {/* Legend Footer */}
-        <g transform="translate(18, 218)">
-          <circle cx="5" cy="5" r="4" fill={colors.heavySpotRed} />
-          <text x="14" y="8" fontSize="7.5" fontWeight="700" fill={colors.textMuted}>
+        <g transform="translate(14, 218)">
+          <circle cx="5" cy="5" r="4.5" fill={colors.heavySpotRed} />
+          <text x="14" y="9" fontSize="9.5" fontWeight="700" fill={colors.textMain}>
             {pick('Heavy Spot U₀', 'Titik Berat U₀', '初期不釣合 U₀')}
           </text>
 
-          <circle cx="120" cy="5" r="4" fill={colors.correctionCyan} />
-          <text x="129" y="8" fontSize="7.5" fontWeight="700" fill={colors.textMuted}>
-            {pick('Correction Mass Wc', 'Massa Koreksi Wc', '修正重り Wc')}
+          <circle cx="120" cy="5" r="4.5" fill={colors.correctionCyan} />
+          <text x="130" y="9" fontSize="9.5" fontWeight="700" fill={colors.textMain}>
+            {pick('Correction Wc', 'Massa Koreksi Wc', '修正重り Wc')}
           </text>
         </g>
       </g>
