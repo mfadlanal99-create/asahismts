@@ -21,6 +21,7 @@ import { gearStrengthMeta } from '../simulators/gear-strength/gearStrengthMeta';
 import { hardnessMeta } from '../simulators/hardness/hardnessMeta';
 import { hydraulicMeta } from '../simulators/hydraulic/hydraulicMeta';
 import { lubeMeta } from '../simulators/lube/lubeMeta';
+import { machine3dExplorerMeta } from '../simulators/machine-3d-explorer/machine3dExplorerMeta';
 import { motorBasicsMeta } from '../simulators/motor-basics/motorBasicsMeta';
 import { oilGreaseBasicsMeta } from '../simulators/oil-grease-basics/oilGreaseBasicsMeta';
 import { pneumaticMeta } from '../simulators/pneumatic/pneumaticMeta';
@@ -48,6 +49,16 @@ export interface SimulatorRegistryEntry {
 }
 
 export const SIMULATOR_REGISTRY: SimulatorRegistryEntry[] = [
+  {
+    meta: machine3dExplorerMeta,
+    Component: lazy(() =>
+      import('../simulators/machine-3d-explorer/Machine3DExplorerSimulator').then(
+        (m) => ({
+          default: m.Machine3DExplorerSimulator,
+        })
+      )
+    ),
+  },
   {
     meta: caliperMeta,
     Component: lazy(() =>

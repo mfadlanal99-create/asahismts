@@ -8,6 +8,7 @@ const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 
 const ROUTES = [
   '/',
+  '/sim/machine-3d-explorer',
   '/sim/caliper',
   '/sim/fits-tolerances',
   '/sim/bore-gauge',

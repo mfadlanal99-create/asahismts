@@ -179,6 +179,22 @@ export function HomePage({
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <button
                 type="button"
+                onClick={() => onSelectSimulator('machine-3d-explorer')}
+                className="inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2.5 text-xs font-bold text-slate-950 shadow-md transition hover:bg-cyan-300"
+              >
+                <Box className="h-4 w-4" />
+                {pick(
+                  '3D Exploded-View Machine',
+                  'Mesin 3D Exploded-View',
+                  '3D 分解ビューマシン'
+                )}
+                <span className="rounded-full bg-slate-950/15 px-2 py-0.5 font-mono text-[10px] font-extrabold">
+                  360° CAD
+                </span>
+              </button>
+
+              <button
+                type="button"
                 onClick={onOpenCompetency}
                 className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-semibold text-[#001F6B] transition hover:bg-[#F4F7FB] dark:bg-[#002D9C] dark:text-white dark:hover:bg-[#3B82F6]"
               >
