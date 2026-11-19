@@ -1,4 +1,5 @@
 import { PUMP_3D_PARTS, type Machine3DPartSpec } from './machine3dData';
+import { buildExtraMachineMesh } from './extraMachines3dMeshes';
 
 export type Vec3 = [number, number, number];
 type RgbTuple = [number, number, number];
@@ -34,7 +35,7 @@ export interface ProjectedCallout {
   depth: number;
 }
 
-interface RawFaceDef {
+export interface RawFaceDef {
   verts: Vec3[];
   colorHex?: string;
   isHousingShell?: boolean;
@@ -49,13 +50,13 @@ interface CompiledFace {
   cullBackface: boolean;
 }
 
-interface EdgeDef {
+export interface EdgeDef {
   a: Vec3;
   b: Vec3;
   isHousingShell?: boolean;
 }
 
-interface PartMesh {
+export interface PartMesh {
   faces: CompiledFace[];
   edges: EdgeDef[];
   calloutLocalAnchor: Vec3;
@@ -112,7 +113,7 @@ function clampByte(n: number): number {
   return n < 0 ? 0 : n > 255 ? 255 : (n + 0.5) | 0;
 }
 
-function compileMesh(
+export function compileMesh(
   rawFaces: RawFaceDef[],
   edges: EdgeDef[],
   calloutLocalAnchor: Vec3,
@@ -136,7 +137,7 @@ function compileMesh(
 
 // --- Parametric CAD Mesh Builders (LOD-tuned for 60 FPS) ---
 
-function addCylinderSection(
+export function addCylinderSection(
   faces: RawFaceDef[],
   edges: EdgeDef[],
   x0: number,
@@ -253,7 +254,7 @@ function addCylinderSection(
   }
 }
 
-function addBox(
+export function addBox(
   faces: RawFaceDef[],
   edges: EdgeDef[],
   cx: number,
@@ -304,7 +305,7 @@ function addBox(
   }
 }
 
-function addBoltRing(
+export function addBoltRing(
   faces: RawFaceDef[],
   edges: EdgeDef[],
   x0: number,
@@ -2870,9 +2871,11 @@ function getPartMesh(part: Machine3DPartSpec): PartMesh {
       built = buildScrewUTrough(baseHex);
       break;
     case 'thrust-bearing-coupling':
-    default:
-      built = buildThrustBearingCoupling(baseHex);
+    default: {
+      const extra = buildExtraMachineMesh(part.id, baseHex);
+      built = extra ?? buildThrustBearingCoupling(baseHex);
       break;
+    }
   }
 
   PART_MESH_CACHE.set(part.id, built);
@@ -3624,6 +3627,9 @@ export function renderCadScene(
     const rotates = Boolean(part.rotates);
     const rotatesAroundZ =
       rotates && (part.id.startsWith('belt-') || part.id.startsWith('chain-'));
+    const rotatesAroundY =
+      rotates &&
+      (part.id === 'teka-turbine-rotor-arms' || part.id === 'teka-intensive-agitator');
     // Belt pulleys spin clockwise (-shaftAngle) so top moves +X; drag sprockets spin CCW (+shaftAngle) so bottom drags +X
     const sinZ = part.id.startsWith('belt-') ? -sinRot : sinRot;
     const shininess = part.appearance.shininess;
@@ -3639,6 +3645,11 @@ export function renderCadScene(
         const nyRot = nx * sinZ + ny * cosRot;
         nx = nxRot;
         ny = nyRot;
+      } else if (rotatesAroundY) {
+        const nxRot = nx * cosRot + nz * sinRot;
+        const nzRot = -nx * sinRot + nz * cosRot;
+        nx = nxRot;
+        nz = nzRot;
       } else if (rotates) {
         const nyRot = ny * cosRot - nz * sinRot;
         const nzRot = ny * sinRot + nz * cosRot;
@@ -3667,6 +3678,11 @@ export function renderCadScene(
           const vyR = vx * sinZ + vy * cosRot;
           vx = vxR;
           vy = vyR;
+        } else if (rotatesAroundY) {
+          const vxR = vx * cosRot + vz * sinRot;
+          const vzR = -vx * sinRot + vz * cosRot;
+          vx = vxR;
+          vz = vzR;
         } else if (rotates) {
           const vyR = vy * cosRot - vz * sinRot;
           const vzR = vy * sinRot + vz * cosRot;
@@ -3742,6 +3758,15 @@ export function renderCadScene(
         const byR = bx * sinZ + by * cosRot;
         bx = bxR;
         by = byR;
+      } else if (rotatesAroundY) {
+        const axR = ax * cosRot + az * sinRot;
+        const azR = -ax * sinRot + az * cosRot;
+        ax = axR;
+        az = azR;
+        const bxR = bx * cosRot + bz * sinRot;
+        const bzR = -bx * sinRot + bz * cosRot;
+        bx = bxR;
+        bz = bzR;
       } else if (rotates) {
         const ayR = ay * cosRot - az * sinRot;
         const azR = ay * sinRot + az * cosRot;

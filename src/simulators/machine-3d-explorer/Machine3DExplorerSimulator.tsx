@@ -38,11 +38,37 @@ import {
   SCREW_CONVEYOR_INFO,
 } from './screwConveyor3dData';
 import {
+  GEARBOX_REDUCER_3D_PARTS,
+  GEARBOX_REDUCER_INFO,
+} from './gearboxReducer3dData';
+import {
+  TEKA_MIXER_3D_PARTS,
+  TEKA_MIXER_INFO,
+} from './tekaMixer3dData';
+import {
+  MOTOR_3D_PARTS,
+  MOTOR_3D_INFO,
+} from './motor3dData';
+import {
+  URAS_MOTOR_3D_PARTS,
+  URAS_MOTOR_INFO,
+} from './urasMotor3dData';
+import {
   Machine3DViewport,
   type CameraPresetCommand,
 } from './Machine3DViewport';
 
-type MachineId = 'pump' | 'belt' | 'chain' | 'knocker' | 'skako' | 'screw';
+type MachineId =
+  | 'pump'
+  | 'belt'
+  | 'chain'
+  | 'knocker'
+  | 'skako'
+  | 'screw'
+  | 'gearbox'
+  | 'teka'
+  | 'motor'
+  | 'uras';
 
 const MACHINE_CONFIGS: {
   id: MachineId;
@@ -147,6 +173,70 @@ const MACHINE_CONFIGS: {
       ja: '通し連続ヘリコイド羽根＆Sch80トルクパイプ・グランドパッキン・端軸受・ギヤモータ。',
     },
     standardTag: 'CEMA BOOK 350',
+  },
+  {
+    id: 'gearbox',
+    info: GEARBOX_REDUCER_INFO,
+    parts: GEARBOX_REDUCER_3D_PARTS,
+    shortLabel: {
+      en: 'Helical 2-Stage Gearbox Reducer',
+      id: 'Gearbox Reducer Heliks 2-Tingkat',
+      ja: '2段ヘリカル減速機',
+    },
+    summary: {
+      en: 'Split-case parallel-shaft helical reducer (i=18.5:1) with tapered roller bearings, Viton seals & oil sump.',
+      id: 'Reducer poros sejajar gigi heliks rumah belah (i=18,5:1) dengan bearing rol tirus, seal Viton & bak oli.',
+      ja: '割りケース平行軸2段ヘリカル減速機（i=18.5:1）・円すいころ軸受・オイルシール。',
+    },
+    standardTag: 'AGMA / ISO 6336',
+  },
+  {
+    id: 'teka',
+    info: TEKA_MIXER_INFO,
+    parts: TEKA_MIXER_3D_PARTS,
+    shortLabel: {
+      en: 'TEKA THZ 4500 A Pan Mixer',
+      id: 'Mixer TEKA THZ 4500 A',
+      ja: 'TEKA THZ 4500 A タービンミキサ',
+    },
+    summary: {
+      en: '4,500 L ring-trough turbine pan mixer with central planetary gearbox, fluid coupling, whirl star & Hardox liners.',
+      id: 'Mixer bak-cincin 4.500 L dengan gearbox planetary pusat, kopling fluida, pengaduk bintang & pelat Hardox.',
+      ja: '4,500 L リングトラフ式遊星ミキサ・流体継手・高速アジテータ・Hardoxライナ。',
+    },
+    standardTag: 'TEKA THZ 4500 A',
+  },
+  {
+    id: 'motor',
+    info: MOTOR_3D_INFO,
+    parts: MOTOR_3D_PARTS,
+    shortLabel: {
+      en: '3-Phase TEFC Induction Motor',
+      id: 'Motor Induksi 3-Fasa TEFC',
+      ja: '三相全閉外扇形誘導電動機',
+    },
+    summary: {
+      en: 'IEC 160M 15 kW 4-pole squirrel-cage TEFC motor with Class-F VPI stator, cooling fins & 6-stud terminal box.',
+      id: 'Motor sangkar tupai TEFC IEC 160M 15 kW 4-kutub dengan stator Kelas-F VPI, sirip pendingin & kotak terminal.',
+      ja: 'IEC 160M 15kW 4極 全閉外扇かご形誘導電動機（F種絶縁・冷却フィン・端子箱）。',
+    },
+    standardTag: 'IEC 60034 / IP55',
+  },
+  {
+    id: 'uras',
+    info: URAS_MOTOR_INFO,
+    parts: URAS_MOTOR_3D_PARTS,
+    shortLabel: {
+      en: 'URAS KEE Vibrating Motor',
+      id: 'Motor Getar URAS KEE',
+      ja: 'ユーラスバイブレータ KEE形',
+    },
+    summary: {
+      en: 'FCD450 nodular iron rotary vibrator with dual phase-adjustable eccentric counterweights & potted terminal box.',
+      id: 'Vibrator putar bodi FCD450 dengan pemberat eksentrik ganda dapat disetel & kotak terminal cor epoksi.',
+      ja: 'FCD450ダクタイル鋳鉄フレーム・位相可変偏心ウエイト・防振モールド端子箱。',
+    },
+    standardTag: 'URAS KEE / IP66',
   },
 ];
 
