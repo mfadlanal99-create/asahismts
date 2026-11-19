@@ -179,6 +179,7 @@ export function Machine3DViewport({
       selectedPartId: s.selectedPartId,
       isolatedPartId: s.isolatedPartId,
       isDark: s.isDark,
+      isDriving: s.isRunning && s.rpm > 0,
     });
 
     frameResultRef.current = res;

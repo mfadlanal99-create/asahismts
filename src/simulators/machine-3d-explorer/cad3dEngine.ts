@@ -23,6 +23,7 @@ export interface RenderSceneOptions {
   selectedPartId: string | null;
   isolatedPartId: string | null;
   isDark: boolean;
+  isDriving?: boolean;
 }
 
 export interface ProjectedCallout {
@@ -3250,6 +3251,7 @@ export function renderCadScene(
     selectedPartId,
     isolatedPartId,
     isDark,
+    isDriving = false,
   } = options;
 
   // Background studio fill
@@ -3559,6 +3561,17 @@ export function renderCadScene(
   }
   const skakoStroke = shaftAngleRad > 0 ? Math.sin(shaftAngleRad * 7.0) * 1.8 : 0;
 
+  // URAS KEE rotary vibrator: synchronous 3D orbital centrifugal whirl + high-frequency housing chatter when Drive is active
+  const isUrasActive = Boolean(isDriving) && !isolatedPartId;
+  const urasCgAngle = shaftAngleRad + 2.096;
+  const urasVibX = isUrasActive ? Math.sin(shaftAngleRad * 9.0) * 0.55 : 0;
+  const urasVibY = isUrasActive
+    ? Math.cos(urasCgAngle) * 1.9 + Math.sin(shaftAngleRad * 11.0) * 0.75
+    : 0;
+  const urasVibZ = isUrasActive
+    ? Math.sin(urasCgAngle) * 1.9 + Math.cos(shaftAngleRad * 11.0) * 0.75
+    : 0;
+
   for (const part of activeParts) {
     const mesh = getPartMesh(part);
     const disp = isolatedPartId
@@ -3586,9 +3599,9 @@ export function renderCadScene(
       (part.id === 'gb-tapered-bearings' || part.id === 'gb-lip-seals')
         ? Math.abs(disp[2])
         : 0;
-    const ox = isolatedPartId ? 0 : part.basePosition[0] + (isBilateralX ? 0 : disp[0]);
+    let ox = isolatedPartId ? 0 : part.basePosition[0] + (isBilateralX ? 0 : disp[0]);
     let oy = isolatedPartId ? 0 : part.basePosition[1] + disp[1];
-    const oz = isolatedPartId ? 0 : part.basePosition[2] + (bilateralZSplit > 0 ? 0 : disp[2]);
+    let oz = isolatedPartId ? 0 : part.basePosition[2] + (bilateralZSplit > 0 ? 0 : disp[2]);
 
     // Apply physics-driven reciprocating & dual-mass resonant motion when Drive is running
     if (!isolatedPartId) {
@@ -3604,6 +3617,10 @@ export function renderCadScene(
         oy += skakoStroke;
       } else if (part.id === 'skako-magnet' || part.id === 'skako-base-plate') {
         oy -= skakoStroke * 0.55;
+      } else if (part.id.startsWith('uras-')) {
+        ox += urasVibX;
+        oy += urasVibY;
+        oz += urasVibZ;
       }
     }
     const knockerSpringScale =
@@ -4055,6 +4072,47 @@ export function renderCadScene(
       }
     }
 
+    // Dynamic centrifugal vibration wave rings & eccentric force arcs for URAS KEE Vibrating Motor
+    if (part.id === 'uras-frame-housing' && isUrasActive) {
+      const wavePhase = ((shaftAngleRad * 0.45) % 1 + 1) % 1;
+      for (const ringIdx of [0, 1]) {
+        const u = (wavePhase + ringIdx * 0.5) % 1;
+        const rX = 28 + u * 26;
+        const rZ = 30 + u * 24;
+        const alphaWave = 0.85 * (1 - u * 0.65);
+        const waveRgb = hexToRgb(ringIdx === 0 ? '#F97316' : '#FACC15');
+        const segs = 16;
+        for (let i = 0; i < segs; i++) {
+          const a0 = (i / segs) * Math.PI * 2;
+          const a1 = ((i + 1) / segs) * Math.PI * 2;
+          pushDynamicEdge(
+            [ox + rX * Math.cos(a0), oy - 30.2, oz + rZ * Math.sin(a0)],
+            [ox + rX * Math.cos(a1), oy - 30.2, oz + rZ * Math.sin(a1)],
+            waveRgb,
+            alphaWave,
+            1.9
+          );
+        }
+      }
+      // Rotating centrifugal force vector arcs on left & right weight planes
+      const arcRgb = hexToRgb('#FACC15');
+      for (const wx of [ox - 41, ox + 41]) {
+        const rArc = 31.5;
+        const arcSegs = 6;
+        for (let i = 0; i < arcSegs; i++) {
+          const a0 = urasCgAngle - 0.65 + (i / arcSegs) * 1.3;
+          const a1 = urasCgAngle - 0.65 + ((i + 1) / arcSegs) * 1.3;
+          pushDynamicEdge(
+            [wx, oy + rArc * Math.cos(a0), oz + rArc * Math.sin(a0)],
+            [wx, oy + rArc * Math.cos(a1), oz + rArc * Math.sin(a1)],
+            arcRgb,
+            0.9,
+            2.1
+          );
+        }
+      }
+    }
+
     if (showCallouts && !isolatedPartId) {
       const biOffX = isBilateralX
         ? mesh.calloutLocalAnchor[0] < 0
@@ -4067,9 +4125,12 @@ export function renderCadScene(
             ? -bilateralZSplit
             : bilateralZSplit
           : 0;
-      const ancX = ox + mesh.calloutLocalAnchor[0] + biOffX;
-      const ancY = oy + mesh.calloutLocalAnchor[1];
-      const ancZ = oz + mesh.calloutLocalAnchor[2] + biOffZ;
+      const urasPinStabilizeX = part.id.startsWith('uras-') ? urasVibX : 0;
+      const urasPinStabilizeY = part.id.startsWith('uras-') ? urasVibY : 0;
+      const urasPinStabilizeZ = part.id.startsWith('uras-') ? urasVibZ : 0;
+      const ancX = ox + mesh.calloutLocalAnchor[0] + biOffX - urasPinStabilizeX;
+      const ancY = oy + mesh.calloutLocalAnchor[1] - urasPinStabilizeY;
+      const ancZ = oz + mesh.calloutLocalAnchor[2] + biOffZ - urasPinStabilizeZ;
       const pAnchor = projectCam(toCameraSpace(ancX, ancY, ancZ));
       const pPin = projectCam(
         toCameraSpace(
