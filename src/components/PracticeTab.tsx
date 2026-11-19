@@ -44,7 +44,7 @@ export function PracticeTab({
 
   if (problems.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-xs dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+      <div className="glass-panel rounded-[28px] p-8 text-center text-[var(--md-on-surface-variant)]">
         Practice problems for this simulator are coming soon.
       </div>
     );
@@ -93,10 +93,10 @@ export function PracticeTab({
 
   return (
     <div className="space-y-5">
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl px-5 py-3.5 shadow-sm">
-        <div className="text-sm text-slate-600 dark:text-slate-300">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-4">
+        <div className="text-sm text-[var(--md-on-surface-variant)]">
           {pick('Solved', 'Selesai', '解答済み')}{' '}
-          <span className="font-mono font-semibold text-[#001F6B] dark:text-[#60A5FA]">
+          <span className="font-mono font-bold text-[var(--md-primary)]">
             {solvedCount} / {problems.length}
           </span>{' '}
           {pick('problems', 'soal', '問')}
@@ -104,7 +104,7 @@ export function PracticeTab({
         <button
           type="button"
           onClick={handleResetAll}
-          className="glass-pill inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800"
+          className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           {pick('Reset All', 'Reset Semua', 'すべてリセット')}
@@ -112,9 +112,9 @@ export function PracticeTab({
       </div>
 
       {allSolved && (
-        <div className="glass-card flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-emerald-300/60 bg-emerald-50/70 px-5 py-4 text-emerald-900 shadow-sm dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-tertiary-container)] px-5 py-4 text-[var(--md-on-tertiary-container)] shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-on-tertiary-container)]/12">
               <Trophy className="h-5 w-5" />
             </div>
             <div>
@@ -139,7 +139,7 @@ export function PracticeTab({
             <button
               type="button"
               onClick={onGoToQuiz}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-emerald-500 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+              className="m3-btn-filled inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
             >
               {pick('Take Quiz', 'Ikuti Kuis', 'クイズへ進む')}
               <ArrowRight className="h-3.5 w-3.5" />
@@ -156,19 +156,19 @@ export function PracticeTab({
         return (
           <div
             key={problem.id}
-            className="glass-card flex h-full flex-col rounded-2xl p-6 shadow-sm"
+            className="glass-card flex h-full flex-col rounded-[28px] p-6"
           >
             <div className="mb-4 flex flex-1 items-start justify-between gap-4">
-              <div className="flex items-start gap-2.5">
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#001F6B]/8 font-mono text-xs font-bold text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA]">
+              <div className="flex items-start gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--md-primary-container)] font-mono text-xs font-bold text-[var(--md-on-primary-container)]">
                   P{idx + 1}
                 </span>
-                <p className="text-sm font-medium leading-relaxed text-slate-900 dark:text-slate-100">
+                <p className="text-sm font-medium leading-relaxed text-[var(--md-on-surface)]">
                   {problem.prompt}
                 </p>
               </div>
               {previouslySolved && (
-                <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-emerald-300/60 bg-emerald-50/80 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 backdrop-blur-sm dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300">
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[var(--md-tertiary-container)] px-2.5 py-1 text-[11px] font-bold text-[var(--md-on-tertiary-container)]">
                   <CheckCircle2 className="h-3 w-3" />
                   {pick('Solved', 'Selesai', '解答済み')}
                 </span>
@@ -176,8 +176,8 @@ export function PracticeTab({
             </div>
 
             <div className="mt-auto">
-              <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center overflow-hidden rounded-xl border border-white/60 bg-white/70 shadow-xs focus-within:border-[#002D9C] dark:border-white/10 dark:bg-slate-950/70 dark:focus-within:border-[#60A5FA]">
+              <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex items-center overflow-hidden rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] transition focus-within:border-[var(--md-primary)] focus-within:ring-2 focus-within:ring-[var(--md-primary)]/20">
                 <input
                   type="number"
                   step="any"
@@ -193,9 +193,9 @@ export function PracticeTab({
                     if (e.key === 'Enter') handleCheck(problem);
                   }}
                   placeholder={pick('Enter value...', 'Masukkan nilai...', '数値を入力...')}
-                  className="w-40 bg-transparent px-3 py-2 font-mono text-sm text-slate-900 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-600"
+                  className="w-36 bg-transparent px-4 py-2 font-mono text-sm text-[var(--md-on-surface)] outline-none placeholder:text-[var(--md-on-surface-variant)]"
                 />
-                <span className="border-l border-white/60 bg-white/40 px-3 py-2 font-mono text-xs text-slate-500 dark:border-white/10 dark:bg-slate-900/50 dark:text-slate-400">
+                <span className="border-l border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-high)] px-3 py-2 font-mono text-xs font-semibold text-[var(--md-on-surface-variant)]">
                   {problem.unit}
                 </span>
               </div>
@@ -203,7 +203,7 @@ export function PracticeTab({
               <button
                 type="button"
                 onClick={() => handleCheck(problem)}
-                className="rounded-xl bg-[#001F6B] px-4 py-2 text-sm font-semibold text-white shadow-xs transition hover:bg-[#002D9C] dark:bg-[#002D9C] dark:text-white dark:hover:bg-[#3B82F6]"
+                className="m3-btn-filled px-4 py-2 text-xs font-bold"
               >
                 {pick('Check Answer', 'Periksa Jawaban', '答え合わせ')}
               </button>
@@ -213,7 +213,7 @@ export function PracticeTab({
                 onClick={() =>
                   updateState(problem.id, { showHint: !state.showHint })
                 }
-                className="glass-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 transition hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800"
+                className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold"
               >
                 <HelpCircle className="h-3.5 w-3.5 text-amber-500 dark:text-amber-400" />
                 {state.showHint
@@ -226,9 +226,9 @@ export function PracticeTab({
                 onClick={() =>
                   updateState(problem.id, { showSolution: !state.showSolution })
                 }
-                className="glass-pill inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-medium text-slate-700 transition hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800"
+                className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold"
               >
-                <Eye className="h-3.5 w-3.5 text-[#001F6B] dark:text-[#60A5FA]" />
+                <Eye className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {state.showSolution
                   ? pick('Hide Solution', 'Tutup Solusi', '解法を隠す')
                   : pick('Solution', 'Solusi', '解法')}
@@ -237,7 +237,7 @@ export function PracticeTab({
 
             {state.checked && (
               <div
-                className={`mt-3 flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm backdrop-blur-md ${
+                className={`mt-3 flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm ${
                   state.isCorrect
                     ? 'border border-emerald-300/60 bg-emerald-50/80 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300'
                     : 'border border-rose-300/60 bg-rose-50/80 text-rose-800 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300'
@@ -268,7 +268,7 @@ export function PracticeTab({
             )}
 
             {state.showHint && (
-              <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900 dark:border-amber-500/25 dark:bg-amber-950/20 dark:text-amber-200">
+              <div className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900 dark:border-amber-500/25 dark:bg-amber-950/20 dark:text-amber-200">
                 <span className="font-semibold">
                   {pick('Hint', 'Petunjuk', 'ヒント')}:
                 </span>{' '}
@@ -277,13 +277,13 @@ export function PracticeTab({
             )}
 
             {state.showSolution && (
-              <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/80">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="mt-3 rounded-2xl border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] p-4">
+                <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Step-by-Step Solution', 'Langkah Penyelesaian', 'ステップ別解法')}{' '}
                   ({pick('Answer', 'Jawaban', '解答')}: {problem.targetValue}{' '}
                   {problem.unit})
                 </div>
-                <ol className="list-inside list-decimal space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+                <ol className="list-inside list-decimal space-y-1.5 text-sm text-[var(--md-on-surface)]">
                   {problem.solutionSteps.map((step) => (
                     <li key={step}>{step}</li>
                   ))}

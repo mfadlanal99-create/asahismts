@@ -64,18 +64,18 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
 
   // Theme palette
   const palette = {
-    bg: isDark ? '#0f172a' : '#f8fafc',
-    panel: isDark ? '#1e293b' : '#ffffff',
-    stroke: isDark ? '#475569' : '#64748b',
+    bg: 'var(--md-surface-container-low)',
+    panel: 'var(--md-surface-container)',
+    stroke: 'var(--md-outline-variant)',
     pipeFill: isDark ? '#1e293b' : '#e2e8f0',
     pipeStroke: isDark ? '#64748b' : '#475569',
-    text: isDark ? '#e2e8f0' : '#0f172a',
-    muted: isDark ? '#94a3b8' : '#475569',
+    text: 'var(--md-on-surface)',
+    muted: 'var(--md-on-surface-variant)',
     casing: isDark ? '#334155' : '#cbd5e1',
     casingStroke: isDark ? '#94a3b8' : '#334155',
-    impeller: isDark ? '#22d3ee' : '#0891b2',
-    gaugeFace: isDark ? '#0f172a' : '#ffffff',
-    gaugeRing: isDark ? '#64748b' : '#475569',
+    impeller: 'var(--md-primary)',
+    gaugeFace: 'var(--md-surface-container-lowest)',
+    gaugeRing: 'var(--md-outline)',
     hatch: isDark ? 'rgba(148,163,184,0.22)' : 'rgba(51,65,85,0.18)',
   };
 
@@ -163,7 +163,7 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
   return (
     <svg
       viewBox="0 0 620 290"
-      className="w-full h-auto rounded-xl border border-slate-200 dark:border-slate-800"
+      className="h-auto w-full rounded-[20px] border border-[var(--md-outline-variant)]/60"
       style={{ background: palette.bg }}
       role="img"
       aria-label="Centrifugal pump test rig CAD diagram"
@@ -327,10 +327,10 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
           strokeWidth="1"
           opacity="0.65"
         />
-        <text x="82" y="42" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={palette.text}>
+        <text x="82" y="42" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={palette.text} fontFamily="var(--font-sans)">
           Suction Tank
         </text>
-        <text x="82" y="240" textAnchor="middle" fontSize="10" fontWeight="600" fill={palette.muted}>
+        <text x="82" y="240" textAnchor="middle" fontSize="10" fontWeight="600" fill={palette.muted} fontFamily="var(--font-mono)">
           Hs = {params.suctionHead >= 0 ? '+' : ''}
           {params.suctionHead.toFixed(1)} m · {params.fluidTempC}°C
         </text>
@@ -379,7 +379,7 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
           ))}
         {/* Discharge arrow */}
         <polygon points="580,60 568,53 568,67" fill={op.flowM3h > 0.5 ? fluidLineColor : palette.muted} />
-        <text x="540" y="39" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={palette.text}>
+        <text x="540" y="39" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={palette.text} fontFamily="var(--font-mono)">
           Q = {op.flowM3h.toFixed(1)} m³/h
         </text>
       </g>
@@ -395,7 +395,7 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
         {/* Cutaway gate discs showing exact opening */}
         <rect x="-4" y={-9} width="8" height={Math.max(1, 9 - valveGap / 2)} fill="#f59e0b" />
         <rect x="-4" y={valveGap / 2} width="8" height={Math.max(1, 9 - valveGap / 2)} fill="#f59e0b" />
-        <text x="0" y="29" textAnchor="middle" fontSize="10" fontWeight="600" fill={palette.text}>
+        <text x="0" y="29" textAnchor="middle" fontSize="10" fontWeight="600" fill={palette.text} fontFamily="var(--font-mono)">
           Valve {params.valveOpening}%
         </text>
       </g>
@@ -497,22 +497,22 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
         <rect x="460" y="185" width="16" height="33" fill={palette.casing} stroke={palette.casingStroke} strokeWidth="1.4" />
 
         {/* Motor RPM & Power Badge */}
-        <rect x="405" y="144" width="70" height="32" rx="4" fill={palette.panel} opacity="0.9" />
-        <text x="440" y="158" textAnchor="middle" fontSize="10" fontWeight="700" fill={palette.text}>
+        <rect x="405" y="144" width="70" height="32" rx="8" fill={palette.panel} stroke={palette.stroke} strokeWidth="0.9" opacity="0.96" />
+        <text x="440" y="158" textAnchor="middle" fontSize="10" fontWeight="700" fill={palette.text} fontFamily="var(--font-mono)">
           {params.rpm} RPM
         </text>
-        <text x="440" y="171" textAnchor="middle" fontSize="9.5" fontWeight="600" fill={palette.muted}>
+        <text x="440" y="171" textAnchor="middle" fontSize="9.5" fontWeight="600" fill={palette.muted} fontFamily="var(--font-mono)">
           {op.shaftPowerKw.toFixed(1)} kW
         </text>
 
         {(params.parallelPumps || params.impellerTrimPct < 100) && (
-          <text x="440" y="117" textAnchor="middle" fontSize="9" fontWeight="700" fill={palette.impeller}>
+          <text x="440" y="117" textAnchor="middle" fontSize="9" fontWeight="700" fill={palette.impeller} fontFamily="var(--font-mono)">
             {params.parallelPumps ? '2× PARALLEL' : ''}
             {params.parallelPumps && params.impellerTrimPct < 100 ? ' · ' : ''}
             {params.impellerTrimPct < 100 ? `Trim ${params.impellerTrimPct}%` : ''}
           </text>
         )}
-        <text x="340" y="190" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={sealColor}>
+        <text x="340" y="190" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={sealColor} fontFamily="var(--font-mono)">
           Seal: {op.sealRisk.toUpperCase()}
         </text>
       </g>
@@ -534,14 +534,14 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
           />
         ))}
         <g transform={`rotate(${psAngle})`}>
-          <line x1="0" y1="4" x2="0" y2="-16" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" />
+          <line x1="0" y1="4" x2="0" y2="-16" stroke="var(--md-primary)" strokeWidth="2" strokeLinecap="round" />
         </g>
         <circle cx="0" cy="0" r="3" fill={palette.text} />
-        <text x="0" y="-28" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={palette.muted}>
+        <text x="0" y="-28" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={palette.muted} fontFamily="var(--font-sans)">
           Ps (Suction)
         </text>
-        <rect x="-26" y="25" width="52" height="14" rx="4" fill={palette.panel} stroke={palette.stroke} strokeWidth="1" />
-        <text x="0" y="35" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={palette.text}>
+        <rect x="-26" y="25" width="52" height="15" rx="6" fill={palette.panel} stroke={palette.stroke} strokeWidth="1" />
+        <text x="0" y="35.5" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={palette.text} fontFamily="var(--font-mono)">
           {op.suctionPressureKpa.toFixed(0)} kPa
         </text>
       </g>
@@ -566,11 +566,11 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
           <line x1="0" y1="4" x2="0" y2="-16" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
         </g>
         <circle cx="0" cy="0" r="3" fill={palette.text} />
-        <text x="0" y="-28" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={palette.muted}>
+        <text x="0" y="-28" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={palette.muted} fontFamily="var(--font-sans)">
           Pd (Disch)
         </text>
-        <rect x="-28" y="25" width="56" height="14" rx="4" fill={palette.panel} stroke={palette.stroke} strokeWidth="1" />
-        <text x="0" y="35" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={palette.text}>
+        <rect x="-28" y="25" width="56" height="15" rx="6" fill={palette.panel} stroke={palette.stroke} strokeWidth="1" />
+        <text x="0" y="35.5" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={palette.text} fontFamily="var(--font-mono)">
           {op.dischargePressureKpa.toFixed(0)} kPa
         </text>
       </g>
@@ -611,6 +611,7 @@ export function PumpRigSvg({ params, op }: PumpRigSvgProps) {
           textAnchor="middle"
           fontSize="10.5"
           fontWeight="700"
+          fontFamily="var(--font-sans)"
           fill={
             op.condition === 'optimal'
               ? isDark

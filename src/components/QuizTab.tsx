@@ -47,7 +47,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
 
   if (questions.length === 0) {
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-xs dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+      <div className="glass-panel rounded-[28px] p-8 text-center text-[var(--md-on-surface-variant)]">
         Quiz questions for this simulator are coming soon.
       </div>
     );
@@ -86,14 +86,14 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
 
   return (
     <div className="space-y-5">
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl px-5 py-3.5 shadow-sm">
-        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-300">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-4">
+        <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--md-on-surface-variant)]">
           <div className="flex items-center gap-2">
-            <Award className="h-4 w-4 text-[#001F6B] dark:text-[#60A5FA]" />
+            <Award className="h-4 w-4 text-[var(--md-primary)]" />
             {submitted ? (
               <span>
                 {pick('Score', 'Skor', 'スコア')}:{' '}
-                <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
                   {correctCount} / {questions.length}
                 </span>{' '}
                 ({currentPct}%)
@@ -101,7 +101,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
             ) : (
               <span>
                 {pick('Answered', 'Dijawab', '回答済み')}{' '}
-                <span className="font-mono font-semibold text-[#001F6B] dark:text-[#60A5FA]">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {answeredCount} / {questions.length}
                 </span>
               </span>
@@ -109,13 +109,13 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
           </div>
 
           {bestPct !== null && (
-            <span className="glass-pill rounded-full px-2.5 py-0.5 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+            <span className="glass-pill rounded-full px-3 py-1 font-mono text-[11px] font-semibold">
               {pick('Best', 'Terbaik', '最高')}: {bestPct}%
             </span>
           )}
 
           {(isMastered || (bestPct !== null && bestPct >= 80)) && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-emerald-300/60 bg-emerald-50/80 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 backdrop-blur-sm dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300">
+            <span className="inline-flex items-center gap-1 rounded-full bg-[var(--md-tertiary-container)] px-3 py-1 text-[11px] font-bold text-[var(--md-on-tertiary-container)]">
               <BadgeCheck className="h-3.5 w-3.5" />
               {pick('Mastered', 'Terkompetensi', '習得済み')} (&ge;80%)
             </span>
@@ -123,12 +123,12 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <label className="glass-pill inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-600 select-none dark:text-slate-300">
+          <label className="glass-pill inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold select-none">
             <input
               type="checkbox"
               checked={shuffleOnRetake}
               onChange={(e) => setShuffleOnRetake(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-slate-300 text-[#001F6B]"
+              className="h-3.5 w-3.5 rounded"
             />
             <Shuffle className="h-3 w-3" />
             {pick('Shuffle on Retake', 'Acak Saat Ulang', '再挑戦時にシャッフル')}
@@ -139,7 +139,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
               type="button"
               disabled={answeredCount === 0}
               onClick={handleSubmit}
-              className="rounded-lg bg-[#001F6B] px-4 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#002D9C] disabled:cursor-not-allowed disabled:opacity-40 dark:bg-[#002D9C] dark:text-white dark:hover:bg-[#3B82F6]"
+              className="m3-btn-filled px-4 py-2 text-xs font-bold disabled:cursor-not-allowed disabled:opacity-40"
             >
               {pick('Submit Quiz', 'Kirim Kuis', 'クイズを提出')}
             </button>
@@ -147,7 +147,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
             <button
               type="button"
               onClick={handleReset}
-              className="glass-pill inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-white dark:text-slate-300 dark:hover:bg-slate-800"
+              className="m3-btn-tonal inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               {pick('Retake Quiz', 'Ulangi Kuis', '再挑戦')}
@@ -163,13 +163,13 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
         return (
           <div
             key={q.id}
-            className="glass-card flex h-full flex-col rounded-2xl p-6 shadow-sm"
+            className="glass-card flex h-full flex-col rounded-[28px] p-6"
           >
-            <div className="mb-4 flex items-start gap-2.5">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#001F6B]/8 font-mono text-xs font-bold text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA]">
+            <div className="mb-4 flex items-start gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[var(--md-primary-container)] font-mono text-xs font-bold text-[var(--md-on-primary-container)]">
                 Q{qIdx + 1}
               </span>
-              <h3 className="text-sm font-medium leading-relaxed text-slate-900 dark:text-slate-100">
+              <h3 className="text-sm font-semibold leading-relaxed text-[var(--md-on-surface)]">
                 {q.question}
               </h3>
             </div>
@@ -180,17 +180,17 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
                 const isCorrect = optIdx === q.correctIndex;
 
                 let optionStyle =
-                  'border-white/60 bg-white/40 text-slate-700 hover:border-slate-300 hover:bg-white/70 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-300 dark:hover:border-white/20 dark:hover:bg-slate-900/60';
+                  'border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]';
 
                 if (!submitted && isSelected) {
                   optionStyle =
-                    'border-[#001F6B]/40 bg-[#001F6B]/8 text-[#001F6B] font-medium dark:border-[#60A5FA]/40 dark:bg-[#3B82F6]/15 dark:text-white';
+                    'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] font-semibold';
                 } else if (submitted && isCorrect) {
                   optionStyle =
-                    'border-emerald-400/80 bg-emerald-50/80 text-emerald-900 font-medium backdrop-blur-sm dark:border-emerald-500/50 dark:bg-emerald-500/20 dark:text-emerald-200';
+                    'border-emerald-400/80 bg-emerald-50/80 text-emerald-900 font-semibold dark:border-emerald-500/50 dark:bg-emerald-500/20 dark:text-emerald-200';
                 } else if (submitted && isSelected && !isCorrect) {
                   optionStyle =
-                    'border-rose-400/80 bg-rose-50/80 text-rose-900 backdrop-blur-sm dark:border-rose-500/50 dark:bg-rose-500/20 dark:text-rose-200';
+                    'border-rose-400/80 bg-rose-50/80 text-rose-900 dark:border-rose-500/50 dark:bg-rose-500/20 dark:text-rose-200';
                 }
 
                 return (
@@ -201,10 +201,10 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
                     onClick={() =>
                       setSelected((prev) => ({ ...prev, [q.id]: optIdx }))
                     }
-                    className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-left text-sm transition backdrop-blur-md ${optionStyle}`}
+                    className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-left text-sm transition ${optionStyle}`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-current/25 font-mono text-xs">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current/25 font-mono text-xs font-bold">
                         {String.fromCharCode(65 + optIdx)}
                       </span>
                       <span>{option}</span>
@@ -222,8 +222,8 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
 
             {submitted && (
               <div className="mt-auto pt-4">
-                <div className="rounded-xl border border-white/60 bg-white/50 px-4 py-3 text-xs leading-relaxed text-slate-700 backdrop-blur-md dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-300">
-                  <span className="font-semibold text-[#001F6B] dark:text-[#60A5FA]">
+                <div className="rounded-2xl border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-4 py-3 text-xs leading-relaxed text-[var(--md-on-surface-variant)]">
+                  <span className="font-bold text-[var(--md-primary)]">
                     {pick('Explanation', 'Penjelasan', '解説')}:{' '}
                   </span>
                   {q.explanation}

@@ -1,5 +1,4 @@
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
-import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 import type {
   ClampFaultScenario,
@@ -40,15 +39,13 @@ export function ClampMeterSvg({
   inrushEnabled,
   snapshot,
 }: ClampMeterSvgProps) {
-  const { theme } = useTheme();
   const { pick } = useLanguage();
-  const isDark = theme === 'dark';
 
-  const bgCard = isDark ? '#0B1328' : '#F8FAFC';
-  const panelBg = isDark ? '#111C38' : '#FFFFFF';
-  const borderStroke = isDark ? '#25365C' : '#CBD5E1';
-  const textMain = isDark ? '#E2E8F0' : '#1E293B';
-  const textMuted = isDark ? '#94A3B8' : '#64748B';
+  const bgCard = 'var(--md-surface-container-lowest)';
+  const panelBg = 'var(--md-surface-container)';
+  const borderStroke = 'var(--md-outline-variant)';
+  const textMain = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
 
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -114,7 +111,7 @@ export function ClampMeterSvg({
   const clampOffsetY = clampY - 105; // Base jaw center at y=105
 
   return (
-    <div className="glass-panel rounded-2xl p-4 shadow-xs">
+    <div className="glass-panel rounded-[28px] p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 680 440"
@@ -178,7 +175,7 @@ export function ClampMeterSvg({
         >
           MCC 400V
         </text>
-        <rect x="34" y="100" width="60" height="220" rx="6" fill={isDark ? '#1E293B' : '#E2E8F0'} />
+        <rect x="34" y="100" width="60" height="220" rx="6" fill="var(--md-surface-container-high)" />
         <text
           x="64"
           y="214"
@@ -300,17 +297,17 @@ export function ClampMeterSvg({
                 y={y - 24}
                 width="104"
                 height="18"
-                rx="4"
-                fill={isSelected ? '#0284C7' : isDark ? '#1E293B' : '#E2E8F0'}
+                rx="6"
+                fill={isSelected ? 'var(--md-primary)' : 'var(--md-surface-container-high)'}
               />
               <text
                 x="168"
                 y={y - 11.5}
                 textAnchor="middle"
-                fill={isSelected ? '#FFFFFF' : textMain}
+                fill={isSelected ? 'var(--md-on-primary)' : textMain}
                 fontSize="9.5"
                 fontWeight="700"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 {c.label}: {amps.toFixed(1)} A
               </text>
@@ -368,7 +365,7 @@ export function ClampMeterSvg({
             fill="#0F172A"
             fontSize="7.5"
             fontWeight="800"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {inrushEnabled ? 'INRUSH PK' : 'TRUE RMS'}
           </text>
@@ -379,7 +376,7 @@ export function ClampMeterSvg({
             fill="#0F172A"
             fontSize="20"
             fontWeight="800"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {snapshot.measuredAmps.toFixed(1)}
           </text>
@@ -390,16 +387,16 @@ export function ClampMeterSvg({
             fill="#0369A1"
             fontSize="9"
             fontWeight="700"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             A AC ({conductor})
           </text>
 
           {/* Power Analyzer Mini Metrics */}
-          <text x="40" y="222" fill="#38BDF8" fontSize="8.5" fontWeight="700" fontFamily="monospace">
+          <text x="40" y="222" fill="#38BDF8" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)">
             {snapshot.activePowerKw.toFixed(1)} kW
           </text>
-          <text x="40" y="236" fill="#94A3B8" fontSize="8.5" fontWeight="700" fontFamily="monospace">
+          <text x="40" y="236" fill="#94A3B8" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)">
             PF {snapshot.powerFactor.toFixed(2)}
           </text>
           <text
@@ -414,7 +411,7 @@ export function ClampMeterSvg({
             }
             fontSize="8.5"
             fontWeight="700"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             UNB {snapshot.currentUnbalancePct.toFixed(1)}%
           </text>
@@ -430,36 +427,36 @@ export function ClampMeterSvg({
           y="376"
           width="636"
           height="46"
-          rx="10"
+          rx="12"
           fill={panelBg}
           stroke={borderStroke}
-          strokeWidth="1.5"
+          strokeWidth="1.4"
         />
         <text x="40" y="396" fill={textMuted} fontSize="9" fontWeight="700">
           LINE VOLTAGE
         </text>
-        <text x="40" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="monospace">
+        <text x="40" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
           {snapshot.lineVoltageV.toFixed(0)} V
         </text>
 
         <text x="165" y="396" fill={textMuted} fontSize="9" fontWeight="700">
           ACTIVE POWER
         </text>
-        <text x="165" y="412" fill="#0284C7" fontSize="13" fontWeight="800" fontFamily="monospace">
+        <text x="165" y="412" fill="var(--md-primary)" fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
           {snapshot.activePowerKw.toFixed(2)} kW
         </text>
 
         <text x="295" y="396" fill={textMuted} fontSize="9" fontWeight="700">
           APPARENT POWER
         </text>
-        <text x="295" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="monospace">
+        <text x="295" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
           {snapshot.apparentPowerKva.toFixed(2)} kVA
         </text>
 
         <text x="430" y="396" fill={textMuted} fontSize="9" fontWeight="700">
           POWER FACTOR
         </text>
-        <text x="430" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="monospace">
+        <text x="430" y="412" fill={textMain} fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
           {snapshot.powerFactor.toFixed(2)}
         </text>
 
@@ -478,7 +475,7 @@ export function ClampMeterSvg({
           }
           fontSize="13"
           fontWeight="800"
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {snapshot.currentUnbalancePct.toFixed(1)}%
         </text>

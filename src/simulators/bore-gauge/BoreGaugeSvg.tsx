@@ -53,14 +53,14 @@ export function BoreGaugeSvg({
   const { pick } = useLanguage();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD engineering palette
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
-  const panelFill = isDark ? '#1e293b' : '#ffffff';
-  const panelStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textSecondary = isDark ? '#cbd5e1' : '#334155';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  // Theme-aware CAD engineering palette harmonized with Material You tokens
+  const bgFill = 'var(--md-surface-container-low)';
+  const gridStroke = 'var(--md-outline-variant)';
+  const panelFill = 'var(--md-surface-container)';
+  const panelStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textSecondary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const blockCastFill = isDark ? '#1e293b' : '#cbd5e1';
   const blockCastStroke = isDark ? '#475569' : '#64748b';
   const hatchStroke = isDark ? '#334155' : '#94a3b8';
@@ -153,11 +153,11 @@ export function BoreGaugeSvg({
   const stemHeightPx = Math.max(54, (probeY - 76) / cosRock);
 
   return (
-    <div className="glass-panel overflow-hidden rounded-2xl shadow-xs">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
       {/* CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Cylinder Block Cutaway, Cross-Section & 0.01 mm Dial Bore Gauge',
               'Penampang Blok Silinder, Lintang & Dial Bore Gauge 0.01 mm',
@@ -193,14 +193,14 @@ export function BoreGaugeSvg({
         </div>
 
         <div className="flex flex-wrap items-center gap-3 text-xs">
-          <div className="text-slate-500 dark:text-slate-400">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('Depth:', 'Kedalaman:', '深さ:')}{' '}
-            <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+            <span className="font-mono font-semibold text-[var(--md-on-surface)]">
               {activePlaneInfo.depthMm} mm
             </span>
             {' · '}
             {pick('Span:', 'Bentang:', '測定値:')}{' '}
-            <span className="font-mono font-semibold text-sky-600 dark:text-sky-400">
+            <span className="font-mono font-bold text-[var(--md-primary)]">
               {hideExactValues
                 ? `Δ ${rocked.dialDeviationMm >= 0 ? '+' : ''}${rocked.dialDeviationMm.toFixed(3)} mm`
                 : `Ø ${rocked.apparentSpanMm.toFixed(3)} mm`}
@@ -210,7 +210,7 @@ export function BoreGaugeSvg({
           <button
             type="button"
             onClick={onRecordCurrentPoint}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 text-xs font-semibold shadow-xs transition-colors"
+            className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
           >
             <PlusCircle className="h-3.5 w-3.5" />
             {pick(
@@ -336,7 +336,7 @@ export function BoreGaugeSvg({
           width="980"
           height="500"
           fill="url(#boreCadGrid)"
-          opacity="0.7"
+          opacity={isDark ? '0.28' : '0.45'}
         />
 
         {/* ===================================================================
@@ -349,11 +349,11 @@ export function BoreGaugeSvg({
             y="10"
             width="378"
             height="38"
-            rx="7"
+            rx="12"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
-            opacity="0.92"
+            opacity="0.96"
           />
           <text
             x="205"
@@ -361,6 +361,7 @@ export function BoreGaugeSvg({
             textAnchor="middle"
             fontSize="11"
             fontWeight="bold"
+            fontFamily="var(--font-sans)"
             fill={textPrimary}
           >
             {pick(
@@ -374,6 +375,7 @@ export function BoreGaugeSvg({
             y="40"
             textAnchor="middle"
             fontSize="9.5"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -654,7 +656,7 @@ export function BoreGaugeSvg({
                   y1={p.y}
                   x2="324"
                   y2={p.y}
-                  stroke={active ? '#0ea5e9' : isDark ? '#334155' : '#cbd5e1'}
+                  stroke={active ? 'var(--md-primary)' : 'var(--md-outline-variant)'}
                   strokeWidth={active ? '1.8' : '1'}
                   strokeDasharray={active ? 'none' : '3 3'}
                 />
@@ -663,9 +665,9 @@ export function BoreGaugeSvg({
                   y={p.y - 11}
                   width="52"
                   height="22"
-                  rx="5"
-                  fill={active ? '#0284c7' : panelFill}
-                  stroke={active ? '#38bdf8' : panelStroke}
+                  rx="11"
+                  fill={active ? 'var(--md-primary-container)' : panelFill}
+                  stroke={active ? 'var(--md-primary)' : panelStroke}
                   strokeWidth="1.3"
                 />
                 <text
@@ -674,7 +676,8 @@ export function BoreGaugeSvg({
                   textAnchor="middle"
                   fontSize="9"
                   fontWeight="bold"
-                  fill={active ? '#ffffff' : textSecondary}
+                  fontFamily="var(--font-mono)"
+                  fill={active ? 'var(--md-on-primary-container)' : textSecondary}
                 >
                   {p.tag}
                 </text>
@@ -893,7 +896,7 @@ export function BoreGaugeSvg({
               y={badgeOffsetY}
               width="112"
               height="19"
-              rx="4"
+              rx="9.5"
               fill={panelFill}
               stroke={rocked.isAtNullPoint ? '#10b981' : '#f59e0b'}
               strokeWidth="1.4"
@@ -903,7 +906,7 @@ export function BoreGaugeSvg({
               y={badgeOffsetY + 13}
               textAnchor="middle"
               fontSize="10"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
               fontWeight="bold"
               fill={rocked.isAtNullPoint ? '#10b981' : '#f59e0b'}
             >
@@ -929,17 +932,18 @@ export function BoreGaugeSvg({
             y="456"
             width="366"
             height="24"
-            rx="6"
+            rx="12"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
-            opacity="0.9"
+            opacity="0.95"
           />
           <text
             x="205"
             y="472"
             textAnchor="middle"
             fontSize="9.5"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -971,11 +975,11 @@ export function BoreGaugeSvg({
             y="10"
             width="248"
             height="38"
-            rx="7"
+            rx="12"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
-            opacity="0.92"
+            opacity="0.96"
           />
           <text
             x="538"
@@ -983,6 +987,7 @@ export function BoreGaugeSvg({
             textAnchor="middle"
             fontSize="11"
             fontWeight="bold"
+            fontFamily="var(--font-sans)"
             fill={textPrimary}
           >
             {pick(
@@ -996,6 +1001,7 @@ export function BoreGaugeSvg({
             y="40"
             textAnchor="middle"
             fontSize="9.5"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -1097,7 +1103,7 @@ export function BoreGaugeSvg({
               y1="0"
               x2="88"
               y2="0"
-              stroke={axis === 'axisA' ? '#0ea5e9' : textMuted}
+              stroke={axis === 'axisA' ? 'var(--md-primary)' : textMuted}
               strokeWidth={axis === 'axisA' ? '2.4' : '1'}
               strokeDasharray={axis === 'axisA' ? 'none' : '3 3'}
             />
@@ -1108,7 +1114,7 @@ export function BoreGaugeSvg({
               y1="-88"
               x2="0"
               y2="88"
-              stroke={axis === 'axisB' ? '#8b5cf6' : textMuted}
+              stroke={axis === 'axisB' ? 'var(--md-primary)' : textMuted}
               strokeWidth={axis === 'axisB' ? '2.4' : '1'}
               strokeDasharray={axis === 'axisB' ? 'none' : '3 3'}
             />
@@ -1145,7 +1151,7 @@ export function BoreGaugeSvg({
                     y1="0"
                     x2={activeRadialPx - 2}
                     y2="0"
-                    stroke={axis === 'axisA' ? '#0ea5e9' : '#8b5cf6'}
+                    stroke="var(--md-primary)"
                     strokeWidth="4.5"
                   />
                   <circle
@@ -1182,9 +1188,9 @@ export function BoreGaugeSvg({
               y="286"
               width="244"
               height="28"
-              rx="6"
-              fill={axis === 'axisA' ? '#0284c7' : panelFill}
-              stroke={axis === 'axisA' ? '#38bdf8' : panelStroke}
+              rx="14"
+              fill={axis === 'axisA' ? 'var(--md-primary-container)' : panelFill}
+              stroke={axis === 'axisA' ? 'var(--md-primary)' : panelStroke}
               strokeWidth="1.3"
             />
             <text
@@ -1193,7 +1199,8 @@ export function BoreGaugeSvg({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill={axis === 'axisA' ? '#ffffff' : '#0ea5e9'}
+              fontFamily="var(--font-sans)"
+              fill={axis === 'axisA' ? 'var(--md-on-primary-container)' : textSecondary}
             >
               {pick(
                 '↔ Axis A: 0° Thrust Wall (Con-Rod Force)',
@@ -1209,9 +1216,9 @@ export function BoreGaugeSvg({
               y="322"
               width="244"
               height="28"
-              rx="6"
-              fill={axis === 'axisB' ? '#7c3aed' : panelFill}
-              stroke={axis === 'axisB' ? '#a78bfa' : panelStroke}
+              rx="14"
+              fill={axis === 'axisB' ? 'var(--md-primary-container)' : panelFill}
+              stroke={axis === 'axisB' ? 'var(--md-primary)' : panelStroke}
               strokeWidth="1.3"
             />
             <text
@@ -1220,7 +1227,8 @@ export function BoreGaugeSvg({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill={axis === 'axisB' ? '#ffffff' : '#8b5cf6'}
+              fontFamily="var(--font-sans)"
+              fill={axis === 'axisB' ? 'var(--md-on-primary-container)' : textSecondary}
             >
               {pick(
                 '↕ Axis B: 90° Wrist-Pin (Crank Parallel)',
@@ -1236,7 +1244,7 @@ export function BoreGaugeSvg({
             y="360"
             width="244"
             height="82"
-            rx="9"
+            rx="14"
             fill={panelFill}
             stroke={
               !hideExactValues && planeOvalityMm > OEM_SERVICE_LIMIT_MM + 1e-6
@@ -1251,6 +1259,7 @@ export function BoreGaugeSvg({
             textAnchor="middle"
             fontSize="9.5"
             fontWeight="bold"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -1264,11 +1273,11 @@ export function BoreGaugeSvg({
             y="404"
             textAnchor="middle"
             fontSize="13"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             fontWeight="bold"
             fill={
               hideExactValues
-                ? '#0ea5e9'
+                ? 'var(--md-primary)'
                 : planeOvalityMm > OEM_SERVICE_LIMIT_MM + 1e-6
                   ? '#ef4444'
                   : '#10b981'
@@ -1291,7 +1300,7 @@ export function BoreGaugeSvg({
             y="426"
             textAnchor="middle"
             fontSize="9"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             fill={textSecondary}
           >
             {hideExactValues
@@ -1309,17 +1318,18 @@ export function BoreGaugeSvg({
             y="456"
             width="244"
             height="24"
-            rx="6"
+            rx="12"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
-            opacity="0.9"
+            opacity="0.95"
           />
           <text
             x="538"
             y="472"
             textAnchor="middle"
             fontSize="9.5"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -1351,11 +1361,11 @@ export function BoreGaugeSvg({
             y="10"
             width="282"
             height="38"
-            rx="7"
+            rx="12"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
-            opacity="0.92"
+            opacity="0.96"
           />
           <text
             x="825"
@@ -1363,6 +1373,7 @@ export function BoreGaugeSvg({
             textAnchor="middle"
             fontSize="11"
             fontWeight="bold"
+            fontFamily="var(--font-sans)"
             fill={textPrimary}
           >
             {pick(
@@ -1376,6 +1387,7 @@ export function BoreGaugeSvg({
             y="40"
             textAnchor="middle"
             fontSize="9.5"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {pick(
@@ -1468,7 +1480,7 @@ export function BoreGaugeSvg({
                       textAnchor="middle"
                       fontSize="9.5"
                       fontWeight="bold"
-                      fontFamily="monospace"
+                      fontFamily="var(--font-mono)"
                       fill={idx === 0 ? '#10b981' : textPrimary}
                     >
                       {idx}
@@ -1484,7 +1496,7 @@ export function BoreGaugeSvg({
                 cx="0"
                 cy="0"
                 r="17"
-                fill={isDark ? '#1e293b' : '#f1f5f9'}
+                fill="var(--md-surface-container-high)"
                 stroke={panelStroke}
                 strokeWidth="1.2"
               />
@@ -1507,11 +1519,11 @@ export function BoreGaugeSvg({
                 y1="2"
                 x2={11 * Math.sin((subDialDeg * Math.PI) / 180)}
                 y2={-11 * Math.cos((subDialDeg * Math.PI) / 180)}
-                stroke="#0ea5e9"
+                stroke="var(--md-primary)"
                 strokeWidth="1.6"
                 strokeLinecap="round"
               />
-              <circle cx="0" cy="0" r="2" fill="#0ea5e9" />
+              <circle cx="0" cy="0" r="2" fill="var(--md-primary)" />
             </g>
 
             {/* Dial Face Typography (Positioned with Zero Collisions) */}
@@ -1521,6 +1533,7 @@ export function BoreGaugeSvg({
               textAnchor="middle"
               fontSize="9.5"
               fontWeight="bold"
+              fontFamily="var(--font-mono)"
               fill={textSecondary}
             >
               0.01 mm
@@ -1530,8 +1543,8 @@ export function BoreGaugeSvg({
               y="26"
               width="72"
               height="16"
-              rx="4"
-              fill={isDark ? '#1e293b' : '#f1f5f9'}
+              rx="8"
+              fill="var(--md-surface-container-high)"
               stroke={panelStroke}
               strokeWidth="0.8"
             />
@@ -1540,9 +1553,9 @@ export function BoreGaugeSvg({
               y="37"
               textAnchor="middle"
               fontSize="8"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
               fontWeight="bold"
-              fill="#0ea5e9"
+              fill="var(--md-primary)"
             >
               0 = Ø85.000
             </text>
@@ -1586,7 +1599,7 @@ export function BoreGaugeSvg({
               y="0"
               width="282"
               height="196"
-              rx="10"
+              rx="16"
               fill={panelFill}
               stroke={panelStroke}
               strokeWidth="1.5"
@@ -1597,6 +1610,7 @@ export function BoreGaugeSvg({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
+              fontFamily="var(--font-sans)"
               fill={textPrimary}
             >
               {pick(
@@ -1629,7 +1643,7 @@ export function BoreGaugeSvg({
             <path
               d="M 35,34 Q 141,138 247,34"
               fill="none"
-              stroke="#0ea5e9"
+              stroke="var(--md-primary)"
               strokeWidth="2.4"
             />
 
@@ -1654,7 +1668,7 @@ export function BoreGaugeSvg({
             })()}
 
             {/* Angle Axis Labels (Cleanly Separated at y = 108) */}
-            <text x="28" y="108" fontSize="9" fill={textMuted}>
+            <text x="28" y="108" fontSize="9" fontFamily="var(--font-mono)" fill={textMuted}>
               -8.0°
             </text>
             <text
@@ -1663,6 +1677,7 @@ export function BoreGaugeSvg({
               textAnchor="middle"
               fontSize="9"
               fontWeight="bold"
+              fontFamily="var(--font-mono)"
               fill="#10b981"
             >
               0.0° (MIN NULL)
@@ -1672,6 +1687,7 @@ export function BoreGaugeSvg({
               y="108"
               textAnchor="end"
               fontSize="9"
+              fontFamily="var(--font-mono)"
               fill={textMuted}
             >
               +8.0°
@@ -1687,7 +1703,7 @@ export function BoreGaugeSvg({
               strokeWidth="1"
             />
 
-            <text x="18" y="136" fontSize="9.5" fill={textMuted}>
+            <text x="18" y="136" fontSize="9.5" fontFamily="var(--font-sans)" fill={textMuted}>
               {pick(
                 'Comparative Dial Deviation:',
                 'Simpangan Komparatif Dial:',
@@ -1699,14 +1715,14 @@ export function BoreGaugeSvg({
               y="136"
               textAnchor="end"
               fontSize="10"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
               fontWeight="bold"
-              fill="#0ea5e9"
+              fill="var(--md-primary)"
             >
               {`${rocked.dialDeviationMm >= 0 ? '+' : ''}${rocked.dialDeviationMm.toFixed(3)} mm`}
             </text>
 
-            <text x="18" y="158" fontSize="9.5" fill={textMuted}>
+            <text x="18" y="158" fontSize="9.5" fontFamily="var(--font-sans)" fill={textMuted}>
               {pick(
                 'Cosine Tilt Error e_rock(θ):',
                 'Kesalahan Miring Kosinus:',
@@ -1718,7 +1734,7 @@ export function BoreGaugeSvg({
               y="158"
               textAnchor="end"
               fontSize="10"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
               fontWeight="bold"
               fill={rocked.cosineErrorMm > 0.005 ? '#f59e0b' : '#10b981'}
             >
@@ -1730,6 +1746,7 @@ export function BoreGaugeSvg({
               y="180"
               fontSize="9.5"
               fontWeight="bold"
+              fontFamily="var(--font-sans)"
               fill={textSecondary}
             >
               {pick(
@@ -1743,7 +1760,7 @@ export function BoreGaugeSvg({
               y="180"
               textAnchor="end"
               fontSize="10.5"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
               fontWeight="bold"
               fill={textPrimary}
             >

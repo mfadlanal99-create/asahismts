@@ -227,22 +227,22 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
   }, []);
 
   const palette = {
-    bg: isDark ? '#0f172a' : '#f8fafc',
-    grid: isDark ? '#1e293b' : '#e2e8f0',
+    bg: 'var(--md-surface-container-low)',
+    grid: 'var(--md-outline-variant)',
     castBody: isDark ? '#1e293b' : '#cbd5e1',
     castBonnet: isDark ? '#283548' : '#dbe3ec',
     castStroke: isDark ? '#64748b' : '#475569',
-    cavity: isDark ? '#090f1d' : '#ffffff',
+    cavity: 'var(--md-surface-container-lowest)',
     flange: isDark ? '#334155' : '#cbd5e1',
     gland: isDark ? '#475569' : '#94a3b8',
     stemDark: isDark ? '#64748b' : '#64748b',
     stemMid: isDark ? '#cbd5e1' : '#e2e8f0',
     hatchBody: isDark ? '#475569' : '#94a3b8',
     hatchBonnet: isDark ? '#64748b' : '#64748b',
-    text: isDark ? '#e2e8f0' : '#0f172a',
-    muted: isDark ? '#94a3b8' : '#475569',
-    panel: isDark ? '#1e293b' : '#ffffff',
-    panelBorder: isDark ? '#334155' : '#cbd5e1',
+    text: 'var(--md-on-surface)',
+    muted: 'var(--md-on-surface-variant)',
+    panel: 'var(--md-surface-container)',
+    panelBorder: 'var(--md-outline-variant)',
   };
 
   const fluidColor =
@@ -317,18 +317,18 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
         : '#78716c';
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+    <div className="glass-panel w-full overflow-hidden rounded-[28px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-5 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             ISO 128 Valve &amp; Stuffing Box Cutaway
           </span>
-          <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+          <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-secondary-container)]">
             {params.valveType.toUpperCase()} • {params.openingPct}% OPEN
           </span>
         </div>
         <div className="flex items-center gap-3 text-[11px] font-medium">
-          <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+          <span className="flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
             <span
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: fluidColor }}
@@ -340,12 +340,12 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
                 : 'Thermal Oil'}
           </span>
           {isLeaking && (
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+            <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 font-semibold text-amber-700 dark:text-amber-300">
               Fugitive Leak
             </span>
           )}
           {isBinding && (
-            <span className="rounded-full bg-red-100 px-2 py-0.5 text-red-800 dark:bg-red-500/20 dark:text-red-300">
+            <span className="rounded-full bg-rose-500/15 px-2.5 py-0.5 font-semibold text-rose-700 dark:text-rose-300">
               Stem Binding
             </span>
           )}
@@ -930,7 +930,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               y="322"
               width="108"
               height="42"
-              rx="6"
+              rx="10"
               fill={palette.panel}
               stroke="#ef4444"
               strokeWidth="1.8"
@@ -942,6 +942,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               fill="#ef4444"
               fontSize="10"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               {params.fluidService === 'steam'
                 ? 'TRAP BLOWING!'
@@ -953,6 +954,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               textAnchor="middle"
               fill={palette.muted}
               fontSize="9.5"
+              fontFamily="var(--font-mono)"
             >
               {telemetry.seatLeakRateLh.toFixed(1)} L/h bypass
             </text>
@@ -986,7 +988,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               y="134"
               width="176"
               height="22"
-              rx="4"
+              rx="8"
               fill={palette.panel}
               stroke="#ef4444"
               strokeWidth="1.2"
@@ -998,6 +1000,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               fill="#ef4444"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               STEM BINDING / SCORING
             </text>
@@ -1041,7 +1044,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               y="92"
               width="186"
               height="22"
-              rx="4"
+              rx="8"
               fill={palette.panel}
               stroke="#f59e0b"
               strokeWidth="1.2"
@@ -1053,6 +1056,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
               fill="#f59e0b"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               FUGITIVE LEAK ({telemetry.fugitivePpm} ppm)
             </text>
@@ -1060,7 +1064,7 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
         )}
 
         {/* CAD Callout Labels */}
-        <g fontSize="10.5" fill={palette.muted} fontWeight="500">
+        <g fontSize="10.5" fill={palette.muted} fontWeight="500" fontFamily="var(--font-sans)">
           <text x="295" y="138" textAnchor="end">
             Gland Follower
           </text>
@@ -1085,10 +1089,10 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
             strokeWidth="1"
             strokeDasharray="2 2"
           />
-          <text x="64" y="224" fill={palette.text} fontWeight="600">
+          <text x="64" y="224" fill={palette.text} fontWeight="600" fontFamily="var(--font-mono)">
             INLET ({params.linePressureBar} bar)
           </text>
-          <text x="614" y="224" fill={palette.text} fontWeight="600">
+          <text x="614" y="224" fill={palette.text} fontWeight="600" fontFamily="var(--font-mono)">
             OUTLET ({(params.linePressureBar - telemetry.deltaPBar).toFixed(1)} bar)
           </text>
         </g>
@@ -1099,19 +1103,19 @@ export function ValveCutawaySvg({ params, telemetry }: ValveCutawaySvgProps) {
           y="362"
           width="542"
           height="34"
-          rx="8"
+          rx="12"
           fill={palette.panel}
           stroke={palette.panelBorder}
           strokeWidth="1.2"
         />
-        <text x="38" y="383" fontSize="11" fontWeight="600" fill={palette.text}>
+        <text x="38" y="383" fontSize="11" fontWeight="600" fill={palette.text} fontFamily="var(--font-mono)">
           Cv: {telemetry.effectiveCv.toFixed(1)} / {telemetry.cvMax}
         </text>
-        <text x="168" y="383" fontSize="11" fontWeight="600" fill={palette.text}>
+        <text x="168" y="383" fontSize="11" fontWeight="600" fill={palette.text} fontFamily="var(--font-mono)">
           Stress: {telemetry.packingStressMpa.toFixed(1)} MPa (Req:{' '}
           {telemetry.requiredStressMpa.toFixed(1)})
         </text>
-        <text x="428" y="383" fontSize="11" fontWeight="600" fill={palette.text}>
+        <text x="428" y="383" fontSize="11" fontWeight="600" fill={palette.text} fontFamily="var(--font-mono)">
           Friction: {telemetry.stemFrictionN.toFixed(0)} N
         </text>
       </svg>

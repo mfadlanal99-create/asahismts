@@ -119,10 +119,10 @@ export function ScrewConveyorSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Action & Fault Injection Bar */}
-      <div className="sim-panel flex flex-wrap items-center justify-between gap-3 p-3.5">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="sim-header mr-1 flex items-center gap-1.5">
-            <ShieldAlert className="h-3.5 w-3.5 text-emerald-500" />
+          <span className="mr-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+            <ShieldAlert className="h-3.5 w-3.5 text-[var(--md-primary)]" />
             {pick('Fault Mode:', 'Mode Gangguan:', '故障モード:')}
           </span>
           {(
@@ -133,7 +133,7 @@ export function ScrewConveyorSimulator() {
                 idLabel: 'Operasi Normal',
                 ja: '正常運転',
                 activeClass:
-                  'bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-500',
+                  'bg-emerald-600 text-white shadow-xs ring-1 ring-emerald-500',
               },
               {
                 id: 'hanger-wear',
@@ -141,7 +141,7 @@ export function ScrewConveyorSimulator() {
                 idLabel: 'Bantalan Gantung Panas',
                 ja: 'ハンガー軸受過熱',
                 activeClass:
-                  'bg-rose-600 text-white shadow-sm ring-1 ring-rose-500',
+                  'bg-rose-600 text-white shadow-xs ring-1 ring-rose-500',
               },
               {
                 id: 'flight-abrasion',
@@ -149,7 +149,7 @@ export function ScrewConveyorSimulator() {
                 idLabel: 'Keausan Daun / Arus Balik',
                 ja: '羽根摩耗・逆流',
                 activeClass:
-                  'bg-amber-600 text-white shadow-sm ring-1 ring-amber-500',
+                  'bg-amber-600 text-white shadow-xs ring-1 ring-amber-500',
               },
               {
                 id: 'overfill-jam',
@@ -157,7 +157,7 @@ export function ScrewConveyorSimulator() {
                 idLabel: 'Penuh Berlebih / Macet',
                 ja: '過充填・トルク急増',
                 activeClass:
-                  'bg-red-600 text-white shadow-sm ring-1 ring-red-500',
+                  'bg-red-600 text-white shadow-xs ring-1 ring-red-500',
               },
             ] as const
           ).map((f) => {
@@ -167,10 +167,10 @@ export function ScrewConveyorSimulator() {
                 key={f.id}
                 type="button"
                 onClick={() => setFault(f.id)}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                   active
                     ? f.activeClass
-                    : 'bg-white/70 text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-slate-700'
+                    : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-highest)]'
                 }`}
               >
                 {pick(f.en, f.idLabel, f.ja)}
@@ -184,7 +184,7 @@ export function ScrewConveyorSimulator() {
             <button
               type="button"
               onClick={() => setFault('normal')}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500"
+              className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
             >
               <Wrench className="h-3.5 w-3.5" />
               {pick('Clear Fault', 'Pulihkan', '故障解除')}
@@ -193,16 +193,16 @@ export function ScrewConveyorSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
           >
             {isPlaying ? (
               <>
-                <Pause className="h-3.5 w-3.5 text-amber-500" />
+                <Pause className="h-3.5 w-3.5" />
                 {pick('Pause', 'Jeda', '一時停止')}
               </>
             ) : (
               <>
-                <Play className="h-3.5 w-3.5 text-emerald-500" />
+                <Play className="h-3.5 w-3.5" />
                 {pick('Run', 'Jalankan', '運転')}
               </>
             )}
@@ -210,7 +210,7 @@ export function ScrewConveyorSimulator() {
           <button
             type="button"
             onClick={() => setInputs(INITIAL_INPUTS)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -219,14 +219,14 @@ export function ScrewConveyorSimulator() {
       </div>
 
       {/* Main 12-Column Aligned Grid */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 items-stretch">
+      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12">
         {/* Left Column: Animated SVG + Live Telemetry KPIs + Diagnostic Summary */}
         <div className="flex flex-col gap-4 lg:col-span-8">
-          <div className="sim-panel p-3.5 space-y-3">
+          <div className="glass-panel space-y-3.5 rounded-[28px] p-4">
             {/* Material Selector Strip */}
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="sim-header mr-1">
+                <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Bulk Material:', 'Material Curah:', '搬送物:')}
                 </span>
                 {MATERIAL_IDS.map((mId) => {
@@ -237,10 +237,10 @@ export function ScrewConveyorSimulator() {
                       key={mId}
                       type="button"
                       onClick={() => selectMaterial(mId)}
-                      className={`rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                      className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
                         active
-                          ? 'bg-emerald-600 text-white shadow-sm'
-                          : 'bg-white/75 text-slate-700 ring-1 ring-slate-200 hover:bg-emerald-50 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700'
+                          ? 'bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)] shadow-xs'
+                          : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {pick(m.nameEn, m.nameId, m.nameJa)}
@@ -248,7 +248,7 @@ export function ScrewConveyorSimulator() {
                   );
                 })}
               </div>
-              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-xs font-medium text-[var(--md-on-surface-variant)]">
                 ρ = {metrics.bulkDensityTM3.toFixed(2)} t/m³ · Fₘ ={' '}
                 {inputs.materialFactorFm.toFixed(1)} · Fᵦ ={' '}
                 {inputs.hangerBearingFactorFb.toFixed(1)}
@@ -259,100 +259,100 @@ export function ScrewConveyorSimulator() {
 
             {/* 6 Live Telemetry KPIs */}
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Mass / Vol Flow', 'Kapasitas Aliran', '質量・体積流量')}</span>
-                  <Cog className="h-3.5 w-3.5 text-emerald-500" />
+                  <Cog className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.massCapacityTh.toFixed(2)}{' '}
                   <span className="text-xs font-semibold">t/h</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {metrics.volumetricCapacityM3h.toFixed(1)} m³/h · Kθ=
                   {metrics.inclinationFactor.toFixed(2)}
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Torque / Axial Speed', 'Torsi / Laju Aksial', 'トルク・軸方向速度')}</span>
-                  <Gauge className="h-3.5 w-3.5 text-sky-500" />
+                  <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
                 <div
-                  className={`mt-1 text-lg font-extrabold ${
+                  className={`mt-1 font-mono text-lg font-extrabold ${
                     inputs.faultMode === 'overfill-jam'
                       ? 'text-rose-600 dark:text-rose-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {metrics.driveTorqueNm.toFixed(0)}{' '}
                   <span className="text-xs font-semibold">N·m</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   v = {metrics.axialSpeedMMin.toFixed(1)} m/min (
                   {metrics.axialVelocityMs.toFixed(2)} m/s)
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Drive Power / Current', 'Daya / Arus Motor', '所要動力・電流')}</span>
-                  <Zap className="h-3.5 w-3.5 text-amber-500" />
+                  <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.drivePowerKw.toFixed(2)}{' '}
                   <span className="text-xs font-semibold">kW</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {metrics.motorCurrentA.toFixed(1)} A (400V) ·{' '}
                   {metrics.motorLoadPct.toFixed(0)}%
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Axial Thrust / Deflect', 'Gaya Aksial / Lendutan', 'スラスト荷重・たわみ')}</span>
-                  <ArrowDownUp className="h-3.5 w-3.5 text-indigo-500" />
+                  <ArrowDownUp className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.axialThrustKn.toFixed(2)}{' '}
                   <span className="text-xs font-semibold">kN</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   δ = {metrics.shaftDeflectionMm.toFixed(2)} mm ·{' '}
                   {pick('Res:', 'Tinggal:', '滞留:')} {metrics.residenceTimeS.toFixed(1)}s
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Hanger Bearings', 'Bantalan Gantung', 'ハンガー軸受')}</span>
-                  <Thermometer className="h-3.5 w-3.5 text-rose-500" />
+                  <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
                 <div
-                  className={`mt-1 text-lg font-extrabold ${
+                  className={`mt-1 font-mono text-lg font-extrabold ${
                     metrics.hangerBearingTempC > 95
                       ? 'text-rose-600 dark:text-rose-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {metrics.hangerBearingTempC.toFixed(0)}{' '}
                   <span className="text-xs font-semibold">°C</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {metrics.hangerCount} {pick('hangers', 'bantalan', '個')} ·{' '}
                   {pick('Gap', 'Celah', '隙間')} {metrics.effectiveClearanceMm.toFixed(0)}mm
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Shear / Jam Risk', 'Risiko Macet / Geser', 'せん断・閉塞リスク')}</span>
-                  <Flame className="h-3.5 w-3.5 text-orange-500" />
+                  <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
                 <div
-                  className={`mt-1 text-lg font-extrabold ${
+                  className={`mt-1 font-mono text-lg font-extrabold ${
                     metrics.shearJamRiskPct > 75
                       ? 'text-rose-600 dark:text-rose-400'
                       : metrics.shearJamRiskPct > 45
@@ -363,7 +363,7 @@ export function ScrewConveyorSimulator() {
                   {metrics.shearJamRiskPct.toFixed(0)}{' '}
                   <span className="text-xs font-semibold">%</span>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Carryback:', 'Arus balik:', '逆流率:')} {metrics.carrybackPct}%
                 </div>
               </div>
@@ -371,10 +371,10 @@ export function ScrewConveyorSimulator() {
           </div>
 
           {/* Diagnostic Summary */}
-          <div className="sim-panel flex-1 p-4 space-y-2.5">
+          <div className="glass-panel flex-1 space-y-2.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <span className="sim-header flex items-center gap-1.5">
-                <Flame className="h-3.5 w-3.5 text-emerald-500" />
+              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+                <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick(
                   'CEMA 350 Engineering Diagnostic',
                   'Diagnostik Rekayasa CEMA 350',
@@ -403,7 +403,7 @@ export function ScrewConveyorSimulator() {
               </span>
             </div>
 
-            <div className="sim-box p-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-3.5 text-xs leading-relaxed text-[var(--md-on-surface)]">
               {inputs.faultMode === 'normal' &&
                 pick(
                   'Auger flights, intermediate hanger bearings, and trough fill are operating within CEMA 350 mechanical & thermal limits.',
@@ -433,31 +433,31 @@ export function ScrewConveyorSimulator() {
         </div>
 
         {/* Right Column: Organized Parameter Groups */}
-        <div className="sim-panel flex flex-col justify-between gap-3 p-4 lg:col-span-4">
+        <div className="glass-panel flex flex-col justify-between gap-3.5 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="sim-header flex items-center gap-1.5">
-                <Sliders className="h-3.5 w-3.5 text-emerald-500" />
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                <Sliders className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('CEMA 350 Parameters', 'Parameter CEMA 350', 'CEMA 350 諸元設定')}
               </span>
               <div className="sim-dial flex h-11 w-11 flex-col items-center justify-center text-center">
-                <span className="text-[11px] font-extrabold leading-none text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono text-[11px] font-extrabold leading-none text-[var(--md-primary)]">
                   {inputs.rpm}
                 </span>
-                <span className="text-[8px] font-bold uppercase text-slate-500">RPM</span>
+                <span className="text-[8px] font-bold uppercase text-[var(--md-on-surface-variant)]">RPM</span>
               </div>
             </div>
 
             {/* Group 1: Auger Geometry */}
-            <div className="sim-box p-2.5 space-y-2 text-xs">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('1. Auger Geometry', '1. Geometri Auger', '1. オーガ幾何諸元')}
               </div>
 
               <label className="block space-y-1">
-                <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                   <span>{pick('Screw Diameter (D)', 'Diameter Ulir (D)', 'スクリュー外径 (D)')}</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {inputs.screwDiameterMm} mm
                   </span>
                 </div>
@@ -468,14 +468,14 @@ export function ScrewConveyorSimulator() {
                   step={25}
                   value={inputs.screwDiameterMm}
                   onChange={(e) => handleScrewDiameterChange(Number(e.target.value))}
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
               </label>
 
               <label className="block space-y-1">
-                <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                   <span>{pick('Center Pipe (dₚ)', 'Pipa Pusat (dₚ)', '中心軸パイプ径 (dₚ)')}</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {inputs.pipeDiameterMm} mm
                   </span>
                 </div>
@@ -488,28 +488,28 @@ export function ScrewConveyorSimulator() {
                   onChange={(e) =>
                     setInputs((p) => ({ ...p, pipeDiameterMm: Number(e.target.value) }))
                   }
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
               </label>
 
               {/* Pitch Mode + Flight Pitch P */}
-              <div className="space-y-1">
-                <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+              <div className="space-y-1.5">
+                <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                   <span>{pick('Pitch Mode & P', 'Mode Pitch & P', 'ピッチモード・P')}</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {inputs.pitchMm} mm
                   </span>
                 </div>
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1.5">
                   {PITCH_MODES.map((pm) => (
                     <button
                       key={pm.id}
                       type="button"
                       onClick={() => selectPitchMode(pm.id)}
-                      className={`rounded py-1 text-[10.5px] font-bold transition ${
+                      className={`rounded-full py-1.5 text-[10.5px] font-bold transition ${
                         inputs.pitchMode === pm.id
-                          ? 'bg-emerald-600 text-white shadow-sm'
-                          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-emerald-50 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700'
+                          ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-xs'
+                          : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {pick(pm.en, pm.idLabel, pm.ja)} ({pm.ratioLabel})
@@ -525,15 +525,15 @@ export function ScrewConveyorSimulator() {
                   onChange={(e) =>
                     setInputs((p) => ({ ...p, pitchMm: Number(e.target.value) }))
                   }
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Length (L)', 'Panjang (L)', '全長 (L)')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.lengthM}m
                     </span>
                   </div>
@@ -546,14 +546,14 @@ export function ScrewConveyorSimulator() {
                     onChange={(e) =>
                       setInputs((p) => ({ ...p, lengthM: Number(e.target.value) }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Clearance', 'Celah', '隙間')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.radialClearanceMm}mm
                     </span>
                   </div>
@@ -569,15 +569,15 @@ export function ScrewConveyorSimulator() {
                         radialClearanceMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
               </div>
             </div>
 
             {/* Group 2: Operating & Trough Fill */}
-            <div className="sim-box p-2.5 space-y-2 text-xs">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   '2. Operating & Trough Fill',
                   '2. Operasi & Pengisian Palung',
@@ -585,25 +585,25 @@ export function ScrewConveyorSimulator() {
                 )}
               </div>
 
-              <div className="space-y-1">
-                <div className="flex items-center justify-between font-semibold text-slate-700 dark:text-slate-200">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-semibold text-[var(--md-on-surface)]">
                   <span>{pick('Trough Loading Fill %', 'Pengisian Palung %', 'トラフ充填率 %')}</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {inputs.troughFillPct}%
                   </span>
                 </div>
-                <div className="grid grid-cols-4 gap-1">
+                <div className="grid grid-cols-4 gap-1.5">
                   {FILL_OPTIONS.map((pct) => (
                     <button
                       key={pct}
                       type="button"
                       onClick={() => setInputs((p) => ({ ...p, troughFillPct: pct }))}
-                      className={`rounded-md py-1 text-xs font-bold transition ${
+                      className={`rounded-full py-1.5 font-mono text-xs font-bold transition ${
                         inputs.troughFillPct === pct
                           ? pct === 95
-                            ? 'bg-amber-600 text-white shadow-sm'
-                            : 'bg-emerald-600 text-white shadow-sm'
-                          : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-emerald-50 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700'
+                            ? 'bg-amber-600 text-white shadow-xs'
+                            : 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-xs'
+                          : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {pct}%
@@ -612,11 +612,11 @@ export function ScrewConveyorSimulator() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Speed', 'Putaran', '回転数')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.rpm} RPM
                     </span>
                   </div>
@@ -629,14 +629,14 @@ export function ScrewConveyorSimulator() {
                     onChange={(e) =>
                       setInputs((p) => ({ ...p, rpm: Number(e.target.value) }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Incline (θ)', 'Sudut (θ)', '傾斜 (θ)')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.inclinationDeg}°
                     </span>
                   </div>
@@ -652,15 +652,15 @@ export function ScrewConveyorSimulator() {
                         inclinationDeg: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
               </div>
             </div>
 
             {/* Group 3: Material & CEMA Factors */}
-            <div className="sim-box p-2.5 space-y-2 text-xs">
-              <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   '3. Material & CEMA Factors',
                   '3. Material & Faktor CEMA',
@@ -669,9 +669,9 @@ export function ScrewConveyorSimulator() {
               </div>
 
               <label className="block space-y-1">
-                <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                   <span>{pick('Bulk Density (ρ)', 'Densitas Curah (ρ)', 'かさ密度 (ρ)')}</span>
-                  <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {(inputs.bulkDensityKgM3 / 1000).toFixed(2)} t/m³
                   </span>
                 </div>
@@ -687,15 +687,15 @@ export function ScrewConveyorSimulator() {
                       bulkDensityKgM3: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
               </label>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Mat. Factor Fₘ', 'Faktor Fₘ', '材料係数 Fₘ')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.materialFactorFm.toFixed(1)}
                     </span>
                   </div>
@@ -711,14 +711,14 @@ export function ScrewConveyorSimulator() {
                         materialFactorFm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block space-y-1">
-                  <div className="flex justify-between font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex justify-between font-semibold text-[var(--md-on-surface)]">
                     <span>{pick('Bearing Fᵦ', 'Bantalan Fᵦ', '軸受係数 Fᵦ')}</span>
-                    <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <span className="font-mono text-[var(--md-primary)]">
                       {inputs.hangerBearingFactorFb.toFixed(1)}
                     </span>
                   </div>
@@ -734,15 +734,15 @@ export function ScrewConveyorSimulator() {
                         hangerBearingFactorFb: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </label>
               </div>
             </div>
           </div>
 
-          <div className="sim-box p-2.5 text-[11px] text-slate-600 dark:text-slate-300">
-            <strong>{pick('CEMA Tip:', 'Tips CEMA:', 'CEMA ヒント:')}</strong>{' '}
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-[11px] text-[var(--md-on-surface-variant)]">
+            <strong className="text-[var(--md-on-surface)]">{pick('CEMA Tip:', 'Tips CEMA:', 'CEMA ヒント:')}</strong>{' '}
             {pick(
               'Use 15% fill for abrasive sand/limestone; 95% tubular/flooded fill spikes torque & jam risk.',
               'Gunakan isi 15% untuk pasir/batu kapur abrasif; isi 95% memicu lonjakan torsi & risiko macet.',

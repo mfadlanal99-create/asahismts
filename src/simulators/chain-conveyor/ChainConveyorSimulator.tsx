@@ -126,9 +126,9 @@ export function ChainConveyorSimulator() {
   return (
     <div className="space-y-5">
       {/* Top Bar & Animation Controls */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5 shadow-xs">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
+        <div className="flex items-center gap-2.5 text-xs font-bold text-[var(--md-on-surface)] sm:text-sm">
+          <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
             <Cog className="h-4 w-4" />
           </span>
           {pick(
@@ -142,16 +142,16 @@ export function ChainConveyorSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
           >
             {isPlaying ? (
               <>
-                <Pause className="h-3.5 w-3.5 text-amber-500" />
+                <Pause className="h-3.5 w-3.5" />
                 {pick('Pause', 'Jeda', '一時停止')}
               </>
             ) : (
               <>
-                <Play className="h-3.5 w-3.5 text-emerald-500" />
+                <Play className="h-3.5 w-3.5" />
                 {pick('Run Drive', 'Jalankan', '運転再開')}
               </>
             )}
@@ -160,7 +160,7 @@ export function ChainConveyorSimulator() {
           <button
             type="button"
             onClick={() => setChainInputs(INITIAL_CHAIN_INPUTS)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -175,36 +175,36 @@ export function ChainConveyorSimulator() {
           {/* Left Column: 2D Canvas + 10-Pitch Vernier Gauge + Readouts */}
           <div className="space-y-4 lg:col-span-8">
             {/* Field Scenarios Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/60">
+            <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="mr-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Presets:', 'Preset:', 'プリセット:')}
                 </span>
                 <button
                   type="button"
                   onClick={() => applyChainPreset('optimal')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-amber-50 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   {pick('Optimal #60 Drive', 'Penggerak #60 Optimal', '正常 #60 駆動')}
                 </button>
                 <button
                   type="button"
                   onClick={() => applyChainPreset('worn-3pct')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-rose-700 shadow-sm ring-1 ring-rose-200 hover:bg-rose-50 dark:bg-slate-800 dark:text-rose-300 dark:ring-rose-500/30"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   {pick('Worn Chain (3.25% Hooked)', 'Rantai Aus (3,25% Kait)', '摩耗限界超過 (3.25%)')}
                 </button>
                 <button
                   type="button"
                   onClick={() => applyChainPreset('starved-tight')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-amber-700 shadow-sm ring-1 ring-amber-200 hover:bg-amber-50 dark:bg-slate-800 dark:text-amber-300 dark:ring-amber-500/30"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   {pick('Dry & Over-Tight Span', 'Kering & Terlalu Kencang', '無給油・張り過ぎ')}
                 </button>
                 <button
                   type="button"
                   onClick={() => applyChainPreset('chordal-12t')}
-                  className="rounded-md bg-white px-2.5 py-1 text-xs font-medium text-sky-700 shadow-sm ring-1 ring-sky-200 hover:bg-sky-50 dark:bg-slate-800 dark:text-sky-300 dark:ring-sky-500/30"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   {pick('12T Polygonal Vibration', 'Getaran Poligonal 12T', '12歯・多角形振動')}
                 </button>
@@ -214,7 +214,7 @@ export function ChainConveyorSimulator() {
                 <button
                   type="button"
                   onClick={applyRecommendedChainFix}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow-sm hover:bg-emerald-500"
+                  className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
                 >
                   <Wrench className="h-3.5 w-3.5" />
                   {pick('Restore Spec', 'Perbaiki ke Standar', '推奨状態に修復')}
@@ -230,54 +230,54 @@ export function ChainConveyorSimulator() {
 
             {/* Key Engineering Readout Cards */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                  <span className="font-semibold">
                     {pick('10-Pitch Gauge', 'Ukur 10-Pitch', '10リンク実測長')}
                   </span>
-                  <Ruler className="h-3.5 w-3.5 text-amber-500" />
+                  <Ruler className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <div className="mt-1 text-base font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-base font-extrabold text-[var(--md-on-surface)]">
                   {chainMetrics.measured10PitchMm.toFixed(1)} mm
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Nominal:', 'Nominal:', '基準:')} {chainMetrics.nominal10PitchMm.toFixed(1)} mm (
                   {chainInputs.wearElongationPct.toFixed(2)}%)
                 </div>
               </div>
 
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                  <span className="font-semibold">
                     {pick('Chordal Action', 'Variasi Kordal', '多角形速度変動')}
                   </span>
-                  <Activity className="h-3.5 w-3.5 text-sky-500" />
+                  <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
                 <div
-                  className={`mt-1 text-base font-extrabold ${
+                  className={`mt-1 font-mono text-base font-extrabold ${
                     chainMetrics.chordalSpeedVarPct > 2.0
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {chainMetrics.chordalSpeedVarPct.toFixed(2)}%
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {chainInputs.z1 < 17
                     ? pick('High vibration (z₁ < 17)', 'Getaran tinggi (z₁ < 17)', '振動大 (z₁ < 17歯)')
                     : pick('Smooth engagement', 'Pertautan halus', '円滑噛み合い (z₁ ≥ 17)')}
                 </div>
               </div>
 
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                  <span className="font-semibold">
                     {pick('Slack Span Sag S', 'Kelendutan S', '緩み側たるみ量 S')}
                   </span>
-                  <Gauge className="h-3.5 w-3.5 text-emerald-500" />
+                  <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
                 <div
-                  className={`mt-1 text-base font-extrabold ${
+                  className={`mt-1 font-mono text-base font-extrabold ${
                     chainMetrics.sagStatus === 'optimal'
                       ? 'text-emerald-600 dark:text-emerald-400'
                       : 'text-amber-600 dark:text-amber-400'
@@ -285,23 +285,23 @@ export function ChainConveyorSimulator() {
                 >
                   {chainMetrics.slackSagMm.toFixed(1)} mm
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Target 2% C:', 'Target 2% C:', '目標 2% C:')}{' '}
                   {chainMetrics.targetSagIdealMm.toFixed(1)} mm
                 </div>
               </div>
 
-              <div className="glass-panel rounded-xl p-3 shadow-xs">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                  <span>
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                  <span className="font-semibold">
                     {pick('Pitch-Line Speed', 'Kecepatan Rantai', 'チェーン周速度')}
                   </span>
-                  <Droplets className="h-3.5 w-3.5 text-amber-500" />
+                  <Droplets className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <div className="mt-1 text-base font-extrabold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-base font-extrabold text-[var(--md-on-surface)]">
                   {chainMetrics.linearSpeedMs.toFixed(2)} m/s
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Rec:', 'Rek:', '推奨:')}{' '}
                   {chainMetrics.recommendedLube === 'Oil Bath'
                     ? pick('Oil Bath', 'Rendaman Oli', '油浴潤滑')
@@ -313,8 +313,8 @@ export function ChainConveyorSimulator() {
 
           {/* Right Column: Interactive Controls & Maintenance Diagnostics */}
           <div className="space-y-4 lg:col-span-4">
-            <div className="glass-panel rounded-2xl p-4 shadow-xs">
-              <h3 className="mb-3 text-sm font-bold text-slate-900 dark:text-slate-100">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+              <h3 className="mb-3 border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-sm font-bold text-[var(--md-on-surface)]">
                 {pick(
                   'Chain Drive & Wear Parameters',
                   'Parameter Penggerak & Keausan Rantai',
@@ -324,7 +324,7 @@ export function ChainConveyorSimulator() {
 
               {/* ANSI / RS Chain Size Selector (RS 40 to RS 160) */}
               <div className="mb-4">
-                <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <label className="mb-1.5 block text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'ANSI / RS Roller Chain Size',
                     'Ukuran Rantai Rol ANSI / RS',
@@ -345,14 +345,14 @@ export function ChainConveyorSimulator() {
                             chainCode: code,
                           }))
                         }
-                        className={`rounded-lg border px-1.5 py-1.5 text-center transition ${
+                        className={`flex flex-col items-center rounded-[20px] border px-1.5 py-2 text-center transition-all ${
                           active
-                            ? 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-300'
-                            : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                            ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30 shadow-2xs'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         <div className="text-xs font-extrabold">{spec.rsLabel}</div>
-                        <div className="text-[10px] opacity-80">
+                        <div className="font-mono text-[10px] opacity-80">
                           {spec.pitchMm} mm
                         </div>
                       </button>
@@ -365,10 +365,10 @@ export function ChainConveyorSimulator() {
               <div className="mb-3 grid grid-cols-2 gap-3">
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Driver z₁', 'Penggerak z₁', '駆動歯数 z₁')}
                     </span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {chainInputs.z1} T
                     </span>
                   </div>
@@ -384,16 +384,16 @@ export function ChainConveyorSimulator() {
                         z1: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-amber-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Driven z₂', 'Digerakkan z₂', '従動歯数 z₂')}
                     </span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {chainInputs.z2} T
                     </span>
                   </div>
@@ -409,7 +409,7 @@ export function ChainConveyorSimulator() {
                         z2: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-amber-500"
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -418,10 +418,10 @@ export function ChainConveyorSimulator() {
               <div className="mb-3 grid grid-cols-2 gap-3">
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Driver RPM', 'RPM Penggerak', '駆動回転数')}
                     </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {chainInputs.driverRpm}
                     </span>
                   </div>
@@ -437,16 +437,16 @@ export function ChainConveyorSimulator() {
                         driverRpm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-amber-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Center C', 'Jarak Pusat C', '軸間距離 C')}
                     </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {chainInputs.centerDistanceMm} mm
                     </span>
                   </div>
@@ -462,7 +462,7 @@ export function ChainConveyorSimulator() {
                         centerDistanceMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-amber-500"
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -470,7 +470,7 @@ export function ChainConveyorSimulator() {
               {/* Pin-Bushing Wear Elongation % */}
               <div className="mb-3">
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Pin-Bushing Wear Elongation (%)',
                       'Perpanjangan Aus Pin-Bushing (%)',
@@ -478,7 +478,7 @@ export function ChainConveyorSimulator() {
                     )}
                   </span>
                   <span
-                    className={`font-extrabold ${
+                    className={`font-mono font-extrabold ${
                       chainMetrics.wearStatus === 'replace-now'
                         ? 'text-rose-600 dark:text-rose-400'
                         : chainMetrics.wearStatus === 'hardened-limit'
@@ -501,9 +501,9 @@ export function ChainConveyorSimulator() {
                       wearElongationPct: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
+                <div className="mt-0.5 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   <span>0% (New)</span>
                   <span>1.5% (Hardened)</span>
                   <span>3.0% (Max Limit)</span>
@@ -513,14 +513,14 @@ export function ChainConveyorSimulator() {
               {/* Slack Span Sag % */}
               <div className="mb-4">
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Slack Span Catenary Sag (% of C)',
                       'Kelendutan Sisi Kendur (% dari C)',
                       '緩み側スパンたるみ率 (% of C)'
                     )}
                   </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {chainInputs.slackSagPct.toFixed(1)}% (
                     {chainMetrics.slackSagMm.toFixed(1)} mm)
                   </span>
@@ -537,9 +537,9 @@ export function ChainConveyorSimulator() {
                       slackSagPct: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
+                <div className="mt-0.5 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   <span>0.4% (Over-tight)</span>
                   <span>2.0% (Ideal)</span>
                   <span>5.0% (Whip)</span>
@@ -548,7 +548,7 @@ export function ChainConveyorSimulator() {
 
               {/* Lubrication Method Selector */}
               <div>
-                <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <label className="mb-1.5 block text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'Lubrication Regime',
                     'Metode Pelumasan',
@@ -574,12 +574,12 @@ export function ChainConveyorSimulator() {
                             lubeMethod: method,
                           }))
                         }
-                        className={`rounded-lg border px-2 py-2 text-xs font-bold transition ${
+                        className={`rounded-full border px-2 py-2 text-xs font-bold transition-all ${
                           active
                             ? method === 'Dry'
                               ? 'border-rose-500 bg-rose-500/15 text-rose-700 dark:text-rose-300'
-                              : 'border-amber-500 bg-amber-500/15 text-amber-700 dark:text-amber-300'
-                            : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                              : 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         {label}
@@ -592,12 +592,12 @@ export function ChainConveyorSimulator() {
 
             {/* Diagnostic Summary Box */}
             <div
-              className={`rounded-xl border p-4 ${
+              className={`rounded-[24px] border p-4 ${
                 chainMetrics.overallHealth === 'critical'
-                  ? 'border-rose-200 bg-rose-50/70 dark:border-rose-500/30 dark:bg-rose-950/30'
+                  ? 'border-rose-200 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'
                   : chainMetrics.overallHealth === 'warning'
-                    ? 'border-amber-200 bg-amber-50/70 dark:border-amber-500/30 dark:bg-amber-950/30'
-                    : 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-500/30 dark:bg-emerald-950/30'
+                    ? 'border-amber-200 bg-amber-50/80 dark:border-amber-500/30 dark:bg-amber-950/30'
+                    : 'border-emerald-200 bg-emerald-50/80 dark:border-emerald-500/30 dark:bg-emerald-950/30'
               }`}
             >
               <div className="mb-2 flex items-center gap-2">
@@ -608,7 +608,7 @@ export function ChainConveyorSimulator() {
                 ) : (
                   <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 )}
-                <h4 className="text-xs font-extrabold uppercase tracking-wide text-slate-900 dark:text-slate-100">
+                <h4 className="text-xs font-extrabold uppercase tracking-wide text-[var(--md-on-surface)]">
                   {pick(
                     'Chain Drive Diagnostic Findings',
                     'Diagnosis Penggerak Rantai',
@@ -617,7 +617,7 @@ export function ChainConveyorSimulator() {
                 </h4>
               </div>
 
-              <ul className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300">
+              <ul className="space-y-1.5 text-xs text-[var(--md-on-surface)]">
                 <li>
                   •{' '}
                   {chainMetrics.wearStatus === 'replace-now'

@@ -100,22 +100,22 @@ export function BeltGearCanvas({
 
   const colors = useMemo(
     () => ({
-      bg: isDark ? '#0b1120' : '#f8fafc',
-      grid: isDark ? '#1e293b' : '#e2e8f0',
-      panelBg: isDark ? '#0f172a' : '#ffffff',
-      panelBorder: isDark ? '#334155' : '#cbd5e1',
-      textPrimary: isDark ? '#f1f5f9' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#64748b',
+      bg: 'var(--md-surface-container-lowest)',
+      grid: 'var(--md-outline-variant)',
+      panelBg: 'var(--md-surface-container)',
+      panelBorder: 'var(--md-outline-variant)',
+      textPrimary: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
       pulleyFill: isDark ? '#1e293b' : '#e2e8f0',
       pulleyRim: isDark ? '#64748b' : '#475569',
       pulleySpoke: isDark ? '#475569' : '#94a3b8',
       beltStroke: isDark ? '#e2e8f0' : '#1e293b',
-      beltDash: isDark ? '#f43f5e' : '#e11d48',
+      beltDash: 'var(--md-primary)',
       gear1Fill: isDark ? '#1e293b' : '#e2e8f0',
-      gear1Stroke: isDark ? '#38bdf8' : '#0284c7',
+      gear1Stroke: 'var(--md-primary)',
       gear2Fill: isDark ? '#1f1629' : '#ffe4e6',
       gear2Stroke: isDark ? '#fb7185' : '#e11d48',
-      pitchCircle1: isDark ? '#38bdf8' : '#0284c7',
+      pitchCircle1: 'var(--md-primary)',
       pitchCircle2: isDark ? '#fb7185' : '#e11d48',
       statusOk: isDark ? '#34d399' : '#059669',
       statusWarn: isDark ? '#fbbf24' : '#d97706',
@@ -307,7 +307,7 @@ export function BeltGearCanvas({
   ]);
 
   return (
-    <div className="glass-panel relative flex items-center justify-center overflow-hidden rounded-2xl shadow-xs">
+    <div className="glass-panel relative flex items-center justify-center overflow-hidden rounded-[28px] p-2">
       <svg
         viewBox="0 0 760 400"
         className="block h-auto w-full select-none"
@@ -329,13 +329,14 @@ export function BeltGearCanvas({
               d="M 24 0 L 0 0 0 24"
               fill="none"
               stroke={colors.grid}
+              strokeOpacity="0.35"
               strokeWidth="0.8"
             />
           </pattern>
         </defs>
 
-        <rect width="760" height="400" fill={colors.bg} />
-        <rect width="760" height="400" fill="url(#bg-grid-belt-gear)" opacity="0.55" />
+        <rect width="760" height="400" fill={colors.bg} rx="18" />
+        <rect width="760" height="400" fill="url(#bg-grid-belt-gear)" rx="18" opacity="0.65" />
 
         {mode === 'v-belt' ? (
           <g>
@@ -372,7 +373,7 @@ export function BeltGearCanvas({
               y={361}
               width="128"
               height="20"
-              rx="6"
+              rx="10"
               fill={colors.panelBg}
               stroke={colors.panelBorder}
             />
@@ -382,6 +383,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="11"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textPrimary}
             >
               C = {vBeltParams.centerDistance} mm
@@ -506,6 +508,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
               fill={colors.textPrimary}
             >
               Driver D₁ = {vBeltParams.d1} mm
@@ -516,6 +519,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textMuted}
             >
               {vBeltParams.motorRpm} RPM
@@ -526,6 +530,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
               fill={colors.textPrimary}
             >
               Driven D₂ = {vBeltParams.d2} mm
@@ -536,6 +541,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textMuted}
             >
               {vBeltResults.outputRpm.toFixed(0)} RPM
@@ -562,7 +568,7 @@ export function BeltGearCanvas({
                 y={Math.max(12, vBeltGeom.midTopY - 94)}
                 width="156"
                 height="46"
-                rx="8"
+                rx="12"
                 fill={colors.panelBg}
                 stroke={statusColor}
                 strokeWidth="1.5"
@@ -573,6 +579,7 @@ export function BeltGearCanvas({
                 textAnchor="middle"
                 fontSize="11"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
                 fill={colors.textPrimary}
               >
                 Force: {vBeltParams.testForceN} N → δ ={' '}
@@ -584,6 +591,7 @@ export function BeltGearCanvas({
                 textAnchor="middle"
                 fontSize="10"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={statusColor}
               >
                 Target C/64 = {vBeltResults.targetDeflectionMm.toFixed(1)} mm
@@ -595,7 +603,7 @@ export function BeltGearCanvas({
               <rect
                 width="176"
                 height="82"
-                rx="8"
+                rx="14"
                 fill={colors.panelBg}
                 stroke={
                   vBeltResults.misalignmentWarning
@@ -609,6 +617,7 @@ export function BeltGearCanvas({
                 y="18"
                 fontSize="10"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
                 fill={colors.textMuted}
               >
                 SHEAVE ALIGNMENT (TOP)
@@ -671,6 +680,7 @@ export function BeltGearCanvas({
                 textAnchor="middle"
                 fontSize="10"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={
                   vBeltResults.misalignmentWarning
                     ? colors.statusDanger
@@ -808,7 +818,7 @@ export function BeltGearCanvas({
                     y={tipY - 10}
                     width="116"
                     height="20"
-                    rx="5"
+                    rx="10"
                     fill={colors.panelBg}
                     stroke={colors.statusDanger}
                     strokeWidth="1.1"
@@ -819,6 +829,7 @@ export function BeltGearCanvas({
                     textAnchor="middle"
                     fontSize="10"
                     fontWeight="700"
+                    fontFamily="var(--font-mono)"
                     fill={colors.textPrimary}
                   >
                     Fₙ = {spurResults.normalForceN.toFixed(0)} N (20°)
@@ -851,7 +862,7 @@ export function BeltGearCanvas({
               y={spurGeom.cy - 98}
               width="116"
               height="20"
-              rx="5"
+              rx="10"
               fill={colors.panelBg}
               stroke={statusColor}
               strokeWidth="1.2"
@@ -862,6 +873,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
               fill={colors.textPrimary}
             >
               v = {spurResults.pitchLineVelocityMs.toFixed(2)} m/s
@@ -900,7 +912,7 @@ export function BeltGearCanvas({
               y={361}
               width="148"
               height="20"
-              rx="6"
+              rx="10"
               fill={colors.panelBg}
               stroke={colors.panelBorder}
             />
@@ -910,6 +922,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="11"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textPrimary}
             >
               C = {spurResults.actualCenterDistanceMm.toFixed(2)} mm
@@ -922,6 +935,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
               fill={colors.textPrimary}
             >
               Pinion Z₁={spurParams.z1}
@@ -932,6 +946,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textMuted}
             >
               d₁ = {spurResults.pitchDiameter1Mm} mm
@@ -942,6 +957,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
               fill={colors.textPrimary}
             >
               Gear Z₂={spurParams.z2}
@@ -952,6 +968,7 @@ export function BeltGearCanvas({
               textAnchor="middle"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={colors.textMuted}
             >
               d₂ = {spurResults.pitchDiameter2Mm} mm
@@ -962,7 +979,7 @@ export function BeltGearCanvas({
               <rect
                 width="206"
                 height="82"
-                rx="8"
+                rx="14"
                 fill={colors.panelBg}
                 stroke={statusColor}
                 strokeWidth="1.2"
@@ -972,6 +989,7 @@ export function BeltGearCanvas({
                 y="19"
                 fontSize="10"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
                 fill={colors.textMuted}
               >
                 MESH & BACKLASH CHECK
@@ -981,6 +999,7 @@ export function BeltGearCanvas({
                 y="39"
                 fontSize="11"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={colors.textPrimary}
               >
                 Module m = {spurParams.moduleMm} mm (α = 20°)
@@ -990,6 +1009,7 @@ export function BeltGearCanvas({
                 y="57"
                 fontSize="11"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={colors.textPrimary}
               >
                 Backlash j = {spurResults.backlashMm.toFixed(3)} mm
@@ -999,6 +1019,7 @@ export function BeltGearCanvas({
                 y="74"
                 fontSize="10"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
                 fill={statusColor}
               >
                 ΔC = {spurParams.centerOffsetMm >= 0 ? '+' : ''}

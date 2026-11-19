@@ -188,15 +188,15 @@ export function CommandPalette({
       role="dialog"
       aria-modal="true"
       aria-label="Quick-jump command palette"
-      className="fixed inset-0 z-50 flex items-start justify-center bg-slate-950/40 p-4 pt-[12vh] backdrop-blur-sm dark:bg-slate-950/60"
+      className="fixed inset-0 z-50 flex items-start justify-center bg-black/45 p-4 pt-[12vh] backdrop-blur-sm"
       onClick={handleClose}
     >
       <div
-        className="glass-panel w-full max-w-xl overflow-hidden rounded-2xl shadow-2xl"
+        className="glass-panel animate-modal-enter w-full max-w-xl overflow-hidden rounded-[32px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 border-b border-slate-200/80 px-4 py-3 dark:border-white/10">
-          <Search className="h-4 w-4 shrink-0 text-slate-400 dark:text-slate-500" />
+        <div className="flex items-center gap-3 border-b border-[var(--md-outline-variant)]/50 px-5 py-3.5">
+          <Search className="h-4 w-4 shrink-0 text-[var(--md-primary)]" />
           <input
             ref={inputRef}
             type="text"
@@ -210,16 +210,16 @@ export function CommandPalette({
               'Lompat ke lab simulator, panduan, laporan, atau tema...',
               'シミュレータ・ハンドブック・レポート・テーマへ移動...'
             )}
-            className="w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-500"
+            className="w-full bg-transparent text-sm font-medium text-[var(--md-on-surface)] outline-none placeholder:text-[var(--md-on-surface-variant)]"
           />
-          <kbd className="glass-pill rounded-md px-1.5 py-0.5 font-mono text-[10px] text-slate-500 dark:text-slate-400">
+          <kbd className="glass-pill rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold text-[var(--md-on-surface-variant)]">
             ESC
           </kbd>
         </div>
 
-        <div className="max-h-80 overflow-y-auto p-2">
+        <div className="max-h-80 overflow-y-auto p-2.5">
           {items.length === 0 ? (
-            <div className="px-4 py-8 text-center text-xs text-slate-500 dark:text-slate-400">
+            <div className="px-4 py-8 text-center text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 `No matching labs or commands for "${query}".`,
                 `Tidak ada lab atau perintah yang cocok untuk "${query}".`,
@@ -236,14 +236,14 @@ export function CommandPalette({
                     type="button"
                     onMouseEnter={() => setActiveIndex(idx)}
                     onClick={item.onExecute}
-                    className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2.5 text-left transition ${
+                    className={`flex w-full items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5 text-left transition ${
                       isSelected
-                        ? 'bg-[#001F6B]/8 text-[#001F6B] dark:bg-[#3B82F6]/15 dark:text-white'
-                        : 'text-slate-700 hover:bg-slate-100/70 dark:text-slate-300 dark:hover:bg-white/5'
+                        ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                        : 'text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#001F6B]/8 text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA]">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
                         {item.kind === 'lab' && item.iconName ? (
                           <SimulatorIcon
                             iconName={item.iconName}
@@ -260,17 +260,17 @@ export function CommandPalette({
                         )}
                       </div>
                       <div className="min-w-0">
-                        <div className="truncate text-sm font-semibold">
+                        <div className="truncate text-sm font-bold">
                           {item.label}
                         </div>
-                        <div className="truncate text-[11px] text-slate-500 dark:text-slate-400">
+                        <div className="truncate text-[11px] opacity-80">
                           {item.subtitle}
                         </div>
                       </div>
                     </div>
 
                     {isSelected && (
-                      <CornerDownLeft className="h-3.5 w-3.5 shrink-0 text-[#001F6B] dark:text-[#60A5FA]" />
+                      <CornerDownLeft className="h-3.5 w-3.5 shrink-0 text-[var(--md-primary)]" />
                     )}
                   </button>
                 );

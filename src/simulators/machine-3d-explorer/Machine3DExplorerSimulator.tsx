@@ -322,16 +322,16 @@ export function Machine3DExplorerSimulator() {
   if (selectedMachineId === null) {
     return (
       <div className="space-y-5">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+        <div className="glass-panel flex flex-col gap-2 rounded-[28px] p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-lg font-extrabold tracking-tight text-[var(--md-on-surface)]">
               {pick(
                 'Choose a 3D Machine to Inspect',
                 'Pilih Mesin 3D untuk Diinspeksi',
                 '点検する3D機械を選択'
               )}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 'Select an assembly to orbit 360°, animate exploded disassembly, and click parts for specifications.',
                 'Pilih rakitan untuk memutar 360°, simulasi bongkar-pasang, dan klik bagian untuk info spesifikasi.',
@@ -339,45 +339,47 @@ export function Machine3DExplorerSimulator() {
               )}
             </p>
           </div>
-          <span className="font-mono text-xs text-slate-400 dark:text-slate-500">
+          <span className="inline-flex w-fit rounded-full bg-[var(--md-primary-container)] px-3 py-1 font-mono text-xs font-bold text-[var(--md-on-primary-container)]">
             {MACHINE_CONFIGS.length} {pick('Assemblies', 'Rakitan', 'アセンブリ')}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           {MACHINE_CONFIGS.map((machine) => (
             <button
               key={machine.id}
               type="button"
               onClick={() => handleSelectMachine(machine.id)}
-              className="group flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white text-left transition duration-150 hover:border-[#001F6B]/50 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 dark:border-slate-800 dark:bg-[#091221] dark:hover:border-cyan-400/50"
+              className="m3-card glass-card group flex flex-col overflow-hidden rounded-[28px] text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--md-primary)]"
             >
               {/* Live 3D Isometric Preview */}
-              <div className="relative w-full overflow-hidden border-b border-slate-200/80 bg-slate-50 dark:border-slate-800 dark:bg-[#060D1A]">
+              <div className="relative w-full overflow-hidden border-b border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)]">
                 <MachinePreviewCanvas parts={machine.parts} isDark={isDark} />
               </div>
 
-              <div className="flex flex-1 flex-col justify-between p-4">
+              <div className="flex flex-1 flex-col justify-between p-5">
                 <div>
-                  <div className="flex items-center justify-between gap-2 font-mono text-[11px] text-slate-500 dark:text-slate-400">
-                    <span>{machine.standardTag}</span>
-                    <span>
+                  <div className="flex items-center justify-between gap-2 font-mono text-[11px]">
+                    <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 font-bold text-[var(--md-on-secondary-container)]">
+                      {machine.standardTag}
+                    </span>
+                    <span className="font-semibold text-[var(--md-on-surface-variant)]">
                       {machine.parts.length} {pick('parts', 'komponen', '部品')}
                     </span>
                   </div>
-                  <h3 className="mt-1.5 text-base font-semibold tracking-tight text-slate-900 group-hover:text-[#001F6B] dark:text-white dark:group-hover:text-cyan-300">
+                  <h3 className="mt-2.5 text-base font-extrabold tracking-tight text-[var(--md-on-surface)] transition-colors group-hover:text-[var(--md-primary)]">
                     {machine.shortLabel[language]}
                   </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--md-on-surface-variant)]">
                     {machine.summary[language]}
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs font-semibold text-[#001F6B] dark:border-slate-800/80 dark:text-cyan-400">
-                  <span>
+                <div className="mt-4 flex items-center justify-between border-t border-[var(--md-outline-variant)]/45 pt-3.5 text-xs">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--md-primary-container)] px-3.5 py-1.5 font-bold text-[var(--md-on-primary-container)] transition group-hover:bg-[var(--md-primary)] group-hover:text-[var(--md-on-primary)]">
                     {pick('Open 3D Inspector', 'Buka Inspektor 3D', '3Dビューアを開く')}
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5" />
                   </span>
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-1" />
                 </div>
               </div>
             </button>
@@ -389,22 +391,22 @@ export function Machine3DExplorerSimulator() {
 
   // --- View 2: Unified CAD Studio Workstation ---
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm dark:border-slate-800 dark:bg-[#091221]">
+    <div className="overflow-hidden rounded-[28px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)] shadow-sm">
       {/* Integrated Top Studio Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/90 px-3 py-2 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/55 px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-2.5">
           <button
             type="button"
             onClick={handleBackToPicker}
-            className="inline-flex shrink-0 items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="m3-btn-tonal inline-flex shrink-0 items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             {pick('Choose Machine', 'Pilih Mesin', '機械選択')}
           </button>
 
-          <div className="hidden h-4 w-px bg-slate-200 sm:block dark:bg-slate-700" />
+          <div className="hidden h-4 w-px bg-[var(--md-outline-variant)]/60 sm:block" />
 
-          <h2 className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+          <h2 className="truncate text-sm font-extrabold text-[var(--md-on-surface)]">
             {activeInfo.title[language]}
           </h2>
         </div>
@@ -412,7 +414,7 @@ export function Machine3DExplorerSimulator() {
         {/* Compact CAD View & Drive Toolbar */}
         <div className="flex flex-wrap items-center gap-1.5">
           {/* Camera View Presets */}
-          <div className="flex items-center rounded-lg border border-slate-200 bg-slate-50 p-0.5 text-[11px] font-medium dark:border-slate-700 dark:bg-slate-800/70">
+          <div className="flex items-center rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-0.5 text-[11px] font-semibold">
             {(
               [
                 ['iso', pick('Iso', 'Iso', '立体')],
@@ -425,7 +427,7 @@ export function Machine3DExplorerSimulator() {
                 key={id}
                 type="button"
                 onClick={() => applyCameraPreset(id)}
-                className="rounded-md px-2 py-1 text-slate-600 transition hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
+                className="rounded-full px-2.5 py-1 text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-surface-container-low)] hover:text-[var(--md-on-surface)]"
               >
                 {label}
               </button>
@@ -435,10 +437,10 @@ export function Machine3DExplorerSimulator() {
           <button
             type="button"
             onClick={() => setXrayHousing((prev) => !prev)}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition ${
               xrayHousing
-                ? 'border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:bg-slate-800'
+                ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
             }`}
           >
             <ScanEye className="h-3.5 w-3.5" />
@@ -448,10 +450,10 @@ export function Machine3DExplorerSimulator() {
           <button
             type="button"
             onClick={() => setShowCallouts((prev) => !prev)}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition ${
               showCallouts
-                ? 'border-[#001F6B]/40 bg-[#001F6B]/10 text-[#001F6B] dark:border-sky-400/40 dark:bg-sky-400/15 dark:text-sky-300'
-                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:bg-slate-800'
+                ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
             }`}
           >
             <Tag className="h-3.5 w-3.5" />
@@ -461,24 +463,24 @@ export function Machine3DExplorerSimulator() {
           <button
             type="button"
             onClick={() => setAutoRotate((prev) => !prev)}
-            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[11px] font-medium transition ${
+            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition ${
               autoRotate
-                ? 'border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:bg-slate-800'
+                ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
             }`}
           >
             <RotateCw className={`h-3.5 w-3.5 ${autoRotate ? 'animate-spin' : ''}`} />
             {pick('Orbit', 'Putar', '回転')}
           </button>
 
-          <div className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 dark:border-slate-700 dark:bg-slate-800/70">
+          <div className="flex items-center gap-2 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] px-2.5 py-1">
             <button
               type="button"
               onClick={() => setIsRunning((prev) => !prev)}
-              className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-semibold transition ${
+              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold transition ${
                 isRunning
                   ? 'bg-emerald-500 text-slate-950'
-                  : 'text-slate-600 hover:bg-slate-200/70 dark:text-slate-300 dark:hover:bg-slate-700'
+                  : 'text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)]'
               }`}
             >
               {isRunning ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
@@ -495,9 +497,9 @@ export function Machine3DExplorerSimulator() {
                 if (!isRunning) setIsRunning(true);
               }}
               aria-label="Drive speed RPM"
-              className="hidden w-16 accent-emerald-600 sm:block dark:accent-emerald-400"
+              className="hidden w-16 sm:block"
             />
-            <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
+            <span className="font-mono text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
               {isRunning ? rpm : 0} RPM
             </span>
           </div>
@@ -534,17 +536,17 @@ export function Machine3DExplorerSimulator() {
         </div>
 
         {/* Right: CAD Assembly Tree / Bill of Materials */}
-        <aside className="flex flex-col border-t border-slate-200/90 bg-slate-50/50 lg:h-[580px] lg:border-l lg:border-t-0 dark:border-slate-800 dark:bg-[#0A1424]">
-          <div className="flex items-center justify-between border-b border-slate-200/80 px-3.5 py-2.5 dark:border-slate-800">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <aside className="flex flex-col border-t border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] lg:h-[580px] lg:border-l lg:border-t-0">
+          <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Assembly Tree', 'Daftar Komponen', '部品ツリー (BOM)')}
             </span>
-            <span className="font-mono text-[11px] text-slate-400">
+            <span className="rounded-full bg-[var(--md-primary-container)] px-2 py-0.5 font-mono text-[10px] font-bold text-[var(--md-on-primary-container)]">
               {activeParts.length}
             </span>
           </div>
 
-          <div className="flex-1 divide-y divide-slate-200/60 overflow-y-auto dark:divide-slate-800/70">
+          <div className="flex-1 space-y-1 overflow-y-auto p-2">
             {activeParts.map((part) => {
               const isSel = selectedPartId === part.id;
               const isIso = isolatedPartId === part.id;
@@ -560,10 +562,10 @@ export function Machine3DExplorerSimulator() {
                       handleSelectBomPart(part.id);
                     }
                   }}
-                  className={`group flex cursor-pointer items-center justify-between gap-2 border-l-2 px-3.5 py-2.5 text-left transition ${
+                  className={`group flex cursor-pointer items-center justify-between gap-2 rounded-2xl px-3 py-2.5 text-left transition ${
                     isSel
-                      ? 'border-l-cyan-500 bg-cyan-500/8 dark:bg-cyan-500/10'
-                      : 'border-l-transparent hover:bg-slate-100/80 dark:hover:bg-slate-800/50'
+                      ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                      : 'hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   <div className="min-w-0 flex-1">
@@ -571,23 +573,23 @@ export function Machine3DExplorerSimulator() {
                       <span
                         className={`font-mono text-[11px] font-bold ${
                           isSel
-                            ? 'text-cyan-700 dark:text-cyan-400'
-                            : 'text-slate-400 dark:text-slate-500'
+                            ? 'text-[var(--md-primary)]'
+                            : 'text-[var(--md-on-surface-variant)]'
                         }`}
                       >
                         {String(part.bomNumber).padStart(2, '0')}
                       </span>
                       <span
-                        className={`truncate text-xs font-medium ${
+                        className={`truncate text-xs font-semibold ${
                           isSel
-                            ? 'text-slate-900 dark:text-white'
-                            : 'text-slate-700 dark:text-slate-200'
+                            ? 'text-[var(--md-on-secondary-container)]'
+                            : 'text-[var(--md-on-surface)]'
                         }`}
                       >
                         {part.name[language]}
                       </span>
                     </div>
-                    <div className="mt-0.5 pl-6 font-mono text-[10px] text-slate-400 dark:text-slate-500">
+                    <div className="mt-0.5 pl-6 font-mono text-[10px] text-[var(--md-on-surface-variant)] opacity-85">
                       {part.partCode} · {pick('Stage', 'Tahap', '段階')} {part.explodeStage}
                     </div>
                   </div>
@@ -600,10 +602,10 @@ export function Machine3DExplorerSimulator() {
                       setIsolatedPartId(isIso ? null : part.id);
                     }}
                     title={pick('Isolate 3D Part', 'Isolasi 3D', '単独表示')}
-                    className={`shrink-0 rounded p-1 transition ${
+                    className={`shrink-0 rounded-full p-1.5 transition ${
                       isIso
-                        ? 'bg-cyan-500 text-slate-950'
-                        : 'text-slate-400 opacity-0 hover:bg-slate-200 hover:text-slate-700 group-hover:opacity-100 dark:hover:bg-slate-700 dark:hover:text-slate-200'
+                        ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                        : 'text-[var(--md-on-surface-variant)] opacity-0 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)] group-hover:opacity-100'
                     }`}
                   >
                     <Maximize2 className="h-3 w-3" />

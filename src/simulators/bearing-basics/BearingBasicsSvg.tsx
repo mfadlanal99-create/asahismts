@@ -67,14 +67,14 @@ export function BearingBasicsSvg({
   const isDark = theme === 'dark';
 
   // Theme-aware CAD colors
-  const canvasBg = isDark ? '#0b1120' : '#f8fafc';
-  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
-  const cardBg = isDark ? '#0f172a' : '#ffffff';
-  const cardHeaderBg = isDark ? '#1e293b' : '#f1f5f9';
-  const cardStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
-  const dimBlue = isDark ? '#38bdf8' : '#0284c7';
+  const canvasBg = 'var(--md-surface-container-low)';
+  const gridColor = 'var(--md-outline-variant)';
+  const cardBg = 'var(--md-surface-container)';
+  const cardHeaderBg = 'var(--md-surface-container-high)';
+  const cardStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
+  const dimBlue = 'var(--md-primary)';
   const ringOutline = isDark ? '#94a3b8' : '#334155';
   const hatchStroke = isDark ? '#64748b' : '#475569';
 
@@ -155,7 +155,7 @@ export function BearingBasicsSvg({
 
         {/* Crisp Arrow Markers */}
         <marker id="bbArrowSky" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#0284c7" />
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="var(--md-primary)" />
         </marker>
         <marker id="bbArrowRed" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ef4444" />
@@ -173,8 +173,8 @@ export function BearingBasicsSvg({
 
 
       {/* Clean Blueprint Background */}
-      <rect width="640" height="460" fill={canvasBg} />
-      <g stroke={gridColor} strokeWidth="0.75" opacity={isDark ? 0.45 : 0.75}>
+      <rect width="640" height="460" rx="16" fill={canvasBg} />
+      <g stroke={gridColor} strokeWidth="0.75" opacity={isDark ? 0.3 : 0.45}>
         {Array.from({ length: 16 }).map((_, i) => (
           <line key={`vg-${i}`} x1={i * 40} y1="0" x2={i * 40} y2="460" />
         ))}
@@ -187,10 +187,10 @@ export function BearingBasicsSvg({
         <g id="bearing-cad-scene">
           {/* Top Header Area (y: 0..48) */}
           <g transform="translate(18, 22)">
-            <text x="0" y="0" fontSize="13.5" fontWeight="800" fill={textPrimary}>
+            <text x="0" y="0" fontSize="13.5" fontWeight="800" fontFamily="var(--font-sans)" fill={textPrimary}>
               {pick(bearingSpec.name, bearingSpec.nameId, bearingSpec.nameJa)}
             </text>
-            <text x="0" y="16" fontSize="9.5" fontWeight="600" fill={textMuted}>
+            <text x="0" y="16" fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)" fill={textMuted}>
               {`ISO ${bearingSpec.isoCode}  •  α = ${bearingSpec.contactAngleDeg}°  •  d = ${bearingSpec.boreMm} mm  •  D = ${bearingSpec.outerDiameterMm} mm  •  B = ${bearingSpec.widthMm} mm`}
             </text>
           </g>
@@ -198,29 +198,29 @@ export function BearingBasicsSvg({
           {/* Top-Right Status / Fault Alert Pill */}
           {isFatalRadialOnThrust ? (
             <g transform="translate(382, 8)">
-              <rect width="242" height="36" rx="7" fill={isDark ? '#450a0a' : '#fef2f2'} stroke="#ef4444" strokeWidth="1.5" />
-              <text x="12" y="15" fontSize="9.5" fontWeight="800" fill={isDark ? '#fca5a5' : '#b91c1c'}>
+              <rect width="242" height="36" rx="10" fill={isDark ? '#450a0a' : '#fef2f2'} stroke="#ef4444" strokeWidth="1.5" />
+              <text x="12" y="15" fontSize="9.5" fontWeight="800" fontFamily="var(--font-sans)" fill={isDark ? '#fca5a5' : '#b91c1c'}>
                 {pick('FATAL: RADIAL LOAD ON 51105', 'FATAL: BEBAN RADIAL PADA 51105', '致命的警告：51105にラジアル負荷')}
               </text>
-              <text x="12" y="28" fontSize="8.2" fill={isDark ? '#f87171' : '#dc2626'}>
+              <text x="12" y="28" fontSize="8.2" fontFamily="var(--font-sans)" fill={isDark ? '#f87171' : '#dc2626'}>
                 {pick('Thrust balls derail under radial force!', 'Bola dorong keluar jalur akibat gaya radial!', '接触角90°のため玉が脱線破損します！')}
               </text>
             </g>
           ) : isAxialOnNuRoller ? (
             <g transform="translate(382, 8)">
-              <rect width="242" height="36" rx="7" fill={isDark ? '#451a03' : '#fffbeb'} stroke="#f59e0b" strokeWidth="1.5" />
-              <text x="12" y="15" fontSize="9.5" fontWeight="800" fill={isDark ? '#fcd34d' : '#b45309'}>
+              <rect width="242" height="36" rx="10" fill={isDark ? '#451a03' : '#fffbeb'} stroke="#f59e0b" strokeWidth="1.5" />
+              <text x="12" y="15" fontSize="9.5" fontWeight="800" fontFamily="var(--font-sans)" fill={isDark ? '#fcd34d' : '#b45309'}>
                 {pick('AXIAL FLOAT ALERT: NU205', 'PERINGATAN GERAK AKSIAL: NU205', 'アキシアル自由端警告：NU205')}
               </text>
-              <text x="12" y="28" fontSize="8.2" fill={isDark ? '#fbbf24' : '#d97706'}>
+              <text x="12" y="28" fontSize="8.2" fontFamily="var(--font-sans)" fill={isDark ? '#fbbf24' : '#d97706'}>
                 {pick('Ribless inner ring cannot locate axial thrust!', 'Cincin dalam tanpa bibir bebas geser aksial!', 'つば無し内輪はスラスト荷重を拘束できません！')}
               </text>
             </g>
           ) : (
             <g transform="translate(432, 10)">
-              <rect width="192" height="30" rx="7" fill={isDark ? '#064e3b' : '#ecfdf5'} stroke="#10b981" strokeWidth="1.2" />
+              <rect width="192" height="30" rx="15" fill={isDark ? '#064e3b' : '#ecfdf5'} stroke="#10b981" strokeWidth="1.2" />
               <circle cx="15" cy="15" r="4" fill="#10b981" />
-              <text x="26" y="18.5" fontSize="9.2" fontWeight="700" fill={isDark ? '#6ee7b7' : '#047857'}>
+              <text x="26" y="18.5" fontSize="9.2" fontWeight="700" fontFamily="var(--font-sans)" fill={isDark ? '#6ee7b7' : '#047857'}>
                 {pick('LOAD VECTOR WITHIN SPEC', 'ARAH BEBAN SESUAI SPESIFIKASI', '負荷方向・構造適合')}
               </text>
             </g>
@@ -232,8 +232,9 @@ export function BearingBasicsSvg({
             y="52"
             width="404"
             height="394"
-            rx="12"
-            fill={isDark ? 'rgba(15, 23, 42, 0.55)' : 'rgba(255, 255, 255, 0.65)'}
+            rx="14"
+            fill="var(--md-surface-container)"
+            fillOpacity="0.55"
             stroke={cardStroke}
             strokeWidth="1.2"
           />
@@ -278,10 +279,10 @@ export function BearingBasicsSvg({
             </g>
 
             {/* Shaft Label placed cleanly above centerline (clear of Fa arrow & pill below) */}
-            <text x="-94" y="-22" fontSize="8.5" fontWeight="800" fill="#0f172a" textAnchor="middle">
+            <text x="-94" y="-22" fontSize="8.5" fontWeight="800" fontFamily="var(--font-sans)" fill="#0f172a" textAnchor="middle">
               {pick('Shaft Ø25', 'Poros Ø25', '軸 Ø25')}
             </text>
-            <text x="92" y="-12" fontSize="7.5" fontWeight="700" fill="#0f172a" textAnchor="middle">
+            <text x="92" y="-12" fontSize="7.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#0f172a" textAnchor="middle">
               {isRotating ? `${Math.round(rotationAngleDeg)}° ↻` : '0 RPM'}
             </text>
 
@@ -362,7 +363,7 @@ export function BearingBasicsSvg({
                   y1={-Math.min(38, 18 + radialLoadKn * 0.9)}
                   x2="0"
                   y2="-4"
-                  stroke={isFatalRadialOnThrust ? '#ef4444' : '#0284c7'}
+                  stroke={isFatalRadialOnThrust ? '#ef4444' : 'var(--md-primary)'}
                   strokeWidth="3.5"
                   markerEnd={isFatalRadialOnThrust ? 'url(#bbArrowRed)' : 'url(#bbArrowSky)'}
                 />
@@ -371,9 +372,9 @@ export function BearingBasicsSvg({
                   y={-Math.min(38, 18 + radialLoadKn * 0.9) - 18}
                   width="76"
                   height="16"
-                  rx="4"
+                  rx="8"
                   fill={cardBg}
-                  stroke={isFatalRadialOnThrust ? '#ef4444' : '#0284c7'}
+                  stroke={isFatalRadialOnThrust ? '#ef4444' : 'var(--md-primary)'}
                   strokeWidth="1.2"
                 />
                 <text
@@ -381,6 +382,7 @@ export function BearingBasicsSvg({
                   y={-Math.min(38, 18 + radialLoadKn * 0.9) - 7}
                   fontSize="8.8"
                   fontWeight="800"
+                  fontFamily="var(--font-mono)"
                   textAnchor="middle"
                   fill={isFatalRadialOnThrust ? '#ef4444' : dimBlue}
                 >
@@ -406,7 +408,7 @@ export function BearingBasicsSvg({
                   y="10"
                   width="72"
                   height="16"
-                  rx="4"
+                  rx="8"
                   fill={cardBg}
                   stroke={isAxialOnNuRoller ? '#f59e0b' : '#10b981'}
                   strokeWidth="1.2"
@@ -416,6 +418,7 @@ export function BearingBasicsSvg({
                   y="21"
                   fontSize="8.8"
                   fontWeight="800"
+                  fontFamily="var(--font-mono)"
                   textAnchor="middle"
                   fill={isAxialOnNuRoller ? '#f59e0b' : '#10b981'}
                 >
@@ -430,8 +433,8 @@ export function BearingBasicsSvg({
               <line x1="-34" y1="-16" x2="-34" y2="6" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="34" y1="-16" x2="34" y2="6" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="-32" y1="0" x2="32" y2="0" stroke={dimBlue} strokeWidth="1.1" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-              <rect x="-32" y="5" width="64" height="14" rx="3" fill={canvasBg} />
-              <text x="0" y="15" fontSize="8.5" fontWeight="700" textAnchor="middle" fill={dimBlue}>
+              <rect x="-32" y="5" width="64" height="14" rx="4" fill={canvasBg} />
+              <text x="0" y="15" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
                 B = {bearingSpec.widthMm} mm
               </text>
             </g>
@@ -441,8 +444,8 @@ export function BearingBasicsSvg({
               <line x1="-56" y1="-108" x2="8" y2="-108" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="-56" y1="108" x2="8" y2="108" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="0" y1="-105" x2="0" y2="105" stroke={dimBlue} strokeWidth="1.1" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-              <rect x="6" y="-9" width="76" height="18" rx="3" fill={canvasBg} stroke={dimBlue} strokeWidth="0.7" opacity="0.9" />
-              <text x="44" y="3" fontSize="8.5" fontWeight="700" textAnchor="middle" fill={dimBlue}>
+              <rect x="6" y="-9" width="76" height="18" rx="6" fill={canvasBg} stroke={dimBlue} strokeWidth="0.7" opacity="0.95" />
+              <text x="44" y="3" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
                 D = {bearingSpec.outerDiameterMm} mm
               </text>
             </g>
@@ -452,8 +455,8 @@ export function BearingBasicsSvg({
               <line x1="-18" y1="-32" x2="6" y2="-32" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="-18" y1="32" x2="6" y2="32" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
               <line x1="0" y1="-30" x2="0" y2="30" stroke={dimBlue} strokeWidth="1.1" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-              <rect x="4" y="-26" width="32" height="13" rx="2" fill={canvasBg} />
-              <text x="20" y="-17" fontSize="8" fontWeight="700" textAnchor="middle" fill={dimBlue}>
+              <rect x="4" y="-26" width="32" height="13" rx="4" fill={canvasBg} />
+              <text x="20" y="-17" fontSize="8" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
                 d={bearingSpec.boreMm}
               </text>
             </g>
@@ -461,48 +464,48 @@ export function BearingBasicsSvg({
 
           {/* RIGHT TECHNICAL SPEC CARD (x: 432..624, y: 52..446) */}
           <g transform="translate(432, 52)">
-            <rect width="192" height="394" rx="10" fill={cardBg} stroke={cardStroke} strokeWidth="1.2" />
-            <path d="M 0 10 Q 0 0 10 0 L 182 0 Q 192 0 192 10 L 192 30 L 0 30 Z" fill={cardHeaderBg} />
+            <rect width="192" height="394" rx="14" fill={cardBg} stroke={cardStroke} strokeWidth="1.2" />
+            <path d="M 0 14 Q 0 0 14 0 L 178 0 Q 192 0 192 14 L 192 30 L 0 30 Z" fill={cardHeaderBg} />
             <line x1="0" y1="30" x2="192" y2="30" stroke={cardStroke} strokeWidth="1" />
-            <text x="12" y="19" fontSize="10" fontWeight="800" fill={textPrimary}>
+            <text x="12" y="19" fontSize="10" fontWeight="800" fontFamily="var(--font-sans)" fill={textPrimary}>
               {pick('Internal Architecture', 'Arsitektur Internal', '内部構造諸元')}
             </text>
 
             <g transform="translate(12, 48)">
               {/* 1. Rolling Element */}
-              <text x="0" y="0" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="0" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Rolling Element', 'Tipe Elemen', '転動体形式')}
               </text>
-              <text x="0" y="13" fontSize="9.2" fontWeight="700" fill={textPrimary}>
+              <text x="0" y="13" fontSize="9.2" fontWeight="700" fontFamily="var(--font-sans)" fill={textPrimary}>
                 {formatElementLabel(bearingSpec.rollingElement, pick)}
               </text>
 
               {/* 2. Contact Angle */}
-              <text x="0" y="34" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="34" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Contact Angle (α)', 'Sudut Kontak (α)', '接触角 (α)')}
               </text>
-              <text x="0" y="47" fontSize="9.5" fontWeight="800" fill={dimBlue}>
+              <text x="0" y="47" fontSize="9.5" fontWeight="800" fontFamily="var(--font-mono)" fill={dimBlue}>
                 α = {bearingSpec.contactAngleDeg}°
               </text>
 
               {/* 3. Radial Capacity */}
-              <text x="0" y="68" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="68" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Radial Rating (Cr)', 'Kapasitas Radial (Cr)', 'ラジアル定格 (Cr)')}
               </text>
-              <text x="0" y="81" fontSize="9.2" fontWeight="700" fill={bearingSpec.radialCapacity === 'Zero' ? '#ef4444' : '#10b981'}>
+              <text x="0" y="81" fontSize="9.2" fontWeight="700" fontFamily="var(--font-mono)" fill={bearingSpec.radialCapacity === 'Zero' ? '#ef4444' : '#10b981'}>
                 {bearingSpec.radialCapacity} ({bearingSpec.dynamicLoadCrKn} kN)
               </text>
 
               {/* 4. Axial Capacity */}
-              <text x="0" y="102" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="102" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Axial Thrust Capability', 'Kapasitas Aksial', 'アキシアル耐力')}
               </text>
-              <text x="0" y="115" fontSize="9" fontWeight="700" fill={dimBlue}>
+              <text x="0" y="115" fontSize="9" fontWeight="700" fontFamily="var(--font-sans)" fill={dimBlue}>
                 {bearingSpec.axialCapacity}
               </text>
 
               {/* 5. Misalignment */}
-              <text x="0" y="136" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="136" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Misalignment Limit', 'Batas Ketidaksejajaran', '許容傾き角')}
               </text>
               {wrapSvgText(
@@ -513,24 +516,24 @@ export function BearingBasicsSvg({
                 ),
                 27
               ).map((line, i) => (
-                <text key={`mis-${i}`} x="0" y={149 + i * 11} fontSize="8.6" fontWeight="700" fill={textPrimary}>
+                <text key={`mis-${i}`} x="0" y={149 + i * 11} fontSize="8.6" fontWeight="700" fontFamily="var(--font-sans)" fill={textPrimary}>
                   {line}
                 </text>
               ))}
 
               {/* 6. Speed Limits */}
-              <text x="0" y="178" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="178" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Max Speed (Grease / Oil)', 'Kecepatan Maks (Gemuk / Oli)', '許容回転速度（グリース/油）')}
               </text>
-              <text x="0" y="191" fontSize="9.2" fontWeight="700" fill={textPrimary}>
+              <text x="0" y="191" fontSize="9.2" fontWeight="700" fontFamily="var(--font-mono)" fill={textPrimary}>
                 {bearingSpec.limitingSpeedGreaseRpm.toLocaleString()} / {bearingSpec.limitingSpeedOilRpm.toLocaleString()} RPM
               </text>
 
               {/* 7. Seal Configuration */}
-              <text x="0" y="212" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="212" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Seal / Shield Enclosure', 'Pelindung / Seal', 'シール・シールド形式')}
               </text>
-              <text x="0" y="225" fontSize="9.2" fontWeight="800" fill={sealType === '2rs' ? '#10b981' : textPrimary}>
+              <text x="0" y="225" fontSize="9.2" fontWeight="800" fontFamily="var(--font-sans)" fill={sealType === '2rs' ? '#10b981' : textPrimary}>
                 {sealType === 'open'
                   ? pick('OPEN (No Shield/Seal)', 'TERBUKA (Tanpa Seal)', '開放形（シール無し）')
                   : sealType === '2z'
@@ -539,18 +542,18 @@ export function BearingBasicsSvg({
               </text>
 
               {/* Engineering Summary Card (Wrapped safely inside box!) */}
-              <rect x="0" y="242" width="168" height="92" rx="7" fill={cardHeaderBg} stroke={cardStroke} strokeWidth="1" />
-              <text x="9" y="257" fontSize="8" fontWeight="800" fill={dimBlue}>
+              <rect x="0" y="242" width="168" height="92" rx="10" fill={cardHeaderBg} stroke={cardStroke} strokeWidth="1" />
+              <text x="9" y="257" fontSize="8" fontWeight="800" fontFamily="var(--font-sans)" fill={dimBlue}>
                 {pick('TYPICAL USE & CAUTION', 'APLIKASI & PERHATIAN', '主な用途と注意点')}
               </text>
-              <text x="9" y="271" fontSize="7.8" fontWeight="600" fill={textPrimary}>
+              <text x="9" y="271" fontSize="7.8" fontWeight="600" fontFamily="var(--font-sans)" fill={textPrimary}>
                 {wrapSvgText(bearingSpec.typicalApplications[0], 25).slice(0, 2).map((line, idx) => (
                   <tspan key={`app-${idx}`} x="9" dy={idx === 0 ? 0 : 10}>
                     • {line}
                   </tspan>
                 ))}
               </text>
-              <text x="9" y="299" fontSize="7.6" fill={isDark ? '#fca5a5' : '#b91c1c'}>
+              <text x="9" y="299" fontSize="7.6" fontFamily="var(--font-sans)" fill={isDark ? '#fca5a5' : '#b91c1c'}>
                 {wrapSvgText(bearingSpec.cautions[0], 26).slice(0, 3).map((line, idx) => (
                   <tspan key={`caut-${idx}`} x="9" dy={idx === 0 ? 0 : 10}>
                     {idx === 0 ? '⚠ ' : '  '}

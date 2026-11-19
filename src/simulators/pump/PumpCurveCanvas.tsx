@@ -87,7 +87,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
       ctx.stroke();
 
       ctx.fillStyle = isDark ? '#34d399' : '#047857';
-      ctx.font = '600 9.5px system-ui, sans-serif';
+      ctx.font = '600 9.5px "Google Sans", "Outfit", sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('POR (70–120% BEP)', (porX1 + porX2) / 2, pad.top + 12);
       ctx.restore();
@@ -106,7 +106,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
 
       const hVal = Math.round(maxH * (1 - i / yTicks));
       ctx.fillStyle = colors.text;
-      ctx.font = '10px system-ui, sans-serif';
+      ctx.font = '10px "JetBrains Mono", monospace';
       ctx.textAlign = 'right';
       ctx.fillText(`${hVal}`, pad.left - 6, y + 3);
 
@@ -126,7 +126,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
 
       const qVal = Math.round((maxQ * i) / xTicks);
       ctx.fillStyle = colors.text;
-      ctx.font = '10px system-ui, sans-serif';
+      ctx.font = '10px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.fillText(`${qVal}`, x, pad.top + plotH + 14);
     }
@@ -142,7 +142,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
 
     // Axis titles
     ctx.fillStyle = colors.text;
-    ctx.font = '600 10.5px system-ui, sans-serif';
+    ctx.font = '600 10.5px "Google Sans", "Outfit", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('Flow Rate Q (m³/h)', pad.left + plotW / 2, height - 6);
 
@@ -264,7 +264,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
-    ctx.font = '600 9.5px system-ui, sans-serif';
+    ctx.font = '600 9.5px "Google Sans", "Outfit", sans-serif';
     ctx.fillText('BEP', bepX - 10, bepY + 16);
     ctx.restore();
 
@@ -292,7 +292,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
     ctx.stroke();
 
     ctx.fillStyle = colors.text;
-    ctx.font = '700 10px system-ui, sans-serif';
+    ctx.font = '700 10px "JetBrains Mono", monospace';
     const labelX = opX > pad.left + plotW * 0.72 ? opX - 72 : opX + 9;
     const labelY = opY < pad.top + 24 ? opY + 14 : opY - 8;
     ctx.fillText(`(${op.flowM3h.toFixed(1)}, ${op.headM.toFixed(1)}m)`, labelX, labelY);
@@ -321,7 +321,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
         <div>
-          <span className="font-semibold text-slate-700 dark:text-slate-200">
+          <span className="font-bold text-[var(--md-on-surface)]">
             {pick(
               'Pump H-Q, System & Efficiency Curves',
               'Kurva H-Q Pompa, Sistem & Efisiensi',
@@ -329,7 +329,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
             )}
           </span>
           {onSelectTargetFlow && (
-            <span className="ml-2 text-[11px] font-medium text-cyan-600 dark:text-cyan-400">
+            <span className="ml-2 text-[11px] font-semibold text-[var(--md-primary)]">
               {pick(
                 '(Click chart to VFD Auto-Tune)',
                 '(Klik grafik untuk Auto-Tune VFD)',
@@ -338,7 +338,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
             </span>
           )}
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-600 dark:text-slate-400">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] text-[var(--md-on-surface-variant)]">
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-0.5 w-3.5 bg-cyan-500" /> {pick('Pump H-Q', 'H-Q Pompa', 'ポンプH-Q')}
           </span>
@@ -355,7 +355,7 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
             params.impellerTrimPct < 100 ||
             params.parallelPumps) && (
             <span className="flex items-center gap-1.5">
-              <span className="inline-block h-0.5 w-3.5 border-t-2 border-dashed border-slate-400" /> Rated 1×
+              <span className="inline-block h-0.5 w-3.5 border-t-2 border-dashed border-[var(--md-outline)]" /> Rated 1×
             </span>
           )}
         </div>
@@ -365,15 +365,15 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
         ref={canvasRef}
         onClick={handleCanvasClick}
         title="Click anywhere on the H-Q chart to auto-tune VFD RPM to that target flow"
-        className={`w-full h-[270px] rounded-xl border border-slate-200 dark:border-slate-800 ${
+        className={`h-[270px] w-full rounded-[22px] border border-[var(--md-outline-variant)]/60 ${
           onSelectTargetFlow ? 'cursor-crosshair' : ''
         }`}
       />
 
       {/* NPSHa vs NPSHr Bar Indicator */}
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900/60">
-        <div className="flex items-center justify-between text-xs mb-2">
-          <span className="font-semibold text-slate-700 dark:text-slate-200">
+      <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+        <div className="mb-2 flex items-center justify-between text-xs">
+          <span className="font-bold text-[var(--md-on-surface)]">
             {pick(
               'Cavitation Margin: NPSHa vs NPSHr',
               'Margin Kavitasi: NPSHa vs NPSHr',
@@ -381,9 +381,9 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
             )}
           </span>
           <span
-            className={`font-semibold ${
+            className={`font-mono font-bold ${
               op.isCavitating
-                ? 'text-red-600 dark:text-red-400'
+                ? 'text-rose-600 dark:text-rose-400'
                 : op.npshMarginM < 1.0
                   ? 'text-amber-600 dark:text-amber-400'
                   : 'text-emerald-600 dark:text-emerald-400'
@@ -397,29 +397,29 @@ export function PumpCurveCanvas({ params, op, onSelectTargetFlow }: PumpCurveCan
 
         <div className="space-y-1.5 text-[11px]">
           <div className="flex items-center gap-2">
-            <span className="w-14 font-medium text-slate-600 dark:text-slate-400">NPSHa</span>
-            <div className="flex-1 h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+            <span className="w-14 font-medium text-[var(--md-on-surface-variant)]">NPSHa</span>
+            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
               <div
                 className={`h-full rounded-full transition-all ${
-                  op.isCavitating ? 'bg-red-500' : 'bg-cyan-500'
+                  op.isCavitating ? 'bg-rose-500' : 'bg-[var(--md-primary)]'
                 }`}
                 style={{ width: `${npshaPct}%` }}
               />
             </div>
-            <span className="w-14 text-right font-mono font-semibold text-slate-800 dark:text-slate-200">
+            <span className="w-14 text-right font-mono font-semibold text-[var(--md-on-surface)]">
               {op.npshaM.toFixed(2)} m
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="w-14 font-medium text-slate-600 dark:text-slate-400">NPSHr</span>
-            <div className="flex-1 h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+            <span className="w-14 font-medium text-[var(--md-on-surface-variant)]">NPSHr</span>
+            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
               <div
                 className="h-full rounded-full bg-amber-500 transition-all"
                 style={{ width: `${npshrPct}%` }}
               />
             </div>
-            <span className="w-14 text-right font-mono font-semibold text-slate-800 dark:text-slate-200">
+            <span className="w-14 text-right font-mono font-semibold text-[var(--md-on-surface)]">
               {op.npshrM.toFixed(2)} m
             </span>
           </div>

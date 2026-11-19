@@ -162,14 +162,14 @@ export function RollerChainLabSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD engineering palette
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
-  const panelFill = isDark ? '#1e293b' : '#ffffff';
-  const panelStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#475569';
-  const dimLine = isDark ? '#64748b' : '#94a3b8';
+  // Theme-aware CAD engineering palette harmonized with Material 3 Expressive tokens
+  const bgFill = 'var(--md-surface-container-lowest)';
+  const gridStroke = isDark ? 'rgba(148,163,184,0.08)' : 'rgba(15,23,42,0.05)';
+  const panelFill = 'var(--md-surface-container)';
+  const panelStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
+  const dimLine = 'var(--md-outline)';
 
   // Visual size scaling from RS 40 (12.7 mm) up to RS 160 (50.8 mm)
   const sizeScale = Math.pow(metrics.spec.pitchMm / 19.05, 0.55);
@@ -390,18 +390,18 @@ export function RollerChainLabSvg({
   return (
     <div className="space-y-4">
       {/* Main 2D CAD Sprocket & Articulated Roller Chain Drive Card */}
-      <div className="overflow-hidden glass-panel rounded-2xl shadow-xs">
+      <div className="glass-panel overflow-hidden rounded-[28px]">
         {/* Card Header Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'ANSI B29.1 Roller Chain & Sprocket Drive Schematic',
                 'Skema Penggerak Rantai Rol & Sproket ANSI B29.1',
                 'ANSI B29.1 ローラチェーン＆スプロケット伝動機構図'
               )}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-primary-container)]">
               {metrics.spec.rsLabel} ({inputs.chainCode} / {metrics.spec.isoCode}) · p ={' '}
               {metrics.spec.pitchMm} mm
             </span>
@@ -422,7 +422,7 @@ export function RollerChainLabSvg({
             <span
               className={`rounded-full px-2.5 py-0.5 font-semibold ${
                 metrics.lubeAdequate && inputs.lubeMethod !== 'Dry'
-                  ? 'bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300'
+                  ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
                   : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
               }`}
             >
@@ -536,7 +536,7 @@ export function RollerChainLabSvg({
                 y="324"
                 width="360"
                 height="18"
-                rx="4"
+                rx="9"
                 fill={panelFill}
                 stroke="#f59e0b"
                 strokeWidth="1"
@@ -549,6 +549,7 @@ export function RollerChainLabSvg({
                 fill={isDark ? '#fde68a' : '#92400e'}
                 fontSize="9.5"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
               >
                 {pick(
                   'TYPE C OIL BATH SUMP — Lower chain immersed (v > 2.2 m/s)',
@@ -567,17 +568,17 @@ export function RollerChainLabSvg({
                 y="0"
                 width="96"
                 height="24"
-                rx="5"
+                rx="10"
                 fill={panelFill}
-                stroke="#0284c7"
-                strokeWidth="1.3"
+                stroke="var(--md-primary)"
+                strokeWidth="1.2"
               />
               <rect
                 x="6"
                 y="5"
                 width="20"
                 height="14"
-                rx="2"
+                rx="4"
                 fill="#f59e0b"
                 opacity="0.85"
               />
@@ -585,9 +586,10 @@ export function RollerChainLabSvg({
                 x="60"
                 y="15.5"
                 textAnchor="middle"
-                fill={isDark ? '#7dd3fc' : '#0369a1'}
+                fill="var(--md-primary)"
                 fontSize="9"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
               >
                 {pick('DRIP OILER', 'TETES OLI', '滴下オイラ')}
               </text>
@@ -629,11 +631,11 @@ export function RollerChainLabSvg({
             y={cy - 22}
             width="192"
             height="18"
-            rx="4"
+            rx="9"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="0.9"
-            opacity="0.92"
+            opacity="0.94"
           />
           <text
             x={(cx1 + cx2) / 2}
@@ -642,6 +644,7 @@ export function RollerChainLabSvg({
             fill={textMuted}
             fontSize="10"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
           >
             {pick('Center Distance', 'Jarak Pusat', '軸間距離')} C ={' '}
             {inputs.centerDistanceMm} mm
@@ -874,11 +877,11 @@ export function RollerChainLabSvg({
             <rect
               width="210"
               height="22"
-              rx="5"
+              rx="11"
               fill={panelFill}
               stroke={panelStroke}
               strokeWidth="1.1"
-              opacity="0.95"
+              opacity="0.96"
             />
             <text
               x="105"
@@ -887,6 +890,7 @@ export function RollerChainLabSvg({
               fill={textPrimary}
               fontSize="10"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {pick('TIGHT SPAN', 'SISI TEGANG', '張り側スパン')} → (v ={' '}
               {metrics.linearSpeedMs.toFixed(2)} m/s)
@@ -910,7 +914,7 @@ export function RollerChainLabSvg({
               y={Math.min(296, sagPeakY + 8)}
               width="188"
               height="22"
-              rx="6"
+              rx="11"
               fill={panelFill}
               stroke="#f59e0b"
               strokeWidth="1.3"
@@ -923,6 +927,7 @@ export function RollerChainLabSvg({
               fill={isDark ? '#fde68a' : '#b45309'}
               fontSize="10"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               S = {metrics.slackSagMm.toFixed(1)} mm ({inputs.slackSagPct.toFixed(1)}
               % C)
@@ -936,7 +941,7 @@ export function RollerChainLabSvg({
               y1="268"
               x2={cx1 - r1 * 0.5}
               y2={cy + r1 * 0.7}
-              stroke="#0ea5e9"
+              stroke="var(--md-primary)"
               strokeWidth="1.2"
               strokeDasharray="3 2"
             />
@@ -945,7 +950,7 @@ export function RollerChainLabSvg({
               y="246"
               width="138"
               height="42"
-              rx="6"
+              rx="10"
               fill={panelFill}
               stroke={panelStroke}
               strokeWidth="1.2"
@@ -954,9 +959,10 @@ export function RollerChainLabSvg({
               x="81"
               y="263"
               textAnchor="middle"
-              fill={isDark ? '#38bdf8' : '#0284c7'}
+              fill="var(--md-primary)"
               fontSize="10"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               {pick('Driver', 'Penggerak', '駆動')} z₁ = {inputs.z1}T
             </text>
@@ -966,6 +972,7 @@ export function RollerChainLabSvg({
               textAnchor="middle"
               fill={textMuted}
               fontSize="9"
+              fontFamily="var(--font-mono)"
             >
               D₁={metrics.pitchDia1Mm.toFixed(0)}mm · {inputs.driverRpm}RPM
             </text>
@@ -978,7 +985,7 @@ export function RollerChainLabSvg({
               y1="268"
               x2={cx2 + r2 * 0.5}
               y2={cy + r2 * 0.7}
-              stroke="#f59e0b"
+              stroke="var(--md-primary)"
               strokeWidth="1.2"
               strokeDasharray="3 2"
             />
@@ -987,7 +994,7 @@ export function RollerChainLabSvg({
               y="246"
               width="138"
               height="42"
-              rx="6"
+              rx="10"
               fill={panelFill}
               stroke={panelStroke}
               strokeWidth="1.2"
@@ -996,9 +1003,10 @@ export function RollerChainLabSvg({
               x="699"
               y="263"
               textAnchor="middle"
-              fill={isDark ? '#fbbf24' : '#b45309'}
+              fill="var(--md-primary)"
               fontSize="10"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               {pick('Driven', 'Digerakkan', '従動')} z₂ = {inputs.z2}T
             </text>
@@ -1008,6 +1016,7 @@ export function RollerChainLabSvg({
               textAnchor="middle"
               fill={textMuted}
               fontSize="9"
+              fontFamily="var(--font-mono)"
             >
               D₂={metrics.pitchDia2Mm.toFixed(0)}mm ·{' '}
               {metrics.drivenRpm.toFixed(0)}RPM
@@ -1019,7 +1028,7 @@ export function RollerChainLabSvg({
             <rect
               width="142"
               height="74"
-              rx="8"
+              rx="12"
               fill={panelFill}
               stroke={
                 metrics.hookWearSeverityPct >= 55
@@ -1036,6 +1045,7 @@ export function RollerChainLabSvg({
               fill={textPrimary}
               fontSize="9"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 'TOOTH HOOK WEAR',
@@ -1111,17 +1121,17 @@ export function RollerChainLabSvg({
       </div>
 
       {/* 10-Pitch Stainless Vernier Chain Wear Gauge Card */}
-      <div className="overflow-hidden glass-panel rounded-2xl shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="glass-panel overflow-hidden rounded-[28px]">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 '10-Pitch Vernier Chain Wear Elongation Gauge',
                 'Alat Ukur Vernier Perpanjangan Aus Rantai 10-Pitch',
                 '10リンク・ノギス式チェーン摩耗伸び測定ゲージ'
               )}
             </h4>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] text-[var(--md-on-surface-variant)]">
               {pick(
                 `Nominal 10×p = ${metrics.nominal10PitchMm.toFixed(1)} mm · Case-Hardened Limit (1.5%) = ${metrics.limit15PctMm.toFixed(1)} mm · Standard Max Limit (3.0%) = ${metrics.limit30PctMm.toFixed(1)} mm`,
                 `Nominal 10×p = ${metrics.nominal10PitchMm.toFixed(1)} mm · Batas Diperkeras (1,5%) = ${metrics.limit15PctMm.toFixed(1)} mm · Batas Maks Standar (3,0%) = ${metrics.limit30PctMm.toFixed(1)} mm`,
@@ -1251,6 +1261,7 @@ export function RollerChainLabSvg({
             fill={isDark ? '#6ee7b7' : '#047857'}
             fontSize="9.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             0% ({metrics.nominal10PitchMm.toFixed(1)})
           </text>
@@ -1270,6 +1281,7 @@ export function RollerChainLabSvg({
             fill={isDark ? '#fde68a' : '#b45309'}
             fontSize="9.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             1.5% ({metrics.limit15PctMm.toFixed(1)})
           </text>
@@ -1289,6 +1301,7 @@ export function RollerChainLabSvg({
             fill={isDark ? '#fda4af' : '#be123c'}
             fontSize="9.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             3.0% ({metrics.limit30PctMm.toFixed(1)})
           </text>
@@ -1403,7 +1416,7 @@ export function RollerChainLabSvg({
             y="126"
             width="250"
             height="21"
-            rx="5"
+            rx="10.5"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
@@ -1415,6 +1428,7 @@ export function RollerChainLabSvg({
             fill={textPrimary}
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             L₁₀ = {metrics.measured10PitchMm.toFixed(2)} mm (+
             {(metrics.measured10PitchMm - metrics.nominal10PitchMm).toFixed(2)}{' '}

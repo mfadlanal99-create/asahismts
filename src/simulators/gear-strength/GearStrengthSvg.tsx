@@ -217,12 +217,12 @@ export function GearStrengthSvg({
   const wn_len = wt_len / Math.cos(alphaRad);
 
   // Theme Colors
-  const cBg = isDark ? '#0b1120' : '#f8fafc';
-  const cGrid = isDark ? '#1e293b' : '#e2e8f0';
-  const cTextPrimary = isDark ? '#f8fafc' : '#0f172a';
-  const cTextSecondary = isDark ? '#94a3b8' : '#475569';
-  const cBorder = isDark ? '#334155' : '#cbd5e1';
-  const cCardBg = isDark ? '#1e293b' : '#ffffff';
+  const cBg = 'var(--md-surface-container-lowest)';
+  const cGrid = 'var(--md-surface-container-high)';
+  const cTextPrimary = 'var(--md-on-surface)';
+  const cTextSecondary = 'var(--md-on-surface-variant)';
+  const cBorder = 'var(--md-outline-variant)';
+  const cCardBg = 'var(--md-surface-container-low)';
 
   const statusBadge =
     status === 'SAFE'
@@ -232,10 +232,11 @@ export function GearStrengthSvg({
         : { bg: '#ef4444', text: '#ffffff', label: 'FAIL' };
 
   return (
-    <div className="glass-panel relative flex w-full items-center justify-center overflow-hidden rounded-2xl p-4 sm:p-5">
+    <div className="glass-panel relative flex w-full items-center justify-center overflow-hidden rounded-[28px] p-4 sm:p-5">
       <svg
         viewBox={`0 0 ${svgW} ${svgH}`}
-        className="w-full h-auto max-h-[480px] select-none font-sans"
+        className="w-full h-auto max-h-[480px] select-none"
+        fontFamily="var(--font-sans)"
         aria-label="Gear Strength CAD Simulation"
       >
         <defs>
@@ -325,13 +326,13 @@ export function GearStrengthSvg({
             y="0"
             width="370"
             height="36"
-            rx="8"
+            rx="12"
             fill={cCardBg}
             stroke={cBorder}
             strokeWidth="1.2"
             fillOpacity="0.95"
           />
-          <text x="14" y="23" fill={cTextPrimary} fontSize="13" fontWeight="800">
+          <text x="14" y="23" fill={cTextPrimary} fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
             {isHelical
               ? `HELICAL (ψ=${inputs.helixAngleDeg}°) • ${z1}T : ${z2}T • u=${gearRatio.toFixed(2)}:1`
               : `SPUR GEAR PAIR • ${z1}T : ${z2}T • u=${gearRatio.toFixed(2)}:1 • m=${inputs.moduleMm}mm`}
@@ -344,7 +345,7 @@ export function GearStrengthSvg({
             y="0"
             width="376"
             height="36"
-            rx="8"
+            rx="12"
             fill={cCardBg}
             stroke={cBorder}
             strokeWidth="1.2"
@@ -358,10 +359,11 @@ export function GearStrengthSvg({
             fill={statusBadge.text}
             fontSize="11"
             fontWeight="800"
+            fontFamily="var(--font-sans)"
           >
             {statusBadge.label}
           </text>
-          <text x="96" y="23" fill={cTextPrimary} fontSize="12.5" fontWeight="700">
+          <text x="96" y="23" fill={cTextPrimary} fontSize="12.5" fontWeight="700" fontFamily="var(--font-mono)">
             σ_b {lewisBendingStressMpa.toFixed(0)} MPa (SF {bendingSafetyFactor.toFixed(2)})  •  σ_c {contactStressMpa.toFixed(0)} MPa (SH {contactSafetyFactor.toFixed(2)})
           </text>
         </g>
@@ -675,7 +677,7 @@ export function GearStrengthSvg({
             y="-12"
             width="148"
             height="24"
-            rx="6"
+            rx="8"
             fill={cCardBg}
             stroke={cBorder}
             strokeWidth="1.2"
@@ -687,6 +689,7 @@ export function GearStrengthSvg({
             fill={cTextPrimary}
             fontSize="13"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
           >
             a = {centerDistanceMm.toFixed(1)} mm
           </text>
@@ -702,16 +705,16 @@ export function GearStrengthSvg({
             y="0"
             width="248"
             height="52"
-            rx="8"
+            rx="12"
             fill={cCardBg}
-            stroke="#6366f1"
+            stroke="var(--md-primary)"
             strokeWidth="1.2"
             fillOpacity="0.95"
           />
-          <text x="124" y="21" textAnchor="middle" fill="#6366f1" fontSize="12.5" fontWeight="800">
+          <text x="124" y="21" textAnchor="middle" fill="var(--md-primary)" fontSize="12" fontWeight="800" fontFamily="var(--font-mono)">
             PINION (z₁={z1}) • d₁ = {pitchDiameter1Mm.toFixed(1)} mm
           </text>
-          <text x="124" y="40" textAnchor="middle" fill={cTextPrimary} fontSize="12" fontWeight="700">
+          <text x="124" y="40" textAnchor="middle" fill={cTextPrimary} fontSize="12" fontWeight="700" fontFamily="var(--font-mono)">
             {inputs.pinionRpm} RPM ↻  •  T₁ = {pinionTorqueNm.toFixed(1)} N·m
           </text>
         </g>
@@ -723,18 +726,18 @@ export function GearStrengthSvg({
             y="0"
             width="248"
             height="52"
-            rx="8"
+            rx="12"
             fill={cCardBg}
             stroke={cBorder}
             strokeWidth="1.2"
             fillOpacity="0.95"
           />
-          <text x="124" y="21" textAnchor="middle" fill={cTextPrimary} fontSize="12.5" fontWeight="800">
+          <text x="124" y="21" textAnchor="middle" fill={cTextPrimary} fontSize="12" fontWeight="800" fontFamily="var(--font-mono)">
             <tspan fill="#ef4444">Wₜ={tangentialForceN.toFixed(0)} N</tspan>
             {'  •  '}
             <tspan fill="#0284c7">Wᵣ={radialForceN.toFixed(0)} N</tspan>
           </text>
-          <text x="124" y="40" textAnchor="middle" fill={cTextSecondary} fontSize="12" fontWeight="700">
+          <text x="124" y="40" textAnchor="middle" fill={cTextSecondary} fontSize="11.5" fontWeight="700" fontFamily="var(--font-mono)">
             {isHelical
               ? `Axial Thrust Wₐ = ${axialForceN.toFixed(0)} N`
               : `Resultant Load Wₙ = ${normalForceN.toFixed(0)} N`}
@@ -748,16 +751,16 @@ export function GearStrengthSvg({
             y="0"
             width="248"
             height="52"
-            rx="8"
+            rx="12"
             fill={cCardBg}
-            stroke="#0284c7"
+            stroke="var(--md-secondary)"
             strokeWidth="1.2"
             fillOpacity="0.95"
           />
-          <text x="124" y="21" textAnchor="middle" fill="#0284c7" fontSize="12.5" fontWeight="800">
+          <text x="124" y="21" textAnchor="middle" fill="var(--md-secondary)" fontSize="12" fontWeight="800" fontFamily="var(--font-mono)">
             GEAR (z₂={z2}) • d₂ = {pitchDiameter2Mm.toFixed(1)} mm
           </text>
-          <text x="124" y="40" textAnchor="middle" fill={cTextPrimary} fontSize="12" fontWeight="700">
+          <text x="124" y="40" textAnchor="middle" fill={cTextPrimary} fontSize="12" fontWeight="700" fontFamily="var(--font-mono)">
             {gearRpm.toFixed(1)} RPM ↺  •  T₂ = {(pinionTorqueNm * gearRatio).toFixed(1)} N·m
           </text>
         </g>

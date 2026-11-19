@@ -25,18 +25,18 @@ export function FitsToleranceSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD engineering palette
+  // Theme-aware CAD engineering palette harmonized with Material You tokens
   const palette = {
-    canvasBg: isDark ? '#0f172a' : '#f8fafc',
-    panelBg: isDark ? '#1e293b' : '#ffffff',
-    panelSubBg: isDark ? '#0f172a' : '#f1f5f9',
-    panelStroke: isDark ? '#334155' : '#cbd5e1',
-    pillBg: isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.94)',
-    gridLine: isDark ? '#1e293b' : '#e2e8f0',
-    gridMajor: isDark ? '#334155' : '#cbd5e1',
-    textPrimary: isDark ? '#f8fafc' : '#0f172a',
-    textSecondary: isDark ? '#cbd5e1' : '#334155',
-    textMuted: isDark ? '#94a3b8' : '#64748b',
+    canvasBg: 'var(--md-surface-container-low)',
+    panelBg: 'var(--md-surface-container)',
+    panelSubBg: 'var(--md-surface-container-low)',
+    panelStroke: 'var(--md-outline-variant)',
+    pillBg: 'var(--md-surface-container-low)',
+    gridLine: 'var(--md-outline-variant)',
+    gridMajor: 'var(--md-outline-variant)',
+    textPrimary: 'var(--md-on-surface)',
+    textSecondary: 'var(--md-on-surface)',
+    textMuted: 'var(--md-on-surface-variant)',
     zeroLine: isDark ? '#22d3ee' : '#0891b2',
     holeStroke: isDark ? '#22d3ee' : '#0891b2',
     holeFill: isDark ? 'rgba(34, 211, 238, 0.24)' : 'rgba(6, 182, 212, 0.18)',
@@ -79,8 +79,8 @@ export function FitsToleranceSvg({
           stroke: isDark ? '#38bdf8' : '#0284c7',
           fill: isDark ? 'rgba(56, 189, 248, 0.28)' : 'rgba(2, 132, 199, 0.20)',
           badgeClass:
-            'bg-sky-100 text-sky-800 border-sky-300 dark:bg-sky-500/20 dark:text-sky-300 dark:border-sky-700/60',
-          dotClass: 'bg-sky-500',
+            'bg-emerald-500/15 text-emerald-700 border-emerald-300/60 dark:text-emerald-300 dark:border-emerald-700/60',
+          dotClass: 'bg-emerald-500',
           label: pick('CLEARANCE FIT', 'SUAIAN LONGGAR', 'すきまばめ'),
         }
       : calc.fitCategory === 'transition'
@@ -158,11 +158,11 @@ export function FitsToleranceSvg({
   const shaftGaugePass = shaftGoPasses && !shaftNoGoPasses;
 
   return (
-    <div className="glass-panel overflow-hidden rounded-2xl shadow-xs">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
       {/* Top CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold tracking-wider text-slate-600 uppercase dark:text-slate-300">
+          <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
             {pick(
               'ISO 286-2 Tolerance & Shrink-Fit CAD Cross-Section',
               'Penampang CAD Toleransi ISO 286-2 & Shrink-Fit',
@@ -176,17 +176,17 @@ export function FitsToleranceSvg({
             Ø{calc.nominalMm} {calc.holeClass}/{calc.shaftClass} · {fitColor.label}
           </span>
         </div>
-        <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-3 text-xs text-[var(--md-on-surface-variant)]">
           <span>
             {pick('Temp:', 'Suhu:', '組立温度:')}{' '}
-            <strong className="font-mono text-slate-800 dark:text-slate-200">
+            <strong className="font-mono text-[var(--md-on-surface)]">
               {calc.processTempC > 0 ? `+${calc.processTempC}` : calc.processTempC} °C
             </strong>
           </span>
           <span>·</span>
           <span>
             Δd:{' '}
-            <strong className="font-mono text-cyan-600 dark:text-cyan-400">
+            <strong className="font-mono text-[var(--md-primary)]">
               {calc.thermalDiameterChangeUm.toFixed(1)} µm
             </strong>
           </span>
@@ -350,7 +350,14 @@ export function FitsToleranceSvg({
 
         {/* Full SVG Canvas Background with Blueprint Grid */}
         <rect x="0" y="0" width="880" height="436" fill={palette.canvasBg} />
-        <rect x="0" y="0" width="880" height="436" fill="url(#fits-cad-grid)" />
+        <rect
+          x="0"
+          y="0"
+          width="880"
+          height="436"
+          fill="url(#fits-cad-grid)"
+          opacity={isDark ? '0.28' : '0.45'}
+        />
 
         {/* ================== LEFT PANEL: ISO 286 TOLERANCE ZONE CHART ================== */}
         <rect
@@ -358,7 +365,7 @@ export function FitsToleranceSvg({
           y="10"
           width="422"
           height="416"
-          rx="12"
+          rx="18"
           fill={palette.panelBg}
           stroke={palette.panelStroke}
           strokeWidth="1.2"
@@ -371,7 +378,7 @@ export function FitsToleranceSvg({
           fill={palette.textPrimary}
           fontSize="11"
           fontWeight="800"
-          fontFamily="ui-sans-serif, system-ui, sans-serif"
+          fontFamily="var(--font-sans)"
         >
           {pick(
             `ISO 286 Zones (µm) — Nominal Ø${calc.nominalMm}.000 mm`,
@@ -415,7 +422,7 @@ export function FitsToleranceSvg({
               }
               fontSize="8.5"
               fontWeight="800"
-              fontFamily="ui-monospace, monospace"
+              fontFamily="var(--font-mono)"
             >
               {isHeatingHub
                 ? `Hub +${Math.round(thermalShiftUm)}µm (${calc.processTempC}°C)`
@@ -442,7 +449,7 @@ export function FitsToleranceSvg({
           fill={palette.textMuted}
           fontSize="8.5"
           fontWeight="700"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           µm
         </text>
@@ -464,7 +471,7 @@ export function FitsToleranceSvg({
           fill={palette.textPrimary}
           fontSize="9.5"
           fontWeight="800"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {calc.holeClass}
         </text>
@@ -491,7 +498,7 @@ export function FitsToleranceSvg({
                 fill={isSelected ? palette.textPrimary : palette.textMuted}
                 fontSize={isSelected ? '9.5' : '9'}
                 fontWeight={isSelected ? '800' : '600'}
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {sc.id}
               </text>
@@ -533,7 +540,7 @@ export function FitsToleranceSvg({
                     fill={palette.zeroLine}
                     fontSize="8.5"
                     fontWeight="800"
-                    fontFamily="ui-monospace, monospace"
+                    fontFamily="var(--font-mono)"
                   >
                     0 µm
                   </text>
@@ -546,7 +553,7 @@ export function FitsToleranceSvg({
                   fill={palette.textMuted}
                   fontSize="8.5"
                   fontWeight="600"
-                  fontFamily="ui-monospace, monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {tick > 0 ? `+${tick}` : `${tick}`}
                 </text>
@@ -649,7 +656,7 @@ export function FitsToleranceSvg({
             fill={palette.holeStroke}
             fontSize="8.5"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             ES +{calc.ES}µm
           </text>
@@ -672,7 +679,7 @@ export function FitsToleranceSvg({
             fill={palette.holeStroke}
             fontSize="8.5"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             EI {calc.EI}µm
           </text>
@@ -709,7 +716,7 @@ export function FitsToleranceSvg({
                 fill={fitColor.stroke}
                 fontSize="8.5"
                 fontWeight="800"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 es {dev.upper >= 0 ? `+${dev.upper}` : dev.upper}µm
               </text>
@@ -731,7 +738,7 @@ export function FitsToleranceSvg({
                 fill={fitColor.stroke}
                 fontSize="8.5"
                 fontWeight="800"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 ei {dev.lower >= 0 ? `+${dev.lower}` : dev.lower}µm
               </text>
@@ -755,7 +762,7 @@ export function FitsToleranceSvg({
           fill={palette.textSecondary}
           fontSize="9"
           fontWeight="700"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {pick(
             `HOLE ${calc.holeClass}: D_min = ${calc.holeMinMm.toFixed(3)} mm (Go) | D_max = ${calc.holeMaxMm.toFixed(3)} mm (No-Go)`,
@@ -769,7 +776,7 @@ export function FitsToleranceSvg({
           fill={palette.textSecondary}
           fontSize="9"
           fontWeight="700"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {pick(
             `SHAFT ${calc.shaftClass}: d_max = ${calc.shaftMaxMm.toFixed(3)} mm (Go) | d_min = ${calc.shaftMinMm.toFixed(3)} mm (No-Go)`,
@@ -791,7 +798,7 @@ export function FitsToleranceSvg({
           fill={fitColor.stroke}
           fontSize="9.5"
           fontWeight="800"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {calc.fitCategory === 'clearance'
             ? pick(
@@ -817,7 +824,7 @@ export function FitsToleranceSvg({
           fill={palette.textMuted}
           fontSize="8.5"
           fontWeight="600"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {pick(
             `Hole T_H = ${calc.holeToleranceUm} µm + Shaft T_S = ${calc.shaftToleranceUm} µm → Fit Band = ${calc.holeToleranceUm + calc.shaftToleranceUm} µm`,
@@ -832,7 +839,7 @@ export function FitsToleranceSvg({
           y="10"
           width="424"
           height="416"
-          rx="12"
+          rx="18"
           fill={palette.panelBg}
           stroke={palette.panelStroke}
           strokeWidth="1.2"
@@ -844,7 +851,7 @@ export function FitsToleranceSvg({
           fill={palette.textPrimary}
           fontSize="11"
           fontWeight="800"
-          fontFamily="ui-sans-serif, system-ui, sans-serif"
+          fontFamily="var(--font-sans)"
         >
           {pick(
             'Machined Shaft & Hub Section + Go/No-Go Gauges',
@@ -877,7 +884,7 @@ export function FitsToleranceSvg({
           }
           fontSize="9"
           fontWeight="800"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {calc.effectiveInterferenceUm > 0
             ? pick(
@@ -1176,7 +1183,7 @@ export function FitsToleranceSvg({
             fill={palette.textPrimary}
             fontSize="9.5"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             Ø{calc.nominalMm} {calc.shaftClass}
           </text>
@@ -1259,7 +1266,7 @@ export function FitsToleranceSvg({
             fill={palette.textSecondary}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             L = {calc.engagementLengthMm} mm
           </text>
@@ -1299,7 +1306,7 @@ export function FitsToleranceSvg({
           }
           fontSize="9.5"
           fontWeight="800"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {calc.canDropInWithoutPress
             ? pick(
@@ -1320,7 +1327,7 @@ export function FitsToleranceSvg({
           fill={palette.textSecondary}
           fontSize="8.5"
           fontWeight="600"
-          fontFamily="ui-monospace, monospace"
+          fontFamily="var(--font-mono)"
         >
           {pick(
             `Thermal Δd = ${calc.thermalDiameterChangeUm.toFixed(1)} µm · Safe Drop-In Margin ≥ +${calc.safeAssemblyMarginUm} µm`,
@@ -1348,7 +1355,7 @@ export function FitsToleranceSvg({
             fill={palette.textPrimary}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-sans-serif, system-ui, sans-serif"
+            fontFamily="var(--font-sans)"
           >
             {pick(
               `Plug Gauge (${calc.holeClass})`,
@@ -1371,7 +1378,7 @@ export function FitsToleranceSvg({
             fill="#ffffff"
             fontSize="8.5"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {holeGaugePass
               ? pick('PASS', 'LULUS', '合格')
@@ -1417,7 +1424,7 @@ export function FitsToleranceSvg({
             fill={holeGoEnters ? (isDark ? '#6ee7b7' : '#047857') : '#f43f5e'}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {holeGoEnters ? '✓' : '✗'} GO: Ø{calc.holeMinMm.toFixed(3)} mm
           </text>
@@ -1427,7 +1434,7 @@ export function FitsToleranceSvg({
             fill={!holeNoGoEnters ? (isDark ? '#6ee7b7' : '#047857') : '#f43f5e'}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {!holeNoGoEnters ? '✓' : '✗'} NO-GO: Ø{calc.holeMaxMm.toFixed(3)} mm
           </text>
@@ -1449,7 +1456,7 @@ export function FitsToleranceSvg({
             fill={palette.textPrimary}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-sans-serif, system-ui, sans-serif"
+            fontFamily="var(--font-sans)"
           >
             {pick(
               `Snap Gauge (${calc.shaftClass})`,
@@ -1472,7 +1479,7 @@ export function FitsToleranceSvg({
             fill="#ffffff"
             fontSize="8.5"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {shaftGaugePass
               ? pick('PASS', 'LULUS', '合格')
@@ -1532,7 +1539,7 @@ export function FitsToleranceSvg({
             fill={shaftGoPasses ? (isDark ? '#6ee7b7' : '#047857') : '#f43f5e'}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {shaftGoPasses ? '✓' : '✗'} GO: Ø{calc.shaftMaxMm.toFixed(3)} mm
           </text>
@@ -1542,7 +1549,7 @@ export function FitsToleranceSvg({
             fill={!shaftNoGoPasses ? (isDark ? '#6ee7b7' : '#047857') : '#f43f5e'}
             fontSize="9"
             fontWeight="800"
-            fontFamily="ui-monospace, monospace"
+            fontFamily="var(--font-mono)"
           >
             {!shaftNoGoPasses ? '✓' : '✗'} NO-GO: Ø{calc.shaftMinMm.toFixed(3)} mm
           </text>

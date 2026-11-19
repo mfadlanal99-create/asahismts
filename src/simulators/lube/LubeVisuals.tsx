@@ -94,41 +94,41 @@ export function ViscosityTempChart({
         ? '#fbbf24'
         : '#d97706';
 
-  const gridStroke = isDark ? '#334155' : '#e2e8f0';
-  const axisText = isDark ? '#94a3b8' : '#64748b';
-  const curveStroke = isDark ? '#f59e0b' : '#d97706';
+  const gridStroke = 'var(--md-outline-variant)';
+  const axisText = 'var(--md-on-surface-variant)';
+  const curveStroke = 'var(--md-primary)';
   const recStroke = isDark ? '#38bdf8' : '#0284c7';
 
   const yTicks = [2, 5, 10, 20, 50, 100, 200, 500, 1000];
   const xTicks = [20, 35, 50, 65, 80, 95, 110];
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+    <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick(
               'Viscosity–Temperature Curve (ASTM D341)',
               'Kurva Viskositas–Suhu (ASTM D341)',
               '粘度–温度曲線 (ASTM D341)',
             )}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-[var(--md-on-surface-variant)]">
             {pick('Target window:', 'Jendela target:', '目標範囲:')} {equipment.targetViscosityMin}–{equipment.targetViscosityMax} cSt
           </p>
         </div>
         <div className="flex items-center gap-3 text-[11px]">
-          <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-            <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+          <span className="inline-flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
+            <span className="h-2.5 w-2.5 rounded-full bg-[var(--md-primary)]" />
             {selectedVg}
           </span>
           {recommendedPath && (
-            <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+            <span className="inline-flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
               <span className="h-0.5 w-3.5 border-t-2 border-dashed border-sky-500" />
               Rec: {equipment.recommendedVg}
             </span>
           )}
-          <span className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+          <span className="inline-flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
             <span className="h-2.5 w-2.5 rounded-xs bg-emerald-500/25 ring-1 ring-emerald-500/60" />
             Target
           </span>
@@ -163,6 +163,7 @@ export function ViscosityTempChart({
                 x2={CHART_W - PAD.right}
                 y2={y}
                 stroke={gridStroke}
+                strokeOpacity={0.45}
                 strokeWidth={1}
               />
               <text
@@ -170,6 +171,7 @@ export function ViscosityTempChart({
                 y={y + 3.5}
                 textAnchor="end"
                 fontSize={10}
+                fontFamily="var(--font-mono)"
                 fill={axisText}
               >
                 {tick}
@@ -189,6 +191,7 @@ export function ViscosityTempChart({
                 x2={x}
                 y2={CHART_H - PAD.bottom}
                 stroke={gridStroke}
+                strokeOpacity={0.45}
                 strokeWidth={1}
               />
               <text
@@ -196,6 +199,7 @@ export function ViscosityTempChart({
                 y={CHART_H - PAD.bottom + 15}
                 textAnchor="middle"
                 fontSize={10}
+                fontFamily="var(--font-mono)"
                 fill={axisText}
               >
                 {t}°C
@@ -211,7 +215,7 @@ export function ViscosityTempChart({
           width={PLOT_W}
           height={PLOT_H}
           fill="none"
-          stroke={isDark ? '#475569' : '#cbd5e1'}
+          stroke="var(--md-outline-variant)"
           strokeWidth={1}
         />
 
@@ -222,6 +226,7 @@ export function ViscosityTempChart({
           textAnchor="middle"
           fontSize={10.5}
           fontWeight={600}
+          fontFamily="var(--font-sans)"
           fill={axisText}
           transform={`rotate(-90 14 ${PAD.top + PLOT_H / 2})`}
         >
@@ -235,6 +240,7 @@ export function ViscosityTempChart({
           textAnchor="middle"
           fontSize={10.5}
           fontWeight={600}
+          fontFamily="var(--font-sans)"
           fill={axisText}
         >
           {pick('Operating Sump Temperature (°C)', 'Suhu Oli Sump (°C)', '運転油温 (°C)')}
@@ -290,7 +296,7 @@ export function ViscosityTempChart({
           cy={opY}
           r={4.5}
           fill={dotColor}
-          stroke={isDark ? '#0f172a' : '#ffffff'}
+          stroke="var(--md-surface-container-lowest)"
           strokeWidth={1.5}
         />
 
@@ -304,8 +310,8 @@ export function ViscosityTempChart({
           <rect
             width={114}
             height={22}
-            rx={6}
-            fill={isDark ? '#1e293b' : '#ffffff'}
+            rx={10}
+            fill="var(--md-surface-container)"
             stroke={dotColor}
             strokeWidth={1.2}
           />
@@ -315,7 +321,8 @@ export function ViscosityTempChart({
             textAnchor="middle"
             fontSize={10}
             fontWeight={600}
-            fill={isDark ? '#f8fafc' : '#0f172a'}
+            fontFamily="var(--font-mono)"
+            fill="var(--md-on-surface)"
           >
             {currentViscosity.toFixed(1)} cSt @ {tempC}°C
           </text>
@@ -616,7 +623,7 @@ export function EhlFilmCanvas({
       ctx.stroke();
 
       ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
-      ctx.font = '700 10.5px ui-monospace, monospace';
+      ctx.font = '700 10.5px "JetBrains Mono", monospace';
       ctx.fillText(`h=${curEhl.filmThicknessUm.toFixed(2)}μm`, dimX + 13, centerY + 3.5);
       ctx.restore();
 
@@ -626,7 +633,7 @@ export function EhlFilmCanvas({
       ctx.roundRect(8, 6, 178, 19, 4);
       ctx.fill();
       ctx.fillStyle = isDark ? '#e2e8f0' : '#0f172a';
-      ctx.font = '600 11px system-ui, sans-serif';
+      ctx.font = '600 11px "Google Sans", "Outfit", sans-serif';
       ctx.fillText('Moving Race / Gear Tooth  →', 14, 19);
 
       ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.8)' : 'rgba(255, 255, 255, 0.85)';
@@ -652,17 +659,17 @@ export function EhlFilmCanvas({
         : 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30';
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+    <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick(
               'EHL Oil Film Thickness (λ-Ratio) & Asperity Contact',
               'Ketebalan Film Oli EHL (Rasio-λ) & Kontak Asperitas',
               'EHL油膜厚さ (λ比) & 突起接触断面',
             )}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-[var(--md-on-surface-variant)]">
             h<sub>min</sub> = {ehl.filmThicknessUm.toFixed(2)} μm · σ ={' '}
             {equipment.surfaceRoughnessUm.toFixed(2)} μm · ISO {iso4406.codeString} (β₅={beta5})
           </p>
@@ -676,10 +683,10 @@ export function EhlFilmCanvas({
 
       <canvas
         ref={canvasRef}
-        className="h-[220px] w-full rounded-lg border border-slate-200 dark:border-slate-800"
+        className="h-[220px] w-full rounded-[20px] border border-[var(--md-outline-variant)]/60"
       />
 
-      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[var(--md-on-surface-variant)]">
         <div className="flex flex-wrap items-center gap-3">
           <span className="inline-flex items-center gap-1">
             <span className="h-2 w-3 rounded-xs bg-amber-500/70" /> Oil Film
@@ -788,17 +795,17 @@ export function StribeckCurveChart({ lambdaRatio, regime }: StribeckCurveChartPr
   const x3 = xOf(3.0);
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+    <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick(
               'Stribeck Friction Curve (μ vs λ-Ratio)',
               'Kurva Gesekan Stribeck (μ vs Rasio-λ)',
               'ストライベック摩擦曲線 (μ vs λ比)',
             )}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-[var(--md-on-surface-variant)]">
             {pick(
               'Boundary (λ < 1) · Mixed (1 ≤ λ < 3) · Full-Film EHL (λ ≥ 3)',
               'Batas (λ < 1) · Campuran (1 ≤ λ < 3) · Full-Film EHL (λ ≥ 3)',
@@ -806,7 +813,7 @@ export function StribeckCurveChart({ lambdaRatio, regime }: StribeckCurveChartPr
             )}
           </p>
         </div>
-        <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+        <span className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1 font-mono text-xs font-semibold text-[var(--md-on-surface)]">
           μ ≈ {curMu.toFixed(3)} · {regime}
         </span>
       </div>
@@ -841,21 +848,21 @@ export function StribeckCurveChart({ lambdaRatio, regime }: StribeckCurveChartPr
         />
 
         {/* Zone Header Labels */}
-        <text x={(P.left + x1) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#fda4af' : '#be123c'}>
+        <text x={(P.left + x1) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-sans)" fill={isDark ? '#fda4af' : '#be123c'}>
           {pick('Boundary', 'Batas', '境界潤滑')}
         </text>
-        <text x={(x1 + x3) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#fcd34d' : '#b45309'}>
+        <text x={(x1 + x3) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-sans)" fill={isDark ? '#fcd34d' : '#b45309'}>
           {pick('Mixed', 'Campuran', '混合潤滑')}
         </text>
-        <text x={(x3 + W - P.right) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#6ee7b7' : '#047857'}>
+        <text x={(x3 + W - P.right) / 2} y={P.top + 14} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-sans)" fill={isDark ? '#6ee7b7' : '#047857'}>
           {pick('Full-Film EHL', 'Full-Film EHL', '完全EHL')}
         </text>
 
         {/* Grid lines */}
         {[0.03, 0.06, 0.09, 0.12].map((mu) => (
           <g key={mu}>
-            <line x1={P.left} y1={yOf(mu)} x2={W - P.right} y2={yOf(mu)} stroke={isDark ? '#334155' : '#e2e8f0'} strokeWidth={1} />
-            <text x={P.left - 8} y={yOf(mu) + 3.5} textAnchor="end" fontSize={10} fill={isDark ? '#94a3b8' : '#64748b'}>
+            <line x1={P.left} y1={yOf(mu)} x2={W - P.right} y2={yOf(mu)} stroke="var(--md-outline-variant)" strokeOpacity={0.45} strokeWidth={1} />
+            <text x={P.left - 8} y={yOf(mu) + 3.5} textAnchor="end" fontSize={10} fontFamily="var(--font-mono)" fill="var(--md-on-surface-variant)">
               {mu.toFixed(2)}
             </text>
           </g>
@@ -868,38 +875,39 @@ export function StribeckCurveChart({ lambdaRatio, regime }: StribeckCurveChartPr
               y1={P.top}
               x2={xOf(l)}
               y2={H - P.bottom}
-              stroke={l === 1 || l === 3 ? (isDark ? '#64748b' : '#94a3b8') : isDark ? '#334155' : '#e2e8f0'}
+              stroke={l === 1 || l === 3 ? 'var(--md-outline)' : 'var(--md-outline-variant)'}
+              strokeOpacity={l === 1 || l === 3 ? 0.85 : 0.45}
               strokeDasharray={l === 1 || l === 3 ? '4 3' : undefined}
               strokeWidth={1}
             />
-            <text x={xOf(l)} y={H - P.bottom + 14} textAnchor="middle" fontSize={10} fill={isDark ? '#94a3b8' : '#64748b'}>
+            <text x={xOf(l)} y={H - P.bottom + 14} textAnchor="middle" fontSize={10} fontFamily="var(--font-mono)" fill="var(--md-on-surface-variant)">
               {l.toFixed(1)}
             </text>
           </g>
         ))}
 
         {/* Border */}
-        <rect x={P.left} y={P.top} width={PW} height={PH} fill="none" stroke={isDark ? '#475569' : '#cbd5e1'} strokeWidth={1} />
+        <rect x={P.left} y={P.top} width={PW} height={PH} fill="none" stroke="var(--md-outline-variant)" strokeWidth={1} />
 
         {/* Axis Titles */}
-        <text x={14} y={P.top + PH / 2} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#94a3b8' : '#64748b'} transform={`rotate(-90 14 ${P.top + PH / 2})`}>
+        <text x={14} y={P.top + PH / 2} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-sans)" fill="var(--md-on-surface-variant)" transform={`rotate(-90 14 ${P.top + PH / 2})`}>
           {pick('Friction μ', 'Gesekan μ', '摩擦係数 μ')}
         </text>
-        <text x={P.left + PW / 2} y={H - 5} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#94a3b8' : '#64748b'}>
+        <text x={P.left + PW / 2} y={H - 5} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-sans)" fill="var(--md-on-surface-variant)">
           {pick('Film Thickness Ratio λ = h_min / σ', 'Rasio Ketebalan Film λ = h_min / σ', '油膜厚さ比 λ = h_min / σ')}
         </text>
 
         {/* Stribeck Curve */}
-        <path d={curvePath} fill="none" stroke={isDark ? '#f59e0b' : '#d97706'} strokeWidth={2.75} strokeLinecap="round" />
+        <path d={curvePath} fill="none" stroke="var(--md-primary)" strokeWidth={2.75} strokeLinecap="round" />
 
         {/* Operating point */}
         <circle cx={dotX} cy={dotY} r={8} fill={dotColor} opacity={0.25} />
-        <circle cx={dotX} cy={dotY} r={4.5} fill={dotColor} stroke={isDark ? '#0f172a' : '#ffffff'} strokeWidth={1.5} />
+        <circle cx={dotX} cy={dotY} r={4.5} fill={dotColor} stroke="var(--md-surface-container-lowest)" strokeWidth={1.5} />
 
         {/* Callout Pill */}
         <g transform={`translate(${Math.min(W - P.right - 122, Math.max(P.left + 6, dotX + 10))}, ${Math.max(P.top + 18, dotY - 24)})`}>
-          <rect width={116} height={20} rx={5} fill={isDark ? '#1e293b' : '#ffffff'} stroke={dotColor} strokeWidth={1.2} />
-          <text x={58} y={13.5} textAnchor="middle" fontSize={10} fontWeight={600} fill={isDark ? '#f8fafc' : '#0f172a'}>
+          <rect width={116} height={20} rx={10} fill="var(--md-surface-container)" stroke={dotColor} strokeWidth={1.2} />
+          <text x={58} y={13.5} textAnchor="middle" fontSize={10} fontWeight={600} fontFamily="var(--font-mono)" fill="var(--md-on-surface)">
             λ={lambdaRatio.toFixed(2)} · μ={curMu.toFixed(3)}
           </text>
         </g>

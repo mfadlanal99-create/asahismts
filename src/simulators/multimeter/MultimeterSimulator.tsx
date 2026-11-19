@@ -269,16 +269,16 @@ export function MultimeterSimulator() {
         {/* ==================== LEFT COLUMN: MULTIMETER + 6-SCENARIO ESD SVG ==================== */}
         <div className="lg:col-span-8 space-y-4">
           {/* Scenario Tabs */}
-          <div className="glass-panel rounded-2xl p-2 flex flex-wrap gap-1.5">
+          <div className="glass-panel flex flex-wrap gap-1.5 rounded-[28px] p-2">
             {SCENARIO_TABS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => handleSelectScenario(tab.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`rounded-full px-3.5 py-1.5 text-xs transition cursor-pointer ${
                   scenario === tab.id
-                    ? 'bg-[#001F6B] text-white dark:bg-amber-500 dark:text-slate-950 shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800/60'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {pick(tab.en, tab.idLabel, tab.ja)}
@@ -332,15 +332,15 @@ export function MultimeterSimulator() {
           />
 
           {/* Probe Overlay Controls */}
-          <div className="glass-panel rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2">
+          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => setActiveProbe('red')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                className={`rounded-full border px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                   activeProbe === 'red'
-                    ? 'bg-rose-600 text-white border-rose-500'
-                    : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                    ? 'border-rose-500 bg-rose-600 text-white'
+                    : 'glass-pill'
                 }`}
               >
                 {pick('Move Red (+)', 'Pindah Merah (+)', '赤プローブ移動')}
@@ -348,10 +348,10 @@ export function MultimeterSimulator() {
               <button
                 type="button"
                 onClick={() => setActiveProbe('black')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                className={`rounded-full border px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                   activeProbe === 'black'
-                    ? 'bg-slate-800 text-white border-slate-600 dark:bg-slate-200 dark:text-slate-950'
-                    : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                    ? 'border-slate-600 bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-950'
+                    : 'glass-pill'
                 }`}
               >
                 {pick('Move Black (COM)', 'Pindah Hitam (COM)', '黒プローブ移動')}
@@ -359,7 +359,7 @@ export function MultimeterSimulator() {
               <button
                 type="button"
                 onClick={handleSwapLeads}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-amber-400 flex items-center gap-1.5 cursor-pointer"
+                className="glass-pill flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold cursor-pointer"
               >
                 <ArrowLeftRight className="h-3.5 w-3.5" />
                 {pick('Swap Leads', 'Tukar Probe', 'リード入替')}
@@ -367,7 +367,7 @@ export function MultimeterSimulator() {
               <button
                 type="button"
                 onClick={handleLiftBoth}
-                className="px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 hover:border-amber-400 cursor-pointer"
+                className="glass-pill rounded-full px-3.5 py-1.5 text-xs font-bold cursor-pointer"
               >
                 {pick('Lift Both', 'Angkat Probe', 'プローブ解除')}
               </button>
@@ -376,10 +376,10 @@ export function MultimeterSimulator() {
             <button
               type="button"
               onClick={() => setSoundEnabled((prev) => !prev)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold border flex items-center gap-1.5 cursor-pointer ${
+              className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold cursor-pointer transition ${
                 soundEnabled
-                  ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700'
+                  ? 'border border-[var(--md-primary)]/40 bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                  : 'glass-pill text-[var(--md-on-surface-variant)]'
               }`}
             >
               {soundEnabled ? (
@@ -395,19 +395,19 @@ export function MultimeterSimulator() {
 
           {/* Diagnostic Readout Note */}
           <div
-            className={`glass-panel rounded-2xl p-4 border ${
+            className={`glass-panel rounded-[28px] p-4 ${
               hasHazard
-                ? 'border-rose-500/60 bg-rose-50/70 dark:bg-rose-950/30'
-                : 'border-slate-200 dark:border-slate-700/70'
+                ? 'border border-rose-500/60 bg-rose-50/70 dark:bg-rose-950/30'
+                : ''
             }`}
           >
             <div className="flex items-start gap-3">
               {hasHazard ? (
-                <AlertTriangle className="h-5 w-5 text-rose-500 shrink-0 mt-0.5" />
+                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-500" />
               ) : (
-                <Zap className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+                <Zap className="mt-0.5 h-5 w-5 shrink-0 text-[var(--md-primary)]" />
               )}
-              <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+              <p className="text-sm leading-relaxed text-[var(--md-on-surface)]">
                 {pick(activeNote.en, activeNote.id, activeNote.ja)}
               </p>
             </div>
@@ -417,14 +417,14 @@ export function MultimeterSimulator() {
         {/* ==================== RIGHT COLUMN: SCENARIO & METER CONTROLS ==================== */}
         <div className="lg:col-span-4 space-y-4">
           {/* Digital vs Analog Quick Mode */}
-          <div className="glass-panel rounded-2xl p-2 grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setMeterStyle('digital')}
-              className={`py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`rounded-full py-2 text-xs transition cursor-pointer ${
                 meterStyle === 'digital'
-                  ? 'bg-[#001F6B] text-white dark:bg-amber-500 dark:text-slate-950'
-                  : 'text-slate-600 dark:text-slate-300'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               Digital DMM-87V
@@ -432,10 +432,10 @@ export function MultimeterSimulator() {
             <button
               type="button"
               onClick={() => setMeterStyle('analog')}
-              className={`py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`rounded-full py-2 text-xs transition cursor-pointer ${
                 meterStyle === 'analog'
-                  ? 'bg-[#001F6B] text-white dark:bg-sky-500 dark:text-slate-950'
-                  : 'text-slate-600 dark:text-slate-300'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               Analog VOM-20K
@@ -444,7 +444,7 @@ export function MultimeterSimulator() {
 
           {/* Fuse Blown Alert */}
           {fuseBlown && (
-            <div className="glass-panel rounded-2xl p-3 border border-rose-500/60 bg-rose-50/80 dark:bg-rose-950/40 flex items-center justify-between gap-2">
+            <div className="glass-panel flex items-center justify-between gap-2 rounded-[24px] border border-rose-500/60 bg-rose-50/80 p-3.5 dark:bg-rose-950/40">
               <span className="text-xs font-bold text-rose-600 dark:text-rose-300">
                 {pick('Internal Current Fuse Blown!', 'Sekring Arus Internal Putus!', '内蔵電流ヒューズ溶断！')}
               </span>
@@ -454,7 +454,7 @@ export function MultimeterSimulator() {
                   setFuseBlown(false);
                   setRedJack('V_OHM_HZ');
                 }}
-                className="px-3 py-1 rounded-lg text-xs font-bold bg-rose-600 text-white cursor-pointer"
+                className="rounded-full bg-rose-600 px-3.5 py-1.5 text-xs font-bold text-white cursor-pointer hover:bg-rose-700"
               >
                 {pick('Replace Fuse', 'Ganti Sekring', 'ヒューズ交換')}
               </button>
@@ -463,12 +463,12 @@ export function MultimeterSimulator() {
 
           {/* Scenario-Specific Interactive Controls */}
           {scenario === 'dividers' && (
-            <div className="glass-panel rounded-2xl p-4 space-y-2">
-              <div className="flex justify-between text-xs font-bold text-slate-700 dark:text-slate-200">
+            <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5">
+              <div className="flex justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span>
                   {pick('Potentiometer Ratio', 'Rasio Potensiometer', 'ポテンショメータ比')}
                 </span>
-                <span className="font-mono text-amber-600 dark:text-amber-400">
+                <span className="font-mono text-[var(--md-primary)]">
                   {Math.round(potRatio * 100)}% ({(12 * potRatio).toFixed(2)} V)
                 </span>
               </div>
@@ -479,23 +479,23 @@ export function MultimeterSimulator() {
                 step={0.05}
                 value={potRatio}
                 onChange={(e) => setPotRatio(Number(e.target.value))}
-                className="w-full cursor-pointer"
+                className="w-full"
               />
             </div>
           )}
 
           {scenario === 'led' && (
-            <div className="glass-panel rounded-2xl p-4 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
+            <div className="glass-panel flex items-center justify-between rounded-[28px] p-4 sm:p-5">
+              <span className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Circuit Toggle Switch (SW1)', 'Saklar Sirkuit (SW1)', '回路スイッチ (SW1)')}
               </span>
               <button
                 type="button"
                 onClick={() => setLedSwitchOn((prev) => !prev)}
-                className={`px-4 py-1.5 rounded-xl text-xs font-bold cursor-pointer ${
+                className={`rounded-full px-4 py-1.5 text-xs font-bold cursor-pointer ${
                   ledSwitchOn
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                    : 'glass-pill'
                 }`}
               >
                 {ledSwitchOn ? 'SW1: ON' : 'SW1: OFF'}
@@ -504,8 +504,8 @@ export function MultimeterSimulator() {
           )}
 
           {scenario === 'ac-outlet' && (
-            <div className="glass-panel rounded-2xl p-4 space-y-2">
-              <div className="text-xs font-bold text-slate-600 dark:text-slate-300">
+            <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5">
+              <div className="text-xs font-bold text-[var(--md-on-surface-variant)]">
                 {pick('AC Outlet Wiring Condition', 'Kondisi Pengkabelan Stopkontak', 'ACコンセント配線状態')}
               </div>
               <div className="grid grid-cols-1 gap-2">
@@ -520,10 +520,10 @@ export function MultimeterSimulator() {
                     key={item.id}
                     type="button"
                     onClick={() => setAcFault(item.id)}
-                    className={`py-2 px-3 rounded-xl text-xs font-bold border text-left cursor-pointer ${
+                    className={`rounded-[20px] border px-3.5 py-2.5 text-left text-xs font-bold transition cursor-pointer ${
                       acFault === item.id
-                        ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-amber-500 dark:text-slate-950'
-                        : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {pick(item.en, item.idL, item.ja)}
@@ -534,15 +534,15 @@ export function MultimeterSimulator() {
           )}
 
           {scenario === 'fault' && (
-            <div className="glass-panel rounded-2xl p-4 space-y-3">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-primary)]">
                   {pick('Guided Fault Diagnosis', 'Tantangan Cari Gangguan', '故障診断チャレンジ')}
                 </span>
                 <button
                   type="button"
                   onClick={handleRandomFault}
-                  className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 flex items-center gap-1 cursor-pointer"
+                  className="m3-btn-tonal flex items-center gap-1 px-3 py-1.5 text-xs font-semibold cursor-pointer"
                 >
                   <RefreshCw className="h-3 w-3" />
                   {pick('New Fault', 'Gangguan Baru', '新しい故障')}
@@ -557,10 +557,10 @@ export function MultimeterSimulator() {
                       setFaultGuess(opt.id);
                       setFaultChecked(false);
                     }}
-                    className={`text-left px-3 py-2 rounded-xl text-xs font-semibold border cursor-pointer ${
+                    className={`rounded-[20px] border px-3.5 py-2.5 text-left text-xs font-semibold transition cursor-pointer ${
                       faultGuess === opt.id
-                        ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-amber-500/25 dark:text-amber-200 dark:border-amber-400'
-                        : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {pick(opt.en, opt.idLabel, opt.ja)}
@@ -572,13 +572,13 @@ export function MultimeterSimulator() {
                   type="button"
                   disabled={!faultGuess}
                   onClick={() => setFaultChecked(true)}
-                  className="w-full py-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 disabled:opacity-40 cursor-pointer"
+                  className="m3-btn-filled w-full py-2.5 text-xs font-bold disabled:opacity-40 cursor-pointer"
                 >
                   {pick('Verify Diagnosis', 'Periksa Diagnosis', '診断を確認')}
                 </button>
                 {faultChecked && faultGuess && (
                   <div
-                    className={`text-xs font-bold flex items-center gap-1.5 ${
+                    className={`flex items-center gap-1.5 text-xs font-bold ${
                       faultGuess === hiddenFault
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-rose-500'
@@ -600,8 +600,8 @@ export function MultimeterSimulator() {
 
           {/* Meter Dial / Range Controls */}
           {meterStyle === 'digital' ? (
-            <div className="glass-panel rounded-2xl p-4 space-y-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Digital Rotary Dial', 'Selektor Digital', 'デジタルダイヤル')}
               </div>
               <div className="grid grid-cols-4 gap-1.5">
@@ -614,10 +614,10 @@ export function MultimeterSimulator() {
                       setDigitalDial(d.id);
                       checkAndTriggerFuse(redNode, blackNode, redJack, d.id);
                     }}
-                    className={`py-2 px-1.5 rounded-xl text-xs font-bold border cursor-pointer ${
+                    className={`rounded-full border px-1.5 py-2 text-xs font-bold transition cursor-pointer ${
                       digitalDial === d.id
-                        ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-amber-500 dark:text-slate-950'
-                        : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {d.label}
@@ -626,8 +626,8 @@ export function MultimeterSimulator() {
               </div>
             </div>
           ) : (
-            <div className="glass-panel rounded-2xl p-4 space-y-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Analog Range & Zero Ω Adj', 'Rentang Analog & Zero Ω', 'アナログレンジ＆0Ω調整')}
               </div>
               <div className="grid grid-cols-3 gap-1.5">
@@ -636,10 +636,10 @@ export function MultimeterSimulator() {
                     key={r.id}
                     type="button"
                     onClick={() => setAnalogRange(r.id)}
-                    className={`py-1.5 px-2 rounded-xl text-[11px] font-bold border cursor-pointer ${
+                    className={`rounded-full border px-2 py-1.5 text-[11px] font-bold transition cursor-pointer ${
                       analogRange === r.id
-                        ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-sky-500 dark:text-slate-950'
-                        : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {r.label}
@@ -647,9 +647,9 @@ export function MultimeterSimulator() {
                 ))}
               </div>
               <div className="space-y-1 pt-1">
-                <div className="flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <div className="flex justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                   <span>Zero Ω Adj</span>
-                  <span className="font-mono">{zeroOhmAdj.toFixed(1)}°</span>
+                  <span className="font-mono text-[var(--md-primary)]">{zeroOhmAdj.toFixed(1)}°</span>
                 </div>
                 <input
                   type="range"
@@ -658,15 +658,15 @@ export function MultimeterSimulator() {
                   step={0.5}
                   value={zeroOhmAdj}
                   onChange={(e) => setZeroOhmAdj(Number(e.target.value))}
-                  className="w-full cursor-pointer"
+                  className="w-full"
                 />
               </div>
             </div>
           )}
 
           {/* Red Lead Input Jack Selector */}
-          <div className="glass-panel rounded-2xl p-4 space-y-2">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5">
+            <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Red Test Lead Jack', 'Jack Kabel Merah', '赤リード接続端子')}
             </div>
             <div className="grid grid-cols-3 gap-2">
@@ -681,10 +681,10 @@ export function MultimeterSimulator() {
                   key={j.id}
                   type="button"
                   onClick={() => handleSelectRedJack(j.id)}
-                  className={`py-1.5 rounded-xl text-xs font-bold border cursor-pointer ${
+                  className={`rounded-full border py-2 text-xs font-bold transition cursor-pointer ${
                     redJack === j.id
-                      ? 'bg-rose-600 text-white border-rose-500'
-                      : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                      ? 'border-rose-500 bg-rose-600 text-white'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   {j.label}

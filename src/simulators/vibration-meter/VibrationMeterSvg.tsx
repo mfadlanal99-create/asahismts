@@ -54,10 +54,10 @@ export function VibrationMeterSvg({
   const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(null);
   const [hoverSnapPoint, setHoverSnapPoint] = useState<ProbePointId | null>(null);
 
-  const bgPanel = isDark ? '#0B1629' : '#F8FAFC';
-  const borderCol = isDark ? '#1E3A5F' : '#CBD5E1';
-  const textPrimary = isDark ? '#F1F5F9' : '#0F172A';
-  const textMuted = isDark ? '#94A3B8' : '#475569';
+  const bgPanel = 'var(--md-surface-container-low)';
+  const borderCol = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const metalFill = isDark ? '#1E293B' : '#CBD5E1';
   const metalStroke = isDark ? '#475569' : '#64748B';
 
@@ -142,7 +142,7 @@ export function VibrationMeterSvg({
         : '#10B981';
 
   return (
-    <div className="glass-panel rounded-2xl p-3 sm:p-4 shadow-xs">
+    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 760 400"
@@ -171,7 +171,7 @@ export function VibrationMeterSvg({
           y="6"
           width="748"
           height="388"
-          rx="16"
+          rx="18"
           fill={bgPanel}
           stroke={borderCol}
           strokeWidth="1.5"
@@ -183,9 +183,9 @@ export function VibrationMeterSvg({
           y="18"
           width="442"
           height="34"
-          rx="8"
-          fill={isDark ? '#001F6B' : '#E6EDF8'}
-          stroke={isDark ? '#002D9C' : '#BFDBFE'}
+          rx="12"
+          fill="var(--md-surface-container)"
+          stroke="var(--md-outline-variant)"
           strokeWidth="1"
         />
         <text
@@ -193,7 +193,8 @@ export function VibrationMeterSvg({
           y="40"
           fontSize="12"
           fontWeight="700"
-          fill={isDark ? '#E2E8F0' : '#001F6B'}
+          fontFamily="var(--font-sans)"
+          fill="var(--md-on-surface)"
         >
           {pick(
             '4-POINT MAGNETIC PROBE ROUTE',
@@ -205,9 +206,10 @@ export function VibrationMeterSvg({
           x="448"
           y="40"
           fontSize="11"
-          fontWeight="600"
+          fontWeight="700"
           textAnchor="end"
-          fill={isDark ? '#C4B5FD' : '#5B21B6'}
+          fontFamily="var(--font-mono)"
+          fill="var(--md-primary)"
         >
           {rpm} RPM • {machineClass.foundation.toUpperCase()}
         </text>
@@ -239,6 +241,7 @@ export function VibrationMeterSvg({
           y="340"
           fontSize="10"
           fontWeight="600"
+          fontFamily="var(--font-sans)"
           textAnchor="middle"
           fill={textMuted}
         >
@@ -289,6 +292,7 @@ export function VibrationMeterSvg({
             y="184"
             fontSize="11"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
             fill={textPrimary}
           >
@@ -309,7 +313,7 @@ export function VibrationMeterSvg({
             stroke="#CBD5E1"
             strokeWidth="1.5"
           />
-          <text x="250" y="272" fontSize="9" fontWeight="600" textAnchor="middle" fill={textMuted}>
+          <text x="250" y="272" fontSize="9" fontWeight="600" fontFamily="var(--font-mono)" textAnchor="middle" fill={textMuted}>
             CPLG
           </text>
         </g>
@@ -350,6 +354,7 @@ export function VibrationMeterSvg({
             y="174"
             fontSize="11"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
             fill={textPrimary}
           >
@@ -389,8 +394,9 @@ export function VibrationMeterSvg({
                   cx={pt.x}
                   cy={pt.y}
                   r={isSnapTarget ? 20 : 15}
-                  fill={isSnapTarget ? 'rgba(139, 92, 246, 0.28)' : 'rgba(139, 92, 246, 0.1)'}
-                  stroke="#A78BFA"
+                  fill="var(--md-primary)"
+                  fillOpacity={isSnapTarget ? 0.24 : 0.1}
+                  stroke="var(--md-primary)"
                   strokeWidth={isSnapTarget ? '2.5' : '1.5'}
                   strokeDasharray={isSnapTarget ? undefined : '4 2'}
                 />
@@ -401,34 +407,30 @@ export function VibrationMeterSvg({
                 r={isSelected || isSnapTarget ? 12 : 9}
                 fill={
                   isSelected || isSnapTarget
-                    ? '#8B5CF6'
-                    : isDark
-                      ? '#334155'
-                      : '#E2E8F0'
+                    ? 'var(--md-primary)'
+                    : 'var(--md-surface-container-high)'
                 }
-                stroke={isSelected || isSnapTarget ? '#DDD6FE' : '#8B5CF6'}
+                stroke={isSelected || isSnapTarget ? 'var(--md-primary-container)' : 'var(--md-primary)'}
                 strokeWidth="2"
               />
               <circle
                 cx={pt.x}
                 cy={pt.y}
                 r="3.5"
-                fill={isSelected || isSnapTarget ? '#FFFFFF' : '#8B5CF6'}
+                fill={isSelected || isSnapTarget ? 'var(--md-on-primary)' : 'var(--md-primary)'}
               />
               <rect
                 x={pt.x - 22}
                 y={pt.y + 15}
                 width="44"
                 height="16"
-                rx="4"
+                rx="6"
                 fill={
                   isSelected || isSnapTarget
-                    ? '#6D28D9'
-                    : isDark
-                      ? '#0F172A'
-                      : '#FFFFFF'
+                    ? 'var(--md-primary-container)'
+                    : 'var(--md-surface-container)'
                 }
-                stroke={isSelected || isSnapTarget ? '#A78BFA' : borderCol}
+                stroke={isSelected || isSnapTarget ? 'var(--md-primary)' : borderCol}
                 strokeWidth="1"
               />
               <text
@@ -436,8 +438,9 @@ export function VibrationMeterSvg({
                 y={pt.y + 26}
                 fontSize="9"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
                 textAnchor="middle"
-                fill={isSelected || isSnapTarget ? '#FFFFFF' : textPrimary}
+                fill={isSelected || isSnapTarget ? 'var(--md-on-primary-container)' : textPrimary}
               >
                 {pt.short}
               </text>
@@ -459,7 +462,7 @@ export function VibrationMeterSvg({
           <path
             d={`M ${probePos.x} ${probePos.y - 32} C ${probePos.x} 90, 455 75, 598 76`}
             fill="none"
-            stroke="#8B5CF6"
+            stroke="var(--md-primary)"
             strokeWidth="2.5"
             strokeDasharray="6 3"
           />
@@ -478,8 +481,8 @@ export function VibrationMeterSvg({
             width="16"
             height="24"
             rx="3.5"
-            fill={dragPos ? '#8B5CF6' : '#7C3AED'}
-            stroke="#DDD6FE"
+            fill="var(--md-primary)"
+            stroke="var(--md-primary-container)"
             strokeWidth={dragPos ? '2' : '1.5'}
           />
           <rect
@@ -512,8 +515,9 @@ export function VibrationMeterSvg({
             fontSize="10"
             fontWeight="700"
             letterSpacing="1"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
-            fill="#C4B5FD"
+            fill="#CBD5E1"
           >
             ISO 10816-3 VIBRATION METER
           </text>
@@ -525,16 +529,16 @@ export function VibrationMeterSvg({
             height="196"
             rx="10"
             fill="url(#vibLcd)"
-            stroke="#8B5CF6"
+            stroke="#475569"
             strokeWidth="1.5"
           />
 
-          <rect x="510" y="116" width="62" height="20" rx="4" fill="#4C1D95" />
-          <text x="541" y="130" fontSize="10" fontWeight="700" textAnchor="middle" fill="#EDE9FE">
+          <rect x="510" y="116" width="62" height="20" rx="6" fill="#312E81" />
+          <text x="541" y="130" fontSize="10" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill="#E0E7FF">
             {POINT_COORDS[hoverSnapPoint ?? activePoint].short}
           </text>
 
-          <text x="696" y="130" fontSize="10" fontWeight="700" textAnchor="end" fill="#A78BFA">
+          <text x="696" y="130" fontSize="10" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="end" fill="#A5B4FC">
             {modeTitle}
           </text>
 
@@ -543,18 +547,18 @@ export function VibrationMeterSvg({
             y="186"
             fontSize="40"
             fontWeight="800"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             textAnchor="end"
             fill="#FFFFFF"
           >
             {primary.value.toFixed(primary.decimals)}
           </text>
-          <text x="636" y="184" fontSize="12" fontWeight="700" fill="#C4B5FD">
+          <text x="636" y="184" fontSize="12" fontWeight="700" fontFamily="var(--font-mono)" fill="#C7D2FE">
             {primary.unit}
           </text>
 
           <rect x="512" y="202" width="182" height="24" rx="6" fill={zoneInfo.bg} />
-          <text x="603" y="218" fontSize="11" fontWeight="800" textAnchor="middle" fill={zoneInfo.text}>
+          <text x="603" y="218" fontSize="11" fontWeight="800" fontFamily="var(--font-sans)" textAnchor="middle" fill={zoneInfo.text}>
             {zoneInfo.label}
           </text>
 
@@ -580,6 +584,7 @@ export function VibrationMeterSvg({
                     y="256"
                     fontSize="9"
                     fontWeight="700"
+                    fontFamily="var(--font-mono)"
                     textAnchor="middle"
                     fill={isZ ? '#FFFFFF' : '#94A3B8'}
                   >
@@ -591,16 +596,16 @@ export function VibrationMeterSvg({
           </g>
 
           <line x1="512" y1="264" x2="694" y2="264" stroke="#312E81" strokeWidth="1" />
-          <text x="514" y="280" fontSize="10" fontFamily="monospace" fill="#CBD5E1">
+          <text x="514" y="280" fontSize="10" fontFamily="var(--font-mono)" fill="#CBD5E1">
             VEL: {reading.velocityRmsMmS.toFixed(2)} mm/s
           </text>
-          <text x="694" y="280" fontSize="10" fontFamily="monospace" textAnchor="end" fill={bduColor}>
+          <text x="694" y="280" fontSize="10" fontFamily="var(--font-mono)" textAnchor="end" fill={bduColor}>
             BDU: {reading.bearingBdu.toFixed(0)}
           </text>
-          <text x="514" y="294" fontSize="10" fontFamily="monospace" fill="#CBD5E1">
+          <text x="514" y="294" fontSize="10" fontFamily="var(--font-mono)" fill="#CBD5E1">
             ACC: {reading.accelPeakG.toFixed(2)} g
           </text>
-          <text x="694" y="294" fontSize="10" fontFamily="monospace" textAnchor="end" fill="#CBD5E1">
+          <text x="694" y="294" fontSize="10" fontFamily="var(--font-mono)" textAnchor="end" fill="#CBD5E1">
             DISP: {reading.displacementPpUm.toFixed(0)} μm
           </text>
 
@@ -610,12 +615,12 @@ export function VibrationMeterSvg({
               y="314"
               width="138"
               height="36"
-              rx="10"
-              fill="#6D28D9"
-              stroke="#A78BFA"
+              rx="18"
+              fill="var(--md-primary)"
+              stroke="var(--md-primary-container)"
               strokeWidth="1.5"
             />
-            <text x="603" y="336" fontSize="11" fontWeight="700" textAnchor="middle" fill="#FFFFFF">
+            <text x="603" y="336" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)" textAnchor="middle" fill="var(--md-on-primary)">
               {pick('CYCLE MODE', 'GANTI MODE', 'モード切替')}
             </text>
           </g>

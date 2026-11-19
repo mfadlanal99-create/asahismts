@@ -23,11 +23,11 @@ export function ValveDiagnosticsPanel({
   const isDark = theme === 'dark';
 
   const palette = {
-    bg: isDark ? '#0f172a' : '#f8fafc',
-    grid: isDark ? '#1e293b' : '#e2e8f0',
-    axis: isDark ? '#475569' : '#94a3b8',
-    text: isDark ? '#e2e8f0' : '#0f172a',
-    muted: isDark ? '#94a3b8' : '#64748b',
+    bg: 'var(--md-surface-container)',
+    grid: 'var(--md-outline-variant)',
+    axis: 'var(--md-outline)',
+    text: 'var(--md-on-surface)',
+    muted: 'var(--md-on-surface-variant)',
   };
 
   // SVG plot geometry
@@ -80,40 +80,40 @@ export function ValveDiagnosticsPanel({
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* 1. Inherent Valve Flow Characteristic Curve */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-        <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="glass-panel rounded-[28px] p-4">
+        <div className="mb-2.5 flex items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2">
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Inherent Flow Characteristic',
                 'Karakteristik Aliran Inheren',
                 '固有流量特性曲線',
               )}
             </h4>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] text-[var(--md-on-surface-variant)]">
               {pick(
                 '% Flow (Cv / Cv,max) vs. % Stem Opening',
                 '% Aliran (Cv / Cv,max) vs. % Bukaan Batang',
                 '流量比 (Cv / Cv,max) vs. バルブ開度 (%)',
               )}{' '}
               —{' '}
-              <span className="font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="font-bold text-[var(--md-primary)]">
                 {VALVE_TYPE_INFO[params.valveType].characteristic}
               </span>
             </p>
           </div>
-          <span className="rounded-md bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[var(--md-on-primary-container)]">
             {telemetry.cvPct.toFixed(0)}% Cv
           </span>
         </div>
 
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          className="h-auto w-full select-none rounded-xl"
+          className="h-auto w-full select-none rounded-[20px] border border-[var(--md-outline-variant)]/50"
           role="img"
           aria-label="Inherent valve flow characteristic curve comparing equal-percentage, linear, and quick-opening"
         >
-          <rect x="0" y="0" width={W} height={H} rx="10" fill={palette.bg} />
+          <rect x="0" y="0" width={W} height={H} rx="14" fill={palette.bg} />
 
           {/* Grid lines */}
           {[0, 25, 50, 75, 100].map((v) => (
@@ -124,6 +124,7 @@ export function ValveDiagnosticsPanel({
                 x2={W - padR}
                 y2={toY(v)}
                 stroke={palette.grid}
+                strokeOpacity="0.45"
                 strokeWidth="1"
               />
               <line
@@ -132,6 +133,7 @@ export function ValveDiagnosticsPanel({
                 x2={toX(v)}
                 y2={H - padB}
                 stroke={palette.grid}
+                strokeOpacity="0.45"
                 strokeWidth="1"
               />
               <text
@@ -140,6 +142,7 @@ export function ValveDiagnosticsPanel({
                 textAnchor="end"
                 fontSize="9.5"
                 fill={palette.muted}
+                fontFamily="var(--font-mono)"
               >
                 {v}%
               </text>
@@ -149,6 +152,7 @@ export function ValveDiagnosticsPanel({
                 textAnchor="middle"
                 fontSize="9.5"
                 fill={palette.muted}
+                fontFamily="var(--font-mono)"
               >
                 {v}%
               </text>
@@ -232,7 +236,7 @@ export function ValveDiagnosticsPanel({
             cx={opX}
             cy={opY}
             r="5.5"
-            fill="#10b981"
+            fill="var(--md-primary)"
             stroke={isDark ? '#0f172a' : '#ffffff'}
             strokeWidth="2"
           />
@@ -245,13 +249,14 @@ export function ValveDiagnosticsPanel({
             fontSize="9.5"
             fontWeight="600"
             fill={palette.muted}
+            fontFamily="var(--font-sans)"
           >
             {pick('Valve Opening (%)', 'Bukaan Katup (%)', 'バルブ開度 (%)')}
           </text>
         </svg>
 
         {/* Legend */}
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-[10.5px] text-slate-600 dark:text-slate-400">
+        <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[10.5px] text-[var(--md-on-surface-variant)]">
           <span className="inline-flex items-center gap-1">
             <span className="h-0.5 w-3 bg-emerald-500" />
             {pick('Equal-% (Globe)', 'Equal-% (Globe)', 'イコール% (グローブ)')}
@@ -265,7 +270,7 @@ export function ValveDiagnosticsPanel({
             {pick('Quick-Open (Gate)', 'Quick-Open (Gate)', 'クイックオープン (ゲート)')}
           </span>
           {activeCustomPath && (
-            <span className="inline-flex items-center gap-1 font-medium text-violet-600 dark:text-violet-400">
+            <span className="inline-flex items-center gap-1 font-semibold text-[var(--md-on-surface)]">
               <span className="h-0.5 w-3 bg-violet-500" />
               {pick('Active', 'Aktif', '選択中')} ({params.valveType})
             </span>
@@ -274,18 +279,18 @@ export function ValveDiagnosticsPanel({
       </div>
 
       {/* 2. Packing Ring-by-Ring Axial Stress Gradient */}
-      <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-3.5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
+      <div className="glass-panel flex flex-col justify-between rounded-[28px] p-4">
         <div>
-          <div className="mb-2 flex items-center justify-between gap-2">
+          <div className="mb-2.5 flex items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2">
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
                   'Packing Ring Stress Gradient',
                   'Gradien Tegangan Cincin Packing',
                   'パッキンリング軸応力勾配',
                 )}
               </h4>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Wall friction attenuates gland load down the stuffing box',
                   'Gesekan dinding melemahkan beban gland ke bawah stuffing box',
@@ -293,7 +298,7 @@ export function ValveDiagnosticsPanel({
                 )}
               </p>
             </div>
-            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+            <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[var(--md-on-secondary-container)]">
               {pick('Req:', 'Min:', '必要:')}{' '}
               {telemetry.requiredStressMpa.toFixed(1)} MPa
             </span>
@@ -303,16 +308,16 @@ export function ValveDiagnosticsPanel({
             {telemetry.ringStressesMpa.map((stress, idx) => {
               const barPct = Math.min(100, (stress / maxRingStress) * 100);
               const barColor = isBinding
-                ? 'bg-red-500'
+                ? 'bg-rose-500'
                 : isLeaking && stress < telemetry.requiredStressMpa
                   ? 'bg-amber-500'
                   : 'bg-emerald-500';
               return (
                 <div key={idx} className="space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Ring', 'Cincin', 'リング')} #{idx + 1}{' '}
-                      <span className="text-slate-400 dark:text-slate-500">
+                      <span className="text-[var(--md-on-surface-variant)]">
                         (
                         {idx === 0
                           ? pick('Top / Gland', 'Atas / Gland', '最上段 / グランド側')
@@ -322,18 +327,18 @@ export function ValveDiagnosticsPanel({
                         • ~{RING_SHARES[idx]}%)
                       </span>
                     </span>
-                    <span className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+                    <span className="font-mono font-bold tabular-nums text-[var(--md-on-surface)]">
                       {stress.toFixed(1)} MPa
                     </span>
                   </div>
-                  <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                  <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                     <div
                       className={`h-full rounded-full transition-all duration-200 ${barColor}`}
                       style={{ width: `${barPct}%` }}
                     />
                     {/* Required sealing stress marker */}
                     <div
-                      className="absolute top-0 bottom-0 w-0.5 bg-slate-900/70 dark:bg-white/80"
+                      className="absolute top-0 bottom-0 w-0.5 bg-[var(--md-on-surface)]/80"
                       style={{ left: `${reqPct}%` }}
                       title={`${pick('Required sealing stress', 'Tegangan penyegelan minimum', '必要シール面圧')}: ${telemetry.requiredStressMpa.toFixed(1)} MPa`}
                     />
@@ -344,8 +349,8 @@ export function ValveDiagnosticsPanel({
           </div>
         </div>
 
-        <p className="mt-3 rounded-xl bg-slate-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600 dark:bg-slate-800/70 dark:text-slate-400">
-          <strong className="text-slate-800 dark:text-slate-200">
+        <p className="mt-3 rounded-[20px] border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-3.5 py-2.5 text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
+          <strong className="text-[var(--md-on-surface)]">
             {pick('Field Tip:', 'Tips Lapangan:', '現場のポイント:')}
           </strong>{' '}
           {pick(

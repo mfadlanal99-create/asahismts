@@ -76,13 +76,13 @@ export function IrThermometerSvg({
     [onAimChange]
   );
 
-  const bgCanvas = isDark ? '#0B1633' : '#F8FAFC';
+  const bgCanvas = 'var(--md-surface-container-low)';
   const viewportBg =
     mode === 'thermal'
       ? tempToPaletteColor(scene.ambientBgTempC, scene.minScaleC, scene.maxScaleC, palette)
       : isDark
-      ? '#111827'
-      : '#E2E8F0';
+      ? '#0b0e14'
+      : 'var(--md-surface-container-lowest)';
 
   const hudBg = isDark ? '#0F172A' : '#1E293B';
   const hudBorder = isDark ? '#334155' : '#475569';
@@ -142,7 +142,16 @@ export function IrThermometerSvg({
         </filter>
       </defs>
 
-      <rect x="0" y="0" width="760" height="440" rx="16" fill={bgCanvas} />
+      <rect
+        x="0"
+        y="0"
+        width="760"
+        height="440"
+        rx="18"
+        fill={bgCanvas}
+        stroke="var(--md-outline-variant)"
+        strokeWidth="1"
+      />
 
       {/* ==================== LEFT: INSPECTION VIEWPORT ==================== */}
       <rect
@@ -152,8 +161,8 @@ export function IrThermometerSvg({
         height="372"
         rx="14"
         fill={viewportBg}
-        stroke={isDark ? '#334155' : '#94A3B8'}
-        strokeWidth="2"
+        stroke="var(--md-outline-variant)"
+        strokeWidth="1.5"
       />
 
       <g clipPath="url(#irViewportClip)">
@@ -206,6 +215,7 @@ export function IrThermometerSvg({
                   textAnchor="middle"
                   fontSize="11"
                   fontWeight="700"
+                  fontFamily="var(--font-sans)"
                   fill="#E2E8F0"
                 >
                   {b.label}
@@ -257,7 +267,15 @@ export function IrThermometerSvg({
               strokeWidth="2"
             />
             <circle cx="300" cy="215" r="22" fill={isDark ? '#CBD5E1' : '#E2E8F0'} />
-            <text x="155" y="180" textAnchor="middle" fontSize="10" fontWeight="700" fill={isDark ? '#E2E8F0' : '#0F172A'}>
+            <text
+              x="155"
+              y="180"
+              textAnchor="middle"
+              fontSize="10"
+              fontWeight="700"
+              fontFamily="var(--font-sans)"
+              fill="var(--md-on-surface)"
+            >
               {pick('SHINY SHAFT (ε=0.15)', 'POROS MENGKILAP', '光沢軸 (ε=0.15)')}
             </text>
           </g>
@@ -289,10 +307,10 @@ export function IrThermometerSvg({
               stroke="#1E293B"
               strokeWidth="2"
             />
-            <text x="145" y="185" textAnchor="middle" fontSize="10" fontWeight="700" fill={isDark ? '#FCA5A5' : '#991B1B'}>
+            <text x="145" y="185" textAnchor="middle" fontSize="10" fontWeight="700" fontFamily="var(--font-sans)" fill={isDark ? '#FCA5A5' : '#991B1B'}>
               {pick('STEAM IN (165°C)', 'UAP MASUK', '蒸気入口')}
             </text>
-            <text x="455" y="185" textAnchor="middle" fontSize="10" fontWeight="700" fill={isDark ? '#93C5FD' : '#1E3A8A'}>
+            <text x="455" y="185" textAnchor="middle" fontSize="10" fontWeight="700" fontFamily="var(--font-sans)" fill={isDark ? '#93C5FD' : '#1E3A8A'}>
               {pick('CONDENSATE (82°C)', 'KONDENSAT', '復水出口')}
             </text>
           </g>
@@ -399,8 +417,18 @@ export function IrThermometerSvg({
         <line x1={aimX} y1={aimY + 5} x2={aimX} y2={aimY + 12} stroke="#EF4444" strokeWidth="1.5" />
 
         {/* Click/Drag Hint Pill at Bottom-Left of Viewport */}
-        <rect x="42" y="372" width="225" height="24" rx="6" fill="rgba(15, 23, 42, 0.78)" />
-        <text x="52" y="388" fontSize="10" fontWeight="600" fill="#F8FAFC">
+        <rect
+          x="42"
+          y="370"
+          width="232"
+          height="26"
+          rx="13"
+          fill="var(--md-surface-container)"
+          fillOpacity="0.92"
+          stroke="var(--md-outline-variant)"
+          strokeWidth="1"
+        />
+        <text x="56" y="387" fontSize="10" fontWeight="600" fontFamily="var(--font-sans)" fill="var(--md-on-surface)">
           {pick(
             'Click or drag anywhere to aim laser',
             'Klik atau seret untuk mengarahkan laser',
@@ -422,10 +450,10 @@ export function IrThermometerSvg({
             stroke="#FFFFFF"
             strokeWidth="1"
           />
-          <text x="524" y="64" textAnchor="end" fontSize="9.5" fontWeight="700" fill="#FFFFFF">
+          <text x="524" y="64" textAnchor="end" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#FFFFFF">
             {scene.maxScaleC}°C
           </text>
-          <text x="524" y="386" textAnchor="end" fontSize="9.5" fontWeight="700" fill="#FFFFFF">
+          <text x="524" y="386" textAnchor="end" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#FFFFFF">
             {scene.minScaleC}°C
           </text>
         </g>
@@ -437,14 +465,14 @@ export function IrThermometerSvg({
         y="34"
         width="160"
         height="372"
-        rx="16"
+        rx="18"
         fill={hudBg}
         stroke={hudBorder}
         strokeWidth="2"
       />
       {/* Top Orange Instrument Accent */}
-      <rect x="590" y="46" width="132" height="24" rx="6" fill="#EA580C" />
-      <text x="656" y="62" textAnchor="middle" fontSize="10" fontWeight="800" fill="#FFFFFF">
+      <rect x="590" y="46" width="132" height="24" rx="8" fill="#EA580C" />
+      <text x="656" y="62" textAnchor="middle" fontSize="10" fontWeight="800" fontFamily="var(--font-sans)" fill="#FFFFFF">
         {mode === 'thermal'
           ? pick('THERMAL CAM', 'KAMERA TERMAL', 'サーモカメラ')
           : pick('IR PYROMETER', 'PIROMETER IR', 'IR放射温度計')}
@@ -452,7 +480,7 @@ export function IrThermometerSvg({
 
       {/* Main Digital Temperature Readout */}
       <rect x="590" y="82" width="132" height="84" rx="10" fill="#071324" stroke="#334155" strokeWidth="1.5" />
-      <text x="656" y="102" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="#94A3B8">
+      <text x="656" y="102" textAnchor="middle" fontSize="9.5" fontWeight="700" fontFamily="var(--font-sans)" fill="#94A3B8">
         {pick('DISPLAYED TEMP', 'SUHU TERBACA', '表示温度')}
       </text>
       <text
@@ -461,7 +489,7 @@ export function IrThermometerSvg({
         textAnchor="middle"
         fontSize="28"
         fontWeight="800"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill="#FB923C"
       >
         {measurement.displayedTempC.toFixed(1)}°C
@@ -469,21 +497,21 @@ export function IrThermometerSvg({
 
       {/* True Center vs Error Breakdown */}
       <rect x="590" y="178" width="132" height="114" rx="10" fill="#0F172A" stroke="#1E293B" strokeWidth="1" />
-      <text x="600" y="198" fontSize="9.5" fontWeight="600" fill="#94A3B8">
+      <text x="600" y="198" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill="#94A3B8">
         {pick('True Center:', 'Suhu Asli:', '真の温度:')}
       </text>
-      <text x="712" y="198" textAnchor="end" fontSize="10.5" fontWeight="700" fontFamily="monospace" fill="#34D399">
+      <text x="712" y="198" textAnchor="end" fontSize="10.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#34D399">
         {measurement.trueCenterTempC.toFixed(1)}°C
       </text>
 
-      <text x="600" y="220" fontSize="9.5" fontWeight="600" fill="#94A3B8">
+      <text x="600" y="220" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill="#94A3B8">
         {pick('Spot Avg:', 'Rata2 Spot:', 'スポット平均:')}
       </text>
-      <text x="712" y="220" textAnchor="end" fontSize="10.5" fontWeight="700" fontFamily="monospace" fill="#F8FAFC">
+      <text x="712" y="220" textAnchor="end" fontSize="10.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#F8FAFC">
         {measurement.spotAvgTrueTempC.toFixed(1)}°C
       </text>
 
-      <text x="600" y="242" fontSize="9.5" fontWeight="600" fill="#94A3B8">
+      <text x="600" y="242" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill="#94A3B8">
         {pick('D:S Error:', 'Galat D:S:', 'D:S誤差:')}
       </text>
       <text
@@ -492,14 +520,14 @@ export function IrThermometerSvg({
         textAnchor="end"
         fontSize="10"
         fontWeight="700"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={Math.abs(measurement.spotErrorC) > 3 ? '#FBBF24' : '#94A3B8'}
       >
         {measurement.spotErrorC >= 0 ? '+' : ''}
         {measurement.spotErrorC.toFixed(1)}°C
       </text>
 
-      <text x="600" y="264" fontSize="9.5" fontWeight="600" fill="#94A3B8">
+      <text x="600" y="264" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill="#94A3B8">
         {pick('ε Error:', 'Galat ε:', 'ε誤差:')}
       </text>
       <text
@@ -508,29 +536,29 @@ export function IrThermometerSvg({
         textAnchor="end"
         fontSize="10"
         fontWeight="700"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={Math.abs(measurement.emissivityErrorC) > 3 ? '#F87171' : '#94A3B8'}
       >
         {measurement.emissivityErrorC >= 0 ? '+' : ''}
         {measurement.emissivityErrorC.toFixed(1)}°C
       </text>
 
-      <text x="600" y="284" fontSize="9" fontWeight="600" fill="#64748B">
+      <text x="600" y="284" fontSize="9" fontWeight="600" fontFamily="var(--font-sans)" fill="#64748B">
         {pick('Target:', 'Target:', '対象:')} {measurement.targetZoneName.slice(0, 14)}
       </text>
 
       {/* Optics & Emissivity Footer */}
       <rect x="590" y="304" width="132" height="88" rx="10" fill="#0F172A" stroke="#1E293B" strokeWidth="1" />
-      <text x="600" y="324" fontSize="9.5" fontWeight="700" fill="#CBD5E1">
+      <text x="600" y="324" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#CBD5E1">
         D:S = {dsRatio}:1 ({distanceCm} cm)
       </text>
-      <text x="600" y="342" fontSize="9.5" fontWeight="700" fill="#38BDF8">
+      <text x="600" y="342" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#38BDF8">
         Spot Ø = {measurement.spotDiameterCm.toFixed(1)} cm
       </text>
-      <text x="600" y="360" fontSize="9.5" fontWeight="700" fill="#FDBA74">
+      <text x="600" y="360" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#FDBA74">
         ε_inst = {instrumentEmissivity.toFixed(2)}
       </text>
-      <text x="600" y="378" fontSize="9.5" fontWeight="700" fill="#94A3B8">
+      <text x="600" y="378" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#94A3B8">
         T_refl = {reflectedTempC}°C {tapeApplied ? '• TAPE' : ''}
       </text>
     </svg>

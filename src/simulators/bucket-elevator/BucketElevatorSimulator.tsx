@@ -106,9 +106,9 @@ export function BucketElevatorSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Action, Elevator Type & Fault Injection Bar */}
-      <div className="sim-panel flex flex-wrap items-center justify-between gap-3 p-3.5">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="sim-header mr-1">
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Fault Injection:', 'Injeksi Gangguan:', '異常注入:')}
           </span>
           {(
@@ -116,27 +116,27 @@ export function BucketElevatorSimulator() {
               {
                 id: 'normal',
                 label: pick('Normal', 'Normal', '正常'),
-                activeCls: 'bg-emerald-500 text-white',
+                activeCls: 'bg-emerald-600 text-white shadow-sm',
               },
               {
                 id: 'belt-slip',
                 label: pick('Belt Slip', 'Slip Sabuk', 'ベルトスリップ'),
-                activeCls: 'bg-amber-500 text-slate-950',
+                activeCls: 'bg-amber-500 text-amber-950 shadow-sm',
               },
               {
                 id: 'boot-choke',
                 label: pick('Boot Choke', 'Boot Tersumbat', 'ブーツ詰まり'),
-                activeCls: 'bg-rose-500 text-white',
+                activeCls: 'bg-rose-600 text-white shadow-sm',
               },
               {
                 id: 'missing-bucket',
                 label: pick('Missing Bucket', 'Bucket Hilang', 'バケット欠損'),
-                activeCls: 'bg-sky-500 text-white',
+                activeCls: 'bg-amber-600 text-white shadow-sm',
               },
               {
                 id: 'misalignment',
                 label: pick('Misalignment', 'Sabuk Miring', 'ベルト蛇行'),
-                activeCls: 'bg-fuchsia-500 text-white',
+                activeCls: 'bg-rose-500 text-white shadow-sm',
               },
             ] as const
           ).map((f) => (
@@ -144,10 +144,10 @@ export function BucketElevatorSimulator() {
               key={f.id}
               type="button"
               onClick={() => setFault(f.id)}
-              className={`rounded-lg px-2.5 py-1.5 text-xs font-bold transition ${
+              className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${
                 inputs.fault === f.id
-                  ? `${f.activeCls} shadow-sm`
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                  ? f.activeCls
+                  : 'glass-pill text-[var(--md-on-surface-variant)]'
               }`}
             >
               {f.label}
@@ -156,7 +156,7 @@ export function BucketElevatorSimulator() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+          <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             {(
               [
                 {
@@ -177,10 +177,10 @@ export function BucketElevatorSimulator() {
                 key={t.id}
                 type="button"
                 onClick={() => setElevatorType(t.id)}
-                className={`rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                className={`rounded-full px-3 py-1 text-xs transition ${
                   inputs.elevatorType === t.id
-                    ? 'bg-sky-500 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {t.label}
@@ -191,16 +191,16 @@ export function BucketElevatorSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             {isPlaying ? (
               <>
-                <Pause className="h-3.5 w-3.5 text-amber-500" />
+                <Pause className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Pause', 'Jeda', '一時停止')}
               </>
             ) : (
               <>
-                <Play className="h-3.5 w-3.5 text-emerald-500" />
+                <Play className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Run', 'Jalankan', '運転')}
               </>
             )}
@@ -209,7 +209,7 @@ export function BucketElevatorSimulator() {
           <button
             type="button"
             onClick={resetAll}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -218,14 +218,14 @@ export function BucketElevatorSimulator() {
       </div>
 
       {/* Main Aligned 12-Column Grid */}
-      <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-12">
+      <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-12">
         {/* Left Column: Cutaway SVG + Live KPI Cards */}
         <div className="flex flex-col gap-4 lg:col-span-7">
-          <div className="sim-panel p-3.5">
-            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <Layers className="h-4 w-4 text-sky-500" />
-                <span className="sim-header">
+                <Layers className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Vertical Cutaway, Vector Diagram & Probe',
                     'Potongan Vertikal, Diagram Vektor & Probe',
@@ -234,14 +234,14 @@ export function BucketElevatorSimulator() {
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="rounded-full bg-slate-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Drag Probe or Click Hotspots',
                     'Seret Probe / Klik Titik Uji',
                     'プローブをドラッグ／点をクリック'
                   )}
                 </span>
-                <span className="rounded-full bg-sky-500/15 px-2.5 py-0.5 text-[11px] font-bold text-sky-700 dark:text-sky-300">
+                <span className="rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-primary-container)]">
                   N_crit = {metrics.criticalRpm.toFixed(1)} RPM
                 </span>
               </div>
@@ -257,76 +257,76 @@ export function BucketElevatorSimulator() {
           </div>
 
           {/* Diagnostic Banner + 6 KPI Boxes */}
-          <div className="sim-panel flex flex-1 flex-col justify-between gap-3 p-4">
+          <div className="glass-panel flex flex-1 flex-col justify-between gap-3.5 rounded-[28px] p-4 sm:p-5">
             <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Mass Capacity', 'Kapasitas Massa', '質量輸送量')}
                 </div>
-                <div className="mt-0.5 text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                   {metrics.massCapacityTph.toFixed(1)}{' '}
-                  <span className="text-xs font-medium">t/h</span>
+                  <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">t/h</span>
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Vol. Capacity', 'Kapasitas Vol.', '体積輸送量')}
                 </div>
-                <div className="mt-0.5 text-lg font-bold text-cyan-600 dark:text-cyan-400">
+                <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.actualCapacityM3h.toFixed(1)}{' '}
-                  <span className="text-xs font-medium">m³/h</span>
+                  <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">m³/h</span>
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Motor Power / Amps', 'Daya / Arus Motor', '動力・電流')}
                 </div>
-                <div className="mt-0.5 text-lg font-bold text-sky-600 dark:text-sky-400">
+                <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                   {metrics.motorPowerKw.toFixed(2)}{' '}
-                  <span className="text-xs font-medium">
+                  <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                     kW · {metrics.motorCurrentA.toFixed(1)} A
                   </span>
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Froude No. (Fr)', 'Bil. Froude (Fr)', 'フルード数 (Fr)')}
                 </div>
-                <div className="mt-0.5 text-lg font-bold text-slate-800 dark:text-white">
+                <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.froudeNumber.toFixed(2)}
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Back-Spill Loss', 'Rugi Tumpah Balik', '逆流損失')}
                 </div>
                 <div
-                  className={`mt-0.5 text-lg font-bold ${
+                  className={`mt-0.5 font-mono text-lg font-extrabold ${
                     metrics.backspillPct > 0
                       ? 'text-rose-600 dark:text-rose-400'
-                      : 'text-slate-800 dark:text-white'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {metrics.backspillPct}%
                 </div>
               </div>
 
-              <div className="sim-box p-2.5">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Req. Backstop', 'Torsi Backstop', '逆転防止トルク')}
                 </div>
-                <div className="mt-0.5 text-lg font-bold text-amber-600 dark:text-amber-400">
+                <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                   {metrics.requiredBackstopTorqueNm.toFixed(0)}{' '}
-                  <span className="text-xs font-medium">N·m</span>
+                  <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">N·m</span>
                 </div>
               </div>
             </div>
 
-            <div className={`rounded-xl border p-3 text-xs ${healthColorClass}`}>
+            <div className={`rounded-[22px] border p-3.5 text-xs ${healthColorClass}`}>
               <div className="flex items-start gap-2">
                 {metrics.healthStatus === 'optimal' ? (
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
@@ -409,11 +409,11 @@ export function BucketElevatorSimulator() {
         {/* Right Column: Organized Parameter Groups + Power/Kinematic Breakdown */}
         <div className="flex flex-col gap-4 lg:col-span-5">
           {/* Operating Parameters Panel */}
-          <div className="sim-panel space-y-3.5 p-4">
-            <div className="flex items-center justify-between">
+          <div className="glass-panel space-y-3.5 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-sky-500" />
-                <span className="sim-header">
+                <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Industrial Elevator Parameters',
                     'Parameter Industri Elevator',
@@ -424,18 +424,18 @@ export function BucketElevatorSimulator() {
 
               {/* Compact Sim-Dial RPM Readout */}
               <div className="sim-dial flex h-12 w-12 flex-col items-center justify-center text-center">
-                <span className="text-[11px] font-extrabold leading-none text-sky-700 dark:text-sky-300">
+                <span className="font-mono text-[11px] font-extrabold leading-none text-[var(--md-primary)]">
                   {Math.round(metrics.effectiveRpm)}
                 </span>
-                <span className="text-[8px] font-bold uppercase text-slate-500 dark:text-slate-400">
+                <span className="text-[8px] font-bold uppercase text-[var(--md-on-surface-variant)]">
                   RPM
                 </span>
               </div>
             </div>
 
             {/* Bulk Material Presets */}
-            <div className="sim-box p-2.5">
-              <div className="mb-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="mb-2 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Bulk Material Preset:',
                   'Preset Material Curah:',
@@ -448,10 +448,10 @@ export function BucketElevatorSimulator() {
                     key={mat.id}
                     type="button"
                     onClick={() => applyMaterialPreset(mat.id)}
-                    className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-left text-[11px] font-semibold transition ${
+                    className={`flex items-center gap-2 rounded-[20px] border px-2.5 py-2 text-left text-[11px] font-semibold transition ${
                       selectedMaterialId === mat.id
-                        ? 'bg-sky-500 text-white shadow-xs'
-                        : 'bg-white/70 text-slate-700 hover:bg-white dark:bg-slate-800/80 dark:text-slate-300'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <span
@@ -467,8 +467,8 @@ export function BucketElevatorSimulator() {
             </div>
 
             {/* Group 1: Drive & Head Pulley */}
-            <div className="sim-box space-y-2.5 p-3 text-xs">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Drive & Head Pulley',
                   'Penggerak & Puli Kepala',
@@ -478,9 +478,9 @@ export function BucketElevatorSimulator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Pulley Dia', 'Dia. Puli', 'プーリ径')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.headPulleyDiaMm} mm
                     </span>
                   </div>
@@ -496,14 +496,14 @@ export function BucketElevatorSimulator() {
                         headPulleyDiaMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Head Speed', 'Putaran', '回転数')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.headPulleyRpm} RPM
                     </span>
                   </div>
@@ -519,16 +519,16 @@ export function BucketElevatorSimulator() {
                         headPulleyRpm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Lift Height', 'Tinggi Angkat', '揚程 H')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.liftHeightM} m
                     </span>
                   </div>
@@ -544,14 +544,14 @@ export function BucketElevatorSimulator() {
                         liftHeightM: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Take-Up', 'Tegangan', '張り張力')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.takeUpTensionKn.toFixed(1)} kN
                     </span>
                   </div>
@@ -567,15 +567,15 @@ export function BucketElevatorSimulator() {
                         takeUpTensionKn: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
               </div>
             </div>
 
             {/* Group 2: Bucket & Casing Geometry */}
-            <div className="sim-box space-y-2.5 p-3 text-xs">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Bucket & Casing Geometry',
                   'Geometri Bucket & Casing',
@@ -585,9 +585,9 @@ export function BucketElevatorSimulator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Width', 'Lebar', 'バケット幅')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bucketWidthMm} mm
                     </span>
                   </div>
@@ -603,14 +603,14 @@ export function BucketElevatorSimulator() {
                         bucketWidthMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Projection', 'Proyeksi', '突出量')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bucketProjectionMm} mm
                     </span>
                   </div>
@@ -626,16 +626,16 @@ export function BucketElevatorSimulator() {
                         bucketProjectionMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Bucket Vol.', 'Vol. Bucket', 'バケット容量')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bucketVolumeL.toFixed(1)} L
                     </span>
                   </div>
@@ -651,14 +651,14 @@ export function BucketElevatorSimulator() {
                         bucketVolumeL: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Pitch', 'Jarak Pitch', '取付ピッチ')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bucketSpacingMm} mm
                     </span>
                   </div>
@@ -674,15 +674,15 @@ export function BucketElevatorSimulator() {
                         bucketSpacingMm: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
               </div>
             </div>
 
             {/* Group 3: Material & Tension */}
-            <div className="sim-box space-y-2.5 p-3 text-xs">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Material & Loading',
                   'Material & Pengisian',
@@ -692,9 +692,9 @@ export function BucketElevatorSimulator() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Fill Factor', 'Faktor Isi', '充填率')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.fillFactorPct}%
                     </span>
                   </div>
@@ -710,14 +710,14 @@ export function BucketElevatorSimulator() {
                         fillFactorPct: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 flex justify-between font-medium">
+                  <div className="mb-1 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Bulk Density', 'Densitas', 'かさ密度')}</span>
-                    <span className="font-bold text-sky-600 dark:text-sky-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bulkDensityTM3.toFixed(2)} t/m³
                     </span>
                   </div>
@@ -733,7 +733,7 @@ export function BucketElevatorSimulator() {
                         bulkDensityTM3: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -741,10 +741,10 @@ export function BucketElevatorSimulator() {
           </div>
 
           {/* Engineering Telemetry Summary */}
-          <div className="sim-panel flex flex-1 flex-col justify-between gap-2.5 p-4">
-            <div className="flex items-center gap-2">
-              <Gauge className="h-4 w-4 text-sky-500" />
-              <span className="sim-header">
+          <div className="glass-panel flex flex-1 flex-col justify-between gap-3 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
                   'Kinematic & Power Breakdown',
                   'Rincian Kinematika & Daya',
@@ -754,56 +754,58 @@ export function BucketElevatorSimulator() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Linear Speed', 'Kec. Linier', 'ベルト速度')}
                 </span>
-                <span className="font-bold">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {metrics.beltSpeedMs.toFixed(2)} m/s
                 </span>
               </div>
 
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Pole Dist. h_p', 'Jarak Kutub h_p', '極距離 h_p')}
                 </span>
-                <span className="font-bold">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {metrics.poleDistanceMm.toFixed(0)} mm
                 </span>
               </div>
 
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Lift Power', 'Daya Angkat', '正味揚程動力')}
                 </span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {metrics.effectiveLiftPowerKw.toFixed(2)} kW
                 </span>
               </div>
 
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Friction Power', 'Daya Gesek', '摩擦・掬い動力')}
                 </span>
-                <span className="font-bold text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {metrics.frictionPowerKw.toFixed(2)} kW
                 </span>
               </div>
 
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Shaft Torque', 'Torsi Poros', '駆動軸トルク')}
                 </span>
-                <span className="font-bold">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {metrics.headShaftTorqueNm.toFixed(0)} N·m
                 </span>
               </div>
 
-              <div className="sim-box flex items-center justify-between px-3 py-2">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Total Buckets', 'Total Bucket', '総バケット数')}
                 </span>
-                <span className="font-bold">{metrics.totalBuckets} pcs</span>
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
+                  {metrics.totalBuckets} pcs
+                </span>
               </div>
             </div>
           </div>

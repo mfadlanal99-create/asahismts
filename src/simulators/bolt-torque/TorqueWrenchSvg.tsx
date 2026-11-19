@@ -28,13 +28,13 @@ export function TorqueWrenchSvg({
   const { pick } = useLanguage();
   const isDark = theme === 'dark';
 
-  const bg = isDark ? '#0f172a' : '#f8fafc';
+  const bg = 'var(--md-surface-container-low)';
   const plateTop = isDark ? '#1e293b' : '#e2e8f0';
   const plateBottom = isDark ? '#0f172a' : '#f1f5f9';
   const plateStroke = isDark ? '#64748b' : '#475569';
   const hatchStroke = isDark ? '#475569' : '#94a3b8';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const boltBody = isDark ? '#94a3b8' : '#64748b';
   const boltHighlight = isDark ? '#cbd5e1' : '#475569';
   const wrenchChrome = isDark ? '#cbd5e1' : '#94a3b8';
@@ -117,7 +117,7 @@ export function TorqueWrenchSvg({
   return (
     <svg
       viewBox="0 0 530 268"
-      className="w-full max-h-[480px] rounded-xl border border-slate-200 dark:border-slate-800"
+      className="w-full max-h-[480px] rounded-[22px] border border-[var(--md-outline-variant)]/60"
       style={{ backgroundColor: bg }}
       role="img"
       aria-label="Bolted joint CAD cross-section and micrometer torque wrench"
@@ -178,6 +178,7 @@ export function TorqueWrenchSvg({
         y="22"
         fontSize="10.5"
         fontWeight="700"
+        fontFamily="var(--font-sans)"
         fill={textMuted}
         letterSpacing="0.05em"
       >
@@ -376,6 +377,7 @@ export function TorqueWrenchSvg({
         textAnchor="middle"
         fontSize="9"
         fontWeight="800"
+        fontFamily="var(--font-mono)"
         fill="#ffffff"
       >
         {propClass.id}
@@ -399,15 +401,17 @@ export function TorqueWrenchSvg({
         y={nutY + 4}
         width="94"
         height="15"
-        rx="3"
-        fill={bg}
-        fillOpacity="0.9"
+        rx="7.5"
+        fill="var(--md-surface-container)"
+        stroke="var(--md-outline-variant)"
+        strokeWidth="0.8"
       />
       <text
-        x={cx + headWidth / 2 + 9}
-        y={nutY + 15}
-        fontSize="9.5"
+        x={cx + headWidth / 2 + 11}
+        y={nutY + 14.5}
+        fontSize="9"
         fontWeight="700"
+        fontFamily="var(--font-mono)"
         fill={statusColor}
       >
         ΔL = +{calc.elongationMm.toFixed(3)} mm
@@ -502,7 +506,7 @@ export function TorqueWrenchSvg({
         <path
           d={`M ${cx + headWidth / 2 + 64} 70 Q ${cx + headWidth / 2 + 72} 56 ${cx + headWidth / 2 + 52} 50`}
           fill="none"
-          stroke="#f59e0b"
+          stroke="var(--md-primary)"
           strokeWidth="2"
           strokeDasharray="3 2"
         />
@@ -511,9 +515,10 @@ export function TorqueWrenchSvg({
           y="33"
           width="82"
           height="16"
-          rx="4"
-          fill={bg}
-          fillOpacity="0.92"
+          rx="8"
+          fill="var(--md-surface-container)"
+          stroke="var(--md-primary)"
+          strokeWidth="0.9"
         />
         <text
           x={cx + headWidth / 2 + 47}
@@ -521,7 +526,8 @@ export function TorqueWrenchSvg({
           textAnchor="middle"
           fontSize="10"
           fontWeight="700"
-          fill="#f59e0b"
+          fontFamily="var(--font-mono)"
+          fill="var(--md-primary)"
         >
           T = {calc.torqueNm.toFixed(0)} N·m
         </text>
@@ -534,6 +540,7 @@ export function TorqueWrenchSvg({
         textAnchor="middle"
         fontSize="11"
         fontWeight="600"
+        fontFamily="var(--font-sans)"
         fill={textPrimary}
       >
         {pick('Preload', 'Preload', '軸力')} Fi = {calc.preloadKn.toFixed(1)} kN (K = {lubrication.kFactor.toFixed(2)})
@@ -546,6 +553,7 @@ export function TorqueWrenchSvg({
         textAnchor="middle"
         fontSize="10.5"
         fontWeight="700"
+        fontFamily="var(--font-sans)"
         fill={textMuted}
         letterSpacing="0.05em"
       >
@@ -556,7 +564,7 @@ export function TorqueWrenchSvg({
       <path
         d={describeArc(gx, gy, r, -210, 30)}
         fill="none"
-        stroke={isDark ? '#1e293b' : '#e2e8f0'}
+        stroke="var(--md-surface-container-highest)"
         strokeWidth="12"
         strokeLinecap="round"
       />
@@ -634,6 +642,7 @@ export function TorqueWrenchSvg({
         textAnchor="middle"
         fontSize="22"
         fontWeight="800"
+        fontFamily="var(--font-mono)"
         fill={statusColor}
       >
         {calc.proofPercent.toFixed(0)}%
@@ -644,19 +653,20 @@ export function TorqueWrenchSvg({
         textAnchor="middle"
         fontSize="10"
         fontWeight="600"
+        fontFamily="var(--font-sans)"
         fill={textMuted}
       >
         {pick('of Proof', 'dari Proof', '保証荷重')} ({propClass.proofStrengthMpa} MPa)
       </text>
 
       {/* Gauge Min/Max Labels */}
-      <text x={gx - 78} y={gy + 38} textAnchor="middle" fontSize="9" fill={textMuted}>
+      <text x={gx - 78} y={gy + 38} textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill={textMuted}>
         0%
       </text>
-      <text x={gx + 78} y={gy + 38} textAnchor="middle" fontSize="9" fill="#ef4444">
+      <text x={gx + 78} y={gy + 38} textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill="#ef4444">
         130%
       </text>
-      <text x={gx} y="248" textAnchor="middle" fontSize="11" fontWeight="600" fill={textPrimary}>
+      <text x={gx} y="248" textAnchor="middle" fontSize="11" fontWeight="600" fontFamily="var(--font-sans)" fill={textPrimary}>
         {pick('Target: 75% Proof', 'Target: 75% Proof', '目標: 75% 保証')} ({calc.recommendedTorqueNm.toFixed(1)} N·m)
       </text>
     </svg>

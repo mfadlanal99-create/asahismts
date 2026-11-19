@@ -50,12 +50,12 @@ export function CompressorSkidSvg({
   const isDark = theme === 'dark';
 
   // Theme-aware palette
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
-  const cardFill = isDark ? '#1e293b' : '#ffffff';
-  const cardStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const bgFill = 'var(--md-surface-container-low)';
+  const gridStroke = 'var(--md-outline-variant)';
+  const cardFill = 'var(--md-surface-container)';
+  const cardStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const pipeBase = isDark ? '#334155' : '#cbd5e1';
 
   const filterClogged = params.intakeFilterDpMbar >= 50;
@@ -100,28 +100,28 @@ export function CompressorSkidSvg({
   const femaleLobePath = buildLobePath(0, 0, 11, 17.5, 6);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+    <div className="glass-panel w-full overflow-hidden rounded-[28px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-5 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             Plant Compressed-Air Skid Schematic
           </span>
           <span
-            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
               sol.highTempTrip
-                ? 'bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-300'
+                ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
                 : dyn.isLoaded
-                  ? 'bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300'
-                  : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
+                  ? 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                  : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
             }`}
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
                 sol.highTempTrip
-                  ? 'bg-red-500'
+                  ? 'bg-rose-500'
                   : dyn.isLoaded
-                    ? 'animate-pulse bg-sky-500'
-                    : 'bg-slate-400'
+                    ? 'animate-pulse bg-[var(--md-primary)]'
+                    : 'bg-[var(--md-outline)]'
               }`}
             />
             {sol.highTempTrip
@@ -131,13 +131,13 @@ export function CompressorSkidSvg({
                 : 'UNLOADED'}
           </span>
         </div>
-        <div className="text-xs text-slate-500 dark:text-slate-400">
+        <div className="text-xs text-[var(--md-on-surface-variant)]">
           FAD:{' '}
-          <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+          <span className="font-mono font-bold text-[var(--md-on-surface)]">
             {sol.actualFadM3Min.toFixed(1)}
           </span>{' '}
           m³/min · Demand:{' '}
-          <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+          <span className="font-mono font-bold text-[var(--md-on-surface)]">
             {sol.totalDemandM3Min.toFixed(1)}
           </span>{' '}
           m³/min
@@ -163,7 +163,7 @@ export function CompressorSkidSvg({
 
         {/* Background */}
         <rect x="0" y="0" width="880" height="340" fill={bgFill} />
-        <rect x="0" y="0" width="880" height="340" fill="url(#skidGrid)" opacity="0.6" />
+        <rect x="0" y="0" width="880" height="340" fill="url(#skidGrid)" opacity="0.35" />
 
         {/* === PIPING CONNECTIONS === */}
         {/* 1. Intake Filter -> Compressor */}
@@ -264,6 +264,7 @@ export function CompressorSkidSvg({
               fontSize="10"
               fontWeight="700"
               fill="#ef4444"
+              fontFamily="var(--font-sans)"
             >
               LEAK!
             </text>
@@ -277,12 +278,12 @@ export function CompressorSkidSvg({
             y="0"
             width="90"
             height="110"
-            rx="10"
+            rx="14"
             fill={cardFill}
             stroke={filterClogged ? '#f59e0b' : cardStroke}
             strokeWidth={filterClogged ? 2.5 : 1.5}
           />
-          <text x="45" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary}>
+          <text x="45" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             INTAKE FILTER
           </text>
           {/* Pleated filter element with progressive ΔP darkening */}
@@ -291,8 +292,8 @@ export function CompressorSkidSvg({
             y="28"
             width="58"
             height="46"
-            rx="4"
-            fill={isDark ? '#0f172a' : '#f1f5f9'}
+            rx="6"
+            fill="var(--md-surface-container-low)"
             stroke={cardStroke}
           />
           <rect
@@ -300,7 +301,7 @@ export function CompressorSkidSvg({
             y="28"
             width="58"
             height="46"
-            rx="4"
+            rx="6"
             fill="#451a03"
             opacity={filterRatio * 0.55}
           />
@@ -323,10 +324,11 @@ export function CompressorSkidSvg({
             fontSize="11"
             fontWeight="700"
             fill={filterClogged ? '#f59e0b' : textPrimary}
+            fontFamily="var(--font-mono)"
           >
             ΔP: {params.intakeFilterDpMbar.toFixed(0)} mbar
           </text>
-          <text x="45" y="103" textAnchor="middle" fontSize="9" fill={textMuted}>
+          <text x="45" y="103" textAnchor="middle" fontSize="9" fill={textMuted} fontFamily="var(--font-mono)">
             P₁: {sol.suctionPressureBarAbs.toFixed(3)} bar
           </text>
         </g>
@@ -338,15 +340,15 @@ export function CompressorSkidSvg({
             y="0"
             width="120"
             height="140"
-            rx="12"
+            rx="16"
             fill={cardFill}
-            stroke={sol.highTempTrip ? '#ef4444' : dyn.isLoaded ? '#0ea5e9' : cardStroke}
+            stroke={sol.highTempTrip ? '#ef4444' : dyn.isLoaded ? 'var(--md-primary)' : cardStroke}
             strokeWidth={sol.highTempTrip ? 2.5 : 1.5}
           />
-          <text x="60" y="19" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary}>
+          <text x="60" y="19" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             COMPRESSOR
           </text>
-          <text x="60" y="31" textAnchor="middle" fontSize="8.5" fill={textMuted}>
+          <text x="60" y="31" textAnchor="middle" fontSize="8.5" fill={textMuted} fontFamily="var(--font-mono)">
             4:6 Twin-Screw / 2-Stg
           </text>
 
@@ -357,8 +359,8 @@ export function CompressorSkidSvg({
             width="88"
             height="54"
             rx="26"
-            fill={isDark ? '#0f172a' : '#f1f5f9'}
-            stroke={sol.highTempTrip ? '#ef4444' : '#0ea5e9'}
+            fill="var(--md-surface-container-low)"
+            stroke={sol.highTempTrip ? '#ef4444' : 'var(--md-primary)'}
             strokeWidth="2"
           />
 
@@ -366,8 +368,8 @@ export function CompressorSkidSvg({
           <g transform={`translate(45, 69) rotate(${maleAngle})`}>
             <path
               d={maleLobePath}
-              fill={sol.highTempTrip ? '#ef4444' : '#0284c7'}
-              stroke={isDark ? '#0f172a' : '#ffffff'}
+              fill={sol.highTempTrip ? '#ef4444' : 'var(--md-primary)'}
+              stroke="var(--md-surface-container-low)"
               strokeWidth="1"
             />
             <circle cx="0" cy="0" r="4" fill={cardFill} />
@@ -378,7 +380,7 @@ export function CompressorSkidSvg({
             <path
               d={femaleLobePath}
               fill={sol.highTempTrip ? '#f87171' : '#38bdf8'}
-              stroke={isDark ? '#0f172a' : '#ffffff'}
+              stroke="var(--md-surface-container-low)"
               strokeWidth="1"
             />
             <circle cx="0" cy="0" r="4" fill={cardFill} />
@@ -391,10 +393,11 @@ export function CompressorSkidSvg({
             fontSize="11"
             fontWeight="700"
             fill={sol.highTempTrip ? '#ef4444' : textPrimary}
+            fontFamily="var(--font-mono)"
           >
             T₂: {sol.dischargeTempC.toFixed(1)} °C
           </text>
-          <text x="60" y="131" textAnchor="middle" fontSize="9" fill={textMuted}>
+          <text x="60" y="131" textAnchor="middle" fontSize="9" fill={textMuted} fontFamily="var(--font-mono)">
             {sol.averagePowerKw.toFixed(1)} kW avg
           </text>
         </g>
@@ -406,12 +409,12 @@ export function CompressorSkidSvg({
             y="0"
             width="110"
             height="130"
-            rx="10"
+            rx="14"
             fill={cardFill}
             stroke={coolerWarn ? '#f59e0b' : cardStroke}
             strokeWidth={coolerWarn ? 2 : 1.5}
           />
-          <text x="55" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary}>
+          <text x="55" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             COOLER SKID
           </text>
 
@@ -421,8 +424,8 @@ export function CompressorSkidSvg({
             y="28"
             width="78"
             height="58"
-            rx="5"
-            fill={isDark ? '#0f172a' : '#f1f5f9'}
+            rx="8"
+            fill="var(--md-surface-container-low)"
             stroke={cardStroke}
           />
           {[0, 1, 2, 3, 4].map((i) => (
@@ -443,7 +446,7 @@ export function CompressorSkidSvg({
               y="28"
               width="78"
               height="58"
-              rx="5"
+              rx="8"
               fill="#78350f"
               opacity={Math.min(0.65, (params.coolerFoulingPct / 100) * 0.65)}
             />
@@ -456,10 +459,10 @@ export function CompressorSkidSvg({
             <line x1="0" y1="-11" x2="0" y2="11" stroke={textPrimary} strokeWidth="2.5" strokeLinecap="round" />
           </g>
 
-          <text x="55" y="103" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={coolerWarn ? '#f59e0b' : textPrimary}>
+          <text x="55" y="103" textAnchor="middle" fontSize="10.5" fontWeight="700" fill={coolerWarn ? '#f59e0b' : textPrimary} fontFamily="var(--font-mono)">
             {blindMode ? 'Fouling: ???' : `Fouling: ${params.coolerFoulingPct}%`}
           </text>
-          <text x="55" y="118" textAnchor="middle" fontSize="9" fill={textMuted}>
+          <text x="55" y="118" textAnchor="middle" fontSize="9" fill={textMuted} fontFamily="var(--font-mono)">
             Out: {sol.aftercoolerOutletC.toFixed(1)} °C
           </text>
         </g>
@@ -476,7 +479,7 @@ export function CompressorSkidSvg({
             fill={reliefVenting ? '#ef4444' : '#64748b'}
           />
           {reliefVenting && (
-            <text x="40" y="9" textAnchor="middle" fontSize="8" fontWeight="700" fill="#ef4444">
+            <text x="40" y="9" textAnchor="middle" fontSize="8" fontWeight="700" fill="#ef4444" fontFamily="var(--font-sans)">
               PRV VENT!
             </text>
           )}
@@ -489,10 +492,10 @@ export function CompressorSkidSvg({
             height="168"
             rx="28"
             fill={cardFill}
-            stroke={sol.waterCarryover ? '#ef4444' : '#0284c7'}
+            stroke={sol.waterCarryover ? '#ef4444' : 'var(--md-primary)'}
             strokeWidth="2"
           />
-          <text x="40" y="11" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary}>
+          <text x="40" y="11" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             {reliefVenting ? '' : 'RECEIVER'}
           </text>
 
@@ -508,21 +511,21 @@ export function CompressorSkidSvg({
           />
 
           {/* Analog Pressure Gauge */}
-          <circle cx="40" cy="82" r="26" fill={isDark ? '#0f172a' : '#ffffff'} stroke={cardStroke} strokeWidth="2" />
+          <circle cx="40" cy="82" r="26" fill="var(--md-surface-container-lowest)" stroke={cardStroke} strokeWidth="2" />
           <path
             d="M 22 100 A 25 25 0 1 1 58 100"
             fill="none"
-            stroke={isDark ? '#475569' : '#94a3b8'}
+            stroke="var(--md-outline)"
             strokeWidth="2"
           />
           <g transform={`translate(40, 82) rotate(${needleDeg})`}>
             <line x1="0" y1="4" x2="0" y2="-19" stroke="#ef4444" strokeWidth="2.2" strokeLinecap="round" />
             <circle cx="0" cy="0" r="3" fill={textPrimary} />
           </g>
-          <text x="40" y="124" textAnchor="middle" fontSize="11.5" fontWeight="700" fill={textPrimary}>
+          <text x="40" y="124" textAnchor="middle" fontSize="11.5" fontWeight="700" fill={textPrimary} fontFamily="var(--font-mono)">
             {dyn.receiverPressureBar.toFixed(2)} bar
           </text>
-          <text x="40" y="138" textAnchor="middle" fontSize="8.5" fill={textMuted}>
+          <text x="40" y="138" textAnchor="middle" fontSize="8.5" fill={textMuted} fontFamily="var(--font-mono)">
             Band {params.loadPressureBar.toFixed(1)}–{params.unloadPressureBar.toFixed(1)}
           </text>
 
@@ -532,11 +535,11 @@ export function CompressorSkidSvg({
             y="163"
             width="52"
             height="16"
-            rx="4"
+            rx="8"
             fill={cardFill}
-            fillOpacity="0.92"
+            fillOpacity="0.94"
             stroke={sol.waterCarryover ? '#ef4444' : cardStroke}
-            strokeWidth="0.8"
+            strokeWidth="0.9"
           />
           <text
             x="40"
@@ -545,6 +548,7 @@ export function CompressorSkidSvg({
             fontSize="9.5"
             fontWeight="700"
             fill={sol.waterCarryover ? '#ef4444' : textPrimary}
+            fontFamily="var(--font-mono)"
           >
             H₂O: {dyn.condensateLevelPct.toFixed(0)}%
           </text>
@@ -556,10 +560,10 @@ export function CompressorSkidSvg({
             y="215"
             width="36"
             height="20"
-            rx="4"
+            rx="6"
             fill={params.autoDrainEnabled ? '#10b981' : '#ef4444'}
           />
-          <text x="40" y="228" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#ffffff">
+          <text x="40" y="228" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="#ffffff" fontFamily="var(--font-sans)">
             {params.autoDrainEnabled ? 'DRAIN OK' : 'STUCK'}
           </text>
           {params.autoDrainEnabled && dyn.condensateLevelPct > 11 && (
@@ -588,12 +592,12 @@ export function CompressorSkidSvg({
             y="0"
             width="106"
             height="112"
-            rx="10"
+            rx="14"
             fill={cardFill}
-            stroke={sol.pressureDewPointC > 10 ? '#ef4444' : '#0ea5e9'}
+            stroke={sol.pressureDewPointC > 10 ? '#ef4444' : 'var(--md-primary)'}
             strokeWidth={sol.pressureDewPointC > 10 ? 2 : 1.5}
           />
-          <text x="53" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary}>
+          <text x="53" y="18" textAnchor="middle" fontSize="10" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             REFRIG. DRYER
           </text>
           <rect
@@ -601,9 +605,9 @@ export function CompressorSkidSvg({
             y="28"
             width="68"
             height="42"
-            rx="6"
-            fill={isDark ? '#0f172a' : '#f0f9ff'}
-            stroke={sol.pressureDewPointC > 10 ? '#f59e0b' : '#7dd3fc'}
+            rx="8"
+            fill="var(--md-surface-container-low)"
+            stroke={sol.pressureDewPointC > 10 ? '#f59e0b' : 'var(--md-primary)'}
           />
           <text
             x="53"
@@ -611,11 +615,12 @@ export function CompressorSkidSvg({
             textAnchor="middle"
             fontSize="13"
             fontWeight="700"
-            fill={sol.pressureDewPointC > 10 ? '#ef4444' : '#0284c7'}
+            fill={sol.pressureDewPointC > 10 ? '#ef4444' : 'var(--md-primary)'}
+            fontFamily="var(--font-mono)"
           >
             {sol.pressureDewPointC.toFixed(1)} °C
           </text>
-          <text x="53" y="86" textAnchor="middle" fontSize="9.5" fontWeight="600" fill={textPrimary}>
+          <text x="53" y="86" textAnchor="middle" fontSize="9.5" fontWeight="600" fill={textPrimary} fontFamily="var(--font-sans)">
             Pressure Dew Pt
           </text>
           <text
@@ -625,6 +630,7 @@ export function CompressorSkidSvg({
             fontSize="8"
             fontWeight="600"
             fill={sol.waterCarryover ? '#ef4444' : textMuted}
+            fontFamily="var(--font-mono)"
           >
             {sol.waterCarryover ? 'WATER CARRYOVER!' : 'Target ≤ 3.5 °C'}
           </text>
@@ -632,14 +638,14 @@ export function CompressorSkidSvg({
 
         {/* === 6. PLANT DEMAND HEADER === */}
         <g transform="translate(772, 26)">
-          <rect x="0" y="0" width="92" height="64" rx="8" fill={cardFill} stroke={cardStroke} />
-          <text x="46" y="18" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={textPrimary}>
+          <rect x="0" y="0" width="92" height="64" rx="12" fill={cardFill} stroke={cardStroke} strokeWidth="1.2" />
+          <text x="46" y="18" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={textPrimary} fontFamily="var(--font-sans)">
             PLANT HEADER
           </text>
-          <text x="46" y="36" textAnchor="middle" fontSize="11" fontWeight="700" fill="#0284c7">
+          <text x="46" y="36" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--md-primary)" fontFamily="var(--font-mono)">
             {params.plantDemandM3Min.toFixed(1)} m³/min
           </text>
-          <text x="46" y="52" textAnchor="middle" fontSize="9" fill={leakHigh ? '#ef4444' : textMuted}>
+          <text x="46" y="52" textAnchor="middle" fontSize="9" fill={leakHigh ? '#ef4444' : textMuted} fontFamily="var(--font-mono)">
             {blindMode ? 'Leaks: ???' : `Leaks: ${sol.leakFlowM3Min.toFixed(2)} m³/m`}
           </text>
         </g>

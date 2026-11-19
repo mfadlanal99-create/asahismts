@@ -36,25 +36,25 @@ export function FastenersBasicsSvg({
 
   const c = useMemo(
     () => ({
-      canvasBg: isDark ? '#0f172a' : '#f8fafc',
-      cardBg: isDark ? '#1e293b' : '#ffffff',
-      cardSubBg: isDark ? '#0f172a' : '#f1f5f9',
-      cardBorder: isDark ? '#334155' : '#cbd5e1',
-      grid: isDark ? '#1e293b' : '#e2e8f0',
-      textMain: isDark ? '#f8fafc' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#64748b',
+      canvasBg: 'var(--md-surface-container-low)',
+      cardBg: 'var(--md-surface-container)',
+      cardSubBg: 'var(--md-surface-container-low)',
+      cardBorder: 'var(--md-outline-variant)',
+      grid: 'var(--md-outline-variant)',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
       steelDark: isDark ? '#1e293b' : '#475569',
       steelEdge: isDark ? '#64748b' : '#475569',
       steelMid: isDark ? '#475569' : '#94a3b8',
       steelLight: isDark ? '#94a3b8' : '#cbd5e1',
+      primary: 'var(--md-primary)',
+      primaryBg: 'var(--md-primary-container)',
+      onPrimaryContainer: 'var(--md-on-primary-container)',
       emerald: '#10b981',
       emeraldBg: isDark ? 'rgba(16,185,129,0.16)' : 'rgba(16,185,129,0.10)',
       amber: '#f59e0b',
       amberBg: isDark ? 'rgba(245,158,11,0.16)' : 'rgba(245,158,11,0.12)',
-      cyan: '#06b6d4',
-      cyanBg: isDark ? 'rgba(6,182,212,0.16)' : 'rgba(6,182,212,0.10)',
-      blue: '#3b82f6',
-      dim: isDark ? '#38bdf8' : '#0284c7',
+      dim: 'var(--md-primary)',
       nylonBlue: '#2563eb',
     }),
     [isDark]
@@ -174,8 +174,8 @@ export function FastenersBasicsSvg({
             ? 'ナイロンリングがねじ山に密着し振動に抵抗'
             : 'フランジ面のギザ歯が座面に食い込み緩みを抑制'
         ),
-        color: c.cyan,
-        bg: c.cyanBg,
+        color: c.primary,
+        bg: c.primaryBg,
       };
     }
     return {
@@ -199,10 +199,11 @@ export function FastenersBasicsSvg({
   }, [nut, washer, pick, c]);
 
   return (
-    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-2xl p-2 select-none shadow-sm">
+    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-2 select-none">
       <svg
         viewBox="0 0 920 500"
-        className="w-full max-h-[480px] h-auto drop-shadow-sm font-sans"
+        className="w-full max-h-[480px] h-auto drop-shadow-sm"
+        style={{ fontFamily: 'var(--font-sans)' }}
         role="img"
         aria-label="Bolted Joint Assembly 2D CAD Cross-Section and Property Class Decoder"
       >
@@ -213,7 +214,7 @@ export function FastenersBasicsSvg({
               fill="none"
               stroke={c.grid}
               strokeWidth="0.6"
-              strokeOpacity={isDark ? 0.35 : 0.65}
+              strokeOpacity={isDark ? 0.2 : 0.32}
             />
           </pattern>
           <pattern id="fbGridMajor" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -223,7 +224,7 @@ export function FastenersBasicsSvg({
               fill="none"
               stroke={c.grid}
               strokeWidth="1.1"
-              strokeOpacity={isDark ? 0.55 : 0.9}
+              strokeOpacity={isDark ? 0.32 : 0.5}
             />
           </pattern>
 
@@ -280,32 +281,32 @@ export function FastenersBasicsSvg({
         </defs>
 
         {/* Sheet Background */}
-        <rect width="920" height="500" fill={c.canvasBg} rx="10" />
-        <rect width="920" height="500" fill="url(#fbGridMajor)" rx="10" />
+        <rect width="920" height="500" fill={c.canvasBg} rx="14" />
+        <rect width="920" height="500" fill="url(#fbGridMajor)" rx="14" />
 
         {/* TOP HEADER BAR (y: 12..42) */}
         <g transform="translate(16, 12)">
-          <rect x="0" y="0" width="320" height="30" rx="6" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
-          <circle cx="16" cy="15" r="5" fill={c.emerald} />
-          <text x="30" y="19" fill={c.textMain} fontSize="11.5" fontWeight="800" letterSpacing="0.4">
+          <rect x="0" y="0" width="320" height="30" rx="15" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
+          <circle cx="16" cy="15" r="5" fill={c.primary} />
+          <text x="30" y="19" fill={c.textMain} fontSize="11.5" fontWeight="800" letterSpacing="0.4" fontFamily="var(--font-sans)">
             {pick('CAD SECTION: BOLTED JOINT ASSEMBLY', 'POTONGAN CAD: SAMBUNGAN BAUT', 'CAD断面図：ボルト締結アセンブリ')}
           </text>
         </g>
 
         <g transform="translate(348, 12)">
-          <rect x="0" y="0" width="192" height="30" rx="6" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
-          <text x="96" y="19" fill={c.emerald} fontSize="11" fontWeight="700" textAnchor="middle">
+          <rect x="0" y="0" width="192" height="30" rx="15" fill={c.primaryBg} stroke={c.primary} strokeWidth="1.2" />
+          <text x="96" y="19" fill={c.onPrimaryContainer} fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
             {size} × {boltSpec.pitchMm} • Class {propertyClass}
           </text>
         </g>
 
         {/* LEFT CAD VIEWPORT FRAME */}
-        <rect x="16" y="50" width="524" height="438" rx="8" fill="none" stroke={c.cardBorder} strokeWidth="1.2" />
+        <rect x="16" y="50" width="524" height="438" rx="14" fill="none" stroke={c.cardBorder} strokeWidth="1.2" />
 
         {/* Top-left Head Standard Pill */}
         <g transform="translate(26, 58)">
-          <rect x="0" y="0" width="215" height="22" rx="4" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
-          <text x="10" y="14.5" fill={c.textMain} fontSize="10" fontWeight="700">
+          <rect x="0" y="0" width="215" height="22" rx="11" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
+          <text x="12" y="14.5" fill={c.textMain} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
             {headSpec.name} ({headSpec.standard.split('/')[0].trim()})
           </text>
         </g>
@@ -435,8 +436,8 @@ export function FastenersBasicsSvg({
               />
               <line x1={cx - headHalfW * 0.45} y1={plateTopY - 38} x2={cx - headHalfW * 0.45} y2={plateTopY - 4} stroke={c.steelEdge} strokeWidth="1.4" />
               <line x1={cx + headHalfW * 0.45} y1={plateTopY - 38} x2={cx + headHalfW * 0.45} y2={plateTopY - 4} stroke={c.steelEdge} strokeWidth="1.4" />
-              <rect x={cx - 21} y={plateTopY - 30} width="42" height="18" rx="3" fill={c.cardBg} fillOpacity="0.92" stroke={c.emerald} strokeWidth="1" />
-              <text x={cx} y={plateTopY - 17} fill={c.emerald} fontSize="11" fontWeight="900" textAnchor="middle">
+              <rect x={cx - 21} y={plateTopY - 30} width="42" height="18" rx="6" fill={c.cardBg} fillOpacity="0.95" stroke={c.primary} strokeWidth="1" />
+              <text x={cx} y={plateTopY - 17} fill={c.primary} fontSize="11" fontWeight="900" textAnchor="middle" fontFamily="var(--font-mono)">
                 {propertyClass}
               </text>
             </g>
@@ -465,11 +466,11 @@ export function FastenersBasicsSvg({
               <path
                 d={`M ${cx - rShank * 0.72} ${plateTopY - 49} L ${cx - rShank * 0.72} ${plateTopY - 22} L ${cx} ${plateTopY - 16} L ${cx + rShank * 0.72} ${plateTopY - 22} L ${cx + rShank * 0.72} ${plateTopY - 49} Z`}
                 fill={c.canvasBg}
-                stroke={c.cyan}
+                stroke={c.primary}
                 strokeWidth="1.4"
               />
-              <line x1={cx - rShank * 0.35} y1={plateTopY - 49} x2={cx - rShank * 0.35} y2={plateTopY - 20} stroke={c.cyan} strokeWidth="1" strokeOpacity="0.6" />
-              <line x1={cx + rShank * 0.35} y1={plateTopY - 49} x2={cx + rShank * 0.35} y2={plateTopY - 20} stroke={c.cyan} strokeWidth="1" strokeOpacity="0.6" />
+              <line x1={cx - rShank * 0.35} y1={plateTopY - 49} x2={cx - rShank * 0.35} y2={plateTopY - 20} stroke={c.primary} strokeWidth="1" strokeOpacity="0.6" />
+              <line x1={cx + rShank * 0.35} y1={plateTopY - 49} x2={cx + rShank * 0.35} y2={plateTopY - 20} stroke={c.primary} strokeWidth="1" strokeOpacity="0.6" />
             </g>
           )}
 
@@ -485,7 +486,7 @@ export function FastenersBasicsSvg({
               <path
                 d={`M ${cx - rShank * 0.58} ${plateTopY} L ${cx - rShank * 0.58} ${plateTopY + 15} L ${cx} ${plateTopY + 20} L ${cx + rShank * 0.58} ${plateTopY + 15} L ${cx + rShank * 0.58} ${plateTopY} Z`}
                 fill={c.canvasBg}
-                stroke={c.cyan}
+                stroke={c.primary}
                 strokeWidth="1.3"
               />
             </g>
@@ -553,8 +554,8 @@ export function FastenersBasicsSvg({
                 <line x1={cx - headHalfW} y1={dimY - 4} x2={cx - headHalfW} y2={extStartY} stroke={c.dim} strokeWidth="1" strokeDasharray="3 2" />
                 <line x1={cx + headHalfW} y1={dimY - 4} x2={cx + headHalfW} y2={extStartY} stroke={c.dim} strokeWidth="1" strokeDasharray="3 2" />
                 <line x1={cx - headHalfW + 3} y1={dimY} x2={cx + headHalfW - 3} y2={dimY} stroke={c.dim} strokeWidth="1.5" markerStart="url(#fbDimArrowStart)" markerEnd="url(#fbDimArrowEnd)" />
-                <rect x={cx - 58} y={dimY - 25} width="116" height="20" rx="4" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
-                <text x={cx} y={dimY - 11.5} fill={c.dim} fontSize="10" fontWeight="800" textAnchor="middle">
+                <rect x={cx - 58} y={dimY - 25} width="116" height="20" rx="10" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
+                <text x={cx} y={dimY - 11.5} fill={c.dim} fontSize="10" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                   {boltHead === 'socket-din912' || boltHead === 'countersunk-din7991'
                     ? `Allen Key: ${boltSpec.allenKeyMm} mm`
                     : boltHead === 'carriage-din603'
@@ -775,11 +776,11 @@ export function FastenersBasicsSvg({
             strokeWidth="1.2"
             markerStart="url(#fbLeaderDot)"
           />
-          <rect x="24" y="294" width="132" height="36" rx="5" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
-          <text x="32" y="308" fill={c.textMuted} fontSize="8.5" fontWeight="800">
+          <rect x="24" y="294" width="132" height="36" rx="10" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
+          <text x="32" y="308" fill={c.textMuted} fontSize="8.5" fontWeight="800" fontFamily="var(--font-sans)">
             {pick('WASHER', 'RING', '座金')}
           </text>
-          <text x="32" y="322" fill={c.textMain} fontSize="10" fontWeight="700">
+          <text x="32" y="322" fill={c.textMain} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
             {washer === 'flat-din125' ? 'Flat DIN 125' : washer === 'spring-din127' ? 'Split Spring DIN 127' : 'Nord-Lock DIN 25201'}
           </text>
 
@@ -790,11 +791,11 @@ export function FastenersBasicsSvg({
             strokeWidth="1.2"
             markerStart="url(#fbLeaderDot)"
           />
-          <rect x="24" y="340" width="132" height="36" rx="5" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
-          <text x="32" y="354" fill={c.textMuted} fontSize="8.5" fontWeight="800">
+          <rect x="24" y="340" width="132" height="36" rx="10" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
+          <text x="32" y="354" fill={c.textMuted} fontSize="8.5" fontWeight="800" fontFamily="var(--font-sans)">
             {pick('NUT TYPE', 'TIPE MUR', 'ナット形式')}
           </text>
-          <text x="32" y="368" fill={c.textMain} fontSize="10" fontWeight="700">
+          <text x="32" y="368" fill={c.textMain} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
             {nut === 'hex-din934'
               ? 'Hex Nut DIN 934'
               : nut === 'nyloc-din985'
@@ -810,35 +811,35 @@ export function FastenersBasicsSvg({
           <line x1="428" y1={plateTopY} x2="452" y2={plateTopY} stroke={c.dim} strokeWidth="1" strokeDasharray="3 2" />
           <line x1="428" y1={plateBotY} x2="452" y2={plateBotY} stroke={c.dim} strokeWidth="1" strokeDasharray="3 2" />
           <line x1="444" y1={plateTopY + 3} x2="444" y2={plateBotY - 3} stroke={c.dim} strokeWidth="1.5" markerStart="url(#fbDimArrowStart)" markerEnd="url(#fbDimArrowEnd)" />
-          <rect x="454" y="220" width="76" height="30" rx="4" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
-          <text x="492" y="233" fill={c.textMuted} fontSize="8" fontWeight="700" textAnchor="middle">
+          <rect x="454" y="220" width="76" height="30" rx="8" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
+          <text x="492" y="233" fill={c.textMuted} fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="var(--font-sans)">
             GRIP Lk
           </text>
-          <text x="492" y="245" fill={c.dim} fontSize="10" fontWeight="800" textAnchor="middle">
+          <text x="492" y="245" fill={c.dim} fontSize="10" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
             100 mm
           </text>
 
           <path d={`M ${cx + rShank + 2} 410 L 380 410`} fill="none" stroke={c.dim} strokeWidth="1.2" markerStart="url(#fbLeaderDot)" />
-          <rect x="380" y="392" width="148" height="36" rx="5" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
-          <text x="454" y="406" fill={c.textMuted} fontSize="8.5" fontWeight="800" textAnchor="middle">
+          <rect x="380" y="392" width="148" height="36" rx="10" fill={c.cardBg} stroke={c.dim} strokeWidth="1" />
+          <text x="454" y="406" fill={c.textMuted} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-sans)">
             {pick('METRIC THREAD (6g)', 'ULIR METRIK (6g)', 'メートルねじ')}
           </text>
-          <text x="454" y="420" fill={c.dim} fontSize="10.5" fontWeight="800" textAnchor="middle">
+          <text x="454" y="420" fill={c.dim} fontSize="10.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
             {size} × {boltSpec.pitchMm} mm Pitch
           </text>
 
           <line x1={cx - rShank} y1={threadEndY + 10} x2={cx - rShank} y2={threadEndY + 30} stroke={c.dim} strokeWidth="1" strokeDasharray="2 2" />
           <line x1={cx + rShank} y1={threadEndY + 10} x2={cx + rShank} y2={threadEndY + 30} stroke={c.dim} strokeWidth="1" strokeDasharray="2 2" />
           <line x1={cx - rShank + 2} y1={threadEndY + 24} x2={cx + rShank - 2} y2={threadEndY + 24} stroke={c.dim} strokeWidth="1.4" markerStart="url(#fbDimArrowStart)" markerEnd="url(#fbDimArrowEnd)" />
-          <rect x={cx - 42} y={threadEndY + 30} width="84" height="18" rx="3" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="0.9" />
-          <text x={cx} y={threadEndY + 42.5} fill={c.textMain} fontSize="9.5" fontWeight="700" textAnchor="middle">
+          <rect x={cx - 42} y={threadEndY + 30} width="84" height="18" rx="9" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="0.9" />
+          <text x={cx} y={threadEndY + 42.5} fill={c.textMain} fontSize="9.5" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
             d = {boltSpec.diameterMm} mm
           </text>
         </g>
 
         {/* RIGHT SIDE: TECHNICAL SPEC & HEAD STAMP PANEL (x: 556..904, y: 12..488) */}
         <g id="specPanel" transform="translate(556, 12)">
-          <rect x="0" y="0" width="348" height="476" rx="10" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.4" />
+          <rect x="0" y="0" width="348" height="476" rx="16" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.4" />
 
           {/* Section 1: Authentic Bolt Head Top-View Stamp */}
           <g transform="translate(18, 16)">
@@ -849,76 +850,76 @@ export function FastenersBasicsSvg({
               strokeWidth="2"
             />
             <circle cx="40" cy="40" r="28" fill="none" stroke={c.steelDark} strokeWidth="1.2" strokeOpacity="0.5" />
-            <text x="40" y="30" fill={c.textMuted} fontSize="8.5" fontWeight="800" textAnchor="middle" letterSpacing="1">
+            <text x="40" y="30" fill={c.textMuted} fontSize="8.5" fontWeight="800" textAnchor="middle" letterSpacing="1" fontFamily="var(--font-sans)">
               MECH-LAB
             </text>
-            <text x="40" y="49" fill={c.emerald} fontSize={propertyClass.length > 4 ? '12.5' : '16'} fontWeight="900" textAnchor="middle">
+            <text x="40" y="49" fill={c.primary} fontSize={propertyClass.length > 4 ? '12.5' : '16'} fontWeight="900" textAnchor="middle" fontFamily="var(--font-mono)">
               {propertyClass}
             </text>
 
-            <text x="90" y="20" fill={c.textMain} fontSize="13.5" fontWeight="800">
+            <text x="90" y="20" fill={c.textMain} fontSize="13.5" fontWeight="800" fontFamily="var(--font-sans)">
               {pick('PROPERTY CLASS', 'KELAS KEKUATAN', '強度区分')} {propertyClass}
             </text>
-            <text x="90" y="37" fill={c.textMuted} fontSize="10.5">
+            <text x="90" y="37" fill={c.textMuted} fontSize="10.5" fontFamily="var(--font-sans)">
               {propClassSpec.material.length > 34 ? `${propClassSpec.material.slice(0, 34)}...` : propClassSpec.material}
             </text>
-            <rect x="90" y="47" width="224" height="20" rx="4" fill={c.emeraldBg} stroke={c.emerald} strokeWidth="0.9" />
-            <text x="100" y="60" fill={c.emerald} fontSize="9.5" fontWeight="700">
+            <rect x="90" y="47" width="224" height="20" rx="10" fill={c.primaryBg} stroke={c.primary} strokeWidth="0.9" />
+            <text x="100" y="60" fill={c.onPrimaryContainer} fontSize="9.5" fontWeight="700" fontFamily="var(--font-sans)">
               {propClassSpec.heatTreatment.length > 34 ? `${propClassSpec.heatTreatment.slice(0, 34)}` : propClassSpec.heatTreatment}
             </text>
           </g>
 
           {/* Section 2: Strength Decoder Breakdown */}
           <g transform="translate(16, 108)">
-            <rect x="0" y="0" width="316" height="106" rx="8" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
-            <text x="12" y="19" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5">
+            <rect x="0" y="0" width="316" height="106" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+            <text x="12" y="19" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5" fontFamily="var(--font-sans)">
               {pick('STRENGTH DECODER', 'DEKODER KEKUATAN BAJA', '強度区分の計算ルール')}
             </text>
 
-            <text x="12" y="42" fill={c.textMain} fontSize="11" fontWeight="700">
+            <text x="12" y="42" fill={c.textMain} fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">
               • {pick('Tensile (UTS)', 'Tarik (UTS)', '引張強さ')}:{' '}
-              <tspan fill={c.emerald} fontWeight="900">{propClassSpec.nominalTensileMpa} MPa</tspan>
+              <tspan fill={c.primary} fontWeight="900" fontFamily="var(--font-mono)">{propClassSpec.nominalTensileMpa} MPa</tspan>
             </text>
-            <text x="182" y="42" fill={c.textMuted} fontSize="9.5" fontFamily="monospace">
+            <text x="182" y="42" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-mono)">
               {decoderFormulaLines.rmFormula}
             </text>
 
-            <text x="12" y="65" fill={c.textMain} fontSize="11" fontWeight="700">
+            <text x="12" y="65" fill={c.textMain} fontSize="11" fontWeight="700" fontFamily="var(--font-sans)">
               • {pick('Yield (Re)', 'Luluh (Re)', '降伏耐力')}:{' '}
-              <tspan fill={c.emerald} fontWeight="900">{propClassSpec.yieldStrengthMpa} MPa</tspan>
+              <tspan fill={c.primary} fontWeight="900" fontFamily="var(--font-mono)">{propClassSpec.yieldStrengthMpa} MPa</tspan>
             </text>
-            <text x="182" y="65" fill={c.textMuted} fontSize="9.5" fontFamily="monospace">
+            <text x="182" y="65" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-mono)">
               {decoderFormulaLines.reFormula}
             </text>
 
             <line x1="12" y1="77" x2="304" y2="77" stroke={c.cardBorder} strokeWidth="0.8" />
-            <text x="12" y="95" fill={c.textMuted} fontSize="10.5" fontWeight="600">
+            <text x="12" y="95" fill={c.textMuted} fontSize="10.5" fontWeight="600" fontFamily="var(--font-sans)">
               • {pick('Proof Stress (Sp)', 'Beban Bukti (Sp)', '保証荷重応力')}:{' '}
-              <tspan fill={c.cyan} fontWeight="800">{propClassSpec.proofStrengthMpa} MPa</tspan>{' '}
+              <tspan fill={c.primary} fontWeight="800" fontFamily="var(--font-mono)">{propClassSpec.proofStrengthMpa} MPa</tspan>{' '}
               (Fp = {jointCalc.proofLoadKn.toFixed(1)} kN)
             </text>
           </g>
 
           {/* Section 3: Recommended Wrench & Allen Key */}
           <g transform="translate(16, 228)">
-            <text x="0" y="0" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5">
+            <text x="0" y="0" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5" fontFamily="var(--font-sans)">
               {pick('RECOMMENDED TOOLING', 'UKURAN KUNCI PAS & KUNCI L', '推奨スパナ・六角棒レンチ')}
             </text>
             <g transform="translate(0, 8)">
-              <rect x="0" y="0" width="152" height="58" rx="6" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
-              <text x="12" y="19" fill={c.textMuted} fontSize="10">
+              <rect x="0" y="0" width="152" height="58" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+              <text x="12" y="19" fill={c.textMuted} fontSize="10" fontFamily="var(--font-sans)">
                 {pick('Hex Spanner (AF)', 'Kunci Pas Hex', 'スパナ二面幅')}
               </text>
-              <text x="12" y="45" fill={c.cyan} fontSize="20" fontWeight="900">
+              <text x="12" y="45" fill={c.primary} fontSize="20" fontWeight="900" fontFamily="var(--font-mono)">
                 {boltSpec.hexSpannerMm} mm
               </text>
             </g>
             <g transform="translate(164, 8)">
-              <rect x="0" y="0" width="152" height="58" rx="6" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
-              <text x="12" y="19" fill={c.textMuted} fontSize="10">
+              <rect x="0" y="0" width="152" height="58" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+              <text x="12" y="19" fill={c.textMuted} fontSize="10" fontFamily="var(--font-sans)">
                 {pick('Allen Key Socket', 'Kunci L Socket', '六角穴レンチ')}
               </text>
-              <text x="12" y="45" fill={c.blue} fontSize="20" fontWeight="900">
+              <text x="12" y="45" fill={c.primary} fontSize="20" fontWeight="900" fontFamily="var(--font-mono)">
                 {boltSpec.allenKeyMm} mm
               </text>
             </g>
@@ -926,24 +927,24 @@ export function FastenersBasicsSvg({
 
           {/* Section 4: Tightening Torque for active Class @ 75% Proof Preload */}
           <g transform="translate(16, 312)">
-            <text x="0" y="0" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5">
+            <text x="0" y="0" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5" fontFamily="var(--font-sans)">
               {pick(`TIGHTENING TORQUE (${propertyClass} @ 75% Fp)`, `TORSI KENCANG (${propertyClass}, 75% Fp)`, `推奨締付トルク（${propertyClass} 75%）`)}
             </text>
             <g transform="translate(0, 8)">
-              <rect x="0" y="0" width="152" height="52" rx="6" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
-              <text x="12" y="18" fill={c.textMuted} fontSize="9.5">
+              <rect x="0" y="0" width="152" height="52" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+              <text x="12" y="18" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-sans)">
                 {pick('Dry Steel (K=0.20)', 'Kering (K=0.20)', 'ドライ (K=0.20)')}
               </text>
-              <text x="12" y="40" fill={c.amber} fontSize="16" fontWeight="900">
+              <text x="12" y="40" fill={c.primary} fontSize="16" fontWeight="900" fontFamily="var(--font-mono)">
                 {jointCalc.recommendedTorqueDryNm.toFixed(1)} N·m
               </text>
             </g>
             <g transform="translate(164, 8)">
-              <rect x="0" y="0" width="152" height="52" rx="6" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
-              <text x="12" y="18" fill={c.textMuted} fontSize="9.5">
+              <rect x="0" y="0" width="152" height="52" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+              <text x="12" y="18" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-sans)">
                 {pick('Lubricated (K=0.15)', 'Terlumasi (K=0.15)', '潤滑時 (K=0.15)')}
               </text>
-              <text x="12" y="40" fill={c.emerald} fontSize="16" fontWeight="900">
+              <text x="12" y="40" fill={c.emerald} fontSize="16" fontWeight="900" fontFamily="var(--font-mono)">
                 {jointCalc.recommendedTorqueLubeNm.toFixed(1)} N·m
               </text>
             </g>
@@ -951,14 +952,14 @@ export function FastenersBasicsSvg({
 
           {/* Section 5: Anti-Loosening Rating Banner */}
           <g transform="translate(16, 390)">
-            <rect x="0" y="0" width="316" height="68" rx="7" fill={lockingRating.bg} stroke={lockingRating.color} strokeWidth="1.2" />
-            <text x="12" y="19" fill={lockingRating.color} fontSize="10" fontWeight="900" letterSpacing="0.4">
+            <rect x="0" y="0" width="316" height="68" rx="14" fill={lockingRating.bg} stroke={lockingRating.color} strokeWidth="1.2" />
+            <text x="12" y="19" fill={lockingRating.color} fontSize="10" fontWeight="900" letterSpacing="0.4" fontFamily="var(--font-sans)">
               {lockingRating.badge}
             </text>
-            <text x="12" y="36" fill={c.textMain} fontSize="9.5" fontWeight="600">
+            <text x="12" y="36" fill={c.textMain} fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)">
               {washerSpec.name} + {nutSpec.name}
             </text>
-            <text x="12" y="54" fill={c.textMuted} fontSize="9.5">
+            <text x="12" y="54" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-sans)">
               {lockingRating.detail}
             </text>
           </g>

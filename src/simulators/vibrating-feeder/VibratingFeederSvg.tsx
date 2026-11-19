@@ -116,22 +116,22 @@ export function VibratingFeederSvg({
 
   const palette = useMemo(
     () => ({
-      bgTop: isDark ? '#0b1424' : '#f8fafc',
-      bgBottom: isDark ? '#0f172a' : '#f1f5f9',
-      grid: isDark ? 'rgba(148, 163, 184, 0.07)' : 'rgba(15, 23, 42, 0.05)',
+      bgTop: 'var(--md-surface-container-low)',
+      bgBottom: 'var(--md-surface-container)',
+      grid: 'color-mix(in srgb, var(--md-outline-variant) 35%, transparent)',
       steel: isDark ? '#334155' : '#64748b',
       steelLight: isDark ? '#64748b' : '#94a3b8',
       steelDark: isDark ? '#1e293b' : '#475569',
       liner: isDark ? '#d97706' : '#b45309',
-      textMain: isDark ? '#f1f5f9' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#475569',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
       particle: isDark ? '#fbbf24' : '#d97706',
       particleAlt: isDark ? '#f59e0b' : '#b45309',
-      spring: isDark ? '#38bdf8' : '#0284c7',
+      spring: 'var(--md-primary)',
       danger: '#ef4444',
       emerald: '#10b981',
       amber: '#f59e0b',
-      cyan: '#06b6d4',
+      cyan: 'var(--md-primary)',
     }),
     [isDark]
   );
@@ -707,7 +707,7 @@ export function VibratingFeederSvg({
   const activeInfo = activeHotspot ? hotspotData[activeHotspot] : null;
 
   return (
-    <div className="sim-box relative overflow-hidden p-2">
+    <div className="relative overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2">
       <svg
         ref={svgRef}
         viewBox="0 0 860 520"
@@ -765,8 +765,8 @@ export function VibratingFeederSvg({
         </defs>
 
         {/* Background & Blueprint Grid */}
-        <rect width="860" height="520" rx="10" fill="url(#vf-bg)" />
-        <rect width="860" height="520" rx="10" fill="url(#vf-grid)" />
+        <rect width="860" height="520" rx="16" fill="url(#vf-bg)" />
+        <rect width="860" height="520" rx="16" fill="url(#vf-grid)" />
 
         {/* Floor / Concrete Foundation */}
         <rect
@@ -913,6 +913,7 @@ export function VibratingFeederSvg({
             fill={palette.textMuted}
             fontSize="9.5"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
           >
             L = {inputs.troughLengthM.toFixed(1)} m · W = {inputs.troughWidthMm} mm
           </text>
@@ -987,6 +988,7 @@ export function VibratingFeederSvg({
               fill={isPhaseSlip ? palette.danger : palette.textMuted}
               fontSize="9.5"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {isPhaseSlip
                 ? pick('PHASE SLIP (Δφ=58°)', 'SLIP FASA (Δφ=58°)', '位相ずれ (Δφ=58°)')
@@ -1048,6 +1050,7 @@ export function VibratingFeederSvg({
               fill={palette.amber}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               β = {inputs.throwAngleDeg}°
             </text>
@@ -1241,6 +1244,7 @@ export function VibratingFeederSvg({
             fill={palette.textMain}
             fontSize="11"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             H = {inputs.gateOpeningMm} mm
           </text>
@@ -1251,6 +1255,7 @@ export function VibratingFeederSvg({
               fill={palette.amber}
               fontSize="9"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('↕ Drag gate', '↕ Geser gerbang', '↕ ドラッグ調整')}
             </text>
@@ -1332,6 +1337,7 @@ export function VibratingFeederSvg({
             fill={palette.textMuted}
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('DISCHARGE CHUTE', 'CORONG KELUARAN', '排出シュート')}
           </text>
@@ -1385,16 +1391,17 @@ export function VibratingFeederSvg({
               y="0"
               width="292"
               height="68"
-              rx="8"
-              fill={isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(255, 255, 255, 0.92)'}
+              rx="14"
+              fill="var(--md-surface-container)"
+              fillOpacity="0.96"
               stroke={
                 activeInfo.status === 'crit'
                   ? palette.danger
                   : activeInfo.status === 'warn'
                     ? palette.amber
-                    : palette.cyan
+                    : 'var(--md-primary)'
               }
-              strokeWidth="1.3"
+              strokeWidth="1.4"
             />
             <text
               x="12"
@@ -1402,15 +1409,17 @@ export function VibratingFeederSvg({
               fill={palette.textMain}
               fontSize="10.5"
               fontWeight="800"
+              fontFamily="var(--font-sans)"
             >
               {activeInfo.title}
             </text>
             <text
               x="12"
               y="35"
-              fill={palette.cyan}
+              fill="var(--md-primary)"
               fontSize="10.5"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {activeInfo.gForce} · φ={activeInfo.phase} · {activeInfo.temp}
             </text>
@@ -1420,6 +1429,7 @@ export function VibratingFeederSvg({
               fill={palette.textMuted}
               fontSize="9.5"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
             >
               {activeInfo.detail}
             </text>
@@ -1433,10 +1443,11 @@ export function VibratingFeederSvg({
             y="0"
             width="274"
             height="68"
-            rx="10"
-            fill={isDark ? 'rgba(15, 23, 42, 0.88)' : 'rgba(255, 255, 255, 0.9)'}
-            stroke={isDark ? 'rgba(255,255,255,0.14)' : 'rgba(15,23,42,0.12)'}
-            strokeWidth="1"
+            rx="14"
+            fill="var(--md-surface-container)"
+            fillOpacity="0.96"
+            stroke="var(--md-outline-variant)"
+            strokeWidth="1.2"
           />
           <text
             x="14"
@@ -1444,6 +1455,7 @@ export function VibratingFeederSvg({
             fill={palette.textMuted}
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('THROW INDEX', 'INDEKS LEMPAR', '投擲指数')} (Kᵥ)
           </text>
@@ -1453,6 +1465,7 @@ export function VibratingFeederSvg({
             fill={kvColor}
             fontSize="20"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
           >
             {metrics.throwIndexKv.toFixed(2)}
           </text>
@@ -1461,6 +1474,7 @@ export function VibratingFeederSvg({
             y="58"
             fill={palette.textMuted}
             fontSize="9.5"
+            fontFamily="var(--font-mono)"
           >
             {metrics.peakGForce.toFixed(2)} g · {inputs.driveFrequencyHz} Hz
           </text>
@@ -1470,7 +1484,8 @@ export function VibratingFeederSvg({
             y1="10"
             x2="138"
             y2="58"
-            stroke={isDark ? 'rgba(255,255,255,0.1)' : 'rgba(15,23,42,0.1)'}
+            stroke="var(--md-outline-variant)"
+            strokeOpacity="0.6"
           />
 
           <text
@@ -1479,6 +1494,7 @@ export function VibratingFeederSvg({
             fill={palette.textMuted}
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('MASS FLOW', 'LAJU MASSA', '質量流量')}
           </text>
@@ -1488,6 +1504,7 @@ export function VibratingFeederSvg({
             fill={palette.textMain}
             fontSize="20"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
           >
             {metrics.massFlowRateTH.toFixed(1)} t/h
           </text>
@@ -1497,6 +1514,7 @@ export function VibratingFeederSvg({
             fill={metrics.inResonanceZone ? palette.danger : palette.textMuted}
             fontSize="9.5"
             fontWeight={metrics.inResonanceZone ? '700' : '500'}
+            fontFamily="var(--font-mono)"
           >
             f/fₙ = {metrics.resonanceRatio.toFixed(2)}
             {metrics.inResonanceZone ? ' (!)' : ''}
@@ -1511,7 +1529,7 @@ export function VibratingFeederSvg({
               y="0"
               width="292"
               height="26"
-              rx="6"
+              rx="10"
               fill="rgba(239, 68, 68, 0.18)"
               stroke={palette.danger}
               strokeWidth="1.3"
@@ -1523,6 +1541,7 @@ export function VibratingFeederSvg({
               fill={palette.danger}
               fontSize="10.5"
               fontWeight="800"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 'RESONANCE ZONE (0.75 ≤ f/fₙ ≤ 1.35)',
@@ -1540,9 +1559,9 @@ export function VibratingFeederSvg({
             y="424"
             width="820"
             height="86"
-            rx="8"
-            fill={isDark ? '#060c17' : 'rgba(255, 255, 255, 0.94)'}
-            stroke={isDark ? 'rgba(56, 189, 248, 0.25)' : 'rgba(15, 23, 42, 0.14)'}
+            rx="14"
+            fill="var(--md-surface-container-low)"
+            stroke="var(--md-outline-variant)"
             strokeWidth="1.2"
           />
           {/* Zero centerline */}
@@ -1551,7 +1570,8 @@ export function VibratingFeederSvg({
             y1={scopePaths.midY}
             x2="588"
             y2={scopePaths.midY}
-            stroke={isDark ? 'rgba(148, 163, 184, 0.22)' : 'rgba(15, 23, 42, 0.14)'}
+            stroke="var(--md-outline-variant)"
+            strokeOpacity="0.65"
             strokeWidth="1"
           />
           {/* Throw-Off Threshold Line (Kv = 1.0) */}
@@ -1570,6 +1590,7 @@ export function VibratingFeederSvg({
             fill={palette.danger}
             fontSize="9"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('THROW-OFF THRESHOLD (Kᵥ=1.0)', 'AMBANG LEMPAR (Kᵥ=1.0)', '投擲しきい値 (Kᵥ=1.0)')}
           </text>
@@ -1596,20 +1617,21 @@ export function VibratingFeederSvg({
             y1="434"
             x2="604"
             y2="500"
-            stroke={isDark ? 'rgba(148, 163, 184, 0.2)' : 'rgba(15, 23, 42, 0.12)'}
+            stroke="var(--md-outline-variant)"
+            strokeOpacity="0.6"
           />
-          <text x="618" y="444" fill={palette.textMuted} fontSize="9.5" fontWeight="700">
+          <text x="618" y="444" fill={palette.textMuted} fontSize="9.5" fontWeight="700" fontFamily="var(--font-sans)">
             {pick('LIVE VIBRATION SCOPE', 'OSILOSKOP GETARAN', '振動波形モニタ')}
           </text>
           <circle cx="623" cy="460" r="3.5" fill={palette.amber} />
-          <text x="633" y="463" fill={palette.textMain} fontSize="10" fontWeight="600">
+          <text x="633" y="463" fill={palette.textMain} fontSize="10" fontWeight="600" fontFamily="var(--font-mono)">
             aₙ = ±{metrics.normalGForce.toFixed(2)} g
           </text>
           <circle cx="623" cy="477" r="3.5" fill={palette.emerald} />
-          <text x="633" y="480" fill={palette.textMain} fontSize="10" fontWeight="600">
+          <text x="633" y="480" fill={palette.textMain} fontSize="10" fontWeight="600" fontFamily="var(--font-mono)">
             A = ±{metrics.singleAmplitudeMm.toFixed(1)} mm
           </text>
-          <text x="618" y="497" fill={palette.textMuted} fontSize="9.5" fontWeight="600">
+          <text x="618" y="497" fill={palette.textMuted} fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)">
             {pick('Threshold', 'Ambang', 'しきい値')}: {metrics.throwOffThresholdG.toFixed(2)} g
           </text>
         </g>

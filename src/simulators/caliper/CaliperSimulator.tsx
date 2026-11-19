@@ -259,10 +259,10 @@ export function CaliperSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Control Bar */}
-      <div className="glass-panel rounded-2xl p-4 shadow-sm space-y-3">
+      <div className="glass-panel rounded-[28px] p-4 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Instrument Selector */}
-          <div className="flex flex-wrap items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 p-1">
+          <div className="flex flex-wrap items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             {(
               [
                 ['vernier-002', pick('Vernier 0.02 mm', 'Jangka Sorong 0.02 mm', 'ノギス 0.02 mm')],
@@ -274,10 +274,10 @@ export function CaliperSimulator() {
                 key={id}
                 type="button"
                 onClick={() => handleSelectInstrument(id)}
-                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-xs transition-colors ${
                   instrument === id
-                    ? 'bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-300 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {label}
@@ -290,10 +290,10 @@ export function CaliperSimulator() {
             <button
               type="button"
               onClick={() => setShowLoupe((v) => !v)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
                 showLoupe
-                  ? 'border-sky-300 dark:border-sky-700 bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300'
-                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                  ? 'border-[var(--md-primary)]/40 bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               <Search className="h-3.5 w-3.5" />
@@ -301,16 +301,16 @@ export function CaliperSimulator() {
             </button>
 
             {showLoupe && (
-              <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-xs">
+              <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-xs">
                 {[2.5, 3, 4].map((z) => (
                   <button
                     key={z}
                     type="button"
                     onClick={() => setLoupeZoom(z)}
-                    className={`px-2 py-1.5 font-medium ${
+                    className={`rounded-full px-2.5 py-1 transition-colors ${
                       loupeZoom === z
-                        ? 'bg-sky-600 text-white'
-                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {z}×
@@ -320,14 +320,14 @@ export function CaliperSimulator() {
             )}
 
             {/* Lab Sub-Mode Switcher */}
-            <div className="flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-slate-800 p-1">
+            <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
               <button
                 type="button"
                 onClick={() => handleSwitchLabMode('measure')}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${
+                className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
                   labMode === 'measure'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <Eye className="h-3.5 w-3.5" />
@@ -336,10 +336,10 @@ export function CaliperSimulator() {
               <button
                 type="button"
                 onClick={() => handleSwitchLabMode('test')}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${
+                className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
                   labMode === 'test'
-                    ? 'bg-amber-500 text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <EyeOff className="h-3.5 w-3.5" />
@@ -348,10 +348,10 @@ export function CaliperSimulator() {
               <button
                 type="button"
                 onClick={() => handleSwitchLabMode('qc')}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold transition-colors ${
+                className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs transition-colors ${
                   labMode === 'qc'
-                    ? 'bg-sky-600 text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <ClipboardCheck className="h-3.5 w-3.5" />
@@ -363,18 +363,18 @@ export function CaliperSimulator() {
 
         {/* Preset Parts & Zero Error Row (or QC Batch Strip when in QC mode) */}
         {labMode !== 'qc' ? (
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--md-outline-variant)]/50">
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mr-1">
+              <span className="text-xs font-semibold text-[var(--md-on-surface-variant)] mr-1">
                 {pick('Test Parts:', 'Benda Uji:', '測定ワーク:')}
               </span>
               <button
                 type="button"
                 onClick={() => handleSelectPart(null)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
+                className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                   activePartId === 'free'
-                    ? 'border-sky-400 bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-semibold text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {pick('Free Measure', 'Ukur Bebas', '自由測定')}
@@ -384,10 +384,10 @@ export function CaliperSimulator() {
                   key={part.id}
                   type="button"
                   onClick={() => handleSelectPart(part)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
+                  className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                     activePartId === part.id
-                      ? 'border-sky-400 bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300'
-                      : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-semibold text-[var(--md-on-primary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {part.name}
@@ -396,12 +396,12 @@ export function CaliperSimulator() {
             </div>
 
             <div className="flex items-center gap-2">
-              <label className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 cursor-pointer">
+              <label className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--md-on-surface-variant)] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={zeroErrorEnabled}
                   onChange={(e) => setZeroErrorEnabled(e.target.checked)}
-                  className="rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                  className="rounded"
                 />
                 {pick('Zero Error', 'Kesalahan Nol', 'ゼロ誤差')}
               </label>
@@ -409,7 +409,7 @@ export function CaliperSimulator() {
                 <select
                   value={zeroErrorMm}
                   onChange={(e) => setZeroErrorMm(Number(e.target.value))}
-                  className="rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-700 dark:text-slate-200"
+                  className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 >
                   {ZERO_ERROR_OPTIONS.filter((o) => o.value !== 0).map((opt) => (
                     <option key={opt.value} value={opt.value}>
@@ -421,13 +421,13 @@ export function CaliperSimulator() {
             </div>
           </div>
         ) : (
-          <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+          <div className="pt-3 border-t border-[var(--md-outline-variant)]/50 space-y-2.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <span className="text-xs font-semibold text-[var(--md-on-surface)]">
                   Incoming QC Batch #{qcBatchVariant + 1}
                 </span>
-                <span className="rounded-full bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 px-2.5 py-0.5 text-[11px] font-semibold text-sky-700 dark:text-sky-300">
+                <span className="rounded-full bg-[var(--md-secondary-container)] px-3 py-0.5 text-[11px] font-semibold text-[var(--md-on-secondary-container)]">
                   Batch Score: {qcCorrectCount} / {qcBatch.length} Correct (
                   {qcCompletedCount} inspected)
                 </span>
@@ -435,14 +435,14 @@ export function CaliperSimulator() {
               <button
                 type="button"
                 onClick={handleNewQcBatch}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 <Shuffle className="h-3.5 w-3.5" />
                 {pick('New QC Batch', 'Batch QC Baru', '新規QCバッチ')}
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
               {qcBatch.map((part, idx) => {
                 const sub = qcSubmissions[part.id];
                 const isActive = idx === activeQcIndex;
@@ -451,36 +451,40 @@ export function CaliperSimulator() {
                     key={part.id}
                     type="button"
                     onClick={() => loadQcPart(part, idx)}
-                    className={`text-left rounded-lg border p-2.5 transition-colors ${
+                    className={`rounded-[20px] border p-3 text-left transition-all ${
                       isActive
-                        ? 'border-sky-500 bg-sky-50/70 dark:bg-sky-950/40'
-                        : 'border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-slate-100/70 dark:hover:bg-slate-800'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-1">
-                      <span className="text-[11px] font-mono font-semibold text-slate-500 dark:text-slate-400">
+                      <span className="text-[11px] font-mono font-semibold opacity-75">
                         {part.partNumber} · {part.measurementType}
                       </span>
                       {sub ? (
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                             sub.fullyCorrect
-                              ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
-                              : 'bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300'
+                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                              : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
                           }`}
                         >
                           {sub.fullyCorrect ? 'OK' : 'MISS'}
                         </span>
                       ) : (
-                        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                        <span className="rounded-full bg-[var(--md-surface-container-high)] px-2 py-0.5 text-[10px] font-medium text-[var(--md-on-surface-variant)]">
                           Pending
                         </span>
                       )}
                     </div>
-                    <div className="mt-0.5 text-xs font-semibold text-slate-900 dark:text-white truncate">
+                    <div className="mt-0.5 text-xs font-semibold truncate">
                       {part.name}
                     </div>
-                    <div className="text-[11px] font-mono text-sky-700 dark:text-sky-300">
+                    <div
+                      className={`text-[11px] font-mono font-semibold ${
+                        isActive ? 'text-[var(--md-on-primary-container)]' : 'text-[var(--md-primary)]'
+                      }`}
+                    >
                       {part.specLabel}
                     </div>
                   </button>
@@ -498,15 +502,15 @@ export function CaliperSimulator() {
           <div
             tabIndex={0}
             onKeyDown={handleStageKeyDown}
-            className="glass-panel rounded-2xl p-4 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500"
+            className="glass-panel rounded-[28px] p-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--md-primary)]"
           >
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <span className="text-xs font-semibold text-[var(--md-on-surface)]">
                   {config.label}
                 </span>
                 <span
-                  className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${
+                  className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${
                     parallaxAngleDeg === 0
                       ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300'
                       : 'border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300'
@@ -525,8 +529,8 @@ export function CaliperSimulator() {
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-[11px]">
-                  <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-medium">
+                <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-[11px]">
+                  <span className="px-2 py-0.5 text-[var(--md-on-surface-variant)] font-medium">
                     {pick('View Angle:', 'Sudut Pandang:', '視点角度:')}
                   </span>
                   {([-15, 0, 15] as const).map((ang) => (
@@ -534,12 +538,12 @@ export function CaliperSimulator() {
                       key={ang}
                       type="button"
                       onClick={() => setParallaxAngleDeg(ang)}
-                      className={`px-2 py-0.5 font-medium transition-colors ${
+                      className={`rounded-full px-2.5 py-0.5 font-semibold transition-colors ${
                         parallaxAngleDeg === ang
                           ? ang === 0
                             ? 'bg-emerald-600 text-white'
                             : 'bg-amber-500 text-white'
-                          : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
+                          : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                       }`}
                     >
                       {ang === 0 ? pick('0° (90° Perp)', '0° (Tegak)', '0° (正面)') : `${ang > 0 ? '+' : ''}${ang}°`}
@@ -547,8 +551,8 @@ export function CaliperSimulator() {
                   ))}
                 </div>
 
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2.5 py-0.5 text-[11px] text-slate-500 dark:text-slate-400">
-                  <Keyboard className="h-3 w-3 text-sky-500" />
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-2.5 py-0.5 text-[11px] text-[var(--md-on-surface-variant)]">
+                  <Keyboard className="h-3 w-3 text-[var(--md-primary)]" />
                   Click stage · <kbd className="font-mono font-semibold">←/→</kbd> ±1 LC ·{' '}
                   <kbd className="font-mono font-semibold">Shift+←/→</kbd> ±10 LC
                 </span>
@@ -592,11 +596,13 @@ export function CaliperSimulator() {
             </div>
 
             {/* Fine & Coarse Adjustment Controls */}
-            <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-4">
+            <div className="mt-4 pt-3 border-t border-[var(--md-outline-variant)]/50 flex flex-wrap items-center gap-4">
               <div className="flex-1 min-w-[220px]">
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
+                <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)] mb-1.5">
                   <span>Position Slider (0 – {config.maxMm} mm)</span>
-                  <span className="font-mono">Step: {config.leastCount.toFixed(2)} mm</span>
+                  <span className="font-mono font-semibold text-[var(--md-primary)]">
+                    Step: {config.leastCount.toFixed(2)} mm
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -610,36 +616,36 @@ export function CaliperSimulator() {
                     );
                     setGuessResult(null);
                   }}
-                  className="w-full accent-sky-600"
+                  className="w-full"
                 />
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => handleStep(-10)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   -10 LC
                 </button>
                 <button
                   type="button"
                   onClick={() => handleStep(-1)}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   <Minus className="h-3.5 w-3.5" /> 1 LC
                 </button>
                 <button
                   type="button"
                   onClick={() => handleStep(1)}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   <Plus className="h-3.5 w-3.5" /> 1 LC
                 </button>
                 <button
                   type="button"
                   onClick={() => handleStep(10)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   +10 LC
                 </button>
@@ -651,7 +657,7 @@ export function CaliperSimulator() {
                     setGuessResult(null);
                   }}
                   title="Reset to zero"
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                  className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   <RotateCcw className="h-3.5 w-3.5" /> Zero
                 </button>
@@ -663,15 +669,15 @@ export function CaliperSimulator() {
         {/* Right Column: Readout / QC / Test Yourself (4 cols) */}
         <div className="lg:col-span-4 space-y-4">
           {labMode === 'qc' ? (
-            <div className="rounded-xl border border-sky-200 dark:border-sky-800/60 bg-sky-50/40 dark:bg-sky-950/20 p-4 space-y-3">
+            <div className="glass-panel rounded-[28px] p-4 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                     Inspecting {activeQcPart.partNumber}: {activeQcPart.name}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                  <p className="mt-0.5 text-xs text-[var(--md-on-surface-variant)]">
                     Tolerance Spec:{' '}
-                    <span className="font-mono font-semibold text-sky-700 dark:text-sky-300">
+                    <span className="font-mono font-semibold text-[var(--md-primary)]">
                       {activeQcPart.specLabel}
                     </span>{' '}
                     · Read the scale in the Magnifier Loupe, enter your measurement, and
@@ -688,17 +694,17 @@ export function CaliperSimulator() {
                     placeholder="Measured mm"
                     value={qcReadingInput}
                     onChange={(e) => setQcReadingInput(e.target.value)}
-                    className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2 text-sm font-mono text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-sm font-mono text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                   />
 
                   <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
                     <button
                       type="button"
                       onClick={() => setQcVerdictChoice('PASS')}
-                      className={`py-2 rounded-lg text-center transition-colors border ${
+                      className={`rounded-full border py-2 text-center transition-colors ${
                         qcVerdictChoice === 'PASS'
                           ? 'bg-emerald-600 border-emerald-600 text-white'
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       {pick('PASS (In Spec)', 'LULUS (Sesuai Spek)', '合格 (規格内)')}
@@ -706,10 +712,10 @@ export function CaliperSimulator() {
                     <button
                       type="button"
                       onClick={() => setQcVerdictChoice('REJECT')}
-                      className={`py-2 rounded-lg text-center transition-colors border ${
+                      className={`rounded-full border py-2 text-center transition-colors ${
                         qcVerdictChoice === 'REJECT'
                           ? 'bg-rose-600 border-rose-600 text-white'
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       {pick('REJECT (Out of Tol)', 'TOLAK (Luar Toleransi)', '不合格 (規格外)')}
@@ -720,7 +726,7 @@ export function CaliperSimulator() {
                     type="button"
                     onClick={handleSubmitQcPart}
                     disabled={!qcReadingInput}
-                    className="w-full py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white text-xs font-semibold transition-colors"
+                    className="m3-btn-filled w-full py-2.5 text-xs font-bold disabled:opacity-45"
                   >
                     {pick('Submit QC Decision', 'Kirim Keputusan QC', 'QC判定を確定')}
                   </button>
@@ -731,7 +737,7 @@ export function CaliperSimulator() {
                   const actualInSpec = isWithinTolerance(activeQcPart);
                   return (
                     <div
-                      className={`rounded-lg border p-3 text-xs space-y-2 ${
+                      className={`rounded-[20px] border p-3 text-xs space-y-2 ${
                         sub.fullyCorrect
                           ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200'
                           : 'border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200'
@@ -761,7 +767,7 @@ export function CaliperSimulator() {
                           onClick={() =>
                             loadQcPart(qcBatch[activeQcIndex + 1], activeQcIndex + 1)
                           }
-                          className="w-full py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-700"
+                          className="glass-pill w-full rounded-full py-2 text-xs font-semibold"
                         >
                           Next Part →
                         </button>
@@ -772,13 +778,13 @@ export function CaliperSimulator() {
               )}
             </div>
           ) : labMode === 'test' ? (
-            <div className="rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50/50 dark:bg-amber-950/20 p-4 space-y-3">
+            <div className="glass-panel rounded-[28px] p-4 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                     Test Yourself — Read the Scale
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-300">
+                  <p className="mt-0.5 text-xs text-[var(--md-on-surface-variant)]">
                     Use the Magnifier Loupe to read the {config.label}
                     {effectiveZeroError !== 0
                       ? ` and compensate for the ${effectiveZeroError >= 0 ? '+' : ''}${effectiveZeroError.toFixed(2)} mm zero error`
@@ -789,14 +795,14 @@ export function CaliperSimulator() {
                 <button
                   type="button"
                   onClick={handleRandomChallenge}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
+                  className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
                   <Shuffle className="h-3.5 w-3.5" />
                   {pick('New Challenge', 'Tantangan Baru', '新しい問題')}
                 </button>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <input
                   type="number"
                   step={config.leastCount}
@@ -806,12 +812,12 @@ export function CaliperSimulator() {
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleCheckGuess();
                   }}
-                  className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2 text-sm font-mono text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-sm font-mono text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={handleCheckGuess}
-                  className="w-full py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition-colors"
+                  className="m3-btn-filled w-full py-2.5 text-xs font-bold"
                 >
                   {pick('Check Reading', 'Periksa Pembacaan', '読取りを確認')}
                 </button>
@@ -819,7 +825,7 @@ export function CaliperSimulator() {
 
               {guessResult && (
                 <div
-                  className={`flex items-start gap-2 rounded-lg border p-3 text-xs ${
+                  className={`flex items-start gap-2 rounded-[20px] border p-3 text-xs ${
                     guessResult.correct
                       ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200'
                       : 'border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-200'
@@ -837,20 +843,20 @@ export function CaliperSimulator() {
           ) : (
             <div className="space-y-4">
               {/* Primary Readout Card */}
-              <div className="glass-panel rounded-2xl p-4 shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="glass-panel rounded-[28px] p-4">
+                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {effectiveZeroError !== 0
                     ? pick('Corrected True Reading', 'Pembacaan Terkoreksi', 'ゼロ誤差補正後の真値')
                     : pick('Measured Reading', 'Hasil Pengukuran', '測定値')}
                 </div>
-                <div className="mt-1 text-3xl font-bold font-mono tabular-nums text-sky-600 dark:text-sky-400">
+                <div className="mt-1 text-3xl font-bold font-mono tabular-nums text-[var(--md-primary)]">
                   {trueReadingMm.toFixed(2)}{' '}
-                  <span className="text-base font-medium text-slate-500 dark:text-slate-400">
+                  <span className="text-base font-medium text-[var(--md-on-surface-variant)]">
                     mm
                   </span>
                 </div>
                 {effectiveZeroError !== 0 && (
-                  <div className="mt-2 text-xs text-slate-600 dark:text-slate-300 space-y-0.5">
+                  <div className="mt-2 text-xs text-[var(--md-on-surface-variant)] space-y-0.5">
                     <div>Observed: {observedMm.toFixed(2)} mm</div>
                     <div>
                       Zero Error: {effectiveZeroError >= 0 ? '+' : ''}
@@ -859,8 +865,8 @@ export function CaliperSimulator() {
                   </div>
                 )}
                 {activePart && (
-                  <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-                    <span className="font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="mt-2.5 pt-2.5 border-t border-[var(--md-outline-variant)]/50 text-xs text-[var(--md-on-surface-variant)]">
+                    <span className="font-semibold text-[var(--md-on-surface)]">
                       {activePart.name}:
                     </span>{' '}
                     {activePart.description}
@@ -869,45 +875,45 @@ export function CaliperSimulator() {
               </div>
 
               {/* Step-by-Step Scale Breakdown */}
-              <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="glass-panel rounded-[28px] p-4 space-y-3">
+                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Scale Reading Breakdown', 'Rincian Pembacaan Skala', '目盛読取り内訳')} ({config.label})
                 </div>
 
                 {vernierBreakdown && (
-                  <div className="space-y-2 text-xs">
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                  <div className="space-y-2.5 text-xs">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         1. Main Scale (MSR)
                       </div>
-                      <div className="mt-0.5 text-base font-bold font-mono text-sky-600 dark:text-sky-400">
+                      <div className="mt-0.5 text-base font-bold font-mono text-[var(--md-primary)]">
                         {vernierBreakdown.msrMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         Whole mm left of vernier 0
                       </div>
                     </div>
 
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         2. Vernier Scale (VSR × LC)
                       </div>
                       <div className="mt-0.5 text-base font-bold font-mono text-emerald-600 dark:text-emerald-400">
                         +{vernierBreakdown.vernierContributionMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         Div #{vernierBreakdown.coincidingDiv} × {vernierBreakdown.leastCount.toFixed(2)} mm
                       </div>
                     </div>
 
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         3. Observed Sum
                       </div>
-                      <div className="mt-0.5 text-base font-bold font-mono text-slate-900 dark:text-white">
+                      <div className="mt-0.5 text-base font-bold font-mono text-[var(--md-on-surface)]">
                         {vernierBreakdown.observedMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         {vernierBreakdown.msrMm} + {vernierBreakdown.vernierContributionMm.toFixed(2)}
                       </div>
                     </div>
@@ -915,40 +921,40 @@ export function CaliperSimulator() {
                 )}
 
                 {microBreakdown && (
-                  <div className="space-y-2 text-xs">
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                  <div className="space-y-2.5 text-xs">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         1. Sleeve Reading
                       </div>
-                      <div className="mt-0.5 text-base font-bold font-mono text-sky-600 dark:text-sky-400">
+                      <div className="mt-0.5 text-base font-bold font-mono text-[var(--md-primary)]">
                         {microBreakdown.sleeveMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         {microBreakdown.sleeveFullMm} mm
                         {microBreakdown.hasHalfMm ? ' + 0.50 mm mark' : ' (no 0.5 mm mark)'}
                       </div>
                     </div>
 
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         2. Thimble (Div × 0.01)
                       </div>
                       <div className="mt-0.5 text-base font-bold font-mono text-emerald-600 dark:text-emerald-400">
                         +{microBreakdown.thimbleContributionMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         Div #{microBreakdown.thimbleDiv} × 0.01 mm
                       </div>
                     </div>
 
-                    <div className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2.5">
-                      <div className="text-slate-500 dark:text-slate-400">
+                    <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                      <div className="text-[var(--md-on-surface-variant)]">
                         3. Observed Sum
                       </div>
-                      <div className="mt-0.5 text-base font-bold font-mono text-slate-900 dark:text-white">
+                      <div className="mt-0.5 text-base font-bold font-mono text-[var(--md-on-surface)]">
                         {microBreakdown.observedMm.toFixed(2)} mm
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         {microBreakdown.sleeveMm.toFixed(2)} +{' '}
                         {microBreakdown.thimbleContributionMm.toFixed(2)}
                       </div>

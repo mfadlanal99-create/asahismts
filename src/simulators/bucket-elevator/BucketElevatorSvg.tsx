@@ -619,22 +619,22 @@ export function BucketElevatorSvg({
   );
   const inletStreamThickness = 3.5 + inletFlowFactor * 9.5;
 
-  const bgFill = isDark ? '#080f1d' : '#f8fafc';
-  const bgStroke = isDark ? '#1e293b' : '#cbd5e1';
-  const gridStroke = isDark ? '#38bdf8' : '#94a3b8';
-  const gridOpacity = isDark ? 0.1 : 0.22;
-  const hudBg = isDark ? '#0f172a' : '#ffffff';
-  const hudTextPrimary = isDark ? '#f8fafc' : '#0f172a';
-  const hudTextMuted = isDark ? '#94a3b8' : '#475569';
-  const hudLabelCyan = isDark ? '#38bdf8' : '#0284c7';
-  const hudValueCyan = isDark ? '#22d3ee' : '#0891b2';
+  const bgFill = 'var(--md-surface-container-low)';
+  const bgStroke = 'var(--md-outline-variant)';
+  const gridStroke = 'var(--md-outline-variant)';
+  const gridOpacity = isDark ? 0.22 : 0.32;
+  const hudBg = 'var(--md-surface-container)';
+  const hudTextPrimary = 'var(--md-on-surface)';
+  const hudTextMuted = 'var(--md-on-surface-variant)';
+  const hudLabelCyan = 'var(--md-primary)';
+  const hudValueCyan = 'var(--md-primary)';
   const hudValueEmerald = isDark ? '#34d399' : '#059669';
   const hudValueRose = isDark ? '#fb7185' : '#e11d48';
-  const dimPillBg = isDark ? '#0f172a' : '#ffffff';
-  const dimPillStroke = isDark ? '#334155' : '#cbd5e1';
-  const dimPillText = isDark ? '#7dd3fc' : '#0369a1';
+  const dimPillBg = 'var(--md-surface-container)';
+  const dimPillStroke = 'var(--md-outline-variant)';
+  const dimPillText = 'var(--md-primary)';
   const casingStroke = isDark ? '#475569' : '#64748b';
-  const fcColor = isDark ? '#22d3ee' : '#0284c7';
+  const fcColor = isDark ? '#38bdf8' : '#0284c7';
   const mgColor = isDark ? '#f59e0b' : '#d97706';
 
   const regimeColor =
@@ -789,7 +789,7 @@ export function BucketElevatorSvg({
         y="0"
         width="640"
         height="520"
-        rx="14"
+        rx="16"
         fill={bgFill}
         stroke={bgStroke}
         strokeWidth="1.5"
@@ -814,7 +814,7 @@ export function BucketElevatorSvg({
         y="246"
         width="54"
         height="24"
-        rx="5"
+        rx="8"
         fill={dimPillBg}
         stroke={dimPillStroke}
       />
@@ -825,6 +825,7 @@ export function BucketElevatorSvg({
         fill={dimPillText}
         fontSize="11"
         fontWeight="700"
+        fontFamily="var(--font-mono)"
       >
         H={inputs.liftHeightM}m
       </text>
@@ -974,6 +975,7 @@ export function BucketElevatorSvg({
         fill={hudTextMuted}
         fontSize="10"
         fontWeight="600"
+        fontFamily="var(--font-sans)"
       >
         {pick('INLET', 'MASUK', '供給口')}
       </text>
@@ -1100,6 +1102,7 @@ export function BucketElevatorSvg({
           fill={regimeColor}
           fontSize="10"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
         >
           P (h_p={metrics.poleDistanceMm.toFixed(0)}mm)
         </text>
@@ -1120,6 +1123,7 @@ export function BucketElevatorSvg({
           fill={fcColor}
           fontSize="9.5"
           fontWeight="800"
+          fontFamily="var(--font-mono)"
         >
           F_c
         </text>
@@ -1140,6 +1144,7 @@ export function BucketElevatorSvg({
           fill={mgColor}
           fontSize="9.5"
           fontWeight="800"
+          fontFamily="var(--font-mono)"
         >
           mg
         </text>
@@ -1216,7 +1221,7 @@ export function BucketElevatorSvg({
               : '#10b981'
           }
         />
-        <text x="34" y="4" fill={hudTextMuted} fontSize="9.5" fontWeight="600">
+        <text x="34" y="4" fill={hudTextMuted} fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)">
           {inputs.takeUpTensionKn.toFixed(1)} kN
         </text>
       </g>
@@ -1337,9 +1342,10 @@ export function BucketElevatorSvg({
         x="458"
         y={topY + 150}
         textAnchor="middle"
-        fill={isDark ? '#cbd5e1' : '#334155'}
+        fill={hudTextPrimary}
         fontSize="10.5"
         fontWeight="700"
+        fontFamily="var(--font-sans)"
       >
         {pick('DISCHARGE CHUTE', 'CORONG BUANG', '排出口シュート')}
       </text>
@@ -1356,15 +1362,15 @@ export function BucketElevatorSvg({
           >
             <circle
               r={isSelected ? 14 : 11}
-              fill={isSelected ? '#0ea5e9' : hudLabelCyan}
+              fill="var(--md-primary)"
               fillOpacity={isSelected ? 0.28 : 0.14}
-              stroke={isSelected ? hudLabelCyan : isDark ? '#7dd3fc' : '#0284c7'}
+              stroke="var(--md-primary)"
               strokeWidth={isSelected ? 2 : 1.2}
               strokeDasharray={isSelected ? undefined : '3 2'}
             />
             <circle
               r="3.5"
-              fill={isSelected ? hudLabelCyan : isDark ? '#e0f2fe' : '#0369a1'}
+              fill={isSelected ? 'var(--md-primary)' : 'var(--md-on-primary-container)'}
             />
           </g>
         );
@@ -1387,13 +1393,13 @@ export function BucketElevatorSvg({
           strokeWidth="2"
           strokeLinecap="round"
         />
-        <circle cx="-14" cy="-14" r="3" fill={fcColor} />
+        <circle cx="-14" cy="-14" r="3" fill={hudLabelCyan} />
         <rect
           x="0"
           y="-10"
           width="46"
           height="24"
-          rx="6"
+          rx="8"
           fill={hudBg}
           stroke={hudLabelCyan}
           strokeWidth="1.8"
@@ -1403,16 +1409,17 @@ export function BucketElevatorSvg({
           y="-6"
           width="38"
           height="12"
-          rx="2.5"
-          fill={isDark ? '#082f49' : '#e0f2fe'}
+          rx="4"
+          fill="var(--md-primary-container)"
         />
         <text
           x="23"
           y="3"
           textAnchor="middle"
-          fill={hudLabelCyan}
+          fill="var(--md-on-primary-container)"
           fontSize="8.5"
           fontWeight="800"
+          fontFamily="var(--font-mono)"
         >
           PROBE
         </text>
@@ -1423,16 +1430,16 @@ export function BucketElevatorSvg({
         <rect
           width="228"
           height="92"
-          rx="10"
+          rx="14"
           fill={hudBg}
-          fillOpacity="0.94"
+          fillOpacity="0.96"
           stroke={regimeColor}
           strokeWidth="1.5"
         />
-        <text x="12" y="21" fill={regimeColor} fontSize="10.5" fontWeight="800">
+        <text x="12" y="21" fill={regimeColor} fontSize="10.5" fontWeight="800" fontFamily="var(--font-sans)">
           {regimeLabel}
         </text>
-        <text x="12" y="42" fill={hudTextMuted} fontSize="10.5">
+        <text x="12" y="42" fill={hudTextMuted} fontSize="10.5" fontFamily="var(--font-sans)">
           {pick('Froude No.', 'Bil. Froude', 'フルード数')}:
         </text>
         <text
@@ -1442,10 +1449,11 @@ export function BucketElevatorSvg({
           fill={hudTextPrimary}
           fontSize="12"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
         >
           Fr = {metrics.froudeNumber.toFixed(2)}
         </text>
-        <text x="12" y="61" fill={hudTextMuted} fontSize="10.5">
+        <text x="12" y="61" fill={hudTextMuted} fontSize="10.5" fontFamily="var(--font-sans)">
           {pick('Linear Speed', 'Kecepatan Linier', 'ベルト速度')}:
         </text>
         <text
@@ -1455,10 +1463,11 @@ export function BucketElevatorSvg({
           fill={hudLabelCyan}
           fontSize="12"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
         >
           {metrics.beltSpeedMs.toFixed(2)} m/s
         </text>
-        <text x="12" y="80" fill={hudTextMuted} fontSize="10.5">
+        <text x="12" y="80" fill={hudTextMuted} fontSize="10.5" fontFamily="var(--font-sans)">
           {pick('Mass Flow', 'Kapasitas Massa', '質量輸送量')}:
         </text>
         <text
@@ -1468,6 +1477,7 @@ export function BucketElevatorSvg({
           fill={hudValueEmerald}
           fontSize="12"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
         >
           {metrics.massCapacityTph.toFixed(1)} t/h
         </text>
@@ -1478,13 +1488,13 @@ export function BucketElevatorSvg({
         <rect
           width="228"
           height="92"
-          rx="10"
+          rx="14"
           fill={hudBg}
-          fillOpacity="0.94"
+          fillOpacity="0.96"
           stroke={hudLabelCyan}
           strokeWidth="1.4"
         />
-        <text x="12" y="20" fill={hudLabelCyan} fontSize="10" fontWeight="800">
+        <text x="12" y="20" fill={hudLabelCyan} fontSize="10" fontWeight="800" fontFamily="var(--font-sans)">
           {pick('PROBE:', 'PROBE:', 'プローブ:')}{' '}
           {pick(
             currentHotspot.labelEn,
@@ -1495,7 +1505,7 @@ export function BucketElevatorSvg({
 
         {activeHotspot === 'head-pulley' && (
           <>
-            <text x="12" y="40" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="40" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Shaft Speed', 'Putaran Poros', '軸回転数')}:
             </text>
             <text
@@ -1505,10 +1515,11 @@ export function BucketElevatorSvg({
               fill={hudTextPrimary}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.effectiveRpm.toFixed(1)} RPM
             </text>
-            <text x="12" y="58" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="58" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Pole Dist. h_p', 'Jarak Kutub h_p', '極距離 h_p')}:
             </text>
             <text
@@ -1518,10 +1529,11 @@ export function BucketElevatorSvg({
               fill={hudValueCyan}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.poleDistanceMm.toFixed(0)} mm
             </text>
-            <text x="12" y="76" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="76" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Bearing Temp', 'Suhu Bantalan', '軸受温度')}:
             </text>
             <text
@@ -1531,6 +1543,7 @@ export function BucketElevatorSvg({
               fill={metrics.headBearingTempC > 75 ? hudValueRose : hudValueEmerald}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.headBearingTempC.toFixed(1)} °C
             </text>
@@ -1539,7 +1552,7 @@ export function BucketElevatorSvg({
 
         {activeHotspot === 'boot-takeup' && (
           <>
-            <text x="12" y="40" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="40" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Take-Up Tension', 'Tegangan Take-Up', '張り張力')}:
             </text>
             <text
@@ -1549,10 +1562,11 @@ export function BucketElevatorSvg({
               fill={hudTextPrimary}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {inputs.takeUpTensionKn.toFixed(1)} kN
             </text>
-            <text x="12" y="58" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="58" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Belt Tracking', 'Offset Sabuk', '蛇行オフセット')}:
             </text>
             <text
@@ -1562,10 +1576,11 @@ export function BucketElevatorSvg({
               fill={metrics.beltTrackingOffsetMm > 8 ? hudValueRose : hudValueEmerald}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               ±{metrics.beltTrackingOffsetMm.toFixed(1)} mm
             </text>
-            <text x="12" y="76" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="76" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Boot Bearing', 'Bantalan Boot', 'ブーツ軸受')}:
             </text>
             <text
@@ -1575,6 +1590,7 @@ export function BucketElevatorSvg({
               fill={metrics.bootBearingTempC > 70 ? hudValueRose : hudValueEmerald}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.bootBearingTempC.toFixed(1)} °C
             </text>
@@ -1583,7 +1599,7 @@ export function BucketElevatorSvg({
 
         {activeHotspot === 'backstop-brake' && (
           <>
-            <text x="12" y="40" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="40" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Req. Holdback', 'Torsi Tahan', '必要逆転トルク')}:
             </text>
             <text
@@ -1593,10 +1609,11 @@ export function BucketElevatorSvg({
               fill={hudTextPrimary}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.requiredBackstopTorqueNm.toFixed(0)} N·m
             </text>
-            <text x="12" y="58" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="58" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Head Torque', 'Torsi Poros', '駆動軸トルク')}:
             </text>
             <text
@@ -1606,10 +1623,11 @@ export function BucketElevatorSvg({
               fill={hudLabelCyan}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.headShaftTorqueNm.toFixed(0)} N·m
             </text>
-            <text x="12" y="76" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="76" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Brake Temp', 'Suhu Rem', 'ブレーキ温度')}:
             </text>
             <text
@@ -1619,6 +1637,7 @@ export function BucketElevatorSvg({
               fill={hudValueEmerald}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.backstopTempC.toFixed(1)} °C
             </text>
@@ -1627,7 +1646,7 @@ export function BucketElevatorSvg({
 
         {activeHotspot === 'discharge-throat' && (
           <>
-            <text x="12" y="40" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="40" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Throw Velocity', 'Kec. Lemparan', '排出初速度')}:
             </text>
             <text
@@ -1637,10 +1656,11 @@ export function BucketElevatorSvg({
               fill={hudTextPrimary}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.chuteThrowVelocityMs.toFixed(2)} m/s
             </text>
-            <text x="12" y="58" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="58" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Back-Spill Loss', 'Tumpah Balik', '逆流損失')}:
             </text>
             <text
@@ -1650,10 +1670,11 @@ export function BucketElevatorSvg({
               fill={metrics.backspillPct > 0 ? hudValueRose : hudValueEmerald}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.backspillPct}%
             </text>
-            <text x="12" y="76" fill={hudTextMuted} fontSize="10">
+            <text x="12" y="76" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
               {pick('Vol. Flow', 'Kapasitas Vol.', '体積輸送量')}:
             </text>
             <text
@@ -1663,6 +1684,7 @@ export function BucketElevatorSvg({
               fill={hudValueCyan}
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               {metrics.actualCapacityM3h.toFixed(1)} m³/h
             </text>
@@ -1676,9 +1698,9 @@ export function BucketElevatorSvg({
           <rect
             width="228"
             height="68"
-            rx="10"
+            rx="14"
             fill={isDark ? '#450a0a' : '#fef2f2'}
-            fillOpacity="0.94"
+            fillOpacity="0.95"
             stroke={isDark ? '#ef4444' : '#dc2626'}
             strokeWidth="1.5"
           />
@@ -1688,6 +1710,7 @@ export function BucketElevatorSvg({
             fill={isDark ? '#fca5a5' : '#b91c1c'}
             fontSize="10.5"
             fontWeight="800"
+            fontFamily="var(--font-sans)"
           >
             {inputs.fault === 'belt-slip'
               ? pick('FAULT: BELT SLIP / LOW RPM', 'GANGGUAN: SLIP SABUK', '異常: ベルトスリップ')
@@ -1702,6 +1725,7 @@ export function BucketElevatorSvg({
             y="40"
             fill={isDark ? '#fecaca' : '#dc2626'}
             fontSize="10"
+            fontFamily="var(--font-sans)"
           >
             {inputs.fault === 'belt-slip'
               ? pick('RPM -38% -> premature back-spill', 'RPM -38% -> tumpah balik', '回転数低下 -> 逆流発生')
@@ -1717,6 +1741,7 @@ export function BucketElevatorSvg({
             fill={isDark ? '#fde047' : '#b45309'}
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             {pick('Motor', 'Motor', 'モータ')}: {metrics.motorPowerKw.toFixed(2)} kW ({metrics.motorCurrentA.toFixed(1)} A)
           </text>

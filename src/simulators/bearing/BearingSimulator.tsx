@@ -196,37 +196,37 @@ export function BearingSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Action & Preset Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 glass-panel rounded-2xl p-3.5 ">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            <Cog className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+            <Cog className="h-4 w-4 text-[var(--md-primary)]" />
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
           </span>
           <button
             type="button"
             onClick={() => applyPreset('motor')}
-            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-violet-500/40 dark:hover:bg-violet-500/10"
+            className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] transition hover:border-[var(--md-primary)]/40 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
           >
             {pick('Standard Motor (6308)', 'Motor Standar (6308)', '標準モータ (6308)')}
           </button>
           <button
             type="button"
             onClick={() => applyPreset('overload')}
-            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-rose-500/40 dark:hover:bg-rose-500/10"
+            className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] transition hover:border-[var(--md-primary)]/40 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
           >
             {pick('Overloaded Ball (6206)', 'Beban Berlebih (6206)', '過負荷玉軸受 (6206)')}
           </button>
           <button
             type="button"
             onClick={() => applyPreset('nu-fault')}
-            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-amber-500/40 dark:hover:bg-amber-500/10"
+            className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] transition hover:border-[var(--md-primary)]/40 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
           >
             {pick('NU Axial Fault', 'Gangguan Aksial NU', 'NU アキシアル異常')}
           </button>
           <button
             type="button"
             onClick={() => applyPreset('tight-fit')}
-            className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-violet-500/40 dark:hover:bg-violet-500/10"
+            className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] transition hover:border-[var(--md-primary)]/40 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
           >
             {pick('Heavy Fit Preload', 'Preload Suaian Sesak', '過大しめしろ予圧')}
           </button>
@@ -236,7 +236,7 @@ export function BearingSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             {isPlaying ? (
               <>
@@ -251,7 +251,7 @@ export function BearingSimulator() {
           <button
             type="button"
             onClick={handleReset}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" /> {pick('Reset', 'Reset', 'リセット')}
           </button>
@@ -261,11 +261,11 @@ export function BearingSimulator() {
       {/* Main Grid: Controls (Left) + Visual & Diagnostics (Right) */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Controls Panel */}
-        <div className="lg:col-span-4 space-y-4 glass-panel rounded-2xl p-4 ">
+        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <div>
             <label
               htmlFor="bearing-select"
-              className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
+              className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]"
             >
               {pick('Bearing Type & Series', 'Tipe & Seri Bearing', '軸受形式・シリーズ')}
             </label>
@@ -273,7 +273,7 @@ export function BearingSimulator() {
               id="bearing-select"
               value={bearingId}
               onChange={(e) => setBearingId(e.target.value as BearingId)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-800 outline-none focus:border-violet-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-sm font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
             >
               {BEARING_CATALOG.map((b) => (
                 <option key={b.id} value={b.id}>
@@ -281,22 +281,22 @@ export function BearingSimulator() {
                 </option>
               ))}
             </select>
-            <div className="mt-2 grid grid-cols-3 gap-1.5 rounded-lg bg-slate-50 p-2 text-center text-[11px] dark:bg-slate-800/60">
+            <div className="mt-2.5 grid grid-cols-3 gap-2 rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-2.5 text-center text-[11px]">
               <div>
-                <div className="text-slate-400">Dynamic C</div>
-                <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+                <div className="text-[var(--md-on-surface-variant)]">Dynamic C</div>
+                <div className="font-mono font-bold text-[var(--md-on-surface)]">
                   {spec.C} kN
                 </div>
               </div>
               <div>
-                <div className="text-slate-400">Static C0</div>
-                <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+                <div className="text-[var(--md-on-surface-variant)]">Static C0</div>
+                <div className="font-mono font-bold text-[var(--md-on-surface)]">
                   {spec.C0} kN
                 </div>
               </div>
               <div>
-                <div className="text-slate-400">Exp. p</div>
-                <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+                <div className="text-[var(--md-on-surface-variant)]">Exp. p</div>
+                <div className="font-mono font-bold text-[var(--md-primary)]">
                   {spec.p === 3 ? '3' : '10/3'}
                 </div>
               </div>
@@ -304,13 +304,13 @@ export function BearingSimulator() {
           </div>
 
           {/* Operating Loads & Speed */}
-          <div className="space-y-3 border-t border-slate-100 pt-3 dark:border-slate-800">
-            <div>
-              <div className="mb-1 flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+          <div className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="font-medium text-[var(--md-on-surface)]">
                   {pick('Radial Load (Fr)', 'Beban Radial (Fr)', 'ラジアル荷重 (Fr)')}
                 </span>
-                <span className="font-mono font-semibold text-violet-600 dark:text-violet-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {Fr.toFixed(1)} kN
                 </span>
               </div>
@@ -321,16 +321,16 @@ export function BearingSimulator() {
                 step={0.5}
                 value={Fr}
                 onChange={(e) => setFr(Number(e.target.value))}
-                className="w-full accent-violet-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="mb-1 flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="font-medium text-[var(--md-on-surface)]">
                   {pick('Axial Load (Fa)', 'Beban Aksial (Fa)', 'アキシアル荷重 (Fa)')}
                 </span>
-                <span className="font-mono font-semibold text-sky-600 dark:text-sky-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {Fa.toFixed(1)} kN
                 </span>
               </div>
@@ -341,16 +341,16 @@ export function BearingSimulator() {
                 step={0.2}
                 value={Fa}
                 onChange={(e) => setFa(Number(e.target.value))}
-                className="w-full accent-sky-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="mb-1 flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="font-medium text-[var(--md-on-surface)]">
                   {pick('Shaft Speed (N)', 'Kecepatan Poros (N)', '軸回転速度 (N)')}
                 </span>
-                <span className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {rpm.toLocaleString()} RPM
                 </span>
               </div>
@@ -361,16 +361,16 @@ export function BearingSimulator() {
                 step={50}
                 value={rpm}
                 onChange={(e) => setRpm(Number(e.target.value))}
-                className="w-full accent-violet-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="mb-1 flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="font-medium text-[var(--md-on-surface)]">
                   {pick('Lubrication / Temp (a_ISO)', 'Pelumasan / Suhu (a_ISO)', '潤滑・温度係数 (a_ISO)')}
                 </span>
-                <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {aIso.toFixed(2)} ({aIsoLabel})
                 </span>
               </div>
@@ -381,21 +381,21 @@ export function BearingSimulator() {
                 step={0.05}
                 value={aIso}
                 onChange={(e) => setAIso(Number(e.target.value))}
-                className="w-full accent-emerald-600"
+                className="w-full"
               />
             </div>
           </div>
 
           {/* ISO Shaft & Housing Fits */}
-          <div className="space-y-3 border-t border-slate-100 pt-3 dark:border-slate-800">
-            <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('ISO 286 Shaft & Housing Fits', 'Suaian Poros & Rumah ISO 286', 'ISO 286 軸・ハウジングはめあい')}
             </div>
             <div className="grid grid-cols-2 gap-2.5">
               <div>
                 <label
                   htmlFor="shaft-fit"
-                  className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300"
+                  className="mb-1 block text-[11px] font-medium text-[var(--md-on-surface-variant)]"
                 >
                   {pick(`Shaft Fit (d=${spec.d} mm)`, `Suaian Poros (d=${spec.d} mm)`, `軸はめあい (d=${spec.d} mm)`)}
                 </label>
@@ -403,7 +403,7 @@ export function BearingSimulator() {
                   id="shaft-fit"
                   value={shaftFit}
                   onChange={(e) => setShaftFit(e.target.value as ShaftFitCode)}
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-800 outline-none focus:border-violet-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-2 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 >
                   {SHAFT_FIT_OPTIONS.map((opt) => (
                     <option key={opt.code} value={opt.code}>
@@ -415,7 +415,7 @@ export function BearingSimulator() {
               <div>
                 <label
                   htmlFor="housing-fit"
-                  className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-300"
+                  className="mb-1 block text-[11px] font-medium text-[var(--md-on-surface-variant)]"
                 >
                   Housing Fit (D={spec.D} mm)
                 </label>
@@ -425,7 +425,7 @@ export function BearingSimulator() {
                   onChange={(e) =>
                     setHousingFit(e.target.value as HousingFitCode)
                   }
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-800 outline-none focus:border-violet-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                  className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-2 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 >
                   {HOUSING_FIT_OPTIONS.map((opt) => (
                     <option key={opt.code} value={opt.code}>
@@ -436,12 +436,12 @@ export function BearingSimulator() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 text-xs dark:border-slate-800 dark:bg-slate-800/50">
+            <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-500 dark:text-slate-400">
+                <span className="text-[var(--md-on-surface-variant)]">
                   Shaft ({shaftFit}):
                 </span>
-                <span className="font-mono font-semibold text-slate-800 dark:text-slate-100">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {formatClearanceRange(
                     metrics.fit.shaft.minClearanceUm,
                     metrics.fit.shaft.maxClearanceUm
@@ -449,10 +449,10 @@ export function BearingSimulator() {
                 </span>
               </div>
               <div className="mt-1 flex justify-between">
-                <span className="text-slate-500 dark:text-slate-400">
+                <span className="text-[var(--md-on-surface-variant)]">
                   Housing ({housingFit}):
                 </span>
-                <span className="font-mono font-semibold text-slate-800 dark:text-slate-100">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {formatClearanceRange(
                     metrics.fit.housing.minClearanceUm,
                     metrics.fit.housing.maxClearanceUm
@@ -464,8 +464,8 @@ export function BearingSimulator() {
         </div>
 
         {/* Right Column: Visual + KPI Readouts + Condition Warnings */}
-        <div className="lg:col-span-8 space-y-4">
-          <div className="flex items-center justify-center glass-panel rounded-2xl p-4 ">
+        <div className="space-y-4 lg:col-span-8">
+          <div className="glass-panel flex items-center justify-center rounded-[28px] p-4 sm:p-5">
             <BearingVisual
               spec={spec}
               metrics={metrics}
@@ -479,35 +479,35 @@ export function BearingSimulator() {
 
           {/* Live Readouts */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-            <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Equiv. Load (P)', 'Beban Ekuivalen (P)', '動等価荷重 (P)')}
               </div>
-              <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+              <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                 {metrics.P.toFixed(2)} kN
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 X={metrics.X.toFixed(2)}, Y={metrics.Y.toFixed(2)}
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Basic Life (L10)', 'Umur Dasar (L10)', '基本定格寿命 (L10)')}
               </div>
-              <div className="mt-1 font-mono text-lg font-bold text-violet-600 dark:text-violet-400">
+              <div className="mt-1 font-mono text-lg font-bold text-[var(--md-primary)]">
                 {formatRevs(metrics.L10)}
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 (C/P)^{spec.p === 3 ? '3' : '10/3'}
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Operating Hours (L10h)', 'Jam Operasi (L10h)', '定格寿命時間 (L10h)')}
               </div>
-              <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+              <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                 {formatHours(metrics.L10h)}
               </div>
               <div className="mt-0.5 text-[10px] text-emerald-600 dark:text-emerald-400">
@@ -515,8 +515,8 @@ export function BearingSimulator() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Static Safety (s0)', 'Keamanan Statis (s0)', '静安全係数 (s0)')}
               </div>
               <div
@@ -530,19 +530,19 @@ export function BearingSimulator() {
               >
                 {metrics.s0.toFixed(2)}
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 C0 / P0 ({spec.C0} / {metrics.P0.toFixed(1)})
               </div>
             </div>
 
-            <div className="col-span-2 sm:col-span-1 rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card col-span-2 rounded-[24px] p-3.5 sm:col-span-1">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 Fit Type
               </div>
-              <div className="mt-1 text-xs font-bold leading-snug text-slate-900 dark:text-white">
+              <div className="mt-1 text-xs font-bold leading-snug text-[var(--md-on-surface)]">
                 {metrics.fit.shaft.classification} (Shaft)
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 {metrics.fit.housing.classification} (Housing)
               </div>
             </div>
@@ -556,11 +556,11 @@ export function BearingSimulator() {
           />
 
           {/* Bearing Mounting & Induction Heater Advisor */}
-          <div className="glass-panel rounded-2xl p-4  space-y-3">
+          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Flame className="h-4 w-4 text-amber-500" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                <Flame className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Bearing Mounting & Induction Heater Advisor',
                     'Penasihat Pemasangan & Pemanas Induksi Bearing',
@@ -569,12 +569,12 @@ export function BearingSimulator() {
                 </span>
               </div>
               <span
-                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                className={`rounded-full px-3 py-0.5 text-[11px] font-semibold ${
                   heaterPlan.overMaxTemp
-                    ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300'
+                    ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
                     : heaterPlan.needsHeater
-                      ? 'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300'
-                      : 'bg-sky-50 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300'
+                      ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+                      : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
                 }`}
               >
                 {heaterPlan.overMaxTemp
@@ -598,16 +598,16 @@ export function BearingSimulator() {
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
-              <div className="md:col-span-5">
-                <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-medium text-slate-700 dark:text-slate-200">
+              <div className="space-y-1.5 md:col-span-5">
+                <div className="flex justify-between text-xs">
+                  <span className="font-medium text-[var(--md-on-surface)]">
                     {pick('Induction Heater Temp', 'Suhu Pemanas Induksi', '誘導加熱温度')}
                   </span>
                   <span
-                    className={`font-mono font-semibold ${
+                    className={`font-mono font-bold ${
                       heaterPlan.overMaxTemp
                         ? 'text-rose-600 dark:text-rose-400'
-                        : 'text-amber-600 dark:text-amber-400'
+                        : 'text-[var(--md-primary)]'
                     }`}
                   >
                     {heaterTempC} °C ({pick('Max', 'Maks', '上限')} 125 °C)
@@ -620,33 +620,33 @@ export function BearingSimulator() {
                   step={5}
                   value={heaterTempC}
                   onChange={(e) => setHeaterTempC(Number(e.target.value))}
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="md:col-span-7 grid grid-cols-3 gap-2 text-center text-[11px]">
-                <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-                  <div className="text-slate-400">
+              <div className="grid grid-cols-3 gap-2 text-center text-[11px] md:col-span-7">
+                <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2.5 py-2">
+                  <div className="text-[var(--md-on-surface-variant)]">
                     {pick('Diametral Expansion', 'Ekspansi Diameter', '内径膨張量')}
                   </div>
-                  <div className="font-mono font-semibold text-violet-600 dark:text-violet-400">
+                  <div className="font-mono font-bold text-[var(--md-primary)]">
                     +{heaterPlan.expansionUm.toFixed(1)} µm
                   </div>
                 </div>
-                <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-                  <div className="text-slate-400">
+                <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2.5 py-2">
+                  <div className="text-[var(--md-on-surface-variant)]">
                     {pick(`Max Interference (${shaftFit})`, `Interferensi Maks (${shaftFit})`, `最大しめしろ (${shaftFit})`)}
                   </div>
-                  <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="font-mono font-bold text-[var(--md-on-surface)]">
                     {heaterPlan.maxInterferenceUm.toFixed(1)} µm
                   </div>
                 </div>
-                <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-                  <div className="text-slate-400">
+                <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2.5 py-2">
+                  <div className="text-[var(--md-on-surface-variant)]">
                     {pick('Slip-On Clearance', 'Celah Masuk Poros', '挿入すきま')}
                   </div>
                   <div
-                    className={`font-mono font-semibold ${
+                    className={`font-mono font-bold ${
                       heaterPlan.slipClearanceUm > 0
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-rose-600 dark:text-rose-400'
@@ -660,7 +660,7 @@ export function BearingSimulator() {
             </div>
 
             {heaterPlan.overMaxTemp && (
-              <div className="rounded-xl border border-rose-200 bg-rose-50/70 px-3 py-2 text-xs text-rose-800 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200">
+              <div className="rounded-[20px] border border-rose-300/60 bg-rose-50/80 px-3.5 py-2.5 text-xs text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-200">
                 <strong>Max Safe Temperature Exceeded ({heaterTempC} °C &gt; 125 °C):</strong>{' '}
                 Heating above 125 °C risks tempering bearing steel, permanent dimensional growth, and damaging seals or polyamide cages. Keep induction heater at 110 °C.
               </div>
@@ -668,9 +668,9 @@ export function BearingSimulator() {
           </div>
 
           {/* Condition & Fault Warnings */}
-          <div className="glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Bearing Condition & Fit Diagnostics',
                   'Diagnostik Kondisi & Suaian Bearing',
@@ -678,24 +678,24 @@ export function BearingSimulator() {
                 )}
               </span>
               {metrics.severity === 'healthy' && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
                   <CheckCircle2 className="h-3.5 w-3.5" /> {pick('Healthy Operation', 'Operasi Sehat', '正常運転')}
                 </span>
               )}
               {metrics.severity === 'warning' && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-500/15 dark:text-amber-300">
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-300">
                   <AlertTriangle className="h-3.5 w-3.5" /> {pick('Advisory Warning', 'Peringatan Awal', '注意警報')}
                 </span>
               )}
               {metrics.severity === 'critical' && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-0.5 text-xs font-semibold text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
+                <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 px-2.5 py-0.5 text-xs font-semibold text-rose-700 dark:text-rose-300">
                   <ShieldAlert className="h-3.5 w-3.5" /> {pick('Critical Fault', 'Gangguan Kritis', '重大異常')}
                 </span>
               )}
             </div>
 
             {metrics.warnings.length === 0 ? (
-              <p className="text-xs text-slate-600 dark:text-slate-300">
+              <p className="text-xs text-[var(--md-on-surface-variant)]">
                 All checks nominal: {spec.designation} operates within static
                 safety ({metrics.s0.toFixed(2)}), fatigue life (
                 {formatHours(metrics.L10ha)}), speed limit ({spec.limitingRpm}{' '}
@@ -706,10 +706,10 @@ export function BearingSimulator() {
                 {metrics.warnings.map((w, idx) => (
                   <div
                     key={idx}
-                    className={`rounded-xl border px-3 py-2 text-xs ${
+                    className={`rounded-[20px] border px-3.5 py-2.5 text-xs ${
                       w.severity === 'critical'
-                        ? 'border-rose-200 bg-rose-50/70 text-rose-800 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200'
-                        : 'border-amber-200 bg-amber-50/70 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200'
+                        ? 'border-rose-300/60 bg-rose-50/80 text-rose-800 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-200'
+                        : 'border-amber-300/60 bg-amber-50/80 text-amber-800 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200'
                     }`}
                   >
                     <div className="font-semibold">{w.title}</div>

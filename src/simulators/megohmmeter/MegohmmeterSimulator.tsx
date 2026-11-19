@@ -14,7 +14,6 @@ import {
   Zap,
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
 import {
   computeMegohmmeterMetrics,
   formatResistance,
@@ -31,8 +30,6 @@ import { MegohmmeterSvg } from './MegohmmeterSvg';
 
 export function MegohmmeterSimulator() {
   const { pick } = useLanguage();
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
 
   const [voltage, setVoltage] = useState<TestVoltage>(500);
   const [lead, setLead] = useState<LeadConnection>('U-GND');
@@ -148,7 +145,7 @@ export function MegohmmeterSimulator() {
   const verdictBadge =
     metrics.verdict === 'danger'
       ? {
-          bg: 'bg-rose-500/15 border-rose-500/40 text-rose-700 dark:text-rose-300',
+          bg: 'border-rose-300/70 bg-rose-50/85 text-rose-900 dark:border-rose-500/40 dark:bg-rose-950/35 dark:text-rose-200',
           icon: <ShieldAlert className="h-4 w-4 text-rose-500 shrink-0" />,
           label: pick(
             'FAIL / DANGER — Do Not Energize',
@@ -158,7 +155,7 @@ export function MegohmmeterSimulator() {
         }
       : metrics.verdict === 'questionable'
       ? {
-          bg: 'bg-amber-500/15 border-amber-500/40 text-amber-800 dark:text-amber-300',
+          bg: 'border-amber-300/70 bg-amber-50/85 text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/35 dark:text-amber-200',
           icon: <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />,
           label: pick(
             'QUESTIONABLE — Dry / Clean & Retest',
@@ -167,7 +164,7 @@ export function MegohmmeterSimulator() {
           ),
         }
       : {
-          bg: 'bg-emerald-500/15 border-emerald-500/40 text-emerald-800 dark:text-emerald-300',
+          bg: 'border-emerald-300/70 bg-emerald-50/85 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/35 dark:text-emerald-200',
           icon: <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />,
           label: pick(
             'PASS — Healthy Insulation (IEEE 43)',
@@ -179,20 +176,20 @@ export function MegohmmeterSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Status & Quick Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 glass-panel rounded-2xl p-3.5 ">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#001F6B] to-[#002D9C] text-white shadow-sm">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-3.5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
             <Gauge className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+            <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick(
                 'DC Insulation Resistance & Polarization Index (IEEE 43)',
                 'Tahanan Isolasi DC & Indeks Polarisasi (IEEE 43)',
                 'DC絶縁抵抗・分極指数 (PI) 診断 (IEEE 43)'
               )}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 'Select test voltage, winding leads, and temperature to diagnose motor insulation.',
                 'Pilih tegangan uji, kabel fasa, dan suhu belitan untuk mendiagnosis isolasi motor.',
@@ -206,7 +203,7 @@ export function MegohmmeterSimulator() {
           <button
             type="button"
             onClick={handleToggleTest}
-            className={`inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold text-white shadow-sm transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold text-white shadow-sm transition ${
               phase === 'charging' || phase === 'testing'
                 ? 'bg-rose-600 hover:bg-rose-700'
                 : 'bg-emerald-600 hover:bg-emerald-700'
@@ -228,7 +225,7 @@ export function MegohmmeterSimulator() {
           <button
             type="button"
             onClick={handleReset}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -240,7 +237,7 @@ export function MegohmmeterSimulator() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Interactive Instrument SVG + Polarization Curve */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="overflow-hidden glass-panel rounded-2xl p-3 ">
+          <div className="glass-panel overflow-hidden rounded-[28px] p-3.5">
             <MegohmmeterSvg
               voltage={voltage}
               lead={lead}
@@ -255,11 +252,11 @@ export function MegohmmeterSimulator() {
           </div>
 
           {/* Time-Accelerated Polarization Curve R(t) */}
-          <div className="glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Activity className="h-4 w-4 text-[#002D9C] dark:text-blue-400" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                <Activity className="h-4 w-4 text-[var(--md-primary)]" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Dielectric Absorption Curve R(t) (0 – 600 s)',
                     'Kurva Absorpsi Dielektrik R(t) (0 – 600 dtk)',
@@ -267,17 +264,17 @@ export function MegohmmeterSimulator() {
                   )}
                 </h3>
               </div>
-              <div className="flex items-center gap-1 rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
-                <Clock className="ml-1.5 h-3.5 w-3.5 text-slate-500" />
+              <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+                <Clock className="ml-1.5 h-3.5 w-3.5 text-[var(--md-on-surface-variant)]" />
                 {([1, 10, 60] as const).map((spd) => (
                   <button
                     key={spd}
                     type="button"
                     onClick={() => setTimeAccel(spd)}
-                    className={`rounded-md px-2 py-0.5 text-[11px] font-bold transition ${
+                    className={`rounded-full px-2.5 py-0.5 text-[11px] transition ${
                       timeAccel === spd
-                        ? 'bg-[#001F6B] text-white dark:bg-blue-600'
-                        : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {spd}×
@@ -303,7 +300,8 @@ export function MegohmmeterSimulator() {
                       y1={y}
                       x2={curveChart.w - curveChart.padR}
                       y2={y}
-                      stroke={isDark ? '#1E293B' : '#E2E8F0'}
+                      stroke="var(--md-outline-variant)"
+                      strokeOpacity="0.45"
                       strokeDasharray="3 3"
                     />
                     <text
@@ -311,7 +309,8 @@ export function MegohmmeterSimulator() {
                       y={y + 3}
                       textAnchor="end"
                       fontSize="9"
-                      fill={isDark ? '#94A3B8' : '#64748B'}
+                      fontFamily="var(--font-mono)"
+                      fill="var(--md-on-surface-variant)"
                     >
                       {val >= 1000 ? `${(val / 1000).toFixed(1)}G` : `${val.toFixed(0)}M`}
                     </text>
@@ -333,7 +332,8 @@ export function MegohmmeterSimulator() {
                       y1={curveChart.padT}
                       x2={x}
                       y2={curveChart.padT + curveChart.plotH}
-                      stroke={isDark ? '#334155' : '#CBD5E1'}
+                      stroke="var(--md-outline)"
+                      strokeOpacity="0.45"
                       strokeDasharray="2 2"
                     />
                     <text
@@ -342,7 +342,8 @@ export function MegohmmeterSimulator() {
                       textAnchor={m.t === 600 ? 'end' : 'middle'}
                       fontSize="9"
                       fontWeight="600"
-                      fill={isDark ? '#94A3B8' : '#64748B'}
+                      fontFamily="var(--font-mono)"
+                      fill="var(--md-on-surface-variant)"
                     >
                       {m.lbl}
                     </text>
@@ -354,7 +355,7 @@ export function MegohmmeterSimulator() {
               <path
                 d={curveChart.d}
                 fill="none"
-                stroke="#F43F5E"
+                stroke="var(--md-primary)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -365,8 +366,8 @@ export function MegohmmeterSimulator() {
                 cx={curveChart.cursorX}
                 cy={curveChart.cursorY}
                 r="4.5"
-                fill="#F43F5E"
-                stroke="#FFFFFF"
+                fill="var(--md-primary)"
+                stroke="var(--md-surface-container-lowest)"
                 strokeWidth="1.5"
               />
             </svg>
@@ -376,45 +377,45 @@ export function MegohmmeterSimulator() {
         {/* Right: Controls & Diagnostic Readouts */}
         <div className="space-y-4 lg:col-span-5">
           {/* Verdict Banner */}
-          <div className={`flex items-center gap-2.5 rounded-2xl border p-3.5 ${verdictBadge.bg}`}>
+          <div className={`flex items-center gap-2.5 rounded-[24px] border p-3.5 ${verdictBadge.bg}`}>
             {verdictBadge.icon}
             <span className="text-xs font-bold">{verdictBadge.label}</span>
           </div>
 
           {/* Primary Diagnostic KPI Grid */}
           <div className="grid grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-[#001F6B]/15 bg-white/85 p-3 dark:border-blue-400/20 dark:bg-slate-900/75">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Live R(t)', 'R(t) Saat Ini', '現在抵抗 R(t)')}
               </div>
-              <div className="mt-0.5 font-mono text-lg font-extrabold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {phase === 'idle' ? '---' : `${rLiveFmt.value} ${rLiveFmt.unit}`}
               </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                 t = {Math.floor(elapsedSec)} s ({lead})
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#001F6B]/15 bg-white/85 p-3 dark:border-blue-400/20 dark:bg-slate-900/75">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Corrected R_c40 (40°C)', 'Koreksi R_c40 (40°C)', '40°C補正値 R_c40')}
               </div>
-              <div className="mt-0.5 font-mono text-lg font-extrabold text-[#002D9C] dark:text-blue-400">
+              <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {rc40Fmt.value} {rc40Fmt.unit}
               </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                 R₁ₘ={r60Fmt.value}{r60Fmt.unit} × K={metrics.kt40.toFixed(2)}
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#001F6B]/15 bg-white/85 p-3 dark:border-blue-400/20 dark:bg-slate-900/75">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 DAR (R₆₀ₛ / R₃₀ₛ)
               </div>
-              <div className="mt-0.5 font-mono text-lg font-extrabold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.dar.toFixed(2)}
               </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 {metrics.dar >= 1.6
                   ? pick('Good (>1.6)', 'Baik (>1,6)', '良好 (>1.6)')
                   : metrics.dar >= 1.25
@@ -423,14 +424,14 @@ export function MegohmmeterSimulator() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#001F6B]/15 bg-white/85 p-3 dark:border-blue-400/20 dark:bg-slate-900/75">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 PI (R₁₀ₘ / R₁ₘ)
               </div>
-              <div className="mt-0.5 font-mono text-lg font-extrabold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.pi.toFixed(2)}
               </div>
-              <div className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 {metrics.pi >= 2.0
                   ? pick('IEEE 43 Good (≥2.0)', 'IEEE 43 Baik (≥2,0)', 'IEEE 43 良好 (≥2.0)')
                   : metrics.pi >= 1.0
@@ -441,11 +442,11 @@ export function MegohmmeterSimulator() {
           </div>
 
           {/* Controls Card */}
-          <div className="space-y-3.5 glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             {/* Test Voltage */}
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-200">
-                <Zap className="h-3.5 w-3.5 text-rose-500" />
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
+                <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('DC Test Voltage', 'Tegangan Uji DC', 'DC試験電圧')}
               </label>
               <div className="grid grid-cols-4 gap-1.5">
@@ -454,10 +455,10 @@ export function MegohmmeterSimulator() {
                     key={v}
                     type="button"
                     onClick={() => setVoltage(v)}
-                    className={`rounded-lg py-1.5 text-xs font-bold transition ${
+                    className={`rounded-full border py-1.5 text-xs font-bold transition ${
                       voltage === v
-                        ? 'bg-[#001F6B] text-white shadow-sm dark:bg-blue-600'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {v} V
@@ -468,7 +469,7 @@ export function MegohmmeterSimulator() {
 
             {/* Lead Connection Selector */}
             <div>
-              <label className="mb-1.5 block text-xs font-bold text-slate-700 dark:text-slate-200">
+              <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Lead Connection', 'Koneksi Kabel Uji', '測定端子接続')}
               </label>
               <div className="grid grid-cols-2 gap-1.5">
@@ -477,10 +478,10 @@ export function MegohmmeterSimulator() {
                     key={lc.id}
                     type="button"
                     onClick={() => setLead(lc.id)}
-                    className={`rounded-lg px-2.5 py-1.5 text-left text-xs font-bold transition ${
+                    className={`rounded-[20px] border px-3 py-2 text-left text-xs font-bold transition ${
                       lead === lc.id
-                        ? 'bg-[#001F6B] text-white shadow-sm dark:bg-blue-600'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {lc.label}
@@ -491,12 +492,12 @@ export function MegohmmeterSimulator() {
 
             {/* Ambient Winding Temperature */}
             <div>
-              <div className="mb-1 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200">
+              <div className="mb-1.5 flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span className="flex items-center gap-1.5">
-                  <Thermometer className="h-3.5 w-3.5 text-orange-500" />
+                  <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                   {pick('Winding Temperature', 'Suhu Belitan', '巻線温度')}
                 </span>
-                <span className="font-mono text-[#002D9C] dark:text-blue-400">
+                <span className="font-mono text-[var(--md-primary)]">
                   {tempC} °C (K_T40 = {metrics.kt40.toFixed(2)})
                 </span>
               </div>
@@ -507,17 +508,17 @@ export function MegohmmeterSimulator() {
                 step={1}
                 value={tempC}
                 onChange={(e) => setTempC(Number(e.target.value))}
-                className="w-full cursor-pointer"
+                className="w-full"
               />
             </div>
 
             {/* Motor Condition Presets */}
             <div>
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-200">
-                <Flame className="h-3.5 w-3.5 text-amber-500" />
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
+                <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Motor Winding Condition', 'Kondisi Belitan Motor', 'モータ巻線状態')}
               </label>
-              <div className="grid grid-cols-1 gap-1.5">
+              <div className="grid grid-cols-1 gap-2">
                 {(Object.keys(MOTOR_PRESETS) as MotorConditionId[]).map((id) => {
                   const p = MOTOR_PRESETS[id];
                   const active = presetId === id;
@@ -526,16 +527,16 @@ export function MegohmmeterSimulator() {
                       key={id}
                       type="button"
                       onClick={() => handleSelectPreset(id)}
-                      className={`rounded-xl border px-3 py-2 text-left transition ${
+                      className={`rounded-[20px] border px-3.5 py-2.5 text-left transition ${
                         active
-                          ? 'border-[#002D9C] bg-[#001F6B]/10 dark:border-blue-400 dark:bg-blue-500/20'
-                          : 'border-slate-200 bg-slate-50/70 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/60 dark:hover:bg-slate-800'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
-                      <div className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                      <div className="text-xs font-bold">
                         {pick(p.labelEn, p.labelId, p.labelJa)}
                       </div>
-                      <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      <div className="text-[11px] opacity-80">
                         {pick(p.descEn, p.descId, p.descJa)}
                       </div>
                     </button>

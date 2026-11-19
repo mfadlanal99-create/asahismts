@@ -192,9 +192,9 @@ export function BoltTorqueSimulator() {
             '締付軸力が不足しています (<55% 保証荷重)。振動による緩みやガスケット漏洩の恐れがあります。'
           ),
           classes:
-            'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300',
+            'border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)]',
           icon: Info,
-          iconColor: 'text-slate-500 dark:text-slate-400',
+          iconColor: 'text-[var(--md-on-surface-variant)]',
         };
     }
   }, [calc, propClass, pick]);
@@ -206,11 +206,11 @@ export function BoltTorqueSimulator() {
       {/* Top Grid: Controls + Torque Wrench Diagram & Live Readouts */}
       <div className="grid gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left Controls Panel */}
-        <div className="glass-panel space-y-5 rounded-2xl p-5 shadow-xs lg:col-span-5">
-          <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-3 dark:border-slate-800">
+        <div className="glass-panel space-y-5 rounded-[28px] p-5 lg:col-span-5">
+          <div className="flex items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-3">
             <div className="flex items-center gap-2">
-              <Wrench className="h-4 w-4 text-amber-500" />
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+              <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
+              <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
                 {pick(
                   'Fastener & Torque Wrench Controls',
                   'Kontrol Baut & Kunci Momen',
@@ -227,10 +227,10 @@ export function BoltTorqueSimulator() {
                 'Aktifkan/matikan suara klik kunci momen',
                 'トルクレンチのクリック音を切り替え'
               )}
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition ${
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-semibold transition ${
                 soundEnabled
-                  ? 'border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-300'
-                  : 'border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                  ? 'border-[var(--md-primary)]/40 bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
               }`}
             >
               {soundEnabled ? (
@@ -247,14 +247,14 @@ export function BoltTorqueSimulator() {
           {/* Metric Bolt Size */}
           <div>
             <div className="flex items-center justify-between text-xs">
-              <label className="font-semibold text-slate-700 dark:text-slate-300">
+              <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
                   'Metric Bolt Size (ISO Coarse)',
                   'Ukuran Baut Metrik (Ulir Kasar ISO)',
                   'メートル並目ねじサイズ (ISO)'
                 )}
               </label>
-              <span className="font-mono text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-[var(--md-on-surface-variant)]">
                 At = {bolt.tensileAreaMm2} mm² · p = {bolt.pitchMm} mm
               </span>
             </div>
@@ -264,10 +264,10 @@ export function BoltTorqueSimulator() {
                   key={b.size}
                   type="button"
                   onClick={() => handleBoltChange(b.size)}
-                  className={`rounded-lg border py-1.5 text-xs font-semibold transition ${
+                  className={`rounded-full border py-1.5 text-xs transition ${
                     selectedSize === b.size
-                      ? 'border-amber-500 bg-amber-500 text-white shadow-xs'
-                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {b.size}
@@ -278,7 +278,7 @@ export function BoltTorqueSimulator() {
 
           {/* Property Class */}
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="text-xs font-semibold text-[var(--md-on-surface)]">
               {pick(
                 'Property Class (ISO 898-1)',
                 'Kelas Properti (ISO 898-1)',
@@ -291,16 +291,16 @@ export function BoltTorqueSimulator() {
                   key={pc.id}
                   type="button"
                   onClick={() => handleClassChange(pc.id)}
-                  className={`rounded-xl border p-2.5 text-left transition ${
+                  className={`rounded-[20px] border p-2.5 text-left transition ${
                     selectedClass === pc.id
-                      ? 'border-amber-500 bg-amber-50 dark:border-amber-500 dark:bg-amber-950/40'
-                      : 'border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">
+                  <div className="text-xs font-bold">
                     {pc.label}
                   </div>
-                  <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+                  <div className="mt-0.5 text-[11px] opacity-80">
                     Sp = {pc.proofStrengthMpa} MPa
                   </div>
                 </button>
@@ -310,7 +310,7 @@ export function BoltTorqueSimulator() {
 
           {/* Surface / Lubrication */}
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="text-xs font-semibold text-[var(--md-on-surface)]">
               {pick(
                 'Surface & Lubrication Condition (Nut Factor K)',
                 'Kondisi Permukaan & Pelumasan (Faktor Mur K)',
@@ -318,39 +318,48 @@ export function BoltTorqueSimulator() {
               )}
             </label>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              {LUBRICATION_CONDITIONS.map((lube) => (
-                <button
-                  key={lube.id}
-                  type="button"
-                  onClick={() => setSelectedLube(lube.id)}
-                  className={`rounded-xl border p-2.5 text-left transition ${
-                    selectedLube === lube.id
-                      ? 'border-amber-500 bg-amber-50 dark:border-amber-500 dark:bg-amber-950/40'
-                      : 'border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-900 dark:text-white">
-                      {lube.label}
-                    </span>
-                    <span className="rounded bg-slate-200 px-1.5 py-0.5 font-mono text-[10px] font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">
-                      K={lube.kFactor.toFixed(2)}
-                    </span>
-                  </div>
-                </button>
-              ))}
+              {LUBRICATION_CONDITIONS.map((lube) => {
+                const isSelected = selectedLube === lube.id;
+                return (
+                  <button
+                    key={lube.id}
+                    type="button"
+                    onClick={() => setSelectedLube(lube.id)}
+                    className={`rounded-[20px] border p-2.5 text-left transition ${
+                      isSelected
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-xs font-bold">
+                        {lube.label}
+                      </span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-bold ${
+                          isSelected
+                            ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                            : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
+                        }`}
+                      >
+                        K={lube.kFactor.toFixed(2)}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
-            <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="mt-1.5 text-[11px] text-[var(--md-on-surface-variant)]">
               {lubrication.note}
             </p>
           </div>
 
           {/* Torque Wrench Slider */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <label
                 htmlFor="torque-slider"
-                className="text-xs font-bold text-slate-800 dark:text-slate-200"
+                className="text-xs font-bold text-[var(--md-on-surface)]"
               >
                 {pick(
                   'Applied Wrench Torque (T)',
@@ -361,7 +370,7 @@ export function BoltTorqueSimulator() {
               <div className="flex items-center gap-2">
                 {(justClicked || inTargetWindow) && (
                   <span
-                    className={`inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-100 px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300 ${
+                    className={`inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-100 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wide text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300 ${
                       justClicked ? 'animate-pulse' : ''
                     }`}
                   >
@@ -373,7 +382,7 @@ export function BoltTorqueSimulator() {
                     )}
                   </span>
                 )}
-                <span className="font-mono text-base font-extrabold text-amber-600 dark:text-amber-400">
+                <span className="font-mono text-base font-extrabold text-[var(--md-primary)]">
                   {torqueNm.toFixed(1)} N·m
                 </span>
               </div>
@@ -387,10 +396,10 @@ export function BoltTorqueSimulator() {
               step={Math.max(0.5, Number((calc.maxSliderTorqueNm / 200).toFixed(1)))}
               value={Math.min(torqueNm, calc.maxSliderTorqueNm)}
               onChange={(e) => updateTorqueWithClickCheck(Number(e.target.value))}
-              className="mt-2.5 w-full accent-amber-500"
+              className="mt-2.5 w-full"
             />
 
-            <div className="mt-2 flex flex-wrap gap-1.5">
+            <div className="mt-2.5 flex flex-wrap gap-1.5">
               {[
                 { label: '50% Proof', pct: 50 },
                 { label: '75% Target', pct: 75 },
@@ -401,7 +410,7 @@ export function BoltTorqueSimulator() {
                   key={preset.label}
                   type="button"
                   onClick={() => applyProofPercent(preset.pct)}
-                  className="rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 transition hover:border-amber-400 hover:text-amber-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-amber-500 dark:hover:text-amber-400"
+                  className="glass-pill rounded-full px-2.5 py-1 text-[11px] font-semibold"
                 >
                   {preset.label}
                 </button>
@@ -410,11 +419,11 @@ export function BoltTorqueSimulator() {
           </div>
 
           {/* Joint Grip Length (L_grip) for Elastic Elongation */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex items-center justify-between text-xs">
               <label
                 htmlFor="grip-slider"
-                className="font-semibold text-slate-700 dark:text-slate-300"
+                className="font-semibold text-[var(--md-on-surface)]"
               >
                 {pick(
                   'Effective Grip Length (L_grip)',
@@ -422,7 +431,7 @@ export function BoltTorqueSimulator() {
                   '有効締付長さ (L_grip)'
                 )}
               </label>
-              <span className="font-mono font-bold text-slate-900 dark:text-white">
+              <span className="font-mono font-bold text-[var(--md-primary)]">
                 {gripLengthMm} mm
               </span>
             </div>
@@ -434,18 +443,18 @@ export function BoltTorqueSimulator() {
               step={5}
               value={gripLengthMm}
               onChange={(e) => setGripLengthMm(Number(e.target.value))}
-              className="mt-2 w-full accent-amber-500"
+              className="mt-2 w-full"
             />
           </div>
         </div>
 
         {/* Right Visualization & Live Readouts */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="glass-panel rounded-2xl p-5 shadow-xs">
+          <div className="glass-panel rounded-[28px] p-5">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Gauge className="h-4 w-4 text-amber-500" />
-                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+                <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
+                <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     'Live Preload & Proof-Load Readout',
                     'Pembacaan Preload & Proof-Load Langsung',
@@ -453,7 +462,7 @@ export function BoltTorqueSimulator() {
                   )}
                 </h2>
               </div>
-              <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-xs text-[var(--md-on-surface-variant)]">
                 T = K · d · Fi
               </span>
             </div>
@@ -471,69 +480,69 @@ export function BoltTorqueSimulator() {
 
             {/* 6 Key Metric Cards */}
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Applied Torque (T)', 'Torsi Diterapkan (T)', '印加トルク (T)')}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.torqueNm.toFixed(1)}{' '}
-                  <span className="text-xs font-normal text-slate-500">N·m</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">N·m</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Clamping Preload (Fi)', 'Gaya Jepit (Fi)', '締付軸力 (Fi)')}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.preloadKn.toFixed(1)}{' '}
-                  <span className="text-xs font-normal text-slate-500">kN</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">kN</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Tensile Stress (σt)', 'Tegangan Tarik (σt)', '引張応力 (σt)')}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.tensileStressMpa.toFixed(0)}{' '}
-                  <span className="text-xs font-normal text-slate-500">MPa</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">MPa</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Proof Capacity', 'Kapasitas Proof', '保証荷重比')} ({propClass.proofStrengthMpa} MPa)
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-amber-600 dark:text-amber-400">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-primary)]">
                   {calc.proofPercent.toFixed(0)}%
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Thread Stress Area (As)', 'Luas Tegangan Ulir (As)', '有効断面積 (As)')}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.tensileAreaMm2.toFixed(1)}{' '}
-                  <span className="text-xs font-normal text-slate-500">mm²</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">mm²</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Elastic Elongation (ΔL)', 'Elongasi Elastis (ΔL)', '弾性伸び (ΔL)')}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.elongationMm.toFixed(3)}{' '}
-                  <span className="text-xs font-normal text-slate-500">mm</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">mm</span>
                 </div>
               </div>
             </div>
 
             {/* Status / Warning Banner */}
             <div
-              className={`mt-4 flex items-start gap-2.5 rounded-xl border p-3.5 text-xs ${statusBanner.classes}`}
+              className={`mt-4 flex items-start gap-2.5 rounded-[22px] border p-3.5 text-xs ${statusBanner.classes}`}
             >
               <BannerIcon className={`mt-0.5 h-4 w-4 shrink-0 ${statusBanner.iconColor}`} />
               <div>

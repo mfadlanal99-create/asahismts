@@ -516,18 +516,18 @@ export function Machine3DViewport({
       />
 
       {/* Minimal Top-Left Zoom Controls */}
-      <div className="pointer-events-auto absolute left-3 top-3 flex items-center gap-0.5 rounded-lg border border-slate-200/90 bg-white/95 p-0.5 text-xs shadow-xs dark:border-slate-700/80 dark:bg-slate-900/95">
+      <div className="pointer-events-auto absolute left-3 top-3 flex items-center gap-0.5 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)]/92 p-1 text-xs shadow-md backdrop-blur-xl">
         <button
           type="button"
           onClick={() => adjustZoom(-0.2)}
           title={pick('Zoom Out', 'Perkecil', '縮小')}
-          className="rounded-md p-1.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          className="rounded-full p-1.5 text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
         >
           <ZoomOut className="h-3.5 w-3.5" />
         </button>
         <span
           ref={zoomTextRef}
-          className="min-w-[40px] text-center font-mono text-[11px] font-medium text-slate-700 dark:text-slate-200"
+          className="min-w-[40px] text-center font-mono text-[11px] font-bold text-[var(--md-on-surface)]"
         >
           100%
         </span>
@@ -535,16 +535,16 @@ export function Machine3DViewport({
           type="button"
           onClick={() => adjustZoom(0.2)}
           title={pick('Zoom In', 'Perbesar', '拡大')}
-          className="rounded-md p-1.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          className="rounded-full p-1.5 text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
         >
           <ZoomIn className="h-3.5 w-3.5" />
         </button>
-        <div className="mx-0.5 h-3.5 w-px bg-slate-200 dark:bg-slate-700" />
+        <div className="mx-0.5 h-3.5 w-px bg-[var(--md-outline-variant)]/60" />
         <button
           type="button"
           onClick={onResetCamera}
           title={pick('Reset View', 'Reset', 'リセット')}
-          className="rounded-md p-1.5 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          className="rounded-full p-1.5 text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
         >
           <RotateCcw className="h-3.5 w-3.5" />
         </button>
@@ -552,15 +552,15 @@ export function Machine3DViewport({
 
       {/* Isolated 3D Banner */}
       {isolatedPartId && selectedPart && (
-        <div className="pointer-events-auto absolute left-1/2 top-3 flex -translate-x-1/2 items-center gap-2.5 rounded-lg border border-cyan-500/40 bg-slate-900/95 px-3 py-1.5 text-xs text-slate-100 shadow-md">
-          <Eye className="h-3.5 w-3.5 text-cyan-400" />
-          <span className="truncate font-medium">
+        <div className="pointer-events-auto absolute left-1/2 top-3 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-[var(--md-primary)]/40 bg-[var(--md-surface-container-low)]/95 px-3.5 py-1.5 text-xs text-[var(--md-on-surface)] shadow-lg backdrop-blur-xl">
+          <Eye className="h-3.5 w-3.5 text-[var(--md-primary)]" />
+          <span className="truncate font-semibold">
             #{String(selectedPart.bomNumber).padStart(2, '0')} {selectedPart.name[language]}
           </span>
           <button
             type="button"
             onClick={() => onToggleIsolatePart(null)}
-            className="rounded bg-cyan-500 px-2 py-0.5 text-[11px] font-semibold text-slate-950 transition hover:bg-cyan-400"
+            className="m3-btn-filled px-2.5 py-0.5 text-[11px] font-bold"
           >
             {pick('Exit Solo', 'Keluar Solo', '全体へ')}
           </button>
@@ -570,7 +570,7 @@ export function Machine3DViewport({
       {/* Compact Bottom-Center Explode Scrubber Dock */}
       {!isolatedPartId && (
         <div
-          className={`pointer-events-auto absolute bottom-3 flex -translate-x-1/2 items-center gap-2.5 rounded-lg border border-slate-200/90 bg-white/95 px-3 py-2 text-xs shadow-sm dark:border-slate-700/80 dark:bg-slate-900/95 ${
+          className={`pointer-events-auto absolute bottom-3 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)]/92 px-3.5 py-2 text-xs shadow-md backdrop-blur-xl ${
             selectedPart
               ? 'left-1/2 w-[min(92%,460px)] sm:left-[calc(50%-174px)] sm:w-[min(420px,calc(100%-380px))]'
               : 'left-1/2 w-[min(92%,460px)]'
@@ -580,16 +580,16 @@ export function Machine3DViewport({
             type="button"
             onClick={onToggleExplodeAnimation}
             title={pick('Animate Explode', 'Animasi', 'アニメ再生')}
-            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#001F6B] text-white transition hover:bg-[#002D9C] dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
+            className="m3-btn-filled flex h-7 w-7 shrink-0 items-center justify-center"
           >
             {isAnimatingExplode ? (
-              <Pause className="h-3 w-3" />
+              <Pause className="h-3.5 w-3.5" />
             ) : (
-              <Play className="h-3 w-3 translate-x-[0.5px]" />
+              <Play className="h-3.5 w-3.5 translate-x-[0.5px]" />
             )}
           </button>
 
-          <span className="hidden shrink-0 text-[11px] font-medium text-slate-500 sm:inline dark:text-slate-400">
+          <span className="hidden shrink-0 text-[11px] font-semibold text-[var(--md-on-surface-variant)] sm:inline">
             {pick('Explode', 'Bongkar', '分解')}
           </span>
 
@@ -601,21 +601,21 @@ export function Machine3DViewport({
             value={explodePct}
             onChange={(e) => onExplodePctChange(Number(e.target.value))}
             aria-label="Exploded view percentage"
-            className="min-w-0 flex-1 accent-[#001F6B] dark:accent-cyan-400"
+            className="min-w-0 flex-1"
           />
 
-          <span className="w-9 shrink-0 text-right font-mono text-[11px] font-semibold text-slate-800 dark:text-slate-200">
+          <span className="w-9 shrink-0 text-right font-mono text-[11px] font-bold text-[var(--md-on-surface)]">
             {explodePct}%
           </span>
 
-          <div className="hidden h-4 w-px bg-slate-200 sm:block dark:bg-slate-700" />
+          <div className="hidden h-4 w-px bg-[var(--md-outline-variant)]/60 sm:block" />
 
           <button
             type="button"
             onClick={() =>
               onExplodeModeChange(explodeMode === 'staged' ? 'proportional' : 'staged')
             }
-            className="hidden shrink-0 rounded border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-600 transition hover:bg-slate-100 sm:inline-block dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+            className="hidden shrink-0 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] sm:inline-block"
           >
             {explodeMode === 'staged'
               ? pick('Staged', 'Bertahap', '段階')
@@ -628,37 +628,37 @@ export function Machine3DViewport({
       <div
         ref={tooltipRef}
         style={{ opacity: 0, left: 0, top: 0 }}
-        className="pointer-events-none absolute z-10 max-w-[236px] rounded-lg border border-slate-700 bg-slate-900/95 px-2.5 py-1.5 text-[11px] text-white shadow-md transition-opacity duration-75 will-change-transform"
+        className="pointer-events-none absolute z-10 max-w-[236px] rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-highest)]/95 px-3 py-1.5 text-[11px] text-[var(--md-on-surface)] shadow-md backdrop-blur-md transition-opacity duration-75 will-change-transform"
       >
         {hoveredPart && hoveredPart.id !== selectedPartId && (
           <div className="flex items-center gap-1.5">
-            <span className="font-mono text-[10px] font-bold text-amber-400">
+            <span className="font-mono text-[10px] font-bold text-[var(--md-primary)]">
               #{String(hoveredPart.bomNumber).padStart(2, '0')}
             </span>
-            <span className="truncate font-medium">{hoveredPart.name[language]}</span>
+            <span className="truncate font-semibold">{hoveredPart.name[language]}</span>
           </div>
         )}
       </div>
 
-      {/* Clean Engineering Part Inspector Pop-up */}
+      {/* Clean Material 3 Expressive Part Inspector Sheet */}
       {selectedPart && (
-        <div className="pointer-events-auto absolute bottom-3 left-3 right-3 z-20 flex max-h-[72%] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white/98 shadow-xl sm:bottom-3 sm:left-auto sm:right-3 sm:top-3 sm:max-h-none sm:w-[336px] dark:border-slate-700 dark:bg-[#0B1526]/98">
-          <div className="flex items-start justify-between gap-2 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
+        <div className="pointer-events-auto absolute bottom-3 left-3 right-3 z-20 flex max-h-[72%] flex-col overflow-hidden rounded-[24px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)]/96 shadow-xl backdrop-blur-xl sm:bottom-3 sm:left-auto sm:right-3 sm:top-3 sm:max-h-none sm:w-[336px]">
+          <div className="flex items-start justify-between gap-2 border-b border-[var(--md-outline-variant)]/55 px-4 py-3.5">
             <div className="min-w-0">
               <div className="flex items-center gap-2 font-mono text-[11px]">
-                <span className="font-bold text-[#001F6B] dark:text-cyan-400">
+                <span className="font-bold text-[var(--md-primary)]">
                   #{String(selectedPart.bomNumber).padStart(2, '0')}
                 </span>
-                <span className="text-slate-400">·</span>
-                <span className="text-slate-500 dark:text-slate-400">
+                <span className="text-[var(--md-on-surface-variant)]">·</span>
+                <span className="text-[var(--md-on-surface-variant)]">
                   {selectedPart.partCode}
                 </span>
-                <span className="text-slate-400">·</span>
-                <span className="font-sans text-[11px] font-medium text-slate-600 dark:text-slate-300">
+                <span className="text-[var(--md-on-surface-variant)]">·</span>
+                <span className="font-sans text-[11px] font-semibold text-[var(--md-on-surface)]">
                   {CATEGORY_COLORS[selectedPart.category].label[language]}
                 </span>
               </div>
-              <h3 className="mt-1 text-sm font-semibold leading-snug text-slate-900 dark:text-white">
+              <h3 className="mt-1 text-sm font-extrabold leading-snug text-[var(--md-on-surface)]">
                 {selectedPart.name[language]}
               </h3>
             </div>
@@ -670,7 +670,7 @@ export function Machine3DViewport({
                 onToggleIsolatePart(null);
               }}
               title={pick('Close Pop-up', 'Tutup', '閉じる')}
-              className="shrink-0 rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              className="shrink-0 rounded-full p-1.5 text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -684,10 +684,10 @@ export function Machine3DViewport({
                   isolatedPartId === selectedPart.id ? null : selectedPart.id
                 )
               }
-              className={`flex w-full items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+              className={`flex w-full items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-xs font-bold transition ${
                 isolatedPartId === selectedPart.id
-                  ? 'border-cyan-500 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300'
-                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-slate-800'
+                  ? 'border-transparent bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] hover:brightness-95'
               }`}
             >
               {isolatedPartId === selectedPart.id ? (
@@ -704,61 +704,61 @@ export function Machine3DViewport({
             </button>
 
             <div>
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Material', 'Material', '材質')}
               </div>
-              <p className="mt-0.5 font-medium text-slate-800 dark:text-slate-100">
+              <p className="mt-0.5 font-semibold text-[var(--md-on-surface)]">
                 {selectedPart.material[language]}
               </p>
             </div>
 
             <div>
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Function', 'Fungsi', '機能')}
               </div>
-              <p className="mt-0.5 leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="mt-0.5 leading-relaxed text-[var(--md-on-surface-variant)]">
                 {selectedPart.functionSummary[language]}
               </p>
             </div>
 
             <div className="border-l-2 border-amber-500 pl-2.5">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                 {pick('Failure Modes', 'Mode Kerusakan', '故障モード')}
               </div>
-              <p className="mt-0.5 leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="mt-0.5 leading-relaxed text-[var(--md-on-surface-variant)]">
                 {selectedPart.failureModes[language]}
               </p>
             </div>
 
             <div className="border-l-2 border-emerald-500 pl-2.5">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                 {pick('Maintenance & Tolerance', 'Perawatan & Toleransi', '保守・公差基準')}
               </div>
-              <p className="mt-0.5 leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="mt-0.5 leading-relaxed text-[var(--md-on-surface-variant)]">
                 {selectedPart.maintenanceSpec[language]}
               </p>
-              <div className="mt-1.5 font-mono text-[11px] font-semibold text-slate-800 dark:text-slate-200">
+              <div className="mt-1.5 font-mono text-[11px] font-bold text-[var(--md-on-surface)]">
                 {selectedPart.clearanceOrTorque}
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t border-slate-200 px-3 py-2 dark:border-slate-800">
+          <div className="flex items-center justify-between border-t border-[var(--md-outline-variant)]/55 px-3.5 py-2.5">
             <button
               type="button"
               onClick={() => stepPart(-1)}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
               <ChevronLeft className="h-3.5 w-3.5" />
               {pick('Prev', 'Prev', '前へ')}
             </button>
-            <span className="font-mono text-[11px] text-slate-400">
+            <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               {selectedIndex + 1} / {parts.length}
             </span>
             <button
               type="button"
               onClick={() => stepPart(1)}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
               {pick('Next', 'Next', '次へ')}
               <ChevronRight className="h-3.5 w-3.5" />

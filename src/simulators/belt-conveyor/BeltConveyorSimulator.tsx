@@ -111,22 +111,22 @@ export function BeltConveyorSimulator() {
         {/* LEFT COLUMN: Presets, Animated CAD Schematic, Telemetry & Diagnostics */}
         <div className="flex flex-col gap-4 lg:col-span-8">
           {/* Scenario Presets + Transport Controls */}
-          <div className="sim-panel flex flex-wrap items-center justify-between gap-2 p-3">
+          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="sim-header mr-1">
+              <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
               </span>
               <button
                 type="button"
                 onClick={() => applyPreset('centered')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200 transition hover:bg-emerald-50 dark:bg-slate-800/80 dark:text-emerald-300 dark:ring-emerald-500/30 dark:hover:bg-emerald-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick('Centered Reference', 'Sabuk Sentris', '中央正常トラッキング')}
               </button>
               <button
                 type="button"
                 onClick={() => applyPreset('tail-rub-right')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-rose-700 ring-1 ring-rose-200 transition hover:bg-rose-50 dark:bg-slate-800/80 dark:text-rose-300 dark:ring-rose-500/30 dark:hover:bg-rose-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick(
                   'Unequal Take-Up (Right Rub)',
@@ -137,7 +137,7 @@ export function BeltConveyorSimulator() {
               <button
                 type="button"
                 onClick={() => applyPreset('chute-off-center')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-amber-700 ring-1 ring-amber-200 transition hover:bg-amber-50 dark:bg-slate-800/80 dark:text-amber-300 dark:ring-amber-500/30 dark:hover:bg-amber-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick(
                   'Off-Center Chute Load',
@@ -148,7 +148,7 @@ export function BeltConveyorSimulator() {
               <button
                 type="button"
                 onClick={() => applyPreset('head-skew')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-sky-700 ring-1 ring-sky-200 transition hover:bg-sky-50 dark:bg-slate-800/80 dark:text-sky-300 dark:ring-sky-500/30 dark:hover:bg-sky-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick(
                   'Head Frame Misalignment',
@@ -158,12 +158,12 @@ export function BeltConveyorSimulator() {
               </button>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {Math.abs(metrics.lateralWanderMm) > 3 && (
                 <button
                   type="button"
                   onClick={handleAutoTrackConveyor}
-                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-emerald-500"
+                  className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
                 >
                   <Wrench className="h-3.5 w-3.5" />
                   {pick('Auto-Center', 'Setel Sentris', '自動調心')}
@@ -172,7 +172,7 @@ export function BeltConveyorSimulator() {
               <button
                 type="button"
                 onClick={() => setIsPlaying((p) => !p)}
-                className="inline-flex items-center gap-1 rounded-lg bg-sky-600 px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-sky-500"
+                className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
               >
                 {isPlaying ? (
                   <Pause className="h-3.5 w-3.5" />
@@ -187,7 +187,7 @@ export function BeltConveyorSimulator() {
                 type="button"
                 onClick={() => setInputs(INITIAL_INPUTS)}
                 title={pick('Reset', 'Reset', 'リセット')}
-                className="inline-flex items-center rounded-lg bg-slate-200/80 p-1.5 text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                className="glass-pill inline-flex items-center justify-center rounded-full p-2"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </button>
@@ -195,7 +195,7 @@ export function BeltConveyorSimulator() {
           </div>
 
           {/* Main Animated CAD Schematic */}
-          <div className="sim-panel p-3">
+          <div className="glass-panel rounded-[28px] p-3.5">
             <BeltConveyorSvg
               inputs={inputs}
               metrics={metrics}
@@ -205,15 +205,15 @@ export function BeltConveyorSimulator() {
 
           {/* 6-Card Live Tracking & Drive Telemetry Grid */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Lateral Wander', 'Penyimpangan Sabuk', 'ベルト横蛇行量')}
                 </span>
-                <Activity className="h-3.5 w-3.5 text-sky-500" />
+                <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
               <div
-                className={`mt-1 text-lg font-extrabold ${
+                className={`mt-1 font-mono text-lg font-extrabold ${
                   metrics.isFrameRubbing
                     ? 'text-rose-600 dark:text-rose-400'
                     : metrics.trackingStatus === 'drifting'
@@ -224,7 +224,7 @@ export function BeltConveyorSimulator() {
                 {metrics.lateralWanderMm > 0 ? '+' : ''}
                 {metrics.lateralWanderMm.toFixed(1)} mm
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.lateralWanderMm > 1
                   ? pick('Drifting RIGHT (+)', 'Geser KANAN (+)', '右側へ寄り (+)')
                   : metrics.lateralWanderMm < -1
@@ -233,52 +233,52 @@ export function BeltConveyorSimulator() {
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Take-Up Steering', 'Efek Baut Take-Up', 'テイクアップ操舵')}
                 </span>
-                <Wrench className="h-3.5 w-3.5 text-sky-500" />
+                <Wrench className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.takeUpWanderContributionMm > 0 ? '+' : ''}
                 {metrics.takeUpWanderContributionMm.toFixed(1)} mm
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 Δ(L−R) = {metrics.takeUpDiffMm > 0 ? '+' : ''}
                 {metrics.takeUpDiffMm} mm ({metrics.tailSkewDeg.toFixed(2)}°)
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Training Idler', 'Training Idler', '調心アイドラ操舵')}
                 </span>
-                <Cog className="h-3.5 w-3.5 text-amber-500" />
+                <Cog className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-sky-600 dark:text-sky-400">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {metrics.idlerWanderContributionMm > 0 ? '+' : ''}
                 {metrics.idlerWanderContributionMm.toFixed(1)} mm
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 Skew α = {inputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
                 {inputs.trainingIdlerSkewDeg.toFixed(1)}°
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Edge Tensions (L/R)', 'Tegangan Tepi', '左右ベルト張力')}
                 </span>
-                <Gauge className="h-3.5 w-3.5 text-sky-500" />
+                <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.leftEdgeTensionKn.toFixed(1)} /{' '}
                 {metrics.rightEdgeTensionKn.toFixed(1)} kN
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   `Total ${metrics.totalBeltTensionKn.toFixed(1)} kN`,
                   `Total ${metrics.totalBeltTensionKn.toFixed(1)} kN`,
@@ -287,32 +287,32 @@ export function BeltConveyorSimulator() {
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Drive Power', 'Daya Penggerak', '駆動動力')}
                 </span>
-                <Zap className="h-3.5 w-3.5 text-emerald-500" />
+                <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.drivePowerKw.toFixed(2)} kW
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 F_eff = {metrics.effectivePullKn.toFixed(2)} kN
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Head Pulley Speed', 'Putaran Puli Kepala', 'ヘッドプーリ回転')}
                 </span>
-                <Cog className="h-3.5 w-3.5 text-sky-500" />
+                <Cog className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.headPulleyRpm.toFixed(1)} RPM
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 v = {inputs.beltSpeedMs.toFixed(1)} m/s (Ø320 mm)
               </div>
             </div>
@@ -320,12 +320,12 @@ export function BeltConveyorSimulator() {
 
           {/* Diagnostic Status Banner */}
           <div
-            className={`sim-box flex items-start gap-3 p-3.5 ${
+            className={`flex items-start gap-3 rounded-[24px] border p-4 ${
               metrics.isFrameRubbing
-                ? 'border-rose-300/80 bg-rose-50/70 dark:border-rose-500/30 dark:bg-rose-950/30'
+                ? 'border-rose-300/80 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'
                 : metrics.trackingStatus === 'drifting'
-                  ? 'border-amber-300/80 bg-amber-50/70 dark:border-amber-500/30 dark:bg-amber-950/30'
-                  : 'border-emerald-300/80 bg-emerald-50/70 dark:border-emerald-500/30 dark:bg-emerald-950/25'
+                  ? 'border-amber-300/80 bg-amber-50/80 dark:border-amber-500/30 dark:bg-amber-950/30'
+                  : 'border-emerald-300/80 bg-emerald-50/80 dark:border-emerald-500/30 dark:bg-emerald-950/25'
             }`}
           >
             {metrics.isFrameRubbing ? (
@@ -335,8 +335,8 @@ export function BeltConveyorSimulator() {
             ) : (
               <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
             )}
-            <div className="min-w-0 flex-1 space-y-1 text-xs text-slate-700 dark:text-slate-300">
-              <div className="font-bold text-slate-900 dark:text-slate-100">
+            <div className="min-w-0 flex-1 space-y-1 text-xs text-[var(--md-on-surface)]">
+              <div className="font-bold text-[var(--md-on-surface)]">
                 {pick(
                   'Belt Tracking Diagnostic & First-Contact Rule',
                   'Diagnosis Pelacakan Sabuk & Aturan Kontak Pertama',
@@ -362,7 +362,7 @@ export function BeltConveyorSimulator() {
                         `正常: ベルトは中心から ±${Math.abs(metrics.lateralWanderMm).toFixed(1)} mm 以内で安定走行しています。`
                       )}
               </p>
-              <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
                 {Math.abs(inputs.chuteOffsetMm) >= 15
                   ? pick(
                       `Off-center chute load (${inputs.chuteOffsetMm > 0 ? '+' : ''}${inputs.chuteOffsetMm} mm) pushes the belt ${metrics.chuteWanderContributionMm > 0 ? 'RIGHT' : 'LEFT'} by ${Math.abs(metrics.chuteWanderContributionMm).toFixed(1)} mm on the troughing rolls. Center the chute deflector plate first.`,
@@ -380,13 +380,13 @@ export function BeltConveyorSimulator() {
         </div>
 
         {/* RIGHT COLUMN: Take-Up, Idler, Chute & Fault Controls */}
-        <div className="sim-panel flex flex-col gap-3 p-4 lg:col-span-4">
+        <div className="glass-panel flex flex-col gap-3.5 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <div className="space-y-3">
             {/* Header with Clearance Dial */}
-            <div className="flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-700/60">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-sky-500" />
-                <span className="sim-header">
+                <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Tracking & Drive Controls',
                     'Kontrol Pelacakan & Penggerak',
@@ -403,25 +403,25 @@ export function BeltConveyorSimulator() {
                 )}
               >
                 <span
-                  className={`text-[11px] font-extrabold leading-none ${
+                  className={`font-mono text-[11px] font-extrabold leading-none ${
                     metrics.isFrameRubbing
                       ? 'text-rose-600 dark:text-rose-400'
                       : metrics.trackingStatus === 'drifting'
                         ? 'text-amber-600 dark:text-amber-400'
-                        : 'text-sky-600 dark:text-sky-400'
+                        : 'text-[var(--md-primary)]'
                   }`}
                 >
                   {metrics.clearanceUsedPct}%
                 </span>
-                <span className="text-[8px] font-bold uppercase text-slate-500">
+                <span className="text-[8px] font-bold uppercase text-[var(--md-on-surface-variant)]">
                   CLR
                 </span>
               </div>
             </div>
 
             {/* Tail Pulley Take-Up Screws */}
-            <div className="sim-box space-y-3 p-3">
-              <div className="sim-header">
+            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Tail Pulley Screw Take-Ups',
                   'Baut Take-Up Puli Ekor',
@@ -431,14 +431,14 @@ export function BeltConveyorSimulator() {
 
               <div>
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Left Tail Take-Up',
                       'Take-Up Ekor Kiri',
                       '左側テイクアップ'
                     )}
                   </span>
-                  <span className="font-bold text-sky-600 dark:text-sky-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.leftTakeUpMm} mm
                   </span>
                 </div>
@@ -454,20 +454,20 @@ export function BeltConveyorSimulator() {
                       leftTakeUpMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-sky-500"
+                  className="w-full"
                 />
               </div>
 
               <div>
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Right Tail Take-Up',
                       'Take-Up Ekor Kanan',
                       '右側テイクアップ'
                     )}
                   </span>
-                  <span className="font-bold text-sky-600 dark:text-sky-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.rightTakeUpMm} mm
                   </span>
                 </div>
@@ -483,11 +483,11 @@ export function BeltConveyorSimulator() {
                       rightTakeUpMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-sky-500"
+                  className="w-full"
                 />
               </div>
 
-              <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Tip: If belt drifts RIGHT (+mm), increase RIGHT take-up screw (or reduce LEFT) to square the tail pulley.',
                   'Tips: Bila sabuk geser ke KANAN (+mm), tambah ulir baut KANAN (atau kurangi KIRI) untuk meluruskan puli ekor.',
@@ -497,8 +497,8 @@ export function BeltConveyorSimulator() {
             </div>
 
             {/* Training Idler & Chute Loading */}
-            <div className="sim-box space-y-3 p-3">
-              <div className="sim-header">
+            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Idler Steering & Chute Feed',
                   'Kemudi Idler & Curahan Chute',
@@ -508,14 +508,14 @@ export function BeltConveyorSimulator() {
 
               <div>
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Training Idler Skew (±4°)',
                       'Sudut Skew Training Idler (±4°)',
                       '調心アイドラ・スキュー角 (±4°)'
                     )}
                   </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
                     {inputs.trainingIdlerSkewDeg.toFixed(1)}°
                   </span>
@@ -532,9 +532,9 @@ export function BeltConveyorSimulator() {
                       trainingIdlerSkewDeg: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
+                <div className="mt-0.5 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   <span>−4° ({pick('Steers Left', 'Arah Kiri', '左へ操舵')})</span>
                   <span>0°</span>
                   <span>+4° ({pick('Steers Right', 'Arah Kanan', '右へ操舵')})</span>
@@ -543,14 +543,14 @@ export function BeltConveyorSimulator() {
 
               <div>
                 <div className="mb-1 flex justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Chute Loading Offset',
                       'Offset Pemuatan Chute',
                       'シュート偏心 (片荷)'
                     )}
                   </span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.chuteOffsetMm > 0 ? '+' : ''}
                     {inputs.chuteOffsetMm} mm
                   </span>
@@ -567,9 +567,9 @@ export function BeltConveyorSimulator() {
                       chuteOffsetMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
-                <div className="mt-0.5 flex justify-between text-[10px] text-slate-400">
+                <div className="mt-0.5 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   <span>−60 mm ({pick('Left', 'Kiri', '左')})</span>
                   <span>0 mm</span>
                   <span>+60 mm ({pick('Right', 'Kanan', '右')})</span>
@@ -578,8 +578,8 @@ export function BeltConveyorSimulator() {
             </div>
 
             {/* Drive Speed & Fault Injection */}
-            <div className="sim-box space-y-3 p-3">
-              <div className="sim-header">
+            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Drive Speed & Frame Fault',
                   'Kecepatan & Gangguan Rangka',
@@ -590,10 +590,10 @@ export function BeltConveyorSimulator() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Belt Speed', 'Laju Sabuk', 'ベルト速度')}
                     </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.beltSpeedMs.toFixed(1)} m/s
                     </span>
                   </div>
@@ -609,16 +609,16 @@ export function BeltConveyorSimulator() {
                         beltSpeedMs: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-sky-500"
+                    className="w-full"
                   />
                 </div>
 
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
-                    <span className="font-medium text-slate-700 dark:text-slate-300">
+                    <span className="font-medium text-[var(--md-on-surface)]">
                       {pick('Head Skew', 'Miring Kepala', 'ヘッド傾き')}
                     </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.headPulleyMisalignDeg > 0 ? '+' : ''}
                       {inputs.headPulleyMisalignDeg.toFixed(1)}°
                     </span>
@@ -635,45 +635,45 @@ export function BeltConveyorSimulator() {
                         headPulleyMisalignDeg: Number(e.target.value),
                       }))
                     }
-                    className="w-full accent-rose-500"
+                    className="w-full"
                   />
                 </div>
               </div>
             </div>
 
             {/* Wander Superposition Breakdown */}
-            <div className="sim-box space-y-1.5 p-3 text-xs">
-              <div className="sim-header">
+            <div className="space-y-1.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Wander Contribution Breakdown',
                   'Rincian Kontribusi Geser',
                   '蛇行要因の内訳'
                 )}
               </div>
-              <div className="flex justify-between text-slate-600 dark:text-slate-300">
+              <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                 <span>{pick('Take-Up Δ(L−R):', 'Take-Up Δ(Ki−Ka):', 'テイクアップ差:')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.takeUpWanderContributionMm > 0 ? '+' : ''}
                   {metrics.takeUpWanderContributionMm.toFixed(1)} mm
                 </span>
               </div>
-              <div className="flex justify-between text-slate-600 dark:text-slate-300">
+              <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                 <span>{pick('Training Idler:', 'Training Idler:', '調心アイドラ:')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.idlerWanderContributionMm > 0 ? '+' : ''}
                   {metrics.idlerWanderContributionMm.toFixed(1)} mm
                 </span>
               </div>
-              <div className="flex justify-between text-slate-600 dark:text-slate-300">
+              <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                 <span>{pick('Chute Offset:', 'Offset Chute:', 'シュート偏心:')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.chuteWanderContributionMm > 0 ? '+' : ''}
                   {metrics.chuteWanderContributionMm.toFixed(1)} mm
                 </span>
               </div>
-              <div className="flex justify-between text-slate-600 dark:text-slate-300">
+              <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                 <span>{pick('Head Skew Fault:', 'Miring Puli Kepala:', 'ヘッド傾き異常:')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.headFaultContributionMm > 0 ? '+' : ''}
                   {metrics.headFaultContributionMm.toFixed(1)} mm
                 </span>

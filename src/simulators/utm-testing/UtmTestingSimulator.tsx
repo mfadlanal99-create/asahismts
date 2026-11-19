@@ -273,7 +273,7 @@ export function UtmTestingSimulator() {
     <div className="flex flex-col gap-5">
       {/* E-STOP Active Interlock Banner */}
       {isEStopped && (
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-red-500/50 bg-red-500/10 p-3.5 text-red-600 dark:border-red-500/40 dark:bg-red-950/30 dark:text-red-400">
+        <div className="flex items-center justify-between gap-3 rounded-[24px] border border-red-500/50 bg-red-500/10 p-4 text-red-600 dark:border-red-500/40 dark:bg-red-950/30 dark:text-red-400">
           <div className="flex items-center gap-2.5">
             <OctagonAlert className="h-5 w-5 shrink-0 text-red-600 dark:text-red-400" />
             <div>
@@ -296,7 +296,7 @@ export function UtmTestingSimulator() {
           <button
             type="button"
             onClick={() => setIsEStopped(false)}
-            className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-red-700 active:opacity-90"
+            className="rounded-full bg-red-600 px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-red-700 active:opacity-90"
           >
             {pick('Release E-Stop', 'Lepas E-Stop', '非常停止解除')}
           </button>
@@ -304,25 +304,25 @@ export function UtmTestingSimulator() {
       )}
 
       {/* Top Controls Bar */}
-      <div className="glass-panel rounded-2xl p-4 sm:p-5 grid grid-cols-1 gap-4 md:grid-cols-12">
+      <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Mode & Material Selectors */}
-        <div className="flex flex-col gap-2 md:col-span-5">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <div className="flex flex-col gap-2.5 md:col-span-5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Test Mode & Specimen', 'Mode Uji & Spesimen', '試験モード・試験片')}
             </span>
             {/* Tensile vs Compression toggle */}
-            <div className="flex rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+            <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
               <button
                 type="button"
                 onClick={() => {
                   setMode('tensile');
                   handleReset();
                 }}
-                className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all ${
                   mode === 'tensile'
-                    ? 'bg-violet-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <ArrowDownUp className="h-3.5 w-3.5 rotate-90" />
@@ -334,10 +334,10 @@ export function UtmTestingSimulator() {
                   setMode('compression');
                   handleReset();
                 }}
-                className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition-all ${
+                className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all ${
                   mode === 'compression'
-                    ? 'bg-violet-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <ArrowDownUp className="h-3.5 w-3.5" />
@@ -347,8 +347,8 @@ export function UtmTestingSimulator() {
           </div>
 
           {/* Material Select Dropdown */}
-          <div className="flex flex-col gap-1">
-            <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Specimen Material', 'Material Spesimen', '試験片材料')}
             </label>
             <select
@@ -357,7 +357,7 @@ export function UtmTestingSimulator() {
                 setSelectedMaterialId(e.target.value);
                 handleReset();
               }}
-              className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-800 transition-colors focus:border-violet-500 focus:outline-hidden dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2 text-xs font-medium text-[var(--md-on-surface)] transition-colors focus:border-[var(--md-primary)] focus:outline-none"
             >
               {PRESET_MATERIALS.map((mat) => (
                 <option key={mat.id} value={mat.id}>
@@ -371,7 +371,7 @@ export function UtmTestingSimulator() {
           </div>
 
           {/* Description snippet */}
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
+          <p className="text-[11px] text-[var(--md-on-surface-variant)]">
             {pick(
               activeMaterial.descriptionEn,
               activeMaterial.descriptionId,
@@ -381,23 +381,23 @@ export function UtmTestingSimulator() {
         </div>
 
         {/* Specimen Geometry Sliders */}
-        <div className="flex flex-col justify-between gap-2.5 border-slate-100 md:col-span-4 md:border-l md:pl-4 dark:border-slate-800">
+        <div className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Specimen Dimensions', 'Dimensi Spesimen', '試験片寸法')}
             </span>
-            <span className="rounded-sm bg-violet-100 px-1.5 py-0.5 text-[10px] font-bold text-violet-700 dark:bg-violet-950 dark:text-violet-300">
+            <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[var(--md-on-primary-container)]">
               A₀ = {((Math.PI / 4) * diameterMm * diameterMm).toFixed(1)} mm²
             </span>
           </div>
 
           {/* Diameter Ø slider */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1.5">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-600 dark:text-slate-300">
+              <span className="font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Diameter Ø', 'Diameter Ø', '直径 Ø')}:
               </span>
-              <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {diameterMm.toFixed(1)} mm
               </span>
             </div>
@@ -411,17 +411,17 @@ export function UtmTestingSimulator() {
                 setDiameterMm(Number(e.target.value));
                 handleReset();
               }}
-              className="h-1.5 w-full cursor-pointer accent-violet-600"
+              className="w-full"
             />
           </div>
 
           {/* Gauge Length L0 slider */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1.5">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-600 dark:text-slate-300">
+              <span className="font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Gauge Length L₀', 'Panjang Ukur L₀', '標点間距離 L₀')}:
               </span>
-              <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {gaugeLengthMm.toFixed(0)} mm
               </span>
             </div>
@@ -435,18 +435,18 @@ export function UtmTestingSimulator() {
                 setGaugeLengthMm(Number(e.target.value));
                 handleReset();
               }}
-              className="h-1.5 w-full cursor-pointer accent-violet-600"
+              className="w-full"
             />
           </div>
         </div>
 
         {/* Crosshead Speed & Action Controls */}
-        <div className="flex flex-col justify-between gap-2.5 border-slate-100 md:col-span-3 md:border-l md:pl-4 dark:border-slate-800">
+        <div className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-3 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Speed & Run', 'Kecepatan & Kontrol', '速度・制御')}
             </span>
-            <span className="font-mono text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <span className="font-mono text-xs font-bold text-[var(--md-primary)]">
               {crossheadSpeedMmMin} mm/min
             </span>
           </div>
@@ -459,7 +459,7 @@ export function UtmTestingSimulator() {
             step={1}
             value={crossheadSpeedMmMin}
             onChange={(e) => setCrossheadSpeedMmMin(Number(e.target.value))}
-            className="h-1.5 w-full cursor-pointer accent-violet-600"
+            className="w-full"
           />
 
           {/* Action buttons row */}
@@ -468,10 +468,10 @@ export function UtmTestingSimulator() {
               type="button"
               onClick={handleTogglePlay}
               disabled={isEStopped}
-              className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-bold text-white shadow-xs transition-all disabled:opacity-40 ${
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold transition-all disabled:opacity-40 ${
                 isRunning
-                  ? 'bg-amber-600 hover:bg-amber-700'
-                  : 'bg-violet-600 hover:bg-violet-700'
+                  ? 'bg-amber-600 text-white hover:bg-amber-700'
+                  : 'm3-btn-filled'
               }`}
             >
               {isRunning ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
@@ -487,7 +487,7 @@ export function UtmTestingSimulator() {
               type="button"
               onClick={handleEmergencyStop}
               title={pick('Emergency Stop', 'Berhenti Darurat', '非常停止')}
-              className={`flex items-center justify-center rounded-lg border p-2 text-white shadow-xs transition-colors ${
+              className={`flex items-center justify-center rounded-full border p-2 text-white shadow-xs transition-colors ${
                 isEStopped
                   ? 'border-red-600 bg-red-600'
                   : 'border-red-500 bg-red-500 hover:bg-red-600'
@@ -500,7 +500,7 @@ export function UtmTestingSimulator() {
               type="button"
               onClick={handleMountSpecimen}
               title={pick('Mount clean specimen', 'Pasang spesimen baru', '新品試験片を装填')}
-              className="flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill flex items-center justify-center rounded-full p-2"
             >
               <Wrench className="h-3.5 w-3.5" />
             </button>
@@ -509,7 +509,7 @@ export function UtmTestingSimulator() {
               type="button"
               onClick={handleReset}
               title={pick('Reset to zero', 'Reset posisi nol', 'ゼロ位置リセット')}
-              className="flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill flex items-center justify-center rounded-full p-2"
             >
               <RotateCcw className="h-3.5 w-3.5" />
             </button>
@@ -519,7 +519,7 @@ export function UtmTestingSimulator() {
               onClick={handleExportCsv}
               disabled={recordedPoints.length === 0}
               title={pick('Export CSV test data', 'Unduh data CSV uji', 'CSVデータ出力')}
-              className="flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill flex items-center justify-center rounded-full p-2 disabled:opacity-40"
             >
               <Download className="h-3.5 w-3.5" />
             </button>
@@ -529,10 +529,10 @@ export function UtmTestingSimulator() {
 
       {/* Custom Material Accordion */}
       {selectedMaterialId === 'custom' && (
-        <div className="flex flex-col gap-3 rounded-2xl border border-violet-200 bg-violet-50/60 p-4 dark:border-violet-900/50 dark:bg-violet-950/20">
+        <div className="flex flex-col gap-3 rounded-[24px] border border-[var(--md-primary)]/40 bg-[var(--md-primary-container)]/35 p-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-            <span className="text-xs font-bold text-violet-950 uppercase dark:text-violet-200">
+            <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
+            <span className="text-xs font-bold uppercase text-[var(--md-on-surface)]">
               {pick(
                 'Custom Material Parameters',
                 'Parameter Material Kustom',
@@ -543,7 +543,7 @@ export function UtmTestingSimulator() {
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+              <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 Young’s E (GPa)
               </label>
               <input
@@ -557,12 +557,12 @@ export function UtmTestingSimulator() {
                     youngsModulusGpa: Number(e.target.value),
                   }))
                 }
-                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+              <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 Yield σy (MPa)
               </label>
               <input
@@ -576,12 +576,12 @@ export function UtmTestingSimulator() {
                     yieldStrengthMpa: Number(e.target.value),
                   }))
                 }
-                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+              <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 UTS (MPa)
               </label>
               <input
@@ -595,12 +595,12 @@ export function UtmTestingSimulator() {
                     utsMpa: Number(e.target.value),
                   }))
                 }
-                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+              <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 Elongation %EL (%)
               </label>
               <input
@@ -615,7 +615,7 @@ export function UtmTestingSimulator() {
                     elongationPct: Number(e.target.value),
                   }))
                 }
-                className="rounded-md border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
           </div>
@@ -625,11 +625,11 @@ export function UtmTestingSimulator() {
       {/* Main Interactive Workspace Grid (SVG 6 cols + Charts & Readouts 6 cols) */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: UTM Load Frame CAD SVG View (lg:col-span-6) */}
-        <div className="glass-panel flex flex-col overflow-hidden rounded-2xl p-4 sm:p-5 lg:col-span-6">
-          <div className="flex items-center justify-between border-b border-slate-200/60 pb-3 dark:border-slate-800/60">
+        <div className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+          <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-3">
             <div className="flex items-center gap-2">
-              <Gauge className="h-4 w-4 text-violet-500" />
-              <span className="text-xs font-semibold tracking-wide text-slate-800 uppercase dark:text-slate-200">
+              <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
+              <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 {pick('UTM Mechanical Load Frame', 'Rangka Beban UTM', '万能試験機 負荷フレーム')}
               </span>
             </div>
@@ -637,7 +637,7 @@ export function UtmTestingSimulator() {
             <button
               type="button"
               onClick={() => setPaceMultiplier((p) => (p === 2 ? 4 : p === 4 ? 8 : 2))}
-              className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
+              className="m3-btn-tonal rounded-full px-3 py-1 text-[11px] font-bold"
             >
               {paceMultiplier}x Sim Speed
             </button>
@@ -666,54 +666,54 @@ export function UtmTestingSimulator() {
           {/* Digital Telemetry Readouts (4 cards) */}
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {/* 1. Force kN */}
-            <div className="glass-card flex flex-col rounded-xl p-3 shadow-xs">
-              <span className="text-[10px] font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card flex flex-col rounded-[24px] p-3.5">
+              <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Load / Force F', 'Gaya Beban F', '荷重 F')}
               </span>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-mono text-xl font-black text-violet-600 dark:text-violet-400">
+                <span className="font-mono text-xl font-black text-[var(--md-primary)]">
                   {currentState.forceKn.toFixed(2)}
                 </span>
-                <span className="text-xs font-semibold text-slate-500">kN</span>
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">kN</span>
               </div>
             </div>
 
             {/* 2. Extension mm */}
-            <div className="glass-card flex flex-col rounded-xl p-3 shadow-xs">
-              <span className="text-[10px] font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card flex flex-col rounded-[24px] p-3.5">
+              <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Displacement ΔL', 'Perpanjangan ΔL', '変位 ΔL')}
               </span>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-mono text-xl font-black text-sky-600 dark:text-sky-400">
+                <span className="font-mono text-xl font-black text-[var(--md-on-surface)]">
                   {currentState.extensionMm.toFixed(3)}
                 </span>
-                <span className="text-xs font-semibold text-slate-500">mm</span>
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">mm</span>
               </div>
             </div>
 
             {/* 3. Stress MPa */}
-            <div className="glass-card flex flex-col rounded-xl p-3 shadow-xs">
-              <span className="text-[10px] font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card flex flex-col rounded-[24px] p-3.5">
+              <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Eng. Stress σ', 'Tegangan σ', '公称応力 σ')}
               </span>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-mono text-xl font-black text-amber-600 dark:text-amber-400">
+                <span className="font-mono text-xl font-black text-[var(--md-primary)]">
                   {currentState.stressMpa.toFixed(1)}
                 </span>
-                <span className="text-xs font-semibold text-slate-500">MPa</span>
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">MPa</span>
               </div>
             </div>
 
             {/* 4. Strain % */}
-            <div className="glass-card flex flex-col rounded-xl p-3 shadow-xs">
-              <span className="text-[10px] font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card flex flex-col rounded-[24px] p-3.5">
+              <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Eng. Strain ε', 'Regangan ε', '公称ひずみ ε')}
               </span>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-mono text-xl font-black text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono text-xl font-black text-[var(--md-on-surface)]">
                   {currentState.strainPct.toFixed(2)}
                 </span>
-                <span className="text-xs font-semibold text-slate-500">%</span>
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">%</span>
               </div>
             </div>
           </div>
@@ -729,11 +729,11 @@ export function UtmTestingSimulator() {
           />
 
           {/* Extracted Mechanical Properties Matrix (ASTM E8 / E9) */}
-          <div className="glass-card flex flex-col gap-2 rounded-xl p-3 sm:p-4 shadow-xs">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
+          <div className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <Layers className="h-4 w-4 text-violet-500" />
-                <span className="text-xs font-semibold tracking-wide text-slate-800 uppercase dark:text-slate-200">
+                <Layers className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                   {pick(
                     'Extracted Material Properties (ASTM E8 / E9)',
                     'Sifat Mekanis Teruji (ASTM E8 / E9)',
@@ -741,8 +741,8 @@ export function UtmTestingSimulator() {
                   )}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-500">
-                <ShieldCheck className="h-3 w-3 text-emerald-500" />
+              <div className="flex items-center gap-1.5 text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
+                <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
                 <span>
                   {mode === 'tensile'
                     ? pick('Tension Mode', 'Mode Tarik', '引張モード')
@@ -751,83 +751,83 @@ export function UtmTestingSimulator() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2.5 text-xs sm:grid-cols-4">
               {/* Young's Modulus */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Modulus E', 'Modulus E', 'ヤング率 E')}
                 </span>
-                <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {extractedProps.modulus} GPa
                 </span>
               </div>
 
               {/* 0.2% Offset Yield */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Yield Rp0.2', 'Kekuatan Luluh', '0.2%耐力')}
                 </span>
-                <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {extractedProps.yieldStrength} MPa
                 </span>
               </div>
 
               {/* Peak Strength UTS / UCS */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {mode === 'tensile' ? 'UTS (Peak)' : 'UCS (Peak)'}
                 </span>
-                <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {extractedProps.uts} MPa
                 </span>
               </div>
 
               {/* Peak Force Recorded */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Peak Force Fmax', 'Gaya Maksimal', '最大荷重 Fmax')}
                 </span>
-                <span className="font-mono font-bold text-violet-600 dark:text-violet-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {peakForceKn.toFixed(2)} kN
                 </span>
               </div>
 
               {/* Elongation at break */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Elongation %EL', 'Perpanjangan %EL', '破断伸び %EL')}
                 </span>
-                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {extractedProps.elongation}%
                 </span>
               </div>
 
               {/* Reduction of Area */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Red. Area %RA', 'Reduksi Luas %RA', '絞り率 %RA')}
                 </span>
-                <span className="font-mono font-bold text-rose-600 dark:text-rose-400">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {mode === 'tensile' ? `${extractedProps.reductionOfArea}%` : 'N/A (Comp)'}
                 </span>
               </div>
 
               {/* Modulus of Resilience Ur */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Resilience (Ur)', 'Kelentingan (Ur)', 'レジリエンス (Ur)')}
                 </span>
-                <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {extractedProps.resilience} MJ/m³
                 </span>
               </div>
 
               {/* Modulus of Toughness UT */}
-              <div className="flex flex-col rounded-lg bg-slate-50 p-2 dark:bg-slate-800/60">
-                <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Toughness (UT)', 'Ketangguhan (UT)', '破壊じん性 (UT)')}
                 </span>
-                <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {extractedProps.toughness} MJ/m³
                 </span>
               </div>

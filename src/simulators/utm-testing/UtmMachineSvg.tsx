@@ -94,17 +94,17 @@ export function UtmMachineSvg({
       frameDark: isDark ? '#1e293b' : '#334155',
       frameMed: isDark ? '#334155' : '#64748b',
       frameLight: isDark ? '#475569' : '#94a3b8',
-      frameBg: isDark ? '#0b0f19' : '#f8fafc',
+      frameBg: 'var(--md-surface-container-low)',
       screwThread: isDark ? '#64748b' : '#cbd5e1',
       gripSteel: isDark ? '#27272a' : '#e4e4e7',
       gripSteelBorder: isDark ? '#52525b' : '#a1a1aa',
-      loadCellBody: isDark ? '#1e1b4b' : '#ede9fe',
-      loadCellBorder: isDark ? '#6366f1' : '#8b5cf6',
-      extensometer: isDark ? '#0284c7' : '#0369a1',
+      loadCellBody: 'var(--md-primary-container)',
+      loadCellBorder: 'var(--md-primary)',
+      extensometer: 'var(--md-primary)',
       oledBg: '#020617',
-      oledBorder: isDark ? '#1e293b' : '#cbd5e1',
-      textMain: isDark ? '#f1f5f9' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#64748b',
+      oledBorder: 'var(--md-outline-variant)',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
     };
   }, [isDark]);
 
@@ -181,7 +181,7 @@ export function UtmMachineSvg({
             fill={c.textMuted}
             fontSize="9"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {pick('[ NO SPECIMEN ]', '[ SPESIMEN KOSONG ]', '[ 試験片未装填 ]')}
           </text>
@@ -299,7 +299,7 @@ export function UtmMachineSvg({
               fill="#ef4444"
               fontSize="8"
               fontWeight="bold"
-              fontFamily="sans-serif"
+              fontFamily="var(--font-sans)"
             >
               {isBrittle ? 'CLEAVAGE' : 'CUP & CONE'}
             </text>
@@ -355,7 +355,7 @@ export function UtmMachineSvg({
                 fill="#ef4444"
                 fontSize="8"
                 fontWeight="bold"
-                fontFamily="sans-serif"
+                fontFamily="var(--font-sans)"
               >
                 45° SHEAR
               </text>
@@ -450,7 +450,7 @@ export function UtmMachineSvg({
           fontSize="6"
           fontWeight="bold"
           textAnchor="middle"
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           EXT
         </text>
@@ -505,19 +505,19 @@ export function UtmMachineSvg({
             y="-9"
             width="54"
             height="18"
-            rx="3"
-            fill={isDark ? 'rgba(15,23,42,0.92)' : 'rgba(255,255,255,0.95)'}
-            stroke="#0284c7"
+            rx="8"
+            fill="var(--md-primary-container)"
+            stroke="var(--md-primary)"
             strokeWidth="0.9"
           />
           <text
             x="25"
             y="3.5"
-            fill={isDark ? '#38bdf8' : '#0369a1'}
+            fill="var(--md-on-primary-container)"
             fontSize="8"
             fontWeight="bold"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             L₀: {gaugeLengthMm}mm
           </text>
@@ -534,7 +534,6 @@ export function UtmMachineSvg({
     specimenCenterX,
     baseDiameterPx,
     gaugeLengthMm,
-    isDark,
     c.loadCellBody,
     c.extensometer,
     c.textMain,
@@ -546,6 +545,7 @@ export function UtmMachineSvg({
       <svg
         viewBox="0 0 530 480"
         className="h-auto max-h-[500px] w-full max-w-[540px] drop-shadow-md"
+        fontFamily="var(--font-sans)"
         style={{ overflow: 'visible' }}
       >
         <defs>
@@ -591,10 +591,10 @@ export function UtmMachineSvg({
           y="15"
           width="506"
           height="450"
-          rx="8"
+          rx="16"
           fill={c.frameBg}
-          stroke={c.gripSteelBorder}
-          strokeWidth="1"
+          stroke="var(--md-outline-variant)"
+          strokeWidth="1.2"
         />
 
         {/* Machine Top Banner */}
@@ -603,10 +603,10 @@ export function UtmMachineSvg({
           y="20"
           width="494"
           height="30"
-          rx="4"
-          fill={isDark ? '#111827' : '#f1f5f9'}
-          stroke={c.gripSteelBorder}
-          strokeWidth="0.8"
+          rx="10"
+          fill="var(--md-surface-container)"
+          stroke="var(--md-outline-variant)"
+          strokeWidth="1"
         />
         <text
           x="28"
@@ -614,7 +614,7 @@ export function UtmMachineSvg({
           fill={c.textMain}
           fontSize="10"
           fontWeight="bold"
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           UTM-50 INDUSTRIAL TESTING SYSTEM
         </text>
@@ -642,7 +642,7 @@ export function UtmMachineSvg({
             fill={c.textMain}
             fontSize="8"
             fontWeight="bold"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {safetyDoorClosed ? 'GUARD: CLOSED' : 'GUARD: OPEN'}
           </text>
@@ -669,9 +669,9 @@ export function UtmMachineSvg({
           y="426"
           width="110"
           height="22"
-          rx="3"
-          fill={isDark ? '#0f172a' : '#ffffff'}
-          stroke={c.frameMed}
+          rx="6"
+          fill="var(--md-surface-container-low)"
+          stroke="var(--md-outline-variant)"
           strokeWidth="1"
         />
         <text
@@ -681,7 +681,7 @@ export function UtmMachineSvg({
           fontSize="8"
           textAnchor="middle"
           fontWeight="600"
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           PRECISION SERVO ACTUATOR
         </text>
@@ -793,7 +793,7 @@ export function UtmMachineSvg({
                     fill={c.textMuted}
                     fontSize="6"
                     textAnchor="end"
-                    fontFamily="monospace"
+                    fontFamily="var(--font-mono)"
                   >
                     {idx * 10}
                   </text>
@@ -837,7 +837,7 @@ export function UtmMachineSvg({
             fontSize="7"
             fontWeight="bold"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             LOAD CELL
           </text>
@@ -848,7 +848,7 @@ export function UtmMachineSvg({
             fontSize="7.5"
             fontWeight="bold"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             ±50 kN
           </text>
@@ -910,7 +910,7 @@ export function UtmMachineSvg({
               fill={c.textMuted}
               fontSize="6.5"
               textAnchor="middle"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               HARDENED PLATEN
             </text>
@@ -969,7 +969,7 @@ export function UtmMachineSvg({
               fill={c.textMuted}
               fontSize="6.5"
               textAnchor="middle"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               LOWER PLATEN
             </text>
@@ -1036,7 +1036,7 @@ export function UtmMachineSvg({
             fontSize="8"
             fontWeight="bold"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             MOTORIZED MOVING CROSSHEAD
           </text>
@@ -1127,19 +1127,20 @@ export function UtmMachineSvg({
                 y="0"
                 width="122"
                 height="14"
-                rx="2"
-                fill={isDark ? 'rgba(15,23,42,0.85)' : 'rgba(241,245,249,0.92)'}
-                stroke="#0ea5e9"
+                rx="6"
+                fill="var(--md-surface-container-low)"
+                fillOpacity="0.92"
+                stroke="var(--md-primary)"
                 strokeWidth="0.8"
               />
               <circle cx="7" cy="7" r="2.5" fill="#10b981" />
               <text
                 x="14"
                 y="10"
-                fill={isDark ? '#38bdf8' : '#0369a1'}
+                fill="var(--md-on-surface)"
                 fontSize="6"
                 fontWeight="bold"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 INTERLOCK: SHIELD CLOSED
               </text>
@@ -1179,7 +1180,7 @@ export function UtmMachineSvg({
               fontWeight="bold"
               textAnchor="middle"
               transform="rotate(-90, 30, 255)"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               GUARD AJAR / UNLATCHED
             </text>
@@ -1240,7 +1241,7 @@ export function UtmMachineSvg({
             fontSize="8"
             fontWeight="bold"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             CONTROLLER V3
           </text>
@@ -1271,13 +1272,13 @@ export function UtmMachineSvg({
               fill={machineStatus.color}
               fontSize="7"
               fontWeight="bold"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {machineStatus.label}
             </text>
 
             {/* Live Load Readout */}
-            <text x="408" y="116" fill="#94a3b8" fontSize="6.5" fontFamily="monospace">
+            <text x="408" y="116" fill="#94a3b8" fontSize="6.5" fontFamily="var(--font-mono)">
               LOAD:
             </text>
             <text
@@ -1287,13 +1288,13 @@ export function UtmMachineSvg({
               fontSize="10"
               fontWeight="bold"
               textAnchor="end"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {forceKn.toFixed(2)} kN
             </text>
 
             {/* Peak Force Readout */}
-            <text x="408" y="130" fill="#94a3b8" fontSize="6.5" fontFamily="monospace">
+            <text x="408" y="130" fill="#94a3b8" fontSize="6.5" fontFamily="var(--font-mono)">
               PEAK:
             </text>
             <text
@@ -1303,13 +1304,13 @@ export function UtmMachineSvg({
               fontSize="8"
               fontWeight="bold"
               textAnchor="end"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {peakForceKn.toFixed(2)} kN
             </text>
 
             {/* Extension Readout */}
-            <text x="408" y="144" fill="#94a3b8" fontSize="6.5" fontFamily="monospace">
+            <text x="408" y="144" fill="#94a3b8" fontSize="6.5" fontFamily="var(--font-mono)">
               EXT:
             </text>
             <text
@@ -1319,13 +1320,13 @@ export function UtmMachineSvg({
               fontSize="8"
               fontWeight="bold"
               textAnchor="end"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {extensionMm.toFixed(3)} mm
             </text>
 
             {/* Stress Readout */}
-            <text x="408" y="158" fill="#94a3b8" fontSize="6.5" fontFamily="monospace">
+            <text x="408" y="158" fill="#94a3b8" fontSize="6.5" fontFamily="var(--font-mono)">
               STRESS:
             </text>
             <text
@@ -1335,7 +1336,7 @@ export function UtmMachineSvg({
               fontSize="8"
               fontWeight="bold"
               textAnchor="end"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {state.stressMpa.toFixed(0)} MPa
             </text>
@@ -1350,7 +1351,7 @@ export function UtmMachineSvg({
               rx="2"
               fill={loadPercentage > 85 ? '#ef4444' : loadPercentage > 60 ? '#f59e0b' : '#10b981'}
             />
-            <text x="455" y="184" fill="#64748b" fontSize="6" textAnchor="middle" fontFamily="monospace">
+            <text x="455" y="184" fill="#64748b" fontSize="6" textAnchor="middle" fontFamily="var(--font-mono)">
               CAPACITY: {loadPercentage.toFixed(0)}% (50kN)
             </text>
 
@@ -1363,7 +1364,7 @@ export function UtmMachineSvg({
                 fontSize="6"
                 fontWeight="bold"
                 textAnchor="middle"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 * INTERLOCK ACTIVE *
               </text>
@@ -1393,7 +1394,7 @@ export function UtmMachineSvg({
               fontSize="7"
               fontWeight="bold"
               textAnchor="middle"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {safetyDoorClosed ? 'DOOR: SECURED' : 'DOOR: OPEN'}
             </text>
@@ -1426,7 +1427,7 @@ export function UtmMachineSvg({
               fontSize="7.5"
               fontWeight="black"
               textAnchor="middle"
-              fontFamily="sans-serif"
+              fontFamily="var(--font-sans)"
             >
               {isRunning ? 'PAUSE' : 'START'}
             </text>
@@ -1484,7 +1485,7 @@ export function UtmMachineSvg({
               fontSize="7.5"
               fontWeight="bold"
               textAnchor="middle"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               RESET 0
             </text>
@@ -1497,7 +1498,7 @@ export function UtmMachineSvg({
             fill="#64748b"
             fontSize="6"
             textAnchor="middle"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             ASAHI-UTM-50
           </text>

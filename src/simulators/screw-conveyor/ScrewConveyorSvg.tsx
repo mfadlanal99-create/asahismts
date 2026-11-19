@@ -596,16 +596,16 @@ export function ScrewConveyorSvg({
     };
   });
 
-  // Theme palette (strictly follows global Light / Dark theme)
-  const bgTop = isDark ? '#0b1424' : '#ffffff';
-  const bgBot = isDark ? '#0f172a' : '#f8fafc';
+  // Theme palette — harmonized with Material 3 Expressive surface & text tokens
+  const bgTop = 'var(--md-surface-container-lowest)';
+  const bgBot = 'var(--md-surface-container-low)';
   const gridStroke = isDark ? 'rgba(148,163,184,0.08)' : 'rgba(15,23,42,0.06)';
   const casingFill = isDark ? '#1e293b' : '#cbd5e1';
   const casingStroke = isDark ? '#64748b' : '#475569';
   const flangeFill = isDark ? '#334155' : '#94a3b8';
   const troughInterior = isDark ? '#091120' : '#f8fafc';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#475569';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
 
   const statusColor =
     metrics.healthStatus === 'critical'
@@ -707,10 +707,10 @@ export function ScrewConveyorSvg({
     hotspots.find((h) => h.id === activeProbe) ?? hotspots[1];
 
   return (
-    <div className="sim-box overflow-hidden p-2.5 space-y-2.5">
+    <div className="space-y-3 overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-2.5">
       <svg
         viewBox="0 0 820 420"
-        className="w-full h-auto select-none"
+        className="w-full h-auto select-none rounded-[16px]"
         role="img"
         aria-label={pick(
           'Screw Conveyor Cutaway Simulation',
@@ -815,9 +815,10 @@ export function ScrewConveyorSvg({
             <text
               x={pivotX + 94}
               y={pivotY - 10}
-              fill="#10b981"
+              fill="var(--md-primary)"
               fontSize="11"
               fontWeight="700"
+              fontFamily="var(--font-mono)"
             >
               θ = {angleDeg.toFixed(0)}° (Kθ={metrics.inclinationFactor.toFixed(2)})
             </text>
@@ -1490,15 +1491,15 @@ export function ScrewConveyorSvg({
             y="0"
             width="255"
             height="58"
-            rx="10"
-            fill={isDark ? 'rgba(15,23,42,0.84)' : 'rgba(255,255,255,0.88)'}
-            stroke={isDark ? 'rgba(148,163,184,0.22)' : 'rgba(15,23,42,0.12)'}
+            rx="14"
+            fill="var(--md-surface-container)"
+            stroke="var(--md-outline-variant)"
           />
           <circle cx="16" cy="18" r="5" fill={statusColor} />
-          <text x="28" y="22" fill={textPrimary} fontSize="11.5" fontWeight="800">
+          <text x="28" y="22" fill={textPrimary} fontSize="11.5" fontWeight="800" fontFamily="var(--font-sans)">
             {pick('CEMA 350 Screw Conveyor', 'Konveyor Sekrup CEMA 350', 'CEMA 350 スクリューコンベヤ')}
           </text>
-          <text x="16" y="42" fill={textMuted} fontSize="10.5" fontWeight="600">
+          <text x="16" y="42" fill={textMuted} fontSize="10.5" fontWeight="600" fontFamily="var(--font-mono)">
             Ø{inputs.screwDiameterMm} mm · P={inputs.pitchMm} mm · {inputs.rpm} RPM · {inputs.troughFillPct}%
           </text>
         </g>
@@ -1510,17 +1511,17 @@ export function ScrewConveyorSvg({
             y="0"
             width="248"
             height="58"
-            rx="10"
-            fill={isDark ? 'rgba(15,23,42,0.84)' : 'rgba(255,255,255,0.88)'}
-            stroke={isDark ? 'rgba(148,163,184,0.22)' : 'rgba(15,23,42,0.12)'}
+            rx="14"
+            fill="var(--md-surface-container)"
+            stroke="var(--md-outline-variant)"
           />
-          <text x="14" y="21" fill={textMuted} fontSize="10" fontWeight="700">
+          <text x="14" y="21" fill={textMuted} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
             {pick('MASS FLOW / DRIVE TORQUE', 'KAPASITAS / TORSI', '搬送量・駆動トルク')}
           </text>
-          <text x="14" y="43" fill="#10b981" fontSize="14" fontWeight="800">
+          <text x="14" y="43" fill="var(--md-primary)" fontSize="14" fontWeight="800" fontFamily="var(--font-mono)">
             {metrics.massCapacityTh.toFixed(1)} t/h
           </text>
-          <text x="116" y="43" fill={textPrimary} fontSize="13" fontWeight="800">
+          <text x="116" y="43" fill={textPrimary} fontSize="13" fontWeight="800" fontFamily="var(--font-mono)">
             · {metrics.driveTorqueNm.toFixed(0)} N·m
           </text>
         </g>
@@ -1529,14 +1530,14 @@ export function ScrewConveyorSvg({
       {/* Bottom Visualization Strip: IR Temp & Torque Probe + Live Power Breakdown */}
       <div className="grid grid-cols-1 gap-2.5 md:grid-cols-12">
         {/* Interactive IR Temp / Torque Inspection Probe Readout */}
-        <div className="md:col-span-7 rounded-xl border border-slate-200/80 bg-white/70 p-2.5 dark:border-slate-700/70 dark:bg-slate-900/60">
+        <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 md:col-span-7">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700 dark:text-slate-200">
-              <Crosshair className="h-3.5 w-3.5 text-emerald-500" />
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
+              <Crosshair className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               <span>
                 {pick('IR & Torque Probe:', 'Probe IR & Torsi:', 'IR温度・トルクプローブ:')}
               </span>
-              <span className="text-emerald-600 dark:text-emerald-400">
+              <span className="text-[var(--md-primary)]">
                 {pick(
                   selectedHotspot.labelEn,
                   selectedHotspot.labelId,
@@ -1550,10 +1551,10 @@ export function ScrewConveyorSvg({
                   key={hs.id}
                   type="button"
                   onClick={() => setActiveProbe(hs.id)}
-                  className={`rounded px-1.5 py-0.5 text-[10px] font-bold transition ${
+                  className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold transition ${
                     activeProbe === hs.id
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-200/70 text-slate-600 hover:bg-slate-300/70 dark:bg-slate-800 dark:text-slate-300'
+                      ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                      : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                   }`}
                 >
                   {pick(
@@ -1566,35 +1567,35 @@ export function ScrewConveyorSvg({
             </div>
           </div>
           <div className="mt-2 grid grid-cols-3 gap-2 text-xs">
-            <div className="flex items-center gap-1.5 rounded-lg bg-slate-100/80 px-2 py-1 dark:bg-slate-800/80">
-              <Thermometer className="h-3.5 w-3.5 text-rose-500" />
+            <div className="flex items-center gap-1.5 rounded-2xl bg-[var(--md-surface-container-high)] px-2.5 py-1.5">
+              <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('IR Temp', 'Suhu IR', 'IR温度')}
                 </div>
-                <div className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                <div className="font-mono font-bold text-[var(--md-on-surface)]">
                   {selectedHotspot.tempC.toFixed(1)} °C
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 rounded-lg bg-slate-100/80 px-2 py-1 dark:bg-slate-800/80">
-              <Gauge className="h-3.5 w-3.5 text-sky-500" />
+            <div className="flex items-center gap-1.5 rounded-2xl bg-[var(--md-surface-container-high)] px-2.5 py-1.5">
+              <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Clearance', 'Celah', '隙間')}
                 </div>
-                <div className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                <div className="font-mono font-bold text-[var(--md-on-surface)]">
                   {selectedHotspot.clearanceMm.toFixed(1)} mm
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 rounded-lg bg-slate-100/80 px-2 py-1 dark:bg-slate-800/80">
-              <Flame className="h-3.5 w-3.5 text-amber-500" />
+            <div className="flex items-center gap-1.5 rounded-2xl bg-[var(--md-surface-container-high)] px-2.5 py-1.5">
+              <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {pick('Local Torque', 'Torsi Lokal', '局所トルク')}
                 </div>
-                <div className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                <div className="font-mono font-bold text-[var(--md-on-surface)]">
                   {selectedHotspot.torqueNm.toFixed(0)} N·m
                 </div>
               </div>
@@ -1603,14 +1604,14 @@ export function ScrewConveyorSvg({
         </div>
 
         {/* Live Power Breakdown Bar inside Visualization Card */}
-        <div className="md:col-span-5 rounded-xl border border-slate-200/80 bg-white/70 p-2.5 dark:border-slate-700/70 dark:bg-slate-900/60 flex flex-col justify-between">
-          <div className="flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-200">
+        <div className="flex flex-col justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 md:col-span-5">
+          <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
             <span>{pick('Live Power Breakdown', 'Rincian Daya Langsung', 'リアルタイム動力内訳')}</span>
-            <span className="font-mono text-emerald-600 dark:text-emerald-400">
+            <span className="font-mono text-[var(--md-primary)]">
               {metrics.drivePowerKw.toFixed(2)} kW
             </span>
           </div>
-          <div className="my-1.5 flex h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div className="my-1.5 flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
             <div
               className="bg-slate-500 transition-all"
               style={{ width: `${(metrics.emptyPowerKw / totalPowerSum) * 100}%` }}
@@ -1624,18 +1625,18 @@ export function ScrewConveyorSvg({
               style={{ width: `${(metrics.liftPowerKw / totalPowerSum) * 100}%` }}
             />
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-1 text-[10.5px] text-slate-600 dark:text-slate-300">
+          <div className="flex flex-wrap items-center justify-between gap-1 text-[10.5px] text-[var(--md-on-surface-variant)]">
             <span>
               <span className="mr-1 inline-block h-2 w-2 rounded-full bg-slate-500" />
-              {pick('Empty', 'Kosong', '空運転')}: <strong>{metrics.emptyPowerKw.toFixed(2)}</strong>
+              {pick('Empty', 'Kosong', '空運転')}: <strong className="font-mono text-[var(--md-on-surface)]">{metrics.emptyPowerKw.toFixed(2)}</strong>
             </span>
             <span>
               <span className="mr-1 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-              {pick('Mat.', 'Mat.', '搬送')}: <strong>{metrics.materialPowerKw.toFixed(2)}</strong>
+              {pick('Mat.', 'Mat.', '搬送')}: <strong className="font-mono text-[var(--md-on-surface)]">{metrics.materialPowerKw.toFixed(2)}</strong>
             </span>
             <span>
               <span className="mr-1 inline-block h-2 w-2 rounded-full bg-sky-500" />
-              {pick('Lift', 'Angkat', '揚程')}: <strong>{metrics.liftPowerKw.toFixed(2)}</strong>
+              {pick('Lift', 'Angkat', '揚程')}: <strong className="font-mono text-[var(--md-on-surface)]">{metrics.liftPowerKw.toFixed(2)}</strong>
             </span>
           </div>
         </div>

@@ -1,11 +1,14 @@
 import { createContext, useContext } from 'react';
 
 export type Theme = 'light' | 'dark';
+export type PixelSeed = 'sapphire' | 'mint' | 'lavender' | 'amber';
 
 export interface ThemeContextValue {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  seed: PixelSeed;
+  setSeed: (seed: PixelSeed) => void;
 }
 
 export const ThemeContext = createContext<ThemeContextValue | undefined>(

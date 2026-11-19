@@ -120,9 +120,9 @@ export function FitsTolerancesSimulator() {
           activeShaftSpec.applicationJa
         ),
         classes:
-          'border-sky-300 bg-sky-50 text-sky-900 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-200',
+          'border-emerald-300/70 bg-emerald-50 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-200',
         icon: CheckCircle2,
-        iconColor: 'text-sky-600 dark:text-sky-400',
+        iconColor: 'text-emerald-600 dark:text-emerald-400',
       };
     }
     if (calc.fitCategory === 'transition') {
@@ -168,11 +168,11 @@ export function FitsTolerancesSimulator() {
       {/* Top Grid: Interactive Controls + 2D SVG Diagram & Readouts */}
       <div className="grid gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left Controls Panel */}
-        <div className="glass-panel space-y-5 rounded-2xl p-5 shadow-xs lg:col-span-5">
-          <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-3 dark:border-slate-800">
+        <div className="glass-panel space-y-5 rounded-[28px] p-5 lg:col-span-5">
+          <div className="flex items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-3">
             <div className="flex items-center gap-2">
-              <Layers className="h-4 w-4 text-cyan-500" />
-              <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+              <Layers className="h-4 w-4 text-[var(--md-primary)]" />
+              <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
                 {pick(
                   'ISO 286 Fit & Thermal Shrink Controls',
                   'Kontrol Suaian ISO 286 & Shrink Termal',
@@ -180,7 +180,7 @@ export function FitsTolerancesSimulator() {
                 )}
               </h2>
             </div>
-            <span className="rounded-full bg-cyan-500/10 px-2.5 py-0.5 font-mono text-xs font-bold text-cyan-700 dark:text-cyan-300">
+            <span className="rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 font-mono text-xs font-bold text-[var(--md-on-primary-container)]">
               Ø{nominalMm} {holeClass}/{shaftClass}
             </span>
           </div>
@@ -188,14 +188,14 @@ export function FitsTolerancesSimulator() {
           {/* 1. Nominal Diameter */}
           <div>
             <div className="flex items-center justify-between text-xs">
-              <label className="font-semibold text-slate-700 dark:text-slate-300">
+              <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
                   'Nominal Diameter d (mm)',
                   'Diameter Nominal d (mm)',
                   '基準寸法・呼び径 d (mm)'
                 )}
               </label>
-              <span className="font-mono text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-[var(--md-on-surface-variant)]">
                 Ø{nominalMm}.000 mm
               </span>
             </div>
@@ -205,10 +205,10 @@ export function FitsTolerancesSimulator() {
                   key={dia}
                   type="button"
                   onClick={() => handleSelectDiameter(dia)}
-                  className={`rounded-lg border py-1.5 font-mono text-xs font-semibold transition ${
+                  className={`rounded-full border py-1.5 font-mono text-xs transition ${
                     nominalMm === dia
-                      ? 'border-cyan-500 bg-cyan-600 text-white shadow-xs'
-                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {dia} mm
@@ -220,44 +220,53 @@ export function FitsTolerancesSimulator() {
           {/* 2. Hole Class (H6, H7, H8) */}
           <div>
             <div className="flex items-center justify-between text-xs">
-              <label className="font-semibold text-slate-700 dark:text-slate-300">
+              <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
                   'Hole Basis Class (ISO 286 Bore)',
                   'Kelas Basis Lubang (Lubang ISO 286)',
                   '穴公差クラス (穴基準 H6/H7/H8)'
                 )}
               </label>
-              <span className="font-mono text-cyan-600 dark:text-cyan-400">
+              <span className="font-mono font-semibold text-[var(--md-primary)]">
                 ES +{calc.ES} / EI {calc.EI} µm
               </span>
             </div>
             <div className="mt-2 grid grid-cols-3 gap-2">
-              {HOLE_CLASSES.map((hc) => (
-                <button
-                  key={hc.id}
-                  type="button"
-                  onClick={() => handleSelectHole(hc.id)}
-                  className={`rounded-xl border p-2.5 text-left transition ${
-                    holeClass === hc.id
-                      ? 'border-cyan-500 bg-cyan-50 dark:border-cyan-500 dark:bg-cyan-950/40'
-                      : 'border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">
-                      {hc.id}
-                    </span>
-                    <span className="rounded bg-slate-200 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-300">
-                      {hc.itGrade}
-                    </span>
-                  </div>
-                  <div className="mt-1 line-clamp-1 text-[10px] text-slate-500 dark:text-slate-400">
-                    {pick(hc.labelEn, hc.labelId, hc.labelJa)}
-                  </div>
-                </button>
-              ))}
+              {HOLE_CLASSES.map((hc) => {
+                const isSelected = holeClass === hc.id;
+                return (
+                  <button
+                    key={hc.id}
+                    type="button"
+                    onClick={() => handleSelectHole(hc.id)}
+                    className={`rounded-[20px] border p-2.5 text-left transition ${
+                      isSelected
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-bold">
+                        {hc.id}
+                      </span>
+                      <span
+                        className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
+                          isSelected
+                            ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                            : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
+                        }`}
+                      >
+                        {hc.itGrade}
+                      </span>
+                    </div>
+                    <div className="mt-1 line-clamp-1 text-[10px] opacity-80">
+                      {pick(hc.labelEn, hc.labelId, hc.labelJa)}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
-            <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="mt-1.5 text-[11px] text-[var(--md-on-surface-variant)]">
               {pick(
                 activeHoleSpec.applicationEn,
                 activeHoleSpec.applicationId,
@@ -269,14 +278,14 @@ export function FitsTolerancesSimulator() {
           {/* 3. Shaft Class (f7, g6, h6, k6, m6, p6, s6) */}
           <div>
             <div className="flex items-center justify-between text-xs">
-              <label className="font-semibold text-slate-700 dark:text-slate-300">
+              <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
                   'Shaft Tolerance Class (f7 – s6)',
                   'Kelas Toleransi Poros (f7 – s6)',
                   '軸公差クラス (f7 〜 s6)'
                 )}
               </label>
-              <span className="font-mono text-slate-600 dark:text-slate-300">
+              <span className="font-mono text-[var(--md-on-surface-variant)]">
                 es {calc.es >= 0 ? `+${calc.es}` : calc.es} / ei{' '}
                 {calc.ei >= 0 ? `+${calc.ei}` : calc.ei} µm
               </span>
@@ -286,7 +295,7 @@ export function FitsTolerancesSimulator() {
                 const isSelected = shaftClass === sc.id;
                 const badgeTone =
                   sc.fitFamily === 'clearance'
-                    ? 'text-sky-600 dark:text-sky-400'
+                    ? 'text-emerald-600 dark:text-emerald-400'
                     : sc.fitFamily === 'transition'
                       ? 'text-amber-600 dark:text-amber-400'
                       : 'text-rose-600 dark:text-rose-400';
@@ -295,14 +304,14 @@ export function FitsTolerancesSimulator() {
                     key={sc.id}
                     type="button"
                     onClick={() => handleSelectShaft(sc.id)}
-                    className={`rounded-xl border p-2 text-left transition ${
+                    className={`rounded-[20px] border p-2.5 text-left transition ${
                       isSelected
-                        ? 'border-cyan-500 bg-cyan-50 dark:border-cyan-500 dark:bg-cyan-950/40'
-                        : 'border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-slate-900 dark:text-white">
+                      <span className="font-mono text-xs font-bold">
                         {sc.id}
                       </span>
                       <span className={`text-[10px] font-bold uppercase ${badgeTone}`}>
@@ -313,7 +322,7 @@ export function FitsTolerancesSimulator() {
                             : pick('Press', 'Sesak', 'しまり')}
                       </span>
                     </div>
-                    <div className="mt-0.5 truncate text-[10px] text-slate-500 dark:text-slate-400">
+                    <div className="mt-0.5 truncate text-[10px] opacity-80">
                       {pick(sc.nameEn, sc.nameId, sc.nameJa).replace(`${sc.id} — `, '')}
                     </div>
                   </button>
@@ -327,7 +336,7 @@ export function FitsTolerancesSimulator() {
             <div className="flex items-center justify-between text-xs">
               <label
                 htmlFor="engagement-length-slider"
-                className="font-semibold text-slate-700 dark:text-slate-300"
+                className="font-semibold text-[var(--md-on-surface)]"
               >
                 {pick(
                   'Hub Engagement Length L (mm)',
@@ -335,7 +344,7 @@ export function FitsTolerancesSimulator() {
                   'ハブ嵌合長さ L (mm)'
                 )}
               </label>
-              <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+              <span className="font-mono font-bold text-[var(--md-primary)]">
                 {engagementLengthMm} mm
               </span>
             </div>
@@ -347,9 +356,9 @@ export function FitsTolerancesSimulator() {
               step={5}
               value={engagementLengthMm}
               onChange={(e) => setEngagementLengthMm(Number(e.target.value))}
-              className="mt-1.5 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-cyan-600 dark:bg-slate-700"
+              className="mt-2 w-full"
             />
-            <div className="mt-1 flex justify-between font-mono text-[10px] text-slate-400">
+            <div className="mt-1 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
               <span>20 mm</span>
               <span>50 mm</span>
               <span>80 mm</span>
@@ -358,18 +367,18 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* 5. Induction Heater / Cryo Shaft Temperature (-80 °C to +160 °C) */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3.5 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex items-center justify-between text-xs">
               <label
                 htmlFor="thermal-temp-slider"
-                className="flex items-center gap-1.5 font-semibold text-slate-800 dark:text-slate-200"
+                className="flex items-center gap-1.5 font-semibold text-[var(--md-on-surface)]"
               >
                 {processTempC > 21 ? (
                   <Flame className="h-3.5 w-3.5 text-orange-500" />
                 ) : processTempC < 19 ? (
-                  <Snowflake className="h-3.5 w-3.5 text-sky-400" />
+                  <Snowflake className="h-3.5 w-3.5 text-sky-500" />
                 ) : (
-                  <Thermometer className="h-3.5 w-3.5 text-slate-500" />
+                  <Thermometer className="h-3.5 w-3.5 text-[var(--md-on-surface-variant)]" />
                 )}
                 {pick(
                   'Induction Heater / Cryo Shaft Temp',
@@ -378,12 +387,12 @@ export function FitsTolerancesSimulator() {
                 )}
               </label>
               <span
-                className={`rounded px-2 py-0.5 font-mono text-xs font-bold ${
+                className={`rounded-full px-2.5 py-0.5 font-mono text-xs font-bold ${
                   processTempC > 21
                     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400'
                     : processTempC < 19
                       ? 'bg-sky-500/15 text-sky-600 dark:text-sky-400'
-                      : 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
+                      : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)]'
                 }`}
               >
                 {processTempC > 0 ? `+${processTempC}` : processTempC} °C (ΔT ={' '}
@@ -399,34 +408,34 @@ export function FitsTolerancesSimulator() {
               step={2}
               value={processTempC}
               onChange={(e) => setProcessTempC(Number(e.target.value))}
-              className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-cyan-600 dark:bg-slate-700"
+              className="mt-2.5 w-full"
             />
-            <div className="mt-1 flex justify-between font-mono text-[10px] text-slate-400">
+            <div className="mt-1 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
               <span>-80°C (Cryo Shaft)</span>
               <span>20°C (Ambient)</span>
               <span>+110°C</span>
               <span>+160°C (Hub Heat)</span>
             </div>
 
-            <div className="mt-2.5 flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               <button
                 type="button"
                 onClick={() => setProcessTempC(-78)}
-                className="rounded-lg border border-sky-300 bg-sky-50 px-2 py-1 text-[11px] font-semibold text-sky-800 transition hover:bg-sky-100 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-300"
+                className="rounded-full border border-sky-300/70 bg-sky-500/10 px-2.5 py-1 text-[11px] font-semibold text-sky-700 transition hover:bg-sky-500/20 dark:border-sky-700/60 dark:text-sky-300"
               >
                 {pick('-78°C Dry Ice', '-78°C Es Kering', '-78°C ドライアイス')}
               </button>
               <button
                 type="button"
                 onClick={() => setProcessTempC(20)}
-                className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                className="glass-pill rounded-full px-2.5 py-1 text-[11px] font-semibold"
               >
                 {pick('20°C Ambient', '20°C Ruang', '20°C 室温')}
               </button>
               <button
                 type="button"
                 onClick={() => setProcessTempC(110)}
-                className="rounded-lg border border-orange-300 bg-orange-50 px-2 py-1 text-[11px] font-semibold text-orange-800 transition hover:bg-orange-100 dark:border-orange-800 dark:bg-orange-950/50 dark:text-orange-300"
+                className="rounded-full border border-orange-300/70 bg-orange-500/10 px-2.5 py-1 text-[11px] font-semibold text-orange-700 transition hover:bg-orange-500/20 dark:border-orange-700/60 dark:text-orange-300"
               >
                 {pick('+110°C Bearing Heater', '+110°C Pemanas', '+110°C 軸受ヒーター')}
               </button>
@@ -438,7 +447,7 @@ export function FitsTolerancesSimulator() {
                       Math.min(160, Math.max(20, calc.requiredTempForDropInC))
                     )
                   }
-                  className="rounded-lg border border-emerald-300 bg-emerald-50 px-2 py-1 text-[11px] font-semibold text-emerald-800 transition hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
+                  className="rounded-full border border-emerald-300/70 bg-emerald-500/15 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 transition hover:bg-emerald-500/25 dark:border-emerald-700/60 dark:text-emerald-300"
                 >
                   {pick(
                     `Auto Drop-In (${Math.min(160, calc.requiredTempForDropInC)}°C)`,
@@ -455,7 +464,7 @@ export function FitsTolerancesSimulator() {
         <div className="space-y-4 lg:col-span-7">
           {/* Fit Classification Banner */}
           <div
-            className={`flex items-start gap-3 rounded-2xl border p-4 ${fitStatusBanner.classes}`}
+            className={`flex items-start gap-3 rounded-[24px] border p-4 ${fitStatusBanner.classes}`}
           >
             <BannerIcon
               className={`mt-0.5 h-5 w-5 shrink-0 ${fitStatusBanner.iconColor}`}
@@ -480,8 +489,8 @@ export function FitsTolerancesSimulator() {
           {/* 4 Live Engineering Readout Cards */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {/* Card 1: Resulting Clearance / Interference */}
-            <div className="glass-panel rounded-xl p-3.5 shadow-xs">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {calc.fitCategory === 'interference'
                   ? pick(
                       'Interference (δ_min .. δ_max)',
@@ -494,12 +503,12 @@ export function FitsTolerancesSimulator() {
                       'すきま (C_min .. C_max)'
                     )}
               </div>
-              <div className="mt-1 font-mono text-base font-bold text-slate-900 dark:text-white">
+              <div className="mt-1 font-mono text-base font-bold text-[var(--md-on-surface)]">
                 {calc.fitCategory === 'interference'
                   ? `+${calc.minInterferenceUm} .. +${calc.maxInterferenceUm} µm`
                   : `${calc.minClearanceUm >= 0 ? `+${calc.minClearanceUm}` : calc.minClearanceUm} .. +${calc.maxClearanceUm} µm`}
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   `Fit band T_fit = ${calc.holeToleranceUm + calc.shaftToleranceUm} µm`,
                   `Rentang T_fit = ${calc.holeToleranceUm + calc.shaftToleranceUm} µm`,
@@ -509,18 +518,18 @@ export function FitsTolerancesSimulator() {
             </div>
 
             {/* Card 2: Lamé Interface Contact Pressure */}
-            <div className="glass-panel rounded-xl p-3.5 shadow-xs">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Contact Pressure (MPa)',
                   'Tekanan Kontak (MPa)',
                   '接触面圧 (MPa)'
                 )}
               </div>
-              <div className="mt-1 font-mono text-base font-bold text-slate-900 dark:text-white">
+              <div className="mt-1 font-mono text-base font-bold text-[var(--md-on-surface)]">
                 {calc.contactPressureMaxMpa.toFixed(1)} MPa
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   `Mean: ${calc.contactPressureMeanMpa.toFixed(1)} MPa (Do/d = 2.0)`,
                   `Rata-rata: ${calc.contactPressureMeanMpa.toFixed(1)} MPa`,
@@ -530,21 +539,27 @@ export function FitsTolerancesSimulator() {
             </div>
 
             {/* Card 3: Hydraulic Press Force */}
-            <div className="glass-panel rounded-xl p-3.5 shadow-xs">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Hydraulic Press Force',
                   'Gaya Pres Hidrolik',
                   '油圧プレス圧入力'
                 )}
               </div>
-              <div className="mt-1 font-mono text-base font-bold text-rose-600 dark:text-rose-400">
+              <div
+                className={`mt-1 font-mono text-base font-bold ${
+                  calc.pressForceMaxKn > 0
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-[var(--md-on-surface)]'
+                }`}
+              >
                 {calc.pressForceMaxKn.toFixed(1)} kN{' '}
-                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                   ({calc.pressForceMaxTonnes.toFixed(2)} t)
                 </span>
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   `µ = 0.15 | Torque: ${calc.transmissibleTorqueNm.toFixed(0)} N·m`,
                   `µ = 0.15 | Torsi: ${calc.transmissibleTorqueNm.toFixed(0)} N·m`,
@@ -554,8 +569,8 @@ export function FitsTolerancesSimulator() {
             </div>
 
             {/* Card 4: Thermal Shrink-Fit Assembly Clearance */}
-            <div className="glass-panel rounded-xl p-3.5 shadow-xs">
-              <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Thermal Assembly Clearance',
                   'Celah Rakit Termal',
@@ -573,7 +588,7 @@ export function FitsTolerancesSimulator() {
                   ? `+${calc.netAssemblyClearanceMinUm.toFixed(1)} µm`
                   : `${calc.netAssemblyClearanceMinUm.toFixed(1)} µm`}
               </div>
-              <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[10px] text-[var(--md-on-surface-variant)]">
                 {calc.canDropInWithoutPress
                   ? pick(
                       `Drop-in ready (≥ +${calc.safeAssemblyMarginUm} µm safe)`,
@@ -592,11 +607,11 @@ export function FitsTolerancesSimulator() {
       </div>
 
       {/* Bottom Interactive Go / No-Go Plug & Snap Gauge Quality Control Inspector */}
-      <div className="glass-panel rounded-2xl p-5 shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3 dark:border-slate-800">
+      <div className="glass-panel rounded-[28px] p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-3">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-cyan-500" />
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+            <ShieldCheck className="h-4 w-4 text-[var(--md-primary)]" />
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick(
                 'Go / No-Go Plug & Snap Gauge QC Bench (Taylor Principle)',
                 'Meja QC Kaliber Batas Plug & Snap Go / No-Go (Prinsip Taylor)',
@@ -605,13 +620,13 @@ export function FitsTolerancesSimulator() {
             </h3>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <span className="font-mono text-slate-500 dark:text-slate-400">
+            <span className="font-mono text-[var(--md-on-surface-variant)]">
               {pick('Actual Mated Clearance:', 'Celah Pasangan Aktual:', '実測嵌合すきま:')}
             </span>
             <span
-              className={`rounded-md px-2 py-0.5 font-mono font-bold ${
+              className={`rounded-full px-3 py-0.5 font-mono font-bold ${
                 actualMeasuredClearanceUm >= 0
-                  ? 'bg-sky-500/15 text-sky-700 dark:text-sky-300'
+                  ? 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
                   : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
               }`}
             >
@@ -624,23 +639,23 @@ export function FitsTolerancesSimulator() {
 
         <div className="mt-4 grid gap-6 md:grid-cols-2">
           {/* Left: Cylindrical Plug Gauge for Hole */}
-          <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center justify-between">
+          <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-4">
+            <div className="flex items-center justify-between gap-2">
               <div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                <div className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick(
                     `1. Cylindrical Plug Gauge — Bore Ø${nominalMm} ${holeClass}`,
                     `1. Kaliber Plug Silindris — Lubang Ø${nominalMm} ${holeClass}`,
                     `1. 円筒プラグゲージ — 穴 Ø${nominalMm} ${holeClass}`
                   )}
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   Go = {calc.holeMinMm.toFixed(3)} mm (EI {calc.EI} µm) · No-Go ={' '}
                   {calc.holeMaxMm.toFixed(3)} mm (ES +{calc.ES} µm)
                 </div>
               </div>
               <span
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ${
+                className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ${
                   holeGaugePass
                     ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                     : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
@@ -663,7 +678,7 @@ export function FitsTolerancesSimulator() {
               <div className="flex justify-between text-xs">
                 <label
                   htmlFor="test-hole-slider"
-                  className="font-medium text-slate-700 dark:text-slate-300"
+                  className="font-medium text-[var(--md-on-surface)]"
                 >
                   {pick(
                     'Machined Bore Deviation:',
@@ -671,7 +686,7 @@ export function FitsTolerancesSimulator() {
                     '加工穴の実測偏差:'
                   )}
                 </label>
-                <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   Ø{(nominalMm + testHoleDevUm / 1000).toFixed(3)} mm (
                   {testHoleDevUm >= 0 ? `+${testHoleDevUm}` : testHoleDevUm} µm)
                 </span>
@@ -684,13 +699,13 @@ export function FitsTolerancesSimulator() {
                 step={1}
                 value={testHoleDevUm}
                 onChange={(e) => setTestHoleDevUm(Number(e.target.value))}
-                className="mt-1.5 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-cyan-600 dark:bg-slate-700"
+                className="mt-2 w-full"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
               <div
-                className={`rounded-lg border p-2 ${
+                className={`rounded-[20px] border p-2.5 ${
                   holeGoEnters
                     ? 'border-emerald-300 bg-emerald-50/70 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200'
                     : 'border-rose-300 bg-rose-50/70 text-rose-900 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200'
@@ -707,7 +722,7 @@ export function FitsTolerancesSimulator() {
                 </div>
               </div>
               <div
-                className={`rounded-lg border p-2 ${
+                className={`rounded-[20px] border p-2.5 ${
                   !holeNoGoEnters
                     ? 'border-emerald-300 bg-emerald-50/70 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200'
                     : 'border-rose-300 bg-rose-50/70 text-rose-900 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200'
@@ -727,17 +742,17 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* Right: C-Frame Snap Gauge for Shaft */}
-          <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-800/40">
-            <div className="flex items-center justify-between">
+          <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-4">
+            <div className="flex items-center justify-between gap-2">
               <div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">
+                <div className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick(
                     `2. C-Frame Snap Gauge — Shaft Ø${nominalMm} ${shaftClass}`,
                     `2. Kaliber Snap C-Frame — Poros Ø${nominalMm} ${shaftClass}`,
                     `2. スナップゲージ — 軸 Ø${nominalMm} ${shaftClass}`
                   )}
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   Go = {calc.shaftMaxMm.toFixed(3)} mm (es{' '}
                   {calc.es >= 0 ? `+${calc.es}` : calc.es} µm) · No-Go ={' '}
                   {calc.shaftMinMm.toFixed(3)} mm (ei{' '}
@@ -745,7 +760,7 @@ export function FitsTolerancesSimulator() {
                 </div>
               </div>
               <span
-                className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ${
+                className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold ${
                   shaftGaugePass
                     ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                     : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
@@ -768,7 +783,7 @@ export function FitsTolerancesSimulator() {
               <div className="flex justify-between text-xs">
                 <label
                   htmlFor="test-shaft-slider"
-                  className="font-medium text-slate-700 dark:text-slate-300"
+                  className="font-medium text-[var(--md-on-surface)]"
                 >
                   {pick(
                     'Machined Shaft Deviation:',
@@ -776,7 +791,7 @@ export function FitsTolerancesSimulator() {
                     '加工軸の実測偏差:'
                   )}
                 </label>
-                <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   Ø{(nominalMm + testShaftDevUm / 1000).toFixed(3)} mm (
                   {testShaftDevUm >= 0 ? `+${testShaftDevUm}` : testShaftDevUm} µm)
                 </span>
@@ -789,13 +804,13 @@ export function FitsTolerancesSimulator() {
                 step={1}
                 value={testShaftDevUm}
                 onChange={(e) => setTestShaftDevUm(Number(e.target.value))}
-                className="mt-1.5 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-cyan-600 dark:bg-slate-700"
+                className="mt-2 w-full"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
               <div
-                className={`rounded-lg border p-2 ${
+                className={`rounded-[20px] border p-2.5 ${
                   shaftGoPasses
                     ? 'border-emerald-300 bg-emerald-50/70 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200'
                     : 'border-rose-300 bg-rose-50/70 text-rose-900 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200'
@@ -812,7 +827,7 @@ export function FitsTolerancesSimulator() {
                 </div>
               </div>
               <div
-                className={`rounded-lg border p-2 ${
+                className={`rounded-[20px] border p-2.5 ${
                   !shaftNoGoPasses
                     ? 'border-emerald-300 bg-emerald-50/70 text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200'
                     : 'border-rose-300 bg-rose-50/70 text-rose-900 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200'

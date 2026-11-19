@@ -102,15 +102,15 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
   const uid = useId().replace(/:/g, '');
 
   // Shared CAD Theme Palette
-  const bgCanvas = isDark ? '#090f1d' : '#f8fafc';
-  const gridMinor = isDark ? '#141e33' : '#e2e8f0';
-  const gridMajor = isDark ? '#1e293b' : '#cbd5e1';
-  const strokeMain = isDark ? '#94a3b8' : '#334155';
-  const strokeMuted = isDark ? '#475569' : '#94a3b8';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textSecondary = isDark ? '#94a3b8' : '#475569';
-  const panelBg = isDark ? '#0f172a' : '#ffffff';
-  const panelBorder = isDark ? '#334155' : '#cbd5e1';
+  const bgCanvas = 'var(--md-surface-container-lowest)';
+  const gridMinor = 'var(--md-surface-container)';
+  const gridMajor = 'var(--md-surface-container-high)';
+  const strokeMain = 'var(--md-outline)';
+  const strokeMuted = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textSecondary = 'var(--md-on-surface-variant)';
+  const panelBg = 'var(--md-surface-container)';
+  const panelBorder = 'var(--md-outline-variant)';
 
   // ---------------------------------------------------------------------------
   // MODE 1: Precision Thermal Dilatometer & Restrained Stress Test Bed
@@ -344,20 +344,20 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
   }, [mode, barSvg, shrinkSvg, bimetalSvg]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
       {/* Clean HTML CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {headerInfo.title}
           </span>
-          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 text-[11px] font-semibold text-[var(--md-on-primary-container)]">
             {headerInfo.subtitle}
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium">
           {headerInfo.legend.map((item) => (
-            <span key={item.label} className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+            <span key={item.label} className="flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
               <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.color }} />
               {item.label}
             </span>
@@ -367,7 +367,8 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
 
       <svg
         viewBox="0 0 900 460"
-        className="mx-auto block max-h-[480px] w-full select-none font-sans"
+        className="mx-auto block max-h-[480px] w-full select-none"
+        fontFamily="var(--font-sans)"
         style={{ backgroundColor: bgCanvas }}
       >
         <defs>
@@ -694,7 +695,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <line x1="382" y1={barSvg.barTopY - 12} x2="382" y2="56" stroke={strokeMuted} strokeWidth="1.8" />
               <rect x="206" y="28" width="206" height="32" rx="6" fill={panelBg} stroke={barSvg.visuals.badgeColor} strokeWidth="1.5" filter={`url(#shadow-${uid})`} />
               <circle cx="222" cy="44" r="5" fill={barSvg.visuals.badgeColor} />
-              <text x="234" y="48" fill={textPrimary} fontSize="11.5" fontFamily="monospace" fontWeight="700">
+              <text x="234" y="48" fill={textPrimary} fontSize="11.5" fontFamily="var(--font-mono)" fontWeight="700">
                 T = {barSvg.inputs.currentTempC} °C (ΔT {barSvg.results.deltaTC >= 0 ? `+${barSvg.results.deltaTC.toFixed(0)}` : barSvg.results.deltaTC.toFixed(0)}°C)
               </text>
             </g>
@@ -710,7 +711,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               strokeDasharray="4 3"
             />
             <rect x={barSvg.baseEndX - 42} y="122" width="84" height="20" rx="4" fill={panelBg} stroke={panelBorder} strokeWidth="1" />
-            <text x={barSvg.baseEndX} y="135" fill={textSecondary} fontSize="10" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+            <text x={barSvg.baseEndX} y="135" fill={textSecondary} fontSize="10" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
               L₀ (20°C)
             </text>
 
@@ -757,7 +758,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 <text x={barSvg.wallX + 113} y="257" fill={textPrimary} fontSize="9.5" fontWeight="700" textAnchor="middle">
                   RIGID STOP
                 </text>
-                <text x={barSvg.wallX + 113} y="271" fill={textSecondary} fontSize="9.5" fontFamily="monospace" textAnchor="middle">
+                <text x={barSvg.wallX + 113} y="271" fill={textSecondary} fontSize="9.5" fontFamily="var(--font-mono)" textAnchor="middle">
                   δ_gap={barSvg.inputs.gapMm.toFixed(2)}mm
                 </text>
 
@@ -775,7 +776,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                       markerEnd={`url(#arrowGreen-${uid})`}
                     />
                     <rect x={(barSvg.barEndX + barSvg.wallX) / 2 - 28} y="280" width="56" height="16" rx="3" fill={panelBg} stroke="#10b981" strokeWidth="0.9" />
-                    <text x={(barSvg.barEndX + barSvg.wallX) / 2} y="291" fill="#10b981" fontSize="9" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+                    <text x={(barSvg.barEndX + barSvg.wallX) / 2} y="291" fill="#10b981" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                       OPEN GAP
                     </text>
                   </g>
@@ -806,7 +807,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                     />
                     {/* Force Callout Badge neatly stacked above RIGID STOP badge, clear of V-rollers & quartz rod */}
                     <rect x={barSvg.wallX + 60} y="204" width="106" height="26" rx="4" fill={isDark ? '#450a0a' : '#fef2f2'} stroke="#ef4444" strokeWidth="1.2" />
-                    <text x={barSvg.wallX + 113} y="221" fill="#ef4444" fontSize="10.5" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+                    <text x={barSvg.wallX + 113} y="221" fill="#ef4444" fontSize="10.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                       F = {barSvg.results.thrustForceKn.toFixed(2)} kN
                     </text>
                   </g>
@@ -888,8 +889,8 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                   LVDT ΔL
                 </text>
                 {/* Digital LCD Window */}
-                <rect x="-30" y="11" width="60" height="16" rx="2.5" fill={isDark ? '#020617' : '#f1f5f9'} stroke={panelBorder} strokeWidth="1" />
-                <text x="0" y="22.5" fill={textPrimary} fontSize="9.5" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+                <rect x="-30" y="11" width="60" height="16" rx="4" fill="var(--md-surface-container-highest)" stroke={panelBorder} strokeWidth="1" />
+                <text x="0" y="22.5" fill={textPrimary} fontSize="9.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                   {barSvg.results.actualExpansionMm >= 0
                     ? `+${barSvg.results.actualExpansionMm.toFixed(2)}`
                     : barSvg.results.actualExpansionMm.toFixed(2)}
@@ -925,23 +926,23 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 markerEnd={`url(#arrowDim-${uid})`}
               />
               <rect x={(barSvg.xAnchor + barSvg.baseEndX) / 2 - 58} y="9" width="116" height="22" rx="4" fill={panelBg} stroke={panelBorder} strokeWidth="1" />
-              <text x={(barSvg.xAnchor + barSvg.baseEndX) / 2} y="24" fill={textPrimary} fontSize="11" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x={(barSvg.xAnchor + barSvg.baseEndX) / 2} y="24" fill={textPrimary} fontSize="11" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 L₀ = {barSvg.inputs.lengthMm} mm
               </text>
 
               {/* Bottom Telemetry Card */}
-              <rect x="520" y="0" width="340" height="68" rx="6" fill={panelBg} stroke={panelBorder} strokeWidth="1.2" filter={`url(#shadow-${uid})`} />
+              <rect x="520" y="0" width="340" height="68" rx="10" fill={panelBg} stroke={panelBorder} strokeWidth="1.2" filter={`url(#shadow-${uid})`} />
               <text x="536" y="21" fill={textSecondary} fontSize="11">
                 Free Expansion (ΔL_free):
               </text>
-              <text x="844" y="21" fill={textPrimary} fontSize="11.5" fontFamily="monospace" fontWeight="700" textAnchor="end">
+              <text x="844" y="21" fill={textPrimary} fontSize="11.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="end">
                 {barSvg.results.freeExpansionMm >= 0 ? `+${barSvg.results.freeExpansionMm.toFixed(4)}` : barSvg.results.freeExpansionMm.toFixed(4)} mm
               </text>
 
               <text x="536" y="40" fill={textSecondary} fontSize="11">
                 Restrained Strain (ε_mech):
               </text>
-              <text x="844" y="40" fill="#f97316" fontSize="11.5" fontFamily="monospace" fontWeight="700" textAnchor="end">
+              <text x="844" y="40" fill="#f97316" fontSize="11.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="end">
                 {(barSvg.results.thermalStrain * 1e6).toFixed(0)} µε ({barSvg.results.restrainedDisplacementMm.toFixed(3)} mm)
               </text>
 
@@ -953,7 +954,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 y="59"
                 fill={barSvg.results.isYielded ? '#ef4444' : barSvg.results.thermalStressMpa > 0 ? '#f97316' : textPrimary}
                 fontSize="11.5"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
                 fontWeight="700"
                 textAnchor="end"
               >
@@ -993,7 +994,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                     filter={shrinkSvg.inputs.heatingDeltaTC > 100 ? `url(#glow-${uid})` : undefined}
                   />
                   <rect x="135" y="64" width="180" height="22" rx="4" fill={panelBg} stroke={shrinkSvg.hubVisuals.badgeColor} strokeWidth="1.2" />
-                  <text x="225" y="79" fill={shrinkSvg.hubVisuals.badgeColor} fontSize="10" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+                  <text x="225" y="79" fill={shrinkSvg.hubVisuals.badgeColor} fontSize="10" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                     INDUCTION HEAT: ΔT = +{shrinkSvg.inputs.heatingDeltaTC} °C
                   </text>
                 </g>
@@ -1098,7 +1099,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               />
               <circle cx={shrinkSvg.cX - 36} cy={shrinkSvg.cY + 34} r="2.5" fill={textPrimary} />
               <rect x="30" y="320" width="96" height="22" rx="4" fill={panelBg} stroke={panelBorder} strokeWidth="1" />
-              <text x="78" y="335" fill={textPrimary} fontSize="10" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x="78" y="335" fill={textPrimary} fontSize="10" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 d = {shrinkSvg.inputs.shaftDiameterMm} mm
               </text>
 
@@ -1111,7 +1112,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               />
               <circle cx={shrinkSvg.cX + shrinkSvg.rHubOuter * 0.72} cy={shrinkSvg.cY + shrinkSvg.rHubOuter * 0.7} r="2.5" fill={textPrimary} />
               <rect x="320" y="320" width="102" height="22" rx="4" fill={panelBg} stroke={panelBorder} strokeWidth="1" />
-              <text x="371" y="335" fill={textPrimary} fontSize="10" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x="371" y="335" fill={textPrimary} fontSize="10" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 D₀ = {shrinkSvg.inputs.hubOuterDiameterMm} mm
               </text>
 
@@ -1139,7 +1140,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                   ? `✓ HOT CLEARANCE: +${shrinkSvg.results.assemblyClearanceMm.toFixed(3)} mm (FREE SLIP-ON)`
                   : `INTERFERENCE ACTIVE: δ = ${(shrinkSvg.inputs.diametralInterferenceMm * 1000).toFixed(0)} µm`}
               </text>
-              <text x="225" y="418" fill={textSecondary} fontSize="10" fontFamily="monospace" textAnchor="middle">
+              <text x="225" y="418" fill={textSecondary} fontSize="10" fontFamily="var(--font-mono)" textAnchor="middle">
                 Bore Δd = +{shrinkSvg.results.hubBoreExpansionMm.toFixed(3)} mm · Min ΔT = {shrinkSvg.results.minDeltaTZeroClearanceC.toFixed(1)} °C
               </text>
             </g>
@@ -1230,7 +1231,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 markerEnd={`url(#arrowOrange-${uid})`}
               />
               <rect x="476" y="78" width="124" height="24" rx="4" fill={panelBg} stroke="#f59e0b" strokeWidth="1.2" />
-              <text x="538" y="94" fill="#d97706" fontSize="10.5" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x="538" y="94" fill="#d97706" fontSize="10.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 T_cap = {shrinkSvg.results.torqueCapacityNm.toFixed(0)} N·m
               </text>
 
@@ -1245,7 +1246,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 markerEnd={`url(#arrowRed-${uid})`}
               />
               <rect x="752" y="78" width="122" height="24" rx="4" fill={panelBg} stroke="#ef4444" strokeWidth="1.2" />
-              <text x="813" y="94" fill="#ef4444" fontSize="10.5" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x="813" y="94" fill="#ef4444" fontSize="10.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 F_ax = {shrinkSvg.results.axialHoldingForceKn.toFixed(1)} kN
               </text>
 
@@ -1263,7 +1264,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 markerEnd={`url(#arrowDim-${uid})`}
               />
               <rect x="631" y="274" width="88" height="20" rx="4" fill={panelBg} stroke={panelBorder} strokeWidth="1" />
-              <text x="675" y="288" fill={textPrimary} fontSize="10.5" fontFamily="monospace" fontWeight="700" textAnchor="middle">
+              <text x="675" y="288" fill={textPrimary} fontSize="10.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="middle">
                 L = {shrinkSvg.inputs.engagementLengthMm} mm
               </text>
 
@@ -1272,14 +1273,14 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <text x="488" y="340" fill={textSecondary} fontSize="11">
                 Lamé Contact Pressure (p_c):
               </text>
-              <text x="856" y="340" fill={textPrimary} fontSize="11.5" fontFamily="monospace" fontWeight="700" textAnchor="end">
+              <text x="856" y="340" fill={textPrimary} fontSize="11.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="end">
                 {shrinkSvg.results.contactPressureMpa.toFixed(2)} MPa
               </text>
 
               <text x="488" y="362" fill={textSecondary} fontSize="11">
                 Hub Inner Hoop Stress (σ_θ):
               </text>
-              <text x="856" y="362" fill={textPrimary} fontSize="11.5" fontFamily="monospace" fontWeight="700" textAnchor="end">
+              <text x="856" y="362" fill={textPrimary} fontSize="11.5" fontFamily="var(--font-mono)" fontWeight="700" textAnchor="end">
                 {shrinkSvg.results.hubInnerHoopStressMpa.toFixed(1)} MPa
               </text>
 
@@ -1291,7 +1292,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                 y="384"
                 fill={shrinkSvg.results.isHubYielded ? '#ef4444' : '#10b981'}
                 fontSize="11.5"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
                 fontWeight="700"
                 textAnchor="end"
               >
@@ -1299,7 +1300,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               </text>
 
               {/* Safety Factor Utilization Bar */}
-              <rect x="488" y="398" width="368" height="12" rx="6" fill={isDark ? '#1e293b' : '#e2e8f0'} />
+              <rect x="488" y="398" width="368" height="12" rx="6" fill="var(--md-surface-container-highest)" />
               <rect
                 x="488"
                 y="398"
@@ -1336,7 +1337,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
             <g transform="translate(140, 24)">
               <rect x="0" y="0" width="214" height="32" rx="6" fill={panelBg} stroke={bimetalSvg.visuals.badgeColor} strokeWidth="1.4" filter={`url(#shadow-${uid})`} />
               <circle cx="16" cy="16" r="5" fill={bimetalSvg.visuals.badgeColor} />
-              <text x="28" y="20" fill={textPrimary} fontSize="11" fontFamily="monospace" fontWeight="700">
+              <text x="28" y="20" fill={textPrimary} fontSize="11" fontFamily="var(--font-mono)" fontWeight="700">
                 T = {bimetalSvg.inputs.currentTempC} °C (ΔT {bimetalSvg.results.deltaTC >= 0 ? `+${bimetalSvg.results.deltaTC.toFixed(0)}` : bimetalSvg.results.deltaTC.toFixed(0)}°C)
               </text>
             </g>
@@ -1385,7 +1386,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               strokeWidth="1.4"
               strokeDasharray="6 4"
             />
-            <text x={bimetalSvg.startX + 16} y={bimetalSvg.startY - bimetalSvg.t1Px - 10} fill={textSecondary} fontSize="9.5" fontFamily="monospace">
+            <text x={bimetalSvg.startX + 16} y={bimetalSvg.startY - bimetalSvg.t1Px - 10} fill={textSecondary} fontSize="9.5" fontFamily="var(--font-mono)">
               DATUM L₀ = {bimetalSvg.inputs.lengthMm} mm (20 °C)
             </text>
 
@@ -1451,7 +1452,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
                   y={(bimetalSvg.deflPx >= 0 ? bimetalSvg.startY - 30 : bimetalSvg.startY + 12) + 15}
                   fill="#ef4444"
                   fontSize="10"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                   fontWeight="700"
                   textAnchor="middle"
                 >
@@ -1539,13 +1540,13 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               </text>
               <line x1="704" y1="244" x2="854" y2="244" stroke={gridMajor} strokeWidth="1" />
               <text x="779" y="268" fill={textSecondary} fontSize="10.5" textAnchor="middle">
-                Contact Gap: <tspan fontFamily="monospace" fontWeight="700" fill={textPrimary}>{bimetalSvg.inputs.switchGapMm.toFixed(2)} mm</tspan>
+                Contact Gap: <tspan fontFamily="var(--font-mono)" fontWeight="700" fill={textPrimary}>{bimetalSvg.inputs.switchGapMm.toFixed(2)} mm</tspan>
               </text>
               <text x="779" y="292" fill={textSecondary} fontSize="10.5" textAnchor="middle">
-                Trip Temp: <tspan fontFamily="monospace" fontWeight="700" fill="#f97316">{bimetalSvg.results.tripTempC.toFixed(1)} °C</tspan>
+                Trip Temp: <tspan fontFamily="var(--font-mono)" fontWeight="700" fill="#f97316">{bimetalSvg.results.tripTempC.toFixed(1)} °C</tspan>
               </text>
               <text x="779" y="316" fill={textSecondary} fontSize="10.5" textAnchor="middle">
-                Tip Angle: <tspan fontFamily="monospace" fontWeight="700" fill={textPrimary}>{bimetalSvg.results.tipAngleDeg.toFixed(2)}°</tspan>
+                Tip Angle: <tspan fontFamily="var(--font-mono)" fontWeight="700" fill={textPrimary}>{bimetalSvg.results.tipAngleDeg.toFixed(2)}°</tspan>
               </text>
             </g>
 
@@ -1556,7 +1557,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <text x="24" y="23" fill={textSecondary} fontSize="10.5">
                 Radius of Curvature (ρ):
               </text>
-              <text x="24" y="43" fill={textPrimary} fontSize="12" fontFamily="monospace" fontWeight="700">
+              <text x="24" y="43" fill={textPrimary} fontSize="12" fontFamily="var(--font-mono)" fontWeight="700">
                 {bimetalSvg.results.radiusOfCurvatureMm === Infinity ? '∞ (Flat)' : `${bimetalSvg.results.radiusOfCurvatureMm.toFixed(1)} mm`}
               </text>
 
@@ -1564,7 +1565,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <text x="252" y="23" fill={textSecondary} fontSize="10.5">
                 Timoshenko Curvature (κ):
               </text>
-              <text x="252" y="43" fill={textPrimary} fontSize="12" fontFamily="monospace" fontWeight="700">
+              <text x="252" y="43" fill={textPrimary} fontSize="12" fontFamily="var(--font-mono)" fontWeight="700">
                 {(bimetalSvg.results.curvatureMm1 * 1e3).toFixed(3)} × 10⁻³ mm⁻¹
               </text>
 
@@ -1572,7 +1573,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <text x="502" y="23" fill={textSecondary} fontSize="10.5">
                 Tip Deflection (δ_tip):
               </text>
-              <text x="502" y="43" fill="#f97316" fontSize="12" fontFamily="monospace" fontWeight="700">
+              <text x="502" y="43" fill="#f97316" fontSize="12" fontFamily="var(--font-mono)" fontWeight="700">
                 {bimetalSvg.results.tipDeflectionMm >= 0 ? `+${bimetalSvg.results.tipDeflectionMm.toFixed(3)}` : bimetalSvg.results.tipDeflectionMm.toFixed(3)} mm
               </text>
 
@@ -1580,7 +1581,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
               <text x="692" y="23" fill={textSecondary} fontSize="10.5">
                 Differential Δα:
               </text>
-              <text x="692" y="43" fill={textPrimary} fontSize="12" fontFamily="monospace" fontWeight="700">
+              <text x="692" y="43" fill={textPrimary} fontSize="12" fontFamily="var(--font-mono)" fontWeight="700">
                 {(bimetalSvg.inputs.layer1Material.alpha - bimetalSvg.inputs.layer2Material.alpha).toFixed(1)} × 10⁻⁶/°C
               </text>
             </g>

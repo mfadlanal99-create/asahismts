@@ -62,22 +62,22 @@ export function VbeltBasicsSimulator() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       {/* Compact Header Strip */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4 shadow-xs">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4 sm:p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-500/15 text-indigo-600 dark:text-indigo-400">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
             <Cog className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+            <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick(
                 'V-Belt & Drive Belt Cross-Section Lab',
                 'Lab Penampang V-Belt & Sabuk Penggerak',
                 'Vベルト・伝動ベルト 断面着座ラボ'
               )}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 'Inspect proportional belt profiles, sidewall wedging physics, bottoming-out failure, and industrial belt codes.',
                 'Inspeksi profil sabuk proporsional, efek baji dinding alur, kegagalan bottoming-out, dan dekoder kode sabuk.',
@@ -88,33 +88,33 @@ export function VbeltBasicsSimulator() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded-lg border border-indigo-200 bg-indigo-50 px-2.5 py-1 font-mono font-bold text-indigo-800 dark:border-indigo-800/60 dark:bg-indigo-950/40 dark:text-indigo-300">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-3.5 py-1 font-mono font-bold text-[var(--md-on-primary-container)]">
             {currentBeltSpec.code} ({currentBeltSpec.topWidthMm}×{currentBeltSpec.heightMm} mm)
           </span>
-          <span className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          <span className="rounded-full bg-[var(--md-secondary-container)] px-3 py-1 font-mono font-bold text-[var(--md-on-secondary-container)]">
             V = {beltLinearSpeedMs.toFixed(1)} m/s
           </span>
         </div>
       </div>
 
       {/* Main Two-Column Grid */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* LEFT COLUMN (lg:col-span-5): Belt Controls & Code Decoder */}
-        <div className="flex flex-col gap-4 lg:col-span-5">
+        <div className="flex flex-col gap-5 lg:col-span-5">
           {/* 1. Belt Profile Selection */}
-          <div className="glass-panel flex flex-col gap-3 rounded-2xl p-4 shadow-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+          <div className="glass-panel flex flex-col gap-3.5 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface)] uppercase">
                 {pick('Select Belt Profile', 'Pilih Profil Sabuk', 'ベルト断面形式の選択')}
               </span>
-              <span className="rounded-sm bg-indigo-100 px-1.5 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+              <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--md-on-secondary-container)]">
                 {currentBeltSpec.wedgeAngleDeg > 0
                   ? `Groove: ${currentBeltSpec.wedgeAngleDeg}°`
                   : pick('Positive / Flat', 'Positif / Datar', '歯付 / 平ベルト')}
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-4">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
               {(Object.keys(BELT_SPECS) as BeltProfileCode[]).map((code) => {
                 const b = BELT_SPECS[code];
                 const active = beltProfile === code;
@@ -126,14 +126,14 @@ export function VbeltBasicsSimulator() {
                       setBeltProfile(code);
                       if (b.standardCodes[0]) setDecoderInput(b.standardCodes[0]);
                     }}
-                    className={`flex flex-col items-center rounded-xl border p-1.5 text-center transition-all ${
+                    className={`flex flex-col items-center rounded-[20px] border p-2 text-center transition-all ${
                       active
-                        ? 'border-indigo-500 bg-indigo-50 text-indigo-950 dark:border-indigo-500 dark:bg-indigo-950/40 dark:text-indigo-100'
-                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700/60'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <span className="font-mono text-xs font-black">{code.replace('_', ' ')}</span>
-                    <span className="text-[9px] opacity-70">
+                    <span className="text-[9px] opacity-75">
                       {b.topWidthMm}×{b.heightMm}mm
                     </span>
                   </button>
@@ -142,18 +142,18 @@ export function VbeltBasicsSimulator() {
             </div>
 
             {/* Pulley Groove Seating Condition Selector */}
-            <div className="mt-1 flex flex-col gap-1.5">
-              <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+            <div className="mt-1 flex flex-col gap-2">
+              <span className="text-[11px] font-bold text-[var(--md-on-surface)]">
                 {pick('Groove Seating Health Condition:', 'Kondisi Kedudukan Alur Puli:', 'プーリ溝着座状態:')}
               </span>
-              <div className="grid grid-cols-3 gap-1.5">
+              <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setPulleyCondition('proper')}
-                  className={`flex flex-col items-center rounded-lg border p-1.5 text-center transition-all ${
+                  className={`flex flex-col items-center rounded-[20px] border p-2 text-center transition-all ${
                     pulleyCondition === 'proper'
                       ? 'border-emerald-500 bg-emerald-50 font-bold text-emerald-950 dark:border-emerald-500 dark:bg-emerald-950/40 dark:text-emerald-200'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
@@ -163,10 +163,10 @@ export function VbeltBasicsSimulator() {
                 <button
                   type="button"
                   onClick={() => setPulleyCondition('worn_sheave')}
-                  className={`flex flex-col items-center rounded-lg border p-1.5 text-center transition-all ${
+                  className={`flex flex-col items-center rounded-[20px] border p-2 text-center transition-all ${
                     pulleyCondition === 'worn_sheave'
                       ? 'border-amber-500 bg-amber-50 font-bold text-amber-950 dark:border-amber-500 dark:bg-amber-950/40 dark:text-amber-200'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
@@ -176,26 +176,26 @@ export function VbeltBasicsSimulator() {
                 <button
                   type="button"
                   onClick={() => setPulleyCondition('bottomed_out')}
-                  className={`flex flex-col items-center rounded-lg border p-1.5 text-center transition-all ${
+                  className={`flex flex-col items-center rounded-[20px] border p-2 text-center transition-all ${
                     pulleyCondition === 'bottomed_out'
-                      ? 'border-red-500 bg-red-50 font-bold text-red-950 dark:border-red-500 dark:bg-red-950/40 dark:text-red-200'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400'
+                      ? 'border-rose-500 bg-rose-50 font-bold text-rose-950 dark:border-rose-500 dark:bg-rose-950/40 dark:text-rose-200'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
-                  <ShieldAlert className="h-3.5 w-3.5 text-red-500" />
+                  <ShieldAlert className="h-3.5 w-3.5 text-rose-500" />
                   <span className="mt-0.5 text-[10px]">{pick('Bottomed-Out', 'Bottoming Out', '底突き故障')}</span>
                 </button>
               </div>
             </div>
 
             {/* Belt Tension & Motor Speed Sliders */}
-            <div className="mt-1 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3 dark:border-slate-800">
-              <div className="flex flex-col gap-1">
+            <div className="mt-1 grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+              <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-600 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick('Tension (T)', 'Tegangan (T)', 'ベルト張力 (T)')}:
                   </span>
-                  <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {beltTensionN} N
                   </span>
                 </div>
@@ -206,16 +206,16 @@ export function VbeltBasicsSimulator() {
                   step={25}
                   value={beltTensionN}
                   onChange={(e) => setBeltTensionN(Number(e.target.value))}
-                  className="h-1.5 w-full cursor-pointer accent-indigo-600"
+                  className="w-full"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between text-xs">
-                  <span className="font-medium text-slate-600 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick('Driver RPM', 'Putaran Motor', '駆動回転数')}:
                   </span>
-                  <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {motorRpm} rpm
                   </span>
                 </div>
@@ -226,17 +226,17 @@ export function VbeltBasicsSimulator() {
                   step={50}
                   value={motorRpm}
                   onChange={(e) => setMotorRpm(Number(e.target.value))}
-                  className="h-1.5 w-full cursor-pointer accent-emerald-600"
+                  className="w-full"
                 />
               </div>
             </div>
           </div>
 
           {/* 2. Interactive Belt Code Decoder */}
-          <div className="glass-panel flex flex-col gap-3 rounded-2xl p-4 shadow-xs">
-            <div className="flex items-center gap-2">
-              <Search className="h-4 w-4 text-indigo-500" />
-              <span className="text-xs font-bold tracking-wide text-slate-700 uppercase dark:text-slate-200">
+          <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <Search className="h-4 w-4 text-[var(--md-primary)]" />
+              <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface)] uppercase">
                 {pick('Interactive Belt Code Decoder', 'Dekoder Kode Sabuk Industri', 'ベルト規格コード解読器')}
               </span>
             </div>
@@ -247,13 +247,13 @@ export function VbeltBasicsSimulator() {
                 value={decoderInput}
                 onChange={(e) => setDecoderInput(e.target.value)}
                 placeholder="e.g. B-65, SPA-1250, HTD 8M-800"
-                className="flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs font-bold text-slate-900 uppercase outline-hidden focus:border-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                className="flex-1 rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2 font-mono text-xs font-bold text-[var(--md-on-surface)] uppercase focus:border-[var(--md-primary)] focus:outline-none"
               />
               {decodedBelt.recognized && (
                 <button
                   type="button"
                   onClick={handleApplyDecodedBelt}
-                  className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-indigo-700"
+                  className="m3-btn-filled px-4 py-2 text-xs font-bold"
                 >
                   {pick('Load', 'Muat', '適用')}
                 </button>
@@ -267,7 +267,7 @@ export function VbeltBasicsSimulator() {
                   key={sample}
                   type="button"
                   onClick={() => setDecoderInput(sample)}
-                  className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                  className="glass-pill rounded-full px-2.5 py-1 font-mono text-[10px] font-semibold"
                 >
                   {sample}
                 </button>
@@ -275,26 +275,26 @@ export function VbeltBasicsSimulator() {
             </div>
 
             <div
-              className={`rounded-xl border p-3 ${
+              className={`rounded-[20px] border p-3.5 ${
                 decodedBelt.recognized
-                  ? 'border-emerald-200 bg-emerald-50/70 dark:border-emerald-800/60 dark:bg-emerald-950/30'
-                  : 'border-amber-200 bg-amber-50/70 dark:border-amber-800/60 dark:bg-amber-950/30'
+                  ? 'border-emerald-300/70 bg-emerald-50/75 dark:border-emerald-500/30 dark:bg-emerald-950/30'
+                  : 'border-amber-300/70 bg-amber-50/75 dark:border-amber-500/30 dark:bg-amber-950/30'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-black text-slate-900 dark:text-white">
+                <span className="text-xs font-black text-[var(--md-on-surface)]">
                   {decodedBelt.family}
                 </span>
                 {decodedBelt.effectiveLengthMm > 0 && (
-                  <span className="rounded-md bg-white/80 px-2 py-0.5 font-mono text-[11px] font-bold text-indigo-700 dark:bg-slate-900 dark:text-indigo-300">
+                  <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-primary-container)]">
                     {decodedBelt.effectiveLengthMm.toFixed(0)} mm
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+              <p className="mt-1 text-[11px] font-semibold text-[var(--md-on-surface)]">
                 {`${decodedBelt.widthMm} × ${decodedBelt.heightMm} mm · ${decodedBelt.lengthType}`}
               </p>
-              <p className="mt-1 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-1 text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
                 {pick(
                   decodedBelt.engineeringRemarks,
                   decodedBelt.engineeringRemarksId,
@@ -306,8 +306,8 @@ export function VbeltBasicsSimulator() {
         </div>
 
         {/* RIGHT COLUMN (lg:col-span-7): Pure-2D CAD SVG & Engineering Notes */}
-        <div className="flex flex-col gap-4 lg:col-span-7">
-          <div className="glass-panel flex w-full items-center justify-center rounded-2xl p-2 shadow-xs">
+        <div className="flex flex-col gap-5 lg:col-span-7">
+          <div className="glass-panel flex w-full items-center justify-center rounded-[28px] p-3">
             <VbeltBasicsSvg
               beltSpec={currentBeltSpec}
               pulleyCondition={pulleyCondition}
@@ -317,60 +317,60 @@ export function VbeltBasicsSimulator() {
           </div>
 
           {/* Live Belt Physics Readout Strip */}
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <div className="glass-panel rounded-xl p-3">
-              <span className="block text-[10px] font-bold text-slate-500 uppercase dark:text-slate-400">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Flank Force Fn', 'Gaya Samping Fn', '側壁抗力 Fn')}
               </span>
-              <span className="font-mono text-sm font-black text-indigo-600 dark:text-indigo-400">
+              <span className="mt-1 block font-mono text-sm font-black text-[var(--md-primary)]">
                 {wedgingPhysics.normalForcePerSideN.toFixed(0)} N
               </span>
             </div>
-            <div className="glass-panel rounded-xl p-3">
-              <span className="block text-[10px] font-bold text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Apparent Grip μ′', 'Gesekan Semu μ′', '見かけ摩擦 μ′')}
               </span>
               <span
-                className={`font-mono text-sm font-black ${
+                className={`mt-1 block font-mono text-sm font-black ${
                   wedgingPhysics.bottomingOutOccurring
-                    ? 'text-red-600 dark:text-red-400'
+                    ? 'text-rose-600 dark:text-rose-400'
                     : 'text-emerald-600 dark:text-emerald-400'
                 }`}
               >
                 {wedgingPhysics.apparentFrictionMuPrime.toFixed(2)}
               </span>
             </div>
-            <div className="glass-panel rounded-xl p-3">
-              <span className="block text-[10px] font-bold text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Min Pulley D', 'Puli Min D', '最小プーリ径')}
               </span>
-              <span className="font-mono text-sm font-black text-slate-800 dark:text-slate-100">
+              <span className="mt-1 block font-mono text-sm font-black text-[var(--md-on-surface)]">
                 Ø {currentBeltSpec.minSheaveDiameterMm} mm
               </span>
             </div>
-            <div className="glass-panel rounded-xl p-3">
-              <span className="block text-[10px] font-bold text-slate-500 uppercase dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Power / Strand', 'Daya / Jalur', '伝動容量/本')}
               </span>
-              <span className="font-mono text-sm font-black text-amber-600 dark:text-amber-400">
+              <span className="mt-1 block font-mono text-sm font-black text-[var(--md-primary)]">
                 {currentBeltSpec.nominalPowerKwPerStrand} kW
               </span>
             </div>
           </div>
 
           {/* Shop Practice Rule of Thumb */}
-          <div className="glass-panel rounded-2xl p-4 shadow-xs">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-start gap-2.5">
               {wedgingPhysics.bottomingOutOccurring ? (
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
+                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
               ) : (
-                <Info className="mt-0.5 h-4 w-4 shrink-0 text-indigo-500" />
+                <Info className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
               )}
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
+                <span className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Shop Practice Rule of Thumb:', 'Kaidah Praktis Bengkel:', '現場実務の設計ルール:')}
                 </span>
-                <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                <p className="text-xs leading-relaxed text-[var(--md-on-surface-variant)]">
                   {pick(
                     currentBeltSpec.constructionDescription,
                     currentBeltSpec.constructionDescriptionId,

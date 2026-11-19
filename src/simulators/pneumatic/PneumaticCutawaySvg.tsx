@@ -349,14 +349,14 @@ export function PneumaticCutawaySvg({
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  // Theme-aware CAD colors
-  const bg = isDark ? '#09101d' : '#f8fafc';
-  const cardBg = isDark ? '#111827' : '#ffffff';
-  const panelBg = isDark ? '#0f172a' : '#f1f5f9';
+  // Theme-aware CAD colors harmonized with Material 3 variables
+  const bg = 'var(--md-surface-container-lowest)';
+  const cardBg = 'var(--md-surface-container-low)';
+  const panelBg = 'var(--md-surface-container)';
   const strokeMain = isDark ? '#94a3b8' : '#334155';
-  const strokeMuted = isDark ? '#334155' : '#cbd5e1';
-  const textMain = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const strokeMuted = 'var(--md-outline-variant)';
+  const textMain = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const fittingFill = isDark ? '#64748b' : '#94a3b8';
   const hatchLine = isDark ? '#475569' : '#94a3b8';
 
@@ -399,18 +399,18 @@ export function PneumaticCutawaySvg({
   const liveRetN = isDoubleActing ? pBBar * 0.1 * areaAnnulusMm2 : 0;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/80">
+    <div className="w-full">
       {/* Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Pneumatic Workcell & 2D CAD Cutaway',
               'Sel Kerja Pneumatik & Potongan CAD 2D',
               '空気圧ワークセル・2D CAD断面図'
             )}
           </span>
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+          <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick(
               'Click 5/2 DCV coils to shift',
               'Klik koil DCV 5/2 untuk menggeser',
@@ -418,7 +418,7 @@ export function PneumaticCutawaySvg({
             )}
           </span>
         </div>
-        <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-cyan-500" />
             {pick('Pressurized Air', 'Udara Bertekanan', '加圧空気')}
@@ -428,7 +428,7 @@ export function PneumaticCutawaySvg({
             {pick('Pilot / Fault', 'Pilot / Gangguan', 'パイロット / 異常')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-slate-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[var(--md-outline)]" />
             {pick('Exhaust (0 bar)', 'Buang (0 bar)', '排気 (0 bar)')}
           </span>
         </div>
@@ -479,7 +479,8 @@ export function PneumaticCutawaySvg({
             <path
               d="M 20 0 L 0 0 0 20"
               fill="none"
-              stroke={isDark ? '#1e293b' : '#e2e8f0'}
+              stroke="var(--md-outline-variant)"
+              strokeOpacity="0.35"
               strokeWidth="0.6"
             />
           </pattern>
@@ -669,7 +670,7 @@ export function PneumaticCutawaySvg({
 
           {/* Stroke & Spec Pill */}
           <rect x="246" y="132" width="280" height="18" rx="9" fill={cardBg} stroke={strokeMuted} strokeWidth="1" />
-          <text x="386" y="144" textAnchor="middle" fontSize="9.5" fontWeight="700" fill={textMuted}>
+          <text x="386" y="144" textAnchor="middle" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill={textMuted}>
             Ø{boreMm} / Ø{effRod} mm ISO 15552 • {strokeMm} / 200 mm ({Math.round(clampedStroke)}%)
           </text>
         </g>
@@ -1174,31 +1175,31 @@ export function PneumaticCutawaySvg({
             y="0"
             width="266"
             height="148"
-            rx="10"
-            fill={cardBg}
+            rx="12"
+            fill={panelBg}
             stroke={strokeMuted}
-            strokeWidth="1.5"
+            strokeWidth="1.2"
           />
-          <text x="14" y="22" fontSize="10" fontWeight="800" fill={textMain}>
+          <text x="14" y="22" fontSize="10" fontWeight="800" fontFamily="var(--font-sans)" fill={textMain}>
             {pick('LIVE PNEUMATIC CAD READOUT', 'DATA CAD PNEUMATIK', 'リアルタイム空圧CAD計測')}
           </text>
-          <line x1="14" y1="30" x2="252" y2="30" stroke={strokeMuted} strokeWidth="1" />
+          <line x1="14" y1="30" x2="252" y2="30" stroke={strokeMuted} strokeWidth="0.9" />
 
-          <text x="14" y="49" fontSize="9.5" fontWeight="600" fill={textMuted}>
+          <text x="14" y="49" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
             FRL Pressure (In → Out):
           </text>
-          <text x="252" y="49" textAnchor="end" fontSize="10" fontWeight="800" fill={cloggedFrl ? '#f59e0b' : frlColor}>
+          <text x="252" y="49" textAnchor="end" fontSize="10" fontWeight="800" fontFamily="var(--font-mono)" fill={cloggedFrl ? '#f59e0b' : frlColor}>
             {frlInBar.toFixed(1)} → {frlOutBar.toFixed(1)} bar
           </text>
 
-          <text x="14" y="69" fontSize="9.5" fontWeight="600" fill={textMuted}>
+          <text x="14" y="69" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
             Extend / Retract Force:
           </text>
-          <text x="252" y="69" textAnchor="end" fontSize="10" fontWeight="800" fill={textMain}>
+          <text x="252" y="69" textAnchor="end" fontSize="10" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             {Math.round(liveExtN)} / {Math.round(liveRetN)} N
           </text>
 
-          <text x="14" y="89" fontSize="9.5" fontWeight="600" fill={textMuted}>
+          <text x="14" y="89" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
             Total Air Consumption:
           </text>
           <text
@@ -1207,15 +1208,16 @@ export function PneumaticCutawaySvg({
             textAnchor="end"
             fontSize="10"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
             fill={activeFault === 'leaking_pilot' ? '#ef4444' : frlColor}
           >
             {totalNlMin.toFixed(1)} NL/min
           </text>
 
-          <text x="14" y="109" fontSize="9.5" fontWeight="600" fill={textMuted}>
+          <text x="14" y="109" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
             5/2 Spool State:
           </text>
-          <text x="252" y="109" textAnchor="end" fontSize="10" fontWeight="800" fill={textMain}>
+          <text x="252" y="109" textAnchor="end" fontSize="10" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             {spoolPos === 1 ? 'POS 1 (1→4A, 2B→3)' : 'POS 0 (1→2B, 4A→5)'}
           </text>
 

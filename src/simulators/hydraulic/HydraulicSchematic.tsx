@@ -395,14 +395,14 @@ export function HydraulicSchematic({
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  // Palette tuned via useTheme()
-  const bg = isDark ? '#09101d' : '#f8fafc';
-  const cardBg = isDark ? '#111827' : '#ffffff';
-  const panelBg = isDark ? '#0f172a' : '#f1f5f9';
+  // Palette harmonized with Material You variables via useTheme()
+  const bg = 'var(--md-surface-container-lowest)';
+  const cardBg = 'var(--md-surface-container-low)';
+  const panelBg = 'var(--md-surface-container)';
   const strokeMain = isDark ? '#94a3b8' : '#334155';
-  const strokeMuted = isDark ? '#334155' : '#cbd5e1';
-  const textMain = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const strokeMuted = 'var(--md-outline-variant)';
+  const textMain = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const fittingFill = isDark ? '#64748b' : '#94a3b8';
   const hatchLine = isDark ? '#475569' : '#94a3b8';
 
@@ -456,26 +456,26 @@ export function HydraulicSchematic({
   const viscosityCst = computeOilViscosityCst(oilTempC);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/80">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             ISO Hydraulic Circuit &amp; Cutaway HPU CAD
           </span>
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+          <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             Click 4/3 DCV to shift spool
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium">
-          <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+          <span className="flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
             <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
             High / Relief (≥130 bar)
           </span>
-          <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+          <span className="flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
             <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
             Working (25–129 bar)
           </span>
-          <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
+          <span className="flex items-center gap-1.5 text-[var(--md-on-surface-variant)]">
             <span className="h-2.5 w-2.5 rounded-full bg-sky-500" />
             Tank / Return
           </span>
@@ -549,7 +549,7 @@ export function HydraulicSchematic({
           </marker>
           {/* Subtle CAD blueprint dot grid */}
           <pattern id={`grid-${uid}`} width="24" height="24" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r="0.8" fill={isDark ? '#1e293b' : '#cbd5e1'} fillOpacity="0.6" />
+            <circle cx="1" cy="1" r="0.8" fill="var(--md-outline-variant)" fillOpacity="0.45" />
           </pattern>
         </defs>
 
@@ -799,6 +799,7 @@ export function HydraulicSchematic({
             textAnchor="middle"
             fontSize="9.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
             fill={textMuted}
           >
             Ø{CYLINDER_BORE_MM} / Ø{CYLINDER_ROD_MM} mm Tie-Rod Cylinder •{' '}
@@ -969,7 +970,7 @@ export function HydraulicSchematic({
           <text x="0" y="-2" textAnchor="middle" fontSize="9" fontWeight="800" fill={textMain}>
             P2
           </text>
-          <text x="0" y="9" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={p2Color}>
+          <text x="0" y="9" textAnchor="middle" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" fill={p2Color}>
             {Math.round(telemetry.p2CapBar)}b
           </text>
         </g>
@@ -981,7 +982,7 @@ export function HydraulicSchematic({
           <text x="0" y="-2" textAnchor="middle" fontSize="9" fontWeight="800" fill={textMain}>
             P3
           </text>
-          <text x="0" y="9" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={p3Color}>
+          <text x="0" y="9" textAnchor="middle" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" fill={p3Color}>
             {Math.round(telemetry.p3RodBar)}b
           </text>
         </g>
@@ -1239,7 +1240,7 @@ export function HydraulicSchematic({
           <text x="0" y="-39" textAnchor="middle" fontSize="9" fontWeight="800" fill={textMain}>
             P1
           </text>
-          <text x="0" y="-28" textAnchor="middle" fontSize="8.5" fontWeight="700" fill={p1Color}>
+          <text x="0" y="-28" textAnchor="middle" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" fill={p1Color}>
             {Math.round(telemetry.p1PumpBar)}b
           </text>
         </g>
@@ -1635,59 +1636,59 @@ export function HydraulicSchematic({
             y="0"
             width="392"
             height="114"
-            rx="8"
+            rx="12"
             fill={panelBg}
             stroke={strokeMuted}
-            strokeWidth="1.4"
+            strokeWidth="1.2"
           />
-          <line x1="0" y1="24" x2="392" y2="24" stroke={strokeMuted} strokeWidth="1" />
-          <text x="12" y="16" fontSize="9.5" fontWeight="800" fill={textMain}>
+          <line x1="0" y1="24" x2="392" y2="24" stroke={strokeMuted} strokeWidth="0.9" />
+          <text x="12" y="16" fontSize="9.5" fontWeight="800" fontFamily="var(--font-sans)" fill={textMain}>
             HYDRAULIC CIRCUIT TELEMETRY &amp; PASCAL BALANCE
           </text>
-          <text x="380" y="16" textAnchor="end" fontSize="8.5" fontWeight="700" fill={oilTempC > 65 ? '#ef4444' : '#f59e0b'}>
+          <text x="380" y="16" textAnchor="end" fontSize="8.5" fontWeight="700" fontFamily="var(--font-mono)" fill={oilTempC > 65 ? '#ef4444' : 'var(--md-primary)'}>
             ISO VG 46: {oilTempC.toFixed(1)} °C ({viscosityCst.toFixed(1)} cSt)
           </text>
 
           {/* Row 1: Geometry & Area Ratio */}
-          <text x="12" y="42" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="12" y="42" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Cylinder Areas
           </text>
-          <text x="12" y="55" fontSize="10" fontWeight="800" fill={textMain}>
+          <text x="12" y="55" fontSize="10" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             A_cap {AREA_CAP_CM2.toFixed(1)} cm² • A_rod {AREA_ANNULUS_CM2.toFixed(1)} cm²
           </text>
 
-          <text x="220" y="42" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="220" y="42" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Flow Continuity
           </text>
-          <text x="220" y="55" fontSize="10" fontWeight="800" fill={textMain}>
+          <text x="220" y="55" fontSize="10" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             Q_p {telemetry.qPumpLpm.toFixed(1)} = {telemetry.qActuatorLpm.toFixed(1)} + {telemetry.qReliefLpm.toFixed(1)} L/m
           </text>
 
           <line x1="12" y1="67" x2="380" y2="67" stroke={strokeMuted} strokeWidth="0.9" />
 
           {/* Row 2: Live Force, Velocity, Power, Efficiency */}
-          <text x="12" y="83" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="12" y="83" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Actuator Velocity
           </text>
-          <text x="12" y="99" fontSize="11" fontWeight="800" fill={textMain}>
+          <text x="12" y="99" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             {telemetry.velocityMmS.toFixed(1)} mm/s
           </text>
 
-          <text x="125" y="83" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="125" y="83" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Net Force
           </text>
-          <text x="125" y="99" fontSize="11" fontWeight="800" fill="#f59e0b">
+          <text x="125" y="99" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)" fill="var(--md-primary)">
             {telemetry.netForceKn.toFixed(1)} kN
           </text>
 
-          <text x="220" y="83" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="220" y="83" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Hyd. Power
           </text>
-          <text x="220" y="99" fontSize="11" fontWeight="800" fill={textMain}>
+          <text x="220" y="99" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)" fill={textMain}>
             {telemetry.hydraulicPowerKw.toFixed(2)} kW
           </text>
 
-          <text x="312" y="83" fontSize="8.5" fontWeight="700" fill={textMuted}>
+          <text x="312" y="83" fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)" fill={textMuted}>
             Efficiency
           </text>
           <text
@@ -1695,6 +1696,7 @@ export function HydraulicSchematic({
             y="99"
             fontSize="11"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
             fill={telemetry.systemEfficiencyPct >= 60 ? '#10b981' : '#f59e0b'}
           >
             {telemetry.systemEfficiencyPct.toFixed(0)}%

@@ -470,17 +470,17 @@ export function OilGreaseBasicsSvg({
     };
   }, []);
 
-  // Theme color palette
+  // Theme color palette — Material 3 Expressive surface & text harmonization
   const c = useMemo(
     () => ({
-      canvasBg: isDark ? '#090e1a' : '#f8fafc',
-      panelBg: isDark ? '#111827' : '#ffffff',
-      subCardBg: isDark ? '#0b1120' : '#f1f5f9',
-      border: isDark ? '#273549' : '#cbd5e1',
+      canvasBg: 'var(--md-surface-container-lowest)',
+      panelBg: 'var(--md-surface-container-low)',
+      subCardBg: 'var(--md-surface-container)',
+      border: 'var(--md-outline-variant)',
       gridMinor: isDark ? 'rgba(148,163,184,0.045)' : 'rgba(15,23,42,0.04)',
       gridMajor: isDark ? 'rgba(148,163,184,0.09)' : 'rgba(15,23,42,0.075)',
-      textMain: isDark ? '#f1f5f9' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#64748b',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
       oledBg: '#020617',
       oledBorder: isDark ? '#1e293b' : '#334155',
       glassStroke: isDark ? '#64748b' : '#94a3b8',
@@ -519,10 +519,10 @@ export function OilGreaseBasicsSvg({
   const compatRad = (compatAngleDeg * Math.PI) / 180;
 
   return (
-    <div className="w-full flex flex-col items-center justify-center p-1.5">
+    <div className="w-full flex flex-col items-center justify-center p-1">
       <svg
         viewBox="0 0 780 480"
-        className="w-full h-auto max-h-[480px] select-none rounded-xl border shadow-sm"
+        className="w-full h-auto max-h-[480px] select-none rounded-[22px] border shadow-sm"
         style={{
           backgroundColor: c.canvasBg,
           borderColor: c.border,
@@ -645,7 +645,7 @@ export function OilGreaseBasicsSvg({
               y="14"
               width="748"
               height="38"
-              rx="8"
+              rx="14"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -658,7 +658,7 @@ export function OilGreaseBasicsSvg({
               fontSize="12"
               fontWeight="700"
               fill={c.textMain}
-              fontFamily="system-ui, sans-serif"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 `ASTM D341 Viscometer  •  ${activeFamily.name}  •  VG ${isoVg} @ ${tempC} °C`,
@@ -673,9 +673,9 @@ export function OilGreaseBasicsSvg({
               y="20"
               width="188"
               height="26"
-              rx="6"
-              fill={isDark ? 'rgba(245,158,11,0.14)' : 'rgba(245,158,11,0.12)'}
-              stroke="#f59e0b"
+              rx="13"
+              fill="var(--md-primary-container)"
+              stroke="var(--md-primary)"
               strokeWidth="1"
             />
             <text
@@ -683,9 +683,9 @@ export function OilGreaseBasicsSvg({
               y="37"
               fontSize="10.5"
               fontWeight="800"
-              fill={isDark ? '#fbbf24' : '#b45309'}
+              fill="var(--md-on-primary-container)"
               textAnchor="middle"
-              fontFamily="ui-monospace, monospace"
+              fontFamily="var(--font-mono)"
             >
               {activeFamily.shortCode.toUpperCase()}
             </text>
@@ -696,7 +696,7 @@ export function OilGreaseBasicsSvg({
               y="62"
               width="408"
               height="402"
-              rx="10"
+              rx="16"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -708,6 +708,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="800"
               fill={c.textMuted}
               letterSpacing="0.06em"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 'FALLING-BALL VISCOMETER (STOKES LAMINAR FLOW)',
@@ -899,7 +900,7 @@ export function OilGreaseBasicsSvg({
                   fontSize="8.5"
                   fontWeight="800"
                   fill={c.textMuted}
-                  fontFamily="ui-monospace, monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {gate.label}
                 </text>
@@ -926,8 +927,8 @@ export function OilGreaseBasicsSvg({
               y="241"
               width="48"
               height="18"
-              rx="4"
-              fill={c.subCardBg}
+              rx="9"
+              fill="var(--md-surface-container-high)"
               stroke={c.border}
               strokeWidth="0.8"
             />
@@ -938,7 +939,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="700"
               fill={c.textMain}
               textAnchor="middle"
-              fontFamily="ui-monospace, monospace"
+              fontFamily="var(--font-mono)"
             >
               180 mm
             </text>
@@ -968,7 +969,7 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="170"
                 height="136"
-                rx="8"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
@@ -980,6 +981,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="800"
                 fill={c.textMuted}
                 letterSpacing="0.06em"
+                fontFamily="var(--font-sans)"
               >
                 {pick('STOKES GATE TIMER', 'TIMER GERBANG STOKES', 'ストークスゲート計測')}
               </text>
@@ -990,7 +992,7 @@ export function OilGreaseBasicsSvg({
                 y="26"
                 width="150"
                 height="40"
-                rx="6"
+                rx="8"
                 fill={c.oledBg}
                 stroke={c.oledBorder}
                 strokeWidth="1"
@@ -1003,13 +1005,13 @@ export function OilGreaseBasicsSvg({
                 fontWeight="900"
                 fill="#38bdf8"
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 0.00 s
               </text>
 
               {/* Telemetry Rows */}
-              <text x="12" y="83" fontSize="9.5" fontWeight="600" fill={c.textMuted}>
+              <text x="12" y="83" fontSize="9.5" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('Target Time:', 'Waktu Target:', '理論時間:')}
               </text>
               <text
@@ -1019,12 +1021,12 @@ export function OilGreaseBasicsSvg({
                 fontWeight="700"
                 fill={c.textMain}
                 textAnchor="end"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {physicsTimeSec.toFixed(2)} s
               </text>
 
-              <text x="12" y="101" fontSize="9.5" fontWeight="600" fill={c.textMuted}>
+              <text x="12" y="101" fontSize="9.5" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('Ball Speed:', 'Laju Bola:', '落下速度:')}
               </text>
               <text
@@ -1034,12 +1036,12 @@ export function OilGreaseBasicsSvg({
                 fontWeight="700"
                 fill={c.textMain}
                 textAnchor="end"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {speedMmSec.toFixed(1)} mm/s
               </text>
 
-              <text x="12" y="119" fontSize="9.5" fontWeight="600" fill={c.textMuted}>
+              <text x="12" y="119" fontSize="9.5" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('Viscosity:', 'Viskositas:', '動粘度:')}
               </text>
               <text
@@ -1047,9 +1049,9 @@ export function OilGreaseBasicsSvg({
                 y="119"
                 fontSize="10.5"
                 fontWeight="800"
-                fill="#f59e0b"
+                fill="var(--md-primary)"
                 textAnchor="end"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {kinematicViscosityCst.toFixed(1)} cSt
               </text>
@@ -1060,15 +1062,13 @@ export function OilGreaseBasicsSvg({
                 y="144"
                 width="170"
                 height="24"
-                rx="5"
+                rx="12"
                 fill={
                   ballPhase === 'dropping'
                     ? 'rgba(56,189,248,0.16)'
                     : ballPhase === 'done'
                       ? 'rgba(34,197,94,0.16)'
-                      : isDark
-                        ? 'rgba(148,163,184,0.12)'
-                        : 'rgba(100,116,139,0.1)'
+                      : 'var(--md-surface-container-high)'
                 }
                 stroke={
                   ballPhase === 'dropping'
@@ -1092,6 +1092,7 @@ export function OilGreaseBasicsSvg({
                       : c.textMuted
                 }
                 textAnchor="middle"
+                fontFamily="var(--font-sans)"
               >
                 {ballPhase === 'dropping'
                   ? pick('TIMING GATE A → B...', 'MENGUKUR A → B...', 'ゲートA→B計測中...')
@@ -1111,17 +1112,21 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="170"
                   height="34"
-                  rx="7"
-                  fill={ballPhase === 'dropping' ? '#ca8a04' : '#f59e0b'}
+                  rx="17"
+                  fill={ballPhase === 'dropping' ? 'var(--md-secondary-container)' : 'var(--md-primary)'}
                 />
-                <polygon points="22,11 32,17 22,23" fill="#0f172a" />
+                <polygon
+                  points="22,11 32,17 22,23"
+                  fill={ballPhase === 'dropping' ? 'var(--md-on-secondary-container)' : 'var(--md-on-primary)'}
+                />
                 <text
                   x="94"
                   y="21"
                   fontSize="11"
                   fontWeight="800"
-                  fill="#0f172a"
+                  fill={ballPhase === 'dropping' ? 'var(--md-on-secondary-container)' : 'var(--md-on-primary)'}
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {ballPhase === 'dropping'
                     ? pick('DROPPING...', 'MELUNCUR...', '落下中...')
@@ -1140,8 +1145,8 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="170"
                   height="28"
-                  rx="6"
-                  fill={c.subCardBg}
+                  rx="14"
+                  fill="var(--md-surface-container-high)"
                   stroke={c.border}
                   strokeWidth="1"
                 />
@@ -1150,8 +1155,9 @@ export function OilGreaseBasicsSvg({
                   y="18"
                   fontSize="10"
                   fontWeight="700"
-                  fill={c.textMuted}
+                  fill={c.textMain}
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {pick('RESET SPHERE TO TOP', 'RESET KE ATAS', '初期位置へ戻す')}
                 </text>
@@ -1164,7 +1170,7 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="170"
                   height="98"
-                  rx="8"
+                  rx="12"
                   fill={c.subCardBg}
                   stroke={c.border}
                   strokeWidth="1"
@@ -1176,7 +1182,7 @@ export function OilGreaseBasicsSvg({
                   fontWeight="700"
                   fill={c.textMain}
                   textAnchor="middle"
-                  fontFamily="ui-monospace, monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   v = 2r²(ρs − ρf)g / 9μ
                 </text>
@@ -1187,6 +1193,7 @@ export function OilGreaseBasicsSvg({
                   fontWeight="600"
                   fill={c.textMuted}
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {pick('Viscous Drag Resistance', 'Hambatan Geser Viskos', '粘性抵抗レベル')}
                 </text>
@@ -1198,7 +1205,7 @@ export function OilGreaseBasicsSvg({
                   width="142"
                   height="10"
                   rx="5"
-                  fill={isDark ? '#1e293b' : '#cbd5e1'}
+                  fill="var(--md-surface-container-highest)"
                 />
                 <rect
                   x="14"
@@ -1208,7 +1215,7 @@ export function OilGreaseBasicsSvg({
                   rx="5"
                   fill={oilColors.mid}
                 />
-                <text x="14" y="68" fontSize="8" fontWeight="600" fill={c.textMuted}>
+                <text x="14" y="68" fontSize="8" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                   {pick('Fast (Thin)', 'Cepat (Encer)', '低粘性・速')}
                 </text>
                 <text
@@ -1218,6 +1225,7 @@ export function OilGreaseBasicsSvg({
                   fontWeight="600"
                   fill={c.textMuted}
                   textAnchor="end"
+                  fontFamily="var(--font-sans)"
                 >
                   {pick('Slow (Thick)', 'Lambat (Kental)', '高粘性・遅')}
                 </text>
@@ -1226,8 +1234,9 @@ export function OilGreaseBasicsSvg({
                   y="86"
                   fontSize="8.5"
                   fontWeight="700"
-                  fill={isDark ? '#fbbf24' : '#b45309'}
+                  fill="var(--md-primary)"
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {pick(
                     'Higher cSt = Slower Descent',
@@ -1244,7 +1253,7 @@ export function OilGreaseBasicsSvg({
               y="62"
               width="330"
               height="402"
-              rx="10"
+              rx="16"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -1256,6 +1265,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="800"
               fill={c.textMuted}
               letterSpacing="0.06em"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 '208L INDUSTRIAL DRUM & THERMAL RESPONSE',
@@ -1354,7 +1364,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="900"
                 fill="#0f172a"
                 textAnchor="middle"
-                fontFamily="system-ui, sans-serif"
+                fontFamily="var(--font-sans)"
               >
                 ISO VG {isoVg}
               </text>
@@ -1365,7 +1375,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="700"
                 fill="#334155"
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 40°C: {isoVg} cSt (±10%)
               </text>
@@ -1376,6 +1386,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="600"
                 fill="#64748b"
                 textAnchor="middle"
+                fontFamily="var(--font-sans)"
               >
                 ISO 3448 CERTIFIED
               </text>
@@ -1393,7 +1404,7 @@ export function OilGreaseBasicsSvg({
                 fontSize="8.5"
                 fontWeight="700"
                 fill="#cbd5e1"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 208 L / 55 GAL
               </text>
@@ -1406,12 +1417,12 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="132"
                 height="56"
-                rx="7"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
               />
-              <text x="10" y="17" fontSize="8.5" fontWeight="700" fill={c.textMuted}>
+              <text x="10" y="17" fontSize="8.5" fontWeight="700" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('BASE OIL GRADE', 'BASIS OLI', '基油タイプ')}
               </text>
               <text
@@ -1420,12 +1431,13 @@ export function OilGreaseBasicsSvg({
                 fontSize="11"
                 fontWeight="800"
                 fill={c.textMain}
+                fontFamily="var(--font-sans)"
               >
                 {activeFamily.baseType === 'synthetic'
                   ? 'PAO Synthetic (H1)'
                   : 'Refined Mineral'}
               </text>
-              <text x="10" y="47" fontSize="8.5" fontWeight="600" fill="#f59e0b">
+              <text x="10" y="47" fontSize="8.5" fontWeight="700" fill="var(--md-primary)" fontFamily="var(--font-mono)">
                 VI ≈ {activeFamily.baseType === 'synthetic' ? '145' : '98'}
               </text>
             </g>
@@ -1437,7 +1449,7 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="156"
                 height="192"
-                rx="8"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
@@ -1484,7 +1496,7 @@ export function OilGreaseBasicsSvg({
                       y1={localTickY}
                       x2={isIsoRef ? '50' : '45'}
                       y2={localTickY}
-                      stroke={isIsoRef ? '#f59e0b' : c.textMuted}
+                      stroke={isIsoRef ? 'var(--md-primary)' : c.textMuted}
                       strokeWidth={isIsoRef ? '2' : '1'}
                     />
                     {isIsoRef ? (
@@ -1494,9 +1506,9 @@ export function OilGreaseBasicsSvg({
                           y={localTickY - 8}
                           width="88"
                           height="16"
-                          rx="3"
-                          fill="rgba(245,158,11,0.18)"
-                          stroke="#f59e0b"
+                          rx="8"
+                          fill="var(--md-primary-container)"
+                          stroke="var(--md-primary)"
                           strokeWidth="0.8"
                         />
                         <text
@@ -1504,9 +1516,9 @@ export function OilGreaseBasicsSvg({
                           y={localTickY + 3.5}
                           fontSize="9"
                           fontWeight="800"
-                          fill={isDark ? '#fbbf24' : '#b45309'}
+                          fill="var(--md-on-primary-container)"
                           textAnchor="middle"
-                          fontFamily="ui-monospace, monospace"
+                          fontFamily="var(--font-mono)"
                         >
                           40°C ISO REF
                         </text>
@@ -1518,7 +1530,7 @@ export function OilGreaseBasicsSvg({
                         fontSize="9.5"
                         fontWeight="600"
                         fill={c.textMuted}
-                        fontFamily="ui-monospace, monospace"
+                        fontFamily="var(--font-mono)"
                       >
                         {t} °C
                       </text>
@@ -1535,7 +1547,7 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="156"
                 height="152"
-                rx="8"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
@@ -1547,6 +1559,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="800"
                 fill={c.textMuted}
                 letterSpacing="0.04em"
+                fontFamily="var(--font-sans)"
               >
                 {pick('ACTUAL VISCOSITY', 'VISKOSITAS AKTUAL', '実運転動粘度')}
               </text>
@@ -1556,8 +1569,8 @@ export function OilGreaseBasicsSvg({
                 y="50"
                 fontSize="24"
                 fontWeight="900"
-                fill="#f59e0b"
-                fontFamily="ui-monospace, monospace"
+                fill="var(--md-primary)"
+                fontFamily="var(--font-mono)"
               >
                 {kinematicViscosityCst.toFixed(1)}
                 <tspan fontSize="11.5" fontWeight="700" dx="4">
@@ -1567,7 +1580,7 @@ export function OilGreaseBasicsSvg({
 
               <line x1="12" y1="62" x2="144" y2="62" stroke={c.border} strokeWidth="1" />
 
-              <text x="12" y="80" fontSize="9" fontWeight="600" fill={c.textMuted}>
+              <text x="12" y="80" fontSize="9" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('vs 40 °C:', 'vs 40 °C:', '40°C比:')}
               </text>
               <text
@@ -1577,7 +1590,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="800"
                 fill={pctDeltaVs40 <= 0 ? '#38bdf8' : '#f97316'}
                 textAnchor="end"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {pctDeltaVs40 > 0 ? `+${pctDeltaVs40.toFixed(0)}%` : `${pctDeltaVs40.toFixed(0)}%`}
               </text>
@@ -1588,7 +1601,7 @@ export function OilGreaseBasicsSvg({
                 y="92"
                 width="132"
                 height="24"
-                rx="5"
+                rx="12"
                 fill={
                   tempC < 25
                     ? 'rgba(56,189,248,0.16)'
@@ -1606,6 +1619,7 @@ export function OilGreaseBasicsSvg({
                   tempC < 25 ? '#38bdf8' : tempC > 70 ? '#ef4444' : '#22c55e'
                 }
                 textAnchor="middle"
+                fontFamily="var(--font-sans)"
               >
                 {tempC < 25
                   ? pick('Cold / High Drag', 'Dingin / Kental', '低温・高抵抗')
@@ -1621,7 +1635,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="600"
                 fill={c.textMuted}
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 Walther @ {tempC} °C
               </text>
@@ -1640,7 +1654,7 @@ export function OilGreaseBasicsSvg({
               y="14"
               width="748"
               height="38"
-              rx="8"
+              rx="14"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -1650,7 +1664,7 @@ export function OilGreaseBasicsSvg({
               y="24"
               width="18"
               height="18"
-              rx="4"
+              rx="6"
               fill={activeThickener1.colorHex}
               stroke={c.border}
               strokeWidth="1"
@@ -1661,7 +1675,7 @@ export function OilGreaseBasicsSvg({
               fontSize="13"
               fontWeight="700"
               fill={c.textMain}
-              fontFamily="system-ui, sans-serif"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 `ASTM D217 Penetrometer  •  NLGI Grade ${activeNlgi.grade} (${activeNlgi.workedPenetrationMid} mm/10)`,
@@ -1676,7 +1690,7 @@ export function OilGreaseBasicsSvg({
               y="20"
               width="208"
               height="26"
-              rx="6"
+              rx="13"
               fill={
                 compatResult.status === 'Compatible'
                   ? 'rgba(34,197,94,0.14)'
@@ -1694,7 +1708,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="800"
               fill={compatResult.colorHex}
               textAnchor="middle"
-              fontFamily="ui-monospace, monospace"
+              fontFamily="var(--font-mono)"
             >
               {compatResult.status.toUpperCase()}
             </text>
@@ -1705,7 +1719,7 @@ export function OilGreaseBasicsSvg({
               y="62"
               width="380"
               height="402"
-              rx="10"
+              rx="16"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -1717,6 +1731,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="800"
               fill={c.textMuted}
               letterSpacing="0.06em"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 'ASTM D217 CONE PENETROMETER (150g CONE, 25 °C)',
@@ -1915,7 +1930,7 @@ export function OilGreaseBasicsSvg({
               />
 
               {/* Cup Spec Plaque */}
-              <rect x="108" y="380" width="72" height="18" rx="3" fill="rgba(15,23,42,0.85)" />
+              <rect x="108" y="380" width="72" height="18" rx="4" fill="rgba(15,23,42,0.85)" />
               <text
                 x="144"
                 y="392"
@@ -1923,7 +1938,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="800"
                 fill="#f8fafc"
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 NLGI {activeNlgi.grade} CUP
               </text>
@@ -1987,7 +2002,7 @@ export function OilGreaseBasicsSvg({
                 fontSize="8.5"
                 fontWeight="800"
                 fill="#ef4444"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 {(activeNlgi.workedPenetrationMid / 10).toFixed(1)} mm
               </text>
@@ -2001,15 +2016,15 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="128"
                 height="72"
-                rx="8"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
               />
-              <text x="10" y="16" fontSize="8" fontWeight="800" fill={c.textMuted}>
+              <text x="10" y="16" fontSize="8" fontWeight="800" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('PENETRATION', 'PENETRASI', '針入度')}
               </text>
-              <rect x="8" y="22" width="112" height="30" rx="5" fill={c.oledBg} />
+              <rect x="8" y="22" width="112" height="30" rx="8" fill={c.oledBg} />
               <text
                 x="64"
                 y="43"
@@ -2017,7 +2032,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="900"
                 fill="#fbbf24"
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 <tspan ref={penValTextRef}>{activeNlgi.workedPenetrationMid}</tspan>
                 <tspan fontSize="9" fontWeight="600" dx="3" fill="#94a3b8">
@@ -2032,7 +2047,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="700"
                 fill={c.textMuted}
                 textAnchor="middle"
-                fontFamily="ui-monospace, monospace"
+                fontFamily="var(--font-mono)"
               >
                 = {(activeNlgi.workedPenetrationMid / 10).toFixed(1)} mm
               </text>
@@ -2043,14 +2058,15 @@ export function OilGreaseBasicsSvg({
                 onClick={handleReleaseCone}
                 transform="translate(0, 82)"
               >
-                <rect x="0" y="0" width="128" height="32" rx="6" fill="#f59e0b" />
+                <rect x="0" y="0" width="128" height="32" rx="16" fill="var(--md-primary)" />
                 <text
                   x="64"
                   y="20"
                   fontSize="10"
                   fontWeight="800"
-                  fill="#0f172a"
+                  fill="var(--md-on-primary)"
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {coneRetracted
                     ? pick('RELEASE CONE', 'LEPAS KERUCUT', '円錐を落下')
@@ -2069,8 +2085,8 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="128"
                   height="26"
-                  rx="6"
-                  fill={c.subCardBg}
+                  rx="13"
+                  fill="var(--md-surface-container-high)"
                   stroke={c.border}
                   strokeWidth="1"
                 />
@@ -2079,8 +2095,9 @@ export function OilGreaseBasicsSvg({
                   y="17"
                   fontSize="9"
                   fontWeight="700"
-                  fill={c.textMuted}
+                  fill={c.textMain}
                   textAnchor="middle"
+                  fontFamily="var(--font-sans)"
                 >
                   {pick('RETRACT CONE', 'TARIK KERUCUT', '円錐を引き上げ')}
                 </text>
@@ -2093,15 +2110,15 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="128"
                   height="94"
-                  rx="8"
+                  rx="12"
                   fill={c.subCardBg}
                   stroke={c.border}
                   strokeWidth="1"
                 />
-                <text x="10" y="16" fontSize="8" fontWeight="800" fill={c.textMuted}>
+                <text x="10" y="16" fontSize="8" fontWeight="800" fill={c.textMuted} fontFamily="var(--font-sans)">
                   {pick('CONSISTENCY', 'KONSISTENSI', '硬さ・食感例え')}
                 </text>
-                <text x="10" y="34" fontSize="11.5" fontWeight="900" fill="#f59e0b">
+                <text x="10" y="34" fontSize="11.5" fontWeight="900" fill="var(--md-primary)" fontFamily="var(--font-sans)">
                   NLGI Grade {activeNlgi.grade}
                 </text>
                 {wrapSvgLines(activeNlgi.textureDescription, 19, 2).map((ln, idx) => (
@@ -2112,14 +2129,15 @@ export function OilGreaseBasicsSvg({
                     fontSize="8.5"
                     fontWeight="600"
                     fill={c.textMain}
+                    fontFamily="var(--font-sans)"
                   >
                     {ln}
                   </text>
                 ))}
-                <text x="10" y="75" fontSize="7.5" fontWeight="700" fill={c.textMuted}>
+                <text x="10" y="75" fontSize="7.5" fontWeight="700" fill={c.textMuted} fontFamily="var(--font-sans)">
                   {pick('LIKE:', 'SEPERTI:', '例え:')}
                 </text>
-                <text x="10" y="86" fontSize="8.2" fontWeight="600" fill={c.textMuted}>
+                <text x="10" y="86" fontSize="8.2" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-sans)">
                   {wrapSvgLines(activeNlgi.foodAnalogy, 20, 1)[0]}
                 </text>
               </g>
@@ -2131,12 +2149,12 @@ export function OilGreaseBasicsSvg({
                   y="0"
                   width="128"
                   height="54"
-                  rx="8"
+                  rx="12"
                   fill={c.subCardBg}
                   stroke={c.border}
                   strokeWidth="1"
                 />
-                <text x="64" y="17" fontSize="8" fontWeight="800" fill={c.textMuted} textAnchor="middle">
+                <text x="64" y="17" fontSize="8" fontWeight="800" fill={c.textMuted} textAnchor="middle" fontFamily="var(--font-sans)">
                   ASTM D217 RANGE
                 </text>
                 <text
@@ -2146,11 +2164,11 @@ export function OilGreaseBasicsSvg({
                   fontWeight="800"
                   fill={c.textMain}
                   textAnchor="middle"
-                  fontFamily="ui-monospace, monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {activeNlgi.workedPenetrationRange[0]}–{activeNlgi.workedPenetrationRange[1]}
                 </text>
-                <text x="64" y="46" fontSize="8" fontWeight="600" fill={c.textMuted} textAnchor="middle">
+                <text x="64" y="46" fontSize="8" fontWeight="600" fill={c.textMuted} textAnchor="middle" fontFamily="var(--font-sans)">
                   mm/10 (60 strokes)
                 </text>
               </g>
@@ -2162,7 +2180,7 @@ export function OilGreaseBasicsSvg({
               y="62"
               width="356"
               height="402"
-              rx="10"
+              rx="16"
               fill={c.panelBg}
               stroke={c.border}
               strokeWidth="1"
@@ -2174,6 +2192,7 @@ export function OilGreaseBasicsSvg({
               fontWeight="800"
               fill={c.textMuted}
               letterSpacing="0.06em"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 '2-GREASE COMPATIBILITY GAUGE (ASTM D6185)',
@@ -2278,7 +2297,7 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="324"
                 height="32"
-                rx="6"
+                rx="16"
                 fill={
                   compatResult.status === 'Compatible'
                     ? 'rgba(34,197,94,0.16)'
@@ -2297,6 +2316,7 @@ export function OilGreaseBasicsSvg({
                 fill={compatResult.colorHex}
                 textAnchor="middle"
                 letterSpacing="0.04em"
+                fontFamily="var(--font-sans)"
               >
                 {compatResult.status.toUpperCase()}
               </text>
@@ -2310,24 +2330,24 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="146"
                 height="58"
-                rx="7"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
               />
               <circle cx="13" cy="15" r="5" fill={activeThickener1.colorHex} />
-              <text x="23" y="18" fontSize="8" fontWeight="700" fill={c.textMuted}>
+              <text x="23" y="18" fontSize="8" fontWeight="700" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('EXISTING GREASE', 'GEMUK LAMA', '既存グリース')}
               </text>
-              <text x="10" y="34" fontSize="10.5" fontWeight="800" fill={c.textMain}>
+              <text x="10" y="34" fontSize="10.5" fontWeight="800" fill={c.textMain} fontFamily="var(--font-sans)">
                 {shortThickenerLabel(thickener1Id)}
               </text>
-              <text x="10" y="48" fontSize="8" fontWeight="600" fill={c.textMuted}>
+              <text x="10" y="48" fontSize="8" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-mono)">
                 Drop: {activeThickener1.droppingPointC === 'Non-Melting' ? 'Non-Melting' : `${activeThickener1.droppingPointC} °C`}
               </text>
 
               {/* Plus Circle */}
-              <circle cx="162" cy="29" r="10" fill={c.subCardBg} stroke={c.border} strokeWidth="1" />
+              <circle cx="162" cy="29" r="10" fill="var(--md-surface-container-high)" stroke={c.border} strokeWidth="1" />
               <text
                 x="162"
                 y="33.5"
@@ -2335,6 +2355,7 @@ export function OilGreaseBasicsSvg({
                 fontWeight="900"
                 fill={c.textMuted}
                 textAnchor="middle"
+                fontFamily="var(--font-sans)"
               >
                 +
               </text>
@@ -2345,19 +2366,19 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="146"
                 height="58"
-                rx="7"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"
               />
               <circle cx="191" cy="15" r="5" fill={activeThickener2.colorHex} />
-              <text x="201" y="18" fontSize="8" fontWeight="700" fill={c.textMuted}>
+              <text x="201" y="18" fontSize="8" fontWeight="700" fill={c.textMuted} fontFamily="var(--font-sans)">
                 {pick('ADDED GREASE', 'GEMUK BARU', '追加グリース')}
               </text>
-              <text x="188" y="34" fontSize="10.5" fontWeight="800" fill={c.textMain}>
+              <text x="188" y="34" fontSize="10.5" fontWeight="800" fill={c.textMain} fontFamily="var(--font-sans)">
                 {shortThickenerLabel(thickener2Id)}
               </text>
-              <text x="188" y="48" fontSize="8" fontWeight="600" fill={c.textMuted}>
+              <text x="188" y="48" fontSize="8" fontWeight="600" fill={c.textMuted} fontFamily="var(--font-mono)">
                 Drop: {activeThickener2.droppingPointC === 'Non-Melting' ? 'Non-Melting' : `${activeThickener2.droppingPointC} °C`}
               </text>
             </g>
@@ -2369,7 +2390,7 @@ export function OilGreaseBasicsSvg({
                 y="0"
                 width="324"
                 height="130"
-                rx="8"
+                rx="12"
                 fill={c.subCardBg}
                 stroke={c.border}
                 strokeWidth="1"

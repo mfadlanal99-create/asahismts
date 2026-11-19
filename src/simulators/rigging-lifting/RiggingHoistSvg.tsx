@@ -30,22 +30,22 @@ export function RiggingHoistSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD engineering palette
+  // Theme-aware Material You CAD engineering palette
   const palette = {
-    bg: isDark ? '#0f172a' : '#f8fafc',
-    grid: isDark ? '#1e293b' : '#e2e8f0',
-    cardFill: isDark ? '#1e293b' : '#ffffff',
-    cardStroke: isDark ? '#334155' : '#cbd5e1',
-    textPrimary: isDark ? '#f1f5f9' : '#0f172a',
-    textSecondary: isDark ? '#cbd5e1' : '#334155',
-    textMuted: isDark ? '#94a3b8' : '#64748b',
+    bg: 'var(--md-surface-container-lowest)',
+    grid: 'var(--md-outline-variant)',
+    cardFill: 'var(--md-surface-container)',
+    cardStroke: 'var(--md-outline-variant)',
+    textPrimary: 'var(--md-on-surface)',
+    textSecondary: 'var(--md-on-surface-variant)',
+    textMuted: 'var(--md-on-surface-variant)',
     machineCasing: isDark ? '#334155' : '#cbd5e1',
     machineDark: isDark ? '#1e293b' : '#94a3b8',
     machineStroke: isDark ? '#94a3b8' : '#475569',
     skidBeamFill: isDark ? '#1e293b' : '#cbd5e1',
     skidBeamFlange: isDark ? '#475569' : '#64748b',
-    floorFill: isDark ? '#020617' : '#e2e8f0',
-    floorStroke: isDark ? '#334155' : '#94a3b8',
+    floorFill: 'var(--md-surface-container)',
+    floorStroke: 'var(--md-outline-variant)',
     forgedSteel: isDark ? '#94a3b8' : '#475569',
     forgedSteelDark: isDark ? '#475569' : '#334155',
   };
@@ -386,11 +386,11 @@ export function RiggingHoistSvg({
   const pinchArrowY = Math.min(padPin1.y, padPin2.y) - 32;
 
   return (
-    <div className="glass-panel overflow-hidden rounded-2xl shadow-xs">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
       {/* CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Overhead Bridge Crane, Sling Geometry & CoG Hoisting Rig',
               'Skema Rigging Overhead Crane, Sudut Sling & Titik Berat (CoG)',
@@ -404,9 +404,9 @@ export function RiggingHoistSvg({
             {statusBadge.label}
           </span>
         </div>
-        <div className="text-xs text-slate-500 dark:text-slate-400">
+        <div className="text-xs text-[var(--md-on-surface-variant)]">
           {pick('Multiplier:', 'Faktor Sudut:', '張力係数:')}{' '}
-          <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+          <span className="font-mono font-semibold text-[var(--md-on-surface)]">
             {useSpreaderBeam ? '1.000×' : `${calc.nominalLoadFactor.toFixed(3)}×`}
           </span>
           {' · '}
@@ -422,7 +422,7 @@ export function RiggingHoistSvg({
           </span>
           {' · '}
           {pick('Shackle:', 'Shackle:', 'シャックル:')}{' '}
-          <span className="font-mono font-semibold text-sky-600 dark:text-sky-400">
+          <span className="font-mono font-semibold text-[var(--md-primary)]">
             {calc.recommendedShackle.modelCode}
           </span>
         </div>
@@ -523,7 +523,7 @@ export function RiggingHoistSvg({
 
         {/* CAD Blueprint Background */}
         <rect x="0" y="0" width="880" height="515" fill={palette.bg} />
-        <rect x="0" y="0" width="880" height="515" fill="url(#riggingCadGrid)" opacity="0.7" />
+        <rect x="0" y="0" width="880" height="515" fill="url(#riggingCadGrid)" opacity="0.35" />
 
         {/* === OVERHEAD BRIDGE CRANE GIRDER BEAM (y = 8..40) === */}
         <g transform="translate(20, 8)">
@@ -539,6 +539,7 @@ export function RiggingHoistSvg({
             fontSize="10.5"
             fontWeight="800"
             fill="#0f172a"
+            fontFamily="var(--font-mono)"
             className="font-mono tracking-wider"
           >
             {pick(
@@ -740,6 +741,7 @@ export function RiggingHoistSvg({
                     fontSize="9.5"
                     fontWeight="800"
                     fill="#0f172a"
+                    fontFamily="var(--font-mono)"
                     className="font-mono"
                   >
                     {pick(
@@ -836,7 +838,7 @@ export function RiggingHoistSvg({
               <rect
                 width="64"
                 height="20"
-                rx="5"
+                rx="10"
                 fill={palette.cardFill}
                 stroke={angleBadgeColor}
                 strokeWidth="1.5"
@@ -848,6 +850,7 @@ export function RiggingHoistSvg({
                 fontSize="10.5"
                 fontWeight="800"
                 fill={palette.textPrimary}
+                fontFamily="var(--font-mono)"
                 className="font-mono"
               >
                 θ₁={calc.theta1Deg.toFixed(0)}°
@@ -867,7 +870,7 @@ export function RiggingHoistSvg({
               <rect
                 width="64"
                 height="20"
-                rx="5"
+                rx="10"
                 fill={palette.cardFill}
                 stroke={angleBadgeColor}
                 strokeWidth="1.5"
@@ -879,6 +882,7 @@ export function RiggingHoistSvg({
                 fontSize="10.5"
                 fontWeight="800"
                 fill={palette.textPrimary}
+                fontFamily="var(--font-mono)"
                 className="font-mono"
               >
                 θ₂={calc.theta2Deg.toFixed(0)}°
@@ -910,7 +914,7 @@ export function RiggingHoistSvg({
                   <rect
                     width="104"
                     height="19"
-                    rx="5"
+                    rx="9.5"
                     fill={palette.cardFill}
                     stroke="#f59e0b"
                     strokeWidth="1.3"
@@ -922,6 +926,7 @@ export function RiggingHoistSvg({
                     fontSize="9.5"
                     fontWeight="800"
                     fill="#d97706"
+                    fontFamily="var(--font-mono)"
                     className="font-mono"
                   >
                     F_h = {calc.horizPinchTonnes.toFixed(2)} t
@@ -1189,7 +1194,7 @@ export function RiggingHoistSvg({
               y="-30"
               width="88"
               height="16"
-              rx="4"
+              rx="8"
               fill="#ec4899"
             />
             <text
@@ -1199,6 +1204,7 @@ export function RiggingHoistSvg({
               fontSize="9.5"
               fontWeight="800"
               fill="#ffffff"
+              fontFamily="var(--font-mono)"
               className="font-mono"
             >
               CoG {calc.massTonnes.toFixed(1)} t
@@ -1219,7 +1225,7 @@ export function RiggingHoistSvg({
                 y="-9"
                 width="78"
                 height="18"
-                rx="4"
+                rx="9"
                 fill={palette.cardFill}
                 stroke="#0ea5e9"
                 strokeWidth="1.2"
@@ -1231,6 +1237,7 @@ export function RiggingHoistSvg({
                 fontSize="9.5"
                 fontWeight="800"
                 fill={isDark ? '#38bdf8' : '#0284c7'}
+                fontFamily="var(--font-mono)"
                 className="font-mono"
               >
                 d₁={calc.d1M.toFixed(2)}m
@@ -1243,7 +1250,7 @@ export function RiggingHoistSvg({
                 y="-9"
                 width="78"
                 height="18"
-                rx="4"
+                rx="9"
                 fill={palette.cardFill}
                 stroke="#a855f7"
                 strokeWidth="1.2"
@@ -1255,6 +1262,7 @@ export function RiggingHoistSvg({
                 fontSize="9.5"
                 fontWeight="800"
                 fill={isDark ? '#c084fc' : '#7e22ce'}
+                fontFamily="var(--font-mono)"
                 className="font-mono"
               >
                 d₂={calc.d2M.toFixed(2)}m
@@ -1273,7 +1281,7 @@ export function RiggingHoistSvg({
           <rect
             width="206"
             height="92"
-            rx="10"
+            rx="14"
             fill={palette.cardFill}
             stroke={leg1Color}
             strokeWidth="2"
@@ -1284,6 +1292,7 @@ export function RiggingHoistSvg({
             fontSize="10"
             fontWeight="800"
             fill={palette.textMuted}
+            fontFamily="var(--font-mono)"
             className="font-mono uppercase"
           >
             {pick('LEG 1 (LEFT) TENSION T₁', 'TEGANGAN KAKI 1 (KIRI) T₁', '左スリング脚1 張力 T₁')}
@@ -1294,6 +1303,7 @@ export function RiggingHoistSvg({
             fontSize="17"
             fontWeight="800"
             fill={palette.textPrimary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {calc.t1Tonnes.toFixed(2)} t{' '}
@@ -1307,6 +1317,7 @@ export function RiggingHoistSvg({
             fontSize="10"
             fontWeight="600"
             fill={palette.textSecondary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {pick('Vert Share', 'Beban Vert', '垂直分担')} V₁={calc.v1Tonnes.toFixed(2)}t · L₁=
@@ -1318,7 +1329,7 @@ export function RiggingHoistSvg({
             width="140"
             height="10"
             rx="5"
-            fill={isDark ? '#0f172a' : '#e2e8f0'}
+            fill="var(--md-surface-container-highest)"
           />
           <rect
             x="12"
@@ -1334,6 +1345,7 @@ export function RiggingHoistSvg({
             fontSize="10.5"
             fontWeight="800"
             fill={palette.textPrimary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {calc.util1Pct.toFixed(0)}%
@@ -1345,7 +1357,7 @@ export function RiggingHoistSvg({
           <rect
             width="206"
             height="28"
-            rx="8"
+            rx="14"
             fill={palette.cardFill}
             stroke={angleBadgeColor}
             strokeWidth="1.6"
@@ -1357,6 +1369,7 @@ export function RiggingHoistSvg({
             fontSize="10.5"
             fontWeight="800"
             fill={palette.textPrimary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             1/sin({useSpreaderBeam ? '90' : calc.nominalAngleDeg}°) ={' '}
@@ -1369,7 +1382,7 @@ export function RiggingHoistSvg({
           <rect
             width="206"
             height="92"
-            rx="10"
+            rx="14"
             fill={palette.cardFill}
             stroke={leg2Color}
             strokeWidth="2"
@@ -1380,6 +1393,7 @@ export function RiggingHoistSvg({
             fontSize="10"
             fontWeight="800"
             fill={palette.textMuted}
+            fontFamily="var(--font-mono)"
             className="font-mono uppercase"
           >
             {pick('LEG 2 (RIGHT) TENSION T₂', 'TEGANGAN KAKI 2 (KANAN) T₂', '右スリング脚2 張力 T₂')}
@@ -1390,6 +1404,7 @@ export function RiggingHoistSvg({
             fontSize="17"
             fontWeight="800"
             fill={palette.textPrimary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {calc.t2Tonnes.toFixed(2)} t{' '}
@@ -1403,6 +1418,7 @@ export function RiggingHoistSvg({
             fontSize="10"
             fontWeight="600"
             fill={palette.textSecondary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {pick('Vert Share', 'Beban Vert', '垂直分担')} V₂={calc.v2Tonnes.toFixed(2)}t · L₂=
@@ -1414,7 +1430,7 @@ export function RiggingHoistSvg({
             width="140"
             height="10"
             rx="5"
-            fill={isDark ? '#0f172a' : '#e2e8f0'}
+            fill="var(--md-surface-container-highest)"
           />
           <rect
             x="12"
@@ -1430,6 +1446,7 @@ export function RiggingHoistSvg({
             fontSize="10.5"
             fontWeight="800"
             fill={palette.textPrimary}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {calc.util2Pct.toFixed(0)}%
@@ -1441,7 +1458,7 @@ export function RiggingHoistSvg({
           <rect
             width="206"
             height="28"
-            rx="8"
+            rx="14"
             fill={palette.cardFill}
             stroke={calc.isTiltWarning ? '#f59e0b' : '#10b981'}
             strokeWidth="1.6"
@@ -1453,6 +1470,7 @@ export function RiggingHoistSvg({
             fontSize="10"
             fontWeight="800"
             fill={calc.isTiltWarning ? '#d97706' : '#059669'}
+            fontFamily="var(--font-mono)"
             className="font-mono"
           >
             {Math.abs(calc.hookMisalignmentM) < 0.02
@@ -1467,12 +1485,12 @@ export function RiggingHoistSvg({
 
         {/* === SHOP FLOOR DATUM BAR (y = 480..506, 3 non-overlapping columns) === */}
         <g transform="translate(20, 480)">
-          <rect width="840" height="26" rx="5" fill={palette.floorFill} stroke={palette.floorStroke} strokeWidth="1.2" />
+          <rect width="840" height="26" rx="10" fill={palette.floorFill} stroke={palette.floorStroke} strokeWidth="1.2" />
           <line x1="0" y1="0" x2="840" y2="0" stroke="#10b981" strokeWidth="1.5" strokeDasharray="8 5" opacity="0.6" />
-          <text x="14" y="17" fontSize="10" fontWeight="700" fill={palette.textSecondary} className="font-mono">
+          <text x="14" y="17" fontSize="10" fontWeight="700" fill={palette.textSecondary} fontFamily="var(--font-mono)" className="font-mono">
             {pick('EL. +0.000 m (SHOP FLOOR)', 'EL. +0.000 m (LANTAI)', '基準床面 EL. +0.000 m')}
           </text>
-          <text x="420" y="17" textAnchor="middle" fontSize="10" fontWeight="700" fill={palette.textSecondary} className="font-mono">
+          <text x="420" y="17" textAnchor="middle" fontSize="10" fontWeight="700" fill={palette.textSecondary} fontFamily="var(--font-mono)" className="font-mono">
             {pick('Tilt:', 'Miring:', '傾き角:')}{' '}
             <tspan fill={calc.isTiltWarning ? '#f59e0b' : '#10b981'}>
               {calc.loadTiltDeg >= 0 ? `+${calc.loadTiltDeg.toFixed(1)}°` : `${calc.loadTiltDeg.toFixed(1)}°`}{' '}
@@ -1481,9 +1499,9 @@ export function RiggingHoistSvg({
                 : pick('OFF-PLUMB!', 'MIRING!', '傾斜注意！')})
             </tspan>
           </text>
-          <text x="826" y="17" textAnchor="end" fontSize="10" fontWeight="700" fill={palette.textSecondary} className="font-mono">
+          <text x="826" y="17" textAnchor="end" fontSize="10" fontWeight="700" fill={palette.textSecondary} fontFamily="var(--font-mono)" className="font-mono">
             {pick('Shackle:', 'Shackle:', 'シャックル:')}{' '}
-            <tspan fill="#0ea5e9">
+            <tspan fill="var(--md-primary)">
               {calc.recommendedShackle.modelCode} (WLL {calc.recommendedShackle.wllTonnes} t)
             </tspan>
           </text>

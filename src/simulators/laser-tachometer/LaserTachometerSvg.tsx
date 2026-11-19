@@ -105,12 +105,13 @@ export function LaserTachometerSvg({
 
   const c = useMemo(
     () => ({
-      bg: isDark ? '#07101e' : '#f1f5f9',
-      panel: isDark ? '#0f172a' : '#ffffff',
-      panelSub: isDark ? '#1e293b' : '#e2e8f0',
-      border: isDark ? '#334155' : '#cbd5e1',
-      textMain: isDark ? '#f8fafc' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#475569',
+      bg: 'var(--md-surface-container-low)',
+      panel: 'var(--md-surface-container)',
+      panelSub: 'var(--md-surface-container-high)',
+      border: 'var(--md-outline-variant)',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
+      primary: 'var(--md-primary)',
       steelDark: isDark ? '#1e293b' : '#475569',
       steelMid: isDark ? '#334155' : '#64748b',
       steelLight: isDark ? '#64748b' : '#94a3b8',
@@ -122,6 +123,9 @@ export function LaserTachometerSvg({
       red: '#ef4444',
       amber: '#f59e0b',
       emerald: '#10b981',
+      badgeRed: isDark ? '#f87171' : '#dc2626',
+      badgeAmber: isDark ? '#fbbf24' : '#d97706',
+      badgeEmerald: isDark ? '#34d399' : '#059669',
       tape: '#f8fafc',
       tapeGlow: '#38bdf8',
     }),
@@ -356,45 +360,45 @@ export function LaserTachometerSvg({
       if (!isOnTarget) {
         return {
           text: pick('SIGNAL LOST · AIM AT TAPE', 'SINYAL HILANG · ARAHKAN KE PITA', '信号喪失 · テープに照準'),
-          color: c.red,
+          color: c.badgeRed,
         };
       }
       return {
         text: pick('LASER LOCKED · 1 PULSE/REV', 'LASER TERKUNCI · 1 PULSA/PUT', 'レーザーロック · 1パルス/回転'),
-        color: c.emerald,
+        color: c.badgeEmerald,
       };
     }
     if (!isOnTarget) {
       return {
         text: pick('OFF-TARGET · AIM STROBE AT ROTOR', 'MELENCENG · ARAHKAN STROBO', '照準外 · ロータに照射'),
-        color: c.amber,
+        color: c.badgeAmber,
       };
     }
     switch (strobe.syncStatus) {
       case 'true-freeze':
         return {
           text: pick('1:1 TRUE FREEZE-FRAME', 'BEKU SEJATI 1:1', '1:1 完全静止 (同期)'),
-          color: c.emerald,
+          color: c.badgeEmerald,
         };
       case 'harmonic-multiple':
         return {
           text: `${strobe.harmonicOrder}× ${pick('HARMONIC DOUBLE-IMAGE', 'HARMONIK GANDA', '高調波マルチ像')}`,
-          color: c.amber,
+          color: c.badgeAmber,
         };
       case 'sub-harmonic':
         return {
           text: `1/${strobe.subHarmonicDivisor}× ${pick('SUB-HARMONIC TRAP', 'JEBAKAN SUB-HARMONIK', '分数調波トラップ')}`,
-          color: c.red,
+          color: c.badgeRed,
         };
       case 'drift-forward':
         return {
           text: pick('ALIAS DRIFT: FORWARD (+)', 'GESER ALIAS: MAJU (+)', 'エイリアスドリフト: 正転 (+)'),
-          color: c.cyan,
+          color: c.primary,
         };
       case 'drift-backward':
         return {
           text: pick('ALIAS DRIFT: BACKWARD (−)', 'GESER ALIAS: MUNDUR (−)', 'エイリアスドリフト: 逆転 (−)'),
-          color: c.cyan,
+          color: c.primary,
         };
       default:
         return {
@@ -453,7 +457,7 @@ export function LaserTachometerSvg({
   );
 
   return (
-    <div className="glass-panel rounded-2xl p-3 sm:p-4 shadow-xs">
+    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 880 460"
@@ -495,14 +499,14 @@ export function LaserTachometerSvg({
           y={0}
           width={880}
           height={460}
-          rx={16}
+          rx={18}
           fill={c.bg}
           stroke={c.border}
           strokeWidth={1}
         />
 
         {/* Subtle CAD Grid */}
-        <g stroke={c.border} strokeOpacity={0.22} strokeWidth={0.75}>
+        <g stroke={c.border} strokeOpacity={0.28} strokeWidth={0.75}>
           {[80, 160, 240, 320, 400].map((y) => (
             <line key={`hy-${y}`} x1={16} y1={y} x2={864} y2={y} />
           ))}
@@ -517,7 +521,7 @@ export function LaserTachometerSvg({
           y={18}
           width={840}
           height={36}
-          rx={8}
+          rx={12}
           fill={c.panel}
           stroke={c.border}
         />
@@ -528,6 +532,7 @@ export function LaserTachometerSvg({
           fontSize={12.5}
           fontWeight={700}
           letterSpacing="0.04em"
+          fontFamily="var(--font-sans)"
         >
           {pick(
             'SIDE ELEVATION: VFD MOTOR – COUPLING – FAN',
@@ -540,7 +545,7 @@ export function LaserTachometerSvg({
           y={24}
           width={328}
           height={24}
-          rx={6}
+          rx={12}
           fill={c.panelSub}
         />
         <circle cx={536} cy={36} r={5} fill={syncBadge.color} />
@@ -550,7 +555,7 @@ export function LaserTachometerSvg({
           fill={syncBadge.color}
           fontSize={11}
           fontWeight={700}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {syncBadge.text}
         </text>
@@ -653,7 +658,7 @@ export function LaserTachometerSvg({
           fill="#93c5fd"
           fontSize={10}
           fontWeight={700}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {drive.poles}P · {drive.vfdFreqHz}Hz
         </text>
@@ -676,7 +681,7 @@ export function LaserTachometerSvg({
           fill="#e2e8f0"
           fontSize={10}
           fontWeight={700}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           Ns: {drive.syncRpm.toFixed(0)} RPM
         </text>
@@ -687,7 +692,7 @@ export function LaserTachometerSvg({
           fill="#38bdf8"
           fontSize={10}
           fontWeight={700}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           Slip: {drive.slipPct.toFixed(2)}%
         </text>
@@ -744,6 +749,7 @@ export function LaserTachometerSvg({
           fill={c.textMuted}
           fontSize={9.5}
           fontWeight={600}
+          fontFamily="var(--font-sans)"
         >
           {pick('REFLECTIVE TAPE', 'PITA REFLEKTIF', '反射テープ')}
         </text>
@@ -783,6 +789,7 @@ export function LaserTachometerSvg({
           fill={c.textMuted}
           fontSize={10}
           fontWeight={700}
+          fontFamily="var(--font-sans)"
           transform="rotate(-90 404 218)"
         >
           {pick('FAN HOUSING', 'RUMAH KIPAS', 'ファンケーシング')}
@@ -794,7 +801,7 @@ export function LaserTachometerSvg({
           y={72}
           width={364}
           height={292}
-          rx={12}
+          rx={16}
           fill={c.panel}
           stroke={c.border}
         />
@@ -805,6 +812,7 @@ export function LaserTachometerSvg({
           fontSize={11.5}
           fontWeight={700}
           letterSpacing="0.03em"
+          fontFamily="var(--font-sans)"
         >
           {mode === 'stroboscope'
             ? pick(
@@ -822,10 +830,10 @@ export function LaserTachometerSvg({
           x={840}
           y={94}
           textAnchor="end"
-          fill={c.cyan}
+          fill={c.primary}
           fontSize={11}
           fontWeight={700}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {mode === 'stroboscope'
             ? `${strobe.strobeFpm.toFixed(0)} FPM`
@@ -871,7 +879,7 @@ export function LaserTachometerSvg({
           textAnchor="middle"
           fill={c.textMuted}
           fontSize={10.5}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {mode === 'stroboscope'
             ? `${pick('Ratio', 'Rasio', '比率')}: ${strobe.ratio.toFixed(2)}× | ${pick('Images', 'Bayangan', '像数')}: ${strobe.apparentImages}`
@@ -898,22 +906,23 @@ export function LaserTachometerSvg({
                 tabIndex={0}
               >
                 <rect
-                  x={386}
-                  y={316}
-                  width={92}
-                  height={24}
-                  rx={6}
-                  fill="#001f6b"
-                  stroke="#38bdf8"
+                  x={382}
+                  y={315}
+                  width={96}
+                  height={26}
+                  rx={13}
+                  fill="var(--md-primary)"
+                  stroke="var(--md-primary-container)"
                   strokeWidth={1}
                 />
                 <text
-                  x={432}
+                  x={430}
                   y={332}
                   textAnchor="middle"
-                  fill="#f8fafc"
+                  fill="var(--md-on-primary)"
                   fontSize={10}
                   fontWeight={700}
+                  fontFamily="var(--font-sans)"
                 >
                   {pick('Snap to Tape', 'Bidik Pita', 'テープに照準')}
                 </text>
@@ -987,8 +996,8 @@ export function LaserTachometerSvg({
             y={0}
             width={158}
             height={106}
-            rx={12}
-            fill="#001f6b"
+            rx={14}
+            fill="#1e293b"
             stroke={isDragging ? '#67e8f9' : isOnTarget ? '#38bdf8' : '#ef4444'}
             strokeWidth={isDragging ? 2 : 1.5}
           />
@@ -1051,7 +1060,7 @@ export function LaserTachometerSvg({
             fill="#38bdf8"
             fontSize={9.5}
             fontWeight={700}
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {mode === 'laser' ? 'OPTICAL TACH' : 'XENON STROBE'}
           </text>
@@ -1063,7 +1072,7 @@ export function LaserTachometerSvg({
             fill={isOnTarget ? '#f8fafc' : '#fca5a5'}
             fontSize={19}
             fontWeight={800}
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {mode === 'laser'
               ? isOnTarget && laserActive
@@ -1078,7 +1087,7 @@ export function LaserTachometerSvg({
             y={86}
             fill="#93c5fd"
             fontSize={9.5}
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {mode === 'laser' ? 'PULSES:' : 'DRIFT:'}
           </text>
@@ -1090,7 +1099,7 @@ export function LaserTachometerSvg({
             fill="#e2e8f0"
             fontSize={10.5}
             fontWeight={700}
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
           >
             {mode === 'laser'
               ? '00000'
@@ -1104,7 +1113,7 @@ export function LaserTachometerSvg({
           y={376}
           width={364}
           height={66}
-          rx={10}
+          rx={14}
           fill={c.panel}
           stroke={c.border}
         />
@@ -1114,6 +1123,7 @@ export function LaserTachometerSvg({
           fill={c.textMain}
           fontSize={11}
           fontWeight={700}
+          fontFamily="var(--font-sans)"
         >
           {mode === 'laser'
             ? pick(
@@ -1132,7 +1142,7 @@ export function LaserTachometerSvg({
           y={420}
           fill={c.textMuted}
           fontSize={10.5}
-          fontFamily="monospace"
+          fontFamily="var(--font-mono)"
         >
           {`f = ${drive.vfdFreqHz} Hz | ${drive.poles}P | Ns = ${drive.syncRpm.toFixed(0)} | Nr = ${drive.rotorRpm.toFixed(1)} RPM`}
         </text>

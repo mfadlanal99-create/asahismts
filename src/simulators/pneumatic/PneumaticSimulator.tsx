@@ -531,7 +531,7 @@ export function PneumaticSimulator() {
   const energyCostPerHr = totalNlMin * 60 * 0.000025;
   const energyCostPerYr = energyCostPerHr * 6000;
 
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
+  const gridStroke = 'var(--md-outline-variant)';
   const lineIdle = isDark ? '#475569' : '#94a3b8';
   const linePressurized = isDark ? '#22d3ee' : '#0891b2';
   const linePilot = isDark ? '#fbbf24' : '#d97706';
@@ -598,38 +598,40 @@ export function PneumaticSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setWorkspaceMode('presets')}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-              workspaceMode === 'presets'
-                ? 'bg-cyan-50 text-cyan-700 ring-1 ring-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-300 dark:ring-cyan-500/50'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-            }`}
-          >
-            <Layers className="h-3.5 w-3.5" />
-            {pick('Pre-built Circuits', 'Sirkuit Prasetel', 'プリセット回路')}
-          </button>
-          <button
-            type="button"
-            onClick={() => setWorkspaceMode('builder')}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-              workspaceMode === 'builder'
-                ? 'bg-cyan-50 text-cyan-700 ring-1 ring-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-300 dark:ring-cyan-500/50'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
-            }`}
-          >
-            <Wrench className="h-3.5 w-3.5" />
-            {pick('Interactive Builder', 'Perakit Interaktif', '回路ビルダー')}
-          </button>
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5 sm:px-5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+            <button
+              type="button"
+              onClick={() => setWorkspaceMode('presets')}
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
+                workspaceMode === 'presets'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+              }`}
+            >
+              <Layers className="h-3.5 w-3.5" />
+              {pick('Pre-built Circuits', 'Sirkuit Prasetel', 'プリセット回路')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setWorkspaceMode('builder')}
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
+                workspaceMode === 'builder'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+              }`}
+            >
+              <Wrench className="h-3.5 w-3.5" />
+              {pick('Interactive Builder', 'Perakit Interaktif', '回路ビルダー')}
+            </button>
+          </div>
 
           {workspaceMode === 'presets' && (
             <select
               value={activePresetId}
               onChange={(e) => loadPreset(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-900 focus:border-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+              className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
             >
               {PNEUMATIC_PRESETS.map((p) => {
                 const localizedName =
@@ -657,10 +659,10 @@ export function PneumaticSimulator() {
           <button
             type="button"
             onClick={() => setCompressorOn((v) => !v)}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
               compressorOn
-                ? 'bg-cyan-600 text-white shadow-xs hover:bg-cyan-500 dark:bg-cyan-500 dark:text-slate-950'
-                : 'bg-slate-100 text-slate-500 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700'
+                ? 'm3-btn-filled font-bold'
+                : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
             }`}
           >
             <Power className="h-3.5 w-3.5" />
@@ -668,8 +670,8 @@ export function PneumaticSimulator() {
             {compressorOn ? 'ON' : 'OFF'}
           </button>
 
-          <label className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
-            <span className="text-slate-500 dark:text-slate-400">
+          <label className="flex items-center gap-2 text-xs text-[var(--md-on-surface)]">
+            <span className="text-[var(--md-on-surface-variant)]">
               {pick('Supply:', 'Suplai:', '供給圧:')}
             </span>
             <input
@@ -679,15 +681,15 @@ export function PneumaticSimulator() {
               step={0.5}
               value={supplyBar}
               onChange={(e) => setSupplyBar(Number(e.target.value))}
-              className="w-24 accent-cyan-600 dark:accent-cyan-400"
+              className="w-24"
             />
-            <span className="w-14 font-mono font-semibold text-cyan-700 dark:text-cyan-300">
+            <span className="w-14 font-mono font-bold text-[var(--md-primary)]">
               {supplyBar.toFixed(1)} bar
             </span>
           </label>
 
-          <label className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300">
-            <span className="text-slate-500 dark:text-slate-400">
+          <label className="flex items-center gap-1.5 text-xs text-[var(--md-on-surface)]">
+            <span className="text-[var(--md-on-surface-variant)]">
               {pick('Bore:', 'Bore:', '内径:')}
             </span>
             <input
@@ -697,9 +699,9 @@ export function PneumaticSimulator() {
               step={5}
               value={boreMm}
               onChange={(e) => setBoreMm(Number(e.target.value))}
-              className="w-20 accent-cyan-600 dark:accent-cyan-400"
+              className="w-20"
             />
-            <span className="w-12 font-mono text-slate-900 dark:text-slate-200">
+            <span className="w-12 font-mono font-semibold text-[var(--md-on-surface)]">
               {boreMm} mm
             </span>
           </label>
@@ -707,7 +709,7 @@ export function PneumaticSimulator() {
           <button
             type="button"
             onClick={handleReset}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -717,8 +719,8 @@ export function PneumaticSimulator() {
 
       {/* Preset Description Banner */}
       {workspaceMode === 'presets' && activePreset && (
-        <div className="rounded-xl border border-cyan-200 bg-cyan-50/70 px-4 py-2.5 text-xs text-slate-700 dark:border-cyan-500/20 dark:bg-cyan-950/20 dark:text-slate-300">
-          <span className="font-semibold text-cyan-800 dark:text-cyan-300">
+        <div className="rounded-[22px] border border-[var(--md-primary)]/25 bg-[var(--md-primary-container)] px-4 py-2.5 text-xs text-[var(--md-on-primary-container)]">
+          <span className="font-bold">
             {activePreset.name}:{' '}
           </span>
           {activePreset.description}
@@ -726,11 +728,11 @@ export function PneumaticSimulator() {
       )}
 
       {/* Plant Fault Troubleshooting Bar */}
-      <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      <div className="glass-panel rounded-[28px] p-3.5 sm:px-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="mr-1 inline-flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
-              <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+            <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
+              <AlertTriangle className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               {pick('Plant Faults:', 'Gangguan Pabrik:', '設備異常:')}
             </span>
             {(
@@ -760,12 +762,10 @@ export function PneumaticSimulator() {
                     setBlindGuess(null);
                     setActiveFault(faultKey);
                   }}
-                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${
+                  className={`rounded-full px-3 py-1 text-xs transition ${
                     isActive
-                      ? faultKey === 'none'
-                        ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-300'
-                        : 'bg-amber-50 text-amber-800 ring-1 ring-amber-500/40 dark:bg-amber-500/20 dark:text-amber-300'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                      ? 'bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/40'
+                      : 'glass-pill font-medium text-[var(--md-on-surface-variant)]'
                   }`}
                 >
                   {label}
@@ -777,10 +777,10 @@ export function PneumaticSimulator() {
           <button
             type="button"
             onClick={startBlindChallenge}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1 text-xs font-semibold transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
               blindMode
-                ? 'bg-amber-500 text-white shadow-xs hover:bg-amber-400 dark:text-slate-950'
-                : 'border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-300 dark:hover:bg-amber-500/20'
+                ? 'm3-btn-filled font-bold'
+                : 'm3-btn-tonal font-semibold'
             }`}
           >
             <HelpCircle className="h-3.5 w-3.5" />
@@ -792,7 +792,7 @@ export function PneumaticSimulator() {
 
         {/* Active Fault Hint or Blind Challenge Panel */}
         {!blindMode && activeFault !== 'none' && (
-          <div className="mt-2.5 rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-xs text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200">
+          <div className="mt-3 rounded-[20px] border border-amber-300/60 bg-amber-50/80 px-3.5 py-2.5 text-xs text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200">
             <span className="font-semibold">
               {FAULT_INFO[activeFault].label}:{' '}
             </span>
@@ -804,7 +804,7 @@ export function PneumaticSimulator() {
         )}
 
         {blindMode && (
-          <div className="mt-2.5 rounded-lg border border-amber-300 bg-amber-50/80 p-3 text-xs dark:border-amber-500/40 dark:bg-amber-950/30">
+          <div className="mt-3 rounded-[20px] border border-amber-300/60 bg-amber-50/80 p-3.5 text-xs dark:border-amber-500/40 dark:bg-amber-950/30">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <span className="font-semibold text-amber-900 dark:text-amber-200">
                 Blind Fault Active — Actuate S1/S2 and inspect FRL ΔP, pilot
@@ -816,7 +816,7 @@ export function PneumaticSimulator() {
                   setBlindMode(false);
                   setBlindGuess(null);
                 }}
-                className="text-[11px] font-medium text-slate-600 underline hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
+                className="text-[11px] font-medium text-[var(--md-on-surface-variant)] underline hover:text-[var(--md-on-surface)]"
               >
                 Exit Challenge
               </button>
@@ -832,12 +832,12 @@ export function PneumaticSimulator() {
                     key={option}
                     type="button"
                     onClick={() => setBlindGuess(option)}
-                    className={`rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
+                    className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold transition ${
                       picked
                         ? isCorrect
                           ? 'border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-300'
                           : 'border-rose-400 bg-rose-50 text-rose-800 dark:bg-rose-500/20 dark:text-rose-300'
-                        : 'border-slate-200 bg-white text-slate-800 hover:border-cyan-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {FAULT_INFO[option].label}
@@ -867,19 +867,19 @@ export function PneumaticSimulator() {
 
       {/* Builder Component Palette */}
       {workspaceMode === 'builder' && (
-        <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="glass-panel rounded-[28px] p-4">
+          <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               Add ISO 1219 Component
             </span>
-            <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-2 text-[11px] text-[var(--md-on-surface-variant)]">
               <span>
                 Drag to move • Click two ports to connect • Click line to remove
               </span>
               <button
                 type="button"
                 onClick={clearCanvas}
-                className="inline-flex items-center gap-1 rounded border border-rose-200 bg-rose-50 px-2 py-0.5 text-rose-700 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/20"
+                className="inline-flex items-center gap-1 rounded-full border border-rose-300/60 bg-rose-50 px-2.5 py-0.5 text-rose-700 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300 dark:hover:bg-rose-500/25"
               >
                 <Trash2 className="h-3 w-3" />
                 Clear Canvas
@@ -896,9 +896,9 @@ export function PneumaticSimulator() {
                   key={type}
                   type="button"
                   onClick={() => addComponent(type)}
-                  className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 transition hover:border-cyan-400 hover:bg-cyan-50 hover:text-cyan-800 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:border-cyan-500/50 dark:hover:bg-slate-800 dark:hover:text-cyan-300"
+                  className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
                 >
-                  <Plus className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
+                  <Plus className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                   {item.name}
                 </button>
               );
@@ -912,11 +912,11 @@ export function PneumaticSimulator() {
         {/* Left Column: 2D CAD Cutaway / ISO 1219 Schematic + Displacement-Step Chart */}
         <div className="space-y-4 lg:col-span-8">
           {workspaceMode === 'presets' && (
-            <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[24px] px-4 py-2.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Visualizer Mode', 'Mode Tampilan', '表示モード')}
               </span>
-              <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 dark:border-slate-700 dark:bg-slate-950">
+              <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 {(
                   [
                     [
@@ -937,10 +937,10 @@ export function PneumaticSimulator() {
                     key={modeKey}
                     type="button"
                     onClick={() => setCadViewMode(modeKey)}
-                    className={`rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                    className={`rounded-full px-3 py-1 text-xs transition ${
                       cadViewMode === modeKey
-                        ? 'bg-white text-cyan-700 shadow-xs dark:bg-slate-800 dark:text-cyan-300'
-                        : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {label}
@@ -951,7 +951,7 @@ export function PneumaticSimulator() {
           )}
 
           {(effectiveCadView === 'cutaway' || effectiveCadView === 'split') && (
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-xs dark:border-slate-800 dark:bg-slate-950">
+            <div className="glass-panel overflow-hidden rounded-[28px]">
               <PneumaticCutawaySvg
                 compressorOn={compressorOn}
                 supplyBar={supplyBar}
@@ -973,7 +973,7 @@ export function PneumaticSimulator() {
                 velocityPctPerSec={primaryCyl?.velocityPctPerSec ?? 0}
                 onShiftSpool={handleCutawayShiftSpool}
               />
-              <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 bg-white px-4 py-2 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-4 py-2.5 text-[11px] text-[var(--md-on-surface-variant)]">
                 <div className="flex flex-wrap items-center gap-4">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="h-2 w-4 rounded-full bg-cyan-500" />
@@ -984,7 +984,7 @@ export function PneumaticSimulator() {
                     {pick('Pilot / Regulated', 'Pilot / Teregulasi', 'パイロット・調圧')}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-4 rounded-full bg-slate-400 dark:bg-slate-600" />
+                    <span className="h-2 w-4 rounded-full bg-[var(--md-outline)]" />
                     {pick('Exhaust / Muffler Vent', 'Buang / Silencer', '排気・サイレンサ')}
                   </span>
                 </div>
@@ -1000,9 +1000,9 @@ export function PneumaticSimulator() {
           )}
 
           {(effectiveCadView === 'iso' || effectiveCadView === 'split') && (
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-xs dark:border-slate-800 dark:bg-slate-950">
+          <div className="glass-panel relative flex flex-col overflow-hidden rounded-[28px]">
           {wiringFrom && (
-            <div className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-1 text-xs text-amber-900 shadow-xs dark:border-amber-500/40 dark:bg-amber-950/80 dark:text-amber-200">
+            <div className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-2xl border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs text-amber-900 shadow-xs dark:border-amber-500/40 dark:bg-amber-950/85 dark:text-amber-200">
               <span>Select destination port to connect air line...</span>
               <button
                 type="button"
@@ -1018,6 +1018,7 @@ export function PneumaticSimulator() {
             ref={svgRef}
             viewBox="0 0 900 500"
             className="h-[460px] w-full touch-none"
+            style={{ background: 'var(--md-surface-container-lowest)' }}
             onClick={() => {
               setSelectedId(null);
               setWiringFrom(null);
@@ -1037,6 +1038,7 @@ export function PneumaticSimulator() {
                   d="M 25 0 L 0 0 0 25"
                   fill="none"
                   stroke={gridStroke}
+                  strokeOpacity="0.35"
                   strokeWidth="0.7"
                 />
               </pattern>
@@ -1155,7 +1157,7 @@ export function PneumaticSimulator() {
           </svg>
 
           {/* Bottom Legend */}
-          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 bg-white px-4 py-2 text-[11px] text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-4 py-2.5 text-[11px] text-[var(--md-on-surface-variant)]">
             <div className="flex flex-wrap items-center gap-4">
               <span className="inline-flex items-center gap-1.5">
                 <span className="h-2 w-4 rounded-full bg-cyan-600 dark:bg-cyan-400" />
@@ -1166,7 +1168,7 @@ export function PneumaticSimulator() {
                 {pick('Pilot Signal', 'Sinyal Pilot', 'パイロット信号')}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <span className="h-2 w-4 rounded-full bg-slate-400 dark:bg-slate-600" />
+                <span className="h-2 w-4 rounded-full bg-[var(--md-outline)]" />
                 {pick('Exhaust / 0 bar', 'Buang / 0 bar', '排気 / 0 bar')}
               </span>
             </div>
@@ -1258,19 +1260,19 @@ export function PneumaticSimulator() {
         {/* Right Telemetry & Inspector Panel */}
         <div className="space-y-4 lg:col-span-4">
           {/* Live Cylinder Readouts */}
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-                <Gauge className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+              <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
+                <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick('Cylinder Telemetry', 'Telemetri Silinder', 'シリンダ計測値')}
               </h3>
-              <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 D={boreMm}mm, d={effectiveRod}mm
               </span>
             </div>
 
             {cylinders.length === 0 ? (
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-[var(--md-on-surface-variant)]">
                 Add a Single-Acting or Double-Acting Cylinder to view live
                 force, flow, and stroke readouts.
               </p>
@@ -1295,57 +1297,57 @@ export function PneumaticSimulator() {
                   return (
                     <div
                       key={cyl.id}
-                      className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs dark:border-slate-800 dark:bg-slate-950/70"
+                      className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs"
                     >
                       <div className="mb-1.5 flex items-center justify-between">
-                        <span className="font-semibold text-cyan-700 dark:text-cyan-300">
+                        <span className="font-bold text-[var(--md-primary)]">
                           {cyl.label}
                         </span>
-                        <span className="font-mono text-slate-700 dark:text-slate-300">
+                        <span className="font-mono text-[var(--md-on-surface-variant)]">
                           {strokeMm.toFixed(0)} / {STROKE_LENGTH_MM} mm (
                           {pct.toFixed(0)}%)
                         </span>
                       </div>
 
-                      <div className="mb-2.5 h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                      <div className="mb-2.5 h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                         <div
-                          className="h-full bg-cyan-600 transition-all duration-75 dark:bg-cyan-400"
+                          className="h-full rounded-full bg-[var(--md-primary)] transition-all duration-75"
                           style={{ width: `${pct}%` }}
                         />
                       </div>
 
                       <div className="grid grid-cols-2 gap-2 text-[11px]">
-                        <div className="rounded border border-slate-200/80 bg-white px-2 py-1.5 dark:border-transparent dark:bg-slate-900">
-                          <div className="text-slate-500 dark:text-slate-400">
+                        <div className="rounded-2xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-2.5 py-2">
+                          <div className="text-[var(--md-on-surface-variant)]">
                             Chamber A / B
                           </div>
-                          <div className="font-mono font-semibold text-slate-900 dark:text-slate-200">
+                          <div className="font-mono font-semibold text-[var(--md-on-surface)]">
                             {pA.toFixed(1)} / {pB.toFixed(1)} bar
                           </div>
                         </div>
-                        <div className="rounded border border-slate-200/80 bg-white px-2 py-1.5 dark:border-transparent dark:bg-slate-900">
-                          <div className="text-slate-500 dark:text-slate-400">
+                        <div className="rounded-2xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-2.5 py-2">
+                          <div className="text-[var(--md-on-surface-variant)]">
                             Live Net Force
                           </div>
-                          <div className="font-mono font-semibold text-cyan-700 dark:text-cyan-300">
+                          <div className="font-mono font-bold text-[var(--md-primary)]">
                             {netForceN >= 0 ? '+' : ''}
                             {netForceN.toFixed(0)} N
                           </div>
                         </div>
-                        <div className="rounded border border-slate-200/80 bg-white px-2 py-1.5 dark:border-transparent dark:bg-slate-900">
-                          <div className="text-slate-500 dark:text-slate-400">
+                        <div className="rounded-2xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-2.5 py-2">
+                          <div className="text-[var(--md-on-surface-variant)]">
                             Max Ext / Ret
                           </div>
-                          <div className="font-mono text-slate-800 dark:text-slate-200">
+                          <div className="font-mono text-[var(--md-on-surface)]">
                             {maxExtendForceN.toFixed(0)} /{' '}
                             {maxRetractForceN.toFixed(0)} N
                           </div>
                         </div>
-                        <div className="rounded border border-slate-200/80 bg-white px-2 py-1.5 dark:border-transparent dark:bg-slate-900">
-                          <div className="text-slate-500 dark:text-slate-400">
+                        <div className="rounded-2xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-2.5 py-2">
+                          <div className="text-[var(--md-on-surface-variant)]">
                             Air Flow
                           </div>
-                          <div className="font-mono text-slate-800 dark:text-slate-200">
+                          <div className="font-mono text-[var(--md-on-surface)]">
                             {activeFlowLpm.toFixed(1)} L/min
                           </div>
                         </div>
@@ -1358,10 +1360,10 @@ export function PneumaticSimulator() {
           </div>
 
           {/* Air Consumption & Compressed-Air Energy Cost */}
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-                <Zap className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+              <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
+                <Zap className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Air Consumption & Cost',
                   'Konsumsi Udara & Biaya',
@@ -1369,12 +1371,12 @@ export function PneumaticSimulator() {
                 )}
               </h3>
               <span
-                className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-semibold ${
+                className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold ${
                   faultLeakNlMin > 20
-                    ? 'bg-rose-50 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
+                    ? 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
                     : frlDeltaP > 1.0
-                      ? 'bg-amber-50 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300'
-                      : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
+                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300'
+                      : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
                 }`}
               >
                 {faultLeakNlMin > 20
@@ -1386,48 +1388,48 @@ export function PneumaticSimulator() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-2 dark:border-slate-800 dark:bg-slate-950/70">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Total Air Flow', 'Total Aliran Udara', '総空気流量')}
                 </div>
-                <div className="font-mono text-sm font-bold text-cyan-700 dark:text-cyan-300">
+                <div className="font-mono text-sm font-bold text-[var(--md-primary)]">
                   {totalNlMin.toFixed(1)} NL/min
                 </div>
               </div>
-              <div className="rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-2 dark:border-slate-800 dark:bg-slate-950/70">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Energy Cost', 'Biaya Energi', '電力コスト')}
                 </div>
-                <div className="font-mono text-sm font-bold text-slate-900 dark:text-slate-100">
+                <div className="font-mono text-sm font-bold text-[var(--md-on-surface)]">
                   ${energyCostPerHr.toFixed(3)}/hr
                 </div>
-                <div className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   ~${energyCostPerYr.toFixed(0)}/yr (6,000h)
                 </div>
               </div>
-              <div className="rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-2 dark:border-slate-800 dark:bg-slate-950/70">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('FRL Gauge (In → Out)', 'Pengukur FRL (In → Out)', 'FRL圧力計 (入口→出口)')}
                 </div>
                 <div
                   className={`font-mono font-semibold ${
                     frlDeltaP > 1.0
                       ? 'text-amber-700 dark:text-amber-300'
-                      : 'text-slate-900 dark:text-slate-200'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {frlInBar.toFixed(1)} → {frlOutBar.toFixed(1)} bar
                 </div>
               </div>
-              <div className="rounded-lg border border-slate-200/80 bg-slate-50 px-2.5 py-2 dark:border-slate-800 dark:bg-slate-950/70">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Leakage / Baseline', 'Kebocoran / Dasar', '漏れ / 基礎消費')}
                 </div>
                 <div
                   className={`font-mono font-semibold ${
                     faultLeakNlMin > 0
                       ? 'text-rose-700 dark:text-rose-300'
-                      : 'text-slate-900 dark:text-slate-200'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {(baselineLeakNlMin + faultLeakNlMin).toFixed(1)} NL/min
@@ -1437,14 +1439,14 @@ export function PneumaticSimulator() {
           </div>
 
           {/* Selected Component Inspector */}
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900">
-            <h3 className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-slate-100">
-              <Wind className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <h3 className="mb-2 flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
+              <Wind className="h-4 w-4 text-[var(--md-primary)]" />
               {pick('Component Inspector', 'Inspektor Komponen', '部品インスペクタ')}
             </h3>
 
             {!selectedComp ? (
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-[var(--md-on-surface-variant)]">
                 Click any component on the schematic to inspect its ports,
                 adjust flow control throttle %, or toggle pushbutton latching.
               </p>
@@ -1452,17 +1454,17 @@ export function PneumaticSimulator() {
               <div className="space-y-3 text-xs">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-slate-100">
+                    <div className="font-semibold text-[var(--md-on-surface)]">
                       {selectedComp.label}
                     </div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                       {COMPONENT_CATALOG[selectedComp.type].name}
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => deleteComponent(selectedComp.id)}
-                    className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2 py-1 text-[11px] font-medium text-rose-700 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/20"
+                    className="inline-flex items-center gap-1 rounded-full border border-rose-300/60 bg-rose-50 px-3 py-1 text-[11px] font-semibold text-rose-700 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300 dark:hover:bg-rose-500/25"
                   >
                     <Trash2 className="h-3 w-3" />
                     Delete
@@ -1471,9 +1473,9 @@ export function PneumaticSimulator() {
 
                 {selectedComp.type === 'flow_control' && (
                   <label className="block space-y-1">
-                    <div className="flex justify-between text-slate-700 dark:text-slate-300">
+                    <div className="flex justify-between text-[var(--md-on-surface)]">
                       <span>Throttle Opening</span>
-                      <span className="font-mono font-semibold text-cyan-700 dark:text-cyan-300">
+                      <span className="font-mono font-bold text-[var(--md-primary)]">
                         {selectedComp.throttlePct ?? 50}%
                       </span>
                     </div>
@@ -1500,14 +1502,14 @@ export function PneumaticSimulator() {
                           )
                         );
                       }}
-                      className="w-full accent-cyan-600 dark:accent-cyan-400"
+                      className="w-full"
                     />
                   </label>
                 )}
 
                 {selectedComp.type === 'valve32_pb' && (
                   <div className="flex items-center justify-between gap-2">
-                    <label className="inline-flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <label className="inline-flex items-center gap-2 text-[var(--md-on-surface)]">
                       <input
                         type="checkbox"
                         checked={Boolean(selectedComp.latched)}
@@ -1520,7 +1522,6 @@ export function PneumaticSimulator() {
                             )
                           )
                         }
-                        className="accent-cyan-600 dark:accent-cyan-400"
                       />
                       Latching Pushbutton
                     </label>
@@ -1535,7 +1536,7 @@ export function PneumaticSimulator() {
                           )
                         )
                       }
-                      className="rounded-lg bg-cyan-50 px-2.5 py-1 font-semibold text-cyan-700 ring-1 ring-cyan-500/40 hover:bg-cyan-100 dark:bg-cyan-500/20 dark:text-cyan-300 dark:hover:bg-cyan-500/30"
+                      className="m3-btn-tonal px-3 py-1.5 text-xs font-bold"
                     >
                       {selectedComp.actuated ? 'Release' : 'Actuate'}
                     </button>
@@ -1544,7 +1545,7 @@ export function PneumaticSimulator() {
 
                 {selectedComp.type === 'valve32_limit' && (
                   <label className="block space-y-1">
-                    <span className="text-slate-700 dark:text-slate-300">
+                    <span className="text-[var(--md-on-surface)]">
                       Linked Cylinder (trips at ≥96% stroke)
                     </span>
                     <select
@@ -1558,7 +1559,7 @@ export function PneumaticSimulator() {
                           )
                         )
                       }
-                      className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+                      className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-2 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                     >
                       <option value="">None (Manual)</option>
                       {cylinders.map((cyl) => (
@@ -1572,9 +1573,9 @@ export function PneumaticSimulator() {
 
                 {selectedComp.type === 'cyl_double' && (
                   <label className="block space-y-1">
-                    <div className="flex justify-between text-slate-700 dark:text-slate-300">
+                    <div className="flex justify-between text-[var(--md-on-surface)]">
                       <span>Rod Diameter</span>
-                      <span className="font-mono text-slate-900 dark:text-slate-200">
+                      <span className="font-mono font-bold text-[var(--md-primary)]">
                         {effectiveRod} mm
                       </span>
                     </div>
@@ -1585,7 +1586,7 @@ export function PneumaticSimulator() {
                       step={2}
                       value={rodMm}
                       onChange={(e) => setRodMm(Number(e.target.value))}
-                      className="w-full accent-cyan-600 dark:accent-cyan-400"
+                      className="w-full"
                     />
                   </label>
                 )}

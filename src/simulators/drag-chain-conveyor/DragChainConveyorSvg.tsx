@@ -294,7 +294,7 @@ function HotspotMarker({
       ? '#f43f5e'
       : status === 'warning'
         ? '#f59e0b'
-        : '#38bdf8';
+        : 'var(--md-primary)';
 
   return (
     <g
@@ -751,9 +751,9 @@ export function DragChainConveyorSvg({
   const pinBarPct = Math.min(100, metrics.shearPinLoadPct);
 
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-3">
       {/* Interactive SVG Cutaway */}
-      <div className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50 shadow-inner dark:border-slate-800 dark:bg-slate-950">
+      <div className="relative overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-lowest)]">
         <svg
           viewBox="0 0 900 430"
           className="block h-auto w-full select-none"
@@ -810,7 +810,7 @@ export function DragChainConveyorSvg({
           <rect
             width="900"
             height="430"
-            fill={isDark ? '#080f1c' : '#f8fafc'}
+            fill="var(--md-surface-container-lowest)"
           />
           <rect width="900" height="430" fill="url(#dcGrid)" />
 
@@ -818,10 +818,11 @@ export function DragChainConveyorSvg({
           <text
             x="20"
             y="26"
-            fill={isDark ? '#94a3b8' : '#475569'}
+            fill="var(--md-on-surface-variant)"
             fontSize="10.5"
             fontWeight="700"
             letterSpacing="1.2"
+            fontFamily="var(--font-sans)"
           >
             {pick(
               'EN-MASSE / SCRAPER DRAG CHAIN CONVEYOR — INTERACTIVE CUTAWAY',
@@ -835,50 +836,47 @@ export function DragChainConveyorSvg({
             <rect
               width="258"
               height="74"
-              rx="8"
-              fill={
-                isDark
-                  ? 'rgba(15, 23, 42, 0.92)'
-                  : 'rgba(255, 255, 255, 0.94)'
-              }
+              rx="12"
+              fill="var(--md-surface-container-low)"
               stroke={
                 activeZone.status === 'critical'
                   ? '#f43f5e'
                   : activeZone.status === 'warning'
                     ? '#f59e0b'
-                    : isDark
-                      ? '#38bdf8'
-                      : '#0284c7'
+                    : 'var(--md-primary)'
               }
               strokeWidth="1.2"
             />
             <text
               x="12"
               y="20"
-              fill={isDark ? '#94a3b8' : '#64748b'}
+              fill="var(--md-on-surface-variant)"
               fontSize="9"
               fontWeight="700"
+              fontFamily="var(--font-sans)"
             >
               {pick('INSPECTION PROBE:', 'PROBE INSPEKSI:', '点検プローブ:')}{' '}
-              <tspan fill={isDark ? '#e2e8f0' : '#0f172a'}>
+              <tspan fill="var(--md-on-surface)">
                 {zoneMeta[selectedZone].label}
               </tspan>
             </text>
             <text
               x="12"
               y="42"
-              fill={isDark ? '#cbd5e1' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('TENSION', 'TEGANGAN', '張力')}
             </text>
             <text
               x="12"
               y="58"
-              fill={isDark ? '#38bdf8' : '#0284c7'}
+              fill="var(--md-primary)"
               fontSize="12.5"
               fontWeight="800"
+              fontFamily="var(--font-mono)"
             >
               {activeZone.tensionKn.toFixed(2)} kN
             </text>
@@ -886,18 +884,20 @@ export function DragChainConveyorSvg({
             <text
               x="98"
               y="42"
-              fill={isDark ? '#cbd5e1' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {zoneMeta[selectedZone].wearLabel}
             </text>
             <text
               x="98"
               y="58"
-              fill={isDark ? '#a78bfa' : '#7c3aed'}
+              fill="var(--md-primary)"
               fontSize="12.5"
               fontWeight="800"
+              fontFamily="var(--font-mono)"
             >
               {zoneMeta[selectedZone].wearVal}
             </text>
@@ -905,9 +905,10 @@ export function DragChainConveyorSvg({
             <text
               x="186"
               y="42"
-              fill={isDark ? '#cbd5e1' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('TEMP', 'SUHU', '温度')}
             </text>
@@ -929,6 +930,7 @@ export function DragChainConveyorSvg({
               }
               fontSize="12.5"
               fontWeight="800"
+              fontFamily="var(--font-mono)"
             >
               {activeZone.temperatureC.toFixed(0)} °C
             </text>
@@ -942,16 +944,17 @@ export function DragChainConveyorSvg({
                 y1={pivotY + 62}
                 x2={pivotX + 240}
                 y2={pivotY + 62}
-                stroke={isDark ? '#475569' : '#94a3b8'}
+                stroke="var(--md-outline)"
                 strokeWidth="1"
                 strokeDasharray="4 4"
               />
               <text
                 x={pivotX + 195}
                 y={pivotY + 54}
-                fill={isDark ? '#a78bfa' : '#7c3aed'}
+                fill="var(--md-primary)"
                 fontSize="11"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
               >
                 θ = {inputs.inclinationDeg}°
               </text>
@@ -1596,36 +1599,30 @@ export function DragChainConveyorSvg({
             <rect
               width="860"
               height="36"
-              rx="8"
-              fill={
-                isDark
-                  ? 'rgba(15, 23, 42, 0.88)'
-                  : 'rgba(255, 255, 255, 0.92)'
-              }
-              stroke={
-                isDark
-                  ? 'rgba(148, 163, 184, 0.2)'
-                  : 'rgba(148, 163, 184, 0.45)'
-              }
+              rx="12"
+              fill="var(--md-surface-container-low)"
+              stroke="var(--md-outline-variant)"
             />
             <text
               x="18"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('FLOW:', 'ALIRAN:', '流量:')}{' '}
-              <tspan fill={isDark ? '#a78bfa' : '#7c3aed'} fontWeight="800">
+              <tspan fill="var(--md-primary)" fontWeight="800" fontFamily="var(--font-mono)">
                 {metrics.massFlowTh.toFixed(1)} t/h
               </tspan>
             </text>
             <text
               x="165"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               T₁:{' '}
               <tspan
@@ -1634,11 +1631,10 @@ export function DragChainConveyorSvg({
                     ? isDark
                       ? '#fb7185'
                       : '#e11d48'
-                    : isDark
-                      ? '#38bdf8'
-                      : '#0284c7'
+                    : 'var(--md-primary)'
                 }
                 fontWeight="800"
+                fontFamily="var(--font-mono)"
               >
                 {metrics.t1Kn.toFixed(2)} kN
               </tspan>
@@ -1646,33 +1642,36 @@ export function DragChainConveyorSvg({
             <text
               x="285"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('TORQUE:', 'TORSI:', 'トルク:')}{' '}
-              <tspan fill={isDark ? '#c4b5fd' : '#6d28d9'} fontWeight="800">
+              <tspan fill="var(--md-primary)" fontWeight="800" fontFamily="var(--font-mono)">
                 {metrics.driveTorqueNm.toFixed(0)} N·m
               </tspan>
             </text>
             <text
               x="435"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('MOTOR:', 'MOTOR:', '動力:')}{' '}
-              <tspan fill={isDark ? '#34d399' : '#059669'} fontWeight="800">
+              <tspan fill={isDark ? '#34d399' : '#059669'} fontWeight="800" fontFamily="var(--font-mono)">
                 {metrics.motorPowerKw.toFixed(2)} kW ({metrics.motorCurrentA.toFixed(1)} A)
               </tspan>
             </text>
             <text
               x="675"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('SAG:', 'SAG:', 'たるみ:')}{' '}
               <tspan
@@ -1681,11 +1680,10 @@ export function DragChainConveyorSvg({
                     ? isDark
                       ? '#fbbf24'
                       : '#d97706'
-                    : isDark
-                      ? '#e2e8f0'
-                      : '#0f172a'
+                    : 'var(--md-on-surface)'
                 }
                 fontWeight="800"
+                fontFamily="var(--font-mono)"
               >
                 {metrics.catenarySagMm.toFixed(0)} mm
               </tspan>
@@ -1693,9 +1691,10 @@ export function DragChainConveyorSvg({
             <text
               x="765"
               y="22"
-              fill={isDark ? '#94a3b8' : '#475569'}
+              fill="var(--md-on-surface-variant)"
               fontSize="10.5"
               fontWeight="600"
+              fontFamily="var(--font-sans)"
             >
               {pick('WEAR:', 'AUS:', '摩耗:')}{' '}
               <tspan
@@ -1704,11 +1703,10 @@ export function DragChainConveyorSvg({
                     ? isDark
                       ? '#fbbf24'
                       : '#d97706'
-                    : isDark
-                      ? '#e2e8f0'
-                      : '#0f172a'
+                    : 'var(--md-on-surface)'
                 }
                 fontWeight="800"
+                fontFamily="var(--font-mono)"
               >
                 {inputs.chainWearPct.toFixed(1)}%
               </tspan>
@@ -1718,17 +1716,17 @@ export function DragChainConveyorSvg({
       </div>
 
       {/* Live Chain Tension & Shear-Pin Load Meter Bar + Hotspot Quick Selector */}
-      <div className="sim-box flex flex-col gap-2.5 p-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0 flex-1 space-y-1.5">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-            <span className="font-bold text-slate-700 dark:text-slate-200">
+            <span className="font-bold text-[var(--md-on-surface)]">
               {pick(
                 'Chain Tension & Shear-Pin Load',
                 'Tegangan Rantai & Beban Shear Pin',
                 'チェーン張力・シャーピン負荷'
               )}
             </span>
-            <span className="font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+            <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               T₁={metrics.t1Kn.toFixed(2)} kN · T₂={metrics.t2Kn.toFixed(2)} kN ·
               Fₑ={metrics.feKn.toFixed(2)} kN ·{' '}
               <span
@@ -1744,14 +1742,14 @@ export function DragChainConveyorSvg({
               </span>
             </span>
           </div>
-          <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+          <div className="relative h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
             <div
               className={`h-full transition-all duration-200 ${
                 metrics.shearPinLoadPct >= 100
                   ? 'bg-rose-500'
                   : metrics.shearPinLoadPct >= 75
                     ? 'bg-amber-500'
-                    : 'bg-gradient-to-r from-violet-500 to-sky-500'
+                    : 'bg-[var(--md-primary)]'
               }`}
               style={{ width: `${pinBarPct}%` }}
             />
@@ -1764,7 +1762,7 @@ export function DragChainConveyorSvg({
         </div>
 
         {/* Clickable Hotspot Pill Selector */}
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {(
             [
               'drive-sprocket',
@@ -1777,10 +1775,10 @@ export function DragChainConveyorSvg({
               key={zid}
               type="button"
               onClick={() => onSelectZone(zid)}
-              className={`rounded-md px-2 py-1 text-[10.5px] font-semibold transition ${
+              className={`rounded-full px-3 py-1 text-[10.5px] font-semibold transition ${
                 selectedZone === zid
-                  ? 'bg-sky-600 text-white shadow-sm'
-                  : 'bg-slate-200/70 text-slate-700 hover:bg-slate-300/80 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                  ? 'bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)] shadow-xs'
+                  : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
               }`}
             >
               {zoneMeta[zid].label}

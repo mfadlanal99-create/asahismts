@@ -1,6 +1,5 @@
 import { Activity } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
 
 export interface OscilloscopeSample {
   t: number; // timestamp in seconds
@@ -27,13 +26,11 @@ export function HydraulicOscilloscope({
   reliefCrackBar,
   accumulatorEnabled,
 }: HydraulicOscilloscopeProps) {
-  const { theme } = useTheme();
   const { pick } = useLanguage();
-  const isDark = theme === 'dark';
 
-  const bg = isDark ? '#0b1220' : '#f8fafc';
-  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const bg = 'var(--md-surface-container-lowest)';
+  const gridColor = 'var(--md-outline-variant)';
+  const textMuted = 'var(--md-on-surface-variant)';
 
   const W = 680;
   const H = 190;
@@ -79,11 +76,11 @@ export function HydraulicOscilloscope({
   const velZeroY = yForVel(0);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/80">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-amber-500" />
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+          <Activity className="h-4 w-4 text-[var(--md-primary)]" />
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Pressure & Velocity Oscilloscope (15s Strip Chart)',
               'Osiloskop Tekanan & Kecepatan (Grafik 15 dtk)',
@@ -94,7 +91,7 @@ export function HydraulicOscilloscope({
 
         <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium">
           {accumulatorEnabled && (
-            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+            <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
               {pick(
                 'N₂ Accumulator Damping ON',
                 'Peredam Akumulator N₂ AKTIF',
@@ -102,21 +99,21 @@ export function HydraulicOscilloscope({
               )}
             </span>
           )}
-          <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
+          <span className="flex items-center gap-1 text-[var(--md-on-surface-variant)]">
             <span className="h-2 w-2 rounded-full bg-amber-500" />
-            P1: <strong className="font-mono">{latest ? latest.p1.toFixed(0) : '0'}</strong> bar
+            P1: <strong className="font-mono text-[var(--md-on-surface)]">{latest ? latest.p1.toFixed(0) : '0'}</strong> bar
           </span>
-          <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
+          <span className="flex items-center gap-1 text-[var(--md-on-surface-variant)]">
             <span className="h-2 w-2 rounded-full bg-red-500" />
-            P2: <strong className="font-mono">{latest ? latest.p2.toFixed(0) : '0'}</strong> bar
+            P2: <strong className="font-mono text-[var(--md-on-surface)]">{latest ? latest.p2.toFixed(0) : '0'}</strong> bar
           </span>
-          <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
+          <span className="flex items-center gap-1 text-[var(--md-on-surface-variant)]">
             <span className="h-2 w-2 rounded-full bg-sky-500" />
-            P3: <strong className="font-mono">{latest ? latest.p3.toFixed(0) : '0'}</strong> bar
+            P3: <strong className="font-mono text-[var(--md-on-surface)]">{latest ? latest.p3.toFixed(0) : '0'}</strong> bar
           </span>
-          <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
+          <span className="flex items-center gap-1 text-[var(--md-on-surface-variant)]">
             <span className="h-2 w-2 rounded-full bg-emerald-500" />
-            v: <strong className="font-mono">{latest ? latest.vel.toFixed(0) : '0'}</strong> mm/s
+            v: <strong className="font-mono text-[var(--md-on-surface)]">{latest ? latest.vel.toFixed(0) : '0'}</strong> mm/s
           </span>
         </div>
       </div>
@@ -133,6 +130,7 @@ export function HydraulicOscilloscope({
                 x2={W - padR}
                 y2={y}
                 stroke={gridColor}
+                strokeOpacity="0.45"
                 strokeWidth="1"
               />
               <text
@@ -141,6 +139,7 @@ export function HydraulicOscilloscope({
                 textAnchor="end"
                 fontSize="9"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={textMuted}
               >
                 {bar}
@@ -160,6 +159,7 @@ export function HydraulicOscilloscope({
                 x2={x}
                 y2={padT + plotH}
                 stroke={gridColor}
+                strokeOpacity="0.45"
                 strokeWidth="1"
               />
               <text
@@ -168,6 +168,7 @@ export function HydraulicOscilloscope({
                 textAnchor="middle"
                 fontSize="9"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={textMuted}
               >
                 {sec === 15 ? 'Now' : `-${15 - sec}s`}
@@ -185,6 +186,7 @@ export function HydraulicOscilloscope({
             textAnchor="start"
             fontSize="9"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
             fill="#10b981"
           >
             {v > 0 ? `+${v}` : v}

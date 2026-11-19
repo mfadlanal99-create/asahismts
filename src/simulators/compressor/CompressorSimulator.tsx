@@ -195,9 +195,9 @@ export function CompressorSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Scenario & Blind Diagnosis Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 glass-panel rounded-2xl p-3 ">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
           </span>
           {COMPRESSOR_PRESETS.map((preset) => {
@@ -218,10 +218,10 @@ export function CompressorSimulator() {
                 type="button"
                 onClick={() => applyPreset(preset.id)}
                 title={preset.description}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-xs transition ${
                   active
-                    ? 'bg-sky-600 text-white shadow-xs dark:bg-sky-500 dark:text-slate-950'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'm3-btn-filled font-bold'
+                    : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
                 }`}
               >
                 {presetLabel}
@@ -234,10 +234,10 @@ export function CompressorSimulator() {
           <button
             type="button"
             onClick={startBlindDiagnosis}
-            className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
               blindMode
-                ? 'bg-amber-500 text-white shadow-xs dark:bg-amber-400 dark:text-slate-950'
-                : 'border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-200 dark:hover:bg-amber-500/20'
+                ? 'm3-btn-filled font-bold'
+                : 'm3-btn-tonal font-semibold'
             }`}
           >
             <EyeOff className="h-3.5 w-3.5" />
@@ -246,7 +246,7 @@ export function CompressorSimulator() {
           <button
             type="button"
             onClick={resetAll}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -256,15 +256,15 @@ export function CompressorSimulator() {
 
       {/* Diagnostic Banner or Blind Diagnosis Challenge */}
       {blindMode ? (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-500/30 dark:bg-amber-500/10">
+        <div className="glass-panel rounded-[28px] border-[var(--md-primary)]/40 p-4 sm:p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-2.5">
-              <HelpCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
+              <HelpCircle className="mt-0.5 h-5 w-5 shrink-0 text-[var(--md-primary)]" />
               <div>
-                <div className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                <div className="text-sm font-bold text-[var(--md-on-surface)]">
                   Blind Fault Diagnosis Active
                 </div>
-                <p className="mt-0.5 text-xs text-amber-800 dark:text-amber-200">
+                <p className="mt-0.5 text-xs text-[var(--md-on-surface-variant)]">
                   A fault has been injected and fault-control sliders are masked. Inspect the live
                   gauges, temperatures, Pressure Dew Point, and skid schematic to identify the root cause.
                 </p>
@@ -281,10 +281,10 @@ export function CompressorSimulator() {
                   setSelectedGuess(opt.id);
                   setDiagnosisResult(null);
                 }}
-                className={`rounded-xl border p-2.5 text-left text-xs transition-colors ${
+                className={`rounded-[20px] border p-3 text-left text-xs transition-all ${
                   selectedGuess === opt.id
-                    ? 'border-sky-600 bg-sky-50 text-sky-900 dark:border-sky-400 dark:bg-sky-500/20 dark:text-sky-100'
-                    : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                 }`}
               >
                 <div className="font-semibold">{opt.label}</div>
@@ -297,7 +297,7 @@ export function CompressorSimulator() {
               type="button"
               disabled={!selectedGuess}
               onClick={submitDiagnosis}
-              className="rounded-lg bg-sky-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-sky-500 dark:text-slate-950 dark:hover:bg-sky-400"
+              className="m3-btn-filled px-4 py-2 text-xs font-bold disabled:cursor-not-allowed disabled:opacity-45"
             >
               Submit Diagnosis
             </button>
@@ -310,7 +310,7 @@ export function CompressorSimulator() {
               </span>
             )}
             {diagnosisResult === 'incorrect' && (
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-red-700 dark:text-red-300">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-700 dark:text-rose-300">
                 <AlertTriangle className="h-4 w-4" />
                 Not quite — check intake ΔP, discharge temp, receiver H₂O level, and duty cycle.
               </span>
@@ -319,10 +319,10 @@ export function CompressorSimulator() {
         </div>
       ) : sol.activeWarnings.length > 0 ? (
         <div
-          className={`flex items-start gap-3 rounded-2xl border p-3.5 text-sm ${
+          className={`flex items-start gap-3 rounded-[24px] border p-4 text-sm ${
             sol.highTempTrip || sol.waterCarryover
-              ? 'border-red-200 bg-red-50 text-red-900 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200'
-              : 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200'
+              ? 'border-rose-300/70 bg-rose-50/90 text-rose-900 dark:border-rose-500/35 dark:bg-rose-950/35 dark:text-rose-200'
+              : 'border-amber-300/70 bg-amber-50/90 text-amber-900 dark:border-amber-500/35 dark:bg-amber-950/35 dark:text-amber-200'
           }`}
         >
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -342,7 +342,7 @@ export function CompressorSimulator() {
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-medium text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+        <div className="flex items-center gap-2.5 rounded-[24px] border border-emerald-300/70 bg-emerald-50/90 px-4 py-3 text-xs font-medium text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/35 dark:text-emerald-200">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <span>
             Skid operating normally — stable pressure band, low intake ΔP, clean cooler heat rejection, and dry plant air (PDP {sol.pressureDewPointC.toFixed(1)} °C).
@@ -353,21 +353,21 @@ export function CompressorSimulator() {
       {/* Live KPI Readout Strip */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
         <KpiCard
-          icon={<Gauge className="h-4 w-4 text-sky-600 dark:text-sky-400" />}
+          icon={<Gauge className={`h-4 w-4 ${sol.pressureStarved ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Discharge Pressure', 'Tekanan Keluaran', '吐出圧力')}
           value={`${dyn.receiverPressureBar.toFixed(2)} bar`}
           sub={`${pick('Band', 'Pita', '帯域')} ${params.loadPressureBar.toFixed(1)}–${params.unloadPressureBar.toFixed(1)}`}
           alert={sol.pressureStarved}
         />
         <KpiCard
-          icon={<Thermometer className="h-4 w-4 text-orange-600 dark:text-orange-400" />}
+          icon={<Thermometer className={`h-4 w-4 ${sol.highTempTrip ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Discharge Temp', 'Suhu Keluaran', '吐出温度')}
           value={`${sol.dischargeTempC.toFixed(1)} °C`}
           sub={sol.highTempTrip ? 'TRIP > 105 °C' : `${pick('Limit', 'Batas', '上限')} 105 °C`}
           alert={sol.highTempTrip}
         />
         <KpiCard
-          icon={<Droplets className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />}
+          icon={<Droplets className={`h-4 w-4 ${sol.pressureDewPointC > 8 ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Pressure Dew Point', 'Titik Embun Tekan', '圧力露点')}
           value={`${sol.pressureDewPointC.toFixed(1)} °C`}
           sub={
@@ -378,21 +378,21 @@ export function CompressorSimulator() {
           alert={sol.pressureDewPointC > 8}
         />
         <KpiCard
-          icon={<Zap className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />}
+          icon={<Zap className={`h-4 w-4 ${sol.specificPowerKwPerM3Min > 7.4 ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Specific Power', 'Daya Spesifik', '比動力')}
           value={`${sol.specificPowerKwPerM3Min.toFixed(2)}`}
           sub="kW / (m³/min)"
           alert={sol.specificPowerKwPerM3Min > 7.4}
         />
         <KpiCard
-          icon={<Percent className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
+          icon={<Percent className={`h-4 w-4 ${sol.dutyCyclePct >= 95 ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Load Duty Cycle', 'Siklus Tugas Beban', '負荷率')}
           value={`${sol.dutyCyclePct.toFixed(0)} %`}
           sub={`${sol.averagePowerKw.toFixed(1)} kW ${pick('avg', 'rata²', '平均')}`}
           alert={sol.dutyCyclePct >= 95}
         />
         <KpiCard
-          icon={<DollarSign className="h-4 w-4 text-amber-600 dark:text-amber-400" />}
+          icon={<DollarSign className={`h-4 w-4 ${sol.annualEnergyCostUsd > 52000 ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Energy Cost', 'Biaya Energi', '電力コスト')}
           value={`$${Math.round(sol.annualEnergyCostUsd).toLocaleString()}/yr`}
           sub="6,000 hr @ $0.12/kWh"
@@ -422,8 +422,8 @@ export function CompressorSimulator() {
           />
         </div>
 
-        <div className="space-y-3 glass-panel rounded-2xl p-4  lg:col-span-4">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="glass-panel space-y-3.5 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
+          <h3 className="border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Operating & Maintenance Controls',
               'Kontrol Operasi & Pemeliharaan',
@@ -461,9 +461,9 @@ export function CompressorSimulator() {
             onChange={(v) => updateParam('plantDemandM3Min', v)}
           />
 
-          <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div className="mb-2.5 flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Fault & Maintenance Parameters',
                   'Parameter Gangguan & Perawatan',
@@ -471,14 +471,14 @@ export function CompressorSimulator() {
                 )}
               </span>
               {blindMode && diagnosisResult !== 'correct' && (
-                <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+                <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--md-on-secondary-container)]">
                   {pick('Masked', 'Disembunyikan', '非表示')}
                 </span>
               )}
             </div>
 
             {blindMode && diagnosisResult !== 'correct' ? (
-              <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-300">
+              <div className="rounded-[22px] border border-dashed border-[var(--md-outline-variant)] bg-[var(--md-surface-container)] p-3.5 text-xs text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Fault parameters are hidden during Blind Diagnosis. Use the schematic readouts and KPI cards to diagnose the issue.',
                   'Parameter gangguan disembunyikan selama Diagnosis Buta. Gunakan pembacaan skematik dan kartu KPI untuk mendiagnosis masalah.',
@@ -517,12 +517,12 @@ export function CompressorSimulator() {
                   onChange={(v) => updateParam('plantLeakPct', v)}
                 />
 
-                <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-800/50">
+                <div className="flex items-center justify-between rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3.5 py-2.5">
                   <div>
-                    <div className="text-xs font-medium text-slate-800 dark:text-slate-200">
+                    <div className="text-xs font-semibold text-[var(--md-on-surface)]">
                       {pick('Condensate Auto-Drain', 'Auto-Drain Kondensat', 'オートドレン排出')}
                     </div>
-                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                       {params.autoDrainEnabled
                         ? pick('Purging receiver moisture', 'Membuang air receiver', 'レシーバ水分排出中')
                         : pick('Valve stuck closed', 'Katup macet tertutup', '弁閉固着')}
@@ -531,10 +531,10 @@ export function CompressorSimulator() {
                   <button
                     type="button"
                     onClick={() => updateParam('autoDrainEnabled', !params.autoDrainEnabled)}
-                    className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${
+                    className={`rounded-full px-3.5 py-1 text-xs font-bold transition-colors ${
                       params.autoDrainEnabled
-                        ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-slate-950'
-                        : 'bg-red-600 text-white dark:bg-red-500 dark:text-white'
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-rose-600 text-white'
                     }`}
                   >
                     {params.autoDrainEnabled
@@ -562,24 +562,24 @@ interface KpiCardProps {
 function KpiCard({ icon, label, value, sub, alert = false }: KpiCardProps) {
   return (
     <div
-      className={`rounded-2xl border p-3 shadow-xs ${
+      className={
         alert
-          ? 'border-red-300 bg-red-50/70 dark:border-red-500/40 dark:bg-red-500/10'
-          : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/70'
-      }`}
+          ? 'rounded-[24px] border border-rose-300/80 bg-rose-50/80 p-3.5 dark:border-rose-500/40 dark:bg-rose-950/30'
+          : 'glass-card rounded-[24px] p-3.5'
+      }
     >
-      <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+      <div className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
         {icon}
         <span className="truncate">{label}</span>
       </div>
       <div
-        className={`mt-1 font-mono text-base font-bold ${
-          alert ? 'text-red-700 dark:text-red-300' : 'text-slate-900 dark:text-slate-100'
+        className={`mt-1 font-mono text-base font-extrabold ${
+          alert ? 'text-rose-700 dark:text-rose-300' : 'text-[var(--md-on-surface)]'
         }`}
       >
         {value}
       </div>
-      <div className="mt-0.5 truncate text-[11px] text-slate-500 dark:text-slate-400">{sub}</div>
+      <div className="mt-0.5 truncate text-[11px] text-[var(--md-on-surface-variant)]">{sub}</div>
     </div>
   );
 }
@@ -604,10 +604,10 @@ function SliderControl({
   onChange,
 }: SliderControlProps) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-slate-700 dark:text-slate-300">{label}</span>
-        <span className="font-mono font-semibold text-slate-900 dark:text-slate-100">
+        <span className="font-medium text-[var(--md-on-surface)]">{label}</span>
+        <span className="font-mono font-bold text-[var(--md-primary)]">
           {step < 1 ? value.toFixed(1) : value.toFixed(0)} {unit}
         </span>
       </div>
@@ -618,7 +618,7 @@ function SliderControl({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-sky-600 dark:bg-slate-700 dark:accent-sky-400"
+        className="w-full"
       />
     </div>
   );

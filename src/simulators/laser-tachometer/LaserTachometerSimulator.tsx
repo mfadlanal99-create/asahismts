@@ -124,10 +124,10 @@ export function LaserTachometerSimulator() {
 
           {/* Live Readout Cards */}
           {mode === 'laser' ? (
-            <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
+            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-                  <ScanLine className="h-4 w-4 text-cyan-500" />
+                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                  <ScanLine className="h-4 w-4 text-[var(--md-primary)]" />
                   {pick(
                     'Optical Laser Tachometer Readouts & Hold Memory',
                     'Pembacaan Takometer Laser & Memori Hold',
@@ -137,74 +137,74 @@ export function LaserTachometerSimulator() {
                 <button
                   type="button"
                   onClick={handleResetStats}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   {pick('Reset Min/Max', 'Reset Min/Maks', '最小/最大リセット')}
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-3">
-                  <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="rounded-[22px] border border-[var(--md-primary)]/45 bg-[var(--md-primary-container)]/60 p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-primary-container)]/80">
                     {pick('Shaft Speed (RPM)', 'Kecepatan Poros (RPM)', '回転速度 (RPM)')}
                   </div>
-                  <div className="text-xl font-bold font-mono text-cyan-600 dark:text-cyan-400 mt-0.5">
+                  <div className="mt-0.5 font-mono text-xl font-extrabold text-[var(--md-primary)]">
                     {isOnTarget && laserActive ? drive.rotorRpm.toFixed(1) : '---.-'}
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-slate-800/40 p-3">
-                  <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Pulse Rate (RPS / Hz)', 'Frekuensi Pulsa (Hz)', 'パルス周波数 (RPS/Hz)')}
                   </div>
-                  <div className="text-xl font-bold font-mono text-slate-800 dark:text-slate-100 mt-0.5">
+                  <div className="mt-0.5 font-mono text-xl font-bold text-[var(--md-on-surface)]">
                     {isOnTarget && laserActive ? drive.rps.toFixed(2) : '--.--'}{' '}
-                    <span className="text-xs font-normal">Hz</span>
+                    <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">Hz</span>
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-slate-800/40 p-3">
-                  <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Angular Velocity (ω)', 'Kecepatan Sudut (ω)', '角速度 (ω)')}
                   </div>
-                  <div className="text-xl font-bold font-mono text-slate-800 dark:text-slate-100 mt-0.5">
+                  <div className="mt-0.5 font-mono text-xl font-bold text-[var(--md-on-surface)]">
                     {isOnTarget && laserActive ? drive.omegaRadS.toFixed(1) : '---.-'}{' '}
-                    <span className="text-xs font-normal">rad/s</span>
+                    <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">rad/s</span>
                   </div>
                 </div>
               </div>
 
               {/* Min / Max / Avg Hold Bar */}
               <div className="grid grid-cols-3 gap-3 pt-1">
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 px-3 py-2 text-center">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5 text-center">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     MIN HOLD
                   </div>
-                  <div className="text-sm font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-sm font-bold text-[var(--md-on-surface)]">
                     {stats.minRpm.toFixed(1)} RPM
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 px-3 py-2 text-center">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5 text-center">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     AVG HOLD
                   </div>
-                  <div className="text-sm font-bold font-mono text-cyan-600 dark:text-cyan-400">
+                  <div className="font-mono text-sm font-bold text-[var(--md-primary)]">
                     {avgRpm.toFixed(1)} RPM
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 px-3 py-2 text-center">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2.5 text-center">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     MAX HOLD
                   </div>
-                  <div className="text-sm font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-sm font-bold text-[var(--md-on-surface)]">
                     {stats.maxRpm.toFixed(1)} RPM
                   </div>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-                <Zap className="h-4 w-4 text-cyan-500" />
+            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+              <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                <Zap className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Stroboscope Harmonic & Alias Diagnostics',
                   'Diagnostik Harmonik & Alias Stroboskop',
@@ -212,36 +212,36 @@ export function LaserTachometerSimulator() {
                 )}
               </h3>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/5 p-3">
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="rounded-[22px] border border-[var(--md-primary)]/45 bg-[var(--md-primary-container)]/60 p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-primary-container)]/80">
                     {pick('Flash Rate', 'Laju Kilat', '発光周波数')}
                   </div>
-                  <div className="text-lg font-bold font-mono text-cyan-600 dark:text-cyan-400">
+                  <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                     {strobe.strobeFpm.toFixed(0)} FPM
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 p-3">
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('FPM / RPM Ratio', 'Rasio FPM / RPM', 'FPM / RPM 比')}
                   </div>
-                  <div className="text-lg font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="mt-0.5 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                     {strobe.ratio.toFixed(2)}×
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 p-3">
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Apparent Images', 'Jumlah Bayangan', '見かけの像数')}
                   </div>
-                  <div className="text-lg font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="mt-0.5 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                     {strobe.apparentImages}
                   </div>
                 </div>
-                <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 p-3">
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                  <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Alias Drift', 'Geser Alias', 'ドリフト速度')}
                   </div>
-                  <div className="text-lg font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="mt-0.5 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                     {strobe.apparentRpm >= 0 ? '+' : ''}
                     {strobe.apparentRpm.toFixed(1)} RPM
                   </div>
@@ -254,16 +254,16 @@ export function LaserTachometerSimulator() {
         {/* RIGHT COLUMN: CONTROLS (5 cols) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Instrument Mode & Transport */}
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-                <Gauge className="h-4 w-4 text-cyan-500" />
+              <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick('Instrument Mode', 'Mode Instrumen', '計測モード')}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsRunning((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[#001F6B] hover:bg-[#002D9C] text-white px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer"
+                className="m3-btn-filled inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold"
               >
                 {isRunning ? (
                   <>
@@ -279,14 +279,14 @@ export function LaserTachometerSimulator() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
               <button
                 type="button"
                 onClick={() => setMode('laser')}
-                className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold border transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 rounded-full px-3 py-2 text-xs transition ${
                   mode === 'laser'
-                    ? 'bg-[#001F6B] text-white border-[#002D9C] shadow-sm'
-                    : 'bg-white/60 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-cyan-500/50'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <ScanLine className="h-4 w-4" />
@@ -295,10 +295,10 @@ export function LaserTachometerSimulator() {
               <button
                 type="button"
                 onClick={() => setMode('stroboscope')}
-                className={`flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold border transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 rounded-full px-3 py-2 text-xs transition ${
                   mode === 'stroboscope'
-                    ? 'bg-[#001F6B] text-white border-[#002D9C] shadow-sm'
-                    : 'bg-white/60 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-cyan-500/50'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 <Zap className="h-4 w-4" />
@@ -307,17 +307,17 @@ export function LaserTachometerSimulator() {
             </div>
 
             {mode === 'laser' ? (
-              <div className="flex items-center justify-between rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-slate-800/40 px-3.5 py-2.5">
-                <span className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              <div className="flex items-center justify-between rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-4 py-2.5">
+                <span className="text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick('650 nm Laser Emitter', 'Pemancar Laser 650 nm', '650 nm レーザー照射')}
                 </span>
                 <button
                   type="button"
                   onClick={() => setLaserActive((prev) => !prev)}
-                  className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors cursor-pointer ${
+                  className={`rounded-full border px-3.5 py-1.5 text-xs font-bold transition-colors ${
                     laserActive
-                      ? 'bg-rose-600 text-white hover:bg-rose-500'
-                      : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
+                      ? 'border-rose-500/40 bg-rose-600 text-white hover:bg-rose-500'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {laserActive
@@ -328,10 +328,10 @@ export function LaserTachometerSimulator() {
             ) : (
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-700 dark:text-slate-200">
+                  <span className="font-bold text-[var(--md-on-surface)]">
                     {pick('Strobe Flash Rate (FPM)', 'Laju Kilat Strobo (FPM)', 'ストロボ発光周波数 (FPM)')}
                   </span>
-                  <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                  <span className="font-mono font-extrabold text-[var(--md-primary)]">
                     {strobeFpm} FPM
                   </span>
                 </div>
@@ -350,7 +350,7 @@ export function LaserTachometerSimulator() {
                       key={delta}
                       type="button"
                       onClick={() => adjustStrobe(delta)}
-                      className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white/70 dark:bg-slate-800/60 py-1.5 text-xs font-mono font-semibold text-slate-700 dark:text-slate-200 hover:border-cyan-500 cursor-pointer"
+                      className="glass-pill rounded-full py-1.5 font-mono text-xs font-semibold"
                     >
                       {delta > 0 ? `+${delta}` : delta}
                     </button>
@@ -360,7 +360,7 @@ export function LaserTachometerSimulator() {
                   <button
                     type="button"
                     onClick={() => setStrobeFpm(Math.round(drive.rotorRpm))}
-                    className="rounded-lg bg-emerald-600/15 border border-emerald-500/40 text-emerald-700 dark:text-emerald-300 py-1.5 text-[11px] font-semibold hover:bg-emerald-600/25 cursor-pointer"
+                    className="rounded-full border border-emerald-500/40 bg-emerald-500/15 py-1.5 text-[11px] font-bold text-emerald-700 transition hover:bg-emerald-500/25 dark:text-emerald-300"
                   >
                     1× RPM ({Math.round(drive.rotorRpm)})
                   </button>
@@ -369,7 +369,7 @@ export function LaserTachometerSimulator() {
                     onClick={() =>
                       setStrobeFpm(Math.min(6000, Math.round(drive.rotorRpm * 2)))
                     }
-                    className="rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-700 dark:text-amber-300 py-1.5 text-[11px] font-semibold hover:bg-amber-500/25 cursor-pointer"
+                    className="rounded-full border border-amber-500/40 bg-amber-500/15 py-1.5 text-[11px] font-bold text-amber-700 transition hover:bg-amber-500/25 dark:text-amber-300"
                   >
                     2× RPM
                   </button>
@@ -378,7 +378,7 @@ export function LaserTachometerSimulator() {
                     onClick={() =>
                       setStrobeFpm(Math.max(200, Math.round(drive.rotorRpm / 2)))
                     }
-                    className="rounded-lg bg-rose-500/15 border border-rose-500/40 text-rose-700 dark:text-rose-300 py-1.5 text-[11px] font-semibold hover:bg-rose-500/25 cursor-pointer"
+                    className="rounded-full border border-rose-500/40 bg-rose-500/15 py-1.5 text-[11px] font-bold text-rose-700 transition hover:bg-rose-500/25 dark:text-rose-300"
                   >
                     ½× RPM
                   </button>
@@ -388,37 +388,40 @@ export function LaserTachometerSimulator() {
           </div>
 
           {/* Motor Drive & VFD Physics Controls */}
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <Sliders className="h-4 w-4 text-cyan-500" />
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+            <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+              <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
               {pick('VFD Motor Drive Controls', 'Kontrol Penggerak Motor VFD', 'VFDモータ駆動制御')}
             </h3>
 
             {/* Presets */}
-            <div className="grid grid-cols-2 gap-1.5">
-              {DRIVE_PRESETS.map((preset) => (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => handleSelectPreset(preset.id)}
-                  className={`rounded-xl px-2.5 py-2 text-left text-[11px] font-medium border transition-colors cursor-pointer ${
-                    presetId === preset.id
-                      ? 'bg-[#001F6B] text-white border-[#002D9C]'
-                      : 'bg-white/60 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-cyan-500/40'
-                  }`}
-                >
-                  {pick(preset.label, preset.labelId, preset.labelJa)}
-                </button>
-              ))}
+            <div className="grid grid-cols-2 gap-2">
+              {DRIVE_PRESETS.map((preset) => {
+                const isSelected = presetId === preset.id;
+                return (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => handleSelectPreset(preset.id)}
+                    className={`rounded-[20px] border px-3 py-2.5 text-left text-[11px] font-semibold transition-all ${
+                      isSelected
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
+                    }`}
+                  >
+                    {pick(preset.label, preset.labelId, preset.labelJa)}
+                  </button>
+                );
+              })}
             </div>
 
             {/* VFD Frequency */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick('VFD Supply Frequency', 'Frekuensi Suplai VFD', 'VFD電源周波数')}
                 </span>
-                <span className="font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                <span className="font-mono font-extrabold text-[var(--md-primary)]">
                   {vfdFreqHz} Hz
                 </span>
               </div>
@@ -435,19 +438,19 @@ export function LaserTachometerSimulator() {
 
             {/* Pole Count */}
             <div className="space-y-1.5">
-              <div className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              <div className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Motor Pole Count (P)', 'Jumlah Kutub Motor (P)', 'モータ極数 (P)')}
               </div>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 {([2, 4, 6, 8] as PoleCount[]).map((p) => (
                   <button
                     key={p}
                     type="button"
                     onClick={() => handlePolesChange(p)}
-                    className={`rounded-lg py-1.5 text-xs font-mono font-semibold border transition-colors cursor-pointer ${
+                    className={`rounded-full py-1.5 font-mono text-xs transition ${
                       poles === p
-                        ? 'bg-[#001F6B] text-white border-[#002D9C]'
-                        : 'bg-white/60 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {p}P
@@ -459,10 +462,10 @@ export function LaserTachometerSimulator() {
             {/* Load Torque */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick('Shaft Load Torque', 'Torsi Beban Poros', '軸負荷トルク')}
                 </span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-100">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {loadTorquePct}%
                 </span>
               </div>
@@ -478,28 +481,28 @@ export function LaserTachometerSimulator() {
             </div>
 
             {/* Drive Summary */}
-            <div className="rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50/70 dark:bg-slate-800/40 p-3 grid grid-cols-3 gap-2 text-center">
+            <div className="grid grid-cols-3 gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-center">
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
                   Ns = 120f/P
                 </div>
-                <div className="text-xs font-bold font-mono text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-xs font-bold text-[var(--md-on-surface)]">
                   {drive.syncRpm.toFixed(0)} RPM
                 </div>
               </div>
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
                   {pick('Rotor Nr', 'Rotor Nr', '実回転 Nr')}
                 </div>
-                <div className="text-xs font-bold font-mono text-cyan-600 dark:text-cyan-400">
+                <div className="font-mono text-xs font-bold text-[var(--md-primary)]">
                   {drive.rotorRpm.toFixed(1)} RPM
                 </div>
               </div>
               <div>
-                <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                <div className="text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
                   {pick('Slip s%', 'Slip s%', 'すべり s%')}
                 </div>
-                <div className="text-xs font-bold font-mono text-amber-600 dark:text-amber-400">
+                <div className="font-mono text-xs font-bold text-[var(--md-primary)]">
                   {drive.slipPct.toFixed(2)}%
                 </div>
               </div>
@@ -507,8 +510,8 @@ export function LaserTachometerSimulator() {
           </div>
 
           {/* Field Tip Card */}
-          <div className="glass-panel rounded-2xl p-4 shadow-xs text-xs text-slate-600 dark:text-slate-300 flex items-start gap-2.5">
-            <Activity className="h-4 w-4 text-cyan-500 shrink-0 mt-0.5" />
+          <div className="glass-panel flex items-start gap-2.5 rounded-[28px] p-4 text-xs text-[var(--md-on-surface-variant)]">
+            <Activity className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
             <p className="leading-relaxed">
               {pick(
                 'Field Tip: In Stroboscope mode, try clicking 2× RPM to observe the harmonic double-image (two tape strips 180° apart), or adjust FPM by ±2 from RPM to observe forward/backward alias drift.',

@@ -133,9 +133,9 @@ export function AlignmentSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Preset & Status Bar */}
-      <div className="flex flex-col gap-3 glass-panel rounded-2xl p-4  lg:flex-row lg:items-center lg:justify-between">
+      <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Presets:', 'Preset:', 'プリセット:')}
           </span>
           {ALIGNMENT_PRESETS.map((preset) => {
@@ -154,10 +154,10 @@ export function AlignmentSimulator() {
                 type="button"
                 onClick={() => selectPreset(preset.id)}
                 title={preset.description}
-                className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
+                className={`rounded-full border px-3.5 py-1.5 text-xs transition ${
                   active
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:border-emerald-500/60 dark:bg-emerald-500/15 dark:text-emerald-300'
-                    : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {presetLabel}
@@ -168,7 +168,7 @@ export function AlignmentSimulator() {
 
         <div className="flex flex-wrap items-center gap-2">
           {solution.isAligned ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300/60 bg-emerald-50/80 px-3 py-1 text-xs font-semibold text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200">
               <CheckCircle2 className="h-3.5 w-3.5" />
               {pick(
                 `In Tolerance (ISO/ANSI ${geometry.rpm} RPM)`,
@@ -177,7 +177,7 @@ export function AlignmentSimulator() {
               )}
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/60 bg-amber-50/80 px-3 py-1 text-xs font-semibold text-amber-800 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200">
               <AlertTriangle className="h-3.5 w-3.5" />
               {pick(
                 'Misaligned — Adjustment Needed',
@@ -191,7 +191,7 @@ export function AlignmentSimulator() {
             <button
               type="button"
               onClick={fixSoftFoot}
-              className="inline-flex items-center gap-1.5 rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300 dark:hover:bg-rose-500/25"
+              className="inline-flex items-center gap-1.5 rounded-full border border-rose-300/60 bg-rose-50/80 px-3 py-1 text-xs font-semibold text-rose-800 transition hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-200 dark:hover:bg-rose-950/50"
             >
               <AlertTriangle className="h-3.5 w-3.5" />
               {pick(
@@ -203,14 +203,14 @@ export function AlignmentSimulator() {
           )}
 
           {/* Laser vs Dial View Toggle */}
-          <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 dark:border-slate-700 dark:bg-slate-800">
+          <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setMeasurementView('dial')}
-              className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium transition ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition ${
                 measurementView === 'dial'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               <Gauge className="h-3.5 w-3.5" />
@@ -219,10 +219,10 @@ export function AlignmentSimulator() {
             <button
               type="button"
               onClick={() => setMeasurementView('laser')}
-              className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium transition ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition ${
                 measurementView === 'laser'
-                  ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               <Crosshair className="h-3.5 w-3.5" />
@@ -233,7 +233,7 @@ export function AlignmentSimulator() {
           <button
             type="button"
             onClick={resetAll}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -285,20 +285,20 @@ export function AlignmentSimulator() {
           },
         ];
         return (
-          <div className="grid grid-cols-2 gap-2 glass-panel rounded-2xl p-3  sm:grid-cols-5">
+          <div className="glass-panel grid grid-cols-2 gap-2.5 rounded-[28px] p-3 sm:grid-cols-5">
             {steps.map((s) => (
               <div
                 key={s.num}
-                className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+                className={`flex items-center gap-2 rounded-[20px] border px-3 py-2 text-xs font-semibold transition ${
                   s.done
-                    ? 'border-emerald-200 bg-emerald-50/80 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300'
-                    : 'border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400'
+                    ? 'border-emerald-300/60 bg-emerald-50/80 text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)]'
                 }`}
               >
                 {s.done ? (
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
                 ) : (
-                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-slate-200 text-[10px] font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">
+                  <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--md-surface-container-highest)] text-[10px] font-bold text-[var(--md-on-surface)]">
                     {s.num}
                   </span>
                 )}
@@ -311,7 +311,7 @@ export function AlignmentSimulator() {
 
       {/* Main Rig + Dial Indicators */}
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-12 sim-equal-grid-xl">
-        <div className="space-y-4 glass-panel rounded-2xl p-4  xl:col-span-7">
+        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 xl:col-span-7">
           <div className="flex items-center justify-center">
             <AlignmentRigSvg
               geometry={geometry}
@@ -323,7 +323,7 @@ export function AlignmentSimulator() {
           </div>
 
           {/* Shaft Rotation Controls */}
-          <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-1.5">
               {CARDINAL_ANGLES.map((c) => (
                 <button
@@ -333,10 +333,10 @@ export function AlignmentSimulator() {
                     setIsRotating(false);
                     setShaftAngleDeg(c.deg);
                   }}
-                  className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition ${
+                  className={`rounded-full border px-3 py-1 text-xs transition ${
                     Math.round(shaftAngleDeg) === c.deg
-                      ? 'border-emerald-500 bg-emerald-600 text-white dark:bg-emerald-500 dark:text-slate-950'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {c.label}
@@ -345,7 +345,7 @@ export function AlignmentSimulator() {
               <button
                 type="button"
                 onClick={() => setIsRotating((r) => !r)}
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold"
               >
                 {isRotating ? (
                   <>
@@ -359,7 +359,7 @@ export function AlignmentSimulator() {
               </button>
             </div>
 
-            <div className="flex flex-1 items-center gap-2 sm:max-w-xs">
+            <div className="flex flex-1 items-center gap-2.5 sm:max-w-xs">
               <input
                 type="range"
                 min={0}
@@ -370,10 +370,10 @@ export function AlignmentSimulator() {
                   setIsRotating(false);
                   setShaftAngleDeg(Number(e.target.value));
                 }}
-                className="w-full accent-emerald-600"
+                className="w-full"
                 aria-label="Shaft rotation angle"
               />
-              <span className="w-12 text-right font-mono text-xs font-semibold text-slate-700 dark:text-slate-200">
+              <span className="w-12 text-right font-mono text-xs font-bold text-[var(--md-primary)]">
                 {Math.round(shaftAngleDeg)}°
               </span>
             </div>
@@ -381,7 +381,7 @@ export function AlignmentSimulator() {
         </div>
 
         {/* Dial Gauges or Laser View & Cardinal Table */}
-        <div className="space-y-4 glass-panel rounded-2xl p-4  xl:col-span-5">
+        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 xl:col-span-5">
           {measurementView === 'laser' ? (
             <LaserAlignmentPanel
               solution={solution}
@@ -412,34 +412,34 @@ export function AlignmentSimulator() {
           )}
 
           {/* Cardinal Readings Table + Validity Rule */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+            <div className="mb-2.5 flex items-center justify-between">
+              <span className="text-xs font-bold text-[var(--md-on-surface)]">
                 Cardinal Readings (mm)
               </span>
-              <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300">
+              <span className="rounded-full border border-emerald-300/60 bg-emerald-50/80 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200">
                 T+B = L+R (Δ {solution.rimValidityErrorMm.toFixed(3)})
               </span>
             </div>
 
             <div className="grid grid-cols-5 gap-1.5 text-center font-mono text-xs">
-              <div className="text-left font-sans text-[11px] font-semibold text-slate-500">
+              <div className="text-left font-sans text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 Gauge
               </div>
-              <div className="font-semibold text-slate-600 dark:text-slate-400">
+              <div className="font-semibold text-[var(--md-on-surface-variant)]">
                 T (0°)
               </div>
-              <div className="font-semibold text-slate-600 dark:text-slate-400">
+              <div className="font-semibold text-[var(--md-on-surface-variant)]">
                 R (90°)
               </div>
-              <div className="font-semibold text-slate-600 dark:text-slate-400">
+              <div className="font-semibold text-[var(--md-on-surface-variant)]">
                 B (180°)
               </div>
-              <div className="font-semibold text-slate-600 dark:text-slate-400">
+              <div className="font-semibold text-[var(--md-on-surface-variant)]">
                 L (270°)
               </div>
 
-              <div className="text-left font-sans text-[11px] font-medium text-slate-700 dark:text-slate-300">
+              <div className="text-left font-sans text-[11px] font-medium text-[var(--md-on-surface)]">
                 Rim {geometry.compensateSag ? '(Comp)' : '(Raw)'}
               </div>
               {[
@@ -458,14 +458,14 @@ export function AlignmentSimulator() {
               ].map((val, idx) => (
                 <div
                   key={idx}
-                  className="rounded bg-white py-0.5 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                  className="rounded-xl border border-[var(--md-outline-variant)]/40 bg-[var(--md-surface-container-low)] py-1 text-[var(--md-on-surface)]"
                 >
                   {val >= 0 ? '+' : ''}
                   {val.toFixed(2)}
                 </div>
               ))}
 
-              <div className="text-left font-sans text-[11px] font-medium text-slate-700 dark:text-slate-300">
+              <div className="text-left font-sans text-[11px] font-medium text-[var(--md-on-surface)]">
                 Face
               </div>
               {[
@@ -476,7 +476,7 @@ export function AlignmentSimulator() {
               ].map((val, idx) => (
                 <div
                   key={idx}
-                  className="rounded bg-white py-0.5 text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                  className="rounded-xl border border-[var(--md-outline-variant)]/40 bg-[var(--md-surface-container-low)] py-1 text-[var(--md-on-surface)]"
                 >
                   {val >= 0 ? '+' : ''}
                   {val.toFixed(2)}
@@ -490,10 +490,10 @@ export function AlignmentSimulator() {
       {/* Soft-Foot Diagnostic & Actionable Alignment Worksheet */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
         {/* Soft-Foot Diagnostic & Shim Check */}
-        <div className="space-y-3 glass-panel rounded-2xl p-4  lg:col-span-6">
+        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white">
+              <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
                 <AlertTriangle
                   className={`h-4 w-4 ${
                     solution.softFootOk
@@ -503,7 +503,7 @@ export function AlignmentSimulator() {
                 />
                 Step 1: {pick('Soft-Foot Diagnostic & Shim Check', 'Diagnosis Soft-Foot & Cek Shim', 'ステップ1: ソフトフット診断とシム確認')}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Loosen each motor anchor bolt to measure dial lift; shim any foot > 0.05 mm before aligning.',
                   'Kendurkan tiap baut kaki motor untuk mengukur angkatan dial; beri shim kaki > 0.05 mm sebelum meluruskan.',
@@ -512,7 +512,7 @@ export function AlignmentSimulator() {
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs">
-              <span className="text-slate-500 dark:text-slate-400">
+              <span className="text-[var(--md-on-surface-variant)]">
                 {pick('Fault Foot:', 'Kaki Bermasalah:', '異常脚:')}
               </span>
               <select
@@ -527,7 +527,7 @@ export function AlignmentSimulator() {
                   setSoftFootShims({ ...ZERO_SOFT_FOOT_SHIMS });
                   setLoosenedFoot(foot);
                 }}
-                className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-1 text-xs font-semibold text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 aria-label="Soft foot fault location"
               >
                 {MOTOR_FEET.map((f) => (
@@ -539,7 +539,7 @@ export function AlignmentSimulator() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {MOTOR_FEET.map((f) => {
               const lift = getResidualSoftFootMm(f.id, misalignment, softFootShims);
               const isLoosened = loosenedFoot === f.id;
@@ -547,25 +547,25 @@ export function AlignmentSimulator() {
               return (
                 <div
                   key={f.id}
-                  className={`flex flex-col justify-between rounded-xl border p-2.5 transition ${
+                  className={`flex flex-col justify-between rounded-[20px] border p-2.5 transition ${
                     isLoosened
                       ? isOut
-                        ? 'border-rose-400 bg-rose-50/70 dark:border-rose-500/50 dark:bg-rose-500/10'
-                        : 'border-emerald-400 bg-emerald-50/60 dark:border-emerald-500/50 dark:bg-emerald-500/10'
-                      : 'border-slate-200 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900'
+                        ? 'border-rose-400 bg-rose-50/70 dark:border-rose-500/50 dark:bg-rose-950/30'
+                        : 'border-emerald-400 bg-emerald-50/60 dark:border-emerald-500/50 dark:bg-emerald-950/30'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
+                    <span className="text-xs font-bold text-[var(--md-on-surface)]">
                       {f.id}
                     </span>
                     <button
                       type="button"
                       onClick={() => setLoosenedFoot(isLoosened ? null : f.id)}
-                      className={`rounded px-1.5 py-0.5 text-[10px] font-semibold transition ${
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-semibold transition ${
                         isLoosened
-                          ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                          : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          ? 'bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                          : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {isLoosened
@@ -586,11 +586,11 @@ export function AlignmentSimulator() {
                         {pick('Lift:', 'Angkat:', '浮き:')} {lift.toFixed(2)} mm
                       </div>
                     ) : (
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                         {pick('Bolt tight', 'Baut kencang', 'ボルト締付済')}
                       </div>
                     )}
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                    <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                       Shim: +{softFootShims[f.id].toFixed(2)} mm
                     </div>
                   </div>
@@ -599,21 +599,21 @@ export function AlignmentSimulator() {
                     <button
                       type="button"
                       onClick={() => adjustFootShim(f.id, -0.05)}
-                      className="flex-1 rounded border border-slate-200 bg-white py-0.5 text-[10px] font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                      className="flex-1 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] py-0.5 text-[10px] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-highest)]"
                     >
                       -0.05
                     </button>
                     <button
                       type="button"
                       onClick={() => adjustFootShim(f.id, 0.01)}
-                      className="flex-1 rounded border border-slate-200 bg-white py-0.5 text-[10px] font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+                      className="flex-1 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] py-0.5 text-[10px] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-highest)]"
                     >
                       +0.01
                     </button>
                     <button
                       type="button"
                       onClick={() => adjustFootShim(f.id, 0.05)}
-                      className="flex-1 rounded border border-emerald-300 bg-emerald-50 py-0.5 text-[10px] font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-300"
+                      className="m3-btn-tonal flex-1 py-0.5 text-[10px] font-bold"
                     >
                       +0.05
                     </button>
@@ -625,18 +625,18 @@ export function AlignmentSimulator() {
         </div>
 
         {/* Actionable Alignment Worksheet */}
-        <div className="space-y-3 glass-panel rounded-2xl p-4  lg:col-span-6">
-          <div className="flex items-center justify-between">
+        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+          <div className="flex items-center justify-between gap-2">
             <div>
-              <h3 className="flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white">
-                <ClipboardList className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
+                <ClipboardList className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Step 2: Actionable Alignment Worksheet',
                   'Langkah 2: Lembar Kerja Koreksi Pelurusan',
                   'ステップ2: 芯出し補正ワークシート'
                 )}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Calculated shims & lateral moves vs. currently applied adjustments.',
                   'Shim & pergeseran lateral terhitung vs. penyetelan yang sudah diterapkan.',
@@ -647,16 +647,16 @@ export function AlignmentSimulator() {
             <button
               type="button"
               onClick={applyRecommended}
-              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+              className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
             >
               <Sparkles className="h-3.5 w-3.5" />
               {pick('Apply Worksheet Moves', 'Terapkan Koreksi', '補正量を適用')}
             </button>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+          <div className="overflow-x-auto rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)]">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-[11px] uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400">
+              <thead className="border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-high)] text-[11px] uppercase tracking-wide text-[var(--md-on-surface-variant)]">
                 <tr>
                   <th className="px-3 py-2">{pick('Motor Foot / Axis', 'Kaki / Sumbu Motor', 'モータ脚・軸')}</th>
                   <th className="px-3 py-2 text-right">{pick('Applied', 'Diterapkan', '適用済')}</th>
@@ -664,7 +664,7 @@ export function AlignmentSimulator() {
                   <th className="px-3 py-2">{pick('Action', 'Tindakan', '作業')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 font-mono dark:divide-slate-800">
+              <tbody className="divide-y divide-[var(--md-outline-variant)]/35 font-mono">
                 {[
                   {
                     label: pick('Front Foot Shim (V)', 'Shim Kaki Depan (V)', '前脚シム (V)'),
@@ -699,12 +699,12 @@ export function AlignmentSimulator() {
                   return (
                     <tr
                       key={row.label}
-                      className="bg-white dark:bg-slate-950/40"
+                      className="transition hover:bg-[var(--md-surface-container-high)]"
                     >
-                      <td className="px-3 py-2 font-sans font-medium text-slate-800 dark:text-slate-200">
+                      <td className="px-3 py-2 font-sans font-medium text-[var(--md-on-surface)]">
                         {row.label}
                       </td>
-                      <td className="px-3 py-2 text-right text-slate-600 dark:text-slate-400">
+                      <td className="px-3 py-2 text-right text-[var(--md-on-surface-variant)]">
                         {row.applied >= 0 ? '+' : ''}
                         {row.applied.toFixed(2)} mm
                       </td>
@@ -724,7 +724,7 @@ export function AlignmentSimulator() {
                             {pick('In Range', 'Dalam Batas', '範囲内')}
                           </span>
                         ) : (
-                          <span className="text-slate-700 dark:text-slate-300">
+                          <span className="text-[var(--md-on-surface)]">
                             {row.rem > 0 ? row.posAction : row.negAction}
                           </span>
                         )}
@@ -741,16 +741,16 @@ export function AlignmentSimulator() {
       {/* Bottom Controls: Shim/Jack Adjuster, Diagnostics, Geometry & Sag */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {/* 1. Shim & Horizontal Jacking Adjuster */}
-        <div className="space-y-3 glass-panel rounded-2xl p-4 ">
+        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
           <div className="flex items-center justify-between">
-            <h3 className="flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white">
-              <Wrench className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
+              <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
               {pick('Shim & Jacking Adjuster', 'Penyetel Shim & Jack', 'シム＆ジャッキ調整')}
             </h3>
             <button
               type="button"
               onClick={applyRecommended}
-              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+              className="m3-btn-filled inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold"
             >
               <Sparkles className="h-3.5 w-3.5" />
               {pick('Auto-Align', 'Lurus Otomatis', '自動芯出し')}
@@ -785,20 +785,20 @@ export function AlignmentSimulator() {
               },
             ] as const
           ).map((ctrl) => (
-            <div key={ctrl.key} className="space-y-1">
+            <div key={ctrl.key} className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-medium text-slate-700 dark:text-slate-300">
+                <span className="font-medium text-[var(--md-on-surface)]">
                   {ctrl.label}
                 </span>
-                <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   Rec:{' '}
-                  <strong className="text-emerald-600 dark:text-emerald-400">
+                  <strong className="text-[var(--md-primary)]">
                     {ctrl.rec >= 0 ? '+' : ''}
                     {ctrl.rec.toFixed(2)} mm
                   </strong>
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <input
                   type="range"
                   min={-1.5}
@@ -811,9 +811,9 @@ export function AlignmentSimulator() {
                       [ctrl.key]: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
-                <span className="w-20 text-right font-mono text-xs font-semibold text-slate-900 dark:text-slate-100">
+                <span className="w-20 text-right font-mono text-xs font-semibold text-[var(--md-on-surface)]">
                   {ctrl.val >= 0 ? '+' : ''}
                   {ctrl.val.toFixed(2)} mm
                 </span>
@@ -823,21 +823,21 @@ export function AlignmentSimulator() {
         </div>
 
         {/* 2. Alignment Diagnostics */}
-        <div className="space-y-3 glass-panel rounded-2xl p-4 ">
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick('Coupling Alignment Diagnostics', 'Diagnostik Pelurusan Kopling', 'カップリング芯出し診断')}
           </h3>
 
           <div className="grid grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Hot Running V-Offset', 'Offset-V Jalan Panas', '熱間運転垂直偏心')}
               </div>
-              <div className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-sm font-bold text-[var(--md-on-surface)]">
                 {solution.hotVerticalOffsetMm >= 0 ? '+' : ''}
                 {solution.hotVerticalOffsetMm.toFixed(3)} mm
               </div>
-              <div className="text-[10px] text-slate-500">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 {pick('Cold', 'Dingin', '冷間')}: {solution.verticalOffsetMm >= 0 ? '+' : ''}
                 {solution.verticalOffsetMm.toFixed(2)} • {pick('Target', 'Target', '目標')}:{' '}
                 {solution.coldTargetOffsetMm >= 0 ? '+' : ''}
@@ -845,47 +845,47 @@ export function AlignmentSimulator() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Horizontal Offset', 'Offset Horizontal', '水平偏心')}
               </div>
-              <div className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-sm font-bold text-[var(--md-on-surface)]">
                 {solution.horizontalOffsetMm >= 0 ? '+' : ''}
                 {solution.horizontalOffsetMm.toFixed(3)} mm
               </div>
-              <div className="text-[10px] text-slate-500">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 Limit ±{solution.maxOffsetLimitMm.toFixed(3)} mm
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 Vertical Angularity
               </div>
-              <div className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-sm font-bold text-[var(--md-on-surface)]">
                 {solution.verticalAngularityPer100 >= 0 ? '+' : ''}
                 {solution.verticalAngularityPer100.toFixed(3)}
               </div>
-              <div className="text-[10px] text-slate-500">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 mm/100mm (≤ {solution.maxAngularityLimitPer100.toFixed(3)})
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 Horizontal Angularity
               </div>
-              <div className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-white">
+              <div className="mt-0.5 font-mono text-sm font-bold text-[var(--md-on-surface)]">
                 {solution.horizontalAngularityPer100 >= 0 ? '+' : ''}
                 {solution.horizontalAngularityPer100.toFixed(3)}
               </div>
-              <div className="text-[10px] text-slate-500">
+              <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                 mm/100mm (≤ {solution.maxAngularityLimitPer100.toFixed(3)})
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs text-[var(--md-on-surface)]">
             <div className="flex items-center justify-between">
               <span>{pick('Parallel Offset Status:', 'Status Offset Paralel:', '平行偏心状態:')}</span>
               <span
@@ -932,9 +932,9 @@ export function AlignmentSimulator() {
         </div>
 
         {/* 3. Machine Geometry & Bar Sag */}
-        <div className="space-y-3 glass-panel rounded-2xl p-4 ">
+        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Machine Geometry & Bar Sag', 'Geometri Mesin & Sag Batang', '機械寸法・バーたわみ')}
             </h3>
             <select
@@ -945,7 +945,7 @@ export function AlignmentSimulator() {
                   rpm: Number(e.target.value) as MachineGeometry['rpm'],
                 }))
               }
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs font-semibold text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               aria-label="Operating RPM"
             >
               {RPM_OPTIONS.map((r) => (
@@ -956,11 +956,11 @@ export function AlignmentSimulator() {
             </select>
           </div>
 
-          <div className="space-y-2 text-xs">
-            <div>
-              <div className="flex justify-between text-slate-700 dark:text-slate-300">
+          <div className="space-y-2.5 text-xs">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[var(--md-on-surface)]">
                 <span>Coupling Sweep Ø (D)</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {geometry.couplingDiameterMm} mm
                 </span>
               </div>
@@ -976,14 +976,14 @@ export function AlignmentSimulator() {
                     couplingDiameterMm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-emerald-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-slate-700 dark:text-slate-300">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[var(--md-on-surface)]">
                 <span>Front Foot Distance (L₁)</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {geometry.frontFootDistMm} mm
                 </span>
               </div>
@@ -999,14 +999,14 @@ export function AlignmentSimulator() {
                     frontFootDistMm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-emerald-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-slate-700 dark:text-slate-300">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[var(--md-on-surface)]">
                 <span>Rear Foot Distance (L₂)</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {geometry.rearFootDistMm} mm
                 </span>
               </div>
@@ -1022,14 +1022,14 @@ export function AlignmentSimulator() {
                     rearFootDistMm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-emerald-600"
+                className="w-full"
               />
             </div>
 
-            <div>
-              <div className="flex justify-between text-slate-700 dark:text-slate-300">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[var(--md-on-surface)]">
                 <span>{pick('Indicator Bar Sag (6 o’clock)', 'Sag Batang Indicator (Pukul 6)', 'バーたわみ（6時位置）')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {geometry.barSagMm.toFixed(2)} mm
                 </span>
               </div>
@@ -1045,12 +1045,12 @@ export function AlignmentSimulator() {
                     barSagMm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-emerald-600"
+                className="w-full"
               />
             </div>
 
-            <label className="flex cursor-pointer items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900">
-              <span className="font-medium text-slate-700 dark:text-slate-200">
+            <label className="flex cursor-pointer items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2">
+              <span className="font-medium text-[var(--md-on-surface)]">
                 {pick('Apply Bar Sag Compensation', 'Terapkan Kompensasi Sag Batang', 'バーたわみ補正を適用')}
               </span>
               <input
@@ -1062,14 +1062,14 @@ export function AlignmentSimulator() {
                     compensateSag: e.target.checked,
                   }))
                 }
-                className="h-4 w-4 accent-emerald-600"
+                className="h-4 w-4"
               />
             </label>
 
-            <div>
-              <div className="flex justify-between text-slate-700 dark:text-slate-300">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[var(--md-on-surface)]">
                 <span>{pick('Simulated Soft Foot', 'Simulasi Soft Foot', '模擬ソフトフット')}</span>
-                <span className="font-mono font-semibold">
+                <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {misalignment.softFootMm.toFixed(2)} mm
                 </span>
               </div>
@@ -1085,14 +1085,14 @@ export function AlignmentSimulator() {
                     softFootMm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-rose-500"
+                className="w-full"
               />
             </div>
 
             {/* Thermal Growth Compensation */}
-            <div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50/80 p-2.5 dark:border-slate-800 dark:bg-slate-900">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-slate-800 dark:text-slate-200">
+            <div className="space-y-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick('Thermal Growth (Cold → Hot)', 'Pemuaian Termal (Dingin → Panas)', '熱膨張補正（冷間 → 熱間）')}
                 </span>
                 <button
@@ -1104,15 +1104,15 @@ export function AlignmentSimulator() {
                       motorThermalGrowthMm: 0.05,
                     }))
                   }
-                  className="rounded border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/40 dark:bg-emerald-500/15 dark:text-emerald-300"
+                  className="m3-btn-tonal px-2.5 py-1 text-[10px] font-bold"
                 >
                   {pick('Hot Pump (+0.15/+0.05)', 'Pompa Panas (+0.15/+0.05)', '高温ポンプ (+0.15/+0.05)')}
                 </button>
               </div>
-              <div>
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
+              <div className="space-y-1">
+                <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                   <span>{pick('Pump Thermal Rise', 'Kenaikan Termal Pompa', 'ポンプ熱上昇')}</span>
-                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+                  <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                     +{geometry.pumpThermalGrowthMm.toFixed(2)} mm
                   </span>
                 </div>
@@ -1128,13 +1128,13 @@ export function AlignmentSimulator() {
                       pumpThermalGrowthMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
-              <div>
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
+              <div className="space-y-1">
+                <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                   <span>{pick('Motor Thermal Rise', 'Kenaikan Termal Motor', 'モータ熱上昇')}</span>
-                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+                  <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                     +{geometry.motorThermalGrowthMm.toFixed(2)} mm
                   </span>
                 </div>
@@ -1150,14 +1150,14 @@ export function AlignmentSimulator() {
                       motorThermalGrowthMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-emerald-600"
+                  className="w-full"
                 />
               </div>
-              <div className="flex justify-between border-t border-slate-200 pt-1.5 text-[11px] dark:border-slate-800">
-                <span className="text-slate-500 dark:text-slate-400">
+              <div className="flex justify-between border-t border-[var(--md-outline-variant)]/50 pt-1.5 text-[11px]">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Cold Target V-Offset:', 'Target Offset-V Dingin:', '冷間目標垂直偏心:')}
                 </span>
-                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {solution.coldTargetOffsetMm >= 0 ? '+' : ''}
                   {solution.coldTargetOffsetMm.toFixed(2)} mm
                 </span>

@@ -49,10 +49,13 @@ export function MicrometerSvg({
     metalDark: isDark ? '#0f172a' : '#cbd5e1',
     tick: isDark ? '#f1f5f9' : '#0f172a',
     tickSubtle: isDark ? '#94a3b8' : '#475569',
-    accent: isDark ? '#38bdf8' : '#0284c7',
+    accent: 'var(--md-primary)',
     coincide: '#10b981',
     partFill: isDark ? '#0369a1' : '#bae6fd',
     partStroke: isDark ? '#38bdf8' : '#0284c7',
+    calloutBg: 'var(--md-surface-container-low)',
+    calloutBorder: 'var(--md-primary)',
+    calloutText: 'var(--md-primary)',
   };
 
   function clientToSvgDelta(deltaClientX: number, deltaClientY: number) {
@@ -112,7 +115,7 @@ export function MicrometerSvg({
 
   return (
     <div className="space-y-3">
-      <div className="relative w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/70">
+      <div className="relative w-full overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]">
         <svg
           ref={svgRef}
           viewBox="0 0 860 285"
@@ -169,6 +172,7 @@ export function MicrometerSvg({
             textAnchor="middle"
             fontSize="10"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
             fill={c.tickSubtle}
           >
             0–25 mm · 0.01 mm
@@ -233,9 +237,9 @@ export function MicrometerSvg({
                   y={76}
                   width={namePillW}
                   height={17}
-                  rx={4}
-                  fill={isDark ? '#0f172a' : '#ffffff'}
-                  stroke={c.partStroke}
+                  rx={8.5}
+                  fill={c.calloutBg}
+                  stroke={c.calloutBorder}
                   strokeWidth={1}
                 />
                 <text
@@ -244,7 +248,8 @@ export function MicrometerSvg({
                   textAnchor="middle"
                   fontSize="9"
                   fontWeight="700"
-                  fill={c.partStroke}
+                  fontFamily="var(--font-sans)"
+                  fill={c.calloutText}
                 >
                   {activePart.name}
                 </text>
@@ -254,9 +259,9 @@ export function MicrometerSvg({
                   y={170}
                   width={dimPillW}
                   height={17}
-                  rx={4}
-                  fill={isDark ? '#0f172a' : '#ffffff'}
-                  stroke={c.partStroke}
+                  rx={8.5}
+                  fill={c.calloutBg}
+                  stroke={c.calloutBorder}
                   strokeWidth={1}
                 />
                 <text
@@ -265,7 +270,8 @@ export function MicrometerSvg({
                   textAnchor="middle"
                   fontSize="8.5"
                   fontWeight="600"
-                  fill={c.partStroke}
+                  fontFamily="var(--font-mono)"
+                  fill={c.calloutText}
                 >
                   {dimLabel}
                 </text>
@@ -341,6 +347,7 @@ export function MicrometerSvg({
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="600"
+                    fontFamily="var(--font-mono)"
                     fill={c.tick}
                   >
                     {mm}
@@ -458,6 +465,7 @@ export function MicrometerSvg({
                       y={y + 3}
                       fontSize="8.5"
                       fontWeight="600"
+                      fontFamily="var(--font-mono)"
                       fill={isAligned ? c.coincide : c.tick}
                     >
                       {div}
@@ -473,6 +481,7 @@ export function MicrometerSvg({
               textAnchor="middle"
               fontSize="9.5"
               fontWeight="500"
+              fontFamily="var(--font-sans)"
               fill={c.tickSubtle}
             >
               Drag thimble horizontally or vertically
@@ -483,14 +492,14 @@ export function MicrometerSvg({
 
       {/* Magnifier Loupe for Micrometer Sleeve + Thimble */}
       {showLoupe && (
-        <div className="rounded-xl border border-sky-200 dark:border-sky-800/70 bg-white dark:bg-slate-900 p-3 shadow-sm">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <div className="text-xs font-semibold text-sky-700 dark:text-sky-300">
+        <div className="rounded-[24px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+            <div className="text-xs font-bold text-[var(--md-primary)]">
               Magnifier Loupe ({loupeZoom}× Optical Zoom — Sleeve & Thimble Datum)
             </div>
-            <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex flex-wrap items-center gap-3 text-[11px] text-[var(--md-on-surface-variant)]">
               <span className="flex items-center gap-1.5">
-                <span className="inline-block w-5 border-t-2 border-dashed border-sky-500" />
+                <span className="inline-block w-5 border-t-2 border-dashed border-[var(--md-primary)]" />
                 Thimble Edge (Sleeve)
               </span>
               {!hideReadout && (
@@ -513,7 +522,7 @@ export function MicrometerSvg({
 
           <svg
             viewBox={`${loupeViewX} ${loupeViewY} ${loupeViewW} ${loupeViewH}`}
-            className="w-full max-h-[160px] h-32 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950"
+            className="w-full max-h-[160px] h-32 rounded-2xl border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-lowest)]"
             aria-label="Magnified Micrometer Scale View"
           >
             {/* Sleeve */}
@@ -555,6 +564,7 @@ export function MicrometerSvg({
                       textAnchor="middle"
                       fontSize="5"
                       fontWeight="700"
+                      fontFamily="var(--font-mono)"
                       fill={c.tick}
                     >
                       {mm}
@@ -612,6 +622,7 @@ export function MicrometerSvg({
                         y={y + 1.8}
                         fontSize="4.8"
                         fontWeight="700"
+                        fontFamily="var(--font-mono)"
                         fill={isAligned ? c.coincide : c.tick}
                       >
                         {div}

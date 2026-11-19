@@ -166,15 +166,15 @@ export function CouplingSimulator() {
   return (
     <div className="space-y-5">
       {/* Sub-tab Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 glass-panel rounded-2xl p-3 ">
-        <div className="flex flex-wrap gap-2">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
+        <div className="inline-flex flex-wrap rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setSubTab('balancing')}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition ${
               subTab === 'balancing'
-                ? 'bg-violet-600 text-white shadow-sm shadow-violet-600/20 dark:bg-violet-500 dark:text-slate-950'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <Activity className="h-4 w-4" />
@@ -187,10 +187,10 @@ export function CouplingSimulator() {
           <button
             type="button"
             onClick={() => setSubTab('coupling')}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition ${
               subTab === 'coupling'
-                ? 'bg-violet-600 text-white shadow-sm shadow-violet-600/20 dark:bg-violet-500 dark:text-slate-950'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <Cog className="h-4 w-4" />
@@ -207,7 +207,7 @@ export function CouplingSimulator() {
             <button
               type="button"
               onClick={() => setIsPlaying((p) => !p)}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
             >
               {isPlaying ? (
                 <>
@@ -224,7 +224,7 @@ export function CouplingSimulator() {
             <button
               type="button"
               onClick={handleNewChallenge}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-violet-200 bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-500/30 dark:bg-violet-500/15 dark:text-violet-300 dark:hover:bg-violet-500/25"
+              className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               {pick(
@@ -243,11 +243,11 @@ export function CouplingSimulator() {
           {/* Left Column: Rotor Disk, Polar Plot & ISO 10816 Meter */}
           <div className="space-y-4 lg:col-span-7">
             {/* ISO 10816-3 RMS Meter */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <Gauge className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-                  <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                  <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
+                  <span className="text-sm font-bold text-[var(--md-on-surface)]">
                     {pick(
                       'ISO 10816-3 RMS Vibration Meter',
                       'Meter Getaran RMS ISO 10816-3',
@@ -257,7 +257,7 @@ export function CouplingSimulator() {
                 </div>
                 {hasInitialRun ? (
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
+                    className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-xs font-semibold ${
                       ZONE_BADGE_CLASSES[balancingSolution.activeZone]
                     }`}
                   >
@@ -270,7 +270,7 @@ export function CouplingSimulator() {
                     mm/s)
                   </span>
                 ) : (
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  <span className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-0.5 text-xs font-medium text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Awaiting Initial Run',
                       'Menunggu Pengukuran Awal',
@@ -282,7 +282,7 @@ export function CouplingSimulator() {
 
               {/* Segmented ISO Zone Bar */}
               <div className="mt-3">
-                <div className="relative h-3 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                <div className="relative h-3 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                   <div className="flex h-full w-full opacity-35">
                     <div className="w-[17.5%] bg-emerald-500" title="Zone A <= 1.4" />
                     <div className="w-[17.5%] bg-sky-500" title="Zone B 1.4-2.8" />
@@ -291,12 +291,12 @@ export function CouplingSimulator() {
                   </div>
                   {hasInitialRun && (
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-violet-600 transition-all duration-300 dark:bg-violet-400"
+                      className="absolute inset-y-0 left-0 rounded-full bg-[var(--md-primary)] transition-all duration-300"
                       style={{ width: `${rmsBarPct}%` }}
                     />
                   )}
                 </div>
-                <div className="mt-1.5 flex justify-between text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <div className="mt-1.5 flex justify-between text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   <span>0.0</span>
                   <span>1.4 (Zone A)</span>
                   <span>2.8 (B)</span>
@@ -307,9 +307,9 @@ export function CouplingSimulator() {
             </div>
 
             {/* Visuals: Rotor Disk + Polar Vector Plot */}
-            <div className="grid grid-cols-1 gap-4 glass-panel rounded-2xl p-4 shadow-xs sm:grid-cols-2 ">
+            <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 sm:grid-cols-2">
               <div className="flex flex-col items-center">
-                <div className="mb-2 flex w-full items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <div className="mb-2 flex w-full items-center justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                   <span>
                     {pick(
                       'Rotor Disk (0°–360° Ring)',
@@ -317,7 +317,7 @@ export function CouplingSimulator() {
                       'ロータ円板 (0°–360° リング)'
                     )}
                   </span>
-                  <span className="text-violet-600 dark:text-violet-400">
+                  <span className="font-mono text-[var(--md-primary)]">
                     {pick('Challenge', 'Tantangan', '課題')} #{challenge.id} ·{' '}
                     {challenge.rpm} RPM
                   </span>
@@ -339,7 +339,7 @@ export function CouplingSimulator() {
               </div>
 
               <div className="flex flex-col items-center">
-                <div className="mb-2 flex w-full items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <div className="mb-2 flex w-full items-center justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                   <span>
                     {pick(
                       'Polar Vibration Vector Plot',
@@ -347,7 +347,7 @@ export function CouplingSimulator() {
                       '極座標振動ベクトル図'
                     )}
                   </span>
-                  <span className="text-slate-500 dark:text-slate-400">
+                  <span className="text-[var(--md-on-surface-variant)]">
                     {pick('1X Phasors', 'Fasor 1X', '1X フェーザ')}
                   </span>
                 </div>
@@ -362,8 +362,8 @@ export function CouplingSimulator() {
             </div>
 
             {/* Live 1X Time-Waveform Vibration Sine Plot */}
-            <div className="glass-panel rounded-2xl p-4 ">
-              <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-[var(--md-on-surface)]">
                 <span>
                   {pick(
                     '1× Time-Waveform Vibration Sine Plot (mm/s Peak-to-Peak)',
@@ -371,7 +371,7 @@ export function CouplingSimulator() {
                     '1× 時間波形振動サインプロット (mm/s Peak-to-Peak)'
                   )}
                 </span>
-                <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <span className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Dashed red = Initial V0 baseline · Solid = Active 1× wave',
                     'Merah putus-putus = Baseline V0 awal · Padat = Gelombang 1× aktif',
@@ -391,9 +391,9 @@ export function CouplingSimulator() {
             </div>
 
             {/* Vector Math Solution Card */}
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
-                <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+              <div className="mb-2.5 flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
+                <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Influence Coefficient Vector Solution',
                   'Solusi Vektor Koefisien Pengaruh',
@@ -401,7 +401,7 @@ export function CouplingSimulator() {
                 )}
               </div>
               {!hasInitialRun ? (
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-xs text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Run Step 1 (Initial Run) and Step 2 (Trial Weight Run) to compute the rotor influence coefficient α and exact correction weight.',
                     'Jalankan Langkah 1 (Pengukuran Awal) dan Langkah 2 (Beban Uji) untuk menghitung koefisien pengaruh α dan beban koreksi.',
@@ -410,44 +410,44 @@ export function CouplingSimulator() {
                 </p>
               ) : (
                 <div className="grid grid-cols-2 gap-2.5 text-xs sm:grid-cols-4">
-                  <div className="rounded-xl border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-slate-900">
-                    <div className="text-slate-500 dark:text-slate-400">
+                  <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                    <div className="text-[var(--md-on-surface-variant)]">
                       {pick('Initial V0', 'V0 Awal', '初期 V0')}
                     </div>
-                    <div className="mt-0.5 font-mono font-semibold text-rose-600 dark:text-rose-400">
+                    <div className="mt-0.5 font-mono font-bold text-rose-600 dark:text-rose-400">
                       {challenge.v0.mag.toFixed(2)} mm/s ∠{' '}
                       {challenge.v0.deg.toFixed(0)}°
                     </div>
                   </div>
-                  <div className="rounded-xl border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-slate-900">
-                    <div className="text-slate-500 dark:text-slate-400">
+                  <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                    <div className="text-[var(--md-on-surface-variant)]">
                       {pick('Trial Run V1', 'Uji V1', '試し運転 V1')}
                     </div>
-                    <div className="mt-0.5 font-mono font-semibold text-sky-600 dark:text-sky-400">
+                    <div className="mt-0.5 font-mono font-bold text-[var(--md-on-surface)]">
                       {isTrialInstalled || isCorrectionApplied
                         ? `${balancingSolution.v1.mag.toFixed(2)} mm/s ∠ ${balancingSolution.v1.deg.toFixed(0)}°`
                         : pick('Pending', 'Menunggu', '待機中')}
                     </div>
                   </div>
-                  <div className="rounded-xl border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-slate-900">
-                    <div className="text-slate-500 dark:text-slate-400">
+                  <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                    <div className="text-[var(--md-on-surface-variant)]">
                       {pick('Trial Effect Vt', 'Efek Uji Vt', '試し効果 Vt')}
                     </div>
-                    <div className="mt-0.5 font-mono font-semibold text-violet-600 dark:text-violet-400">
+                    <div className="mt-0.5 font-mono font-bold text-[var(--md-primary)]">
                       {isTrialInstalled || isCorrectionApplied
                         ? `${balancingSolution.vt.mag.toFixed(2)} mm/s ∠ ${balancingSolution.vt.deg.toFixed(0)}°`
                         : pick('Pending', 'Menunggu', '待機中')}
                     </div>
                   </div>
-                  <div className="rounded-xl border border-slate-200 bg-white p-2.5 dark:border-slate-800 dark:bg-slate-900">
-                    <div className="text-slate-500 dark:text-slate-400">
+                  <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                    <div className="text-[var(--md-on-surface-variant)]">
                       {pick(
                         'Required Correction',
                         'Koreksi Dibutuhkan',
                         '必要修正量'
                       )}
                     </div>
-                    <div className="mt-0.5 font-mono font-semibold text-emerald-600 dark:text-emerald-400">
+                    <div className="mt-0.5 font-mono font-bold text-emerald-600 dark:text-emerald-400">
                       {isTrialInstalled || isCorrectionApplied
                         ? `${balancingSolution.mcMag.toFixed(1)} g @ ${balancingSolution.mcDeg.toFixed(0)}°`
                         : pick('Pending', 'Menunggu', '待機中')}
@@ -461,9 +461,9 @@ export function CouplingSimulator() {
           {/* Right Column: Step-by-Step Technician Controls */}
           <div className="space-y-4 lg:col-span-5">
             {/* Step 1: Initial Run */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     '1. Initial Baseline Run (V0)',
                     '1. Pengukuran Awal (V0)',
@@ -471,12 +471,12 @@ export function CouplingSimulator() {
                   )}
                 </h3>
                 {hasInitialRun && (
-                  <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
                     {pick('Recorded', 'Tercatat', '記録済み')}
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
+              <p className="mt-1 text-xs text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Measure baseline 1X amplitude and phase with no trial weights installed.',
                   'Ukur amplitudo dan fasa 1X awal tanpa beban uji terpasang.',
@@ -486,7 +486,7 @@ export function CouplingSimulator() {
               <button
                 type="button"
                 onClick={handleRunInitial}
-                className="mt-3 w-full rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+                className="m3-btn-filled mt-3 w-full px-4 py-2.5 text-xs font-bold"
               >
                 {hasInitialRun
                   ? pick(
@@ -503,9 +503,9 @@ export function CouplingSimulator() {
             </div>
 
             {/* Step 2: Trial Weight */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     '2. Attach Trial Weight (mt @ θt)',
                     '2. Pasang Beban Uji (mt @ θt)',
@@ -513,14 +513,14 @@ export function CouplingSimulator() {
                   )}
                 </h3>
                 {isTrialInstalled && (
-                  <span className="text-xs font-semibold text-sky-600 dark:text-sky-400">
+                  <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 text-xs font-bold text-[var(--md-on-primary-container)]">
                     {pick('Installed', 'Terpasang', '装着中')}
                   </span>
                 )}
               </div>
               <div className="mt-3 space-y-3">
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Trial Mass (mt)',
@@ -528,7 +528,7 @@ export function CouplingSimulator() {
                         '試し質量 (mt)'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {trialMassG} g
                     </span>
                   </div>
@@ -539,11 +539,11 @@ export function CouplingSimulator() {
                     step={1}
                     value={trialMassG}
                     onChange={(e) => setTrialMassG(Number(e.target.value))}
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Trial Angle (θt)',
@@ -551,7 +551,7 @@ export function CouplingSimulator() {
                         '試し角度 (θt)'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {trialAngleDeg}°
                     </span>
                   </div>
@@ -562,13 +562,13 @@ export function CouplingSimulator() {
                     step={5}
                     value={trialAngleDeg}
                     onChange={(e) => setTrialAngleDeg(Number(e.target.value))}
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={handleRunTrial}
-                  className="w-full rounded-xl bg-sky-600 px-3 py-2 text-xs font-semibold text-white hover:bg-sky-700 dark:bg-sky-500 dark:text-slate-950 dark:hover:bg-sky-400"
+                  className="m3-btn-filled w-full px-4 py-2.5 text-xs font-bold"
                 >
                   {pick(
                     'Attach Trial Weight & Measure V1',
@@ -580,9 +580,9 @@ export function CouplingSimulator() {
             </div>
 
             {/* Step 3: Correction Weight */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     '3. Install Correction Weight (mc @ θc)',
                     '3. Pasang Beban Koreksi (mc @ θc)',
@@ -590,15 +590,15 @@ export function CouplingSimulator() {
                   )}
                 </h3>
                 {isCorrectionApplied && (
-                  <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                  <span className="rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
                     {balancingSolution.reductionPct.toFixed(0)}%{' '}
                     {pick('Reduced', 'Turun', '低減')}
                   </span>
                 )}
               </div>
               <div className="mt-3 space-y-3">
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Correction Mass (mc)',
@@ -606,7 +606,7 @@ export function CouplingSimulator() {
                         '修正質量 (mc)'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {corrMassG.toFixed(1)} g
                     </span>
                   </div>
@@ -617,11 +617,11 @@ export function CouplingSimulator() {
                     step={0.5}
                     value={corrMassG}
                     onChange={(e) => setCorrMassG(Number(e.target.value))}
-                    className="mt-1 w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </div>
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Correction Angle (θc)',
@@ -629,7 +629,7 @@ export function CouplingSimulator() {
                         '修正角度 (θc)'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {corrAngleDeg}°
                     </span>
                   </div>
@@ -640,7 +640,7 @@ export function CouplingSimulator() {
                     step={1}
                     value={corrAngleDeg}
                     onChange={(e) => setCorrAngleDeg(Number(e.target.value))}
-                    className="mt-1 w-full accent-emerald-600"
+                    className="w-full"
                   />
                 </div>
 
@@ -649,7 +649,7 @@ export function CouplingSimulator() {
                     type="button"
                     disabled={!hasInitialRun}
                     onClick={handleFillCalculatedCorrection}
-                    className="flex-1 rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-violet-500/30 dark:bg-violet-500/15 dark:text-violet-300"
+                    className="m3-btn-tonal flex-1 px-3 py-2.5 text-xs font-bold disabled:cursor-not-allowed disabled:opacity-45"
                   >
                     {pick(
                       'Auto-Fill Solved mc, θc',
@@ -660,7 +660,7 @@ export function CouplingSimulator() {
                   <button
                     type="button"
                     onClick={handleApplyCorrection}
-                    className="flex-1 rounded-xl bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+                    className="m3-btn-filled flex-1 px-3 py-2.5 text-xs font-bold"
                   >
                     {pick(
                       'Remove Trial & Balance',
@@ -681,7 +681,7 @@ export function CouplingSimulator() {
           {/* Left: Coupling Selector, Visualization & Health Banner */}
           <div className="space-y-4 lg:col-span-7">
             {/* Coupling Type Selector */}
-            <div className="grid grid-cols-3 gap-2 glass-panel rounded-2xl p-2 ">
+            <div className="glass-panel grid grid-cols-3 gap-2.5 rounded-[28px] p-3">
               {(['jaw', 'gear', 'grid'] as CouplingType[]).map((typeId) => {
                 const spec = COUPLING_SPECS[typeId];
                 const active = couplingInputs.couplingType === typeId;
@@ -695,20 +695,14 @@ export function CouplingSimulator() {
                         couplingType: typeId,
                       }))
                     }
-                    className={`rounded-xl px-3 py-2 text-left transition ${
+                    className={`rounded-[20px] border px-3 py-2.5 text-left transition ${
                       active
-                        ? 'bg-violet-600 text-white shadow-sm dark:bg-violet-500 dark:text-slate-950'
-                        : 'bg-slate-50 text-slate-700 hover:bg-slate-100 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:bg-slate-800'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <div className="text-xs font-bold">{spec.shortName}</div>
-                    <div
-                      className={`text-[11px] ${
-                        active
-                          ? 'text-violet-100 dark:text-slate-900'
-                          : 'text-slate-500 dark:text-slate-400'
-                      }`}
-                    >
+                    <div className="text-[11px] opacity-80">
                       Rated {spec.nominalTorqueNm} Nm
                     </div>
                   </button>
@@ -717,29 +711,29 @@ export function CouplingSimulator() {
             </div>
 
             {/* Interactive SVG Cross-section & Keyway Fit */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <CouplingInspectionSvg
                 inputs={couplingInputs}
                 result={inspectionResult}
                 parallelMisalignmentMm={parallelMisalignmentMm}
                 angularMisalignmentDeg={angularMisalignmentDeg}
               />
-              <p className="mt-3 text-xs text-slate-600 dark:text-slate-400">
+              <p className="mt-3 text-xs text-[var(--md-on-surface-variant)]">
                 {inspectionResult.spec.summary}
               </p>
             </div>
 
             {/* Parallel & Angular Misalignment Tolerance Gauges */}
-            <div className="glass-panel rounded-2xl p-4 ">
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <div className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <div className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     'Parallel & Angular Misalignment Tolerance Gauges',
                     'Pengukur Toleransi Misalignment Paralel & Sudut',
                     '偏心・偏角ミスアライメント許容ゲージ'
                   )}
                 </div>
-                <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                <span className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Jaw vs. Gear vs. Grid capacity',
                     'Kapasitas Jaw vs. Gear vs. Grid',
@@ -749,12 +743,12 @@ export function CouplingSimulator() {
               </div>
 
               <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick('Parallel Offset', 'Offset Paralel', '偏心量')}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {parallelMisalignmentMm.toFixed(2)} mm
                     </span>
                   </div>
@@ -767,11 +761,11 @@ export function CouplingSimulator() {
                     onChange={(e) =>
                       setParallelMisalignmentMm(Number(e.target.value))
                     }
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Angular Misalignment',
@@ -779,7 +773,7 @@ export function CouplingSimulator() {
                         '偏角'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {angularMisalignmentDeg.toFixed(2)}°
                     </span>
                   </div>
@@ -792,7 +786,7 @@ export function CouplingSimulator() {
                     onChange={(e) =>
                       setAngularMisalignmentDeg(Number(e.target.value))
                     }
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
               </div>
@@ -819,19 +813,19 @@ export function CouplingSimulator() {
                   return (
                     <div
                       key={typeId}
-                      className={`rounded-xl border p-3 transition ${
+                      className={`rounded-[20px] border p-3 transition ${
                         isSelected
-                          ? 'border-violet-400 bg-violet-50/70 dark:border-violet-500/60 dark:bg-violet-500/10'
-                          : 'border-slate-200 bg-slate-50/70 dark:border-slate-800 dark:bg-slate-900/40'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)]/35 ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]'
                       }`}
                     >
-                      <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-slate-100">
+                      <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                         <span>{spec.shortName}</span>
                         <span
-                          className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                             pOver || aOver
-                              ? 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
-                              : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
+                              ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
+                              : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                           }`}
                         >
                           {pOver || aOver
@@ -842,14 +836,14 @@ export function CouplingSimulator() {
 
                       <div className="mt-2 space-y-2 text-[11px]">
                         <div>
-                          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                          <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                             <span>{pick('Parallel', 'Paralel', '偏心')}</span>
-                            <span className="font-mono font-semibold">
+                            <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                               {parallelMisalignmentMm.toFixed(2)} /{' '}
                               {spec.maxParallelMisalignmentMm.toFixed(2)} mm
                             </span>
                           </div>
-                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                             <div
                               className={`h-full rounded-full transition-all ${
                                 pOver
@@ -864,14 +858,14 @@ export function CouplingSimulator() {
                         </div>
 
                         <div>
-                          <div className="flex justify-between text-slate-600 dark:text-slate-400">
+                          <div className="flex justify-between text-[var(--md-on-surface-variant)]">
                             <span>{pick('Angular', 'Sudut', '偏角')}</span>
-                            <span className="font-mono font-semibold">
+                            <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                               {angularMisalignmentDeg.toFixed(2)}° /{' '}
                               {spec.maxAngularMisalignmentDeg.toFixed(2)}°
                             </span>
                           </div>
-                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                             <div
                               className={`h-full rounded-full transition-all ${
                                 aOver
@@ -893,12 +887,12 @@ export function CouplingSimulator() {
 
             {/* Recommendation Banner */}
             <div
-              className={`flex items-start gap-3 rounded-2xl border p-4 ${
+              className={`flex items-start gap-3 rounded-[24px] border p-4 ${
                 inspectionResult.healthStatus === 'Healthy'
-                  ? 'border-emerald-200 bg-emerald-50 text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200'
+                  ? 'border-emerald-300/60 bg-emerald-50/80 text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200'
                   : inspectionResult.healthStatus === 'Monitor'
-                    ? 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200'
-                    : 'border-rose-200 bg-rose-50 text-rose-900 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200'
+                    ? 'border-amber-300/60 bg-amber-50/80 text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200'
+                    : 'border-rose-300/60 bg-rose-50/80 text-rose-900 dark:border-rose-500/30 dark:bg-rose-950/30 dark:text-rose-200'
               }`}
             >
               {inspectionResult.healthStatus === 'Healthy' ? (
@@ -920,9 +914,9 @@ export function CouplingSimulator() {
           {/* Right: Sliders & Inspection Metrics */}
           <div className="space-y-4 lg:col-span-5">
             {/* Parameter Sliders */}
-            <div className="glass-panel rounded-2xl p-4 ">
-              <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-slate-100">
-                <Wrench className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+              <div className="mb-3 flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
+                <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Operating & Fit Parameters',
                   'Parameter Operasi & Suaian',
@@ -931,12 +925,12 @@ export function CouplingSimulator() {
               </div>
 
               <div className="space-y-3.5">
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick('Applied Torque', 'Torsi Kerja', '作用トルク')}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {couplingInputs.torqueNm} Nm
                     </span>
                   </div>
@@ -952,12 +946,12 @@ export function CouplingSimulator() {
                         torqueNm: Number(e.target.value),
                       }))
                     }
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Keyway Clearance',
@@ -965,7 +959,7 @@ export function CouplingSimulator() {
                         'キー溝隙間'
                       )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {couplingInputs.keywayClearanceMm.toFixed(2)} mm
                     </span>
                   </div>
@@ -981,12 +975,12 @@ export function CouplingSimulator() {
                         keywayClearanceMm: Number(e.target.value),
                       }))
                     }
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                     <span>
                       {couplingInputs.couplingType === 'jaw'
                         ? pick(
@@ -1006,7 +1000,7 @@ export function CouplingSimulator() {
                               'グリッド・ハブ溝摩耗'
                             )}
                     </span>
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {couplingInputs.elastomerWearPct}%
                     </span>
                   </div>
@@ -1022,15 +1016,15 @@ export function CouplingSimulator() {
                         elastomerWearPct: Number(e.target.value),
                       }))
                     }
-                    className="mt-1 w-full accent-violet-600"
+                    className="w-full"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 pt-1">
-                  <div>
-                    <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                       <span>{pick('Shaft Ø', 'Ø Poros', '軸径 Ø')}</span>
-                      <span className="font-mono font-semibold">
+                      <span className="font-mono font-bold text-[var(--md-primary)]">
                         {couplingInputs.shaftDiameterMm} mm
                       </span>
                     </div>
@@ -1046,15 +1040,15 @@ export function CouplingSimulator() {
                           shaftDiameterMm: Number(e.target.value),
                         }))
                       }
-                      className="mt-1 w-full accent-violet-600"
+                      className="w-full"
                     />
                   </div>
-                  <div>
-                    <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface)]">
                       <span>
                         {pick('Key Length', 'Panjang Pasak', 'キー長さ')}
                       </span>
-                      <span className="font-mono font-semibold">
+                      <span className="font-mono font-bold text-[var(--md-primary)]">
                         {couplingInputs.keyLengthMm} mm
                       </span>
                     </div>
@@ -1070,7 +1064,7 @@ export function CouplingSimulator() {
                           keyLengthMm: Number(e.target.value),
                         }))
                       }
-                      className="mt-1 w-full accent-violet-600"
+                      className="w-full"
                     />
                   </div>
                 </div>
@@ -1079,25 +1073,25 @@ export function CouplingSimulator() {
 
             {/* Live Inspection Readouts */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="glass-panel rounded-2xl p-3.5 ">
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Torsional Backlash',
                     'Backlash Torsi',
                     'ねじりバックラッシ'
                   )}
                 </div>
-                <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {inspectionResult.torsionalBacklashDeg.toFixed(2)}°
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {inspectionResult.torsionalBacklashArcMin.toFixed(0)} arc-min ·{' '}
                   {inspectionResult.circumferentialPlayMm.toFixed(2)} mm
                 </div>
               </div>
 
-              <div className="glass-panel rounded-2xl p-3.5 ">
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Effective Service Factor',
                     'Faktor Layanan Efektif',
@@ -1115,14 +1109,14 @@ export function CouplingSimulator() {
                 >
                   {inspectionResult.effectiveServiceFactor.toFixed(2)} SF
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Nominal', 'Nominal', '公称')}:{' '}
                   {inspectionResult.nominalServiceFactor.toFixed(2)} SF
                 </div>
               </div>
 
-              <div className="glass-panel rounded-2xl p-3.5 ">
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Fretting Corrosion Risk',
                     'Risiko Korosi Fretting',
@@ -1142,24 +1136,24 @@ export function CouplingSimulator() {
                 >
                   {inspectionResult.frettingRisk}
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Risk index', 'Indeks risiko', 'リスク指数')}:{' '}
                   {inspectionResult.frettingScore}/100
                 </div>
               </div>
 
-              <div className="glass-panel rounded-2xl p-3.5 ">
-                <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <div className="glass-card rounded-[24px] p-3.5">
+                <div className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'DIN 6885 Key Stress',
                     'Tegangan Pasak DIN 6885',
                     'DIN 6885 キー応力'
                   )}
                 </div>
-                <div className="mt-1 font-mono text-sm font-bold text-slate-900 dark:text-slate-100">
+                <div className="mt-1 font-mono text-sm font-bold text-[var(--md-primary)]">
                   τ = {inspectionResult.keyShearStressMpa.toFixed(1)} MPa
                 </div>
-                <div className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   σc = {inspectionResult.keyCrushingStressMpa.toFixed(1)} MPa
                 </div>
               </div>

@@ -20,15 +20,15 @@ export function BeltConveyorSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD engineering palette
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
-  const panelFill = isDark ? '#1e293b' : '#ffffff';
-  const panelStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#475569';
+  // Theme-aware CAD engineering palette harmonized with Material 3 Expressive tokens
+  const bgFill = 'var(--md-surface-container-lowest)';
+  const gridStroke = isDark ? 'rgba(148,163,184,0.08)' : 'rgba(15,23,42,0.05)';
+  const panelFill = 'var(--md-surface-container)';
+  const panelStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const steelFrameFill = isDark ? '#334155' : '#cbd5e1';
-  const steelFrameStroke = isDark ? '#64748b' : '#64748b';
+  const steelFrameStroke = '#64748b';
 
   // Top-Down Plan View coordinates (viewBox 780 x 390)
   const centerY = 120;
@@ -77,18 +77,18 @@ export function BeltConveyorSvg({
       : '#10b981';
 
   return (
-    <div className="overflow-hidden rounded-xl border border-slate-200/80 dark:border-slate-800/80">
+    <div className="overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-lowest)]">
       {/* Clean CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50/70 px-3.5 py-2 dark:border-slate-800 dark:bg-slate-900/60">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-3.5 py-2.5">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Belt Conveyor Tracking & Take-Up Tension Schematic',
               'Skema Pelacakan Sabuk Konveyor & Tegangan Take-Up',
               'ベルトコンベヤ蛇行調整＆テイクアップ張力機構図'
             )}
           </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-0.5 text-[11px] font-bold text-sky-800 dark:bg-sky-500/20 dark:text-sky-300">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-secondary-container)]">
             v = {inputs.beltSpeedMs.toFixed(1)} m/s · L/R:{' '}
             {inputs.leftTakeUpMm}/{inputs.rightTakeUpMm} mm
           </span>
@@ -178,7 +178,7 @@ export function BeltConveyorSvg({
         />
 
         {/* ==================== 1. TOP-DOWN PLAN VIEW ==================== */}
-        <text x="16" y="18" fill={textMuted} fontSize="10" fontWeight="700">
+        <text x="16" y="18" fill={textMuted} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
           {pick(
             'TOP-DOWN PLAN VIEW — Structural C-Channel Frame & Take-Up Alignment',
             'TAMPAK ATAS — Rangka Kanal-C & Penyetelan Take-Up',
@@ -193,7 +193,7 @@ export function BeltConveyorSvg({
             y={centerY - frameHalfWidthPx - 24}
             width="108"
             height="16"
-            rx="4"
+            rx="8"
             fill={panelFill}
             stroke={
               metrics.rubbingSide === 'left' ? '#f43f5e' : panelStroke
@@ -213,6 +213,7 @@ export function BeltConveyorSvg({
             }
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('LEFT RAIL (−mm)', 'REL KIRI (−mm)', '左レール (−mm)')}
           </text>
@@ -222,7 +223,7 @@ export function BeltConveyorSvg({
             y={centerY + frameHalfWidthPx + 9}
             width="108"
             height="16"
-            rx="4"
+            rx="8"
             fill={panelFill}
             stroke={
               metrics.rubbingSide === 'right' ? '#f43f5e' : panelStroke
@@ -242,6 +243,7 @@ export function BeltConveyorSvg({
             }
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('RIGHT RAIL (+mm)', 'REL KANAN (+mm)', '右レール (+mm)')}
           </text>
@@ -362,18 +364,19 @@ export function BeltConveyorSvg({
             y={centerY - 60}
             width="62"
             height="17"
-            rx="3.5"
+            rx="8.5"
             fill={panelFill}
-            stroke="#0284c7"
-            strokeWidth="1.3"
+            stroke="var(--md-primary)"
+            strokeWidth="1.2"
           />
           <text
             x="53"
             y={centerY - 48.5}
             textAnchor="middle"
-            fill={isDark ? '#7dd3fc' : '#0369a1'}
+            fill="var(--md-primary)"
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             L: {inputs.leftTakeUpMm} mm
           </text>
@@ -403,18 +406,19 @@ export function BeltConveyorSvg({
             y={centerY + 43}
             width="62"
             height="17"
-            rx="3.5"
+            rx="8.5"
             fill={panelFill}
-            stroke="#0284c7"
-            strokeWidth="1.3"
+            stroke="var(--md-primary)"
+            strokeWidth="1.2"
           />
           <text
             x="53"
             y={centerY + 54.5}
             textAnchor="middle"
-            fill={isDark ? '#7dd3fc' : '#0369a1'}
+            fill="var(--md-primary)"
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             R: {inputs.rightTakeUpMm} mm
           </text>
@@ -469,7 +473,7 @@ export function BeltConveyorSvg({
             y="32"
             width="92"
             height="17"
-            rx="4"
+            rx="8.5"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
@@ -478,9 +482,10 @@ export function BeltConveyorSvg({
             x={tailMidX}
             y="43.5"
             textAnchor="middle"
-            fill={isDark ? '#fbbf24' : '#b45309'}
+            fill={textPrimary}
             fontSize="9"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('TAIL PULLEY', 'PULI EKOR', 'テールプーリ')}
           </text>
@@ -635,7 +640,7 @@ export function BeltConveyorSvg({
             y={centerY + 67}
             width="96"
             height="17"
-            rx="4"
+            rx="8.5"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
@@ -644,9 +649,10 @@ export function BeltConveyorSvg({
             x="694"
             y={centerY + 78.5}
             textAnchor="middle"
-            fill={isDark ? '#fbbf24' : '#b45309'}
+            fill={textPrimary}
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('DRIVE MOTOR', 'MOTOR PENGGERAK', '駆動ギアモータ')}
           </text>
@@ -657,7 +663,7 @@ export function BeltConveyorSvg({
             y="32"
             width="100"
             height="17"
-            rx="4"
+            rx="8.5"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="1"
@@ -666,9 +672,10 @@ export function BeltConveyorSvg({
             x={headCenterX}
             y="43.5"
             textAnchor="middle"
-            fill={isDark ? '#fbbf24' : '#b45309'}
+            fill={textPrimary}
             fontSize="9"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('HEAD PULLEY', 'PULI KEPALA', 'ヘッドプーリ')}
           </text>
@@ -817,18 +824,19 @@ export function BeltConveyorSvg({
             y="32"
             width="136"
             height="17"
-            rx="4"
-            fill={panelFill}
-            stroke="#0284c7"
+            rx="8.5"
+            fill="var(--md-primary-container)"
+            stroke="var(--md-primary)"
             strokeWidth="1"
           />
           <text
             x={trainerX}
             y="43.5"
             textAnchor="middle"
-            fill={isDark ? '#38bdf8' : '#0284c7'}
+            fill="var(--md-on-primary-container)"
             fontSize="9"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             {pick('TRAINING IDLER', 'TRAINING IDLER', '調心アイドラ')} (
             {inputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
@@ -858,7 +866,7 @@ export function BeltConveyorSvg({
               }
               width="150"
               height="18"
-              rx="4"
+              rx="9"
               fill="#e11d48"
             />
             <text
@@ -872,6 +880,7 @@ export function BeltConveyorSvg({
               fill="#ffffff"
               fontSize="9"
               fontWeight="800"
+              fontFamily="var(--font-sans)"
             >
               {pick(
                 'FRAME RUBBING ALARM!',
@@ -892,7 +901,7 @@ export function BeltConveyorSvg({
           strokeWidth="1.5"
         />
 
-        <text x="16" y="247" fill={textMuted} fontSize="10" fontWeight="700">
+        <text x="16" y="247" fill={textMuted} fontSize="10" fontWeight="700" fontFamily="var(--font-sans)">
           {pick(
             'SIDE ELEVATION & 3-ROLL CEMA TROUGHING CROSS-SECTION',
             'TAMPAK SAMPING & PENAMPANG ROL TROUGHING 3-BAGIAN',
@@ -1040,7 +1049,7 @@ export function BeltConveyorSvg({
             y="269"
             width="116"
             height="17"
-            rx="4"
+            rx="8.5"
             fill={panelFill}
             stroke={panelStroke}
             strokeWidth="0.9"
@@ -1052,6 +1061,7 @@ export function BeltConveyorSvg({
             fill={textPrimary}
             fontSize="9"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick('Carrying Run →', 'Sisi Angkut →', 'キャリア側（往路） →')}
           </text>
@@ -1063,6 +1073,7 @@ export function BeltConveyorSvg({
             fill={textMuted}
             fontSize="9"
             fontWeight="600"
+            fontFamily="var(--font-sans)"
           >
             ← {pick('Return Run', 'Sisi Balik', 'リターン側（復路）')}
           </text>
@@ -1075,8 +1086,8 @@ export function BeltConveyorSvg({
             y="242"
             width="270"
             height="136"
-            rx="10"
-            fill={panelFill}
+            rx="14"
+            fill="var(--md-surface-container-low)"
             stroke={panelStroke}
             strokeWidth="1.4"
           />
@@ -1087,6 +1098,7 @@ export function BeltConveyorSvg({
             fill={textPrimary}
             fontSize="9.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
           >
             {pick(
               '3-ROLL TROUGHING CROSS-SECTION',
@@ -1183,6 +1195,7 @@ export function BeltConveyorSvg({
             fill={textMuted}
             fontSize="9"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
           >
             {pick('Wander:', 'Geser:', '蛇行量:')}{' '}
             {metrics.lateralWanderMm > 0 ? '+' : ''}

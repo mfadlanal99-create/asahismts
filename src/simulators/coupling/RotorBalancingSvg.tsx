@@ -55,11 +55,11 @@ export function RotorDiskSvg({
 
   const ticks = Array.from({ length: 24 }, (_, i) => i * 15);
 
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const ringStroke = isDark ? '#334155' : '#cbd5e1';
+  const bgFill = 'var(--md-surface-container-low)';
+  const ringStroke = 'var(--md-outline-variant)';
   const diskStroke = isDark ? '#475569' : '#94a3b8';
-  const textFill = isDark ? '#cbd5e1' : '#334155';
-  const mutedFill = isDark ? '#64748b' : '#94a3b8';
+  const textFill = 'var(--md-on-surface)';
+  const mutedFill = 'var(--md-on-surface-variant)';
 
   const trialPos = polarPoint(0, 0, diskR - 18, trialAngleDeg);
   const corrPos = polarPoint(0, 0, diskR - 18, corrAngleDeg);
@@ -122,8 +122,8 @@ export function RotorDiskSvg({
             cx={0}
             cy={0}
             r={16}
-            fill="#a855f7"
-            opacity={0.35}
+            fill="var(--md-primary)"
+            opacity={0.32}
           />
         )}
         <rect
@@ -131,9 +131,9 @@ export function RotorDiskSvg({
           y={-7}
           width={32}
           height={14}
-          rx={3}
-          fill={isTachFlash ? '#7c3aed' : isDark ? '#312e81' : '#ede9fe'}
-          stroke={isTachFlash ? '#c4b5fd' : '#7c3aed'}
+          rx={6}
+          fill={isTachFlash ? 'var(--md-primary)' : 'var(--md-primary-container)'}
+          stroke="var(--md-primary)"
           strokeWidth={isTachFlash ? 2 : 1.2}
         />
         <text
@@ -143,7 +143,8 @@ export function RotorDiskSvg({
           dominantBaseline="central"
           fontSize={7.5}
           fontWeight={700}
-          fill={isTachFlash ? '#ffffff' : '#7c3aed'}
+          fontFamily="var(--font-mono)"
+          fill={isTachFlash ? 'var(--md-on-primary)' : 'var(--md-on-primary-container)'}
         >
           TACH
         </text>
@@ -152,13 +153,13 @@ export function RotorDiskSvg({
           y1={7}
           x2={-34}
           y2={46}
-          stroke={isTachFlash ? '#c084fc' : '#7c3aed'}
+          stroke="var(--md-primary)"
           strokeWidth={isTachFlash ? 2.4 : 1.3}
           strokeDasharray={isTachFlash ? undefined : '2 2'}
           opacity={isTachFlash ? 1 : 0.75}
         />
         {isTachFlash && (
-          <circle cx={-34} cy={46} r={4.5} fill="#c084fc" />
+          <circle cx={-34} cy={46} r={4.5} fill="var(--md-primary)" />
         )}
       </g>
 
@@ -181,7 +182,7 @@ export function RotorDiskSvg({
               y1={p1.y}
               x2={p2.x}
               y2={p2.y}
-              stroke={isMajor ? '#7c3aed' : mutedFill}
+              stroke={isMajor ? 'var(--md-primary)' : mutedFill}
               strokeWidth={isMajor ? 2 : 1}
             />
             {isMajor && (
@@ -192,6 +193,7 @@ export function RotorDiskSvg({
                 dominantBaseline="central"
                 fontSize={11}
                 fontWeight={700}
+                fontFamily="var(--font-mono)"
                 fill={textFill}
               >
                 {deg}°
@@ -253,7 +255,7 @@ export function RotorDiskSvg({
           y1={0}
           x2={0}
           y2={-diskR}
-          stroke="#7c3aed"
+          stroke="var(--md-primary)"
           strokeWidth={1.5}
           strokeDasharray="4 3"
           opacity={0.75}
@@ -264,7 +266,7 @@ export function RotorDiskSvg({
           width={8}
           height={10}
           rx={1.5}
-          fill="#8b5cf6"
+          fill="var(--md-primary)"
         />
         <text
           x={0}
@@ -272,7 +274,8 @@ export function RotorDiskSvg({
           textAnchor="middle"
           fontSize={9}
           fontWeight={700}
-          fill="#7c3aed"
+          fontFamily="var(--font-mono)"
+          fill="var(--md-primary)"
         >
           0° REF
         </text>
@@ -296,6 +299,7 @@ export function RotorDiskSvg({
               textAnchor="middle"
               fontSize={7.5}
               fontWeight={700}
+              fontFamily="var(--font-sans)"
               fill="#f43f5e"
             >
               HS
@@ -318,6 +322,7 @@ export function RotorDiskSvg({
               dominantBaseline="central"
               fontSize={8}
               fontWeight={700}
+              fontFamily="var(--font-mono)"
               fill="#ffffff"
             >
               {trialMassG}g
@@ -340,6 +345,7 @@ export function RotorDiskSvg({
               dominantBaseline="central"
               fontSize={8}
               fontWeight={700}
+              fontFamily="var(--font-mono)"
               fill="#ffffff"
             >
               {corrMassG.toFixed(0)}g
@@ -363,7 +369,7 @@ export function RotorDiskSvg({
           height={7}
           fill={isDark ? '#94a3b8' : '#475569'}
         />
-        <circle cx={0} cy={0} r={5} fill="#7c3aed" />
+        <circle cx={0} cy={0} r={5} fill="var(--md-primary)" />
       </g>
 
       {/* Bottom RPM Pill */}
@@ -371,8 +377,8 @@ export function RotorDiskSvg({
         <rect
           width={92}
           height={20}
-          rx={6}
-          fill={isDark ? '#1e293b' : '#ffffff'}
+          rx={10}
+          fill="var(--md-surface-container)"
           stroke={ringStroke}
         />
         <text
@@ -382,6 +388,7 @@ export function RotorDiskSvg({
           dominantBaseline="central"
           fontSize={10}
           fontWeight={600}
+          fontFamily="var(--font-mono)"
           fill={textFill}
         >
           {isPlaying ? `${rpm} RPM` : 'PAUSED'}
@@ -419,10 +426,10 @@ export function PolarVectorPlotSvg({
   );
   const scale = maxR / maxScaleMmS;
 
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#334155' : '#cbd5e1';
-  const textFill = isDark ? '#cbd5e1' : '#334155';
-  const mutedText = isDark ? '#94a3b8' : '#64748b';
+  const bgFill = 'var(--md-surface-container-low)';
+  const gridStroke = 'var(--md-outline-variant)';
+  const textFill = 'var(--md-on-surface)';
+  const mutedText = 'var(--md-on-surface-variant)';
 
   const zoneAR = Math.min(maxR, 1.4 * scale);
   const zoneBR = Math.min(maxR, 2.8 * scale);
@@ -489,7 +496,7 @@ export function PolarVectorPlotSvg({
           refY="3"
           orient="auto"
         >
-          <path d="M0,0 L0,6 L7,3 z" fill="#8b5cf6" />
+          <path d="M0,0 L0,6 L7,3 z" fill="var(--md-primary)" />
         </marker>
         <marker
           id="arrow-vres"
@@ -579,6 +586,7 @@ export function PolarVectorPlotSvg({
               dominantBaseline="central"
               fontSize={10}
               fontWeight={700}
+              fontFamily="var(--font-mono)"
               fill={mutedText}
             >
               {deg}°
@@ -614,6 +622,7 @@ export function PolarVectorPlotSvg({
             textAnchor="middle"
             fontSize={10}
             fontWeight={700}
+            fontFamily="var(--font-mono)"
             fill="#f43f5e"
           >
             V0
@@ -638,7 +647,7 @@ export function PolarVectorPlotSvg({
             y1={pV0.y}
             x2={pV1.x}
             y2={pV1.y}
-            stroke="#8b5cf6"
+            stroke="var(--md-primary)"
             strokeWidth={2}
             strokeDasharray="4 3"
             markerEnd="url(#arrow-vt)"
@@ -658,6 +667,7 @@ export function PolarVectorPlotSvg({
             textAnchor="middle"
             fontSize={10}
             fontWeight={700}
+            fontFamily="var(--font-mono)"
             fill="#0284c7"
           >
             V1
@@ -689,6 +699,7 @@ export function PolarVectorPlotSvg({
         y={304}
         fontSize={10}
         fontWeight={600}
+        fontFamily="var(--font-mono)"
         fill={mutedText}
       >
         Full scale: {maxScaleMmS} mm/s | Zone A ≤ 1.4
@@ -716,9 +727,6 @@ export function VibrationWaveformSvg({
   isTrialInstalled,
   isCorrectionApplied,
 }: VibrationWaveformSvgProps) {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
   const w = 560;
   const h = 148;
   const padL = 44;
@@ -774,10 +782,10 @@ export function VibrationWaveformSvg({
           ? '#f59e0b'
           : '#f43f5e';
 
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const gridStroke = isDark ? '#334155' : '#cbd5e1';
-  const mutedText = isDark ? '#94a3b8' : '#64748b';
-  const textFill = isDark ? '#e2e8f0' : '#1e293b';
+  const bgFill = 'var(--md-surface-container-low)';
+  const gridStroke = 'var(--md-outline-variant)';
+  const mutedText = 'var(--md-on-surface-variant)';
+  const textFill = 'var(--md-on-surface)';
 
   return (
     <svg
@@ -790,7 +798,7 @@ export function VibrationWaveformSvg({
         y={0}
         width={w}
         height={h}
-        rx={12}
+        rx={14}
         fill={bgFill}
         stroke={gridStroke}
         strokeWidth={1}
@@ -832,10 +840,10 @@ export function VibrationWaveformSvg({
           y1={padT}
           x2={padL + f * plotW}
           y2={padT + plotH}
-          stroke={f === 0.5 ? '#7c3aed' : gridStroke}
+          stroke={f === 0.5 ? 'var(--md-primary)' : gridStroke}
           strokeDasharray={f === 0.5 ? '4 2' : '2 3'}
           strokeWidth={f === 0.5 ? 1.3 : 1}
-          opacity={f === 0.5 ? 0.65 : 1}
+          opacity={f === 0.5 ? 0.75 : 1}
         />
       ))}
       <text
@@ -844,7 +852,8 @@ export function VibrationWaveformSvg({
         textAnchor="middle"
         fontSize={8.5}
         fontWeight={700}
-        fill="#7c3aed"
+        fontFamily="var(--font-mono)"
+        fill="var(--md-primary)"
       >
         360° TACH
       </text>
@@ -855,6 +864,7 @@ export function VibrationWaveformSvg({
         y={padT + 4}
         textAnchor="end"
         fontSize={9.5}
+        fontFamily="var(--font-mono)"
         fill={mutedText}
       >
         +{maxAxisMmS}
@@ -864,6 +874,7 @@ export function VibrationWaveformSvg({
         y={midY + 3}
         textAnchor="end"
         fontSize={9.5}
+        fontFamily="var(--font-mono)"
         fill={mutedText}
       >
         0
@@ -873,6 +884,7 @@ export function VibrationWaveformSvg({
         y={padT + plotH}
         textAnchor="end"
         fontSize={9.5}
+        fontFamily="var(--font-mono)"
         fill={mutedText}
       >
         -{maxAxisMmS}
@@ -906,7 +918,7 @@ export function VibrationWaveformSvg({
             y1={padT}
             x2={cursorX}
             y2={padT + plotH}
-            stroke={isTachCursor ? '#a855f7' : waveColor}
+            stroke={isTachCursor ? 'var(--md-primary)' : waveColor}
             strokeWidth={isTachCursor ? 2 : 1.4}
             strokeDasharray="2 2"
             opacity={0.85}
@@ -915,7 +927,7 @@ export function VibrationWaveformSvg({
             cx={cursorX}
             cy={cursorY}
             r={4.5}
-            fill={isTachCursor ? '#a855f7' : waveColor}
+            fill={isTachCursor ? 'var(--md-primary)' : waveColor}
             stroke="#ffffff"
             strokeWidth={1.5}
           />
@@ -933,7 +945,7 @@ export function VibrationWaveformSvg({
       )}
 
       {/* Footer Info */}
-      <text x={padL} y={h - 6} fontSize={9.5} fontWeight={600} fill={mutedText}>
+      <text x={padL} y={h - 6} fontSize={9.5} fontWeight={600} fontFamily="var(--font-mono)" fill={mutedText}>
         0 ms (1X = {(rpm / 60).toFixed(1)} Hz)
       </text>
       <text
@@ -942,6 +954,7 @@ export function VibrationWaveformSvg({
         textAnchor="end"
         fontSize={9.5}
         fontWeight={700}
+        fontFamily="var(--font-mono)"
         fill={textFill}
       >
         {hasInitialRun

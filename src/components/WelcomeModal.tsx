@@ -27,8 +27,8 @@ const LEARNING_MODES = [
     idDesc: 'Rig interaktif langsung, alat ukur & simulasi kerusakan',
     jaDesc: 'リアルタイム操作リグ・計器・異常再現',
     icon: Sliders,
-    color: 'text-[#001F6B] dark:text-[#60A5FA]',
-    bg: 'bg-[#E6EDF8] dark:bg-[#001F6B]/25',
+    color: 'text-[var(--md-on-primary-container)]',
+    bg: 'bg-[var(--md-primary-container)]',
   },
   {
     enTitle: 'Explore',
@@ -109,41 +109,41 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="welcome-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm dark:bg-slate-950/60"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-sm"
       onClick={handleClose}
     >
       <div
-        className="glass-panel relative w-full max-w-2xl overflow-hidden rounded-3xl shadow-2xl"
+        className="glass-panel animate-modal-enter relative w-full max-w-2xl overflow-hidden rounded-[32px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="relative border-b border-slate-200/80 px-6 pt-6 pb-5 dark:border-white/10">
+        <div className="relative border-b border-[var(--md-outline-variant)]/50 px-6 pt-6 pb-5">
           <button
             type="button"
             onClick={handleClose}
             aria-label="Close welcome dialog"
-            className="glass-pill absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-xl text-slate-500 transition hover:bg-white hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white"
+            className="glass-pill absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full"
           >
             <X className="h-4 w-4" />
           </button>
 
           <div className="flex items-start gap-4">
-            <div className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#001F6B]/8 text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA] sm:flex">
+            <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] sm:flex">
               <Wrench className="h-5 w-5" />
             </div>
 
             <div>
-              <div className="mb-1.5 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#001F6B] dark:text-[#60A5FA]">
+              <div className="mb-1.5 inline-flex items-center gap-1.5 rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-secondary-container)]">
                 <Sparkles className="h-3 w-3" />
                 Asahi-SMTS
               </div>
               <h2
                 id="welcome-modal-title"
-                className="text-xl font-bold tracking-tight text-[#0F172A] dark:text-white sm:text-2xl"
+                className="text-xl font-extrabold tracking-tight text-[var(--md-on-surface)] sm:text-2xl"
               >
                 Asahimas Smart Maintenance Training System
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300 sm:text-sm">
+              <p className="mt-1.5 text-xs leading-relaxed text-[var(--md-on-surface-variant)] sm:text-sm">
                 {pick(
                   'Interactive plant reliability & mechanical maintenance suite with 40 hands-on simulators across precision measurement, diagnostic instruments, rotating equipment, machine elements, and fluid power.',
                   'Paket keandalan pabrik & pemeliharaan mekanik interaktif dengan 40 simulator praktis di bidang pengukuran presisi, instrumen diagnostik, peralatan rotasi, elemen mesin, dan tenaga fluida.',
@@ -156,7 +156,7 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
 
         {/* Body: 4 Learning Mode Cards */}
         <div className="px-6 py-5">
-          <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="mb-3 text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick(
               '4-Mode Training Workflow',
               'Alur Pelatihan 4 Mode',
@@ -170,18 +170,18 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
               return (
                 <div
                   key={m.enTitle}
-                  className="glass-card flex items-start gap-3 rounded-2xl p-3.5"
+                  className="glass-card flex items-start gap-3 rounded-[24px] p-4"
                 >
                   <div
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/60 shadow-xs backdrop-blur-md dark:border-white/10 ${m.bg} ${m.color}`}
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${m.bg} ${m.color}`}
                   >
                     <Icon className="h-4.5 w-4.5" />
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-slate-900 dark:text-white">
+                    <div className="text-sm font-bold text-[var(--md-on-surface)]">
                       {pick(m.enTitle, m.idTitle, m.jaTitle)}
                     </div>
-                    <p className="mt-0.5 text-xs leading-snug text-slate-600 dark:text-slate-400">
+                    <p className="mt-0.5 text-xs leading-snug text-[var(--md-on-surface-variant)]">
                       {pick(m.enDesc, m.idDesc, m.jaDesc)}
                     </p>
                   </div>
@@ -191,23 +191,23 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
           </div>
 
           {/* Creator badge */}
-          <div className="glass-pill mt-4 flex items-center justify-between rounded-xl px-4 py-2.5 text-xs">
-            <span className="inline-flex items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
-              <UserCheck className="h-4 w-4 text-[#001F6B] dark:text-[#60A5FA]" />
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-4 py-2.5 text-xs">
+            <span className="inline-flex items-center gap-2 font-medium text-[var(--md-on-surface-variant)]">
+              <UserCheck className="h-4 w-4 text-[var(--md-primary)]" />
               {pick('Made by', 'Dibuat oleh', '制作')}{' '}
-              <strong className="font-semibold text-slate-900 dark:text-white">
+              <strong className="font-bold text-[var(--md-on-surface)]">
                 M. Fadlan Alamsyah
               </strong>
             </span>
-            <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+            <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               Asahi-SMTS v1.0
             </span>
           </div>
         </div>
 
         {/* Footer actions */}
-        <div className="flex flex-col-reverse items-center justify-between gap-3 border-t border-white/60 bg-white/40 px-6 py-4 backdrop-blur-md dark:border-white/10 dark:bg-slate-950/40 sm:flex-row">
-          <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-slate-600 select-none dark:text-slate-400">
+        <div className="flex flex-col-reverse items-center justify-between gap-3 border-t border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-6 py-4 sm:flex-row">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-[var(--md-on-surface-variant)] select-none">
             <input
               type="checkbox"
               checked={dontShowAgain}
@@ -215,7 +215,7 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
                 setDontShowAgain(e.target.checked);
                 persistPreference(e.target.checked);
               }}
-              className="h-4 w-4 rounded border-slate-300 text-[#001F6B] focus:ring-[#002D9C] dark:border-slate-700 dark:bg-slate-900"
+              className="h-4 w-4 rounded"
             />
             {pick(
               "Don't show again on startup",
@@ -227,7 +227,7 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
           <button
             type="button"
             onClick={handleClose}
-            className="w-full rounded-xl bg-[#001F6B] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#001F6B]/20 transition hover:bg-[#002D9C] dark:bg-[#002D9C] dark:text-white dark:hover:bg-[#3B82F6] sm:w-auto"
+            className="m3-btn-filled w-full px-6 py-2.5 text-sm font-bold sm:w-auto"
           >
             {pick(
               'Enter Training System',

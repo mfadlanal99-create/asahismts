@@ -89,9 +89,9 @@ export function ConditionMonitoringPanel({
 
   const svgColors = useMemo(
     () => ({
-      grid: isDark ? '#1e293b' : '#e2e8f0',
-      axis: isDark ? '#475569' : '#94a3b8',
-      text: isDark ? '#94a3b8' : '#475569',
+      grid: 'var(--md-outline-variant)',
+      axis: 'var(--md-outline-variant)',
+      text: 'var(--md-on-surface-variant)',
       line:
         healthState === 'healthy'
           ? isDark
@@ -117,9 +117,9 @@ export function ConditionMonitoringPanel({
               ? 'rgba(251, 113, 133, 0.18)'
               : 'rgba(225, 29, 72, 0.12)',
       markerBpfo: isDark ? '#fb7185' : '#e11d48',
-      markerBpfi: isDark ? '#a78bfa' : '#7c3aed',
+      markerBpfi: 'var(--md-primary)',
       markerShaft: isDark ? '#38bdf8' : '#0284c7',
-      markerOther: isDark ? '#94a3b8' : '#64748b',
+      markerOther: 'var(--md-on-surface-variant)',
     }),
     [isDark, healthState]
   );
@@ -209,18 +209,18 @@ export function ConditionMonitoringPanel({
 
   const tempBadgeClass =
     data.housingTempC >= 80
-      ? 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30'
+      ? 'bg-rose-500/15 text-rose-700 border-rose-300/60 dark:text-rose-300 dark:border-rose-500/30'
       : data.housingTempC >= 60
-        ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30'
-        : 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700';
+        ? 'bg-amber-500/15 text-amber-700 border-amber-300/60 dark:text-amber-300 dark:border-amber-500/30'
+        : 'bg-[var(--md-surface-container)] text-[var(--md-on-surface)] border-[var(--md-outline-variant)]/60';
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70 space-y-3">
+    <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
       {/* Header + Health State Selector */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-violet-600 dark:text-violet-400" />
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <Activity className="h-4 w-4 text-[var(--md-primary)]" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Condition Monitoring & Vibration FFT Spectrum',
               'Pemantauan Kondisi & Spektrum Getaran FFT',
@@ -237,10 +237,10 @@ export function ConditionMonitoringPanel({
                 key={st.id}
                 type="button"
                 onClick={() => onHealthStateChange(st.id)}
-                className={`rounded-lg border px-2.5 py-1 text-[11px] font-semibold transition ${
+                className={`rounded-full border px-3 py-1 text-[11px] transition ${
                   active
-                    ? 'border-violet-500 bg-violet-600 text-white shadow-xs dark:bg-violet-500 dark:text-slate-950'
-                    : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-violet-300 hover:text-violet-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-violet-500/40'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {healthLabels[st.id]}
@@ -251,9 +251,9 @@ export function ConditionMonitoringPanel({
       </div>
 
       {/* Telemetry Badges: ISO 10816/20816 RMS, Housing Temp, Acoustic Status */}
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
         <div
-          className={`flex items-center justify-between rounded-xl border px-3 py-2 ${getIsoBadgeClass(data.isoZone)}`}
+          className={`flex items-center justify-between rounded-[20px] border px-3.5 py-2.5 ${getIsoBadgeClass(data.isoZone)}`}
         >
           <div>
             <div className="text-[10px] font-semibold uppercase opacity-80">
@@ -267,13 +267,13 @@ export function ConditionMonitoringPanel({
               {data.rmsVelocityMmS.toFixed(2)} mm/s
             </div>
           </div>
-          <span className="rounded-md bg-white/60 px-2 py-0.5 text-[11px] font-bold dark:bg-slate-950/40">
+          <span className="rounded-full bg-[var(--md-surface-container-low)]/85 px-2.5 py-0.5 text-[11px] font-bold">
             {data.isoZone}
           </span>
         </div>
 
         <div
-          className={`flex items-center justify-between rounded-xl border px-3 py-2 ${tempBadgeClass}`}
+          className={`flex items-center justify-between rounded-[20px] border px-3.5 py-2.5 ${tempBadgeClass}`}
         >
           <div>
             <div className="text-[10px] font-semibold uppercase opacity-80">
@@ -290,9 +290,9 @@ export function ConditionMonitoringPanel({
           <Thermometer className="h-4 w-4 opacity-80" />
         </div>
 
-        <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 dark:border-slate-800 dark:bg-slate-800/60 dark:text-slate-200">
+        <div className="flex items-center justify-between rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3.5 py-2.5 text-[var(--md-on-surface)]">
           <div className="min-w-0 pr-2">
-            <div className="text-[10px] font-semibold uppercase text-slate-500 dark:text-slate-400">
+            <div className="text-[10px] font-semibold uppercase text-[var(--md-on-surface-variant)]">
               {pick(
                 'Acoustic / Condition',
                 'Akustik / Kondisi',
@@ -303,14 +303,14 @@ export function ConditionMonitoringPanel({
               {localizedAcoustic}
             </div>
           </div>
-          <Volume2 className="h-4 w-4 shrink-0 text-violet-600 dark:text-violet-400" />
+          <Volume2 className="h-4 w-4 shrink-0 text-[var(--md-primary)]" />
         </div>
       </div>
 
       {/* Live SVG FFT Spectrum + Time-Waveform / Envelope (gE) Shock-Pulse Plot */}
       <div className="grid grid-cols-1 gap-3 xl:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-2 dark:border-slate-800 dark:bg-slate-950/60">
-          <div className="mb-1 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+          <div className="mb-1 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             <span>
               {pick(
                 'FFT Velocity Spectrum (mm/s)',
@@ -337,6 +337,7 @@ export function ConditionMonitoringPanel({
                     x2={width - padR}
                     y2={y}
                     stroke={svgColors.grid}
+                    strokeOpacity={0.55}
                     strokeWidth={1}
                   />
                   <text
@@ -345,6 +346,7 @@ export function ConditionMonitoringPanel({
                     textAnchor="end"
                     fill={svgColors.text}
                     fontSize="9.5"
+                    fontFamily="var(--font-mono)"
                   >
                     {val.toFixed(1)}
                   </text>
@@ -363,6 +365,7 @@ export function ConditionMonitoringPanel({
                     x2={x}
                     y2={padT + plotH}
                     stroke={svgColors.grid}
+                    strokeOpacity={0.55}
                     strokeWidth={1}
                     strokeDasharray="3 3"
                   />
@@ -372,6 +375,7 @@ export function ConditionMonitoringPanel({
                     textAnchor="middle"
                     fill={svgColors.text}
                     fontSize="9.5"
+                    fontFamily="var(--font-mono)"
                   >
                     {hz} Hz
                   </text>
@@ -386,6 +390,7 @@ export function ConditionMonitoringPanel({
               textAnchor="middle"
               fill={svgColors.text}
               fontSize="9.5"
+              fontFamily="var(--font-sans)"
               transform={`rotate(-90 12 ${padT + plotH / 2})`}
             >
               Velocity (mm/s)
@@ -454,8 +459,8 @@ export function ConditionMonitoringPanel({
                       width={30}
                       height={11}
                       rx={3}
-                      fill={isDark ? '#020617' : '#f8fafc'}
-                      opacity={0.85}
+                      fill="var(--md-surface-container-low)"
+                      opacity={0.9}
                     />
                     <text
                       x={labelX}
@@ -464,6 +469,7 @@ export function ConditionMonitoringPanel({
                       fill={color}
                       fontSize="9"
                       fontWeight="700"
+                      fontFamily="var(--font-mono)"
                     >
                       {mk.label}
                     </text>
@@ -475,8 +481,8 @@ export function ConditionMonitoringPanel({
         </div>
 
         {/* Time-Waveform / Envelope (gE) Shock-Pulse Plot */}
-        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-2 dark:border-slate-800 dark:bg-slate-950/60">
-          <div className="mb-1 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+          <div className="mb-1 flex items-center justify-between px-1 text-[10px] font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             <span>
               {pick(
                 'Time-Waveform / Envelope (gE)',
@@ -506,6 +512,7 @@ export function ConditionMonitoringPanel({
                     x2={width - padR}
                     y2={y}
                     stroke={svgColors.grid}
+                    strokeOpacity={0.55}
                     strokeWidth={1}
                   />
                   <text
@@ -514,6 +521,7 @@ export function ConditionMonitoringPanel({
                     textAnchor="end"
                     fill={svgColors.text}
                     fontSize="9.5"
+                    fontFamily="var(--font-mono)"
                   >
                     {val.toFixed(1)}
                   </text>
@@ -532,6 +540,7 @@ export function ConditionMonitoringPanel({
                     x2={x}
                     y2={padT + plotH}
                     stroke={svgColors.grid}
+                    strokeOpacity={0.55}
                     strokeWidth={1}
                     strokeDasharray="3 3"
                   />
@@ -541,6 +550,7 @@ export function ConditionMonitoringPanel({
                     textAnchor="middle"
                     fill={svgColors.text}
                     fontSize="9.5"
+                    fontFamily="var(--font-mono)"
                   >
                     {tMs.toFixed(0)} ms
                   </text>
@@ -554,6 +564,7 @@ export function ConditionMonitoringPanel({
               textAnchor="middle"
               fill={svgColors.text}
               fontSize="9.5"
+              fontFamily="var(--font-sans)"
               transform={`rotate(-90 12 ${padT + plotH / 2})`}
             >
               Envelope (gE)
@@ -589,6 +600,7 @@ export function ConditionMonitoringPanel({
                     }
                     fontSize="9"
                     fontWeight="700"
+                    fontFamily="var(--font-mono)"
                   >
                     Δt={data.impactPeriodMs.toFixed(1)}ms
                   </text>
@@ -607,44 +619,44 @@ export function ConditionMonitoringPanel({
       </div>
 
       {/* Kinematic Defect Frequencies Readout Strip */}
-      <div className="grid grid-cols-5 gap-2 text-center text-[11px]">
-        <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-          <div className="text-slate-400">
+      <div className="grid grid-cols-2 gap-2 text-center text-[11px] sm:grid-cols-5">
+        <div className="rounded-[18px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2 py-2">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('1× Shaft', '1× Poros', '1× 軸回転')}
           </div>
-          <div className="font-mono font-semibold text-sky-600 dark:text-sky-400">
+          <div className="font-mono font-bold text-[var(--md-primary)]">
             {data.shaftHz.toFixed(1)} Hz
           </div>
         </div>
-        <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-          <div className="text-slate-400">
+        <div className="rounded-[18px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2 py-2">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('FTF (Cage)', 'FTF (Sangkar)', 'FTF (保持器)')}
           </div>
-          <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+          <div className="font-mono font-bold text-[var(--md-on-surface)]">
             {data.ftfHz.toFixed(1)} Hz
           </div>
         </div>
-        <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-          <div className="text-slate-400">
+        <div className="rounded-[18px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2 py-2">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('BSF (Ball)', 'BSF (Elemen)', 'BSF (転動体)')}
           </div>
-          <div className="font-mono font-semibold text-slate-700 dark:text-slate-200">
+          <div className="font-mono font-bold text-[var(--md-on-surface)]">
             {data.bsfHz.toFixed(1)} Hz
           </div>
         </div>
-        <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-          <div className="text-slate-400">
+        <div className="rounded-[18px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2 py-2">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('BPFO (Outer)', 'BPFO (Luar)', 'BPFO (外輪)')}
           </div>
-          <div className="font-mono font-semibold text-rose-600 dark:text-rose-400">
+          <div className="font-mono font-bold text-rose-600 dark:text-rose-400">
             {data.bpfoHz.toFixed(1)} Hz
           </div>
         </div>
-        <div className="rounded-lg bg-slate-50 px-2 py-1.5 dark:bg-slate-800/60">
-          <div className="text-slate-400">
+        <div className="col-span-2 rounded-[18px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] px-2 py-2 sm:col-span-1">
+          <div className="text-[var(--md-on-surface-variant)]">
             {pick('BPFI (Inner)', 'BPFI (Dalam)', 'BPFI (内輪)')}
           </div>
-          <div className="font-mono font-semibold text-violet-600 dark:text-violet-400">
+          <div className="font-mono font-bold text-[var(--md-primary)]">
             {data.bpfiHz.toFixed(1)} Hz
           </div>
         </div>

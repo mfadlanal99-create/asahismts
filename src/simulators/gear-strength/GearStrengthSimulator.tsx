@@ -156,20 +156,20 @@ export function GearStrengthSimulator() {
   return (
     <div className="flex flex-col gap-5">
       {/* Top Banner: Quick Presets, Controls & Status Indicator */}
-      <div className="glass-panel grid grid-cols-1 gap-4 rounded-2xl p-4 sm:p-5 shadow-sm md:grid-cols-12">
+      <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Gear Mode Switcher */}
-        <div className="flex flex-col gap-1.5 md:col-span-4">
-          <label className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+        <div className="flex flex-col gap-2 md:col-span-4">
+          <label className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
             {pick('Gear Configuration Mode', 'Mode Konfigurasi Roda Gigi', '歯車形式・駆動モード')}
           </label>
-          <div className="flex rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+          <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setGearType('spur')}
-              className={`flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition ${
+              className={`flex-1 rounded-full px-3 py-1.5 text-xs transition ${
                 gearType === 'spur'
-                  ? 'bg-white text-indigo-600 shadow-xs dark:bg-slate-700 dark:text-indigo-400'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               {pick('Spur Gears (Direct / 0°)', 'Roda Gigi Lurus (Spur / 0°)', '平歯車（スパーギヤ 0°）')}
@@ -177,10 +177,10 @@ export function GearStrengthSimulator() {
             <button
               type="button"
               onClick={() => setGearType('helical')}
-              className={`flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition ${
+              className={`flex-1 rounded-full px-3 py-1.5 text-xs transition ${
                 gearType === 'helical'
-                  ? 'bg-white text-indigo-600 shadow-xs dark:bg-slate-700 dark:text-indigo-400'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               {pick('Helical Gears (Smooth / ψ)', 'Roda Gigi Helikal (ψ)', 'はすば歯車（ヘリカルギヤ ψ）')}
@@ -189,18 +189,18 @@ export function GearStrengthSimulator() {
         </div>
 
         {/* Animation & Speed Controls */}
-        <div className="flex flex-col justify-between gap-1.5 border-slate-100 md:col-span-4 md:border-l md:pl-4 dark:border-slate-800">
+        <div className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Rotation & Physical Speed', 'Rotasi & Kecepatan Fisik', '回転・実周速シミュレーション')}
             </span>
             <button
               type="button"
               onClick={() => setIsRunning(!isRunning)}
-              className={`flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold transition shadow-xs ${
+              className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold transition ${
                 isRunning
-                  ? 'bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-950/60 dark:text-amber-300'
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500'
+                  ? 'm3-btn-tonal'
+                  : 'm3-btn-filled'
               }`}
             >
               {isRunning ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
@@ -210,7 +210,7 @@ export function GearStrengthSimulator() {
             </button>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             {[
               { val: 0.05, label: '0.05×' },
               { val: 0.1, label: '0.1×' },
@@ -221,10 +221,10 @@ export function GearStrengthSimulator() {
                 key={val}
                 type="button"
                 onClick={() => setRotationSpeed(val)}
-                className={`flex-1 rounded-md py-1 text-[11px] font-bold transition ${
+                className={`flex-1 rounded-full py-1 text-[11px] transition ${
                   Math.abs(rotationSpeed - val) < 0.01
-                    ? 'bg-indigo-600 text-white shadow-xs dark:bg-indigo-500'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {label}
@@ -234,19 +234,19 @@ export function GearStrengthSimulator() {
         </div>
 
         {/* Quick Presets & Actions */}
-        <div className="flex flex-col justify-between gap-1.5 border-slate-100 md:col-span-4 md:border-l md:pl-4 dark:border-slate-800">
+        <div className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+            <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Engineering Benchmarks', 'Benchmark Rekayasa', '標準ベンチマーク')}
             </span>
-            <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
+            <Sparkles className="h-3.5 w-3.5 text-[var(--md-primary)]" />
           </div>
 
           <div className="flex items-center gap-1.5">
             <select
               onChange={(e) => handleApplyPreset(e.target.value)}
               defaultValue=""
-              className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
             >
               <option value="" disabled>
                 {pick('Select Preset Case...', 'Pilih Kasus Preset...', 'プリセットを選択...')}
@@ -262,7 +262,7 @@ export function GearStrengthSimulator() {
               type="button"
               onClick={handleReset}
               title={pick('Reset to defaults', 'Reset ke awal', '初期化')}
-              className="flex items-center justify-center rounded-lg border border-slate-200 bg-slate-100 p-1.5 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill flex items-center justify-center rounded-full p-2"
             >
               <RotateCcw className="h-4 w-4" />
             </button>
@@ -270,7 +270,7 @@ export function GearStrengthSimulator() {
               type="button"
               onClick={() => exportGearDataToCsv(analysisResult)}
               title={pick('Export CSV Report', 'Unduh CSV', 'CSV出力')}
-              className="flex items-center justify-center gap-1 rounded-lg border border-slate-200 bg-slate-100 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="glass-pill flex items-center justify-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
             >
               <Download className="h-3.5 w-3.5" />
               CSV
@@ -291,12 +291,12 @@ export function GearStrengthSimulator() {
 
           {/* Safety Status Alert Banner */}
           <div
-            className={`flex items-start gap-3 rounded-xl border p-3.5 transition-colors ${
+            className={`flex items-start gap-3 rounded-[24px] border p-4 transition-colors ${
               analysisResult.status === 'SAFE'
-                ? 'border-emerald-200 bg-emerald-50/70 text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/20 dark:text-emerald-200'
+                ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200'
                 : analysisResult.status === 'MARGINAL'
-                  ? 'border-amber-200 bg-amber-50/70 text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/20 dark:text-amber-200'
-                  : 'border-red-200 bg-red-50/70 text-red-900 dark:border-red-900/40 dark:bg-red-950/20 dark:text-red-200'
+                  ? 'border-amber-500/35 bg-amber-500/10 text-amber-900 dark:text-amber-200'
+                  : 'border-red-500/35 bg-red-500/10 text-red-900 dark:text-red-200'
             }`}
           >
             {analysisResult.status === 'SAFE' ? (
@@ -343,54 +343,54 @@ export function GearStrengthSimulator() {
 
           {/* Key Metric Summary Cards (Large, High-Legibility Glass Cards) */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="glass-card rounded-xl p-3 shadow-xs">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Nominal Torque T₁', 'Torsi Nominal T₁', '入力トルク T₁')}
               </span>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {analysisResult.pinionTorqueNm.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">N·m</span>
+                <span className="font-sans text-xs font-medium text-[var(--md-on-surface-variant)]">N·m</span>
               </div>
-              <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-xs text-[var(--md-on-surface-variant)]">
                 {inputs.powerKw} kW @ {inputs.pinionRpm} rpm
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-3 shadow-xs">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Bending σ_b', 'Lentur σ_b', '曲げ応力 σ_b')}
               </span>
-              <div className="mt-1 text-lg font-extrabold text-indigo-600 dark:text-indigo-400">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {analysisResult.lewisBendingStressMpa.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">MPa</span>
+                <span className="font-sans text-xs font-medium text-[var(--md-on-surface-variant)]">MPa</span>
               </div>
-              <div className="mt-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <div className="mt-0.5 text-xs font-semibold text-[var(--md-on-surface)]">
                 Limit {activeMaterial.allowableBendingMpa} • SF {analysisResult.bendingSafetyFactor.toFixed(2)}
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-3 shadow-xs">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Contact σ_c', 'Kontak σ_c', '接触応力 σ_c')}
               </span>
-              <div className="mt-1 text-lg font-extrabold text-sky-600 dark:text-sky-400">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {analysisResult.contactStressMpa.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">MPa</span>
+                <span className="font-sans text-xs font-medium text-[var(--md-on-surface-variant)]">MPa</span>
               </div>
-              <div className="mt-0.5 text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <div className="mt-0.5 text-xs font-semibold text-[var(--md-on-surface)]">
                 Limit {activeMaterial.allowableContactMpa} • SH {analysisResult.contactSafetyFactor.toFixed(2)}
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-3 shadow-xs">
-              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Pitch Speed v', 'Kecepatan v', '周速 v')}
               </span>
-              <div className="mt-1 text-lg font-extrabold text-emerald-600 dark:text-emerald-400">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {analysisResult.pitchLineVelocityMps.toFixed(2)}{' '}
-                <span className="text-xs font-medium text-slate-500">m/s</span>
+                <span className="font-sans text-xs font-medium text-[var(--md-on-surface-variant)]">m/s</span>
               </div>
-              <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 font-mono text-xs text-[var(--md-on-surface-variant)]">
                 Kv = {analysisResult.dynamicFactorKv.toFixed(2)} • J = {analysisResult.geometryFactorJ.toFixed(2)}
               </div>
             </div>
@@ -398,10 +398,10 @@ export function GearStrengthSimulator() {
 
           {/* Helical vs Spur Engineering Assessment & 2D Top-View Tooth Angle Schematic */}
           {gearType === 'helical' && spurBaseline && (
-            <div className="glass-card rounded-2xl border border-indigo-300/60 bg-indigo-50/50 p-4 shadow-sm dark:border-indigo-500/20 dark:bg-indigo-950/25">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-200/70 pb-2.5 dark:border-indigo-800/50">
+            <div className="glass-panel rounded-[28px] border border-[var(--md-primary)]/35 p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                  <span className="text-sm font-bold text-[var(--md-on-surface)]">
                     {pick(
                       'Is This Helical Gear Good? — Engineering Assessment',
                       'Apakah Roda Gigi Helikal Ini Baik? — Evaluasi Desain',
@@ -414,7 +414,7 @@ export function GearStrengthSimulator() {
                     analysisResult.helicalVerdict === 'optimal'
                       ? 'bg-emerald-600 text-white'
                       : analysisResult.helicalVerdict === 'partial-overlap'
-                        ? 'bg-amber-500 text-slate-950'
+                        ? 'bg-amber-500 text-amber-950'
                         : 'bg-red-600 text-white'
                   }`}
                 >
@@ -428,21 +428,21 @@ export function GearStrengthSimulator() {
 
               <div className="mt-3 grid grid-cols-1 items-center gap-4 md:grid-cols-12">
                 {/* 2D Top-View Helical Tooth Angle & Axial Thrust Diagram */}
-                <div className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-700 dark:bg-slate-900 md:col-span-5">
-                  <span className="mb-1 text-[11px] font-bold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+                <div className="flex flex-col items-center rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5 md:col-span-5">
+                  <span className="mb-1 text-[11px] font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">
                     {pick('Top View: Helical Face Mesh', 'Tampak Atas: Sudut Gigi Heliks', '上面図：ねじれ角とスラスト力')}
                   </span>
-                  <svg viewBox="0 0 240 112" className="w-full h-auto max-h-[115px] select-none">
+                  <svg viewBox="0 0 240 112" className="h-auto max-h-[115px] w-full select-none" fontFamily="var(--font-sans)">
                     <defs>
                       <marker id="topArrRed" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                         <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444" />
                       </marker>
-                      <marker id="topArrPurple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                        <path d="M 0 1 L 10 5 L 0 9 z" fill="#8b5cf6" />
+                      <marker id="topArrPrimary" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--md-primary)" />
                       </marker>
                     </defs>
                     {/* Gear face body (top-down cylinder slice of width b) */}
-                    <rect x="42" y="20" width="156" height="58" rx="4" fill="#e2e8f0" stroke="#475569" strokeWidth="1.5" className="dark:fill-slate-800 dark:stroke-slate-400" />
+                    <rect x="42" y="20" width="156" height="58" rx="6" fill="var(--md-surface-container-highest)" stroke="var(--md-outline)" strokeWidth="1.5" />
                     {/* Slanted helical teeth across face width at helix angle psi */}
                     {[-45, -15, 15, 45, 75].map((xOff) => {
                       const shift = Math.tan((helixAngleDeg * Math.PI) / 180) * 58;
@@ -455,27 +455,27 @@ export function GearStrengthSimulator() {
                           y1="22"
                           x2={x2}
                           y2="76"
-                          stroke="#6366f1"
+                          stroke="var(--md-primary)"
                           strokeWidth="3.2"
                           strokeLinecap="round"
                         />
                       );
                     })}
                     {/* Centerline / Axial reference */}
-                    <line x1="25" y1="49" x2="215" y2="49" stroke="#94a3b8" strokeWidth="1" strokeDasharray="4 3" />
+                    <line x1="25" y1="49" x2="215" y2="49" stroke="var(--md-outline)" strokeWidth="1" strokeDasharray="4 3" />
                     {/* Helix Angle ψ indicator */}
-                    <text x="120" y="13" textAnchor="middle" fill="#6366f1" fontSize="11" fontWeight="800">
+                    <text x="120" y="13" textAnchor="middle" fill="var(--md-primary)" fontSize="10.5" fontWeight="800" fontFamily="var(--font-mono)">
                       Helix Angle ψ = {helixAngleDeg}° (b = {faceWidthMm} mm)
                     </text>
                     {/* Tangential Force Wt (vertical) */}
                     <line x1="120" y1="49" x2="120" y2="95" stroke="#ef4444" strokeWidth="2.2" markerEnd="url(#topArrRed)" />
-                    <text x="128" y="96" fill="#ef4444" fontSize="11" fontWeight="800">
+                    <text x="128" y="96" fill="#ef4444" fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
                       Wₜ ({analysisResult.tangentialForceN.toFixed(0)} N)
                     </text>
                     {/* Axial Thrust Wa (horizontal along shaft!) */}
-                    <line x1="120" y1="49" x2="188" y2="49" stroke="#8b5cf6" strokeWidth="2.5" markerEnd="url(#topArrPurple)" />
-                    <rect x="148" y="29" width="84" height="16" rx="4" fill="#ffffff" fillOpacity="0.9" stroke="#8b5cf6" strokeWidth="1" className="dark:fill-slate-900" />
-                    <text x="190" y="41" textAnchor="middle" fill="#8b5cf6" fontSize="10.5" fontWeight="800">
+                    <line x1="120" y1="49" x2="188" y2="49" stroke="var(--md-primary)" strokeWidth="2.5" markerEnd="url(#topArrPrimary)" />
+                    <rect x="148" y="29" width="84" height="16" rx="6" fill="var(--md-surface-container-low)" fillOpacity="0.92" stroke="var(--md-primary)" strokeWidth="1" />
+                    <text x="190" y="41" textAnchor="middle" fill="var(--md-primary)" fontSize="10.5" fontWeight="800" fontFamily="var(--font-mono)">
                       Wₐ = {analysisResult.axialForceN.toFixed(0)} N
                     </text>
                   </svg>
@@ -497,42 +497,42 @@ export function GearStrengthSimulator() {
 
                     return (
                       <>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="rounded-lg bg-white p-2 dark:bg-slate-900/80">
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                        <div className="grid grid-cols-2 gap-2.5">
+                          <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-2.5">
+                            <span className="text-[11px] text-[var(--md-on-surface-variant)]">
                               {pick('vs Equivalent Spur (0°)', 'vs Gigi Lurus Spur (0°)', '平歯車（0°）比')}
                             </span>
-                            <div className="mt-0.5 font-bold text-emerald-600 dark:text-emerald-400">
+                            <div className="mt-0.5 font-mono font-bold text-emerald-600 dark:text-emerald-400">
                               {bendPct.toFixed(1)}% {pick('Bending Stress', 'Tegangan Lentur', '曲げ応力')}
                             </div>
-                            <div className="font-bold text-sky-600 dark:text-sky-400">
+                            <div className="font-mono font-bold text-[var(--md-primary)]">
                               {contactPct.toFixed(1)}% {pick('Contact Stress', 'Tegangan Kontak', '接触面圧')}
                             </div>
                           </div>
 
-                          <div className="rounded-lg bg-white p-2 dark:bg-slate-900/80">
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                          <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-2.5">
+                            <span className="text-[11px] text-[var(--md-on-surface-variant)]">
                               {pick('Helical Overlap Ratio ε_β', 'Rasio Overlap Helikal ε_β', '重なり噛合い率 ε_β')}
                             </span>
                             <div
-                              className={`mt-0.5 text-sm font-extrabold ${
+                              className={`mt-0.5 font-mono text-sm font-extrabold ${
                                 analysisResult.axialContactRatio >= 1.0
                                   ? 'text-emerald-600 dark:text-emerald-400'
                                   : 'text-amber-600 dark:text-amber-400'
                               }`}
                             >
                               {analysisResult.axialContactRatio.toFixed(2)}{' '}
-                              <span className="text-xs font-semibold">
+                              <span className="font-sans text-xs font-semibold">
                                 ({analysisResult.axialContactRatio >= 1.0 ? '≥ 1.0 Full' : '< 1.0 Partial'})
                               </span>
                             </div>
-                            <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                            <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                               {pick('Target ≥ 1.0 for quiet mesh', 'Target ≥ 1.0 untuk mulus', '目標 ≥ 1.0（静粛連続噛合い）')}
                             </div>
                           </div>
                         </div>
 
-                        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
+                        <p className="leading-relaxed text-[var(--md-on-surface-variant)]">
                           {analysisResult.helicalVerdict === 'optimal'
                             ? pick(
                                 `Yes, this helical gear is well-tuned: teeth engage progressively (ε_β = ${analysisResult.axialContactRatio.toFixed(2)} ≥ 1.0), reducing bending & pitting stresses compared to Spur while keeping axial bearing thrust moderate (${thrustPct.toFixed(0)}% of Wt). Use angular-contact or tapered roller bearings to support Wa = ${analysisResult.axialForceN.toFixed(0)} N.`,
@@ -561,21 +561,21 @@ export function GearStrengthSimulator() {
         </div>
 
         {/* Right Column: Controls, Sliders & Material Selection (lg:col-span-5) */}
-        <div className="flex flex-col gap-3.5 lg:col-span-5">
+        <div className="flex flex-col gap-4 lg:col-span-5">
           {/* Material Selection Card */}
-          <div className="glass-panel rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
-              <span className="text-xs font-bold tracking-wide text-slate-800 uppercase dark:text-slate-200">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 {pick('Gear Material & Heat Treatment', 'Material Roda Gigi & Perlakuan Panas', '歯車材質・熱処理仕様')}
               </span>
-              <Layers className="h-4 w-4 text-indigo-500" />
+              <Layers className="h-4 w-4 text-[var(--md-primary)]" />
             </div>
 
-            <div className="mt-2.5 flex flex-col gap-2">
+            <div className="mt-3 flex flex-col gap-2.5">
               <select
                 value={selectedMaterialId}
                 onChange={(e) => setSelectedMaterialId(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-800 shadow-xs dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               >
                 {PRESET_GEAR_MATERIALS.map((mat) => (
                   <option key={mat.id} value={mat.id}>
@@ -587,24 +587,24 @@ export function GearStrengthSimulator() {
                 </option>
               </select>
 
-              <div className="rounded-lg bg-slate-50 p-2.5 text-xs text-slate-600 dark:bg-slate-800/60 dark:text-slate-300">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 text-xs text-[var(--md-on-surface-variant)]">
                 <div className="flex justify-between font-semibold">
                   <span>
                     {pick('Allowable Bending [σ_b]:', 'Batas Izin Lentur [σ_b]:', '許容曲げ応力 [σ_b]:')}
                   </span>
-                  <span className="text-indigo-600 dark:text-indigo-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {activeMaterial.allowableBendingMpa} MPa
                   </span>
                 </div>
-                <div className="flex justify-between font-semibold mt-1">
+                <div className="mt-1 flex justify-between font-semibold">
                   <span>
                     {pick('Allowable Contact [σ_c]:', 'Batas Izin Kontak [σ_c]:', '許容接触応力 [σ_c]:')}
                   </span>
-                  <span className="text-sky-600 dark:text-sky-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {activeMaterial.allowableContactMpa} MPa
                   </span>
                 </div>
-                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                <p className="mt-2 text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
                   {pick(
                     activeMaterial.descriptionEn,
                     activeMaterial.descriptionId,
@@ -615,9 +615,9 @@ export function GearStrengthSimulator() {
 
               {/* Custom Material Accordion */}
               {selectedMaterialId === 'custom' && (
-                <div className="grid grid-cols-2 gap-2 rounded-xl border border-indigo-200 bg-indigo-50/50 p-3 dark:border-indigo-900/40 dark:bg-indigo-950/20">
+                <div className="grid grid-cols-2 gap-2.5 rounded-[22px] border border-[var(--md-primary)]/40 bg-[var(--md-primary-container)]/35 p-3">
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">
+                    <label className="text-[10px] font-semibold text-[var(--md-on-surface)]">
                       Young's Modulus E (GPa)
                     </label>
                     <input
@@ -631,11 +631,11 @@ export function GearStrengthSimulator() {
                           youngsModulusGpa: Number(e.target.value),
                         }))
                       }
-                      className="rounded border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                      className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">
+                    <label className="text-[10px] font-semibold text-[var(--md-on-surface)]">
                       Poisson's Ratio ν
                     </label>
                     <input
@@ -650,11 +650,11 @@ export function GearStrengthSimulator() {
                           poissonsRatio: Number(e.target.value),
                         }))
                       }
-                      className="rounded border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                      className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">
+                    <label className="text-[10px] font-semibold text-[var(--md-on-surface)]">
                       Allowable Bending (MPa)
                     </label>
                     <input
@@ -668,11 +668,11 @@ export function GearStrengthSimulator() {
                           allowableBendingMpa: Number(e.target.value),
                         }))
                       }
-                      className="rounded border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                      className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-1">
-                    <label className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">
+                    <label className="text-[10px] font-semibold text-[var(--md-on-surface)]">
                       Allowable Contact (MPa)
                     </label>
                     <input
@@ -686,7 +686,7 @@ export function GearStrengthSimulator() {
                           allowableContactMpa: Number(e.target.value),
                         }))
                       }
-                      className="rounded border border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-700 dark:bg-slate-800"
+                      className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2.5 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -695,20 +695,20 @@ export function GearStrengthSimulator() {
           </div>
 
           {/* Operating Parameters Card */}
-          <div className="glass-panel rounded-2xl p-4 shadow-sm">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800">
-              <span className="text-xs font-bold tracking-wide text-slate-800 uppercase dark:text-slate-200">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 {pick('Power & Kinematic Inputs', 'Input Daya & Kinematika', '動力・運動諸元設定')}
               </span>
-              <Zap className="h-4 w-4 text-amber-500" />
+              <Zap className="h-4 w-4 text-[var(--md-primary)]" />
             </div>
 
             <div className="mt-3 flex flex-col gap-3">
               {/* Power Slider */}
-              <div className="flex flex-col gap-1">
-                <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+              <div className="flex flex-col gap-1.5">
+                <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                   <span>{pick('Transmitted Power P', 'Daya Transmisi P', '伝達動力 P')}</span>
-                  <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {powerKw.toFixed(1)} kW
                   </span>
                 </div>
@@ -719,15 +719,15 @@ export function GearStrengthSimulator() {
                   step={0.5}
                   value={powerKw}
                   onChange={(e) => setPowerKw(Number(e.target.value))}
-                  className="accent-indigo-600"
+                  className="w-full"
                 />
               </div>
 
               {/* Pinion RPM Slider */}
-              <div className="flex flex-col gap-1">
-                <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+              <div className="flex flex-col gap-1.5">
+                <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                   <span>{pick('Pinion Speed n₁', 'Kecepatan Pinion n₁', 'ピニオン回転数 n₁')}</span>
-                  <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {pinionRpm} RPM
                   </span>
                 </div>
@@ -738,16 +738,16 @@ export function GearStrengthSimulator() {
                   step={50}
                   value={pinionRpm}
                   onChange={(e) => setPinionRpm(Number(e.target.value))}
-                  className="accent-indigo-600"
+                  className="w-full"
                 />
               </div>
 
               {/* Module & Face Width side-by-side */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                     <span>{pick('Module m', 'Modul m', 'モジュール m')}</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {moduleMm} mm
                     </span>
                   </div>
@@ -758,14 +758,14 @@ export function GearStrengthSimulator() {
                     step={0.5}
                     value={moduleMm}
                     onChange={(e) => setModuleMm(Number(e.target.value))}
-                    className="accent-indigo-600"
+                    className="w-full"
                   />
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                     <span>{pick('Face Width b', 'Lebar Muka b', '歯幅 b')}</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {faceWidthMm} mm
                     </span>
                   </div>
@@ -776,17 +776,17 @@ export function GearStrengthSimulator() {
                     step={5}
                     value={faceWidthMm}
                     onChange={(e) => setFaceWidthMm(Number(e.target.value))}
-                    className="accent-indigo-600"
+                    className="w-full"
                   />
                 </div>
               </div>
 
               {/* Teeth Counts z1, z2 */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                     <span>{pick('Pinion Teeth z₁', 'Gigi Pinion z₁', 'ピニオン歯数 z₁')}</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {pinionTeeth}
                     </span>
                   </div>
@@ -797,14 +797,14 @@ export function GearStrengthSimulator() {
                     step={1}
                     value={pinionTeeth}
                     onChange={(e) => setPinionTeeth(Number(e.target.value))}
-                    className="accent-indigo-600"
+                    className="w-full"
                   />
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  <div className="flex justify-between text-xs font-medium text-slate-700 dark:text-slate-300">
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                     <span>{pick('Gear Teeth z₂', 'Gigi Gear z₂', '大歯車歯数 z₂')}</span>
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {gearTeeth}
                     </span>
                   </div>
@@ -815,21 +815,21 @@ export function GearStrengthSimulator() {
                     step={2}
                     value={gearTeeth}
                     onChange={(e) => setGearTeeth(Number(e.target.value))}
-                    className="accent-indigo-600"
+                    className="w-full"
                   />
                 </div>
               </div>
 
               {/* Pressure Angle & Application Factor */}
-              <div className="grid grid-cols-2 gap-3 pt-1 border-t border-slate-100 dark:border-slate-800">
+              <div className="grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-2.5">
                 <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
+                  <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Pressure Angle α', 'Sudut Tekan α', '基準圧力角 α')}
                   </label>
                   <select
                     value={pressureAngleDeg}
                     onChange={(e) => setPressureAngleDeg(Number(e.target.value))}
-                    className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                   >
                     <option value={20}>20° (Standard Full-Depth)</option>
                     <option value={25}>25° (High Strength Root)</option>
@@ -837,13 +837,13 @@ export function GearStrengthSimulator() {
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <label className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
+                  <label className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                     {pick('Application Factor K_o', 'Faktor Aplikasi K_o', '使用衝撃係数 K_o')}
                   </label>
                   <select
                     value={applicationFactor}
                     onChange={(e) => setApplicationFactor(Number(e.target.value))}
-                    className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                    className="rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-1.5 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                   >
                     <option value={1.0}>1.00 - Uniform (Motor/Fan)</option>
                     <option value={1.25}>1.25 - Light Shock (Pump/Agitator)</option>
@@ -855,10 +855,10 @@ export function GearStrengthSimulator() {
 
               {/* Helical Angle (if helical) */}
               {gearType === 'helical' && (
-                <div className="flex flex-col gap-1.5 rounded-xl border border-indigo-200 bg-indigo-50/70 p-3 dark:border-indigo-900/50 dark:bg-indigo-950/30">
-                  <div className="flex justify-between text-xs font-semibold text-slate-800 dark:text-slate-200">
+                <div className="flex flex-col gap-2 rounded-[22px] border border-[var(--md-primary)]/40 bg-[var(--md-primary-container)]/40 p-3.5 text-[var(--md-on-primary-container)]">
+                  <div className="flex justify-between text-xs font-semibold">
                     <span>{pick('Helix Angle ψ (Recommended: 15°–22°)', 'Sudut Heliks ψ (Saran: 15°–22°)', 'ねじれ角 ψ（推奨：15°〜22°）')}</span>
-                    <span className="font-extrabold text-indigo-600 dark:text-indigo-400">
+                    <span className="font-mono font-extrabold text-[var(--md-primary)]">
                       {helixAngleDeg}°
                     </span>
                   </div>
@@ -869,9 +869,9 @@ export function GearStrengthSimulator() {
                     step={1}
                     value={helixAngleDeg}
                     onChange={(e) => setHelixAngleDeg(Number(e.target.value))}
-                    className="accent-indigo-600"
+                    className="w-full"
                   />
-                  <div className="flex justify-between text-xs text-slate-600 dark:text-slate-400">
+                  <div className="flex justify-between font-mono text-xs opacity-85">
                     <span>mt = {analysisResult.transverseModuleMm.toFixed(2)} mm</span>
                     <span>ε_β = {analysisResult.axialContactRatio.toFixed(2)}</span>
                     <span>Wa = {analysisResult.axialForceN.toFixed(0)} N</span>

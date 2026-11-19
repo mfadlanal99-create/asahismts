@@ -108,14 +108,14 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
   // Theme CAD Palette
   const pal = useMemo(
     () => ({
-      canvasBg: isDark ? '#090f1d' : '#f8fafc',
-      frameBorder: isDark ? '#1e293b' : '#cbd5e1',
-      gridMinor: isDark ? '#131d33' : '#e2e8f0',
-      gridMajor: isDark ? '#1e293b' : '#cbd5e1',
-      cardBg: isDark ? '#0f172a' : '#ffffff',
-      cardBorder: isDark ? '#334155' : '#cbd5e1',
-      textPrimary: isDark ? '#f1f5f9' : '#0f172a',
-      textSecondary: isDark ? '#94a3b8' : '#475569',
+      canvasBg: 'var(--md-surface-container-lowest)',
+      frameBorder: 'var(--md-outline-variant)',
+      gridMinor: 'var(--md-surface-container)',
+      gridMajor: 'var(--md-surface-container-high)',
+      cardBg: 'var(--md-surface-container)',
+      cardBorder: 'var(--md-outline-variant)',
+      textPrimary: 'var(--md-on-surface)',
+      textSecondary: 'var(--md-on-surface-variant)',
       plateAStart: isDark ? '#475569' : '#e2e8f0',
       plateAEnd: isDark ? '#334155' : '#cbd5e1',
       plateBStart: isDark ? '#64748b' : '#f1f5f9',
@@ -128,8 +128,8 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
       weldHi: '#fef3c7',
       weldMid: isDark ? '#f59e0b' : '#d97706',
       weldLo: isDark ? '#b45309' : '#92400e',
-      dimStroke: isDark ? '#94a3b8' : '#475569',
-      dimText: isDark ? '#e2e8f0' : '#1e293b',
+      dimStroke: 'var(--md-on-surface-variant)',
+      dimText: 'var(--md-on-surface)',
       forceColor: '#ef4444',
       momentColor: '#8b5cf6',
       tauPrimeColor: '#10b981',
@@ -207,21 +207,21 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
   }, [mode, electrode, pick]);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+    <div className="glass-panel overflow-hidden rounded-[28px]">
       {/* Clean HTML CAD Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold tracking-wider text-slate-700 uppercase dark:text-slate-200">
+          <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
             {headerInfo.title}
           </span>
-          <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 dark:bg-amber-950/60 dark:text-amber-300">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 text-[11px] font-semibold text-[var(--md-on-primary-container)]">
             {headerInfo.subtitle}
           </span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-xs border border-slate-400 bg-slate-300 dark:border-slate-500 dark:bg-slate-600" />
+            <span className="h-2.5 w-2.5 rounded-xs border border-[var(--md-outline-variant)] bg-[var(--md-surface-container-highest)]" />
             {pick('±45° ISO Hatch', 'Arsiran ISO ±45°', '±45°ハッチング')}
           </span>
           <span className="flex items-center gap-1.5">
@@ -245,7 +245,8 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
       {/* Main Pure-2D Industrial CAD SVG */}
       <svg
         viewBox="0 0 960 500"
-        className="mx-auto block max-h-[480px] w-full font-sans select-none"
+        className="mx-auto block max-h-[480px] w-full select-none"
+        fontFamily="var(--font-sans)"
         style={{ backgroundColor: pal.canvasBg, fontVariantNumeric: 'tabular-nums' }}
       >
         <defs>
@@ -1940,9 +1941,9 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
             y="0"
             width="362"
             height="452"
-            rx="12"
-            fill={pal.cardBg}
-            stroke={pal.cardBorder}
+            rx="16"
+            fill="var(--md-surface-container-low)"
+            stroke="var(--md-outline-variant)"
             strokeWidth="1.5"
           />
 
@@ -1952,12 +1953,12 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
             y="10"
             width="342"
             height="30"
-            rx="7"
-            fill={pal.canvasBg}
-            stroke={pal.cardBorder}
+            rx="10"
+            fill="var(--md-surface-container-high)"
+            stroke="var(--md-outline-variant)"
             strokeWidth="1"
           />
-          <circle cx="24" cy="25" r="4.5" fill="#38bdf8" />
+          <circle cx="24" cy="25" r="4.5" fill="var(--md-primary)" />
           <text
             x="36"
             y="29"
@@ -1965,6 +1966,7 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
             fontSize="10.5"
             fontWeight="800"
             letterSpacing="0.4"
+            fontFamily="var(--font-sans)"
           >
             {mode === 'butt-joint'
               ? pick(
@@ -2139,7 +2141,7 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
             )}
 
             {/* Outer Magnifier Rim & Crisp Non-Overlapping Annotations */}
-            <circle cx="0" cy="0" r="112" fill="none" stroke="#38bdf8" strokeWidth="2.2" />
+            <circle cx="0" cy="0" r="112" fill="none" stroke="var(--md-primary)" strokeWidth="2.2" />
 
             {mode !== 'butt-joint' ? (
               <>
@@ -2149,15 +2151,15 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="-62"
                   width="104"
                   height="32"
-                  rx="6"
+                  rx="8"
                   fill={pal.cardBg}
                   stroke={statusColor}
                   strokeWidth="1.4"
                 />
-                <text x="82" y="-48" fill={statusColor} fontSize="10" fontWeight="800" textAnchor="middle">
+                <text x="82" y="-48" fill={statusColor} fontSize="10" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                   a = {throatMm.toFixed(2)} mm
                 </text>
-                <text x="82" y="-36" fill={pal.textSecondary} fontSize="8.5" textAnchor="middle">
+                <text x="82" y="-36" fill={pal.textSecondary} fontSize="8.5" textAnchor="middle" fontFamily="var(--font-mono)">
                   a = 0.7071 × s
                 </text>
                 <line x1="20" y1="-2" x2="48" y2="-30" stroke="#ffffff" strokeWidth="1" strokeDasharray="2 2" />
@@ -2178,12 +2180,12 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="-27"
                   width="54"
                   height="18"
-                  rx="4"
+                  rx="6"
                   fill={pal.cardBg}
                   stroke={pal.cardBorder}
                   strokeWidth="0.9"
                 />
-                <text x="-69" y="-14" fill={pal.dimText} fontSize="9.5" fontWeight="700" textAnchor="middle">
+                <text x="-69" y="-14" fill={pal.dimText} fontSize="9.5" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
                   s = {legSizeMm}
                 </text>
 
@@ -2203,12 +2205,12 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="52"
                   width="64"
                   height="18"
-                  rx="4"
+                  rx="6"
                   fill={pal.cardBg}
                   stroke={pal.cardBorder}
                   strokeWidth="0.9"
                 />
-                <text x="37" y="64" fill={pal.dimText} fontSize="9.5" fontWeight="700" textAnchor="middle">
+                <text x="37" y="64" fill={pal.dimText} fontSize="9.5" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
                   s = {legSizeMm} mm
                 </text>
 
@@ -2218,12 +2220,12 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="32"
                   width="54"
                   height="17"
-                  rx="4"
+                  rx="6"
                   fill={pal.cardBg}
-                  stroke="#38bdf8"
+                  stroke="var(--md-primary)"
                   strokeWidth="0.9"
                 />
-                <text x="-37" y="44" fill="#38bdf8" fontSize="9" fontWeight="700" textAnchor="middle">
+                <text x="-37" y="44" fill="var(--md-primary)" fontSize="9" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
                   Root (R)
                 </text>
               </>
@@ -2234,15 +2236,15 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="-76"
                   width="112"
                   height="30"
-                  rx="6"
+                  rx="8"
                   fill={pal.cardBg}
                   stroke={statusColor}
                   strokeWidth="1.3"
                 />
-                <text x="84" y="-62" fill={statusColor} fontSize="10" fontWeight="800" textAnchor="middle">
+                <text x="84" y="-62" fill={statusColor} fontSize="10" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                   a = {throatMm.toFixed(1)} mm
                 </text>
-                <text x="84" y="-51" fill={pal.textSecondary} fontSize="8.5" textAnchor="middle">
+                <text x="84" y="-51" fill={pal.textSecondary} fontSize="8.5" textAnchor="middle" fontFamily="var(--font-mono)">
                   {penetrationType === 'cjp' ? 'CJP (Full t)' : 'PJP (0.75t)'}
                 </text>
                 <rect
@@ -2250,12 +2252,12 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
                   y="-88"
                   width="96"
                   height="18"
-                  rx="4"
+                  rx="6"
                   fill={pal.cardBg}
                   stroke={pal.cardBorder}
                   strokeWidth="0.9"
                 />
-                <text x="-48" y="-75" fill={pal.textSecondary} fontSize="8.5" fontWeight="700" textAnchor="middle">
+                <text x="-48" y="-75" fill={pal.textSecondary} fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="var(--font-sans)">
                   Crown (AWS Excl.)
                 </text>
               </>
@@ -2269,8 +2271,8 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
               y="0"
               width="338"
               height="136"
-              rx="10"
-              fill={pal.canvasBg}
+              rx="12"
+              fill={pal.cardBg}
               stroke={pal.cardBorder}
               strokeWidth="1.2"
             />
@@ -2281,7 +2283,7 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
               y="12"
               width="145"
               height="26"
-              rx="6"
+              rx="13"
               fill={
                 status === 'PASS'
                   ? 'rgba(16, 185, 129, 0.16)'
@@ -2300,17 +2302,18 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
               fontWeight="900"
               textAnchor="middle"
               letterSpacing="0.5"
+              fontFamily="var(--font-mono)"
             >
               {status} · SF {safetyFactor >= 99 ? '∞' : safetyFactor.toFixed(2)}
             </text>
 
             {/* Utilization Percentage Right */}
-            <text x="324" y="29" fill={pal.textPrimary} fontSize="11" fontWeight="800" textAnchor="end">
+            <text x="324" y="29" fill={pal.textPrimary} fontSize="11" fontWeight="800" textAnchor="end" fontFamily="var(--font-mono)">
               {stressUtilizationPct.toFixed(1)}% {pick('Util.', 'Rasio', '利用率')}
             </text>
 
             {/* Live Utilization Progress Track */}
-            <rect x="12" y="46" width="314" height="7" rx="3.5" fill={isDark ? '#1e293b' : '#e2e8f0'} />
+            <rect x="12" y="46" width="314" height="7" rx="3.5" fill="var(--md-surface-container-highest)" />
             <rect
               x="12"
               y="46"
@@ -2325,14 +2328,14 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
               <text x="0" y="12" fill={pal.textSecondary} fontSize="10" fontWeight="600">
                 {pick('Design Throat (a)', 'Tebal Leher (a)', '理論のど厚 (a)')}:
               </text>
-              <text x="150" y="12" fill={pal.textPrimary} fontSize="10.5" fontWeight="800" textAnchor="end">
+              <text x="150" y="12" fill={pal.textPrimary} fontSize="10.5" fontWeight="800" textAnchor="end" fontFamily="var(--font-mono)">
                 {throatMm.toFixed(2)} mm
               </text>
 
               <text x="168" y="12" fill={pal.textSecondary} fontSize="10" fontWeight="600">
                 {pick('Area Aw', 'Luas Aw', '面積 Aw')}:
               </text>
-              <text x="314" y="12" fill={pal.textPrimary} fontSize="10.5" fontWeight="800" textAnchor="end">
+              <text x="314" y="12" fill={pal.textPrimary} fontSize="10.5" fontWeight="800" textAnchor="end" fontFamily="var(--font-mono)">
                 {effectiveAreaAwMm2.toFixed(0)} mm²
               </text>
 
@@ -2341,14 +2344,14 @@ export const WeldStrengthSvg: FC<WeldStrengthSvgProps> = ({ inputs, results }) =
               <text x="0" y="42" fill={pal.textSecondary} fontSize="10" fontWeight="600">
                 {pick('Peak Throat Stress', 'Tegangan Leher Puncak', '最大合成応力')}:
               </text>
-              <text x="314" y="42" fill={statusColor} fontSize="11" fontWeight="800" textAnchor="end">
+              <text x="314" y="42" fill={statusColor} fontSize="11" fontWeight="800" textAnchor="end" fontFamily="var(--font-mono)">
                 {peakCombinedStressMpa.toFixed(1)} MPa
               </text>
 
               <text x="0" y="60" fill={pal.textSecondary} fontSize="10" fontWeight="600">
                 {pick('AWS Allowable Limit', 'Batas Izin Standar AWS', 'AWS許容応力限度')}:
               </text>
-              <text x="314" y="60" fill={pal.statusPass} fontSize="11" fontWeight="800" textAnchor="end">
+              <text x="314" y="60" fill={pal.statusPass} fontSize="11" fontWeight="800" textAnchor="end" fontFamily="var(--font-mono)">
                 {allowableStressMpa.toFixed(1)} MPa
               </text>
             </g>

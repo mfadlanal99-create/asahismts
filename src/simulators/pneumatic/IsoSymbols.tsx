@@ -34,14 +34,14 @@ export function IsoSymbol({
   const spoolPos = runtime?.activeSpoolPos ?? 0;
   const isActuated = spoolPos === 1;
 
-  // Theme-aware SVG palette
-  const bodyBg = isDark ? '#0f172a' : '#ffffff';
+  // Theme-aware SVG palette harmonized with Material 3
+  const bodyBg = 'var(--md-surface-container-lowest)';
   const inactiveStroke = isDark ? '#64748b' : '#94a3b8';
   const neutralStroke = isDark ? '#94a3b8' : '#475569';
   const arrowStroke = isDark ? '#cbd5e1' : '#334155';
   const activeCyan = isDark ? '#22d3ee' : '#0891b2';
   const activeCyanText = isDark ? '#67e8f9' : '#0e7490';
-  const labelFill = isDark ? '#cbd5e1' : '#1e293b';
+  const labelFill = 'var(--md-on-surface)';
   const activeFill = isDark
     ? 'rgba(34, 211, 238, 0.14)'
     : 'rgba(8, 145, 178, 0.10)';
@@ -545,9 +545,9 @@ export function IsoSymbol({
           y={labelY - 11}
           width={Math.max(76, comp.label.length * 6.8 + 16)}
           height={15}
-          rx={4}
-          fill={isDark ? 'rgba(2, 6, 23, 0.88)' : 'rgba(248, 250, 252, 0.92)'}
-          stroke={isDark ? 'rgba(51, 65, 85, 0.65)' : 'rgba(203, 213, 225, 0.85)'}
+          rx={6}
+          fill="var(--md-surface-container)"
+          stroke="var(--md-outline-variant)"
           strokeWidth={0.8}
         />
         <text

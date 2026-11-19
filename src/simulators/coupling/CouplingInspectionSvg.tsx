@@ -21,11 +21,11 @@ export function CouplingInspectionSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const bgFill = isDark ? '#0f172a' : '#f8fafc';
-  const cardFill = isDark ? '#1e293b' : '#ffffff';
-  const borderStroke = isDark ? '#334155' : '#cbd5e1';
-  const textFill = isDark ? '#e2e8f0' : '#1e293b';
-  const mutedFill = isDark ? '#94a3b8' : '#64748b';
+  const bgFill = 'var(--md-surface-container-low)';
+  const cardFill = 'var(--md-surface-container)';
+  const borderStroke = 'var(--md-outline-variant)';
+  const textFill = 'var(--md-on-surface)';
+  const mutedFill = 'var(--md-on-surface-variant)';
   const metalFill = isDark ? '#475569' : '#cbd5e1';
   const metalDark = isDark ? '#334155' : '#94a3b8';
 
@@ -34,7 +34,7 @@ export function CouplingInspectionSvg({
       ? '#f43f5e'
       : inputs.elastomerWearPct >= 30
         ? '#f59e0b'
-        : '#8b5cf6';
+        : 'var(--md-primary)';
 
   const frettingColor =
     result.frettingRisk === 'Critical'
@@ -133,11 +133,12 @@ export function CouplingInspectionSvg({
         y={32}
         fontSize={11}
         fontWeight={700}
+        fontFamily="var(--font-sans)"
         fill={textFill}
       >
         {result.spec.shortName} — Backlash View
       </text>
-      <text x={24} y={47} fontSize={10} fill={mutedFill}>
+      <text x={24} y={47} fontSize={10} fontFamily="var(--font-mono)" fill={mutedFill}>
         Play: {result.torsionalBacklashDeg.toFixed(2)}° (
         {result.circumferentialPlayMm.toFixed(2)} mm)
       </text>
@@ -335,6 +336,7 @@ export function CouplingInspectionSvg({
           textAnchor="middle"
           fontSize={10}
           fontWeight={700}
+          fontFamily="var(--font-mono)"
           fill={textFill}
         >
           Ø{inputs.shaftDiameterMm}
@@ -347,7 +349,7 @@ export function CouplingInspectionSvg({
         y={12}
         width={282}
         height={232}
-        rx={10}
+        rx={12}
         fill={cardFill}
         stroke={borderStroke}
         strokeWidth={1}
@@ -357,14 +359,14 @@ export function CouplingInspectionSvg({
         y={12}
         width={282}
         height={232}
-        rx={10}
+        rx={12}
         fill="url(#coupling-cad-grid)"
         opacity={0.55}
       />
-      <text x={318} y={32} fontSize={11} fontWeight={700} fill={textFill}>
+      <text x={318} y={32} fontSize={11} fontWeight={700} fontFamily="var(--font-sans)" fill={textFill}>
         Keyway Fit &amp; Fretting Inspection
       </text>
-      <text x={318} y={47} fontSize={10} fill={mutedFill}>
+      <text x={318} y={47} fontSize={10} fontFamily="var(--font-mono)" fill={mutedFill}>
         DIN 6885 Key: {result.keyWidthMm}×{result.keyHeightMm}×
         {inputs.keyLengthMm} mm | Gap: {inputs.keywayClearanceMm.toFixed(2)} mm
       </text>
@@ -421,8 +423,8 @@ export function CouplingInspectionSvg({
           width={44}
           height={40}
           rx={2}
-          fill="#8b5cf6"
-          stroke="#6d28d9"
+          fill="var(--md-primary)"
+          stroke="var(--md-on-primary-container)"
           strokeWidth={1.5}
         />
         <text
@@ -431,7 +433,8 @@ export function CouplingInspectionSvg({
           textAnchor="middle"
           fontSize={10}
           fontWeight={700}
-          fill="#ffffff"
+          fontFamily="var(--font-sans)"
+          fill="var(--md-on-primary)"
         >
           KEY
         </text>
@@ -460,7 +463,7 @@ export function CouplingInspectionSvg({
               y={-92}
               width={92}
               height={16}
-              rx={4}
+              rx={8}
               fill={cardFill}
               stroke={frettingColor}
               strokeWidth={1}
@@ -471,6 +474,7 @@ export function CouplingInspectionSvg({
               textAnchor="middle"
               fontSize={9}
               fontWeight={700}
+              fontFamily="var(--font-sans)"
               fill={frettingColor}
             >
               {result.frettingRisk} Fretting
@@ -482,17 +486,18 @@ export function CouplingInspectionSvg({
         <path
           d="M -42 15 A 45 45 0 0 0 42 15"
           fill="none"
-          stroke="#0284c7"
+          stroke="var(--md-primary)"
           strokeWidth={2.2}
         />
-        <polygon points="44,12 36,19 46,22" fill="#0284c7" />
+        <polygon points="44,12 36,19 46,22" fill="var(--md-primary)" />
         <text
           x={0}
           y={38}
           textAnchor="middle"
           fontSize={10}
           fontWeight={700}
-          fill="#0284c7"
+          fontFamily="var(--font-mono)"
+          fill="var(--md-primary)"
         >
           T = {inputs.torqueNm} Nm
         </text>

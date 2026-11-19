@@ -57,10 +57,13 @@ export function VernierSvg({
     carriageStroke: isDark ? '#94a3b8' : '#475569',
     tick: isDark ? '#e2e8f0' : '#0f172a',
     tickSubtle: isDark ? '#94a3b8' : '#475569',
-    accent: isDark ? '#38bdf8' : '#0284c7',
+    accent: 'var(--md-primary)',
     coincide: '#10b981',
     partFill: isDark ? '#0369a1' : '#bae6fd',
     partStroke: isDark ? '#38bdf8' : '#0284c7',
+    calloutBg: 'var(--md-surface-container-low)',
+    calloutBorder: 'var(--md-primary)',
+    calloutText: 'var(--md-primary)',
   };
 
   function clientToSvgDeltaX(deltaClientX: number): number {
@@ -123,7 +126,7 @@ export function VernierSvg({
 
   return (
     <div className="space-y-3">
-      <div className="relative w-full overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-900/70">
+      <div className="relative w-full overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]">
         <svg
           ref={svgRef}
           viewBox="0 0 860 302"
@@ -233,6 +236,7 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="600"
+                      fontFamily="var(--font-mono)"
                       fill={c.tick}
                     >
                       {mm}
@@ -246,6 +250,7 @@ export function VernierSvg({
               y={SEAM_Y - 17}
               fontSize="9"
               fontWeight="600"
+              fontFamily="var(--font-mono)"
               fill={c.tickSubtle}
             >
               mm
@@ -310,6 +315,7 @@ export function VernierSvg({
                         textAnchor="middle"
                         fontSize="9.5"
                         fontWeight="700"
+                        fontFamily="var(--font-sans)"
                         fill={c.tick}
                       >
                         {activePart.name}
@@ -321,9 +327,9 @@ export function VernierSvg({
                       y={SEAM_Y + 102}
                       width={pillW}
                       height={18}
-                      rx={4}
-                      fill={isDark ? '#0f172a' : '#ffffff'}
-                      stroke={c.partStroke}
+                      rx={9}
+                      fill={c.calloutBg}
+                      stroke={c.calloutBorder}
                       strokeWidth={1}
                     />
                     <text
@@ -332,7 +338,8 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="600"
-                      fill={c.partStroke}
+                      fontFamily="var(--font-mono)"
+                      fill={c.calloutText}
                     >
                       {odLabel}
                     </text>
@@ -394,9 +401,9 @@ export function VernierSvg({
                       y={18}
                       width={pillW}
                       height={18}
-                      rx={4}
-                      fill={isDark ? '#0f172a' : '#ffffff'}
-                      stroke={c.partStroke}
+                      rx={9}
+                      fill={c.calloutBg}
+                      stroke={c.calloutBorder}
                       strokeWidth={1}
                     />
                     <text
@@ -405,7 +412,8 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="700"
-                      fill={c.partStroke}
+                      fontFamily="var(--font-sans)"
+                      fill={c.calloutText}
                     >
                       {label}
                     </text>
@@ -434,7 +442,7 @@ export function VernierSvg({
                       y={BEAM_Y - 42}
                       width={shiftPx}
                       height={20}
-                      fill={isDark ? '#0f172a' : '#ffffff'}
+                      fill="var(--md-surface-container-low)"
                       stroke={c.partStroke}
                       strokeWidth={1.4}
                     />
@@ -455,9 +463,9 @@ export function VernierSvg({
                       y={18}
                       width={pillW}
                       height={18}
-                      rx={4}
-                      fill={isDark ? '#0f172a' : '#ffffff'}
-                      stroke={c.partStroke}
+                      rx={9}
+                      fill={c.calloutBg}
+                      stroke={c.calloutBorder}
                       strokeWidth={1}
                     />
                     <text
@@ -466,7 +474,8 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="700"
-                      fill={c.partStroke}
+                      fontFamily="var(--font-sans)"
+                      fill={c.calloutText}
                     >
                       {label}
                     </text>
@@ -502,9 +511,9 @@ export function VernierSvg({
                       y={BEAM_Y - 26}
                       width={pillW}
                       height={17}
-                      rx={4}
-                      fill={isDark ? '#0f172a' : '#ffffff'}
-                      stroke={c.partStroke}
+                      rx={8.5}
+                      fill={c.calloutBg}
+                      stroke={c.calloutBorder}
                       strokeWidth={1}
                     />
                     <text
@@ -513,7 +522,8 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="8.5"
                       fontWeight="700"
-                      fill={c.partStroke}
+                      fontFamily="var(--font-sans)"
+                      fill={c.calloutText}
                     >
                       {label}
                     </text>
@@ -620,6 +630,7 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="9"
                       fontWeight="600"
+                      fontFamily="var(--font-mono)"
                       fill={isCoinciding ? c.coincide : i === 0 ? c.accent : c.tick}
                     >
                       {leastCount === 0.02 ? i / 5 : i / 2}
@@ -634,6 +645,7 @@ export function VernierSvg({
               y={SEAM_Y + 46}
               fontSize="9"
               fontWeight="500"
+              fontFamily="var(--font-sans)"
               fill={c.tickSubtle}
             >
               Drag jaw
@@ -644,21 +656,21 @@ export function VernierSvg({
 
       {/* High-Precision Magnifier Loupe Bar */}
       {showLoupe && (
-        <div className="rounded-xl border border-sky-200 dark:border-sky-800/70 bg-white dark:bg-slate-900 p-3 shadow-sm space-y-2">
+        <div className="rounded-[24px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 space-y-2.5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold text-sky-700 dark:text-sky-300">
+              <span className="text-xs font-bold text-[var(--md-primary)]">
                 Magnifier Loupe ({loupeZoom}× Optical Zoom)
               </span>
               {/* 3-Pill Loupe Focus Toggle */}
-              <div className="flex items-center rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden text-[11px]">
+              <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-[11px]">
                 <button
                   type="button"
                   onClick={() => setLoupeFocus('full')}
-                  className={`px-2 py-0.5 font-medium ${
+                  className={`rounded-full px-2.5 py-0.5 transition-colors ${
                     effectiveFocus === 'full'
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   Full Scale
@@ -666,10 +678,10 @@ export function VernierSvg({
                 <button
                   type="button"
                   onClick={() => setLoupeFocus('msr')}
-                  className={`px-2 py-0.5 font-medium ${
+                  className={`rounded-full px-2.5 py-0.5 transition-colors ${
                     effectiveFocus === 'msr'
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   MSR (0 Mark)
@@ -678,10 +690,10 @@ export function VernierSvg({
                   <button
                     type="button"
                     onClick={() => setLoupeFocus('coinciding')}
-                    className={`px-2 py-0.5 font-medium ${
+                    className={`rounded-full px-2.5 py-0.5 transition-colors ${
                       effectiveFocus === 'coinciding'
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     Coinciding Tick
@@ -691,9 +703,9 @@ export function VernierSvg({
             </div>
 
             {/* Striped Line Legend */}
-            <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
+            <div className="flex flex-wrap items-center gap-3 text-[11px] text-[var(--md-on-surface-variant)]">
               <span className="flex items-center gap-1.5">
-                <span className="inline-block w-5 border-t-2 border-dashed border-sky-500" />
+                <span className="inline-block w-5 border-t-2 border-dashed border-[var(--md-primary)]" />
                 Vernier 0 (MSR)
               </span>
               {!hideReadout && (
@@ -716,7 +728,7 @@ export function VernierSvg({
 
           <svg
             viewBox={`${loupeViewX} ${loupeViewY} ${loupeViewW} ${loupeViewH}`}
-            className="w-full max-h-[160px] h-32 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950"
+            className="w-full max-h-[160px] h-32 rounded-2xl border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-lowest)]"
             aria-label="Magnified Vernier Scale View"
           >
             {/* Beam background inside loupe */}
@@ -764,6 +776,7 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="5.5"
                       fontWeight="700"
+                      fontFamily="var(--font-mono)"
                       fill={c.tick}
                     >
                       {mm}
@@ -861,6 +874,7 @@ export function VernierSvg({
                       textAnchor="middle"
                       fontSize="5"
                       fontWeight="700"
+                      fontFamily="var(--font-mono)"
                       fill={isCoinciding ? c.coincide : i === 0 ? c.accent : c.tick}
                     >
                       {leastCount === 0.02 ? i / 5 : i / 2}

@@ -193,7 +193,7 @@ export function MultimeterSvg({
   const matFill = isDark ? '#0B2239' : '#133A5E';
   const matBorder = isDark ? '#1E4976' : '#0F2D4A';
   const cardFill = isDark ? '#102A43' : '#1E3A5F';
-  const canvasBg = isDark ? '#070F22' : '#E2E8F0';
+  const canvasBg = 'var(--md-surface-container-low)';
 
   const activeDial =
     DIGITAL_DIAL_POINTS.find((d) => d.mode === digitalDial) ??
@@ -215,7 +215,7 @@ export function MultimeterSvg({
         : '#0F291E';
 
   return (
-    <div className="glass-panel rounded-2xl p-3 shadow-xs">
+    <div className="glass-panel rounded-[28px] p-3.5">
       <svg
         ref={svgRef}
         viewBox="0 0 880 460"
@@ -300,7 +300,7 @@ export function MultimeterSvg({
                   fill={lcdText}
                   fontSize="8"
                   fontWeight="800"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {digitalReadout.rangeLabel} {digitalReadout.polarity}
                 </text>
@@ -311,7 +311,7 @@ export function MultimeterSvg({
                     fill={lcdText}
                     fontSize="8"
                     fontWeight="900"
-                    fontFamily="monospace"
+                    fontFamily="var(--font-mono)"
                   >
                     HOLD
                   </text>
@@ -323,7 +323,7 @@ export function MultimeterSvg({
                     fill={lcdText}
                     fontSize="8"
                     fontWeight="900"
-                    fontFamily="monospace"
+                    fontFamily="var(--font-mono)"
                   >
                     {minMaxMode.toUpperCase()}
                   </text>
@@ -348,7 +348,7 @@ export function MultimeterSvg({
                   fill={lcdText}
                   fontSize="31"
                   fontWeight="800"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {digitalReadout.display}
                 </text>
@@ -359,7 +359,7 @@ export function MultimeterSvg({
                   fill={lcdText}
                   fontSize="10.5"
                   fontWeight="800"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {digitalReadout.unit}
                 </text>
@@ -566,7 +566,7 @@ export function MultimeterSvg({
               fill="#0369A1"
               fontSize="9.5"
               fontWeight="700"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {analogReadout.scaleText}
             </text>
@@ -621,7 +621,7 @@ export function MultimeterSvg({
               fill="#38BDF8"
               fontSize="14"
               fontWeight="800"
-              fontFamily="monospace"
+              fontFamily="var(--font-mono)"
             >
               {analogRange.replace('_', ' ')}
             </text>
@@ -952,7 +952,7 @@ export function MultimeterSvg({
                 fill="#34D399"
                 fontSize="13"
                 fontWeight="800"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 Vout = {(12 * circuit.potRatio).toFixed(2)} V
               </text>

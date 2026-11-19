@@ -21,14 +21,14 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
   const [activeTab, setActiveTab] = useState<'fft' | 'bode'>('fft');
 
   const colors = {
-    bg: isDark ? '#0f172a' : '#ffffff',
-    border: isDark ? '#1e293b' : '#e2e8f0',
-    grid: isDark ? '#1e293b' : '#f1f5f9',
-    axis: isDark ? '#475569' : '#cbd5e1',
-    textMain: isDark ? '#f1f5f9' : '#0f172a',
-    textMuted: isDark ? '#94a3b8' : '#64748b',
-    textDim: isDark ? '#64748b' : '#94a3b8',
-    primary: isDark ? '#38bdf8' : '#0284c7', // Cyan / Sky
+    bg: 'var(--md-surface-container-low)',
+    border: 'var(--md-outline-variant)',
+    grid: 'var(--md-outline-variant)',
+    axis: 'var(--md-outline-variant)',
+    textMain: 'var(--md-on-surface)',
+    textMuted: 'var(--md-on-surface-variant)',
+    textDim: 'var(--md-on-surface-variant)',
+    primary: 'var(--md-primary)',
     secondary: isDark ? '#f59e0b' : '#d97706', // Amber for phase
     criticalSpeedLine: isDark ? '#f43f5e' : '#e11d48',
   };
@@ -65,11 +65,11 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
 
     return (
       <div className="flex flex-col gap-2.5">
-        <div className="flex items-center justify-between text-xs text-slate-500">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">
+        <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+          <span className="font-semibold text-[var(--md-on-surface)]">
             {pick('Vibration Velocity Spectrum (0 – 150 Hz)', 'Spektrum Kecepatan Getaran (0 – 150 Hz)', '振動速度スペクトル (0 – 150 Hz)')}
           </span>
-          <span className="font-mono text-cyan-600 dark:text-cyan-400">
+          <span className="font-mono font-semibold text-[var(--md-primary)]">
             {pick('Tracking: Orders 1X, 2X, 3X', 'Pelacakan: Orde 1X, 2X, 3X', '追従: 1X, 2X, 3X 次数比')}
           </span>
         </div>
@@ -77,7 +77,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
         <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full h-auto select-none">
           <defs>
             <linearGradient id={`fftAreaGrad-${filterId}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={colors.primary} stopOpacity="0.45" />
+              <stop offset="0%" stopColor={colors.primary} stopOpacity="0.42" />
               <stop offset="100%" stopColor={colors.primary} stopOpacity="0.02" />
             </linearGradient>
           </defs>
@@ -94,6 +94,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   x2={padL + plotW}
                   y2={y}
                   stroke={colors.grid}
+                  strokeOpacity="0.55"
                   strokeWidth="1"
                   strokeDasharray="4 3"
                 />
@@ -103,6 +104,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   textAnchor="end"
                   fontSize="10"
                   fontWeight="600"
+                  fontFamily="var(--font-mono)"
                   fill={colors.textDim}
                 >
                   {val}
@@ -122,6 +124,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   x2={x}
                   y2={padT + plotH}
                   stroke={colors.grid}
+                  strokeOpacity="0.55"
                   strokeWidth="1"
                   strokeDasharray="4 3"
                 />
@@ -131,6 +134,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   textAnchor="middle"
                   fontSize="10"
                   fontWeight="600"
+                  fontFamily="var(--font-mono)"
                   fill={colors.textDim}
                 >
                   {hz} Hz
@@ -141,7 +145,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
 
           {/* Spectrum Shaded Area & Line */}
           <path d={areaD} fill={`url(#fftAreaGrad-${filterId})`} />
-          <path d={pathD} fill="none" stroke={colors.primary} strokeWidth="2" />
+          <path d={pathD} fill="none" stroke={colors.primary} strokeWidth="2.2" />
 
           {/* Peak Callout Badges (1X, 2X, 3X) with Collision Prevention */}
           {state.harmonics.map((h) => {
@@ -168,7 +172,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   cx={px}
                   cy={py}
                   r="4.5"
-                  fill={h.order === 1 ? '#06b6d4' : '#64748b'}
+                  fill={h.order === 1 ? colors.primary : '#64748b'}
                   stroke="#ffffff"
                   strokeWidth="1.4"
                 />
@@ -178,9 +182,9 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   y={badgeY}
                   width="56"
                   height="19"
-                  rx="4"
-                  fill={h.order === 1 ? (isDark ? '#083344' : '#ecfeff') : isDark ? '#1e293b' : '#f1f5f9'}
-                  stroke={h.order === 1 ? '#06b6d4' : colors.axis}
+                  rx="8"
+                  fill={h.order === 1 ? 'var(--md-primary-container)' : 'var(--md-surface-container)'}
+                  stroke={h.order === 1 ? colors.primary : colors.axis}
                   strokeWidth="1.2"
                 />
                 <text
@@ -189,7 +193,8 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   textAnchor="middle"
                   fontSize="9.5"
                   fontWeight="800"
-                  fill={h.order === 1 ? (isDark ? '#38bdf8' : '#0891b2') : colors.textMain}
+                  fontFamily="var(--font-mono)"
+                  fill={h.order === 1 ? 'var(--md-on-primary-container)' : colors.textMain}
                 >
                   {h.order}X: {h.velocityRms.toFixed(2)}
                 </text>
@@ -204,6 +209,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             textAnchor="middle"
             fontSize="10.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             fill={colors.textMain}
           >
             {pick('Frequency (Hz) / Running Speed Orders', 'Frekuensi (Hz) / Orde Kecepatan Putar', '周波数 (Hz) / 回転次数比')}
@@ -213,6 +219,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             textAnchor="middle"
             fontSize="10.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             fill={colors.textMain}
           >
             {pick('Velocity RMS (mm/s)', 'Kecepatan RMS (mm/s)', '振動速度実効値 (mm/s RMS)')}
@@ -224,21 +231,21 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
           {state.harmonics.map((h) => (
             <div
               key={h.order}
-              className="flex flex-col rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60"
+              className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5"
             >
               <div className="flex items-center justify-between text-[11px] font-bold">
-                <span className={h.order === 1 ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500'}>
+                <span className={h.order === 1 ? 'text-[var(--md-primary)]' : 'text-[var(--md-on-surface-variant)]'}>
                   {h.label}
                 </span>
-                <span className="font-mono text-slate-700 dark:text-slate-300">
+                <span className="font-mono text-[var(--md-on-surface-variant)]">
                   {h.freqHz.toFixed(1)} Hz
                 </span>
               </div>
               <div className="mt-1 flex items-baseline justify-between">
-                <span className="font-mono text-xs font-black text-slate-800 dark:text-slate-100">
+                <span className="font-mono text-xs font-black text-[var(--md-on-surface)]">
                   {h.velocityRms.toFixed(2)} mm/s
                 </span>
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">
                   ({h.displacementUm.toFixed(1)} μm)
                 </span>
               </div>
@@ -298,8 +305,8 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
 
     return (
       <div className="flex flex-col gap-2.5">
-        <div className="flex items-center justify-between text-xs text-slate-500">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">
+        <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+          <span className="font-semibold text-[var(--md-on-surface)]">
             {pick('Bode Diagram: Synchronous Amplitude & Phase vs RPM', 'Diagram Bode: Amplitudo & Sudut Fasa Sinkron vs RPM', 'ボード線図: 同期振幅および位相遅れ vs RPM')}
           </span>
           <span className="font-bold text-rose-600 dark:text-rose-400">
@@ -323,6 +330,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             y={padT + 12}
             fontSize="10"
             fontWeight="800"
+            fontFamily="var(--font-mono)"
             fill={colors.criticalSpeedLine}
           >
             Nc = {state.criticalRpm} RPM
@@ -334,8 +342,8 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             const val = (ratio * maxAmp).toFixed(0);
             return (
               <g key={ratio}>
-                <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeWidth="1" strokeDasharray="3 3" />
-                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fill={colors.textDim}>
+                <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeOpacity="0.55" strokeWidth="1" strokeDasharray="3 3" />
+                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)" fill={colors.textDim}>
                   {val}
                 </text>
               </g>
@@ -346,6 +354,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             textAnchor="middle"
             fontSize="10"
             fontWeight="800"
+            fontFamily="var(--font-sans)"
             fill={colors.primary}
           >
             Amp (μm)
@@ -360,8 +369,8 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             const y = getPhaseY(deg);
             return (
               <g key={deg}>
-                <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeWidth="1" strokeDasharray="3 3" />
-                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fill={colors.textDim}>
+                <line x1={padL} y1={y} x2={padL + plotW} y2={y} stroke={colors.grid} strokeOpacity="0.55" strokeWidth="1" strokeDasharray="3 3" />
+                <text x={padL - 8} y={y + 3.5} textAnchor="end" fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)" fill={colors.textDim}>
                   {deg}°
                 </text>
               </g>
@@ -372,6 +381,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             textAnchor="middle"
             fontSize="10"
             fontWeight="800"
+            fontFamily="var(--font-sans)"
             fill={colors.secondary}
           >
             Phase (°)
@@ -404,6 +414,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
                   textAnchor="middle"
                   fontSize="9.5"
                   fontWeight="600"
+                  fontFamily="var(--font-mono)"
                   fill={colors.textDim}
                 >
                   {rpm}
@@ -417,6 +428,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
             textAnchor="middle"
             fontSize="10.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             fill={colors.textMain}
           >
             Rotor Operating Speed (RPM)
@@ -424,18 +436,18 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
         </svg>
 
         {/* Operating Point Diagnostic Banner */}
-        <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs dark:border-slate-800 dark:bg-slate-900/60">
-          <span className="font-semibold text-slate-700 dark:text-slate-300">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3.5 py-2 text-xs">
+          <span className="font-semibold text-[var(--md-on-surface)]">
             {pick('Current Operating State:', 'Kondisi Operasi Saat Ini:', '現在の運転状態:')}
           </span>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-cyan-600 dark:text-cyan-400">
+            <span className="font-mono font-bold text-[var(--md-primary)]">
               {state.rpm} RPM (r = {state.frequencyRatio.toFixed(2)})
             </span>
-            <span className="font-mono text-cyan-700 dark:text-cyan-300">
+            <span className="font-mono font-semibold text-[var(--md-on-surface)]">
               {state.displacement1xPeakUm.toFixed(1)} μm
             </span>
-            <span className="font-mono text-amber-600 dark:text-amber-400">
+            <span className="font-mono font-semibold text-[var(--md-on-surface-variant)]">
               φ = {state.phaseLagDeg.toFixed(1)}°
             </span>
           </div>
@@ -445,20 +457,20 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
   };
 
   return (
-    <div className="glass-card flex flex-col gap-3 rounded-2xl p-4 shadow-xs">
+    <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
       {/* Chart Switcher Header */}
-      <div className="flex items-center justify-between border-b border-slate-200/60 pb-2.5 dark:border-slate-800/60">
-        <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+        <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">
           {pick('Diagnostic Spectra & Rotor Dynamic Response', 'Spektra Diagnostik & Respons Dinamika Rotor', '診断スペクトル・ロータ動特性応答')}
         </span>
-        <div className="flex rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+        <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setActiveTab('fft')}
-            className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all ${
               activeTab === 'fft'
-                ? 'bg-cyan-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <BarChart3 className="h-3.5 w-3.5" />
@@ -467,10 +479,10 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
           <button
             type="button"
             onClick={() => setActiveTab('bode')}
-            className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all ${
               activeTab === 'bode'
-                ? 'bg-cyan-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <TrendingUp className="h-3.5 w-3.5" />

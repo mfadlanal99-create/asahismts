@@ -65,17 +65,17 @@ export function AnalogDialGauge({
   });
 
   return (
-    <div className="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-900/60">
-      <div className="mb-1 flex w-full items-center justify-between">
+    <div className="flex flex-col items-center rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+      <div className="mb-1 flex w-full items-center justify-between gap-2">
         <div>
-          <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+          <div className="text-xs font-semibold text-[var(--md-on-surface)]">
             {label}
           </div>
-          <div className="text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="text-[11px] text-[var(--md-on-surface-variant)]">
             {subtitle}
           </div>
         </div>
-        <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 font-mono text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+        <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 font-mono text-[11px] font-semibold text-[var(--md-on-secondary-container)]">
           TIR {tirMm.toFixed(2)} mm
         </span>
       </div>
@@ -146,6 +146,7 @@ export function AnalogDialGauge({
                 dominantBaseline="central"
                 fontSize="8.5"
                 fontWeight="600"
+                fontFamily="var(--font-mono)"
                 fill={textMuted}
               >
                 {t.numVal}
@@ -183,6 +184,7 @@ export function AnalogDialGauge({
           textAnchor="middle"
           fontSize="7.5"
           fontWeight="600"
+          fontFamily="var(--font-mono)"
           fill={textMuted}
         >
           0.01 mm
@@ -204,7 +206,7 @@ export function AnalogDialGauge({
         <circle cx="80" cy="80" r="2" fill={faceBg} />
       </svg>
 
-      <div className="mt-1 rounded-lg border border-slate-200 bg-white px-3 py-1 font-mono text-sm font-bold text-slate-900 dark:border-slate-700 dark:bg-slate-950 dark:text-white">
+      <div className="mt-1 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] px-3.5 py-1 font-mono text-sm font-bold text-[var(--md-on-surface)]">
         {valueMm >= 0 ? '+' : ''}
         {valueMm.toFixed(3)} mm
       </div>
@@ -230,13 +232,13 @@ export function AlignmentRigSvg({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const bg = isDark ? '#0f172a' : '#f8fafc';
-  const cardBg = isDark ? '#1e293b' : '#ffffff';
-  const stroke = isDark ? '#334155' : '#cbd5e1';
+  const bg = 'var(--md-surface-container-low)';
+  const cardBg = 'var(--md-surface-container)';
+  const stroke = 'var(--md-outline-variant)';
   const machineFill = isDark ? '#1e293b' : '#e2e8f0';
   const machineStroke = isDark ? '#475569' : '#64748b';
-  const textMain = isDark ? '#f1f5f9' : '#0f172a';
-  const textSub = isDark ? '#94a3b8' : '#475569';
+  const textMain = 'var(--md-on-surface)';
+  const textSub = 'var(--md-on-surface-variant)';
   const centerLineColor = isDark ? '#38bdf8' : '#0284c7';
   const motorLineColor = solution.isAligned
     ? isDark
@@ -301,7 +303,7 @@ export function AlignmentRigSvg({
   return (
     <svg
       viewBox="0 0 660 270"
-      className="w-full max-h-[480px] rounded-xl border border-slate-200 dark:border-slate-800"
+      className="w-full max-h-[480px] rounded-[22px] border border-[var(--md-outline-variant)]/60"
       style={{ background: bg }}
       aria-label="Motor to Pump Shaft Alignment Rig"
     >
@@ -338,11 +340,12 @@ export function AlignmentRigSvg({
         y="22"
         fontSize="11"
         fontWeight="700"
+        fontFamily="var(--font-sans)"
         fill={textMain}
       >
         SIDE VIEW — VERTICAL PLANE (EXAGGERATED)
       </text>
-      <text x="18" y="37" fontSize="10" fill={textSub}>
+      <text x="18" y="37" fontSize="10" fontFamily="var(--font-sans)" fill={textSub}>
         Pump (Stationary) → Coupling → Motor (Adjustable Shims)
       </text>
 
@@ -422,6 +425,7 @@ export function AlignmentRigSvg({
           textAnchor="middle"
           fontSize="12"
           fontWeight="700"
+          fontFamily="var(--font-sans)"
           fill={textMain}
         >
           PUMP
@@ -431,6 +435,7 @@ export function AlignmentRigSvg({
           y="162"
           textAnchor="middle"
           fontSize="9"
+          fontFamily="var(--font-sans)"
           fill={textSub}
         >
           Stationary
@@ -557,6 +562,7 @@ export function AlignmentRigSvg({
           textAnchor="middle"
           fontSize="12"
           fontWeight="700"
+          fontFamily="var(--font-sans)"
           fill={textMain}
         >
           MOTOR
@@ -566,6 +572,7 @@ export function AlignmentRigSvg({
           y="145"
           textAnchor="middle"
           fontSize="9"
+          fontFamily="var(--font-mono)"
           fill={textSub}
         >
           {geometry.rpm} RPM
@@ -738,10 +745,10 @@ export function AlignmentRigSvg({
       )}
 
       {/* Foot Distance Dimension Labels */}
-      <text x="298" y="252" textAnchor="middle" fontSize="9.5" fill={textSub}>
+      <text x="298" y="252" textAnchor="middle" fontSize="9.5" fontFamily="var(--font-mono)" fill={textSub}>
         {hasSoftFoot ? '' : `Front L₁ = ${geometry.frontFootDistMm} mm`}
       </text>
-      <text x="406" y="252" textAnchor="middle" fontSize="9.5" fill={textSub}>
+      <text x="406" y="252" textAnchor="middle" fontSize="9.5" fontFamily="var(--font-mono)" fill={textSub}>
         Rear L₂ = {geometry.rearFootDistMm} mm
       </text>
 
@@ -762,6 +769,7 @@ export function AlignmentRigSvg({
         textAnchor="middle"
         fontSize="11"
         fontWeight="700"
+        fontFamily="var(--font-sans)"
         fill={textMain}
       >
         END VIEW (D = {geometry.couplingDiameterMm} mm)
@@ -771,6 +779,7 @@ export function AlignmentRigSvg({
         y="37"
         textAnchor="middle"
         fontSize="10"
+        fontFamily="var(--font-mono)"
         fill={textSub}
       >
         Shaft Angle: {shaftAngleDeg.toFixed(0)}°
@@ -809,6 +818,7 @@ export function AlignmentRigSvg({
         textAnchor="middle"
         fontSize={isNearAngle(0) ? '11' : '10'}
         fontWeight="700"
+        fontFamily="var(--font-mono)"
         fill={isNearAngle(0) ? activeCardinalColor : textMain}
       >
         T (0°)
@@ -819,6 +829,7 @@ export function AlignmentRigSvg({
         textAnchor="middle"
         fontSize={isNearAngle(90) ? '11' : '10'}
         fontWeight="700"
+        fontFamily="var(--font-mono)"
         fill={isNearAngle(90) ? activeCardinalColor : textMain}
       >
         R
@@ -829,6 +840,7 @@ export function AlignmentRigSvg({
         textAnchor="middle"
         fontSize={isNearAngle(180) ? '11' : '10'}
         fontWeight="700"
+        fontFamily="var(--font-mono)"
         fill={isNearAngle(180) ? activeCardinalColor : textMain}
       >
         B (180°)
@@ -839,6 +851,7 @@ export function AlignmentRigSvg({
         textAnchor="middle"
         fontSize={isNearAngle(270) ? '11' : '10'}
         fontWeight="700"
+        fontFamily="var(--font-mono)"
         fill={isNearAngle(270) ? activeCardinalColor : textMain}
       >
         L
@@ -879,6 +892,7 @@ export function AlignmentRigSvg({
         y="246"
         textAnchor="middle"
         fontSize="9"
+        fontFamily="var(--font-sans)"
         fill={textSub}
       >
         Blue: Pump Center • {solution.isAligned ? 'Green' : 'Amber'}: Motor Hub
@@ -901,9 +915,9 @@ export function LaserAlignmentPanel({
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const bg = isDark ? '#0f172a' : '#f8fafc';
-  const grid = isDark ? '#334155' : '#cbd5e1';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const bg = 'var(--md-surface-container-low)';
+  const grid = 'var(--md-outline-variant)';
+  const textMuted = 'var(--md-on-surface-variant)';
 
   // Map coupling offsets to PSD target crosshair (-22..+22 px)
   const clampPx = (v: number) => Math.max(-22, Math.min(22, v * 35));
@@ -919,16 +933,16 @@ export function LaserAlignmentPanel({
     <div className="space-y-3">
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {/* PSD Laser Target */}
-        <div className="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="flex flex-col items-center rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
           <div className="mb-1 flex w-full items-center justify-between">
-            <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+            <span className="text-xs font-semibold text-[var(--md-on-surface)]">
               PSD Laser Target
             </span>
             <span
               className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                 solution.isAligned
-                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
-                  : 'bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
+                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                  : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
               }`}
             >
               {solution.isAligned ? 'LOCKED' : 'LIVE BEAM'}
@@ -940,7 +954,7 @@ export function LaserAlignmentPanel({
               y="6"
               width="100"
               height="100"
-              rx="10"
+              rx="12"
               fill={bg}
               stroke={grid}
               strokeWidth="1.5"
@@ -964,10 +978,10 @@ export function LaserAlignmentPanel({
             />
             <line x1="12" y1="56" x2="100" y2="56" stroke={grid} />
             <line x1="56" y1="12" x2="56" y2="100" stroke={grid} />
-            <text x="56" y="18" textAnchor="middle" fontSize="8" fill={textMuted}>
+            <text x="56" y="18" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={textMuted}>
               +V
             </text>
-            <text x="94" y="53" textAnchor="middle" fontSize="8" fill={textMuted}>
+            <text x="94" y="53" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={textMuted}>
               +H
             </text>
             {/* Synchronized Laser Sweep Phase Marker */}
@@ -975,7 +989,7 @@ export function LaserAlignmentPanel({
               cx={phaseX}
               cy={phaseY}
               r="3"
-              fill={isDark ? '#38bdf8' : '#0284c7'}
+              fill="var(--md-primary)"
             />
             {/* Laser beam spot */}
             <circle
@@ -992,41 +1006,41 @@ export function LaserAlignmentPanel({
               fill={solution.isAligned ? '#10b981' : '#f43f5e'}
             />
           </svg>
-          <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+          <div className="mt-1 text-[11px] text-[var(--md-on-surface-variant)]">
             Target Zone: ISO {rpm} RPM
           </div>
         </div>
 
         {/* Live Laser Coupling Readout */}
-        <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-900/60">
-          <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+        <div className="flex flex-col justify-between rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+          <div className="text-xs font-semibold text-[var(--md-on-surface)]">
             Dual-Laser Coupling Readout
           </div>
           <div className="my-2 space-y-2 text-xs">
-            <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-1.5 dark:bg-slate-800">
-              <span className="text-slate-500 dark:text-slate-400">V-Offset</span>
-              <span className="font-mono font-bold text-slate-900 dark:text-white">
+            <div className="flex items-center justify-between rounded-xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-3 py-1.5">
+              <span className="text-[var(--md-on-surface-variant)]">V-Offset</span>
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {solution.verticalOffsetMm >= 0 ? '+' : ''}
                 {solution.verticalOffsetMm.toFixed(3)} mm
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-1.5 dark:bg-slate-800">
-              <span className="text-slate-500 dark:text-slate-400">V-Angle</span>
-              <span className="font-mono font-bold text-slate-900 dark:text-white">
+            <div className="flex items-center justify-between rounded-xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-3 py-1.5">
+              <span className="text-[var(--md-on-surface-variant)]">V-Angle</span>
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {solution.verticalAngularityPer100 >= 0 ? '+' : ''}
                 {solution.verticalAngularityPer100.toFixed(3)} /100
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-1.5 dark:bg-slate-800">
-              <span className="text-slate-500 dark:text-slate-400">H-Offset</span>
-              <span className="font-mono font-bold text-slate-900 dark:text-white">
+            <div className="flex items-center justify-between rounded-xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-3 py-1.5">
+              <span className="text-[var(--md-on-surface-variant)]">H-Offset</span>
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {solution.horizontalOffsetMm >= 0 ? '+' : ''}
                 {solution.horizontalOffsetMm.toFixed(3)} mm
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-lg bg-white px-2.5 py-1.5 dark:bg-slate-800">
-              <span className="text-slate-500 dark:text-slate-400">H-Angle</span>
-              <span className="font-mono font-bold text-slate-900 dark:text-white">
+            <div className="flex items-center justify-between rounded-xl border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-low)] px-3 py-1.5">
+              <span className="text-[var(--md-on-surface-variant)]">H-Angle</span>
+              <span className="font-mono font-bold text-[var(--md-on-surface)]">
                 {solution.horizontalAngularityPer100 >= 0 ? '+' : ''}
                 {solution.horizontalAngularityPer100.toFixed(3)} /100
               </span>

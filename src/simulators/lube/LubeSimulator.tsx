@@ -146,49 +146,49 @@ export function LubeSimulator() {
   return (
     <div className="space-y-5">
       {/* Top Scenario Presets + Equipment Selector */}
-      <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
+      <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-3">
           <div>
-            <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+            <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick(
                 'Equipment & Lubricant Operating Conditions',
                 'Kondisi Operasi Peralatan & Pelumas',
                 '機器・潤滑油の運転条件',
               )}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {equipment.description}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="mr-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <span className="mr-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               {pick('Fault Scenarios:', 'Skenario Gangguan:', '異常シナリオ:')}
             </span>
             <button
               type="button"
               onClick={() => applyPreset('healthy')}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-amber-300 hover:bg-amber-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-amber-500/40 dark:hover:bg-amber-500/10"
+              className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
             >
               {pick('Healthy Gearbox', 'Gearbox Sehat', '正常減速機')}
             </button>
             <button
               type="button"
               onClick={() => applyPreset('water')}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-sky-300 hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-sky-500/40 dark:hover:bg-sky-500/10"
+              className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
             >
               {pick('Water Ingress', 'Masuknya Air', '水分混入')}
             </button>
             <button
               type="button"
               onClick={() => applyPreset('thermal')}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-amber-300 hover:bg-amber-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-amber-500/40 dark:hover:bg-amber-500/10"
+              className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
             >
               {pick('Thermal Overload', 'Beban Panas Berlebih', '過熱・熱酸化')}
             </button>
             <button
               type="button"
               onClick={() => applyPreset('under-viscous')}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-rose-500/40 dark:hover:bg-rose-500/10"
+              className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
             >
               {pick('Under-Viscous Bearing', 'Bantalan Kurang Kental', '低粘度軸受')}
             </button>
@@ -199,7 +199,7 @@ export function LubeSimulator() {
         <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {/* Equipment Selector */}
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Equipment Type', 'Jenis Peralatan', '対象機器')}
             </label>
             <div className="grid grid-cols-2 gap-1.5">
@@ -210,14 +210,14 @@ export function LubeSimulator() {
                     key={eq.id}
                     type="button"
                     onClick={() => handleSelectEquipment(eq.id)}
-                    className={`rounded-lg border px-2.5 py-2 text-left text-xs font-medium transition ${
+                    className={`rounded-[20px] border px-3 py-2 text-left text-xs font-medium transition ${
                       active
-                        ? 'border-amber-500 bg-amber-50 text-amber-800 shadow-xs dark:border-amber-400/60 dark:bg-amber-500/15 dark:text-amber-200'
-                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:border-slate-600'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
-                    <div className="truncate font-semibold">{eq.shortName}</div>
-                    <div className="text-[10px] opacity-75">
+                    <div className="truncate font-bold">{eq.shortName}</div>
+                    <div className="text-[10px] opacity-80">
                       Rec: {eq.recommendedVg}
                     </div>
                   </button>
@@ -228,7 +228,7 @@ export function LubeSimulator() {
 
           {/* ISO VG Grade Selector */}
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('ISO VG Viscosity Grade', 'Grade Viskositas ISO VG', 'ISO VG 粘度グレード')}
             </label>
             <div className="grid grid-cols-4 gap-1.5">
@@ -240,17 +240,17 @@ export function LubeSimulator() {
                     key={vg}
                     type="button"
                     onClick={() => setSelectedVg(vg)}
-                    className={`relative rounded-lg border px-1.5 py-1.5 text-center text-xs font-semibold transition ${
+                    className={`relative rounded-full border px-1.5 py-1.5 text-center text-xs transition ${
                       active
-                        ? 'border-amber-500 bg-amber-500 text-white shadow-xs dark:text-slate-950'
-                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-amber-300 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                     }`}
                   >
                     {vg.replace('VG ', '')}
                     {isRec && (
                       <span
                         title="Recommended Grade"
-                        className={`absolute -top-1 -right-1 h-2 w-2 rounded-full ${
+                        className={`absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full ${
                           active ? 'bg-emerald-300' : 'bg-emerald-500'
                         }`}
                       />
@@ -259,7 +259,7 @@ export function LubeSimulator() {
                 );
               })}
             </div>
-            <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="mt-1.5 text-[11px] text-[var(--md-on-surface-variant)]">
               {pick(
                 `Green dot = OEM recommended (${equipment.recommendedVg})`,
                 `Titik hijau = rekomendasi OEM (${equipment.recommendedVg})`,
@@ -271,11 +271,11 @@ export function LubeSimulator() {
           {/* Temperature & Water Contamination Sliders */}
           <div className="space-y-3">
             <div>
-              <div className="mb-1 flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">
+              <div className="mb-1.5 flex items-center justify-between text-xs">
+                <span className="font-bold text-[var(--md-on-surface)]">
                   {pick('Operating Temp', 'Suhu Operasi', '運転油温')}
                 </span>
-                <span className="font-mono font-semibold text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {tempC} °C
                 </span>
               </div>
@@ -286,9 +286,9 @@ export function LubeSimulator() {
                 step={1}
                 value={tempC}
                 onChange={(e) => setTempC(Number(e.target.value))}
-                className="w-full accent-amber-500"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] text-slate-400">
+              <div className="mt-1 flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>20 °C</span>
                 <span>
                   Opt: {equipment.optimalTempRange[0]}–{equipment.optimalTempRange[1]} °C
@@ -298,11 +298,11 @@ export function LubeSimulator() {
             </div>
 
             <div>
-              <div className="mb-1 flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">
+              <div className="mb-1.5 flex items-center justify-between text-xs">
+                <span className="font-bold text-[var(--md-on-surface)]">
                   {pick('Water Contamination', 'Kontaminasi Air', '水分混入量')}
                 </span>
-                <span className="font-mono font-semibold text-sky-600 dark:text-sky-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {waterPpm} ppm
                 </span>
               </div>
@@ -313,9 +313,9 @@ export function LubeSimulator() {
                 step={25}
                 value={waterPpm}
                 onChange={(e) => setWaterPpm(Number(e.target.value))}
-                className="w-full accent-sky-500"
+                className="w-full"
               />
-              <div className="flex justify-between text-[10px] text-slate-400">
+              <div className="mt-1 flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>0 ppm</span>
                 <span>Limit: {equipment.waterLimitPpm} ppm</span>
                 <span>2000 ppm</span>
@@ -325,7 +325,7 @@ export function LubeSimulator() {
 
           {/* Wear Particle Level */}
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-300">
+            <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Wear Particle Level', 'Tingkat Partikel Keausan', '摩耗粉レベル')}
             </label>
             <div className="grid grid-cols-3 gap-1.5">
@@ -342,14 +342,14 @@ export function LubeSimulator() {
                     key={lvl}
                     type="button"
                     onClick={() => setWearLevel(lvl)}
-                    className={`rounded-lg border px-2 py-2 text-xs font-semibold transition ${
+                    className={`rounded-full border px-2 py-2 text-xs font-semibold transition ${
                       active
                         ? lvl === 'normal'
                           ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300'
                           : lvl === 'elevated'
                             ? 'border-amber-500 bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300'
                             : 'border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300'
-                        : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {lvlLabel}
@@ -359,13 +359,13 @@ export function LubeSimulator() {
             </div>
 
             {/* Live Oil Oxidation & Remaining Useful Life (RUL %) Bar */}
-            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 dark:border-slate-800 dark:bg-slate-800/50">
+            <div className="mt-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-medium text-slate-600 dark:text-slate-300">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick('Oil Oxidation & RUL', 'Oksidasi Oli & Sisa Umur', '油酸化 & 残存寿命 (RUL)')}
                 </span>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-slate-900 dark:text-slate-100">
+                  <span className="font-mono font-bold text-[var(--md-on-surface)]">
                     {labReport.estimatedOilLifePct}%
                   </span>
                   <span
@@ -375,7 +375,7 @@ export function LubeSimulator() {
                   </span>
                 </div>
               </div>
-              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                 <div
                   className={`h-full rounded-full transition-all duration-300 ${
                     labReport.estimatedOilLifePct >= 60
@@ -387,7 +387,7 @@ export function LubeSimulator() {
                   style={{ width: `${labReport.estimatedOilLifePct}%` }}
                 />
               </div>
-              <div className="mt-1 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-1 flex items-center justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>{pick('Arrhenius (+10°C = ½ life)', 'Arrhenius (+10°C = ½ umur)', 'アレニウス則 (+10°Cで寿命半減)')}</span>
                 <span>~{Math.round(40 * labReport.estimatedOilLifePct).toLocaleString()} h {pick('drain', 'ganti', '交換目安')}</span>
               </div>
@@ -397,7 +397,7 @@ export function LubeSimulator() {
       </div>
 
       {/* Live Visuals Row */}
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <ViscosityTempChart
           equipment={equipment}
           selectedVg={selectedVg}
@@ -419,18 +419,18 @@ export function LubeSimulator() {
       <StribeckCurveChart lambdaRatio={ehl.lambdaRatio} regime={ehl.regime} />
 
       {/* Bottom Engineering Analysis Grid */}
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-3">
         {/* 1. ISO 4406 Cleanliness Code */}
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-          <div className="mb-3 flex items-center justify-between">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
             <div className="flex items-center gap-2">
-              <Microscope className="h-4 w-4 text-amber-500" />
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              <Microscope className="h-4 w-4 text-[var(--md-primary)]" />
+              <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                 {pick('ISO 4406 Cleanliness Code', 'Kode Kebersihan ISO 4406', 'ISO 4406 清浄度コード')}
               </h3>
             </div>
             <span
-              className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold ${
+              className={`rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${
                 iso4406.status === 'clean'
                   ? SEVERITY_BADGE.normal
                   : iso4406.status === 'caution'
@@ -446,17 +446,17 @@ export function LubeSimulator() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="grid grid-cols-2 gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Actual Sample', 'Sampel Aktual', '実測サンプル')}
               </div>
-              <div className="font-mono text-2xl font-bold text-slate-900 dark:text-slate-100">
+              <div className="font-mono text-2xl font-bold text-[var(--md-on-surface)]">
                 {iso4406.codeString}
               </div>
             </div>
             <div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Equipment Target', 'Target Peralatan', '機器目標')}
               </div>
               <div className="font-mono text-2xl font-bold text-emerald-600 dark:text-emerald-400">
@@ -466,9 +466,9 @@ export function LubeSimulator() {
           </div>
 
           {/* Filtration Beta-Ratio Selector & Bearing Life Multiplier */}
-          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-            <div className="mb-1.5 flex items-center justify-between text-[11px]">
-              <span className="font-semibold text-slate-700 dark:text-slate-300">
+          <div className="mt-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+            <div className="mb-2 flex items-center justify-between text-[11px]">
+              <span className="font-bold text-[var(--md-on-surface)]">
                 {pick('Filtration Beta-Ratio (β₅)', 'Rasio Beta Filtrasi (β₅)', 'フィルタ β₅ 値')}
               </span>
               <span
@@ -483,7 +483,7 @@ export function LubeSimulator() {
                 a_ISO = {iso4406.aIsoMultiplier.toFixed(2)}× {pick('Life', 'Umur', '寿命')}
               </span>
             </div>
-            <div className="grid grid-cols-4 gap-1">
+            <div className="grid grid-cols-4 gap-1.5">
               {BETA_5_OPTIONS.map((opt) => {
                 const active = beta5 === opt.value;
                 return (
@@ -491,10 +491,10 @@ export function LubeSimulator() {
                     key={opt.value}
                     type="button"
                     onClick={() => setBeta5(opt.value)}
-                    className={`rounded-md border px-1.5 py-1 text-center transition ${
+                    className={`flex flex-col items-center rounded-[16px] border px-1.5 py-1.5 text-center transition ${
                       active
-                        ? 'border-amber-500 bg-amber-500 text-white shadow-xs dark:text-slate-950'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-amber-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     <div className="text-[11px] font-semibold">{opt.label}</div>
@@ -506,27 +506,27 @@ export function LubeSimulator() {
           </div>
 
           <div className="mt-3 space-y-1.5 text-xs">
-            <div className="flex items-center justify-between rounded-md bg-slate-50 px-2.5 py-1.5 dark:bg-slate-800/40">
-              <span className="text-slate-600 dark:text-slate-300">
+            <div className="flex items-center justify-between rounded-2xl bg-[var(--md-surface-container)] px-3 py-2">
+              <span className="text-[var(--md-on-surface-variant)]">
                 ≥ 4 μm(c) (Code {iso4406.actual[0]})
               </span>
-              <span className="font-mono font-medium text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                 {iso4406.particles4um}
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-md bg-slate-50 px-2.5 py-1.5 dark:bg-slate-800/40">
-              <span className="text-slate-600 dark:text-slate-300">
+            <div className="flex items-center justify-between rounded-2xl bg-[var(--md-surface-container)] px-3 py-2">
+              <span className="text-[var(--md-on-surface-variant)]">
                 ≥ 6 μm(c) (Code {iso4406.actual[1]})
               </span>
-              <span className="font-mono font-medium text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                 {iso4406.particles6um}
               </span>
             </div>
-            <div className="flex items-center justify-between rounded-md bg-slate-50 px-2.5 py-1.5 dark:bg-slate-800/40">
-              <span className="text-slate-600 dark:text-slate-300">
+            <div className="flex items-center justify-between rounded-2xl bg-[var(--md-surface-container)] px-3 py-2">
+              <span className="text-[var(--md-on-surface-variant)]">
                 ≥ 14 μm(c) (Code {iso4406.actual[2]})
               </span>
-              <span className="font-mono font-medium text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                 {iso4406.particles14um}
               </span>
             </div>
@@ -534,10 +534,10 @@ export function LubeSimulator() {
         </div>
 
         {/* 2. Used Oil Lab Report Diagnosis */}
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-          <div className="mb-3 flex items-center gap-2">
-            <ShieldAlert className="h-4 w-4 text-amber-500" />
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="mb-3 flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+            <ShieldAlert className="h-4 w-4 text-[var(--md-primary)]" />
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Used Oil Lab Report Diagnosis', 'Diagnosis Laporan Lab Oli Bekas', '使用油ラボ診断レポート')}
             </h3>
           </div>
@@ -555,11 +555,11 @@ export function LubeSimulator() {
               return (
                 <div
                   key={flag.id}
-                  className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-800/50"
+                  className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 dark:text-slate-100">
-                      <Icon className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400" />
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
+                      <Icon className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                       {flag.title}
                     </div>
                     <span
@@ -571,10 +571,10 @@ export function LubeSimulator() {
                       {SEVERITY_LABEL[flag.severity]}
                     </span>
                   </div>
-                  <div className="mt-1 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                  <div className="mt-1 font-mono text-[11px] text-[var(--md-on-surface)]">
                     {flag.reading}
                   </div>
-                  <p className="mt-1 text-[11px] leading-snug text-slate-600 dark:text-slate-400">
+                  <p className="mt-1 text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
                     {flag.summary}
                   </p>
                   {flag.severity !== 'normal' && (
@@ -589,17 +589,17 @@ export function LubeSimulator() {
         </div>
 
         {/* 3. Grease Relubrication Calculator */}
-        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-          <div className="mb-3 flex items-center gap-2">
-            <Wrench className="h-4 w-4 text-amber-500" />
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="mb-3 flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+            <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Grease Relubrication Calculator', 'Kalkulator Pelumasan Ulang Gemuk', 'グリース補給量計算')}
             </h3>
           </div>
 
           <div className="grid grid-cols-2 gap-2.5">
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              <label className="mb-1 block text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Bearing OD D (mm)', 'Diameter Luar D (mm)', '軸受外径 D (mm)')}
               </label>
               <input
@@ -610,11 +610,11 @@ export function LubeSimulator() {
                 onChange={(e) =>
                   setGreaseD(Math.max(30, Number(e.target.value) || 30))
                 }
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-2 font-mono text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              <label className="mb-1 block text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Bearing Width B (mm)', 'Lebar Bantalan B (mm)', '軸受幅 B (mm)')}
               </label>
               <input
@@ -625,11 +625,11 @@ export function LubeSimulator() {
                 onChange={(e) =>
                   setGreaseB(Math.max(10, Number(e.target.value) || 10))
                 }
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-2 font-mono text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              <label className="mb-1 block text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Shaft Speed (RPM)', 'Kecepatan Poros (RPM)', '軸回転数 (RPM)')}
               </label>
               <input
@@ -641,17 +641,17 @@ export function LubeSimulator() {
                 onChange={(e) =>
                   setGreaseRpm(Math.max(100, Number(e.target.value) || 100))
                 }
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 font-mono text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-2 font-mono text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
             <div>
-              <label className="mb-1 block text-[11px] font-medium text-slate-600 dark:text-slate-400">
+              <label className="mb-1 block text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Bearing Type', 'Tipe Bantalan', '軸受タイプ')}
               </label>
               <select
                 value={bearingType}
                 onChange={(e) => setBearingType(e.target.value as BearingType)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3 py-2 text-xs text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               >
                 <option value="ball">Ball (K = 1.0)</option>
                 <option value="cylindrical">Cyl. Roller (K = 0.5)</option>
@@ -660,32 +660,32 @@ export function LubeSimulator() {
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-2 rounded-lg border border-amber-200 bg-amber-50/70 p-3 dark:border-amber-500/30 dark:bg-amber-500/10">
+          <div className="mt-3 grid grid-cols-2 gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/45 bg-[var(--md-secondary-container)] p-3.5 text-[var(--md-on-secondary-container)]">
             <div>
-              <div className="text-[11px] text-amber-800 dark:text-amber-300">
+              <div className="text-[11px] opacity-85">
                 Grease Shot (G)
               </div>
-              <div className="font-mono text-xl font-bold text-amber-700 dark:text-amber-200">
+              <div className="font-mono text-xl font-extrabold text-[var(--md-primary)]">
                 {greaseResult.quantityGrams.toFixed(1)} g
               </div>
-              <div className="text-[10px] text-amber-700/80 dark:text-amber-300/80">
+              <div className="text-[10px] opacity-80">
                 G = 0.005 · D · B
               </div>
             </div>
             <div>
-              <div className="text-[11px] text-amber-800 dark:text-amber-300">
+              <div className="text-[11px] opacity-85">
                 Interval (t<sub>f</sub>)
               </div>
-              <div className="font-mono text-xl font-bold text-amber-700 dark:text-amber-200">
+              <div className="font-mono text-xl font-extrabold text-[var(--md-primary)]">
                 {greaseResult.intervalHours.toLocaleString()} h
               </div>
-              <div className="text-[10px] text-amber-700/80 dark:text-amber-300/80">
+              <div className="text-[10px] opacity-80">
                 Temp factor: {(greaseResult.tempFactor * 100).toFixed(0)}%
               </div>
             </div>
           </div>
 
-          <p className="mt-2.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+          <p className="mt-2.5 text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
             Interval halves every +15 °C above 70 °C (currently {tempC} °C). At{' '}
             {greaseResult.intervalHours.toLocaleString()} h, add{' '}
             {greaseResult.quantityGrams.toFixed(1)} g (~

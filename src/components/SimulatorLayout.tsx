@@ -54,8 +54,8 @@ export function SimulatorLayout({
   }, []);
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-x-clip bg-[#F4F7FB] text-slate-900 glass-mesh-light dark:bg-[#07101E] dark:text-slate-100 dark:glass-mesh-dark">
-      {/* Floating Pill Ribbon Top Bar */}
+    <div className="relative flex min-h-screen flex-col overflow-x-clip bg-[var(--md-surface)] text-[var(--md-on-surface)] glass-mesh-light dark:glass-mesh-dark">
+      {/* Android 17 Floating System Bar */}
       <TopRibbon
         variant="simulator"
         mode={mode}
@@ -94,24 +94,27 @@ export function SimulatorLayout({
         </div>
       </div>
 
-      {/* Compact Glass Lab Title Strip */}
+      {/* Material 3 Expressive Lab Header Card */}
       <div className="relative mx-auto w-full max-w-none px-4 pt-6 pb-2 sm:px-6 lg:px-10 xl:px-12">
-        <div className="glass-panel flex flex-col gap-3 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-start gap-3 sm:items-center">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#001F6B]/8 text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA]">
-              <SimulatorIcon iconName={meta.iconName} className="h-5 w-5" />
+        <div className="glass-panel flex flex-col gap-4 rounded-[28px] p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3.5 sm:items-center">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs">
+              <SimulatorIcon iconName={meta.iconName} className="h-6 w-6" />
             </div>
 
             <div>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span>{translateCategory(meta.category, language)}</span>
-                <span>·</span>
-                <span>{translateDifficulty(meta.difficulty, language)}</span>
+              <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold">
+                <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[var(--md-on-secondary-container)]">
+                  {translateCategory(meta.category, language)}
+                </span>
+                <span className="rounded-full bg-[var(--md-surface-container-highest)] px-2.5 py-0.5 text-[var(--md-on-surface-variant)]">
+                  {translateDifficulty(meta.difficulty, language)}
+                </span>
               </div>
-              <h1 className="mt-0.5 text-base font-bold tracking-tight text-[#0F172A] dark:text-white sm:text-lg">
+              <h1 className="mt-1.5 text-base font-extrabold tracking-tight text-[var(--md-on-surface)] sm:text-lg">
                 {meta.title}
               </h1>
-              <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-400">
+              <p className="mt-0.5 text-xs text-[var(--md-on-surface-variant)]">
                 {meta.description}
               </p>
             </div>
@@ -126,7 +129,7 @@ export function SimulatorLayout({
                 'Cetak atau ekspor lembar kerja lab ini',
                 'この実習ワークシートを印刷またはエクスポート'
               )}
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#001F6B] px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-[#002D9C] dark:bg-[#002D9C] dark:hover:bg-[#3B82F6]"
+              className="m3-btn-filled inline-flex shrink-0 items-center gap-1.5 px-4 py-2 text-xs font-bold"
             >
               <Printer className="h-3.5 w-3.5" />
               {pick(
@@ -139,7 +142,7 @@ export function SimulatorLayout({
             <button
               type="button"
               onClick={onBack}
-              className="glass-pill inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-white hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10"
+              className="m3-btn-tonal inline-flex shrink-0 items-center gap-1.5 px-4 py-2 text-xs font-semibold"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               {pick('Back to Labs', 'Kembali ke Lab', 'ラボ一覧へ')}
@@ -149,7 +152,7 @@ export function SimulatorLayout({
       </div>
 
       {/* Main Workspace */}
-      <main className="relative mx-auto w-full max-w-none flex-1 px-4 py-4 pb-10 sm:px-6 lg:px-10 xl:px-12">
+      <main className="pixel-sim-workspace relative mx-auto w-full max-w-none flex-1 px-4 py-4 pb-10 sm:px-6 lg:px-10 xl:px-12">
         <div key={mode} className="animate-view-enter">
           {mode === 'simulate' && children}
           {mode === 'explore' && <ExploreTab sections={meta.explore} />}
@@ -166,18 +169,18 @@ export function SimulatorLayout({
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="glass-panel border-t border-slate-200/80 dark:border-white/10">
-        <div className="mx-auto flex w-full max-w-none flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-slate-500 dark:text-slate-400 sm:flex-row sm:px-6 lg:px-10 xl:px-12">
+      {/* Material 3 Surface Footer */}
+      <footer className="border-t border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]">
+        <div className="mx-auto flex w-full max-w-none flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-[var(--md-on-surface-variant)] sm:flex-row sm:px-6 lg:px-10 xl:px-12">
           <span>
-            <strong className="font-semibold text-slate-800 dark:text-slate-200">
+            <strong className="font-bold text-[var(--md-on-surface)]">
               Asahi-SMTS
             </strong>{' '}
             — Asahimas Smart Maintenance Training System
           </span>
           <span>
             {pick('Made by', 'Dibuat oleh', '制作')}{' '}
-            <strong className="font-semibold text-slate-800 dark:text-slate-200">
+            <strong className="font-bold text-[var(--md-on-surface)]">
               M. Fadlan Alamsyah
             </strong>
           </span>

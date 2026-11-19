@@ -71,8 +71,8 @@ export function BearingVisual({
       shaft: isDark ? '#475569' : '#94a3b8',
       shaftInner: isDark ? '#334155' : '#cbd5e1',
       cage: isDark ? '#d97706' : '#b45309',
-      text: isDark ? '#e2e8f0' : '#0f172a',
-      muted: isDark ? '#94a3b8' : '#475569',
+      text: 'var(--md-on-surface)',
+      muted: 'var(--md-on-surface-variant)',
       forceFr: isDark ? '#fb7185' : '#e11d48',
       forceFa: isDark ? '#38bdf8' : '#0284c7',
       loadZone: isDark ? 'rgba(251, 113, 133, 0.14)' : 'rgba(225, 29, 72, 0.09)',
@@ -154,12 +154,12 @@ export function BearingVisual({
   return (
     <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
       {/* Front View: Rotating Bearing & Load Zone */}
-      <div className="xl:col-span-7 rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-950/60">
+      <div className="xl:col-span-7 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
         <div className="mb-2 flex items-center justify-between px-1">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             Front View — Load Zone &amp; FTF/BSF Kinematics
           </span>
-          <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+          <span className="font-mono text-xs text-[var(--md-on-surface-variant)]">
             {spec.designation} · {rpm.toLocaleString()} RPM
           </span>
         </div>
@@ -468,6 +468,7 @@ export function BearingVisual({
             fill={colors.forceFr}
             fontSize="12"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
           >
             Fr = {Fr.toFixed(1)} kN
           </text>
@@ -480,6 +481,7 @@ export function BearingVisual({
             fill={colors.muted}
             fontSize="11"
             fontWeight="600"
+            fontFamily="var(--font-sans)"
           >
             Peak Load Zone (Qmax ≈ {metrics.qMax.toFixed(2)} kN/element)
           </text>
@@ -487,15 +489,15 @@ export function BearingVisual({
           {/* Legend */}
           <g transform="translate(12, 12)">
             <circle cx={6} cy={6} r={5} fill={getLoadColor(0.02, isDark)} />
-            <text x={15} y={10} fill={colors.muted} fontSize="10">
+            <text x={15} y={10} fill={colors.muted} fontSize="10" fontFamily="var(--font-sans)">
               Unloaded
             </text>
             <circle cx={6} cy={22} r={5} fill={getLoadColor(0.5, isDark)} />
-            <text x={15} y={26} fill={colors.muted} fontSize="10">
+            <text x={15} y={26} fill={colors.muted} fontSize="10" fontFamily="var(--font-sans)">
               Loaded
             </text>
             <circle cx={6} cy={38} r={5} fill={getLoadColor(0.9, isDark)} />
-            <text x={15} y={42} fill={colors.muted} fontSize="10">
+            <text x={15} y={42} fill={colors.muted} fontSize="10" fontFamily="var(--font-sans)">
               Peak Qmax
             </text>
           </g>
@@ -503,12 +505,12 @@ export function BearingVisual({
       </div>
 
       {/* Axial Cross-Section & Fit Interface */}
-      <div className="xl:col-span-5 flex flex-col justify-between rounded-xl border border-slate-200 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-slate-950/60">
+      <div className="xl:col-span-5 flex flex-col justify-between rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
         <div className="mb-2 flex items-center justify-between px-1">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             Cross-Section &amp; ISO Fit Zones
           </span>
-          <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+          <span className="font-mono text-xs text-[var(--md-on-surface-variant)]">
             d={spec.d} · D={spec.D} · B={spec.B} mm
           </span>
         </div>
@@ -552,8 +554,9 @@ export function BearingVisual({
             y={22}
             width={124}
             height={19}
-            rx={4}
-            fill={isDark ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.9)'}
+            rx={6}
+            fill="var(--md-surface-container-low)"
+            fillOpacity="0.9"
           />
           <text
             x={140}
@@ -562,6 +565,7 @@ export function BearingVisual({
             fill={colors.text}
             fontSize="11"
             fontWeight="600"
+            fontFamily="var(--font-sans)"
           >
             Housing ({metrics.fit.housing.code})
           </text>
@@ -779,6 +783,7 @@ export function BearingVisual({
             fill={isDark ? '#f8fafc' : '#0f172a'}
             fontSize="11"
             fontWeight="600"
+            fontFamily="var(--font-sans)"
           >
             Shaft ({metrics.fit.shaft.code})
           </text>
@@ -804,6 +809,7 @@ export function BearingVisual({
                 fill={colors.forceFa}
                 fontSize="10.5"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
               >
                 Fa = {Fa.toFixed(1)} kN
               </text>
@@ -818,6 +824,7 @@ export function BearingVisual({
             fill={shaftFitStroke}
             fontSize="10"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
           >
             Shaft {metrics.fit.shaft.code}: {metrics.fit.shaft.minClearanceUm} to{' '}
             {metrics.fit.shaft.maxClearanceUm > 0
@@ -832,6 +839,7 @@ export function BearingVisual({
             fill={housingFitStroke}
             fontSize="10"
             fontWeight="600"
+            fontFamily="var(--font-mono)"
           >
             Housing {metrics.fit.housing.code}:{' '}
             {metrics.fit.housing.minClearanceUm > 0
@@ -845,14 +853,14 @@ export function BearingVisual({
           </text>
         </svg>
 
-        <div className="mt-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300">
+        <div className="mt-2 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] px-3.5 py-2.5 text-xs text-[var(--md-on-surface)]">
           <div className="flex items-center justify-between font-medium">
             <span>Est. Radial Clearance Loss:</span>
-            <span className="font-mono font-semibold text-violet-600 dark:text-violet-400">
+            <span className="font-mono font-bold text-[var(--md-primary)]">
               {metrics.fit.clearanceReductionUm} µm
             </span>
           </div>
-          <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-[11px] text-[var(--md-on-surface-variant)]">
             {spec.notes}
           </p>
         </div>

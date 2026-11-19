@@ -163,44 +163,44 @@ export function UtmCharts({
 
   // Styling colors
   const c = {
-    bg: isDark ? '#090d16' : '#ffffff',
-    border: isDark ? '#1e293b' : '#e2e8f0',
+    bg: 'var(--md-surface-container-lowest)',
+    border: 'var(--md-outline-variant)',
     grid: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)',
-    axis: isDark ? '#475569' : '#94a3b8',
-    textMain: isDark ? '#f1f5f9' : '#0f172a',
-    textMuted: isDark ? '#94a3b8' : '#64748b',
-    curveLive: '#8b5cf6', // Violet
-    curveGhost: isDark ? 'rgba(139, 92, 246, 0.25)' : 'rgba(139, 92, 246, 0.20)',
+    axis: 'var(--md-outline)',
+    textMain: 'var(--md-on-surface)',
+    textMuted: 'var(--md-on-surface-variant)',
+    curveLive: 'var(--md-primary)',
+    curveGhost: 'var(--md-primary)',
     yieldColor: '#eab308', // Amber yellow
     utsColor: '#06b6d4', // Cyan
     fractureColor: '#f43f5e', // Rose
   };
 
   return (
-    <div className="glass-card flex w-full flex-col gap-2 rounded-xl p-3 sm:p-4 shadow-xs">
+    <div className="glass-panel flex w-full flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
       {/* Chart Header & Mode Toggle Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-2.5 dark:border-slate-800/60">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
         <div className="flex items-center gap-2">
-          <Activity className="h-4 w-4 text-violet-500" />
-          <span className="text-xs font-semibold tracking-wide text-slate-800 uppercase dark:text-slate-200">
+          <Activity className="h-4 w-4 text-[var(--md-primary)]" />
+          <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
             {chartType === 'stress-strain'
               ? pick('Live Stress–Strain Curve (σ–ε)', 'Kurva Tegangan-Regangan (σ–ε)', '応力-ひずみ線図 (σ–ε)')
               : pick('Live Force–Elongation Curve (F–ΔL)', 'Kurva Beban-Perpanjangan (F–ΔL)', '荷重-変位線図 (F–ΔL)')}
           </span>
-          <span className="rounded-sm bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 text-[10px] font-semibold text-[var(--md-on-primary-container)]">
             {materialName}
           </span>
         </div>
 
         {/* Tab switch buttons */}
-        <div className="flex rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800">
+        <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setChartType('stress-strain')}
-            className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs transition-all ${
               chartType === 'stress-strain'
-                ? 'bg-violet-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <Activity className="h-3 w-3" />
@@ -209,10 +209,10 @@ export function UtmCharts({
           <button
             type="button"
             onClick={() => setChartType('force-elongation')}
-            className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs transition-all ${
               chartType === 'force-elongation'
-                ? 'bg-violet-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
             <BarChart2 className="h-3 w-3" />
@@ -226,6 +226,7 @@ export function UtmCharts({
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           className="h-auto w-full select-none"
+          fontFamily="var(--font-sans)"
           style={{ overflow: 'visible' }}
         >
           {/* Background rect */}
@@ -237,7 +238,7 @@ export function UtmCharts({
             fill={c.bg}
             stroke={c.border}
             strokeWidth="1"
-            rx="4"
+            rx="10"
           />
 
           {/* Grid lines horizontal */}
@@ -258,7 +259,7 @@ export function UtmCharts({
                 fill={c.textMuted}
                 fontSize="8.5"
                 textAnchor="end"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 {tick.label}
               </text>
@@ -283,7 +284,7 @@ export function UtmCharts({
                 fill={c.textMuted}
                 fontSize="8.5"
                 textAnchor="middle"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 {tick.label}
               </text>
@@ -299,7 +300,7 @@ export function UtmCharts({
             fontSize="10"
             fontWeight="600"
             textAnchor="middle"
-            fontFamily="sans-serif"
+            fontFamily="var(--font-sans)"
           >
             {xLabel} [{xUnit}]
           </text>
@@ -313,7 +314,7 @@ export function UtmCharts({
             fontWeight="600"
             textAnchor="middle"
             transform="rotate(-90)"
-            fontFamily="sans-serif"
+            fontFamily="var(--font-sans)"
           >
             {yLabel} [{yUnit}]
           </text>
@@ -324,6 +325,7 @@ export function UtmCharts({
               d={fullPathD}
               fill="none"
               stroke={c.curveGhost}
+              strokeOpacity="0.28"
               strokeWidth="2"
               strokeDasharray="4 3"
             />
@@ -349,7 +351,7 @@ export function UtmCharts({
                 fontSize="8"
                 fontWeight="bold"
                 textAnchor="middle"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 0.2%
               </text>
@@ -374,7 +376,7 @@ export function UtmCharts({
                 fill={c.yieldColor}
                 fontSize="8"
                 fontWeight="bold"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 Rp0.2: {yieldY.toFixed(0)} {yUnit}
               </text>
@@ -397,7 +399,7 @@ export function UtmCharts({
                 fontSize="8"
                 fontWeight="bold"
                 textAnchor="middle"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 UTS: {utsY.toFixed(0)} {yUnit}
               </text>
@@ -429,7 +431,7 @@ export function UtmCharts({
                 fill={c.fractureColor}
                 fontSize="8"
                 fontWeight="bold"
-                fontFamily="monospace"
+                fontFamily="var(--font-mono)"
               >
                 RUPTURE
               </text>
@@ -457,17 +459,17 @@ export function UtmCharts({
                 cy={currentSvgY}
                 r="7"
                 fill="none"
-                stroke="#a78bfa"
+                stroke="var(--md-primary)"
                 strokeWidth="1.5"
-                opacity="0.8"
+                opacity="0.65"
               />
               {/* Inner glowing dot */}
               <circle
                 cx={currentSvgX}
                 cy={currentSvgY}
                 r="3.5"
-                fill="#ffffff"
-                stroke="#7c3aed"
+                fill="var(--md-on-primary)"
+                stroke="var(--md-primary)"
                 strokeWidth="2"
               />
               {/* Live coordinate badge */}
@@ -482,19 +484,19 @@ export function UtmCharts({
                   y="0"
                   width="78"
                   height="20"
-                  rx="3"
-                  fill={isDark ? 'rgba(15,23,42,0.92)' : 'rgba(255,255,255,0.95)'}
-                  stroke="#8b5cf6"
+                  rx="8"
+                  fill="var(--md-primary-container)"
+                  stroke="var(--md-primary)"
                   strokeWidth="1"
                 />
                 <text
                   x="39"
                   y="13"
-                  fill={c.textMain}
+                  fill="var(--md-on-primary-container)"
                   fontSize="8"
                   fontWeight="bold"
                   textAnchor="middle"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {currentY.toFixed(1)} {yUnit}
                 </text>
@@ -509,20 +511,21 @@ export function UtmCharts({
               y="-10"
               width="230"
               height="18"
-              rx="3"
-              fill={isDark ? 'rgba(15,23,42,0.85)' : 'rgba(248,250,252,0.85)'}
-              stroke={c.border}
+              rx="8"
+              fill="var(--md-surface-container)"
+              fillOpacity="0.92"
+              stroke="var(--md-outline-variant)"
               strokeWidth="0.8"
             />
             {/* Live trace item */}
             <line x1="0" y1="-1" x2="14" y2="-1" stroke={c.curveLive} strokeWidth="2" />
-            <text x="18" y="2" fill={c.textMain} fontSize="7.5" fontWeight="600" fontFamily="sans-serif">
+            <text x="18" y="2" fill={c.textMain} fontSize="7.5" fontWeight="600" fontFamily="var(--font-sans)">
               {pick('Recorded', 'Terekam', '実測')}
             </text>
 
             {/* Yield marker item */}
             <circle cx="68" cy="-1" r="2.5" fill={c.yieldColor} />
-            <text x="74" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="sans-serif">
+            <text x="74" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="var(--font-sans)">
               Rp0.2
             </text>
 
@@ -531,14 +534,14 @@ export function UtmCharts({
               points="114,-4 117,1 111,1"
               fill={c.utsColor}
             />
-            <text x="121" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="sans-serif">
+            <text x="121" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="var(--font-sans)">
               UTS
             </text>
 
             {/* Rupture marker item */}
             <line x1="152" y1="-4" x2="158" y2="2" stroke={c.fractureColor} strokeWidth="1.5" />
             <line x1="158" y1="-4" x2="152" y2="2" stroke={c.fractureColor} strokeWidth="1.5" />
-            <text x="162" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="sans-serif">
+            <text x="162" y="2" fill={c.textMuted} fontSize="7.5" fontFamily="var(--font-sans)">
               Rupture
             </text>
           </g>

@@ -188,7 +188,7 @@ export function MegohmmeterSvg({
       ? '#F59E0B'
       : '#10B981';
 
-  const bgCard = isDark ? '#0B1633' : '#F8FAFC';
+  const bgCard = 'var(--md-surface-container-lowest)';
   const chassisFill = isDark ? '#1E293B' : '#334155';
   const chassisBorder = isDark ? '#475569' : '#1E293B';
   const lcdBg = isDark ? '#071324' : '#E2E8F0';
@@ -397,7 +397,7 @@ export function MegohmmeterSvg({
         textAnchor="middle"
         fontSize="28"
         fontWeight="800"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={isHvActive ? statusColor : isDark ? '#64748B' : '#64748B'}
       >
         {isHvActive
@@ -414,7 +414,7 @@ export function MegohmmeterSvg({
         textAnchor="start"
         fontSize="10.5"
         fontWeight="700"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={isHvActive ? '#F43F5E' : isDark ? '#94A3B8' : '#475569'}
       >
         {isHvActive ? `⚡ ${voltage}V DC` : `${voltage}V STBY`}
@@ -425,7 +425,7 @@ export function MegohmmeterSvg({
         textAnchor="middle"
         fontSize="10.5"
         fontWeight="700"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={lcdText}
       >
         t={Math.floor(elapsedSec)}s
@@ -436,7 +436,7 @@ export function MegohmmeterSvg({
         textAnchor="end"
         fontSize="10.5"
         fontWeight="700"
-        fontFamily="monospace"
+        fontFamily="var(--font-mono)"
         fill={isDark ? '#38BDF8' : '#0369A1'}
       >
         {isHvActive
@@ -829,7 +829,7 @@ export function MegohmmeterSvg({
         textAnchor="middle"
         fontSize="9.5"
         fontWeight="600"
-        fill={isDark ? '#94A3B8' : '#64748B'}
+        fill="var(--md-on-surface-variant)"
       >
         {pick(
           'Drag red/black clips onto U1, V1, W1, or PE/GND',

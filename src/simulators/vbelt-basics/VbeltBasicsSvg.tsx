@@ -62,15 +62,15 @@ export function VbeltBasicsSvg({
   const { pick } = useLanguage();
   const isDark = theme === 'dark';
 
-  // Theme-aware CAD colors
-  const canvasBg = isDark ? '#0b1120' : '#f8fafc';
-  const gridColor = isDark ? '#1e293b' : '#e2e8f0';
-  const cardBg = isDark ? '#0f172a' : '#ffffff';
-  const cardHeaderBg = isDark ? '#1e293b' : '#f1f5f9';
-  const cardStroke = isDark ? '#334155' : '#cbd5e1';
-  const textPrimary = isDark ? '#f1f5f9' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
-  const dimBlue = isDark ? '#38bdf8' : '#0284c7';
+  // Theme-aware Material You CAD colors
+  const canvasBg = 'var(--md-surface-container-lowest)';
+  const gridColor = 'var(--md-outline-variant)';
+  const cardBg = 'var(--md-surface-container-low)';
+  const cardHeaderBg = 'var(--md-surface-container)';
+  const cardStroke = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
+  const dimBlue = 'var(--md-primary)';
   const ringOutline = isDark ? '#94a3b8' : '#334155';
   const rubberEdge = isDark ? '#475569' : '#0f172a';
 
@@ -107,7 +107,7 @@ export function VbeltBasicsSvg({
 
         {/* Crisp Arrow Markers */}
         <marker id="bbArrowSky" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#0284c7" />
+          <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="var(--md-primary)" />
         </marker>
         <marker id="bbArrowRed" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ef4444" />
@@ -118,8 +118,8 @@ export function VbeltBasicsSvg({
       </defs>
 
       {/* Clean Blueprint Background */}
-      <rect width="640" height="460" fill={canvasBg} />
-      <g stroke={gridColor} strokeWidth="0.75" opacity={isDark ? 0.45 : 0.75}>
+      <rect width="640" height="460" fill={canvasBg} rx="18" />
+      <g stroke={gridColor} strokeWidth="0.75" opacity={isDark ? 0.3 : 0.45}>
         {Array.from({ length: 16 }).map((_, i) => (
           <line key={`vg-${i}`} x1={i * 40} y1="0" x2={i * 40} y2="460" />
         ))}
@@ -132,10 +132,10 @@ export function VbeltBasicsSvg({
         <g id="belt-cad-scene">
           {/* Top Header Area */}
           <g transform="translate(18, 22)">
-            <text x="0" y="0" fontSize="13.5" fontWeight="800" fill={textPrimary}>
+            <text x="0" y="0" fontSize="13.5" fontWeight="800" fontFamily="var(--font-sans)" fill={textPrimary}>
               {pick(beltSpec.name, beltSpec.nameId, beltSpec.nameJa)}
             </text>
-            <text x="0" y="16" fontSize="9.5" fontWeight="600" fill={textMuted}>
+            <text x="0" y="16" fontSize="9.5" fontWeight="600" fontFamily="var(--font-mono)" fill={textMuted}>
               {`Profile: ${beltSpec.code}  •  Width × Height: ${beltSpec.topWidthMm} × ${beltSpec.heightMm} mm  •  Groove: ${beltSpec.wedgeAngleDeg > 0 ? `${beltSpec.wedgeAngleDeg}°` : 'Positive / Flat'}`}
             </text>
           </g>
@@ -143,29 +143,29 @@ export function VbeltBasicsSvg({
           {/* Top-Right Status / Bottoming-Out Alert Pill */}
           {isBottomedOut ? (
             <g transform="translate(362, 8)">
-              <rect width="262" height="36" rx="7" fill={isDark ? '#450a0a' : '#fef2f2'} stroke="#ef4444" strokeWidth="1.6" />
-              <text x="12" y="15" fontSize="9.5" fontWeight="800" fill={isDark ? '#fca5a5' : '#b91c1c'}>
+              <rect width="262" height="36" rx="12" fill={isDark ? '#450a0a' : '#fef2f2'} stroke="#ef4444" strokeWidth="1.6" />
+              <text x="12" y="15" fontSize="9.5" fontWeight="800" fontFamily="var(--font-sans)" fill={isDark ? '#fca5a5' : '#b91c1c'}>
                 {pick('CRITICAL: BOTTOMING-OUT FAILURE!', 'KRITIS: KEGAGALAN BOTTOMING OUT!', '重大故障：プーリ底突き（ボトミング）！')}
               </text>
-              <text x="12" y="28" fontSize="8.2" fill={isDark ? '#f87171' : '#dc2626'}>
+              <text x="12" y="28" fontSize="8.2" fontFamily="var(--font-sans)" fill={isDark ? '#f87171' : '#dc2626'}>
                 {pick('Sidewall wedge lost! μ′ dropped to 0.30 (Slip!)', 'Efek baji hilang! μ′ anjlok ke 0.30 (Selip parah!)', 'くさび効果喪失！μ′が0.30へ急落しスリップ焼損！')}
               </text>
             </g>
           ) : pulleyCondition === 'worn_sheave' && !isTimingOrFlat ? (
             <g transform="translate(392, 8)">
-              <rect width="232" height="36" rx="7" fill={isDark ? '#451a03' : '#fffbeb'} stroke="#f59e0b" strokeWidth="1.4" />
-              <text x="12" y="15" fontSize="9.5" fontWeight="800" fill={isDark ? '#fcd34d' : '#b45309'}>
+              <rect width="232" height="36" rx="12" fill={isDark ? '#451a03' : '#fffbeb'} stroke="#f59e0b" strokeWidth="1.4" />
+              <text x="12" y="15" fontSize="9.5" fontWeight="800" fontFamily="var(--font-sans)" fill={isDark ? '#fcd34d' : '#b45309'}>
                 {pick('WARNING: DISHED / WORN SHEAVE', 'PERINGATAN: ALUR PULI AUS', '警告：プーリ溝側面が摩耗')}
               </text>
-              <text x="12" y="28" fontSize="8.2" fill={isDark ? '#fbbf24' : '#d97706'}>
+              <text x="12" y="28" fontSize="8.2" fontFamily="var(--font-sans)" fill={isDark ? '#fbbf24' : '#d97706'}>
                 {pick('Belt rides low; replace sheave before bottoming.', 'Sabuk duduk terlalu dalam; segera ganti puli.', 'ベルト沈み込み過多。底突き前に交換推奨。')}
               </text>
             </g>
           ) : (
             <g transform="translate(422, 10)">
-              <rect width="202" height="30" rx="7" fill={isDark ? '#064e3b' : '#ecfdf5'} stroke="#10b981" strokeWidth="1.2" />
+              <rect width="202" height="30" rx="15" fill={isDark ? '#064e3b' : '#ecfdf5'} stroke="#10b981" strokeWidth="1.2" />
               <circle cx="15" cy="15" r="4" fill="#10b981" />
-              <text x="26" y="18.5" fontSize="9.2" fontWeight="700" fill={isDark ? '#6ee7b7' : '#047857'}>
+              <text x="26" y="18.5" fontSize="9.2" fontWeight="700" fontFamily="var(--font-sans)" fill={isDark ? '#6ee7b7' : '#047857'}>
                 {isTimingOrFlat
                   ? pick('PROPER BELT TRACKING', 'KEDUDUKAN SABUK OPTIMAL', '適正かみ合い・トラッキング')
                   : pick('OPTIMAL SIDEWALL WEDGING', 'BAJI DINDING SAMPING OPTIMAL', '適正側面くさび着座')}
@@ -179,8 +179,9 @@ export function VbeltBasicsSvg({
             y="52"
             width="404"
             height="394"
-            rx="12"
-            fill={isDark ? 'rgba(15, 23, 42, 0.55)' : 'rgba(255, 255, 255, 0.65)'}
+            rx="16"
+            fill={cardBg}
+            fillOpacity="0.65"
             stroke={cardStroke}
             strokeWidth="1.2"
           />
@@ -193,7 +194,6 @@ export function VbeltBasicsSvg({
               pulleyCondition,
               beltTensionN,
               wedgingPhysics,
-              isDark,
               textPrimary,
               dimBlue,
               ringOutline,
@@ -205,22 +205,22 @@ export function VbeltBasicsSvg({
 
           {/* RIGHT WEDGING PHYSICS & TELEMETRY CARD (x: 432..624, y: 52..446) */}
           <g transform="translate(432, 52)">
-            <rect width="192" height="394" rx="10" fill={cardBg} stroke={cardStroke} strokeWidth="1.2" />
-            <path d="M 0 10 Q 0 0 10 0 L 182 0 Q 192 0 192 10 L 192 30 L 0 30 Z" fill={cardHeaderBg} />
+            <rect width="192" height="394" rx="14" fill={cardBg} stroke={cardStroke} strokeWidth="1.2" />
+            <path d="M 0 14 Q 0 0 14 0 L 178 0 Q 192 0 192 14 L 192 30 L 0 30 Z" fill={cardHeaderBg} />
             <line x1="0" y1="30" x2="192" y2="30" stroke={cardStroke} strokeWidth="1" />
-            <text x="12" y="19" fontSize="10" fontWeight="800" fill={textPrimary}>
+            <text x="12" y="19" fontSize="10" fontWeight="800" fontFamily="var(--font-sans)" fill={textPrimary}>
               {pick('Drive & Wedge Physics', 'Fisika Baji & Transmisi', 'くさび摩擦力学解析')}
             </text>
 
             <g transform="translate(12, 48)">
               {/* Apparent Friction */}
-              <text x="0" y="0" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="0" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {isTimingOrFlat
                   ? pick('Drive Engagement', 'Mekanisme Transmisi', '動力伝達方式')
                   : pick('Apparent Friction (μ′)', 'Gesekan Semu (μ′)', '見かけ摩擦係数 (μ′)')}
               </text>
               {isTimingOrFlat ? (
-                <text x="0" y="18" fontSize="11.5" fontWeight="800" fill="#10b981">
+                <text x="0" y="18" fontSize="11.5" fontWeight="800" fontFamily="var(--font-sans)" fill="#10b981">
                   {beltSpec.code.startsWith('HTD')
                     ? pick('Positive Tooth Mesh', 'Kait Gigi Positif', '歯形ポジティブ噛合')
                     : pick('Flat Crown Friction', 'Gesekan Sabuk Datar', 'クラウン平摩擦 (η>98%)')}
@@ -232,38 +232,39 @@ export function VbeltBasicsSvg({
                     y="19"
                     fontSize="15"
                     fontWeight="900"
+                    fontFamily="var(--font-mono)"
                     fill={isBottomedOut ? '#ef4444' : '#10b981'}
                   >
                     μ′ = {wedgingPhysics.apparentFrictionMuPrime.toFixed(2)}
                   </text>
-                  <text x="82" y="18" fontSize="8.2" fill={textMuted}>
+                  <text x="82" y="18" fontSize="8.2" fontFamily="var(--font-mono)" fill={textMuted}>
                     (base μ = {wedgingPhysics.baseFrictionMu})
                   </text>
                 </g>
               )}
 
               {/* Wedging Multiplier */}
-              <text x="0" y="42" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="42" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Wedging Multiplier', 'Pengganda Efek Baji', 'くさび力増幅率')}
               </text>
-              <text x="0" y="56" fontSize="9.5" fontWeight="700" fill={textPrimary}>
+              <text x="0" y="56" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill={textPrimary}>
                 {isTimingOrFlat
                   ? 'N/A (0° Wedge)'
                   : `1 / sin(${(beltSpec.wedgeAngleDeg / 2).toFixed(0)}°) = ${wedgingPhysics.wedgingMultiplier}×`}
               </text>
 
               {/* Sidewall Normal Force */}
-              <text x="0" y="78" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="78" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Sidewall Clamping (F_N)', 'Gaya Tekan Dinding (F_N)', '側面垂直抗力 (F_N)')}
               </text>
-              <text x="0" y="92" fontSize="9.5" fontWeight="700" fill={dimBlue}>
+              <text x="0" y="92" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill={dimBlue}>
                 {isTimingOrFlat
                   ? `${beltTensionN} N (Radial)`
                   : `${wedgingPhysics.normalForcePerSideN} N / flank`}
               </text>
 
               {/* Max Traction */}
-              <text x="0" y="114" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="114" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Max Grip Traction', 'Gaya Traksi Maksimum', '最大伝達トラクション')}
               </text>
               <text
@@ -271,6 +272,7 @@ export function VbeltBasicsSvg({
                 y="128"
                 fontSize="9.8"
                 fontWeight="800"
+                fontFamily="var(--font-mono)"
                 fill={isBottomedOut ? '#ef4444' : '#10b981'}
               >
                 {isTimingOrFlat
@@ -279,18 +281,18 @@ export function VbeltBasicsSvg({
               </text>
 
               {/* Min Sheave Diameter */}
-              <text x="0" y="150" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="150" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Min Pulley Diameter', 'Diameter Puli Minimum', '最小許容プーリ径')}
               </text>
-              <text x="0" y="164" fontSize="9.5" fontWeight="700" fill={textPrimary}>
+              <text x="0" y="164" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill={textPrimary}>
                 Ø{beltSpec.minSheaveDiameterMm} mm
               </text>
 
               {/* Max Speed */}
-              <text x="0" y="186" fontSize="8.2" fontWeight="600" fill={textMuted}>
+              <text x="0" y="186" fontSize="8.2" fontWeight="600" fontFamily="var(--font-sans)" fill={textMuted}>
                 {pick('Max Rated Belt Speed', 'Kecepatan Sabuk Maks', '最高許容周速度')}
               </text>
-              <text x="0" y="200" fontSize="9.5" fontWeight="700" fill={textPrimary}>
+              <text x="0" y="200" fontSize="9.5" fontWeight="700" fontFamily="var(--font-mono)" fill={textPrimary}>
                 {beltSpec.maxBeltSpeedMPerS} m/s  •  {beltSpec.nominalPowerKwPerStrand} kW/strand
               </text>
 
@@ -300,7 +302,7 @@ export function VbeltBasicsSvg({
                 y="218"
                 width="168"
                 height="114"
-                rx="7"
+                rx="10"
                 fill={isBottomedOut ? (isDark ? '#450a0a' : '#fef2f2') : cardHeaderBg}
                 stroke={isBottomedOut ? '#ef4444' : cardStroke}
                 strokeWidth="1.1"
@@ -310,6 +312,7 @@ export function VbeltBasicsSvg({
                 y="233"
                 fontSize="8"
                 fontWeight="800"
+                fontFamily="var(--font-sans)"
                 fill={isBottomedOut ? '#ef4444' : dimBlue}
               >
                 {pick('SEATING DIAGNOSIS', 'DIAGNOSIS KEDUDUKAN', '着座状態診断')}
@@ -319,6 +322,7 @@ export function VbeltBasicsSvg({
                 y="248"
                 fontSize="7.8"
                 fontWeight="600"
+                fontFamily="var(--font-sans)"
                 fill={isBottomedOut ? (isDark ? '#fca5a5' : '#991b1b') : textPrimary}
               >
                 {wrapSvgText(
@@ -357,7 +361,6 @@ function renderBeltPulleyScene({
   pulleyCondition,
   beltTensionN,
   wedgingPhysics,
-  isDark,
   textPrimary,
   dimBlue,
   ringOutline,
@@ -369,7 +372,6 @@ function renderBeltPulleyScene({
   pulleyCondition: 'proper' | 'bottomed_out' | 'worn_sheave';
   beltTensionN: number;
   wedgingPhysics: WedgingPhysicsResult;
-  isDark: boolean;
   textPrimary: string;
   dimBlue: string;
   ringOutline: string;
@@ -434,15 +436,15 @@ function renderBeltPulleyScene({
         <line x1={toothCenters[1]} y1="-54" x2={toothCenters[2]} y2="-54" stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
         <line x1={toothCenters[1]} y1="-58" x2={toothCenters[1]} y2="-20" stroke={dimBlue} strokeWidth="0.8" strokeDasharray="3,2" />
         <line x1={toothCenters[2]} y1="-58" x2={toothCenters[2]} y2="-20" stroke={dimBlue} strokeWidth="0.8" strokeDasharray="3,2" />
-        <rect x={(toothCenters[1] + toothCenters[2]) / 2 - 36} y="-74" width="72" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x={(toothCenters[1] + toothCenters[2]) / 2} y="-63.5" fontSize="8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x={(toothCenters[1] + toothCenters[2]) / 2 - 36} y="-74" width="72" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x={(toothCenters[1] + toothCenters[2]) / 2} y="-63.5" fontSize="8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           Pitch = {pitchMm.toFixed(1)} mm
         </text>
 
         {/* Live Height Dimension Arrow */}
         <line x1="-168" y1={-backingPx - 6} x2="-168" y2={6 + toothDepthPx} stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x="-196" y="-44" width="58" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="-167" y="-33.5" fontSize="7.8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-196" y="-44" width="58" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="-167" y="-33.5" fontSize="7.8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           H = {beltSpec.heightMm}mm
         </text>
 
@@ -469,14 +471,14 @@ function renderBeltPulleyScene({
         <line x1="-128" y1="-44" x2="128" y2="-44" stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
         <line x1="-128" y1="-48" x2="-128" y2="-14" stroke={dimBlue} strokeWidth="0.8" />
         <line x1="128" y1="-48" x2="128" y2="-14" stroke={dimBlue} strokeWidth="0.8" />
-        <rect x="-42" y="-64" width="84" height="16" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="0" y="-53" fontSize="8.2" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-42" y="-64" width="84" height="16" rx="8" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="0" y="-53" fontSize="8.2" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           W = {beltSpec.topWidthMm} mm
         </text>
         {/* Thickness Dimension */}
         <line x1="-142" y1="-10" x2="-142" y2="4" stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x="-195" y="-12" width="48" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="-171" y="-1.5" fontSize="7.8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-195" y="-12" width="48" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="-171" y="-1.5" fontSize="7.8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           H={beltSpec.heightMm}mm
         </text>
         <text x="0" y="-82" fontSize="9.5" fontWeight="800" textAnchor="middle" fill={dimBlue}>
@@ -531,14 +533,14 @@ function renderBeltPulleyScene({
         ))}
         {/* Rib Pitch Dimension */}
         <line x1={-totalRibsW / 2 + ribPitchPx * 1.5} y1="-34" x2={-totalRibsW / 2 + ribPitchPx * 2.5} y2="-34" stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x="-46" y="-54" width="92" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="0" y="-43.5" fontSize="8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-46" y="-54" width="92" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="0" y="-43.5" fontSize="8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           Rib Pitch = {pitchMm} mm
         </text>
         {/* Total Height Dimension */}
         <line x1={-totalRibsW / 2 - 14} y1={-backThickPx + yDrop} x2={-totalRibsW / 2 - 14} y2={yDrop + ribDepthPx} stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x={-totalRibsW / 2 - 74} y="-12" width="54" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x={-totalRibsW / 2 - 47} y="-1.5" fontSize="7.8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x={-totalRibsW / 2 - 74} y="-12" width="54" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x={-totalRibsW / 2 - 47} y="-1.5" fontSize="7.8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           H={beltSpec.heightMm}mm
         </text>
 
@@ -641,7 +643,7 @@ function renderBeltPulleyScene({
 
       {/* Molded Bottom Cog Profile Indicator for AX / BX */}
       {isCogged && (
-        <g fill={isDark ? '#0b1120' : '#f8fafc'} stroke="#f59e0b" strokeWidth="1">
+        <g fill="var(--md-surface-container-low)" stroke="#f59e0b" strokeWidth="1">
           <path d={`M ${-botW / 2 + 4} ${bBotY} Q ${-botW / 2 + 9} ${bBotY - 8} ${-botW / 2 + 14} ${bBotY} Z`} />
           <path d={`M -5 ${bBotY} Q 0 ${bBotY - 8} 5 ${bBotY} Z`} />
           <path d={`M ${botW / 2 - 14} ${bBotY} Q ${botW / 2 - 9} ${bBotY - 8} ${botW / 2 - 4} ${bBotY} Z`} />
@@ -662,8 +664,8 @@ function renderBeltPulleyScene({
         })}
         {/* Pitch Cords Pill cleanly outside right edge */}
         <line x1={topW / 2 + 8} y1={bTopY + beltH * 0.28} x2={122} y2={bTopY + beltH * 0.28} stroke="#eab308" strokeWidth="0.9" />
-        <rect x="122" y={bTopY + beltH * 0.28 - 7.5} width="60" height="15" rx="3" fill={cardBg} stroke="#eab308" strokeWidth="0.9" />
-        <text x="152" y={bTopY + beltH * 0.28 + 3} fontSize="7.6" fontWeight="800" textAnchor="middle" fill="#ca8a04">
+        <rect x="122" y={bTopY + beltH * 0.28 - 7.5} width="60" height="15" rx="7.5" fill={cardBg} stroke="#eab308" strokeWidth="0.9" />
+        <text x="152" y={bTopY + beltH * 0.28 + 3} fontSize="7.6" fontWeight="800" fontFamily="var(--font-sans)" textAnchor="middle" fill="#ca8a04">
           Pitch Cords
         </text>
       </g>
@@ -674,8 +676,8 @@ function renderBeltPulleyScene({
         <line x1={-topW / 2} y1={bTopY - 4} x2={-topW / 2} y2="-118" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
         <line x1={topW / 2} y1={bTopY - 4} x2={topW / 2} y2="-118" stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
         <line x1={-topW / 2 + 2} y1="-114" x2={topW / 2 - 2} y2="-114" stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x="-42" y="-134" width="84" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="0" y="-123.5" fontSize="8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-42" y="-134" width="84" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="0" y="-123.5" fontSize="8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           W = {beltSpec.topWidthMm} mm
         </text>
       </g>
@@ -685,8 +687,8 @@ function renderBeltPulleyScene({
         <line x1={-topW / 2 - 4} y1={bTopY} x2="-130" y2={bTopY} stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
         <line x1={-botW / 2 - 4} y1={bBotY} x2="-130" y2={bBotY} stroke={dimBlue} strokeWidth="0.8" opacity="0.7" />
         <line x1="-126" y1={bTopY + 2} x2="-126" y2={bBotY - 2} stroke={dimBlue} strokeWidth="1.2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-        <rect x="-194" y={(bTopY + bBotY) / 2 - 7.5} width="62" height="15" rx="3" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="-163" y={(bTopY + bBotY) / 2 + 3} fontSize="8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-194" y={(bTopY + bBotY) / 2 - 7.5} width="62" height="15" rx="7.5" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="-163" y={(bTopY + bBotY) / 2 + 3} fontSize="8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           H = {beltSpec.heightMm} mm
         </text>
       </g>
@@ -699,22 +701,22 @@ function renderBeltPulleyScene({
           <line x1={topW / 2} y1={bTopY + 4} x2={botW / 2} y2={bBotY - 1} stroke="#10b981" strokeWidth="3.5" opacity="0.9" />
 
           {/* Sidewall Clamping Force Arrows F_N placed cleanly below Height & Pitch Cords */}
-          <line x1="-120" y1={rootY + 26} x2={-(botW / 2 + 6)} y2={bBotY - 8} stroke="#0284c7" strokeWidth="2.8" markerEnd="url(#bbArrowSky)" />
-          <rect x="-194" y={rootY + 20} width="72" height="16" rx="3" fill={cardBg} stroke="#0284c7" strokeWidth="1" />
-          <text x="-158" y={rootY + 31} fontSize="7.8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+          <line x1="-120" y1={rootY + 26} x2={-(botW / 2 + 6)} y2={bBotY - 8} stroke="var(--md-primary)" strokeWidth="2.8" markerEnd="url(#bbArrowSky)" />
+          <rect x="-194" y={rootY + 20} width="72" height="16" rx="8" fill={cardBg} stroke="var(--md-primary)" strokeWidth="1" />
+          <text x="-158" y={rootY + 31} fontSize="7.8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
             F_N={wedgingPhysics.normalForcePerSideN}N
           </text>
 
-          <line x1="120" y1={rootY + 26} x2={botW / 2 + 6} y2={bBotY - 8} stroke="#0284c7" strokeWidth="2.8" markerEnd="url(#bbArrowSky)" />
-          <rect x="122" y={rootY + 20} width="72" height="16" rx="3" fill={cardBg} stroke="#0284c7" strokeWidth="1" />
-          <text x="158" y={rootY + 31} fontSize="7.8" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+          <line x1="120" y1={rootY + 26} x2={botW / 2 + 6} y2={bBotY - 8} stroke="var(--md-primary)" strokeWidth="2.8" markerEnd="url(#bbArrowSky)" />
+          <rect x="122" y={rootY + 20} width="72" height="16" rx="8" fill={cardBg} stroke="var(--md-primary)" strokeWidth="1" />
+          <text x="158" y={rootY + 31} fontSize="7.8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
             F_N={wedgingPhysics.normalForcePerSideN}N
           </text>
 
           {/* Root Clearance Callout cleanly below belt bottom */}
           <line x1="0" y1={bBotY + 2} x2="0" y2={rootY - 2} stroke="#10b981" strokeWidth="2" markerStart="url(#bbDimTick)" markerEnd="url(#bbDimTick)" />
-          <rect x="-50" y={rootY + 7} width="100" height="16" rx="4" fill={cardBg} stroke="#10b981" strokeWidth="1" />
-          <text x="0" y={rootY + 18} fontSize="8" fontWeight="800" textAnchor="middle" fill="#10b981">
+          <rect x="-50" y={rootY + 7} width="100" height="16" rx="8" fill={cardBg} stroke="#10b981" strokeWidth="1" />
+          <text x="0" y={rootY + 18} fontSize="8" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill="#10b981">
             {isWorn ? 'Low Clearance: 1.2mm' : 'Root Gap c > 2.5 mm'}
           </text>
         </g>
@@ -724,27 +726,27 @@ function renderBeltPulleyScene({
           <rect x={-botW / 2} y={rootY - 5} width={botW} height="7" rx="2" fill="#ef4444" />
           {/* Sidewall Clearance Lost Pill Indicators + Leader Lines into Air Gap */}
           <line x1="-120" y1={rootY + 24} x2={-(botW / 2 + 2)} y2={bBotY - 12} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3,2" />
-          <rect x="-194" y={rootY + 18} width="74" height="16" rx="3" fill={cardBg} stroke="#ef4444" strokeWidth="1.1" />
-          <text x="-157" y={rootY + 29} fontSize="7.6" fontWeight="800" textAnchor="middle" fill="#ef4444">
+          <rect x="-194" y={rootY + 18} width="74" height="16" rx="8" fill={cardBg} stroke="#ef4444" strokeWidth="1.1" />
+          <text x="-157" y={rootY + 29} fontSize="7.6" fontWeight="800" fontFamily="var(--font-sans)" textAnchor="middle" fill="#ef4444">
             Flank Grip Lost
           </text>
 
           <line x1="120" y1={rootY + 24} x2={botW / 2 + 2} y2={bBotY - 12} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3,2" />
-          <rect x="120" y={rootY + 18} width="74" height="16" rx="3" fill={cardBg} stroke="#ef4444" strokeWidth="1.1" />
-          <text x="157" y={rootY + 29} fontSize="7.6" fontWeight="800" textAnchor="middle" fill="#ef4444">
+          <rect x="120" y={rootY + 18} width="74" height="16" rx="8" fill={cardBg} stroke="#ef4444" strokeWidth="1.1" />
+          <text x="157" y={rootY + 29} fontSize="7.6" fontWeight="800" fontFamily="var(--font-sans)" textAnchor="middle" fill="#ef4444">
             Flank Grip Lost
           </text>
 
           {/* Radial Tension Dumping Straight into Groove Root */}
           <line x1="0" y1={bTopY - 26} x2="0" y2={bTopY - 2} stroke="#ef4444" strokeWidth="3.5" markerEnd="url(#bbArrowRed)" />
-          <rect x="-44" y={bTopY - 46} width="88" height="16" rx="3" fill={cardBg} stroke="#ef4444" strokeWidth="1.2" />
-          <text x="0" y={bTopY - 35} fontSize="8.5" fontWeight="800" textAnchor="middle" fill="#ef4444">
+          <rect x="-44" y={bTopY - 46} width="88" height="16" rx="8" fill={cardBg} stroke="#ef4444" strokeWidth="1.2" />
+          <text x="0" y={bTopY - 35} fontSize="8.5" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill="#ef4444">
             T = {beltTensionN} N (Slip!)
           </text>
 
           {/* Zero Clearance Alert Pill below root */}
-          <rect x="-64" y={rootY + 7} width="128" height="17" rx="4" fill="#fef2f2" stroke="#ef4444" strokeWidth="1.4" />
-          <text x="0" y={rootY + 18.5} fontSize="8.2" fontWeight="900" textAnchor="middle" fill="#b91c1c">
+          <rect x="-64" y={rootY + 7} width="128" height="17" rx="8.5" fill="#fef2f2" stroke="#ef4444" strokeWidth="1.4" />
+          <text x="0" y={rootY + 18.5} fontSize="8.2" fontWeight="900" fontFamily="var(--font-mono)" textAnchor="middle" fill="#b91c1c">
             BOTTOMING OUT (c = 0 mm)!
           </text>
         </g>
@@ -753,8 +755,8 @@ function renderBeltPulleyScene({
       {/* Groove Included Angle 2β Callout at Bottom of Cast Iron Web */}
       <g transform={`translate(0, ${rootY + 46})`}>
         <path d="M -22 -10 A 26 26 0 0 1 22 -10" fill="none" stroke={dimBlue} strokeWidth="1.3" />
-        <rect x="-64" y="-3" width="128" height="16" rx="4" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
-        <text x="0" y="8" fontSize="8.6" fontWeight="800" textAnchor="middle" fill={dimBlue}>
+        <rect x="-64" y="-3" width="128" height="16" rx="8" fill={cardBg} stroke={dimBlue} strokeWidth="0.8" />
+        <text x="0" y="8" fontSize="8.6" fontWeight="800" fontFamily="var(--font-mono)" textAnchor="middle" fill={dimBlue}>
           {pick(`Sheave Angle 2β = ${beltSpec.wedgeAngleDeg}°`, `Sudut Alur 2β = ${beltSpec.wedgeAngleDeg}°`, `プーリ溝角 2β = ${beltSpec.wedgeAngleDeg}°`)}
         </text>
       </g>

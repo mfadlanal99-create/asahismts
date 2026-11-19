@@ -267,52 +267,50 @@ export function HardnessSimulator() {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Header Banner */}
-      <div className="glass-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl p-4 sm:p-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500/10 text-rose-500">
-              <Target className="h-5 w-5" />
-            </span>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              {pick(
-                'Rockwell, Brinell & Vickers Hardness Tester',
-                'Penguji Kekerasan Rockwell, Brinell & Vickers',
-                'ロックウェル・ブリネル・ビッカース硬さ試験機'
-              )}
-            </h1>
+      {/* Compact Material 3 Status Bar (replaces duplicate h1 banner) */}
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-3.5">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
+            <Target className="h-4.5 w-4.5" />
           </div>
-          <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
-            {pick(
-              'ASTM E18, ASTM E10 & ASTM E92 standardized indentation metrology with automated loading cycle & ASTM E140 multi-scale conversions.',
-              'Metrologi uji kekerasan ASTM E18, E10 & E92 dengan siklus pembebanan terintegrasi dan tabel konversi ASTM E140.',
-              'ASTM E18 / E10 / E92に準拠した圧痕硬さ試験およびASTM E140多尺度換算シミュレータ。'
-            )}
-          </p>
+          <div>
+            <div className="text-xs font-extrabold tracking-tight text-[var(--md-on-surface)] sm:text-sm">
+              {pick(
+                'ASTM Indentation Metrology & Cycle Control',
+                'Metrologi Uji Kekerasan & Kontrol Siklus Otomatis',
+                'ASTM 圧痕硬さ計測＆自動負荷シーケンス'
+              )}
+            </div>
+            <div className="text-[11px] text-[var(--md-on-surface-variant)]">
+              {activeScale.standard} · ASTM E140 Scale Equivalence
+            </div>
+          </div>
         </div>
 
-        {/* Quick status pill */}
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--md-primary-container)] px-3.5 py-1.5 text-xs font-bold text-[var(--md-on-primary-container)]">
             <Gauge className="h-3.5 w-3.5" />
             {activeScale.fullName}
+          </span>
+          <span className="rounded-full bg-[var(--md-secondary-container)] px-3 py-1.5 font-mono text-xs font-bold text-[var(--md-on-secondary-container)]">
+            {activeScale.totalLoadKgf} kgf
           </span>
         </div>
       </div>
 
       {/* Main Simulator Grid (lg:grid-cols-12) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sim-equal-grid">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left Column: Industrial Machine SVG CAD View (lg:col-span-7) */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          <div className="glass-panel flex flex-col overflow-hidden rounded-2xl p-4 sm:p-5">
-            <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
+        <div className="flex flex-col gap-4 lg:col-span-7">
+          <div className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-                <span className="text-xs font-semibold tracking-wide text-foreground uppercase">
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--md-primary)] animate-pulse" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick('C-Frame Machine & Optical Inset', 'Mesin C-Frame & Inset Optik', 'Cフレーム試験機＆光学インセット')}
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-muted-foreground">
+              <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {activeScale.standard}
               </span>
             </div>
@@ -335,9 +333,9 @@ export function HardnessSimulator() {
             </div>
 
             {/* Machine Interactive Guidance Strip */}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-muted/40 p-2.5 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Info className="h-4 w-4 text-rose-500 shrink-0" />
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-[20px] border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container)] p-3 text-xs text-[var(--md-on-surface-variant)]">
+              <div className="flex items-center gap-2.5">
+                <Info className="h-4 w-4 shrink-0 text-[var(--md-primary)]" />
                 <span>
                   {stage === 'idle'
                     ? pick(
@@ -375,25 +373,25 @@ export function HardnessSimulator() {
         </div>
 
         {/* Right Column: Controls & ASTM E140 Conversion Card (lg:col-span-5) */}
-        <div className="lg:col-span-5 flex flex-col gap-5">
+        <div className="flex flex-col gap-5 lg:col-span-5">
           {/* Test Setup Controls Card */}
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-border/50 pb-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <Layers className="h-4 w-4 text-rose-500" />
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <div className="flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
+                <Layers className="h-4 w-4 text-[var(--md-primary)]" />
                 <span>{pick('Test Parameters', 'Parameter Pengujian', '試験条件設定')}</span>
               </div>
-              <span className="text-xs text-muted-foreground font-mono">
+              <span className="font-mono text-xs font-semibold text-[var(--md-primary)]">
                 {activeScale.totalLoadKgf} kgf
               </span>
             </div>
 
             {/* 1. Scale Selector (HRC, HRB, HBW, HV) */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-foreground">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Hardness Scale & Indenter Method', 'Metode & Skala Kekerasan', '硬さスケール・圧子方式')}
               </label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 {(Object.keys(HARDNESS_SCALES) as HardnessScaleId[]).map((scaleId) => {
                   const s = HARDNESS_SCALES[scaleId];
                   const isSelected = selectedScaleId === scaleId;
@@ -402,19 +400,27 @@ export function HardnessSimulator() {
                       key={scaleId}
                       type="button"
                       onClick={() => handleScaleChange(scaleId)}
-                      className={`flex flex-col items-start p-2 rounded-lg border text-left transition-all ${
+                      className={`flex flex-col items-start rounded-[20px] border p-3 text-left transition-all ${
                         isSelected
-                          ? 'border-rose-500 bg-rose-500/10 text-foreground font-medium ring-1 ring-rose-500/30'
-                          : 'border-border/70 hover:border-border bg-background/50 text-muted-foreground'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="text-xs font-bold text-foreground">{s.id}</span>
-                        <span className="text-[10px] text-muted-foreground font-mono">
+                      <div className="flex w-full items-center justify-between">
+                        <span
+                          className={`text-xs font-extrabold ${
+                            isSelected
+                              ? 'text-[var(--md-on-primary-container)]'
+                              : 'text-[var(--md-on-surface)]'
+                          }`}
+                        >
+                          {s.id}
+                        </span>
+                        <span className="font-mono text-[10px] font-semibold opacity-80">
                           {s.totalLoadKgf} kgf
                         </span>
                       </div>
-                      <span className="text-[11px] truncate w-full">{s.name}</span>
+                      <span className="mt-0.5 w-full truncate text-[11px] opacity-90">{s.name}</span>
                     </button>
                   );
                 })}
@@ -422,14 +428,14 @@ export function HardnessSimulator() {
             </div>
 
             {/* 2. Material Specimen Selector */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-foreground">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Specimen Material', 'Material Benda Uji', '試験片材質')}
               </label>
               <select
                 value={selectedMaterialId}
                 onChange={(e) => handleMaterialChange(e.target.value as SpecimenMaterialId)}
-                className="w-full rounded-lg border border-border/80 bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-rose-500"
+                className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
               >
                 {(Object.keys(SPECIMEN_MATERIALS) as SpecimenMaterialId[]).map((matId) => {
                   const m = SPECIMEN_MATERIALS[matId];
@@ -443,8 +449,8 @@ export function HardnessSimulator() {
 
               {/* Material Recommendation or Out-of-Range warning */}
               {isScaleOutOfRange ? (
-                <div className="flex items-start gap-1.5 rounded-md bg-amber-500/10 p-2 text-[11px] text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                  <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 rounded-2xl border border-amber-300/60 bg-amber-50/80 p-3 text-[11px] text-amber-900 dark:border-amber-500/25 dark:bg-amber-950/30 dark:text-amber-200">
+                  <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                   <span>
                     {pick(
                       `Warning: ${activeMaterial.name} is outside the recommended ${activeScale.id} range (${activeScale.minRecommended}–${activeScale.maxRecommended} ${activeScale.unit}). Consider using ${activeMaterial.recommendedScale}.`,
@@ -454,7 +460,7 @@ export function HardnessSimulator() {
                   </span>
                 </div>
               ) : isScaleRecommended ? (
-                <div className="flex items-center gap-1.5 rounded-md bg-emerald-500/10 p-2 text-[11px] text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <div className="flex items-center gap-2 rounded-2xl border border-emerald-300/60 bg-emerald-50/80 p-3 text-[11px] font-medium text-emerald-900 dark:border-emerald-500/25 dark:bg-emerald-950/30 dark:text-emerald-200">
                   <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
                   <span>
                     {pick(
@@ -469,13 +475,15 @@ export function HardnessSimulator() {
 
             {/* 3. Dwell Time Slider & Auto-Cycle Switch */}
             <div className="grid grid-cols-2 gap-3 pt-1">
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3 text-muted-foreground" />
+                  <span className="flex items-center gap-1 font-bold text-[var(--md-on-surface)]">
+                    <Clock className="h-3.5 w-3.5 text-[var(--md-on-surface-variant)]" />
                     {pick('Dwell Time', 'Waktu Dwell', '荷重保持時間')}
                   </span>
-                  <span className="font-mono text-xs font-bold text-rose-500">{dwellTimeSec}s</span>
+                  <span className="font-mono text-xs font-extrabold text-[var(--md-primary)]">
+                    {dwellTimeSec}s
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -488,36 +496,38 @@ export function HardnessSimulator() {
                     setDwellTimeSec(val);
                     if (stage === 'idle') setDwellRemaining(val);
                   }}
-                  className="w-full accent-rose-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="space-y-1">
-                <span className="text-xs font-semibold text-foreground block">
+              <div className="space-y-1.5">
+                <span className="block text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Cycle Mode', 'Mode Siklus', '動作モード')}
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsAutoCycle(!isAutoCycle)}
-                  className={`w-full py-1.5 px-2 rounded-lg border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
+                  className={`flex w-full items-center justify-center gap-1.5 rounded-full border px-3 py-2 text-xs font-semibold transition ${
                     isAutoCycle
-                      ? 'border-rose-500/50 bg-rose-500/10 text-rose-500'
-                      : 'border-border bg-background text-muted-foreground'
+                      ? 'border-[var(--md-primary)]/40 bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
                   }`}
                 >
-                  <Sparkles className="h-3 w-3" />
-                  {isAutoCycle ? pick('Auto Full Cycle', 'Otomatis Penuh', '全自動シーケンス') : pick('Manual Stepping', 'Langkah Manual', '手動ステップ')}
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {isAutoCycle
+                    ? pick('Auto Full Cycle', 'Otomatis Penuh', '全自動シーケンス')
+                    : pick('Manual Stepping', 'Langkah Manual', '手動ステップ')}
                 </button>
               </div>
             </div>
 
             {/* 4. Action Buttons */}
-            <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+            <div className="flex items-center gap-2 border-t border-[var(--md-outline-variant)]/50 pt-3">
               <button
                 type="button"
                 onClick={handleStartCycle}
                 disabled={stage !== 'idle' && stage !== 'completed'}
-                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white py-2 px-3 text-xs font-semibold shadow-sm transition-all"
+                className="m3-btn-filled flex flex-1 items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold disabled:opacity-45"
               >
                 <Play className="h-3.5 w-3.5 fill-current" />
                 {pick('Start Test Cycle', 'Mulai Siklus Pengujian', '試験サイクル開始')}
@@ -527,7 +537,7 @@ export function HardnessSimulator() {
                 <button
                   type="button"
                   onClick={proceedToMajorLoad}
-                  className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white py-2 px-3 text-xs font-semibold shadow-sm transition-all"
+                  className="m3-btn-tonal flex flex-1 items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold"
                 >
                   {pick('Apply Major Load', 'Beban Utama', '主荷重付加')}
                 </button>
@@ -536,7 +546,7 @@ export function HardnessSimulator() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="flex items-center justify-center gap-1 rounded-lg border border-border bg-background hover:bg-muted text-muted-foreground hover:text-foreground py-2 px-3 text-xs font-medium transition-colors"
+                className="glass-pill flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 {pick('Reset', 'Reset', 'リセット')}
@@ -545,16 +555,18 @@ export function HardnessSimulator() {
           </div>
 
           {/* ASTM E140 Conversion Card */}
-          <div className="glass-panel rounded-2xl p-4 sm:p-5 space-y-3">
-            <div className="flex items-center justify-between border-b border-border/50 pb-2">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <FileSpreadsheet className="h-4 w-4 text-rose-500" />
+          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <div className="flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
+                <FileSpreadsheet className="h-4 w-4 text-[var(--md-primary)]" />
                 <span>{pick('ASTM E140 Conversion Equivalent', 'Konversi Standar ASTM E140', 'ASTM E140 硬さ換算・引張強さ')}</span>
               </div>
-              <span className="text-[11px] font-mono text-muted-foreground">ASTM E140 Tab. 1</span>
+              <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
+                ASTM E140 Tab. 1
+              </span>
             </div>
 
-            <p className="text-[11px] text-muted-foreground">
+            <p className="text-[11px] text-[var(--md-on-surface-variant)]">
               {pick(
                 'Approximate equivalent values for non-austenitic steels & structural alloys based on ASTM E140 empirical tables.',
                 'Perkiraan nilai ekuivalen berdasarkan tabel empiris ASTM E140 untuk baja paduan non-austenitik.',
@@ -563,90 +575,90 @@ export function HardnessSimulator() {
             </p>
 
             {/* Equivalence Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
               {/* HRC */}
               <div
-                className={`p-2 rounded-lg border flex flex-col items-center ${
+                className={`flex flex-col items-center rounded-[20px] border p-2.5 ${
                   selectedScaleId === 'HRC'
-                    ? 'border-rose-500 bg-rose-500/10'
-                    : 'border-border/60 bg-muted/20'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] text-[var(--md-on-surface)]'
                 }`}
               >
-                <span className="text-[10px] font-mono text-muted-foreground">HRC</span>
-                <span className="text-base font-bold text-foreground">
+                <span className="font-mono text-[10px] opacity-75">HRC</span>
+                <span className="text-base font-extrabold">
                   {activeConversion.HRC.value > 0 ? activeConversion.HRC.value : '—'}
                 </span>
-                <span className="text-[9px] text-muted-foreground text-center">
+                <span className="text-center text-[9px] opacity-75">
                   {activeConversion.HRC.valid ? 'Standard' : 'Out of range'}
                 </span>
               </div>
 
               {/* HRB */}
               <div
-                className={`p-2 rounded-lg border flex flex-col items-center ${
+                className={`flex flex-col items-center rounded-[20px] border p-2.5 ${
                   selectedScaleId === 'HRB'
-                    ? 'border-rose-500 bg-rose-500/10'
-                    : 'border-border/60 bg-muted/20'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] text-[var(--md-on-surface)]'
                 }`}
               >
-                <span className="text-[10px] font-mono text-muted-foreground">HRB</span>
-                <span className="text-base font-bold text-foreground">
+                <span className="font-mono text-[10px] opacity-75">HRB</span>
+                <span className="text-base font-extrabold">
                   {activeConversion.HRB.value > 0 ? activeConversion.HRB.value : '—'}
                 </span>
-                <span className="text-[9px] text-muted-foreground text-center">
+                <span className="text-center text-[9px] opacity-75">
                   {activeConversion.HRB.valid ? 'Standard' : 'Out of range'}
                 </span>
               </div>
 
               {/* HBW */}
               <div
-                className={`p-2 rounded-lg border flex flex-col items-center ${
+                className={`flex flex-col items-center rounded-[20px] border p-2.5 ${
                   selectedScaleId === 'HBW'
-                    ? 'border-rose-500 bg-rose-500/10'
-                    : 'border-border/60 bg-muted/20'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] text-[var(--md-on-surface)]'
                 }`}
               >
-                <span className="text-[10px] font-mono text-muted-foreground">HBW</span>
-                <span className="text-base font-bold text-foreground">
+                <span className="font-mono text-[10px] opacity-75">HBW</span>
+                <span className="text-base font-extrabold">
                   {activeConversion.HBW.value > 0 ? activeConversion.HBW.value : '—'}
                 </span>
-                <span className="text-[9px] text-muted-foreground text-center">10/3000 kgf</span>
+                <span className="text-center text-[9px] opacity-75">10/3000 kgf</span>
               </div>
 
               {/* HV */}
               <div
-                className={`p-2 rounded-lg border flex flex-col items-center ${
+                className={`flex flex-col items-center rounded-[20px] border p-2.5 ${
                   selectedScaleId === 'HV'
-                    ? 'border-rose-500 bg-rose-500/10'
-                    : 'border-border/60 bg-muted/20'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] text-[var(--md-on-surface)]'
                 }`}
               >
-                <span className="text-[10px] font-mono text-muted-foreground">HV</span>
-                <span className="text-base font-bold text-foreground">
+                <span className="font-mono text-[10px] opacity-75">HV</span>
+                <span className="text-base font-extrabold">
                   {activeConversion.HV.value > 0 ? activeConversion.HV.value : '—'}
                 </span>
-                <span className="text-[9px] text-muted-foreground text-center">HV 30</span>
+                <span className="text-center text-[9px] opacity-75">HV 30</span>
               </div>
             </div>
 
             {/* Estimated Ultimate Tensile Strength (UTS) Banner */}
-            <div className="flex items-center justify-between rounded-lg bg-rose-500/10 border border-rose-500/20 p-2.5">
-              <div className="flex items-center gap-2">
-                <Award className="h-4 w-4 text-rose-500" />
+            <div className="flex items-center justify-between rounded-[22px] border border-[var(--md-outline-variant)]/45 bg-[var(--md-secondary-container)] p-3.5 text-[var(--md-on-secondary-container)]">
+              <div className="flex items-center gap-2.5">
+                <Award className="h-5 w-5 text-[var(--md-primary)]" />
                 <div>
-                  <div className="text-xs font-semibold text-foreground">
+                  <div className="text-xs font-bold">
                     {pick('Estimated Tensile Strength (UTS)', 'Perkiraan Kekuatan Tarik (UTS)', '推定引張強さ（UTS）')}
                   </div>
-                  <div className="text-[10px] text-muted-foreground">
+                  <div className="text-[10px] opacity-80">
                     UTS ≈ 3.45 × HBW (ASTM E140)
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-base font-bold font-mono text-rose-500">
+                <div className="font-mono text-base font-extrabold text-[var(--md-primary)]">
                   {activeConversion.utsMpa.value} MPa
                 </div>
-                <div className="text-[10px] text-muted-foreground font-mono">
+                <div className="font-mono text-[10px] opacity-80">
                   {Math.round(activeConversion.utsMpa.value * 0.145038)} ksi
                 </div>
               </div>
@@ -656,13 +668,13 @@ export function HardnessSimulator() {
       </div>
 
       {/* Test Log Table Card */}
-      <div className="glass-panel rounded-2xl p-4 sm:p-5 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/50 pb-2">
+      <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+        <div className="flex flex-col justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-foreground">
+            <span className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Hardness Inspection Log', 'Log Pengujian Kekerasan', '硬さ測定検査ログ')}
             </span>
-            <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground font-mono">
+            <span className="rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 font-mono text-xs font-bold text-[var(--md-on-primary-container)]">
               {testLogs.length} {pick('runs', 'pengujian', '回')}
             </span>
           </div>
@@ -672,25 +684,25 @@ export function HardnessSimulator() {
               type="button"
               onClick={handleExportCsv}
               disabled={testLogs.length === 0}
-              className="flex items-center gap-1 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-medium text-foreground hover:bg-muted disabled:opacity-40 transition-colors"
+              className="glass-pill flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold disabled:opacity-40"
             >
-              <Download className="h-3 w-3" />
+              <Download className="h-3.5 w-3.5" />
               {pick('Export CSV', 'Ekspor CSV', 'CSV出力')}
             </button>
             <button
               type="button"
               onClick={handleClearLogs}
               disabled={testLogs.length === 0}
-              className="flex items-center gap-1 rounded-md border border-border bg-background px-2.5 py-1 text-xs font-medium text-muted-foreground hover:text-destructive hover:border-destructive/40 disabled:opacity-40 transition-colors"
+              className="glass-pill flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 disabled:opacity-40 dark:hover:border-rose-500/40 dark:hover:bg-rose-950/30 dark:hover:text-rose-300"
             >
-              <Trash2 className="h-3 w-3" />
+              <Trash2 className="h-3.5 w-3.5" />
               {pick('Clear', 'Hapus', 'クリア')}
             </button>
           </div>
         </div>
 
         {testLogs.length === 0 ? (
-          <div className="py-8 text-center text-xs text-muted-foreground">
+          <div className="py-8 text-center text-xs text-[var(--md-on-surface-variant)]">
             {pick(
               'No tests performed yet. Select scale & material, then click Start Cycle.',
               'Belum ada riwayat pengujian. Pilih skala & benda uji, lalu tekan Mulai.',
@@ -701,51 +713,51 @@ export function HardnessSimulator() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-border/60 text-muted-foreground">
-                  <th className="py-2 px-2 font-medium">#ID</th>
-                  <th className="py-2 px-2 font-medium">{pick('Time', 'Waktu', '時刻')}</th>
-                  <th className="py-2 px-2 font-medium">{pick('Scale', 'Skala', '尺度')}</th>
-                  <th className="py-2 px-2 font-medium">{pick('Material', 'Material', '材質')}</th>
-                  <th className="py-2 px-2 font-medium text-right">{pick('Load', 'Beban', '荷重')}</th>
-                  <th className="py-2 px-2 font-medium text-right">{pick('Hardness', 'Nilai', '硬さ値')}</th>
-                  <th className="py-2 px-2 font-medium text-right">{pick('Depth h', 'Kedalaman', '深さh')}</th>
-                  <th className="py-2 px-2 font-medium text-right">{pick('Equiv HV', 'Ekiv HV', 'HV換算')}</th>
-                  <th className="py-2 px-2 font-medium text-right">{pick('Est UTS', 'Est UTS', '推定UTS')}</th>
-                  <th className="py-2 px-2 font-medium">{pick('Status', 'Status', '判定')}</th>
+                <tr className="border-b border-[var(--md-outline-variant)]/50 text-[var(--md-on-surface-variant)]">
+                  <th className="px-2 py-2.5 font-bold">#ID</th>
+                  <th className="px-2 py-2.5 font-bold">{pick('Time', 'Waktu', '時刻')}</th>
+                  <th className="px-2 py-2.5 font-bold">{pick('Scale', 'Skala', '尺度')}</th>
+                  <th className="px-2 py-2.5 font-bold">{pick('Material', 'Material', '材質')}</th>
+                  <th className="px-2 py-2.5 text-right font-bold">{pick('Load', 'Beban', '荷重')}</th>
+                  <th className="px-2 py-2.5 text-right font-bold">{pick('Hardness', 'Nilai', '硬さ値')}</th>
+                  <th className="px-2 py-2.5 text-right font-bold">{pick('Depth h', 'Kedalaman', '深さh')}</th>
+                  <th className="px-2 py-2.5 text-right font-bold">{pick('Equiv HV', 'Ekiv HV', 'HV換算')}</th>
+                  <th className="px-2 py-2.5 text-right font-bold">{pick('Est UTS', 'Est UTS', '推定UTS')}</th>
+                  <th className="px-2 py-2.5 font-bold">{pick('Status', 'Status', '判定')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border/40 font-mono">
+              <tbody className="divide-y divide-[var(--md-outline-variant)]/35 font-mono">
                 {testLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-muted/30">
-                    <td className="py-2 px-2 text-foreground font-semibold">{log.id}</td>
-                    <td className="py-2 px-2 text-muted-foreground">{log.timestamp}</td>
-                    <td className="py-2 px-2">
-                      <span className="font-bold text-rose-500">{log.scale}</span>
+                  <tr key={log.id} className="transition hover:bg-[var(--md-surface-container-high)]">
+                    <td className="px-2 py-2.5 font-semibold text-[var(--md-on-surface)]">{log.id}</td>
+                    <td className="px-2 py-2.5 text-[var(--md-on-surface-variant)]">{log.timestamp}</td>
+                    <td className="px-2 py-2.5">
+                      <span className="font-bold text-[var(--md-primary)]">{log.scale}</span>
                     </td>
-                    <td className="py-2 px-2 font-sans text-foreground truncate max-w-[140px]">
+                    <td className="max-w-[140px] truncate px-2 py-2.5 font-sans text-[var(--md-on-surface)]">
                       {log.materialName}
                     </td>
-                    <td className="py-2 px-2 text-right text-muted-foreground">
+                    <td className="px-2 py-2.5 text-right text-[var(--md-on-surface-variant)]">
                       {log.appliedLoadKgf} kgf
                     </td>
-                    <td className="py-2 px-2 text-right font-bold text-foreground">
+                    <td className="px-2 py-2.5 text-right font-bold text-[var(--md-on-surface)]">
                       {log.measuredHardness} {log.scale}
                     </td>
-                    <td className="py-2 px-2 text-right text-muted-foreground">
+                    <td className="px-2 py-2.5 text-right text-[var(--md-on-surface-variant)]">
                       {(log.geometry.depthMm * 1000).toFixed(1)} µm
                     </td>
-                    <td className="py-2 px-2 text-right text-muted-foreground">
+                    <td className="px-2 py-2.5 text-right text-[var(--md-on-surface-variant)]">
                       {log.conversions.HV.value} HV
                     </td>
-                    <td className="py-2 px-2 text-right font-bold text-rose-500">
+                    <td className="px-2 py-2.5 text-right font-bold text-[var(--md-primary)]">
                       {log.conversions.utsMpa.value} MPa
                     </td>
-                    <td className="py-2 px-2">
+                    <td className="px-2 py-2.5">
                       <span
-                        className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-sans ${
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 font-sans text-[10px] font-bold ${
                           log.validScale
-                            ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                            ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                            : 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
                         }`}
                       >
                         {log.validScale ? 'VALID' : 'OUT-RANGE'}

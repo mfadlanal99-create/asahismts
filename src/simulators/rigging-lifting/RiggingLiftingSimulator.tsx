@@ -157,7 +157,7 @@ export function RiggingLiftingSimulator() {
     <div className="space-y-5">
       {/* Top Safety Status Banner */}
       {alarms.length === 0 ? (
-        <div className="flex items-start gap-3 rounded-xl border border-emerald-300 bg-emerald-50/90 p-3.5 text-emerald-950 dark:border-emerald-800/80 dark:bg-emerald-950/40 dark:text-emerald-200">
+        <div className="flex items-start gap-3 rounded-[24px] border border-emerald-300 bg-emerald-50/90 p-4 text-emerald-950 dark:border-emerald-800/80 dark:bg-emerald-950/40 dark:text-emerald-200">
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div className="text-xs sm:text-sm">
             <p className="font-bold">
@@ -181,7 +181,7 @@ export function RiggingLiftingSimulator() {
           {alarms.map((al) => (
             <div
               key={al.id}
-              className={`flex items-start gap-3 rounded-xl border p-3.5 ${
+              className={`flex items-start gap-3 rounded-[24px] border p-4 ${
                 al.severity === 'danger'
                   ? 'border-rose-300 bg-rose-50 text-rose-950 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-200'
                   : 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200'
@@ -202,19 +202,20 @@ export function RiggingLiftingSimulator() {
       )}
 
       {/* Equipment Presets Selector Strip */}
-      <div className="glass-panel rounded-2xl p-4 shadow-xs">
-        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
-          <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            <Scale className="h-4 w-4 text-emerald-500" />
+      <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+          <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+            <Scale className="h-4 w-4 text-[var(--md-primary)]" />
             {pick('Equipment Hoisting Presets', 'Preset Peralatan Angkat', '機器揚重プリセット')}
           </span>
-          <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
-            {pick('Payload:', 'Beban:', '吊り荷質量:')} <strong>{massTonnes.toFixed(1)} t</strong> (
+          <span className="font-mono text-xs text-[var(--md-on-surface-variant)]">
+            {pick('Payload:', 'Beban:', '吊り荷質量:')}{' '}
+            <strong className="text-[var(--md-on-surface)]">{massTonnes.toFixed(1)} t</strong> (
             {calc.weightKn.toFixed(1)} kN) | {pick('Lug Span:', 'Bentang Lug:', 'ラグ間隔:')}{' '}
-            <strong>{lugSpanM.toFixed(1)} m</strong>
+            <strong className="text-[var(--md-on-surface)]">{lugSpanM.toFixed(1)} m</strong>
           </span>
         </div>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
           {EQUIPMENT_PRESETS.map((preset) => {
             const active = preset.id === presetId;
             return (
@@ -222,19 +223,27 @@ export function RiggingLiftingSimulator() {
                 key={preset.id}
                 type="button"
                 onClick={() => handleSelectPreset(preset.id)}
-                className={`flex flex-col justify-between rounded-lg border p-3 text-left transition ${
+                className={`flex flex-col justify-between rounded-[20px] border p-3 text-left transition ${
                   active
-                    ? 'border-emerald-500 bg-emerald-500/10 text-slate-900 dark:border-emerald-400 dark:bg-emerald-500/15 dark:text-white'
-                    : 'border-slate-200 bg-slate-50/60 text-slate-700 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-300 dark:hover:border-slate-700'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                 }`}
               >
                 <div>
                   <div className="text-xs font-bold">{preset.name[language]}</div>
-                  <div className="mt-1 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                  <div
+                    className={`mt-1 text-[11px] leading-snug ${
+                      active ? 'opacity-85' : 'text-[var(--md-on-surface-variant)]'
+                    }`}
+                  >
                     {preset.subtitle[language]}
                   </div>
                 </div>
-                <div className="mt-2 flex items-center gap-2 font-mono text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+                <div
+                  className={`mt-2 flex items-center gap-2 font-mono text-[10px] font-semibold ${
+                    active ? 'text-[var(--md-on-primary-container)]' : 'text-[var(--md-primary)]'
+                  }`}
+                >
                   <span>{preset.massTonnes.toFixed(1)} t</span>
                   <span>•</span>
                   <span>θ={preset.defaultAngleDeg}°</span>
@@ -252,10 +261,10 @@ export function RiggingLiftingSimulator() {
         {/* Left Column: Rigging Controls (5 cols) */}
         <div className="space-y-4 lg:col-span-5">
           {/* Control Card 1: Horizontal Sling Angle & Spreader Beam */}
-          <div className="glass-panel rounded-2xl p-4 shadow-xs">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                <Triangle className="h-4 w-4 text-emerald-500" />
+              <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                <Triangle className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Horizontal Sling Angle θ',
                   'Sudut Sling Horizontal θ',
@@ -263,7 +272,7 @@ export function RiggingLiftingSimulator() {
                 )}
               </label>
               <span
-                className={`rounded-md px-2 py-0.5 font-mono text-xs font-bold ${
+                className={`rounded-full px-2.5 py-0.5 font-mono text-xs font-bold ${
                   calc.isAngleDanger
                     ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
                     : calc.isAngleCaution
@@ -283,9 +292,9 @@ export function RiggingLiftingSimulator() {
               value={nominalAngleDeg}
               disabled={useSpreaderBeam}
               onChange={(e) => setNominalAngleDeg(Number(e.target.value))}
-              className="mt-3 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-emerald-600 disabled:opacity-50 dark:bg-slate-700"
+              className="mt-3 w-full disabled:opacity-50"
             />
-            <div className="mt-1.5 flex justify-between font-mono text-[10px] text-slate-500 dark:text-slate-400">
+            <div className="mt-1.5 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
               <span className="text-rose-500 font-semibold">25° (&lt;30° Danger)</span>
               <span className="text-rose-500">30° (2.00×)</span>
               <span className="text-amber-500">45° (1.41×)</span>
@@ -303,10 +312,10 @@ export function RiggingLiftingSimulator() {
                     setUseSpreaderBeam(false);
                     setNominalAngleDeg(deg);
                   }}
-                  className={`rounded-md border px-2.5 py-1 font-mono text-xs font-semibold transition ${
+                  className={`rounded-full border px-3 py-1 font-mono text-xs transition ${
                     !useSpreaderBeam && nominalAngleDeg === deg
-                      ? 'border-emerald-500 bg-emerald-500 text-white'
-                      : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                   }`}
                 >
                   {deg}°
@@ -315,10 +324,10 @@ export function RiggingLiftingSimulator() {
               <button
                 type="button"
                 onClick={() => setUseSpreaderBeam((v) => !v)}
-                className={`ml-auto rounded-md border px-2.5 py-1 text-xs font-bold transition ${
+                className={`ml-auto rounded-full border px-3 py-1 text-xs font-bold transition ${
                   useSpreaderBeam
-                    ? 'border-amber-500 bg-amber-500 text-slate-950'
-                    : 'border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                    ? 'border-[var(--md-primary)]/40 bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                    : 'glass-pill'
                 }`}
               >
                 {useSpreaderBeam
@@ -329,9 +338,9 @@ export function RiggingLiftingSimulator() {
           </div>
 
           {/* Control Card 2: Hitch Configuration & Sling Rated WLL */}
-          <div className="glass-panel rounded-2xl p-4 shadow-xs space-y-4">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
                   'Hitch Configuration (Efficiency η)',
                   'Konfigurasi Ikatan Sling (Efisiensi η)',
@@ -346,10 +355,10 @@ export function RiggingLiftingSimulator() {
                       key={h.id}
                       type="button"
                       onClick={() => setHitchType(h.id)}
-                      className={`rounded-lg border p-2 text-center transition ${
+                      className={`flex flex-col items-center rounded-[20px] border p-2.5 text-center transition ${
                         active
-                          ? 'border-emerald-500 bg-emerald-500/15 font-bold text-emerald-700 dark:border-emerald-400 dark:text-emerald-300'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800/50 dark:text-slate-300'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       <div className="text-xs">{h.shortLabel[language]}</div>
@@ -360,23 +369,23 @@ export function RiggingLiftingSimulator() {
                   );
                 })}
               </div>
-              <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="mt-1.5 text-[11px] text-[var(--md-on-surface-variant)]">
                 {hitchSpec.note[language]}
               </p>
             </div>
 
-            <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
+            <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Sling Rated Vertical WLL',
                     'Kapasitas WLL Vertikal Sling',
                     'スリング基本使用荷重 (WLL)'
                   )}
                 </label>
-                <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+                <span className="font-mono text-xs text-[var(--md-on-surface-variant)]">
                   {pick('Effective:', 'WLL Efektif:', '実効 WLL:')}{' '}
-                  <strong className="text-emerald-600 dark:text-emerald-400">
+                  <strong className="text-[var(--md-primary)]">
                     {calc.effectiveWllTonnes.toFixed(2)} t
                   </strong>
                 </span>
@@ -389,10 +398,10 @@ export function RiggingLiftingSimulator() {
                       key={spec.wllTonnes}
                       type="button"
                       onClick={() => setRatedWll(spec.wllTonnes)}
-                      className={`flex flex-col items-center rounded-lg border p-2 transition ${
+                      className={`flex flex-col items-center rounded-[20px] border p-2.5 transition ${
                         active
-                          ? 'border-emerald-500 bg-emerald-500/15 font-bold text-slate-900 dark:border-emerald-400 dark:text-white'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800/50 dark:text-slate-300'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       <span
@@ -406,27 +415,27 @@ export function RiggingLiftingSimulator() {
                   );
                 })}
               </div>
-              <div className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-1.5 text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Color Code:', 'Kode Warna:', '等級色:')}{' '}
-                <span className="font-semibold">{wllSpec.colorName[language]}</span>
+                <span className="font-semibold text-[var(--md-on-surface)]">{wllSpec.colorName[language]}</span>
               </div>
             </div>
           </div>
 
           {/* Control Card 3: Center-of-Gravity (CoG) Offset & Crane Hook Horizontal Position */}
-          <div className="glass-panel rounded-2xl p-4 shadow-xs space-y-4">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
             {/* CoG Offset Slider */}
             <div>
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                  <Crosshair className="h-4 w-4 text-pink-500" />
+                <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                  <Crosshair className="h-4 w-4 text-[var(--md-primary)]" />
                   {pick(
                     'Center-of-Gravity (CoG) Offset',
                     'Offset Titik Berat (CoG)',
                     '重心（CoG）水平オフセット'
                   )}
                 </label>
-                <span className="font-mono text-xs font-bold text-pink-600 dark:text-pink-400">
+                <span className="font-mono text-xs font-bold text-[var(--md-primary)]">
                   {cogOffsetPct >= 0 ? `+${cogOffsetPct}%` : `${cogOffsetPct}%`} (d₁=
                   {calc.d1M.toFixed(2)}m, d₂={calc.d2M.toFixed(2)}m)
                 </span>
@@ -438,9 +447,9 @@ export function RiggingLiftingSimulator() {
                 step={1}
                 value={cogOffsetPct}
                 onChange={(e) => setCogOffsetPct(Number(e.target.value))}
-                className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-pink-500 dark:bg-slate-700"
+                className="mt-2 w-full"
               />
-              <div className="mt-1 flex justify-between font-mono text-[10px] text-slate-500 dark:text-slate-400">
+              <div className="mt-1 flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>{pick('-30% (Heavy Left Lug 1)', '-30% (Berat Kiri Lug 1)', '-30% (左ラグ1側偏心)')}</span>
                 <span>0% ({pick('Centered', 'Tengah', '中央')})</span>
                 <span>{pick('+30% (Heavy Right Lug 2)', '+30% (Berat Kanan Lug 2)', '+30% (右ラグ2側偏心)')}</span>
@@ -448,9 +457,9 @@ export function RiggingLiftingSimulator() {
             </div>
 
             {/* Crane Hook Horizontal Position Slider */}
-            <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
+            <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Crane Hook Horizontal Position',
                     'Posisi Horizontal Hook Crane',
@@ -475,10 +484,10 @@ export function RiggingLiftingSimulator() {
                 step={1}
                 value={hookPosPct}
                 onChange={(e) => setHookPosPct(Number(e.target.value))}
-                className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-emerald-600 dark:bg-slate-700"
+                className="mt-2 w-full"
               />
               <div className="mt-2 flex items-center justify-between gap-2">
-                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                <span className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {Math.abs(hookPosPct - cogOffsetPct) === 0
                     ? pick(
                         '✓ Hook is plumb over CoG (0° level lift)',
@@ -494,7 +503,7 @@ export function RiggingLiftingSimulator() {
                 <button
                   type="button"
                   onClick={() => setHookPosPct(cogOffsetPct)}
-                  className="rounded-md bg-emerald-600 px-2.5 py-1 text-xs font-bold text-white shadow-xs transition hover:bg-emerald-500"
+                  className="m3-btn-filled px-3.5 py-1.5 text-xs font-bold"
                 >
                   {pick('Align Hook Over CoG', 'Luruskan Hook ke CoG', 'フックを重心真上へ芯出し')}
                 </button>
@@ -502,12 +511,12 @@ export function RiggingLiftingSimulator() {
             </div>
 
             {/* Payload Mass Adjustment Slider */}
-            <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
+            <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick('Payload Mass (W)', 'Massa Beban Angkat (W)', '吊り荷質量 (W)')}
                 </label>
-                <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200">
+                <span className="font-mono text-xs font-bold text-[var(--md-primary)]">
                   {massTonnes.toFixed(1)} t ({calc.weightKn.toFixed(1)} kN)
                 </span>
               </div>
@@ -521,7 +530,7 @@ export function RiggingLiftingSimulator() {
                   setPresetId('custom');
                   setMassTonnes(Number(e.target.value));
                 }}
-                className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-emerald-600 dark:bg-slate-700"
+                className="mt-2 w-full"
               />
             </div>
           </div>
@@ -542,15 +551,15 @@ export function RiggingLiftingSimulator() {
           {/* Telemetry & WLL Utilization Breakdown Cards */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {/* Card 1: Leg 1 & Leg 2 WLL Utilization Bars */}
-            <div className="glass-panel rounded-2xl p-3.5 shadow-xs">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
+            <div className="glass-card rounded-[24px] p-4">
+              <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span>{pick('WLL Utilization %', 'Utilisasi WLL %', '実効 WLL 稼働率 %')}</span>
-                <Gauge className="h-4 w-4 text-emerald-500" />
+                <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
               </div>
 
               {/* Leg 1 bar */}
               <div className="mt-2.5">
-                <div className="flex justify-between font-mono text-[11px]">
+                <div className="flex justify-between font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   <span>
                     {pick('Leg 1:', 'Kaki 1:', '脚1:')} {calc.t1Tonnes.toFixed(2)} t /{' '}
                     {calc.effectiveWllTonnes.toFixed(2)} t
@@ -567,7 +576,7 @@ export function RiggingLiftingSimulator() {
                     {calc.util1Pct.toFixed(0)}%
                   </span>
                 </div>
-                <div className="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                   <div
                     className={`h-full rounded-full transition-all ${
                       calc.util1Pct > 100
@@ -583,7 +592,7 @@ export function RiggingLiftingSimulator() {
 
               {/* Leg 2 bar */}
               <div className="mt-2.5">
-                <div className="flex justify-between font-mono text-[11px]">
+                <div className="flex justify-between font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                   <span>
                     {pick('Leg 2:', 'Kaki 2:', '脚2:')} {calc.t2Tonnes.toFixed(2)} t /{' '}
                     {calc.effectiveWllTonnes.toFixed(2)} t
@@ -600,7 +609,7 @@ export function RiggingLiftingSimulator() {
                     {calc.util2Pct.toFixed(0)}%
                   </span>
                 </div>
-                <div className="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="mt-1 h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                   <div
                     className={`h-full rounded-full transition-all ${
                       calc.util2Pct > 100
@@ -616,48 +625,48 @@ export function RiggingLiftingSimulator() {
             </div>
 
             {/* Card 2: Angle Multiplier & Pinch Force */}
-            <div className="glass-panel rounded-2xl p-3.5 shadow-xs">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
+            <div className="glass-card rounded-[24px] p-4">
+              <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span>
                   {pick('Angle Factor & Pinch', 'Faktor Sudut & Jepit', '角度倍率・水平圧縮力')}
                 </span>
-                <ShieldAlert className="h-4 w-4 text-amber-500" />
+                <ShieldAlert className="h-4 w-4 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-2 font-mono text-lg font-extrabold text-slate-900 dark:text-white">
+              <div className="mt-2 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {useSpreaderBeam ? '1.000×' : `${calc.nominalLoadFactor.toFixed(3)}×`}{' '}
-                <span className="text-xs font-normal text-slate-500">
+                <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">
                   (1/sin {useSpreaderBeam ? '90°' : `${nominalAngleDeg}°`})
                 </span>
               </div>
-              <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+              <div className="mt-1 text-xs text-[var(--md-on-surface-variant)]">
                 {pick('Horiz Pinch:', 'Gaya Jepit:', '水平圧縮力:')}{' '}
-                <strong className="font-mono">
+                <strong className="font-mono text-[var(--md-on-surface)]">
                   {useSpreaderBeam ? '0.00 t (0 kN)' : `${calc.horizPinchTonnes.toFixed(2)} t (${calc.horizPinchKn.toFixed(1)} kN)`}
                 </strong>
               </div>
-              <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-1 text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Headroom H:', 'Tinggi Hook H:', '必要揚程 H:')}{' '}
-                <span className="font-mono font-semibold">{calc.headroomM.toFixed(2)} m</span>
+                <span className="font-mono font-semibold text-[var(--md-on-surface)]">{calc.headroomM.toFixed(2)} m</span>
               </div>
             </div>
 
             {/* Card 3: Shackle & Rigging Hardware Spec */}
-            <div className="glass-panel rounded-2xl p-3.5 shadow-xs">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-300">
+            <div className="glass-card rounded-[24px] p-4">
+              <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span>
                   {pick('Shackle Recommendation', 'Rekomendasi Shackle', '推奨シャックル選定')}
                 </span>
-                <Info className="h-4 w-4 text-sky-500" />
+                <Info className="h-4 w-4 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-2 font-mono text-base font-extrabold text-sky-600 dark:text-sky-400">
+              <div className="mt-2 font-mono text-base font-extrabold text-[var(--md-primary)]">
                 {calc.recommendedShackle.modelCode}
               </div>
-              <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-                WLL <strong>{calc.recommendedShackle.wllTonnes.toFixed(2)} t</strong> •{' '}
+              <div className="mt-1 text-xs text-[var(--md-on-surface-variant)]">
+                WLL <strong className="text-[var(--md-on-surface)]">{calc.recommendedShackle.wllTonnes.toFixed(2)} t</strong> •{' '}
                 {pick('Pin Ø', 'Pin Ø', 'ピン径 Ø')}
-                <strong>{calc.recommendedShackle.pinDiameterMm} mm</strong>
+                <strong className="text-[var(--md-on-surface)]">{calc.recommendedShackle.pinDiameterMm} mm</strong>
               </div>
-              <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-1 text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   `Sized for peak leg load ${Math.max(calc.t1Tonnes, calc.t2Tonnes).toFixed(2)} t`,
                   `Untuk beban kaki maks ${Math.max(calc.t1Tonnes, calc.t2Tonnes).toFixed(2)} t`,
@@ -668,8 +677,8 @@ export function RiggingLiftingSimulator() {
           </div>
 
           {/* 1/sin(θ) Sling Angle Multiplier Reference Strip */}
-          <div className="glass-panel rounded-2xl p-3.5 shadow-xs">
-            <div className="mb-2 flex items-center justify-between text-xs font-bold text-slate-700 dark:text-slate-300">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-2.5 flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
               <span>
                 {pick(
                   'ASME B30.9 Sling Angle Load Factor Table (LF = 1 / sin θ)',
@@ -677,7 +686,7 @@ export function RiggingLiftingSimulator() {
                   'ASME B30.9 スリング角度張力係数テーブル (LF = 1 / sin θ)'
                 )}
               </span>
-              <span className="font-mono text-[11px] text-slate-500">
+              <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Active θ =', 'Sudut θ Aktif =', '現在の角度 θ =')} {nominalAngleDeg}°
               </span>
             </div>
@@ -693,17 +702,19 @@ export function RiggingLiftingSimulator() {
                 return (
                   <div
                     key={row.deg}
-                    className={`rounded-lg border p-2 ${
+                    className={`rounded-[20px] border p-2.5 ${
                       isSelected
-                        ? 'border-emerald-500 bg-emerald-500/15 ring-1 ring-emerald-500'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/40'
                         : row.zone === 'danger'
                           ? 'border-rose-200 bg-rose-50/50 dark:border-rose-900/50 dark:bg-rose-950/30'
                           : row.zone === 'caution'
                             ? 'border-amber-200 bg-amber-50/50 dark:border-amber-900/50 dark:bg-amber-950/30'
-                            : 'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/40'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]'
                     }`}
                   >
-                    <div className="font-bold text-slate-900 dark:text-white">θ = {row.deg}°</div>
+                    <div className={`font-bold ${isSelected ? 'text-[var(--md-on-primary-container)]' : 'text-[var(--md-on-surface)]'}`}>
+                      θ = {row.deg}°
+                    </div>
                     <div
                       className={`text-sm font-extrabold ${
                         row.zone === 'danger'
@@ -715,7 +726,9 @@ export function RiggingLiftingSimulator() {
                     >
                       {row.lf}
                     </div>
-                    <div className="text-[10px] text-slate-500 dark:text-slate-400">{row.label}</div>
+                    <div className={`text-[10px] ${isSelected ? 'opacity-85' : 'text-[var(--md-on-surface-variant)]'}`}>
+                      {row.label}
+                    </div>
                   </div>
                 );
               })}

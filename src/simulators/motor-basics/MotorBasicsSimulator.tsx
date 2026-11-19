@@ -62,9 +62,9 @@ export function MotorBasicsSimulator() {
             }
           />
 
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-cyan-500" />
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
+            <h3 className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+              <Zap className="h-4 w-4 text-[var(--md-primary)]" />
               {pick(
                 'Motor Architecture, Mounting & Enclosure Guide',
                 'Panduan Arsitektur Motor, Pemasangan & Proteksi IP',
@@ -73,54 +73,54 @@ export function MotorBasicsSimulator() {
             </h3>
 
             <div className="grid gap-3 md:grid-cols-3 text-xs">
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/40 p-3 space-y-1">
-                <div className="font-semibold text-cyan-600 dark:text-cyan-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 space-y-1">
+                <div className="font-bold text-[var(--md-primary)]">
                   {activeMotor.name}
                 </div>
-                <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] font-mono text-[var(--md-on-surface-variant)]">
                   {activeMotor.efficiencyClass}
                 </div>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+                <p className="text-[var(--md-on-surface-variant)] leading-relaxed pt-1">
                   {activeMotor.features}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
-                  <strong className="text-slate-700 dark:text-slate-200">
+                <p className="text-[11px] text-[var(--md-on-surface-variant)] pt-1">
+                  <strong className="text-[var(--md-on-surface)]">
                     {pick('Use:', 'Aplikasi:', '用途:')}
                   </strong>{' '}
                   {activeMotor.primaryUse}
                 </p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/40 p-3 space-y-1">
-                <div className="font-semibold text-emerald-600 dark:text-emerald-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 space-y-1">
+                <div className="font-bold text-[var(--md-primary)]">
                   {activeMount.name} ({activeMount.code})
                 </div>
-                <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] font-mono text-[var(--md-on-surface-variant)]">
                   IEC 60034-7
                 </div>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+                <p className="text-[var(--md-on-surface-variant)] leading-relaxed pt-1">
                   {activeMount.description}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
-                  <strong className="text-slate-700 dark:text-slate-200">
+                <p className="text-[11px] text-[var(--md-on-surface-variant)] pt-1">
+                  <strong className="text-[var(--md-on-surface)]">
                     {pick('Best Fit:', 'Cocok Untuk:', '適合例:')}
                   </strong>{' '}
                   {activeMount.bestFit}
                 </p>
               </div>
 
-              <div className="rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/70 dark:bg-slate-800/40 p-3 space-y-1">
-                <div className="font-semibold text-amber-600 dark:text-amber-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 space-y-1">
+                <div className="font-bold text-[var(--md-primary)]">
                   {activeIp.code} {pick('Enclosure', 'Selungkup', '保護構造')}
                 </div>
-                <div className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] font-mono text-[var(--md-on-surface-variant)]">
                   IEC 60529
                 </div>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+                <p className="text-[var(--md-on-surface-variant)] leading-relaxed pt-1">
                   {activeIp.dustProtection}
                 </p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1">
-                  <strong className="text-slate-700 dark:text-slate-200">
+                <p className="text-[11px] text-[var(--md-on-surface-variant)] pt-1">
+                  <strong className="text-[var(--md-on-surface)]">
                     {pick('Zone:', 'Area:', '環境:')}
                   </strong>{' '}
                   {activeIp.environment}
@@ -132,9 +132,9 @@ export function MotorBasicsSimulator() {
 
         {/* RIGHT COLUMN: MOTOR CONTROLS & TELEMETRY (5 cols) */}
         <div className="lg:col-span-5 space-y-5">
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <Cpu className="h-4 w-4 text-cyan-500" />
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
+            <h2 className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+              <Cpu className="h-4 w-4 text-[var(--md-primary)]" />
               {pick(
                 'Motor Type, Poles, Mounting & Wiring',
                 'Pengaturan Motor, Kutub, Mounting & Kabel',
@@ -144,19 +144,19 @@ export function MotorBasicsSimulator() {
 
             {/* Motor Type */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+              <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Electric Motor Family', 'Jenis Motor Listrik', '電動機の種類')}
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {MOTOR_TYPES.map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setMotorType(item.id)}
-                    className={`px-3 py-2 rounded-xl text-left text-xs font-medium border transition ${
+                    className={`px-3.5 py-2.5 rounded-[20px] text-left text-xs font-semibold border transition ${
                       motorType === item.id
-                        ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                        : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                        ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {item.name}
@@ -168,19 +168,19 @@ export function MotorBasicsSimulator() {
             {/* Mounting & IP Rating */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Mounting (IEC)', 'Tipe Mounting', '取付方式')}
                 </label>
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1.5">
                   {(['B3', 'B5', 'B14'] as MotorMounting[]).map((code) => (
                     <button
                       key={code}
                       type="button"
                       onClick={() => setMounting(code)}
-                      className={`py-2 rounded-xl text-center text-xs font-semibold border transition ${
+                      className={`py-2 rounded-full text-center text-xs font-semibold border transition ${
                         mounting === code
-                          ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                          : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {code}
@@ -190,19 +190,19 @@ export function MotorBasicsSimulator() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('IP Protection', 'Rating IP', 'IP保護等級')}
                 </label>
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1.5">
                   {(['IP54', 'IP55', 'IP65'] as IpRating[]).map((code) => (
                     <button
                       key={code}
                       type="button"
                       onClick={() => setIpRating(code)}
-                      className={`py-2 rounded-xl text-center text-xs font-semibold border transition ${
+                      className={`py-2 rounded-full text-center text-xs font-semibold border transition ${
                         ipRating === code
-                          ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                          : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {code}
@@ -215,23 +215,23 @@ export function MotorBasicsSimulator() {
             {/* Poles & Grid Frequency */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Magnetic Poles', 'Jumlah Kutub', '極数')}
                 </label>
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1.5">
                   {([2, 4, 6] as PoleCount[]).map((p) => (
                     <button
                       key={p}
                       type="button"
                       onClick={() => setPoles(p)}
-                      className={`py-2 rounded-xl text-center text-xs font-semibold border transition ${
+                      className={`flex flex-col items-center py-2 rounded-[20px] text-center text-xs font-semibold border transition ${
                         poles === p
-                          ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                          : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       <div>{p}P</div>
-                      <div className="text-[10px] font-normal opacity-80">
+                      <div className="font-mono text-[10px] font-normal opacity-80">
                         {frequency === 50
                           ? POLE_SPECS[p].syncSpeed50HzRpm
                           : POLE_SPECS[p].syncSpeed60HzRpm}
@@ -242,7 +242,7 @@ export function MotorBasicsSimulator() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Supply Frequency', 'Frekuensi Listrik', '電源周波数')}
                 </label>
                 <div className="grid grid-cols-2 gap-1.5">
@@ -251,10 +251,10 @@ export function MotorBasicsSimulator() {
                       key={hz}
                       type="button"
                       onClick={() => setFrequency(hz)}
-                      className={`py-2 rounded-xl text-center text-xs font-semibold border transition ${
+                      className={`py-2 rounded-full text-center text-xs font-semibold border transition ${
                         frequency === hz
-                          ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                          : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {hz} Hz
@@ -264,15 +264,15 @@ export function MotorBasicsSimulator() {
               </div>
             </div>
 
-            {/* Star vs Delta + Run/Stop */}
-            <div className="grid grid-cols-2 gap-2.5 pt-1">
+            {/* Star vs Delta Segmented Control */}
+            <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
               <button
                 type="button"
                 onClick={() => setTerminalConnection('star')}
-                className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition ${
+                className={`py-2 px-3 rounded-full text-xs transition ${
                   terminalConnection === 'star'
-                    ? 'border-cyan-500 bg-cyan-50 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-300'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 Star (Y) — 400V
@@ -280,10 +280,10 @@ export function MotorBasicsSimulator() {
               <button
                 type="button"
                 onClick={() => setTerminalConnection('delta')}
-                className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition ${
+                className={`py-2 px-3 rounded-full text-xs transition ${
                   terminalConnection === 'delta'
-                    ? 'border-amber-500 bg-amber-50 dark:bg-amber-500/15 text-amber-700 dark:text-amber-300'
-                    : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 Delta (Δ) — 230V
@@ -292,8 +292,8 @@ export function MotorBasicsSimulator() {
           </div>
 
           {/* LIVE TELEMETRY & WIRING SUMMARY */}
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-3">
+            <h3 className="border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Nameplate Speed, Torque & Terminal Telemetry',
                 'Telemetri Putaran, Torsi & Terminal Motor',
@@ -302,48 +302,48 @@ export function MotorBasicsSimulator() {
             </h3>
 
             <div className="grid grid-cols-2 gap-2.5 text-xs">
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200/80 dark:border-slate-700/60">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Sync / Rated RPM', 'Sinkron / Terukur', '同期／定格回転数')}
                 </div>
-                <div className="text-base font-bold text-cyan-600 dark:text-cyan-400 mt-0.5">
+                <div className="mt-0.5 font-mono text-base font-extrabold text-[var(--md-primary)]">
                   {motorCalc.syncRpm} / {motorCalc.ratedRpm}
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200/80 dark:border-slate-700/60">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('4 kW Shaft Torque', 'Torsi Poros 4 kW', '4 kW 定格軸トルク')}
                 </div>
-                <div className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                <div className="mt-0.5 font-mono text-base font-extrabold text-[var(--md-primary)]">
                   {motorCalc.ratedTorqueNm.toFixed(1)} N·m
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200/80 dark:border-slate-700/60">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Coil Phase (400V Grid)', 'Tegangan Fasa (400V)', '400V時 相電圧')}
                 </div>
-                <div className="text-base font-bold text-amber-600 dark:text-amber-400 mt-0.5">
+                <div className="mt-0.5 font-mono text-base font-extrabold text-[var(--md-primary)]">
                   {motorCalc.phaseVoltageOn400V.toFixed(0)} V
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 border border-slate-200/80 dark:border-slate-700/60">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Angular Speed & Slip', 'Sudut & Slip Rotor', '角速度・すべり')}
                 </div>
-                <div className="text-base font-bold text-slate-800 dark:text-slate-100 mt-0.5">
+                <div className="mt-0.5 font-mono text-base font-extrabold text-[var(--md-on-surface)]">
                   {motorCalc.omegaRadS.toFixed(0)} rad/s ({motorCalc.slipPct.toFixed(1)}%)
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl bg-cyan-50/70 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800/60 p-3 text-xs space-y-1">
-              <div className="font-semibold text-cyan-700 dark:text-cyan-300">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/45 bg-[var(--md-secondary-container)] p-3.5 text-xs text-[var(--md-on-secondary-container)] space-y-1">
+              <div className="font-bold text-[var(--md-primary)]">
                 {activeWiring.symbol} — {activeWiring.name}
               </div>
-              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <p className="opacity-90 leading-relaxed">
                 {activeWiring.jumperArrangement}
               </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] opacity-80">
                 <strong>{pick('400V Rule:', 'Aturan 400V:', '400V電源注意:')}</strong>{' '}
                 {activeWiring.operatingVoltage400VGrid}
               </p>

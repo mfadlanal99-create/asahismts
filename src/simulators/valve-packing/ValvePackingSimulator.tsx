@@ -132,9 +132,9 @@ export function ValvePackingSimulator() {
   return (
     <div className="space-y-4">
       {/* Preset & Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 glass-panel rounded-2xl p-3 ">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
           </span>
           {VALVE_PRESETS.map((preset) => {
@@ -145,10 +145,10 @@ export function ValvePackingSimulator() {
                 type="button"
                 onClick={() => applyPreset(preset.id)}
                 title={preset.description}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-xs transition ${
                   active
-                    ? 'bg-emerald-600 text-white shadow-xs dark:bg-emerald-500 dark:text-slate-950'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'm3-btn-filled font-bold'
+                    : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
                 }`}
               >
                 {presetLabel(preset.id, preset.label)}
@@ -160,7 +160,7 @@ export function ValvePackingSimulator() {
         <button
           type="button"
           onClick={resetAll}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+          className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           {pick('Reset', 'Reset', 'リセット')}
@@ -169,8 +169,8 @@ export function ValvePackingSimulator() {
 
       {/* Maintenance Status Banner */}
       {isBinding ? (
-        <div className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-3.5 text-sm text-red-900 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200">
-          <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-red-600 dark:text-red-400" />
+        <div className="flex items-start gap-3 rounded-[24px] border border-rose-300/70 bg-rose-50/90 p-4 text-sm text-rose-900 dark:border-rose-500/35 dark:bg-rose-950/35 dark:text-rose-200">
+          <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-rose-600 dark:text-rose-400" />
           <div>
             <div className="font-semibold">
               {pick('Maintenance Status:', 'Status Pemeliharaan:', '保全ステータス:')}{' '}
@@ -186,7 +186,7 @@ export function ValvePackingSimulator() {
           </div>
         </div>
       ) : isLeaking || isSeatIssue ? (
-        <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-3.5 text-sm text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+        <div className="flex items-start gap-3 rounded-[24px] border border-amber-300/70 bg-amber-50/90 p-4 text-sm text-amber-900 dark:border-amber-500/35 dark:bg-amber-950/35 dark:text-amber-200">
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
           <div>
             <div className="font-semibold">
@@ -212,7 +212,7 @@ export function ValvePackingSimulator() {
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-medium text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+        <div className="flex items-center gap-2.5 rounded-[24px] border border-emerald-300/70 bg-emerald-50/90 px-4 py-3 text-xs font-medium text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/35 dark:text-emerald-200">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <span>
             <strong>
@@ -238,98 +238,98 @@ export function ValvePackingSimulator() {
 
           {/* Live Readout Cards */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="glass-panel rounded-2xl p-3.5 ">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                 <span>{pick('Flow Rate (Q)', 'Laju Aliran (Q)', '流量 (Q)')}</span>
-                <Gauge className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-xl font-bold tabular-nums text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-xl font-extrabold tabular-nums text-[var(--md-on-surface)]">
                 {telemetry.flowM3h.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">m³/h</span>
+                <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">m³/h</span>
               </div>
-              <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 Cv = {telemetry.effectiveCv.toFixed(1)} • ΔP ={' '}
                 {telemetry.deltaPBar.toFixed(1)} bar
               </div>
             </div>
 
-            <div className="glass-panel rounded-2xl p-3.5 ">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                 <span>{pick('Stem Friction', 'Gesekan Batang', 'ステム摩擦力')}</span>
                 <Wrench
                   className={`h-3.5 w-3.5 ${
                     isBinding
-                      ? 'text-red-500'
-                      : 'text-slate-500 dark:text-slate-400'
+                      ? 'text-rose-500'
+                      : 'text-[var(--md-primary)]'
                   }`}
                 />
               </div>
               <div
-                className={`mt-1 text-xl font-bold tabular-nums ${
+                className={`mt-1 font-mono text-xl font-extrabold tabular-nums ${
                   isBinding
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'text-slate-900 dark:text-slate-100'
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {telemetry.stemFrictionN.toFixed(0)}{' '}
-                <span className="text-xs font-medium text-slate-500">N</span>
+                <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">N</span>
               </div>
-              <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Gland Force:', 'Gaya Gland:', '押付力:')}{' '}
                 {(telemetry.glandForceN / 1000).toFixed(1)} kN
               </div>
             </div>
 
-            <div className="glass-panel rounded-2xl p-3.5 ">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                 <span>{pick('Packing Leak', 'Kebocoran Packing', 'パッキン漏洩')}</span>
                 <Droplets
                   className={`h-3.5 w-3.5 ${
                     isLeaking
                       ? 'text-amber-500'
-                      : 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-[var(--md-primary)]'
                   }`}
                 />
               </div>
               <div
-                className={`mt-1 text-xl font-bold tabular-nums ${
+                className={`mt-1 font-mono text-xl font-extrabold tabular-nums ${
                   isLeaking
                     ? 'text-amber-600 dark:text-amber-400'
-                    : 'text-slate-900 dark:text-slate-100'
+                    : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {telemetry.packingLeakRateMlMin.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">
+                <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   mL/min
                 </span>
               </div>
-              <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 EPA M21: {telemetry.fugitivePpm} ppm
               </div>
             </div>
 
-            <div className="glass-panel rounded-2xl p-3.5 ">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                 <span>{pick('Seat Leakage', 'Kebocoran Dudukan', 'シート漏れ')}</span>
                 <AlertTriangle
                   className={`h-3.5 w-3.5 ${
                     isSeatIssue
-                      ? 'text-red-500'
-                      : 'text-slate-400 dark:text-slate-500'
+                      ? 'text-rose-500'
+                      : 'text-[var(--md-on-surface-variant)]'
                   }`}
                 />
               </div>
               <div
-                className={`mt-1 text-xl font-bold tabular-nums ${
+                className={`mt-1 font-mono text-xl font-extrabold tabular-nums ${
                   isSeatIssue
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'text-slate-900 dark:text-slate-100'
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {telemetry.seatLeakRateLh.toFixed(1)}{' '}
-                <span className="text-xs font-medium text-slate-500">L/h</span>
+                <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">L/h</span>
               </div>
-              <div className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="mt-0.5 text-[11px] text-[var(--md-on-surface-variant)]">
                 {telemetry.trapBlowing
                   ? pick('Steam Trap: Blowing!', 'Steam Trap: Meniup!', 'トラップ: 吹き抜け!')
                   : pick('Trap: Normal Cycle', 'Trap: Siklus Normal', 'トラップ: 正常作動')}
@@ -341,8 +341,8 @@ export function ValvePackingSimulator() {
         </div>
 
         {/* Right Column: Interactive Controls */}
-        <div className="space-y-4 glass-panel rounded-2xl p-4  lg:col-span-4">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
+          <h3 className="border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Valve & Packing Controls',
               'Kontrol Katup & Packing',
@@ -354,7 +354,7 @@ export function ValvePackingSimulator() {
           <div>
             <label
               htmlFor="valve-type-select"
-              className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300"
+              className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]"
             >
               {pick('Valve Type', 'Jenis Katup', 'バルブ形式')}
             </label>
@@ -364,7 +364,7 @@ export function ValvePackingSimulator() {
               onChange={(e) =>
                 updateParam('valveType', e.target.value as ValveType)
               }
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
             >
               {(Object.keys(VALVE_TYPE_INFO) as ValveType[]).map((vt) => (
                 <option key={vt} value={vt}>
@@ -376,7 +376,7 @@ export function ValvePackingSimulator() {
 
           {/* Fluid Service */}
           <div>
-            <label className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300">
+            <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Fluid Service', 'Layanan Fluida', '対象流体')}
             </label>
             <div className="grid grid-cols-3 gap-1.5">
@@ -387,10 +387,10 @@ export function ValvePackingSimulator() {
                     key={fs}
                     type="button"
                     onClick={() => updateParam('fluidService', fs)}
-                    className={`rounded-lg px-2 py-1.5 text-[11px] font-medium transition-colors ${
+                    className={`rounded-full px-2.5 py-1.5 text-[11px] transition ${
                       active
-                        ? 'bg-emerald-600 text-white dark:bg-emerald-500 dark:text-slate-950'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                        ? 'm3-btn-filled font-bold'
+                        : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
                     }`}
                   >
                     {fluidLabel(fs)}
@@ -402,15 +402,15 @@ export function ValvePackingSimulator() {
 
           {/* Valve Opening */}
           <div>
-            <div className="mb-1 flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
+            <div className="mb-1.5 flex items-center justify-between text-xs">
+              <span className="font-medium text-[var(--md-on-surface)]">
                 {pick(
                   'Valve Opening (Stem Travel)',
                   'Bukaan Katup (Gerak Batang)',
                   'バルブ開度 (ステムリフト)',
                 )}
               </span>
-              <span className="font-semibold tabular-nums text-emerald-600 dark:text-emerald-400">
+              <span className="font-mono font-bold tabular-nums text-[var(--md-primary)]">
                 {params.openingPct}%
               </span>
             </div>
@@ -423,17 +423,17 @@ export function ValvePackingSimulator() {
               onChange={(e) =>
                 updateParam('openingPct', Number(e.target.value))
               }
-              className="w-full accent-emerald-600"
+              className="w-full"
             />
           </div>
 
           {/* Line Pressure */}
           <div>
-            <div className="mb-1 flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
+            <div className="mb-1.5 flex items-center justify-between text-xs">
+              <span className="font-medium text-[var(--md-on-surface)]">
                 {pick('Line Pressure', 'Tekanan Jalur', 'ライン圧力')}
               </span>
-              <span className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-bold tabular-nums text-[var(--md-primary)]">
                 {params.linePressureBar} bar
               </span>
             </div>
@@ -446,21 +446,21 @@ export function ValvePackingSimulator() {
               onChange={(e) =>
                 updateParam('linePressureBar', Number(e.target.value))
               }
-              className="w-full accent-emerald-600"
+              className="w-full"
             />
           </div>
 
           {/* Gland Follower Nut Torque */}
           <div>
-            <div className="mb-1 flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
+            <div className="mb-1.5 flex items-center justify-between text-xs">
+              <span className="font-medium text-[var(--md-on-surface)]">
                 {pick(
                   'Gland Follower Nut Torque',
                   'Torsi Mur Gland Follower',
                   'グランドナット締付トルク',
                 )}
               </span>
-              <span className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-bold tabular-nums text-[var(--md-primary)]">
                 {params.glandTorqueNm} N·m
               </span>
             </div>
@@ -473,21 +473,21 @@ export function ValvePackingSimulator() {
               onChange={(e) =>
                 updateParam('glandTorqueNm', Number(e.target.value))
               }
-              className="w-full accent-emerald-600"
+              className="w-full"
             />
           </div>
 
           {/* Packing Ring Wear / Cycles */}
           <div>
-            <div className="mb-1 flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-700 dark:text-slate-300">
+            <div className="mb-1.5 flex items-center justify-between text-xs">
+              <span className="font-medium text-[var(--md-on-surface)]">
                 {pick(
                   'Packing Ring Wear / Cycles',
                   'Keausan / Siklus Cincin Packing',
                   'パッキン摩耗 / 作動回数',
                 )}
               </span>
-              <span className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">
+              <span className="font-mono font-bold tabular-nums text-[var(--md-primary)]">
                 {(params.packingWearCycles / 1000).toFixed(0)}k{' '}
                 {pick('cycles', 'siklus', '回')}
               </span>
@@ -501,7 +501,7 @@ export function ValvePackingSimulator() {
               onChange={(e) =>
                 updateParam('packingWearCycles', Number(e.target.value))
               }
-              className="w-full accent-emerald-600"
+              className="w-full"
             />
           </div>
 
@@ -509,7 +509,7 @@ export function ValvePackingSimulator() {
           <div>
             <label
               htmlFor="fault-injection-select"
-              className="mb-1.5 block text-xs font-medium text-slate-700 dark:text-slate-300"
+              className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]"
             >
               {pick(
                 'Steam Trap / Seat Fault Injection',
@@ -521,7 +521,7 @@ export function ValvePackingSimulator() {
               id="fault-injection-select"
               value={params.fault}
               onChange={(e) => updateParam('fault', e.target.value as FaultMode)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-900 focus:border-emerald-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
             >
               {(Object.keys(FAULT_MODE_INFO) as FaultMode[]).map((fm) => (
                 <option key={fm} value={fm}>

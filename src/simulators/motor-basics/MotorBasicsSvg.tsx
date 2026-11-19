@@ -47,13 +47,13 @@ export function MotorBasicsSvg({
 
   const c = useMemo(
     () => ({
-      canvasBg: isDark ? '#0f172a' : '#f8fafc',
-      cardBg: isDark ? '#1e293b' : '#ffffff',
-      cardSubBg: isDark ? '#0f172a' : '#f1f5f9',
-      cardBorder: isDark ? '#334155' : '#cbd5e1',
-      grid: isDark ? '#1e293b' : '#e2e8f0',
-      textMain: isDark ? '#f8fafc' : '#0f172a',
-      textMuted: isDark ? '#94a3b8' : '#64748b',
+      canvasBg: 'var(--md-surface-container-lowest)',
+      cardBg: 'var(--md-surface-container-low)',
+      cardSubBg: 'var(--md-surface-container)',
+      cardBorder: 'var(--md-outline-variant)',
+      grid: 'var(--md-outline-variant)',
+      textMain: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
       steelDark: isDark ? '#1e293b' : '#475569',
       steelEdge: isDark ? '#64748b' : '#475569',
       steelMid: isDark ? '#475569' : '#94a3b8',
@@ -61,11 +61,12 @@ export function MotorBasicsSvg({
       emerald: '#10b981',
       amber: '#f59e0b',
       amberBg: isDark ? 'rgba(245,158,11,0.16)' : 'rgba(245,158,11,0.12)',
-      cyan: '#06b6d4',
-      cyanBg: isDark ? 'rgba(6,182,212,0.16)' : 'rgba(6,182,212,0.10)',
+      cyan: 'var(--md-primary)',
+      cyanBg: 'var(--md-primary-container)',
+      onCyanBg: 'var(--md-on-primary-container)',
       blue: '#3b82f6',
       rose: '#ef4444',
-      dim: isDark ? '#38bdf8' : '#0284c7',
+      dim: 'var(--md-primary)',
       phenolic: isDark ? '#1c1917' : '#292524',
       phenolicRib: isDark ? '#44403c' : '#57534e',
     }),
@@ -260,10 +261,10 @@ export function MotorBasicsSvg({
   }, [isMotorSpinning, motorCalc.ratedRpm]);
 
   return (
-    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-2xl p-2 select-none shadow-sm">
+    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-3 select-none">
       <svg
         viewBox="0 0 920 500"
-        className="w-full max-h-[480px] h-auto drop-shadow-sm font-sans"
+        className="w-full max-h-[480px] h-auto drop-shadow-sm"
         role="img"
         aria-label="Electric Motor 2D CAD Cutaway, 6-Stud Star/Delta Terminal Block, and Metallic Nameplate"
       >
@@ -274,7 +275,7 @@ export function MotorBasicsSvg({
               fill="none"
               stroke={c.grid}
               strokeWidth="0.6"
-              strokeOpacity={isDark ? 0.35 : 0.65}
+              strokeOpacity={isDark ? 0.22 : 0.35}
             />
           </pattern>
           <pattern id="mbGridMajor" width="80" height="80" patternUnits="userSpaceOnUse">
@@ -284,7 +285,7 @@ export function MotorBasicsSvg({
               fill="none"
               stroke={c.grid}
               strokeWidth="1.1"
-              strokeOpacity={isDark ? 0.55 : 0.9}
+              strokeOpacity={isDark ? 0.35 : 0.55}
             />
           </pattern>
 
@@ -363,27 +364,27 @@ export function MotorBasicsSvg({
         </defs>
 
         {/* Sheet Background */}
-        <rect width="920" height="500" fill={c.canvasBg} rx="10" />
-        <rect width="920" height="500" fill="url(#mbGridMajor)" rx="10" />
+        <rect width="920" height="500" fill={c.canvasBg} rx="18" />
+        <rect width="920" height="500" fill="url(#mbGridMajor)" rx="18" />
 
         {/* TOP HEADER BAR (y: 12..42) */}
         <g transform="translate(16, 12)">
-          <rect x="0" y="0" width="320" height="30" rx="6" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
+          <rect x="0" y="0" width="320" height="30" rx="15" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
           <circle cx="16" cy="15" r="5" fill={c.cyan} />
-          <text x="30" y="19" fill={c.textMain} fontSize="11.5" fontWeight="800" letterSpacing="0.4">
+          <text x="30" y="19" fill={c.textMain} fontSize="11.5" fontWeight="800" letterSpacing="0.4" fontFamily="var(--font-sans)">
             {pick('CAD CUTAWAY: 3-PHASE TEFC MOTOR', 'POTONGAN CAD: MOTOR INDUKSI 3-FASA', 'CAD構造図：三相全閉外扇形電動機')}
           </text>
         </g>
 
         <g transform="translate(348, 12)">
-          <rect x="0" y="0" width="192" height="30" rx="6" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
-          <text x="96" y="19" fill={c.cyan} fontSize="11" fontWeight="700" textAnchor="middle">
+          <rect x="0" y="0" width="192" height="30" rx="15" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.2" />
+          <text x="96" y="19" fill={c.cyan} fontSize="11" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
             {poles}P • {frequency}Hz • {motorCalc.ratedRpm} RPM
           </text>
         </g>
 
         {/* LEFT CAD VIEWPORT FRAME */}
-        <rect x="16" y="50" width="524" height="438" rx="8" fill="none" stroke={c.cardBorder} strokeWidth="1.2" />
+        <rect x="16" y="50" width="524" height="438" rx="16" fill="none" stroke={c.cardBorder} strokeWidth="1.2" />
 
         {/* TOP HALF (y: 52..298): TEFC MOTOR HALF-CUTAWAY CAD */}
         <g id="motorCutaway">
@@ -515,7 +516,7 @@ export function MotorBasicsSvg({
                 opacity="0"
               />
             ))}
-            <text x="415" y="96" fill={c.cyan} fontSize="8.5" fontWeight="800" textAnchor="middle">
+            <text x="415" y="96" fill={c.cyan} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-sans)">
               TEFC AIRFLOW
             </text>
           </g>
@@ -602,8 +603,8 @@ export function MotorBasicsSvg({
             {/* Clean RPM Speed Badge (shown when running, no circular ring!) */}
             {isMotorSpinning && (
               <g>
-                <rect x="34" y="138" width="84" height="20" rx="4" fill={c.emerald} />
-                <text x="76" y="151.5" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle">
+                <rect x="34" y="138" width="84" height="20" rx="10" fill={c.emerald} />
+                <text x="76" y="151.5" fill="#ffffff" fontSize="10" fontWeight="900" textAnchor="middle" fontFamily="var(--font-mono)">
                   {motorCalc.ratedRpm} RPM
                 </text>
               </g>
@@ -618,8 +619,8 @@ export function MotorBasicsSvg({
               <rect x="163" y="280" width="10" height="12" fill="url(#mbBoltFinishGrad)" stroke={c.steelEdge} strokeWidth="1" />
               <rect x="337" y="280" width="10" height="12" fill="url(#mbBoltFinishGrad)" stroke={c.steelEdge} strokeWidth="1" />
               <rect x="115" y="292" width="285" height="8" rx="1.5" fill={c.steelMid} fillOpacity="0.45" stroke={c.steelEdge} strokeWidth="1.2" />
-              <rect x="218" y="276" width="76" height="16" rx="3" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="0.9" />
-              <text x="256" y="287" fill={c.cyan} fontSize="9" fontWeight="800" textAnchor="middle">
+              <rect x="218" y="276" width="76" height="16" rx="8" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="0.9" />
+              <text x="256" y="287" fill={c.cyan} fontSize="9" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 B3 FOOT
               </text>
             </g>
@@ -630,8 +631,8 @@ export function MotorBasicsSvg({
               <rect x="114" y="88" width="16" height="192" rx="2.5" fill="url(#mbCylSteelGrad)" stroke={c.steelEdge} strokeWidth="1.8" />
               <circle cx="122" cy="104" r="4.5" fill={c.canvasBg} stroke={c.steelEdge} strokeWidth="1.3" />
               <circle cx="122" cy="264" r="4.5" fill={c.canvasBg} stroke={c.steelEdge} strokeWidth="1.3" />
-              <rect x="34" y="88" width="74" height="20" rx="4" fill={c.cardBg} stroke={c.cyan} strokeWidth="1" />
-              <text x="71" y="101.5" fill={c.cyan} fontSize="9.5" fontWeight="800" textAnchor="middle">
+              <rect x="34" y="88" width="74" height="20" rx="10" fill={c.cardBg} stroke={c.cyan} strokeWidth="1" />
+              <text x="71" y="101.5" fill={c.cyan} fontSize="9.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 B5 FLANGE
               </text>
             </g>
@@ -642,8 +643,8 @@ export function MotorBasicsSvg({
               <rect x="122" y="114" width="10" height="140" rx="2" fill="url(#mbCylSteelGrad)" stroke={c.steelEdge} strokeWidth="1.6" />
               <rect x="122" y="126" width="7" height="6" fill={c.steelDark} stroke={c.amber} strokeWidth="1" />
               <rect x="122" y="236" width="7" height="6" fill={c.steelDark} stroke={c.amber} strokeWidth="1" />
-              <rect x="34" y="100" width="78" height="20" rx="4" fill={c.cardBg} stroke={c.amber} strokeWidth="1" />
-              <text x="73" y="113.5" fill={c.amber} fontSize="9.5" fontWeight="800" textAnchor="middle">
+              <rect x="34" y="100" width="78" height="20" rx="10" fill={c.cardBg} stroke={c.amber} strokeWidth="1" />
+              <text x="73" y="113.5" fill={c.amber} fontSize="9.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 B14 FACE
               </text>
             </g>
@@ -654,7 +655,7 @@ export function MotorBasicsSvg({
             <rect x="195" y="76" width="66" height="30" rx="3" fill="url(#mbMotorBodyGrad)" stroke={c.steelEdge} strokeWidth="1.6" />
             <rect x="192" y="72" width="72" height="6" rx="2" fill={c.steelLight} stroke={c.steelEdge} strokeWidth="1.2" />
             <rect x="261" y="85" width="13" height="13" rx="1.5" fill="url(#mbBusbarGrad)" stroke={c.steelDark} strokeWidth="1.1" />
-            <text x="228" y="95" fill="#ffffff" fontSize="8.5" fontWeight="800" textAnchor="middle">
+            <text x="228" y="95" fill="#ffffff" fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
               T-BOX
             </text>
             <path d="M 274 91 L 478 91 L 478 308 L 285 308" fill="none" stroke={c.dim} strokeWidth="1.2" strokeDasharray="4 3" markerEnd="url(#mbDimArrowEnd)" />
@@ -663,13 +664,13 @@ export function MotorBasicsSvg({
 
         {/* BOTTOM HALF: ENLARGED 6-STUD TERMINAL BLOCK & WIRING INSET */}
         <g id="enlargedTerminalBlock" transform="translate(26, 312)">
-          <rect x="0" y="0" width="504" height="168" rx="8" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.3" />
+          <rect x="0" y="0" width="504" height="168" rx="14" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.3" />
 
-          <text x="14" y="18" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5">
+          <text x="14" y="18" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5" fontFamily="var(--font-sans)">
             {pick('TERMINAL BLOCK DETAIL (6-STUD IEC)', 'DETAIL BLOK TERMINAL (6-BAUT IEC)', '端子台拡大図（6端子 IEC配列）')}
           </text>
-          <rect x="330" y="6" width="162" height="20" rx="4" fill={terminalConnection === 'star' ? c.cyanBg : c.amberBg} stroke={terminalConnection === 'star' ? c.cyan : c.amber} strokeWidth="1" />
-          <text x="411" y="19.5" fill={terminalConnection === 'star' ? c.cyan : c.amber} fontSize="9.5" fontWeight="900" textAnchor="middle">
+          <rect x="330" y="6" width="162" height="20" rx="10" fill={terminalConnection === 'star' ? c.cyanBg : c.amberBg} stroke={terminalConnection === 'star' ? c.cyan : c.amber} strokeWidth="1" />
+          <text x="411" y="19.5" fill={terminalConnection === 'star' ? c.onCyanBg : c.amber} fontSize="9.5" fontWeight="900" textAnchor="middle" fontFamily="var(--font-mono)">
             {terminalConnection === 'star' ? 'STAR (Y) — 400V' : 'DELTA (Δ) — 230V'}
           </text>
 
@@ -681,7 +682,7 @@ export function MotorBasicsSvg({
           {terminalConnection === 'star' && (
             <g id="starBusbar">
               <rect x="44" y="54" width="182" height="14" rx="4" fill="url(#mbBusbarGrad)" stroke="#92400e" strokeWidth="1.5" />
-              <text x="135" y="47" fill="#fde047" fontSize="8" fontWeight="800" textAnchor="middle">
+              <text x="135" y="47" fill="#fde047" fontSize="8" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 NEUTRAL STAR POINT (W2–U2–V2)
               </text>
             </g>
@@ -709,7 +710,7 @@ export function MotorBasicsSvg({
                 strokeWidth="1"
               />
               <circle cx={col.x} cy="61" r="2.5" fill="#92400e" />
-              <text x={col.x} y="48" fill="#e2e8f0" fontSize="9.5" fontWeight="800" textAnchor="middle">
+              <text x={col.x} y="48" fill="#e2e8f0" fontSize="9.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 {col.labelTop}
               </text>
 
@@ -721,13 +722,13 @@ export function MotorBasicsSvg({
                 strokeWidth="1"
               />
               <circle cx={col.x} cy="103" r="2.5" fill="#92400e" />
-              <text x={col.x} y="127" fill="#e2e8f0" fontSize="9.5" fontWeight="800" textAnchor="middle">
+              <text x={col.x} y="127" fill="#e2e8f0" fontSize="9.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">
                 {col.labelBot}
               </text>
 
               <line x1={col.x} y1="136" x2={col.x} y2="146" stroke={col.lineCol} strokeWidth="3.5" />
-              <rect x={col.x - 14} y="143" width="28" height="17" rx="3" fill={col.lineCol} />
-              <text x={col.x} y="155" fill="#ffffff" fontSize="9" fontWeight="900" textAnchor="middle">
+              <rect x={col.x - 14} y="143" width="28" height="17" rx="8.5" fill={col.lineCol} />
+              <text x={col.x} y="155" fill="#ffffff" fontSize="9" fontWeight="900" textAnchor="middle" fontFamily="var(--font-mono)">
                 {col.line}
               </text>
             </g>
@@ -735,7 +736,7 @@ export function MotorBasicsSvg({
 
           {/* Right Side Schematic + Physics Summary */}
           <g transform="translate(268, 34)">
-            <rect x="0" y="0" width="224" height="122" rx="6" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
+            <rect x="0" y="0" width="224" height="122" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
 
             {terminalConnection === 'star' ? (
               <g transform="translate(46, 52)">
@@ -743,9 +744,9 @@ export function MotorBasicsSvg({
                 <line x1="-30" y1="22" x2="0" y2="0" stroke={c.cyan} strokeWidth="2.5" />
                 <line x1="30" y1="22" x2="0" y2="0" stroke={c.cyan} strokeWidth="2.5" />
                 <circle cx="0" cy="0" r="4.5" fill={c.amber} />
-                <text x="0" y="-39" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L1 (U1)</text>
-                <text x="-30" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L2 (V1)</text>
-                <text x="30" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L3 (W1)</text>
+                <text x="0" y="-39" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L1 (U1)</text>
+                <text x="-30" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L2 (V1)</text>
+                <text x="30" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L3 (W1)</text>
               </g>
             ) : (
               <g transform="translate(46, 54)">
@@ -753,31 +754,31 @@ export function MotorBasicsSvg({
                 <circle cx="0" cy="-32" r="3.5" fill={c.rose} />
                 <circle cx="-30" cy="22" r="3.5" fill={c.amber} />
                 <circle cx="30" cy="22" r="3.5" fill={c.blue} />
-                <text x="0" y="-39" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L1</text>
-                <text x="-33" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L2</text>
-                <text x="33" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle">L3</text>
+                <text x="0" y="-39" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L1</text>
+                <text x="-33" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L2</text>
+                <text x="33" y="34" fill={c.textMain} fontSize="8.5" fontWeight="800" textAnchor="middle" fontFamily="var(--font-mono)">L3</text>
               </g>
             )}
 
             <g transform="translate(96, 18)">
-              <text x="0" y="0" fill={terminalConnection === 'star' ? c.cyan : c.amber} fontSize="10" fontWeight="800">
+              <text x="0" y="0" fill={terminalConnection === 'star' ? c.cyan : c.amber} fontSize="10" fontWeight="800" fontFamily="var(--font-mono)">
                 {terminalConnection === 'star' ? 'V_phase = V_line / √3' : 'V_phase = V_line'}
               </text>
-              <text x="0" y="18" fill={c.textMain} fontSize="10" fontWeight="700">
+              <text x="0" y="18" fill={c.textMain} fontSize="10" fontWeight="700" fontFamily="var(--font-mono)">
                 {terminalConnection === 'star' ? 'Coil: 230 V (on 400V)' : 'Coil: 400 V (Full Line)'}
               </text>
               <line x1="0" y1="28" x2="116" y2="28" stroke={c.cardBorder} strokeWidth="0.8" />
-              <text x="0" y="44" fill={c.textMuted} fontSize="9">
+              <text x="0" y="44" fill={c.textMuted} fontSize="9" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('Start current: Low (~1/3)', 'Arus start: Rendah (~1/3)', '始動電流：低（約1/3）')
                   : pick('Start current: Full (6–8×)', 'Arus start: Penuh (6–8×)', '始動電流：定格の6〜8倍')}
               </text>
-              <text x="0" y="60" fill={c.textMuted} fontSize="9">
+              <text x="0" y="60" fill={c.textMuted} fontSize="9" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('Torque: 1/3 of Delta', 'Torsi: 1/3 dari Delta', '始動トルク：デルタの1/3')
                   : pick('Torque: 100% Rated', 'Torsi: 100% Penuh', 'トルク：定格100%発揮')}
               </text>
-              <text x="0" y="80" fill={c.emerald} fontSize="8.5" fontWeight="700">
+              <text x="0" y="80" fill={c.emerald} fontSize="8.5" fontWeight="700" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('Link: W2–U2–V2 horiz.', 'Jumper: W2–U2–V2 horiz.', '短絡：上段水平バー')
                   : pick('Links: 3 vertical bars', 'Jumper: 3 plat vertikal', '短絡：3本垂直バー')}
@@ -788,8 +789,8 @@ export function MotorBasicsSvg({
 
         {/* RIGHT SIDE: INDUSTRIAL METALLIC MOTOR NAMEPLATE & CONTROLS */}
         <g id="motorNameplatePanel" transform="translate(556, 12)">
-          <rect x="0" y="0" width="348" height="422" rx="10" fill="url(#mbNameplateGrad)" stroke={c.steelEdge} strokeWidth="2" />
-          <rect x="10" y="10" width="328" height="402" rx="6" fill="none" stroke={c.cardBorder} strokeWidth="1" />
+          <rect x="0" y="0" width="348" height="422" rx="16" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1.6" />
+          <rect x="10" y="10" width="328" height="402" rx="10" fill="none" stroke={c.cardBorder} strokeWidth="1" />
 
           {[
             [16, 16],
@@ -804,93 +805,93 @@ export function MotorBasicsSvg({
           ))}
 
           <g transform="translate(24, 34)">
-            <text x="150" y="0" fill={c.textMain} fontSize="12.5" fontWeight="900" letterSpacing="0.8" textAnchor="middle">
+            <text x="150" y="0" fill={c.textMain} fontSize="12.5" fontWeight="900" letterSpacing="0.8" textAnchor="middle" fontFamily="var(--font-sans)">
               MECH-LAB INDUSTRIAL MOTORS
             </text>
-            <text x="150" y="14" fill={c.textMuted} fontSize="9" fontWeight="700" textAnchor="middle">
+            <text x="150" y="14" fill={c.textMuted} fontSize="9" fontWeight="700" textAnchor="middle" fontFamily="var(--font-mono)">
               IEC 60034-1 • CE • EFFICIENCY CLASS IE3
             </text>
             <line x1="0" y1="22" x2="300" y2="22" stroke={c.cardBorder} strokeWidth="1.4" />
           </g>
 
           <g transform="translate(24, 76)">
-            <text x="0" y="0" fill={c.textMuted} fontSize="9" fontWeight="800">TYPE:</text>
-            <text x="38" y="0" fill={c.textMain} fontSize="11" fontWeight="800">{motorShortName}</text>
-            <text x="208" y="0" fill={c.textMuted} fontSize="9" fontWeight="800">MOUNT:</text>
-            <text x="255" y="0" fill={c.cyan} fontSize="11.5" fontWeight="900">{mountSpec.code}</text>
+            <text x="0" y="0" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">TYPE:</text>
+            <text x="38" y="0" fill={c.textMain} fontSize="11" fontWeight="800" fontFamily="var(--font-sans)">{motorShortName}</text>
+            <text x="208" y="0" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">MOUNT:</text>
+            <text x="255" y="0" fill={c.cyan} fontSize="11.5" fontWeight="900" fontFamily="var(--font-mono)">{mountSpec.code}</text>
 
             <line x1="0" y1="10" x2="300" y2="10" stroke={c.cardBorder} strokeWidth="0.7" />
 
-            <text x="0" y="28" fill={c.textMuted} fontSize="9" fontWeight="800">POWER:</text>
-            <text x="48" y="28" fill={c.emerald} fontSize="12.5" fontWeight="900">
+            <text x="0" y="28" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">POWER:</text>
+            <text x="48" y="28" fill={c.emerald} fontSize="12.5" fontWeight="900" fontFamily="var(--font-mono)">
               4.0 kW <tspan fill={c.textMuted} fontSize="10" fontWeight="600">({motorCalc.ratedTorqueNm.toFixed(1)} N·m)</tspan>
             </text>
-            <text x="208" y="28" fill={c.textMuted} fontSize="9" fontWeight="800">EFF:</text>
-            <text x="236" y="28" fill={c.emerald} fontSize="10.5" fontWeight="800">89.2% (IE3)</text>
+            <text x="208" y="28" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">EFF:</text>
+            <text x="236" y="28" fill={c.emerald} fontSize="10.5" fontWeight="800" fontFamily="var(--font-mono)">89.2% (IE3)</text>
 
             <line x1="0" y1="38" x2="300" y2="38" stroke={c.cardBorder} strokeWidth="0.7" />
 
-            <text x="0" y="56" fill={c.textMuted} fontSize="9" fontWeight="800">POLES:</text>
-            <text x="42" y="56" fill={c.textMain} fontSize="11" fontWeight="800">{poles}P</text>
+            <text x="0" y="56" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">POLES:</text>
+            <text x="42" y="56" fill={c.textMain} fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">{poles}P</text>
 
-            <text x="92" y="56" fill={c.textMuted} fontSize="9" fontWeight="800">FREQ:</text>
-            <text x="128" y="56" fill={c.textMain} fontSize="11" fontWeight="800">{frequency} Hz</text>
+            <text x="92" y="56" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">FREQ:</text>
+            <text x="128" y="56" fill={c.textMain} fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">{frequency} Hz</text>
 
-            <text x="195" y="56" fill={c.textMuted} fontSize="9" fontWeight="800">RPM:</text>
-            <text x="228" y="56" fill={c.textMain} fontSize="12" fontWeight="900">{motorCalc.ratedRpm}</text>
+            <text x="195" y="56" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">RPM:</text>
+            <text x="228" y="56" fill={c.textMain} fontSize="12" fontWeight="900" fontFamily="var(--font-mono)">{motorCalc.ratedRpm}</text>
 
-            <text x="0" y="72" fill={c.textMuted} fontSize="9">
+            <text x="0" y="72" fill={c.textMuted} fontSize="9" fontFamily="var(--font-mono)">
               Sync Ns = {motorCalc.syncRpm} RPM • Slip = {motorCalc.slipPct.toFixed(1)}% • ω = {motorCalc.omegaRadS.toFixed(0)} rad/s
             </text>
 
             {/* Dual Voltage Box */}
             <g transform="translate(0, 86)">
-              <rect x="0" y="0" width="300" height="62" rx="6" fill={c.cardBg} stroke={c.cardBorder} strokeWidth="1" />
+              <rect x="0" y="0" width="300" height="62" rx="10" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />
               <rect
                 x="4"
                 y="4"
                 width="292"
                 height="25"
-                rx="4"
+                rx="7"
                 fill={terminalConnection === 'delta' ? c.amberBg : 'transparent'}
                 stroke={terminalConnection === 'delta' ? c.amber : 'transparent'}
                 strokeWidth="1"
               />
-              <text x="12" y="21" fill={terminalConnection === 'delta' ? c.amber : c.textMain} fontSize="11" fontWeight="800">
+              <text x="12" y="21" fill={terminalConnection === 'delta' ? c.amber : c.textMain} fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
                 Δ (Delta) 230 V
               </text>
-              <text x="135" y="21" fill={c.textMain} fontSize="10.5" fontWeight="700">14.5 A</text>
-              <text x="205" y="21" fill={c.textMuted} fontSize="9.5">cos φ 0.84</text>
+              <text x="135" y="21" fill={c.textMain} fontSize="10.5" fontWeight="700" fontFamily="var(--font-mono)">14.5 A</text>
+              <text x="205" y="21" fill={c.textMuted} fontSize="9.5" fontFamily="var(--font-mono)">cos φ 0.84</text>
 
               <rect
                 x="4"
                 y="33"
                 width="292"
                 height="25"
-                rx="4"
+                rx="7"
                 fill={terminalConnection === 'star' ? c.cyanBg : 'transparent'}
                 stroke={terminalConnection === 'star' ? c.cyan : 'transparent'}
                 strokeWidth="1"
               />
-              <text x="12" y="50" fill={terminalConnection === 'star' ? c.cyan : c.textMain} fontSize="11" fontWeight="800">
+              <text x="12" y="50" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMain} fontSize="11" fontWeight="800" fontFamily="var(--font-mono)">
                 Y (Star) 400 V
               </text>
-              <text x="135" y="50" fill={c.textMain} fontSize="10.5" fontWeight="700">8.4 A</text>
-              <text x="205" y="50" fill={c.textMuted} fontSize="9.5">cos φ 0.84</text>
+              <text x="135" y="50" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMain} fontSize="10.5" fontWeight="700" fontFamily="var(--font-mono)">8.4 A</text>
+              <text x="205" y="50" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMuted} fontSize="9.5" fontFamily="var(--font-mono)">cos φ 0.84</text>
             </g>
 
             {/* IP Rating */}
             <g transform="translate(0, 166)">
-              <text x="0" y="0" fill={c.textMuted} fontSize="9" fontWeight="800">IP CODE:</text>
-              <text x="50" y="0" fill={c.cyan} fontSize="12" fontWeight="900">{ipRating}</text>
+              <text x="0" y="0" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">IP CODE:</text>
+              <text x="50" y="0" fill={c.cyan} fontSize="12" fontWeight="900" fontFamily="var(--font-mono)">{ipRating}</text>
 
-              <text x="108" y="0" fill={c.textMuted} fontSize="9" fontWeight="800">INSUL:</text>
-              <text x="145" y="0" fill={c.textMain} fontSize="10.5" fontWeight="800">Class F</text>
+              <text x="108" y="0" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">INSUL:</text>
+              <text x="145" y="0" fill={c.textMain} fontSize="10.5" fontWeight="800" fontFamily="var(--font-sans)">Class F</text>
 
-              <text x="210" y="0" fill={c.textMuted} fontSize="9" fontWeight="800">DUTY:</text>
-              <text x="245" y="0" fill={c.textMain} fontSize="10.5" fontWeight="800">S1 Cont.</text>
+              <text x="210" y="0" fill={c.textMuted} fontSize="9" fontWeight="800" fontFamily="var(--font-mono)">DUTY:</text>
+              <text x="245" y="0" fill={c.textMain} fontSize="10.5" fontWeight="800" fontFamily="var(--font-sans)">S1 Cont.</text>
 
-              <text x="0" y="17" fill={c.textMuted} fontSize="9">
+              <text x="0" y="17" fill={c.textMuted} fontSize="9" fontFamily="var(--font-sans)">
                 {ipSpec.dustProtection.split(':')[0]} • {ipSpec.waterProtection.split(':')[0]}
               </text>
             </g>
@@ -902,33 +903,33 @@ export function MotorBasicsSvg({
                 y="0"
                 width="300"
                 height="112"
-                rx="6"
+                rx="12"
                 fill={terminalConnection === 'star' ? c.cyanBg : c.amberBg}
                 stroke={terminalConnection === 'star' ? c.cyan : c.amber}
                 strokeWidth="1.2"
               />
-              <text x="12" y="20" fill={terminalConnection === 'star' ? c.cyan : c.amber} fontSize="10.5" fontWeight="900">
+              <text x="12" y="20" fill={terminalConnection === 'star' ? c.onCyanBg : c.amber} fontSize="10.5" fontWeight="900" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('Y — STAR (WYE) CONNECTION', 'Y — SAMBUNGAN BINTANG (STAR)', 'Y — スター（Y）結線')
                   : pick('Δ — DELTA CONNECTION', 'Δ — SAMBUNGAN SEGITIGA (DELTA)', 'Δ — デルタ（Δ）結線')}
               </text>
-              <text x="12" y="40" fill={c.textMain} fontSize="9.5" fontWeight="700">
+              <text x="12" y="40" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMain} fontSize="9.5" fontWeight="700" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('• Jumper: Horizontal bar across W2–U2–V2', '• Jumper: Plat horizontal di W2–U2–V2', '• 短絡金具：W2–U2–V2 を水平に1枚接続')
                   : pick('• Jumpers: 3 vertical bars (U1–W2, V1–U2, W1–V2)', '• Jumper: 3 plat vertikal (U1–W2, V1–U2, W1–V2)', '• 短絡金具：U1–W2, V1–U2, W1–V2 を垂直3枚')}
               </text>
-              <text x="12" y="58" fill={c.textMain} fontSize="9.5">
+              <text x="12" y="58" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMain} fontSize="9.5" fontFamily="var(--font-sans)">
                 {terminalConnection === 'star'
                   ? pick('• Coil Voltage: V_line / √3 (230V on 400V grid)', '• Tegangan Kumparan: V_line / √3 (230V di 400V)', '• 巻線電圧：V_線間 / √3（400V電源で230V）')
                   : pick('• Coil Voltage: Full V_line across each phase', '• Tegangan Kumparan: V_line penuh di tiap fasa', '• 巻線電圧：各相巻線に線間電圧が直接印加')}
               </text>
               <line x1="12" y1="70" x2="288" y2="70" stroke={c.cardBorder} strokeWidth="0.8" />
-              <text x="12" y="88" fill={c.textMuted} fontSize="9">
+              <text x="12" y="88" fill={terminalConnection === 'star' ? c.onCyanBg : c.textMuted} fontSize="9" fontFamily="var(--font-sans)" opacity={terminalConnection === 'star' ? 0.85 : 1}>
                 {terminalConnection === 'star'
                   ? pick('Use on 400V supply for 230/400V rated motors', 'Wajib di jala 400V untuk motor rating 230/400V', '230/400V定格モーターを400V電源で運転時')
                   : pick('Use on 230V VFD or 400V for 400/690V motors', 'Untuk inverter 230V atau motor 400/690V di 400V', '230Vインバータ、または400/690V機の400V運転')}
               </text>
-              <text x="12" y="102" fill={c.emerald} fontSize="8.8" fontWeight="700">
+              <text x="12" y="102" fill={terminalConnection === 'star' ? c.onCyanBg : c.emerald} fontSize="8.8" fontWeight="700" fontFamily="var(--font-sans)">
                 {mountSpec.code}: {mountSpec.bestFit.slice(0, 44)}
               </text>
             </g>
@@ -937,8 +938,8 @@ export function MotorBasicsSvg({
           {/* Interactive SVG Buttons below Nameplate */}
           <g transform="translate(0, 434)">
             <g className="cursor-pointer" onClick={onToggleSpin} role="button" tabIndex={0}>
-              <rect x="0" y="0" width="166" height="36" rx="7" fill={isMotorSpinning ? c.rose : c.emerald} />
-              <text x="83" y="22" fill="#ffffff" fontSize="11" fontWeight="800" textAnchor="middle">
+              <rect x="0" y="0" width="166" height="36" rx="18" fill={isMotorSpinning ? c.rose : c.emerald} />
+              <text x="83" y="22" fill="#ffffff" fontSize="11" fontWeight="800" textAnchor="middle" fontFamily="var(--font-sans)">
                 {isMotorSpinning
                   ? pick('■ STOP MOTOR', '■ STOP MOTOR', '■ 停止する')
                   : pick('▶ RUN MOTOR', '▶ PUTAR MOTOR', '▶ 運転開始')}
@@ -951,8 +952,8 @@ export function MotorBasicsSvg({
                 y="0"
                 width="172"
                 height="36"
-                rx="7"
-                fill={c.cardBg}
+                rx="18"
+                fill={c.cardSubBg}
                 stroke={terminalConnection === 'star' ? c.amber : c.cyan}
                 strokeWidth="1.8"
               />
@@ -963,6 +964,7 @@ export function MotorBasicsSvg({
                 fontSize="10.5"
                 fontWeight="800"
                 textAnchor="middle"
+                fontFamily="var(--font-sans)"
               >
                 {terminalConnection === 'star'
                   ? pick('SWITCH TO DELTA (Δ)', 'GANTI KE DELTA (Δ)', 'デルタ（Δ）へ切替')

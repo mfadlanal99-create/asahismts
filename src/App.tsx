@@ -111,9 +111,9 @@ function AppContent() {
         >
           <Suspense
             fallback={
-              <div className="flex min-h-[380px] flex-col items-center justify-center gap-3 rounded-2xl border border-[#001F6B]/15 bg-white p-8 dark:border-[#3B82F6]/20 dark:bg-[#0C1829]/80">
-                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#001F6B] border-t-transparent dark:border-[#60A5FA]" />
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <div className="glass-panel flex min-h-[380px] flex-col items-center justify-center gap-3 rounded-[28px] p-8">
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--md-primary)] border-t-transparent" />
+                <span className="text-xs font-medium text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Loading simulator workspace...',
                     'Memuat ruang kerja simulator...',

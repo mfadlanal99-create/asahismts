@@ -121,18 +121,18 @@ export function OilGreaseBasicsSimulator() {
   return (
     <div className="w-full space-y-5">
       {/* Top Mode Selector Tabs */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5 shadow-xs">
-        <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 shadow-xs">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
+        <div className="flex flex-wrap items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setMode('oil')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all duration-200 ${
               mode === 'oil'
-                ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200/80 dark:border-slate-700'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
-            <Droplet className="h-4 w-4 text-amber-500" />
+            <Droplet className="h-4 w-4 text-[var(--md-primary)]" />
             {pick(
               'Mode 1: Industrial Oil & Viscosity',
               'Mode 1: Jenis Oli & Viskositas',
@@ -142,13 +142,13 @@ export function OilGreaseBasicsSimulator() {
           <button
             type="button"
             onClick={() => setMode('grease')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+            className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-all duration-200 ${
               mode === 'grease'
-                ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200/80 dark:border-slate-700'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
             }`}
           >
-            <Layers className="h-4 w-4 text-amber-500" />
+            <Layers className="h-4 w-4 text-[var(--md-primary)]" />
             {pick(
               'Mode 2: Grease NLGI & Compatibility',
               'Mode 2: Gemuk NLGI & Kompatibilitas',
@@ -161,7 +161,7 @@ export function OilGreaseBasicsSimulator() {
         <button
           type="button"
           onClick={handleReset}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors"
+          className="glass-pill flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           {pick('Reset Lab', 'Reset Lab', 'ラボを初期化')}
@@ -169,19 +169,19 @@ export function OilGreaseBasicsSimulator() {
       </div>
 
       {/* Main 12-Column Responsive Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sim-equal-grid">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* ========================================================= */}
         {/* LEFT COLUMN: CONTROLS & SELECTION (lg:col-span-5)         */}
         {/* ========================================================= */}
-        <div className="lg:col-span-5 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:col-span-5">
           {mode === 'oil' ? (
             <>
               {/* "Which Oil for This Machine?" Beginner Selector */}
-              <div className="glass-panel rounded-2xl border-amber-500/25 bg-amber-500/5 dark:bg-amber-950/20 p-4 space-y-3 shadow-xs">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-amber-500" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                    <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-primary)]">
                       {pick(
                         'Beginner Helper: Which Oil for This Machine?',
                         'Panduan Pemula: Oli Mana untuk Mesin Ini?',
@@ -191,7 +191,7 @@ export function OilGreaseBasicsSimulator() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-1.5">
+                <div className="grid grid-cols-1 gap-2">
                   {MACHINE_PRESETS.map((preset) => {
                     const isSelected = selectedMachinePresetId === preset.id;
                     return (
@@ -199,20 +199,26 @@ export function OilGreaseBasicsSimulator() {
                         key={preset.id}
                         type="button"
                         onClick={() => applyMachinePreset(preset.id)}
-                        className={`text-left p-2.5 rounded-lg border transition-all text-xs flex items-center justify-between ${
+                        className={`flex items-center justify-between rounded-[20px] border p-2.5 text-left text-xs transition-all ${
                           isSelected
-                            ? 'bg-amber-500/15 border-amber-500 text-amber-950 dark:text-amber-200 font-semibold shadow-xs'
-                            : 'bg-white/60 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-amber-400/50 text-slate-700 dark:text-slate-300'
+                            ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-semibold text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30 shadow-2xs'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         <div className="flex flex-col gap-0.5">
                           <span>{preset.name[pick('en', 'id', 'ja')]}</span>
-                          <span className="text-[10px] text-muted-foreground font-mono">
+                          <span
+                            className={`font-mono text-[10px] ${
+                              isSelected
+                                ? 'text-[var(--md-on-primary-container)]/80'
+                                : 'text-[var(--md-on-surface-variant)]'
+                            }`}
+                          >
                             {preset.recommendedFamilyId.toUpperCase()} • ISO VG{' '}
                             {preset.recommendedVg} @ {preset.recommendedTempC}°C
                           </span>
                         </div>
-                        <ChevronRight className="h-3.5 w-3.5 opacity-50 shrink-0" />
+                        <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-60" />
                       </button>
                     );
                   })}
@@ -220,8 +226,8 @@ export function OilGreaseBasicsSimulator() {
 
                 {/* Machine Recommendation Rationale Callout */}
                 {selectedMachinePresetId && (
-                  <div className="text-[11px] leading-relaxed text-amber-900 dark:text-amber-200/90 bg-white/70 dark:bg-slate-900/70 p-2.5 rounded-lg border border-amber-500/20">
-                    <span className="font-bold mr-1">
+                  <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-3 text-[11px] leading-relaxed text-[var(--md-on-surface-variant)]">
+                    <span className="mr-1 font-bold text-[var(--md-primary)]">
                       {pick('Why this choice?', 'Mengapa pilihan ini?', '選定根拠:')}
                     </span>
                     {
@@ -234,18 +240,16 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* Oil Family Selection Card */}
-              <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-xs">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Industrial Oil Family',
                       'Keluarga Oli Industri',
                       '産業用潤滑油ファミリー'
                     )}
                   </label>
-                  <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${activeFamily.badgeBg}`}
-                  >
+                  <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--md-on-secondary-container)]">
                     {activeFamily.shortCode}
                   </span>
                 </div>
@@ -261,20 +265,26 @@ export function OilGreaseBasicsSimulator() {
                           setSelectedFamilyId(family.id);
                           setSelectedMachinePresetId(null);
                         }}
-                        className={`text-left p-2.5 rounded-lg border transition-all text-xs flex flex-col gap-1 ${
+                        className={`flex flex-col gap-1 rounded-[20px] border p-2.5 text-left text-xs transition-all ${
                           isSelected
-                            ? 'border-amber-500 bg-amber-500/10 text-amber-900 dark:text-amber-200 font-bold shadow-xs'
-                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:border-slate-300 text-slate-700 dark:text-slate-300'
+                            ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30 shadow-2xs'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         <div className="flex items-center gap-1.5">
                           <span
-                            className="h-2.5 w-2.5 rounded-full shrink-0"
+                            className="h-2.5 w-2.5 shrink-0 rounded-full"
                             style={{ backgroundColor: family.colorHex }}
                           />
                           <span className="truncate">{family.name}</span>
                         </div>
-                        <span className="text-[10px] font-normal text-muted-foreground line-clamp-1">
+                        <span
+                          className={`line-clamp-1 text-[10px] font-normal ${
+                            isSelected
+                              ? 'text-[var(--md-on-primary-container)]/80'
+                              : 'text-[var(--md-on-surface-variant)]'
+                          }`}
+                        >
                           {family.shortCode}
                         </span>
                       </button>
@@ -283,12 +293,12 @@ export function OilGreaseBasicsSimulator() {
                 </div>
 
                 {/* Family Description Info */}
-                <div className="rounded-lg bg-slate-50 dark:bg-slate-800/40 p-2.5 text-xs text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-800">
+                <div className="rounded-[20px] border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] p-3 text-xs text-[var(--md-on-surface-variant)]">
                   <p className="leading-relaxed">
                     {activeFamily.description[pick('en', 'id', 'ja')]}
                   </p>
-                  <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 text-[11px] text-slate-500">
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <div className="mt-2 border-t border-[var(--md-outline-variant)]/50 pt-2 text-[11px] text-[var(--md-on-surface-variant)]">
+                    <span className="font-semibold text-[var(--md-on-surface)]">
                       {pick('Additives: ', 'Aditif Utama: ', '主要添加剤: ')}
                     </span>
                     {activeFamily.primaryAdditives}
@@ -297,16 +307,16 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* ISO VG Viscosity Grade Buttons */}
-              <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-xs">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+                <div className="flex items-center justify-between gap-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     {pick(
                       'ISO VG Viscosity Grade (ISO 3448)',
                       'Tingkat Viskositas ISO VG (ISO 3448)',
                       'ISO VG 粘度グレード（ISO 3448規格）'
                     )}
                   </label>
-                  <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400">
+                  <span className="font-mono text-xs font-bold text-[var(--md-primary)]">
                     VG {selectedIsoVg} ({activeIsoGrade.min40}–
                     {activeIsoGrade.max40} cSt @ 40°C)
                   </span>
@@ -323,10 +333,10 @@ export function OilGreaseBasicsSimulator() {
                           setSelectedIsoVg(grade.vg);
                           setSelectedMachinePresetId(null);
                         }}
-                        className={`py-2 px-1 text-center rounded-lg border text-xs font-mono transition-all ${
+                        className={`rounded-full border px-2 py-2 text-center font-mono text-xs transition-all ${
                           isSelected
-                            ? 'border-amber-500 bg-amber-500 text-slate-900 font-extrabold shadow-sm'
-                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:border-slate-300 text-slate-700 dark:text-slate-300'
+                            ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-extrabold text-[var(--md-on-primary)] shadow-xs'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         VG {grade.vg}
@@ -335,8 +345,8 @@ export function OilGreaseBasicsSimulator() {
                   })}
                 </div>
 
-                <div className="text-[11px] text-muted-foreground leading-snug">
-                  <span className="font-semibold">
+                <div className="text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick('Typical Applications: ', 'Aplikasi Tipikal: ', '代表的用途: ')}
                   </span>
                   {activeIsoGrade.commonUses}
@@ -344,11 +354,11 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* Operating Temperature Slider */}
-              <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-xs">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <Thermometer className="h-4 w-4 text-red-500" />
-                    <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    <Thermometer className="h-4 w-4 text-[var(--md-primary)]" />
+                    <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                       {pick(
                         'Operating Temperature',
                         'Suhu Operasi Fluida',
@@ -357,11 +367,11 @@ export function OilGreaseBasicsSimulator() {
                     </label>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-mono font-bold text-red-500">
+                    <span className="font-mono text-sm font-bold text-[var(--md-primary)]">
                       {tempC} °C
                     </span>
                     {tempC === 40 && (
-                      <span className="text-[10px] bg-amber-500/20 text-amber-700 dark:text-amber-300 px-1.5 py-0.5 rounded-sm font-semibold">
+                      <span className="rounded-full bg-[var(--md-secondary-container)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--md-on-secondary-container)]">
                         ISO 40°C REF
                       </span>
                     )}
@@ -378,10 +388,10 @@ export function OilGreaseBasicsSimulator() {
                     setTempC(Number(e.target.value));
                     setSelectedMachinePresetId(null);
                   }}
-                  className="w-full accent-amber-500 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg"
+                  className="w-full"
                 />
 
-                <div className="flex justify-between text-[10px] text-muted-foreground font-mono">
+                <div className="flex justify-between font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                   <span>10 °C ({pick('Cold Start', 'Start Dingin', '低温始動')})</span>
                   <span>40 °C (ISO Ref)</span>
                   <span>90 °C ({pick('Hot Sump', 'Sump Panas', '高温稼働')})</span>
@@ -392,16 +402,16 @@ export function OilGreaseBasicsSimulator() {
             <>
               {/* MODE 2: GREASE NLGI GRADES & COMPATIBILITY CHECKER */}
               {/* NLGI Consistency Grade Selector */}
-              <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-xs">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     {pick(
                       'NLGI Consistency Grade (ASTM D217)',
                       'Kelas Konsistensi NLGI (ASTM D217)',
                       'NLGI ちょう度グレード（ASTM D217）'
                     )}
                   </label>
-                  <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400">
+                  <span className="font-mono text-xs font-bold text-[var(--md-primary)]">
                     NLGI {activeNlgi.grade} (
                     {activeNlgi.workedPenetrationRange[0]}–
                     {activeNlgi.workedPenetrationRange[1]} mm/10)
@@ -416,10 +426,10 @@ export function OilGreaseBasicsSimulator() {
                         key={grade.grade}
                         type="button"
                         onClick={() => setSelectedNlgi(grade.grade)}
-                        className={`py-2 px-1 text-center rounded-lg border text-xs font-mono transition-all ${
+                        className={`rounded-full border px-1.5 py-2 text-center font-mono text-xs transition-all ${
                           isSelected
-                            ? 'border-amber-500 bg-amber-500 text-slate-900 font-extrabold shadow-sm'
-                            : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:border-slate-300 text-slate-700 dark:text-slate-300'
+                            ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-extrabold text-[var(--md-on-primary)] shadow-xs'
+                            : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                         }`}
                       >
                         NLGI {grade.grade}
@@ -428,8 +438,8 @@ export function OilGreaseBasicsSimulator() {
                   })}
                 </div>
 
-                <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-2.5 text-xs text-amber-950 dark:text-amber-200">
-                  <div className="font-bold flex items-center gap-1">
+                <div className="rounded-[20px] border border-[var(--md-primary)]/25 bg-[var(--md-primary-container)]/75 p-3 text-xs text-[var(--md-on-primary-container)]">
+                  <div className="flex items-center gap-1 font-bold">
                     <span>{activeNlgi.textureDescription}</span>
                     <span className="font-normal opacity-80">
                       • {pick('Analogy: ', 'Analogi: ', '例え: ')}{activeNlgi.foodAnalogy}
@@ -442,9 +452,9 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* 2-Grease Thickener Cross-Check Selectors */}
-              <div className="glass-panel rounded-2xl p-4 space-y-4 shadow-xs">
+              <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Interactive 2-Grease Compatibility',
                       'Uji Kompatibilitas 2-Gemuk Interaktif',
@@ -452,7 +462,7 @@ export function OilGreaseBasicsSimulator() {
                     )}
                   </label>
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${compatResult.badgeBg}`}
+                    className={`rounded-full border px-2.5 py-0.5 text-[10px] font-bold ${compatResult.badgeBg}`}
                   >
                     {compatResult.status}
                   </span>
@@ -460,7 +470,7 @@ export function OilGreaseBasicsSimulator() {
 
                 {/* Grease 1 Thickener */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                  <label className="flex items-center justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'Existing Grease in Bearing (Grease 1):',
@@ -468,7 +478,7 @@ export function OilGreaseBasicsSimulator() {
                         '軸受内既存グリース（グリース1）:'
                       )}
                     </span>
-                    <span className="text-[11px] font-mono text-muted-foreground">
+                    <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                       Drop: {activeThickener1.droppingPointC === 'Non-Melting' ? 'Non-Melting' : `${activeThickener1.droppingPointC}°C`}
                     </span>
                   </label>
@@ -477,7 +487,7 @@ export function OilGreaseBasicsSimulator() {
                     onChange={(e) =>
                       setThickener1Id(e.target.value as ThickenerId)
                     }
-                    className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-medium"
+                    className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                   >
                     {THICKENERS.map((t) => (
                       <option key={t.id} value={t.id}>
@@ -489,7 +499,7 @@ export function OilGreaseBasicsSimulator() {
 
                 {/* Grease 2 Thickener */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                  <label className="flex items-center justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                     <span>
                       {pick(
                         'New Grease to Add (Grease 2):',
@@ -497,7 +507,7 @@ export function OilGreaseBasicsSimulator() {
                         '追加補給グリース（グリース2）:'
                       )}
                     </span>
-                    <span className="text-[11px] font-mono text-muted-foreground">
+                    <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                       Drop: {activeThickener2.droppingPointC === 'Non-Melting' ? 'Non-Melting' : `${activeThickener2.droppingPointC}°C`}
                     </span>
                   </label>
@@ -506,7 +516,7 @@ export function OilGreaseBasicsSimulator() {
                     onChange={(e) =>
                       setThickener2Id(e.target.value as ThickenerId)
                     }
-                    className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 font-medium"
+                    className="w-full rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2.5 text-xs font-medium text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                   >
                     {THICKENERS.map((t) => (
                       <option key={t.id} value={t.id}>
@@ -518,12 +528,12 @@ export function OilGreaseBasicsSimulator() {
 
                 {/* Compatibility Outcome Alert Box */}
                 <div
-                  className={`p-3 rounded-lg border text-xs space-y-1.5 ${
+                  className={`space-y-1.5 rounded-[20px] border p-3.5 text-xs ${
                     compatResult.status === 'Compatible'
-                      ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-950 dark:text-emerald-200'
+                      ? 'border-emerald-500/25 bg-emerald-500/10 text-emerald-950 dark:text-emerald-200'
                       : compatResult.status === 'Caution'
-                      ? 'bg-amber-500/10 border-amber-500/20 text-amber-950 dark:text-amber-200'
-                      : 'bg-rose-500/10 border-rose-500/20 text-rose-950 dark:text-rose-200'
+                      ? 'border-amber-500/25 bg-amber-500/10 text-amber-950 dark:text-amber-200'
+                      : 'border-rose-500/25 bg-rose-500/10 text-rose-950 dark:text-rose-200'
                   }`}
                 >
                   <div className="flex items-center gap-1.5 font-bold">
@@ -539,7 +549,7 @@ export function OilGreaseBasicsSimulator() {
                   <p className="text-[11px] leading-relaxed">
                     {compatResult.consequence[pick('en', 'id', 'ja')]}
                   </p>
-                  <p className="text-[11px] font-semibold pt-1 border-t border-current/15">
+                  <p className="border-t border-current/15 pt-1 text-[11px] font-semibold">
                     {compatResult.recommendation[pick('en', 'id', 'ja')]}
                   </p>
                 </div>
@@ -548,10 +558,10 @@ export function OilGreaseBasicsSimulator() {
           )}
 
           {/* Quick Technical Tip Card */}
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-3.5 flex items-start gap-2.5 text-xs text-slate-600 dark:text-slate-400">
-            <HelpCircle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs text-[var(--md-on-surface-variant)]">
+            <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
             <div className="space-y-1">
-              <span className="font-bold text-slate-800 dark:text-slate-200">
+              <span className="font-bold text-[var(--md-on-surface)]">
                 {mode === 'oil'
                   ? pick(
                       'Why 40 °C is the Global Standard:',
@@ -584,9 +594,9 @@ export function OilGreaseBasicsSimulator() {
         {/* ========================================================= */}
         {/* RIGHT COLUMN: CAD SVG VISUALIZER & LIVE METRICS (lg:col-span-7) */}
         {/* ========================================================= */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
+        <div className="flex flex-col gap-4 lg:col-span-7">
           {/* Pure-2D CAD SVG Visualizer */}
-          <div className="glass-panel flex items-center justify-center rounded-2xl overflow-hidden shadow-xs p-2">
+          <div className="glass-panel flex items-center justify-center overflow-hidden rounded-[28px] p-2.5">
             <OilGreaseBasicsSvg
               mode={mode}
               oilFamilyId={selectedFamilyId}
@@ -601,57 +611,57 @@ export function OilGreaseBasicsSimulator() {
 
           {/* Live Engineering Metrics Dashboard */}
           {mode === 'oil' ? (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {/* Metric 1: Operating Viscosity */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Operating Viscosity', 'Viskositas Operasi', '運転時動粘度')}
                 </span>
-                <div className="text-xl font-mono font-black text-amber-500">
+                <div className="font-mono text-xl font-black text-[var(--md-primary)]">
                   {currentViscosityCst.toFixed(1)}{' '}
                   <span className="text-xs font-normal">cSt</span>
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   @ {tempC} °C ({activeFamily.baseType})
                 </div>
               </div>
 
               {/* Metric 2: Nominal ISO VG */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('ISO VG Benchmark', 'Benchmark ISO VG', '公称 ISO VG')}
                 </span>
-                <div className="text-xl font-mono font-black text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-xl font-black text-[var(--md-on-surface)]">
                   {selectedIsoVg}{' '}
                   <span className="text-xs font-normal">cSt</span>
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   @ 40 °C (±10% band)
                 </div>
               </div>
 
               {/* Metric 3: Tolerance Band */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('ISO 3448 Tolerance', 'Toleransi ISO 3448', 'ISO 3448 許容公差')}
                 </span>
-                <div className="text-sm font-mono font-bold text-slate-700 dark:text-slate-300">
+                <div className="font-mono text-sm font-bold text-[var(--md-on-surface)]">
                   {activeIsoGrade.min40} – {activeIsoGrade.max40}
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   cSt (at 40 °C)
                 </div>
               </div>
 
               {/* Metric 4: Viscosity Index */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Viscosity Index (VI)', 'Indeks Viskositas', '粘度指数（VI）')}
                 </span>
-                <div className="text-xl font-mono font-black text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-xl font-black text-[var(--md-on-surface)]">
                   {activeFamily.baseType === 'synthetic' ? '145' : '98'}
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {activeFamily.baseType === 'synthetic'
                     ? pick('High VI (Flat curve)', 'VI Tinggi (Stabil)', '高VI（温度依存性小）')
                     : pick('Standard Mineral', 'Mineral Standar', '標準鉱油')}
@@ -659,61 +669,61 @@ export function OilGreaseBasicsSimulator() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {/* Metric 1: NLGI Grade */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('NLGI Grade', 'Kelas NLGI', 'NLGIちょう度')}
                 </span>
-                <div className="text-xl font-mono font-black text-amber-500">
+                <div className="font-mono text-xl font-black text-[var(--md-primary)]">
                   Grade {activeNlgi.grade}
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   {activeNlgi.textureDescription}
                 </div>
               </div>
 
               {/* Metric 2: Worked Penetration */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Worked Penetration', 'Penetrasi Tertempa', '混和針入度')}
                 </span>
-                <div className="text-lg font-mono font-black text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-lg font-black text-[var(--md-on-surface)]">
                   {activeNlgi.workedPenetrationMid}{' '}
                   <span className="text-xs font-normal">mm/10</span>
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   ASTM D217 (25 °C, 60 strokes)
                 </div>
               </div>
 
               {/* Metric 3: Dropping Point */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Dropping Point (T1)', 'Titik Tetes (T1)', '滴点（グリース1）')}
                 </span>
-                <div className="text-lg font-mono font-bold text-slate-700 dark:text-slate-300">
+                <div className="font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {activeThickener1.droppingPointC === 'Non-Melting'
                     ? 'Non-Melting'
                     : `${activeThickener1.droppingPointC} °C`}
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   Max: {activeThickener1.maxContinuousTempC} °C
                 </div>
               </div>
 
               {/* Metric 4: Compatibility Status */}
-              <div className="glass-panel rounded-xl p-3 space-y-1 shadow-xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="glass-card space-y-1 rounded-[24px] p-3.5">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Mix Compatibility', 'Kompatibilitas Campuran', '混和適合性')}
                 </span>
                 <div
-                  className="text-sm font-bold truncate"
+                  className="truncate text-sm font-bold"
                   style={{ color: compatResult.colorHex }}
                 >
                   {compatResult.status}
                 </div>
-                <div className="text-[10px] text-muted-foreground">
+                <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                   ASTM D6185 Standard
                 </div>
               </div>
@@ -721,10 +731,10 @@ export function OilGreaseBasicsSimulator() {
           )}
 
           {/* Educational Comparison / Reference Strip */}
-          <div className="glass-panel rounded-2xl p-4 space-y-3 shadow-xs">
+          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center gap-2">
-              <Gauge className="h-4 w-4 text-amber-500" />
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {mode === 'oil'
                   ? pick(
                       'Viscosity Reference Table across Temperatures',
@@ -741,42 +751,48 @@ export function OilGreaseBasicsSimulator() {
 
             {mode === 'oil' ? (
               <div className="overflow-x-auto">
-                <table className="w-full text-xs text-left">
+                <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-500">
+                    <tr className="border-b border-[var(--md-outline-variant)]/50 text-[11px] text-[var(--md-on-surface-variant)]">
                       <th className="py-2 pr-3 font-semibold">Grade</th>
-                      <th className="py-2 px-3 font-semibold">@ 20 °C</th>
-                      <th className="py-2 px-3 font-semibold text-amber-600 dark:text-amber-400">
+                      <th className="px-3 py-2 font-semibold">@ 20 °C</th>
+                      <th className="px-3 py-2 font-semibold text-[var(--md-primary)]">
                         @ 40 °C (Ref)
                       </th>
-                      <th className="py-2 px-3 font-semibold">@ 60 °C</th>
-                      <th className="py-2 px-3 font-semibold">@ 80 °C</th>
+                      <th className="px-3 py-2 font-semibold">@ 60 °C</th>
+                      <th className="px-3 py-2 font-semibold">@ 80 °C</th>
                       <th className="py-2 pl-3 font-semibold">@ 100 °C</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 font-mono">
+                  <tbody className="divide-y divide-[var(--md-outline-variant)]/35 font-mono">
                     {[32, 46, 68, 100, 150, 220, 320, 460].map((vg) => {
                       const isCurrent = vg === selectedIsoVg;
                       return (
                         <tr
                           key={vg}
-                          className={`${
+                          className={
                             isCurrent
-                              ? 'bg-amber-500/10 font-bold text-amber-900 dark:text-amber-200'
-                              : 'text-slate-600 dark:text-slate-400'
-                          }`}
+                              ? 'bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                              : 'text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-surface-container-high)]'
+                          }
                         >
                           <td className="py-1.5 pr-3">ISO VG {vg}</td>
-                          <td className="py-1.5 px-3">
+                          <td className="px-3 py-1.5">
                             {calculateViscosityAtTemp(vg, 20).toFixed(0)}
                           </td>
-                          <td className="py-1.5 px-3 text-amber-600 dark:text-amber-400">
+                          <td
+                            className={`px-3 py-1.5 font-bold ${
+                              isCurrent
+                                ? 'text-[var(--md-on-primary-container)]'
+                                : 'text-[var(--md-primary)]'
+                            }`}
+                          >
                             {vg}
                           </td>
-                          <td className="py-1.5 px-3">
+                          <td className="px-3 py-1.5">
                             {calculateViscosityAtTemp(vg, 60).toFixed(1)}
                           </td>
-                          <td className="py-1.5 px-3">
+                          <td className="px-3 py-1.5">
                             {calculateViscosityAtTemp(vg, 80).toFixed(1)}
                           </td>
                           <td className="py-1.5 pl-3">
@@ -795,19 +811,31 @@ export function OilGreaseBasicsSimulator() {
                   return (
                     <div
                       key={g.grade}
-                      className={`p-2.5 rounded-lg border text-center transition-all ${
+                      className={`rounded-[20px] border p-2.5 text-center transition-all ${
                         isCurrent
-                          ? 'border-amber-500 bg-amber-500/15 shadow-xs'
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30 shadow-2xs'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)]'
                       }`}
                     >
-                      <div className="text-xs font-mono font-black text-slate-800 dark:text-slate-100">
+                      <div className="font-mono text-xs font-black">
                         NLGI {g.grade}
                       </div>
-                      <div className="text-[10px] font-semibold text-amber-600 dark:text-amber-400 truncate">
+                      <div
+                        className={`truncate text-[10px] font-semibold ${
+                          isCurrent
+                            ? 'text-[var(--md-on-primary-container)]'
+                            : 'text-[var(--md-primary)]'
+                        }`}
+                      >
                         {g.workedPenetrationMid} mm/10
                       </div>
-                      <div className="text-[9px] text-muted-foreground mt-1 line-clamp-1">
+                      <div
+                        className={`mt-1 line-clamp-1 text-[9px] ${
+                          isCurrent
+                            ? 'text-[var(--md-on-primary-container)]/80'
+                            : 'text-[var(--md-on-surface-variant)]'
+                        }`}
+                      >
                         {g.foodAnalogy}
                       </div>
                     </div>

@@ -53,13 +53,13 @@ export function DbMeterSvg({
   const [draggingHood, setDraggingHood] = useState(false);
   const [hoodDragY, setHoodDragY] = useState<number | null>(null);
 
-  const bgPanel = isDark ? '#0B1629' : '#F8FAFC';
-  const borderCol = isDark ? '#1E3A5F' : '#CBD5E1';
-  const textPrimary = isDark ? '#F1F5F9' : '#0F172A';
-  const textMuted = isDark ? '#94A3B8' : '#475569';
+  const bgPanel = 'var(--md-surface-container-low)';
+  const borderCol = 'var(--md-outline-variant)';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
   const machineFill = isDark ? '#1E293B' : '#CBD5E1';
   const machineStroke = isDark ? '#64748B' : '#475569';
-  const floorCol = isDark ? '#1E293B' : '#E2E8F0';
+  const floorCol = 'var(--md-surface-container-high)';
 
   const toSvgCoords = (clientX: number, clientY: number) => {
     const svg = svgRef.current;
@@ -161,7 +161,7 @@ export function DbMeterSvg({
         : 66;
 
   return (
-    <div className="glass-panel rounded-2xl p-3 sm:p-4 shadow-xs">
+    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 760 400"
@@ -194,7 +194,7 @@ export function DbMeterSvg({
           y="6"
           width="748"
           height="388"
-          rx="16"
+          rx="18"
           fill={bgPanel}
           stroke={borderCol}
           strokeWidth="1.5"
@@ -206,9 +206,9 @@ export function DbMeterSvg({
           y="18"
           width="436"
           height="34"
-          rx="8"
-          fill={isDark ? '#001F6B' : '#E6EDF8'}
-          stroke={isDark ? '#002D9C' : '#BFDBFE'}
+          rx="12"
+          fill="var(--md-surface-container)"
+          stroke="var(--md-outline-variant)"
           strokeWidth="1"
         />
         <text
@@ -216,7 +216,8 @@ export function DbMeterSvg({
           y="40"
           fontSize="11.5"
           fontWeight="700"
-          fill={isDark ? '#E2E8F0' : '#001F6B'}
+          fontFamily="var(--font-sans)"
+          fill="var(--md-on-surface)"
         >
           {pick(
             'FREE-FIELD ACOUSTIC PROPAGATION',
@@ -229,8 +230,9 @@ export function DbMeterSvg({
           y="40"
           fontSize="11"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
           textAnchor="end"
-          fill={enclosureActive ? '#10B981' : isDark ? '#93C5FD' : '#002D9C'}
+          fill={enclosureActive ? (isDark ? '#34D399' : '#059669') : 'var(--md-primary)'}
         >
           {enclosureActive ? '-12 dB ENCLOSURE' : 'OPEN FIELD'}
         </text>
@@ -250,19 +252,20 @@ export function DbMeterSvg({
         />
         <circle cx={MIC_MIN_X} cy="330" r="3" fill={textMuted} />
         <circle cx={MIC_MAX_X} cy="330" r="3" fill={textMuted} />
-        <text x={MIC_MIN_X} y="346" fontSize="10" textAnchor="middle" fill={textMuted}>
+        <text x={MIC_MIN_X} y="346" fontSize="10" fontFamily="var(--font-mono)" textAnchor="middle" fill={textMuted}>
           1 m
         </text>
         <text
           x={(MIC_MIN_X + MIC_MAX_X) / 2}
           y="346"
           fontSize="10"
+          fontFamily="var(--font-mono)"
           textAnchor="middle"
           fill={textMuted}
         >
           8 m
         </text>
-        <text x={MIC_MAX_X} y="346" fontSize="10" textAnchor="middle" fill={textMuted}>
+        <text x={MIC_MAX_X} y="346" fontSize="10" fontFamily="var(--font-mono)" textAnchor="middle" fill={textMuted}>
           15 m
         </text>
 
@@ -272,19 +275,19 @@ export function DbMeterSvg({
           y1="364"
           x2={micX}
           y2="364"
-          stroke="#10B981"
+          stroke="var(--md-primary)"
           strokeWidth="2"
         />
-        <line x1={sourceCenterX} y1="358" x2={sourceCenterX} y2="370" stroke="#10B981" strokeWidth="2" />
-        <line x1={micX} y1="358" x2={micX} y2="370" stroke="#10B981" strokeWidth="2" />
+        <line x1={sourceCenterX} y1="358" x2={sourceCenterX} y2="370" stroke="var(--md-primary)" strokeWidth="2" />
+        <line x1={micX} y1="358" x2={micX} y2="370" stroke="var(--md-primary)" strokeWidth="2" />
         <rect
-          x={(sourceCenterX + micX) / 2 - 36}
+          x={(sourceCenterX + micX) / 2 - 38}
           y="354"
-          width="72"
+          width="76"
           height="20"
-          rx="6"
-          fill={isDark ? '#064E3B' : '#D1FAE5'}
-          stroke="#10B981"
+          rx="10"
+          fill="var(--md-primary-container)"
+          stroke="var(--md-primary)"
           strokeWidth="1"
         />
         <text
@@ -292,8 +295,9 @@ export function DbMeterSvg({
           y="368"
           fontSize="11"
           fontWeight="700"
+          fontFamily="var(--font-mono)"
           textAnchor="middle"
-          fill={isDark ? '#6EE7B7' : '#065F46'}
+          fill="var(--md-on-primary-container)"
         >
           d = {distanceM.toFixed(1)} m
         </text>
@@ -399,6 +403,7 @@ export function DbMeterSvg({
             y="162"
             fontSize="11"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
             fill={textPrimary}
           >
@@ -445,12 +450,13 @@ export function DbMeterSvg({
                 strokeWidth="2.5"
                 strokeDasharray="8 4"
               />
-              <rect x="52" y={hoodY - 10} width="120" height="20" rx="6" fill="#10B981" />
+              <rect x="52" y={hoodY - 10} width="120" height="20" rx="10" fill="#10B981" />
               <text
                 x="112"
                 y={hoodY + 4}
                 fontSize="10"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
                 textAnchor="middle"
                 fill="#FFFFFF"
               >
@@ -465,7 +471,7 @@ export function DbMeterSvg({
                 y={hoodY}
                 width="136"
                 height="28"
-                rx="8"
+                rx="10"
                 fill={isDark ? '#064E3B' : '#D1FAE5'}
                 stroke="#10B981"
                 strokeWidth="1.5"
@@ -476,6 +482,7 @@ export function DbMeterSvg({
                 y={hoodY + 18}
                 fontSize="10"
                 fontWeight="700"
+                fontFamily="var(--font-sans)"
                 textAnchor="middle"
                 fill={isDark ? '#6EE7B7' : '#065F46'}
               >
@@ -522,7 +529,7 @@ export function DbMeterSvg({
             y="203"
             fontSize="7"
             fontWeight="700"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             textAnchor="middle"
             fill={splColor}
           >
@@ -538,9 +545,9 @@ export function DbMeterSvg({
             y="230"
             width="52"
             height="16"
-            rx="5"
-            fill={draggingMic ? '#10B981' : isDark ? '#0F172A' : '#FFFFFF'}
-            stroke="#10B981"
+            rx="8"
+            fill={draggingMic ? 'var(--md-primary)' : 'var(--md-surface-container)'}
+            stroke="var(--md-primary)"
             strokeWidth="1"
           />
           <text
@@ -548,8 +555,9 @@ export function DbMeterSvg({
             y="241"
             fontSize="8.5"
             fontWeight="700"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
-            fill={draggingMic ? '#FFFFFF' : '#10B981'}
+            fill={draggingMic ? 'var(--md-on-primary)' : 'var(--md-primary)'}
           >
             ◄ DRAG ►
           </text>
@@ -577,6 +585,7 @@ export function DbMeterSvg({
             fontSize="10"
             fontWeight="700"
             letterSpacing="1"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
             fill="#34D399"
           >
@@ -595,16 +604,16 @@ export function DbMeterSvg({
           />
 
           <rect x="504" y="116" width="44" height="20" rx="4" fill="#065F46" />
-          <text x="526" y="130" fontSize="11" fontWeight="700" textAnchor="middle" fill="#A7F3D0">
+          <text x="526" y="130" fontSize="11" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill="#A7F3D0">
             {weighting}
           </text>
 
           <rect x="554" y="116" width="66" height="20" rx="4" fill="#0F3D36" />
-          <text x="587" y="130" fontSize="10" fontWeight="700" textAnchor="middle" fill="#6EE7B7">
+          <text x="587" y="130" fontSize="10" fontWeight="700" fontFamily="var(--font-mono)" textAnchor="middle" fill="#6EE7B7">
             {timeWeighting === 'FAST' ? 'FAST 125ms' : 'SLOW 1s'}
           </text>
 
-          <text x="696" y="130" fontSize="10" fontWeight="600" textAnchor="end" fill="#6EE7B7">
+          <text x="696" y="130" fontSize="10" fontWeight="600" fontFamily="var(--font-mono)" textAnchor="end" fill="#6EE7B7">
             SPL
           </text>
 
@@ -613,17 +622,17 @@ export function DbMeterSvg({
             y="188"
             fontSize="44"
             fontWeight="800"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             textAnchor="end"
             fill={splColor}
           >
             {liveSplDb.toFixed(1)}
           </text>
-          <text x="642" y="186" fontSize="15" fontWeight="700" fill="#A7F3D0">
+          <text x="642" y="186" fontSize="15" fontWeight="700" fontFamily="var(--font-mono)" fill="#A7F3D0">
             {weighting}
           </text>
 
-          <text x="506" y="214" fontSize="11" fontWeight="600" fontFamily="monospace" fill="#94A3B8">
+          <text x="506" y="214" fontSize="11" fontWeight="600" fontFamily="var(--font-mono)" fill="#94A3B8">
             PEAK HOLD:
           </text>
           <text
@@ -631,7 +640,7 @@ export function DbMeterSvg({
             y="214"
             fontSize="12"
             fontWeight="700"
-            fontFamily="monospace"
+            fontFamily="var(--font-mono)"
             textAnchor="end"
             fill="#FBBF24"
           >
@@ -662,35 +671,35 @@ export function DbMeterSvg({
 
             <line x1={peakX} y1="224" x2={peakX} y2="254" stroke="#FBBF24" strokeWidth="2.5" />
 
-            <text x="505" y="268" fontSize="9" fill="#6EE7B7">30</text>
-            <text x="554" y="268" fontSize="9" textAnchor="middle" fill="#6EE7B7">60</text>
-            <text x="615" y="268" fontSize="9" textAnchor="middle" fill="#FBBF24">85</text>
-            <text x="654" y="268" fontSize="9" textAnchor="middle" fill="#F87171">105</text>
-            <text x="698" y="268" fontSize="9" textAnchor="end" fill="#F87171">130</text>
+            <text x="505" y="268" fontSize="9" fontFamily="var(--font-mono)" fill="#6EE7B7">30</text>
+            <text x="554" y="268" fontSize="9" fontFamily="var(--font-mono)" textAnchor="middle" fill="#6EE7B7">60</text>
+            <text x="615" y="268" fontSize="9" fontFamily="var(--font-mono)" textAnchor="middle" fill="#FBBF24">85</text>
+            <text x="654" y="268" fontSize="9" fontFamily="var(--font-mono)" textAnchor="middle" fill="#F87171">105</text>
+            <text x="698" y="268" fontSize="9" fontFamily="var(--font-mono)" textAnchor="end" fill="#F87171">130</text>
           </g>
 
           <g className="cursor-pointer" onClick={onCycleWeighting} role="button" tabIndex={0}>
-            <rect x="498" y="294" width="62" height="34" rx="8" fill="#002D9C" stroke="#60A5FA" strokeWidth="1" />
-            <text x="529" y="315" fontSize="11" fontWeight="700" textAnchor="middle" fill="#FFFFFF">
+            <rect x="498" y="294" width="62" height="34" rx="12" fill="var(--md-primary)" stroke="var(--md-primary-container)" strokeWidth="1" />
+            <text x="529" y="315" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)" textAnchor="middle" fill="var(--md-on-primary)">
               A / C / Z
             </text>
           </g>
 
           <g className="cursor-pointer" onClick={onToggleTimeWeighting} role="button" tabIndex={0}>
-            <rect x="569" y="294" width="62" height="34" rx="8" fill="#065F46" stroke="#34D399" strokeWidth="1" />
-            <text x="600" y="315" fontSize="11" fontWeight="700" textAnchor="middle" fill="#FFFFFF">
+            <rect x="569" y="294" width="62" height="34" rx="12" fill="#065F46" stroke="#34D399" strokeWidth="1" />
+            <text x="600" y="315" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)" textAnchor="middle" fill="#FFFFFF">
               F / S
             </text>
           </g>
 
           <g className="cursor-pointer" onClick={onResetPeak} role="button" tabIndex={0}>
-            <rect x="640" y="294" width="62" height="34" rx="8" fill="#78350F" stroke="#FBBF24" strokeWidth="1" />
-            <text x="671" y="315" fontSize="11" fontWeight="700" textAnchor="middle" fill="#FFFFFF">
+            <rect x="640" y="294" width="62" height="34" rx="12" fill="#78350F" stroke="#FBBF24" strokeWidth="1" />
+            <text x="671" y="315" fontSize="11" fontWeight="700" fontFamily="var(--font-sans)" textAnchor="middle" fill="#FFFFFF">
               PK RST
             </text>
           </g>
 
-          <text x="600" y="354" fontSize="9.5" fontWeight="600" textAnchor="middle" fill="#94A3B8">
+          <text x="600" y="354" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" textAnchor="middle" fill="#94A3B8">
             {pick(
               'Drag meter on floorplan or click buttons',
               'Geser meter di lantai atau klik tombol',

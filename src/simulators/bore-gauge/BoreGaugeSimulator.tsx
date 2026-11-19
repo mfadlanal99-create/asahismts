@@ -235,11 +235,11 @@ export function BoreGaugeSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Control Panel: Liner Presets & Master Ring Setup */}
-      <div className="glass-panel rounded-2xl p-4 shadow-xs space-y-3">
+      <div className="glass-panel rounded-[28px] p-4 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <Crosshair className="h-4 w-4 text-sky-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <Crosshair className="h-4 w-4 text-[var(--md-primary)]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick(
                 'Cylinder Liner Wear Profile Preset',
                 'Preset Profil Keausan Liner Silinder',
@@ -250,7 +250,7 @@ export function BoreGaugeSimulator() {
 
           {/* Master Ring Gauge & Anvil Reference Pill */}
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-sky-200 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/50 px-2.5 py-1 font-medium text-sky-700 dark:text-sky-300">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--md-primary-container)] px-3 py-1 font-semibold text-[var(--md-on-primary-container)]">
               {pick(
                 'Master Ring: Ø85.000 mm | Anvil: 85 mm + 0.0 mm Spacer',
                 'Master Ring: Ø85.000 mm | Anvil: 85 mm + 0.0 mm Spacer',
@@ -258,8 +258,8 @@ export function BoreGaugeSimulator() {
               )}
             </span>
 
-            <div className="flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 py-1">
-              <span className="text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+              <span className="px-2 text-[var(--md-on-surface-variant)] font-medium">
                 {pick('Bezel Zero:', 'Nol Bezel:', 'ゼロ補正:')}
               </span>
               {([-0.02, 0, 0.02] as const).map((offset) => (
@@ -267,10 +267,10 @@ export function BoreGaugeSimulator() {
                   key={offset}
                   type="button"
                   onClick={() => setBezelZeroOffsetMm(offset)}
-                  className={`px-1.5 py-0.5 rounded font-mono text-[11px] font-semibold transition-colors ${
+                  className={`rounded-full px-2.5 py-0.5 font-mono text-[11px] transition-colors ${
                     bezelZeroOffsetMm === offset
-                      ? 'bg-sky-600 text-white'
-                      : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {offset === 0
@@ -291,18 +291,18 @@ export function BoreGaugeSimulator() {
                 key={item.id}
                 type="button"
                 onClick={() => handleSelectPreset(item.id)}
-                className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2 text-left text-xs font-semibold transition-all ${
+                className={`flex items-center justify-between gap-2 rounded-[20px] border px-3 py-2.5 text-left text-xs font-semibold transition-all ${
                   active
-                    ? 'border-sky-500 bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-200 shadow-xs'
-                    : 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                 }`}
               >
                 <span className="truncate">{item.label}</span>
                 <span
-                  className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold ${
+                  className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
                     active
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
+                      ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                      : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
                   }`}
                 >
                   {item.badge}
@@ -313,10 +313,10 @@ export function BoreGaugeSimulator() {
         </div>
 
         {/* Interactive Probe Controls: Depth Plane, Measurement Axis, Rocking Angle */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-2 border-t border-slate-200 dark:border-slate-800">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-3 border-t border-[var(--md-outline-variant)]/50">
           {/* Probe Depth Plane */}
           <div className="md:col-span-4 space-y-1.5">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick(
                 '1. Probe Depth Plane',
                 '1. Bidang Kedalaman Probe',
@@ -338,10 +338,10 @@ export function BoreGaugeSimulator() {
                   key={id}
                   type="button"
                   onClick={() => setDepthPlane(id)}
-                  className={`px-2 py-2 rounded-lg border text-xs font-semibold transition-colors ${
+                  className={`rounded-full border px-2 py-2 text-xs transition-colors ${
                     depthPlane === id
-                      ? 'border-sky-500 bg-sky-600 text-white shadow-xs'
-                      : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {label}
@@ -352,7 +352,7 @@ export function BoreGaugeSimulator() {
 
           {/* Measurement Axis */}
           <div className="md:col-span-4 space-y-1.5">
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick(
                 '2. Measurement Axis (0° vs 90°)',
                 '2. Sumbu Ukur (0° vs 90°)',
@@ -363,10 +363,10 @@ export function BoreGaugeSimulator() {
               <button
                 type="button"
                 onClick={() => setAxis('axisA')}
-                className={`px-2.5 py-2 rounded-lg border text-xs font-semibold transition-colors ${
+                className={`rounded-full border px-2.5 py-2 text-xs transition-colors ${
                   axis === 'axisA'
-                    ? 'border-sky-500 bg-sky-600 text-white shadow-xs'
-                    : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {pick(
@@ -378,10 +378,10 @@ export function BoreGaugeSimulator() {
               <button
                 type="button"
                 onClick={() => setAxis('axisB')}
-                className={`px-2.5 py-2 rounded-lg border text-xs font-semibold transition-colors ${
+                className={`rounded-full border px-2.5 py-2 text-xs transition-colors ${
                   axis === 'axisB'
-                    ? 'border-violet-500 bg-violet-600 text-white shadow-xs'
-                    : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] font-semibold text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {pick(
@@ -396,7 +396,7 @@ export function BoreGaugeSimulator() {
           {/* Gauge Rocking Angle (-8° to +8°) */}
           <div className="md:col-span-4 space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(
                   '3. Gauge Rocking Angle (-8° to +8°)',
                   '3. Sudut Goyang Gauge (-8° s/d +8°)',
@@ -404,7 +404,7 @@ export function BoreGaugeSimulator() {
                 )}
               </label>
               <span
-                className={`font-mono text-xs font-bold px-1.5 py-0.5 rounded ${
+                className={`font-mono text-xs font-bold px-2 py-0.5 rounded-full ${
                   rocked.isAtNullPoint
                     ? 'bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300'
                     : 'bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300'
@@ -430,7 +430,7 @@ export function BoreGaugeSimulator() {
                   setRockingAngleDeg(Number(e.target.value));
                 }}
                 aria-label="Gauge Rocking Angle"
-                className="w-full accent-sky-600 cursor-pointer"
+                className="w-full"
               />
               <button
                 type="button"
@@ -443,7 +443,7 @@ export function BoreGaugeSimulator() {
                   'Setel ke Titik Balik 0.0°',
                   '0.0° 反転点に合わせる'
                 )}
-                className="shrink-0 rounded-md border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100"
+                className="shrink-0 rounded-full border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-950/50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100"
               >
                 0.0°
               </button>
@@ -458,10 +458,8 @@ export function BoreGaugeSimulator() {
                     return !v;
                   });
                 }}
-                className={`shrink-0 inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-[11px] font-bold transition-colors ${
-                  isAutoRocking
-                    ? 'border-amber-400 bg-amber-500 text-white'
-                    : 'border-sky-300 dark:border-sky-700 bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300'
+                className={`shrink-0 inline-flex items-center gap-1 px-3 py-1 text-[11px] font-bold ${
+                  isAutoRocking ? 'm3-btn-filled' : 'm3-btn-tonal'
                 }`}
               >
                 {isAutoRocking ? (
@@ -501,7 +499,7 @@ export function BoreGaugeSimulator() {
 
           {/* Off-Null Recording Warning Banner */}
           {offNullWarning && (
-            <div className="flex items-start gap-2 rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/60 px-3.5 py-2.5 text-xs text-amber-800 dark:text-amber-200">
+            <div className="flex items-start gap-2 rounded-[22px] border border-amber-300/70 dark:border-amber-700/70 bg-amber-50 dark:bg-amber-950/60 px-4 py-3 text-xs text-amber-800 dark:text-amber-200">
               <AlertTriangle className="h-4 w-4 shrink-0 text-amber-500 mt-0.5" />
               <span>{offNullWarning}</span>
             </div>
@@ -509,18 +507,18 @@ export function BoreGaugeSimulator() {
         </div>
 
         {/* Right Column (5/12): 6-Point Bore Mapping Matrix, Live Diagnostics & Verdict */}
-        <div className="lg:col-span-5 glass-panel rounded-2xl p-4 shadow-xs space-y-3.5">
+        <div className="lg:col-span-5 glass-panel rounded-[28px] p-4 space-y-3.5">
           <div className="space-y-2">
             <div>
-              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <ClipboardCheck className="h-4 w-4 text-sky-500 shrink-0" />
+              <h3 className="text-sm font-bold text-[var(--md-on-surface)] flex items-center gap-2">
+                <ClipboardCheck className="h-4 w-4 text-[var(--md-primary)] shrink-0" />
                 {pick(
                   '6-Point Bore Map & Ovality / Taper Diagnostics',
                   'Tabel Pemetaan 6-Titik & Ovalitas / Ketirusan',
                   '6点ボア測定表 & 楕円度・テーパ判定'
                 )}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-[11px] text-[var(--md-on-surface-variant)] mt-0.5">
                 {pick(
                   'Click any cell to aim probe, rock to 0.0° null point, and record.',
                   'Klik sel untuk memindah probe, goyangkan ke 0.0° null, lalu catat.',
@@ -533,7 +531,7 @@ export function BoreGaugeSimulator() {
               <button
                 type="button"
                 onClick={handleAutoMapAllSix}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-sky-300 dark:border-sky-700 bg-sky-50 dark:bg-sky-950/60 px-2.5 py-1.5 text-[11px] font-semibold text-sky-700 dark:text-sky-300 hover:bg-sky-100 transition-colors"
+                className="m3-btn-tonal inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 {pick(
@@ -545,7 +543,7 @@ export function BoreGaugeSimulator() {
               <button
                 type="button"
                 onClick={handleClearMap}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2.5 py-1.5 text-[11px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 transition-colors"
+                className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 {pick('Clear', 'Hapus', 'クリア')}
@@ -557,7 +555,7 @@ export function BoreGaugeSimulator() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-[11px]">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300">
+                <tr className="border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)]">
                   <th className="py-2 px-2 font-bold">
                     {pick('Plane', 'Bidang', '深さ')}
                   </th>
@@ -572,7 +570,7 @@ export function BoreGaugeSimulator() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+              <tbody className="divide-y divide-[var(--md-outline-variant)]/40">
                 {(
                   [
                     ['top', pick('Top 15', 'Atas 15', '上部 15')],
@@ -589,11 +587,11 @@ export function BoreGaugeSimulator() {
                       key={planeId}
                       className={
                         depthPlane === planeId
-                          ? 'bg-sky-50/50 dark:bg-sky-950/25'
+                          ? 'bg-[var(--md-primary-container)]/25'
                           : ''
                       }
                     >
-                      <td className="py-2 px-2 font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                      <td className="py-2 px-2 font-semibold text-[var(--md-on-surface)] whitespace-nowrap">
                         {planeLabel}
                       </td>
                       <td className="py-1.5 px-1.5">
@@ -603,10 +601,10 @@ export function BoreGaugeSimulator() {
                             setDepthPlane(planeId);
                             setAxis('axisA');
                           }}
-                          className={`w-full text-left font-mono px-2 py-1 rounded border transition-colors ${
+                          className={`w-full text-left font-mono px-2.5 py-1 rounded-full border transition-colors ${
                             depthPlane === planeId && axis === 'axisA'
-                              ? 'border-sky-500 bg-sky-100/70 dark:bg-sky-900/50 text-sky-900 dark:text-sky-100 font-bold'
-                              : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                              ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] font-bold'
+                              : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                           }`}
                         >
                           {row.axisA !== null ? row.axisA.toFixed(3) : '—'}
@@ -619,10 +617,10 @@ export function BoreGaugeSimulator() {
                             setDepthPlane(planeId);
                             setAxis('axisB');
                           }}
-                          className={`w-full text-left font-mono px-2 py-1 rounded border transition-colors ${
+                          className={`w-full text-left font-mono px-2.5 py-1 rounded-full border transition-colors ${
                             depthPlane === planeId && axis === 'axisB'
-                              ? 'border-violet-500 bg-violet-100/70 dark:bg-violet-900/50 text-violet-900 dark:text-violet-100 font-bold'
-                              : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200'
+                              ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] font-bold'
+                              : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                           }`}
                         >
                           {row.axisB !== null ? row.axisB.toFixed(3) : '—'}
@@ -630,7 +628,7 @@ export function BoreGaugeSimulator() {
                       </td>
                       <td className="py-2 px-1.5 font-mono font-bold whitespace-nowrap">
                         {ovality === null ? (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-[var(--md-on-surface-variant)]">—</span>
                         ) : exceeds ? (
                           <span className="inline-flex items-center gap-1 text-rose-600 dark:text-rose-400">
                             <XCircle className="h-3 w-3 shrink-0" />
@@ -648,11 +646,11 @@ export function BoreGaugeSimulator() {
                 })}
 
                 {/* Taper Summary Row */}
-                <tr className="border-t-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/90 font-semibold">
-                  <td className="py-2 px-2 text-slate-900 dark:text-white whitespace-nowrap">
+                <tr className="border-t-2 border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container)] font-semibold">
+                  <td className="py-2 px-2 text-[var(--md-on-surface)] whitespace-nowrap">
                     {pick('Taper', 'Ketirusan', 'テーパ')}
                   </td>
-                  <td className="py-2 px-1.5 font-mono font-bold text-sky-700 dark:text-sky-300">
+                  <td className="py-2 px-1.5 font-mono font-bold text-[var(--md-primary)]">
                     {mapMetrics.taperByAxis.axisA !== null
                       ? `${mapMetrics.taperByAxis.axisA.toFixed(3)}`
                       : '—'}
@@ -669,12 +667,12 @@ export function BoreGaugeSimulator() {
                         </span>
                       )}
                   </td>
-                  <td className="py-2 px-1.5 font-mono font-bold text-violet-700 dark:text-violet-300">
+                  <td className="py-2 px-1.5 font-mono font-bold text-[var(--md-primary)]">
                     {mapMetrics.taperByAxis.axisB !== null
                       ? `${mapMetrics.taperByAxis.axisB.toFixed(3)}`
                       : '—'}
                   </td>
-                  <td className="py-2 px-1.5 font-mono font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                  <td className="py-2 px-1.5 font-mono font-bold text-[var(--md-on-surface)] whitespace-nowrap">
                     {mapMetrics.maxTaperMm !== null
                       ? `${mapMetrics.maxTaperMm.toFixed(3)} max`
                       : '—'}
@@ -686,44 +684,44 @@ export function BoreGaugeSimulator() {
 
           {/* Summary Cards: Max Ovality & Max Taper (2-col) + OEM Service Verdict */}
           <div className="grid grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-2.5">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Max Ovality', 'Ovalitas Maks', '最大楕円度')}
               </div>
               <div className="mt-0.5 flex items-baseline justify-between gap-1">
-                <span className="font-mono text-base font-bold text-slate-900 dark:text-white">
+                <span className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {mapMetrics.maxOvalityMm !== null
                     ? `${mapMetrics.maxOvalityMm.toFixed(3)} mm`
                     : '—'}
                 </span>
-                <span className="text-[10px] text-slate-500">≤ 0.050</span>
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">≤ 0.050</span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 p-2.5">
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Max Taper', 'Tirus Maks', '最大テーパ')}
               </div>
               <div className="mt-0.5 flex items-baseline justify-between gap-1">
-                <span className="font-mono text-base font-bold text-slate-900 dark:text-white">
+                <span className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {mapMetrics.maxTaperMm !== null
                     ? `${mapMetrics.maxTaperMm.toFixed(3)} mm`
                     : '—'}
                 </span>
-                <span className="text-[10px] text-slate-500">≤ 0.050</span>
+                <span className="text-[10px] text-[var(--md-on-surface-variant)]">≤ 0.050</span>
               </div>
             </div>
 
             <div
-              className={`col-span-2 rounded-xl border p-3 ${
+              className={`col-span-2 rounded-[22px] border p-3 ${
                 mapMetrics.recordedCount < 6
-                  ? 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50'
+                  ? 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]'
                   : mapMetrics.isServiceLimitExceeded
                     ? 'border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40'
                     : 'border-emerald-300 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40'
               }`}
             >
-              <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick(
                   'OEM Re-Bore / Honing Verdict',
                   'Keputusan Servis Re-Bore / Honing OEM',
@@ -732,7 +730,7 @@ export function BoreGaugeSimulator() {
               </div>
               <div className="mt-1 font-bold text-xs">
                 {mapMetrics.recordedCount < 6 ? (
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface-variant)]">
                     {pick(
                       `Record all 6 points (${mapMetrics.recordedCount}/6 logged)`,
                       `Catat semua 6 titik (${mapMetrics.recordedCount}/6 tercatat)`,
@@ -764,9 +762,9 @@ export function BoreGaugeSimulator() {
 
           {/* Blind Inspection Challenge Panel */}
           {presetId === 'blind-challenge' && (
-            <div className="rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50/70 dark:bg-amber-950/30 p-3 space-y-2">
+            <div className="rounded-[22px] border border-[var(--md-primary)]/40 bg-[var(--md-primary-container)]/35 p-3.5 space-y-2.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="text-[11px] font-bold text-amber-900 dark:text-amber-200">
+                <div className="text-[11px] font-bold text-[var(--md-on-surface)]">
                   {pick(
                     `Blind Challenge #${blindVariant + 1}: Submit QC decision`,
                     `Tantangan Buta #${blindVariant + 1}: Kirim keputusan QC`,
@@ -776,7 +774,7 @@ export function BoreGaugeSimulator() {
                 <button
                   type="button"
                   onClick={handleNewBlindChallenge}
-                  className="inline-flex items-center gap-1 rounded-md border border-amber-400 dark:border-amber-600 bg-white dark:bg-slate-800 px-2 py-1 text-[11px] font-semibold text-amber-800 dark:text-amber-200"
+                  className="glass-pill inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold"
                 >
                   <Shuffle className="h-3 w-3" />
                   {pick('New Liner', 'Liner Baru', '新規ライナ')}
@@ -787,10 +785,10 @@ export function BoreGaugeSimulator() {
                 <button
                   type="button"
                   onClick={() => setBlindVerdictGuess('PASS')}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border ${
+                  className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-colors ${
                     blindVerdictGuess === 'PASS'
                       ? 'border-emerald-600 bg-emerald-600 text-white'
-                      : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   {pick('PASS (≤ 0.050)', 'LULUS (≤ 0.050)', '合格 (≤ 0.050)')}
@@ -798,10 +796,10 @@ export function BoreGaugeSimulator() {
                 <button
                   type="button"
                   onClick={() => setBlindVerdictGuess('RE-BORE')}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border ${
+                  className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-colors ${
                     blindVerdictGuess === 'RE-BORE'
                       ? 'border-rose-600 bg-rose-600 text-white'
-                      : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   {pick(
@@ -813,7 +811,7 @@ export function BoreGaugeSimulator() {
                 <button
                   type="button"
                   onClick={() => setBlindSubmitted(true)}
-                  className="px-3 py-1 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-bold shadow-xs"
+                  className="m3-btn-filled px-3.5 py-1 text-[11px] font-bold"
                 >
                   {pick('Verify', 'Periksa', '判定確認')}
                 </button>

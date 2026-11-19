@@ -77,19 +77,19 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
   const c = useMemo(() => {
     return isDark
       ? {
-          bg: '#0f172a',
-          grid: '#1e293b',
-          gridSubtle: '#141e33',
+          bg: 'var(--md-surface-container-lowest)',
+          grid: 'var(--md-surface-container-high)',
+          gridSubtle: 'var(--md-surface-container)',
           beamFlange: '#475569',
           beamWeb: '#334155',
           beamStroke: '#64748b',
-          axis: '#334155',
-          axisText: '#94a3b8',
-          textMuted: '#94a3b8',
-          textMain: '#f8fafc',
-          textDim: '#64748b',
-          cardBg: '#1e293b',
-          cardBorder: '#334155',
+          axis: 'var(--md-outline-variant)',
+          axisText: 'var(--md-on-surface-variant)',
+          textMuted: 'var(--md-on-surface-variant)',
+          textMain: 'var(--md-on-surface)',
+          textDim: 'var(--md-on-surface-variant)',
+          cardBg: 'var(--md-surface-container)',
+          cardBorder: 'var(--md-outline-variant)',
           sfdPosFill: 'rgba(16, 185, 129, 0.22)',
           sfdPosStroke: '#10b981',
           sfdNegFill: 'rgba(244, 63, 94, 0.22)',
@@ -100,19 +100,19 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
           bmdNegStroke: '#f59e0b',
         }
       : {
-          bg: '#ffffff',
-          grid: '#f1f5f9',
-          gridSubtle: '#f8fafc',
+          bg: 'var(--md-surface-container-lowest)',
+          grid: 'var(--md-surface-container-high)',
+          gridSubtle: 'var(--md-surface-container)',
           beamFlange: '#cbd5e1',
           beamWeb: '#e2e8f0',
           beamStroke: '#94a3b8',
-          axis: '#cbd5e1',
-          axisText: '#64748b',
-          textMuted: '#64748b',
-          textMain: '#0f172a',
-          textDim: '#94a3b8',
-          cardBg: '#ffffff',
-          cardBorder: '#e2e8f0',
+          axis: 'var(--md-outline-variant)',
+          axisText: 'var(--md-on-surface-variant)',
+          textMuted: 'var(--md-on-surface-variant)',
+          textMain: 'var(--md-on-surface)',
+          textDim: 'var(--md-on-surface-variant)',
+          cardBg: 'var(--md-surface-container)',
+          cardBorder: 'var(--md-outline-variant)',
           sfdPosFill: 'rgba(16, 185, 129, 0.18)',
           sfdPosStroke: '#059669',
           sfdNegFill: 'rgba(244, 63, 94, 0.18)',
@@ -275,11 +275,12 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
   }, [diagramPoints]);
 
   return (
-    <div className="relative w-full select-none overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900">
+    <div className="relative w-full select-none overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]">
       <svg
         ref={svgRef}
         viewBox={`0 0 ${svgW} ${svgH}`}
         className="h-auto max-h-[480px] w-full"
+        fontFamily="var(--font-sans)"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -341,7 +342,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
         <text x={xStart} y={26} fill={c.textDim} fontSize="10" fontWeight="bold" letterSpacing="0.08em">
           {pick('1. BEAM LOADING & ELASTICA DEFLECTION', '1. PEMBEBANAN BALOK & DEFLEKSI ELASTIS', '1. 梁荷重・たわみ弾性曲線')}
         </text>
-        <text x={xEnd} y={26} textAnchor="end" fill={c.textDim} fontSize="10" fontFamily="monospace">
+        <text x={xEnd} y={26} textAnchor="end" fill={c.textDim} fontSize="10" fontFamily="var(--font-mono)">
           L_tot: {totalLengthM.toFixed(2)} m ({material.name.split(' ')[0]})
         </text>
 
@@ -396,7 +397,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
             <circle cx={0} cy={0} r={3} fill="#f59e0b" />
             <g transform={`translate(0, ${maxDeflectionMm >= 0 ? 17 : -17})`}>
               <rect x="-48" y="-9" width="96" height="17" rx="3.5" fill={c.cardBg} stroke="#f59e0b" strokeWidth="1" className="shadow-xs" />
-              <text x="0" y="3" textAnchor="middle" fill="#f59e0b" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+              <text x="0" y="3" textAnchor="middle" fill="#f59e0b" fontSize="8.5" fontWeight="bold" fontFamily="var(--font-mono)">
                 δ_max: {maxDeflectionMm.toFixed(2)}mm
               </text>
             </g>
@@ -509,7 +510,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                 {/* UDL Callout Pill Badge */}
                 <g transform={`translate(${badgeCenterX}, ${loadYTop - 9})`}>
                   <rect x="-42" y="-10" width="84" height="17" rx="3.5" fill={c.cardBg} stroke="#f59e0b" strokeWidth="1" className="shadow-xs" />
-                  <text x="0" y="2" textAnchor="middle" fill="#f59e0b" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+                  <text x="0" y="2" textAnchor="middle" fill="#f59e0b" fontSize="8.5" fontWeight="bold" fontFamily="var(--font-mono)">
                     w: {udlKnM.toFixed(1)} kN/m
                   </text>
                 </g>
@@ -532,7 +533,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                 {/* Force Callout Pill Badge */}
                 <g transform={`translate(${badgeXClamped}, ${yBeam - 56})`}>
                   <rect x="-38" y="-10" width="76" height="17" rx="3.5" fill={c.cardBg} stroke="#ef4444" strokeWidth="1.2" className="shadow-xs" />
-                  <text x="0" y="2" textAnchor="middle" fill="#ef4444" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+                  <text x="0" y="2" textAnchor="middle" fill="#ef4444" fontSize="8.5" fontWeight="bold" fontFamily="var(--font-mono)">
                     P: {pointLoadKn.toFixed(1)} kN
                   </text>
                 </g>
@@ -577,7 +578,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                   fill={isUpA ? '#10b981' : '#f59e0b'}
                   fontSize="9"
                   fontWeight="bold"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   R_A: {reactions.rAKn.toFixed(1)} kN
                 </text>
@@ -599,7 +600,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
             />
             <g transform="translate(-24, -20)">
               <rect x="-42" y="-10" width="84" height="18" rx="4" fill={c.cardBg} stroke="#8b5cf6" strokeWidth="1" className="shadow-xs" />
-              <text x="0" y="3" textAnchor="middle" fill="#8b5cf6" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+              <text x="0" y="3" textAnchor="middle" fill="#8b5cf6" fontSize="8.5" fontWeight="bold" fontFamily="var(--font-mono)">
                 M_A: {reactions.mAKNm.toFixed(1)} kNm
               </text>
             </g>
@@ -641,7 +642,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                     fill={isUpB ? '#10b981' : '#f59e0b'}
                     fontSize="9"
                     fontWeight="bold"
-                    fontFamily="monospace"
+                    fontFamily="var(--font-mono)"
                   >
                     R_B: {reactions.rBKn.toFixed(1)} kN
                   </text>
@@ -656,7 +657,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
           <line x1={xStart} y1="0" x2={xSupportB} y2="0" stroke={c.textDim} strokeWidth="1" markerStart="url(#arrowDim)" markerEnd="url(#arrowDim)" />
           <line x1={xStart} y1="-5" x2={xStart} y2="5" stroke={c.textDim} strokeWidth="1" />
           <line x1={xSupportB} y1="-5" x2={xSupportB} y2="5" stroke={c.textDim} strokeWidth="1" />
-          <text x={(xStart + xSupportB) / 2} y="-4" textAnchor="middle" fill={c.textDim} fontSize="8.5" fontFamily="monospace">
+          <text x={(xStart + xSupportB) / 2} y="-4" textAnchor="middle" fill={c.textDim} fontSize="8.5" fontFamily="var(--font-mono)">
             L = {spanM.toFixed(2)} m
           </text>
         </g>
@@ -666,7 +667,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
           <g transform={`translate(0, ${yBeam + 88})`}>
             <line x1={xSupportB} y1="0" x2={xEnd} y2="0" stroke={c.textDim} strokeWidth="1" markerStart="url(#arrowDim)" markerEnd="url(#arrowDim)" />
             <line x1={xEnd} y1="-5" x2={xEnd} y2="5" stroke={c.textDim} strokeWidth="1" />
-            <text x={(xSupportB + xEnd) / 2} y="-4" textAnchor="middle" fill={c.textDim} fontSize="8.5" fontFamily="monospace">
+            <text x={(xSupportB + xEnd) / 2} y="-4" textAnchor="middle" fill={c.textDim} fontSize="8.5" fontFamily="var(--font-mono)">
               a = {(totalLengthM - spanM).toFixed(2)} m
             </text>
           </g>
@@ -683,18 +684,18 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
 
         {/* Baseline (V = 0) */}
         <line x1={xStart} y1={ySfdZero} x2={xEnd} y2={ySfdZero} stroke={c.axis} strokeWidth="1.2" strokeDasharray="4 2" />
-        <text x={xStart - 10} y={ySfdZero + 3} textAnchor="end" fill={c.axisText} fontSize="9" fontFamily="monospace">
+        <text x={xStart - 10} y={ySfdZero + 3} textAnchor="end" fill={c.axisText} fontSize="9" fontFamily="var(--font-mono)">
           0
         </text>
 
         {/* Upper & Lower Bound ticks */}
         <line x1={xStart - 4} y1={ySfdZero - sfdHalfHeight} x2={xStart} y2={ySfdZero - sfdHalfHeight} stroke={c.axis} strokeWidth="1" />
-        <text x={xStart - 10} y={ySfdZero - sfdHalfHeight + 3} textAnchor="end" fill="#10b981" fontSize="8.5" fontFamily="monospace">
+        <text x={xStart - 10} y={ySfdZero - sfdHalfHeight + 3} textAnchor="end" fill="#10b981" fontSize="8.5" fontFamily="var(--font-mono)">
           +{absMaxShearKn.toFixed(1)}
         </text>
 
         <line x1={xStart - 4} y1={ySfdZero + sfdHalfHeight} x2={xStart} y2={ySfdZero + sfdHalfHeight} stroke={c.axis} strokeWidth="1" />
-        <text x={xStart - 10} y={ySfdZero + sfdHalfHeight + 3} textAnchor="end" fill="#f43f5e" fontSize="8.5" fontFamily="monospace">
+        <text x={xStart - 10} y={ySfdZero + sfdHalfHeight + 3} textAnchor="end" fill="#f43f5e" fontSize="8.5" fontFamily="var(--font-mono)">
           -{absMaxShearKn.toFixed(1)}
         </text>
 
@@ -709,7 +710,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
         {analysis.maxShearKn > 0.05 && (
           <g transform={`translate(${Math.min(xEnd - 45, xStart + 45)}, ${ySfdZero - analysis.maxShearKn * shearScale - 8})`}>
             <rect x="-32" y="-9" width="64" height="15" rx="3.5" fill={c.cardBg} stroke="#10b981" strokeWidth="1" className="shadow-xs" />
-            <text x="0" y="2" textAnchor="middle" fill="#10b981" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            <text x="0" y="2" textAnchor="middle" fill="#10b981" fontSize="8" fontWeight="bold" fontFamily="var(--font-mono)">
               +{analysis.maxShearKn.toFixed(1)} kN
             </text>
           </g>
@@ -717,7 +718,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
         {analysis.minShearKn < -0.05 && (
           <g transform={`translate(${Math.max(xStart + 45, xEnd - 45)}, ${ySfdZero - analysis.minShearKn * shearScale + 12})`}>
             <rect x="-32" y="-9" width="64" height="15" rx="3.5" fill={c.cardBg} stroke="#f43f5e" strokeWidth="1" className="shadow-xs" />
-            <text x="0" y="2" textAnchor="middle" fill="#f43f5e" fontSize="8" fontWeight="bold" fontFamily="monospace">
+            <text x="0" y="2" textAnchor="middle" fill="#f43f5e" fontSize="8" fontWeight="bold" fontFamily="var(--font-mono)">
               {analysis.minShearKn.toFixed(1)} kN
             </text>
           </g>
@@ -729,7 +730,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
             <line x1={svgX} y1={ySfdZero - 22} x2={svgX} y2={yBmdZero + 45} stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="3 3" opacity={0.7} />
             <circle cx={svgX} cy={ySfdZero} r="3" fill="#3b82f6" />
             <rect x={svgX - 24} y={ySfdZero + 4} width="48" height="13" rx="2.5" fill={c.cardBg} stroke="#3b82f6" strokeWidth="0.8" />
-            <text x={svgX} y={ySfdZero + 13} textAnchor="middle" fill="#3b82f6" fontSize="7.5" fontWeight="bold" fontFamily="monospace">
+            <text x={svgX} y={ySfdZero + 13} textAnchor="middle" fill="#3b82f6" fontSize="7.5" fontWeight="bold" fontFamily="var(--font-mono)">
               V=0 @{xM}m
             </text>
           </g>
@@ -746,18 +747,18 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
 
         {/* Baseline (M = 0) */}
         <line x1={xStart} y1={yBmdZero} x2={xEnd} y2={yBmdZero} stroke={c.axis} strokeWidth="1.2" strokeDasharray="4 2" />
-        <text x={xStart - 10} y={yBmdZero + 3} textAnchor="end" fill={c.axisText} fontSize="9" fontFamily="monospace">
+        <text x={xStart - 10} y={yBmdZero + 3} textAnchor="end" fill={c.axisText} fontSize="9" fontFamily="var(--font-mono)">
           0
         </text>
 
         {/* Limits */}
         <line x1={xStart - 4} y1={yBmdZero - bmdHalfHeight} x2={xStart} y2={yBmdZero - bmdHalfHeight} stroke={c.axis} strokeWidth="1" />
-        <text x={xStart - 10} y={yBmdZero - bmdHalfHeight + 3} textAnchor="end" fill="#3b82f6" fontSize="8.5" fontFamily="monospace">
+        <text x={xStart - 10} y={yBmdZero - bmdHalfHeight + 3} textAnchor="end" fill="#3b82f6" fontSize="8.5" fontFamily="var(--font-mono)">
           +{absMaxMomentKNm.toFixed(1)}
         </text>
 
         <line x1={xStart - 4} y1={yBmdZero + bmdHalfHeight} x2={xStart} y2={yBmdZero + bmdHalfHeight} stroke={c.axis} strokeWidth="1" />
-        <text x={xStart - 10} y={yBmdZero + bmdHalfHeight + 3} textAnchor="end" fill="#f59e0b" fontSize="8.5" fontFamily="monospace">
+        <text x={xStart - 10} y={yBmdZero + bmdHalfHeight + 3} textAnchor="end" fill="#f59e0b" fontSize="8.5" fontFamily="var(--font-mono)">
           -{absMaxMomentKNm.toFixed(1)}
         </text>
 
@@ -781,7 +782,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                 <circle cx={pSvgX} cy={pSvgY} r="4" fill="#2563eb" stroke={c.cardBg} strokeWidth="1.5" />
                 <g transform={`translate(${clampedPillX}, ${isSagging ? pSvgY - 14 : pSvgY + 14})`}>
                   <rect x="-46" y="-10" width="92" height="18" rx="4" fill={c.cardBg} stroke="#2563eb" strokeWidth="1.2" className="shadow-xs" />
-                  <text x="0" y="3" textAnchor="middle" fill="#2563eb" fontSize="8.5" fontWeight="bold" fontFamily="monospace">
+                  <text x="0" y="3" textAnchor="middle" fill="#2563eb" fontSize="8.5" fontWeight="bold" fontFamily="var(--font-mono)">
                     M_max: {peakMomentPoint.momentKNm.toFixed(1)} kNm
                   </text>
                 </g>
@@ -801,7 +802,7 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
               y1={32}
               x2={toSvgX(hoverPoint.x)}
               y2={svgH - 32}
-              stroke="#8b5cf6"
+              stroke="var(--md-primary)"
               strokeWidth="1.2"
               strokeDasharray="3 2"
             />
@@ -821,13 +822,12 @@ export function BeamBendingSvg({ analysis, deflectionMultiplier = 15 }: BeamBend
                     y="-11"
                     width="270"
                     height="22"
-                    rx="5"
-                    fill={c.cardBg}
-                    stroke="#8b5cf6"
-                    strokeWidth="1.4"
-                    className="shadow-sm"
+                    rx="11"
+                    fill="var(--md-primary-container)"
+                    stroke="var(--md-primary)"
+                    strokeWidth="1.3"
                   />
-                  <text x="0" y="3" textAnchor="middle" fill={c.textMain} fontSize="9" fontWeight="bold" fontFamily="monospace">
+                  <text x="0" y="3" textAnchor="middle" fill="var(--md-on-primary-container)" fontSize="9" fontWeight="bold" fontFamily="var(--font-mono)">
                     x:{hoverPoint.x.toFixed(2)}m | V:{hoverPoint.shearKn.toFixed(1)}kN | M:{hoverPoint.momentKNm.toFixed(1)}kNm | σ:{hoverPoint.bendingStressMpa.toFixed(1)}MPa
                   </text>
                 </g>

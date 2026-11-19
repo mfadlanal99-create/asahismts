@@ -55,10 +55,10 @@ function SliderControl({
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-slate-700 dark:text-slate-300">
+        <span className="font-semibold text-[var(--md-on-surface)]">
           {label}
         </span>
-        <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono font-semibold text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+        <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 font-mono font-bold text-[var(--md-primary)]">
           {Number.isInteger(step) ? value : value.toFixed(2)} {unit}
         </span>
       </div>
@@ -69,7 +69,7 @@ function SliderControl({
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-slate-200 accent-rose-600 dark:bg-slate-700 dark:accent-rose-400"
+        className="w-full"
       />
     </div>
   );
@@ -176,16 +176,16 @@ export function BeltGearSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Toolbar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-2xl p-3.5 shadow-xs">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex rounded-xl border border-slate-200 bg-slate-50 p-1 dark:border-slate-800 dark:bg-slate-950">
+          <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setDriveMode('v-belt')}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition-colors ${
                 driveMode === 'v-belt'
-                  ? 'bg-rose-600 text-white shadow-xs dark:bg-rose-500 dark:text-slate-950'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               <Disc className="h-3.5 w-3.5" />
@@ -194,10 +194,10 @@ export function BeltGearSimulator() {
             <button
               type="button"
               onClick={() => setDriveMode('spur-gear')}
-              className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition-colors ${
                 driveMode === 'spur-gear'
-                  ? 'bg-rose-600 text-white shadow-xs dark:bg-rose-500 dark:text-slate-950'
-                  : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100'
+                  ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                  : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
               }`}
             >
               <Cog className="h-3.5 w-3.5" />
@@ -208,10 +208,10 @@ export function BeltGearSimulator() {
           <button
             type="button"
             onClick={toggleTroubleshooting}
-            className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs transition-colors ${
               showTroubleshooting
-                ? 'border-rose-500 bg-rose-50 text-rose-700 dark:border-rose-400 dark:bg-rose-500/15 dark:text-rose-300'
-                : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700'
+                ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                : 'glass-pill font-semibold'
             }`}
           >
             <Wrench className="h-3.5 w-3.5" />
@@ -240,7 +240,7 @@ export function BeltGearSimulator() {
           <button
             type="button"
             onClick={() => setIsRunning((r) => !r)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             {isRunning ? (
               <>
@@ -258,7 +258,7 @@ export function BeltGearSimulator() {
           <button
             type="button"
             onClick={handleReset}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -288,11 +288,11 @@ export function BeltGearSimulator() {
 
       {/* Live Readouts Strip */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        <div className="glass-panel rounded-xl p-3 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {pick('Speed Ratio (i)', 'Rasio Kecepatan (i)', '変速比 (i)')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-primary)]">
             {(driveMode === 'v-belt'
               ? vBeltResults.speedRatio
               : spurResults.speedRatio
@@ -301,52 +301,52 @@ export function BeltGearSimulator() {
           </div>
         </div>
 
-        <div className="glass-panel rounded-xl p-3 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {pick('Output RPM (N₂)', 'Putaran Output (N₂)', '出力回転数 (N₂)')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
             {(driveMode === 'v-belt'
               ? vBeltResults.outputRpm
               : spurResults.outputRpm
             ).toFixed(0)}{' '}
-            <span className="text-xs font-normal text-slate-500">RPM</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">RPM</span>
           </div>
         </div>
 
-        <div className="glass-panel rounded-xl p-3 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {pick('Output Torque (T₂)', 'Torsi Output (T₂)', '出力トルク (T₂)')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
             {(driveMode === 'v-belt'
               ? vBeltResults.outputTorqueNm
               : spurResults.outputTorqueNm
             ).toFixed(1)}{' '}
-            <span className="text-xs font-normal text-slate-500">N·m</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">N·m</span>
           </div>
         </div>
 
-        <div className="glass-panel rounded-xl p-3 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {driveMode === 'v-belt'
               ? pick('Belt Length (L)', 'Panjang Sabuk (L)', 'ベルト長さ (L)')
               : pick('Center Distance (C)', 'Jarak Pusat (C)', '中心距離 (C)')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
             {driveMode === 'v-belt'
               ? `${vBeltResults.beltLengthMm.toFixed(0)} mm`
               : `${spurResults.actualCenterDistanceMm.toFixed(2)} mm`}
           </div>
         </div>
 
-        <div className="col-span-2 glass-panel rounded-xl p-3 shadow-xs sm:col-span-1">
-          <div className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+        <div className="col-span-2 glass-card rounded-[24px] p-3.5 sm:col-span-1">
+          <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {driveMode === 'v-belt'
               ? pick('Belt Slip / Eff.', 'Slip Sabuk / Ef.', 'スリップ / 効率')
               : pick('Backlash / Eff.', 'Backlash / Ef.', 'バックラッシ / 効率')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-slate-100">
+          <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
             {driveMode === 'v-belt'
               ? `${vBeltResults.slipPercent.toFixed(1)}% / ${vBeltResults.efficiencyPercent.toFixed(0)}%`
               : `${spurResults.backlashMm.toFixed(3)} mm`}
@@ -369,9 +369,9 @@ export function BeltGearSimulator() {
 
           {/* Live Drive Diagnostics Telemetry Strip */}
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            <div className="glass-panel rounded-xl p-2.5 shadow-xs">
-              <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                <Thermometer className="h-3.5 w-3.5 text-rose-500" />
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
+                <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {driveMode === 'v-belt'
                   ? pick('Belt Temp', 'Suhu Sabuk', 'ベルト温度')
                   : pick('Mesh Temp', 'Suhu Roda Gigi', '歯面温度')}
@@ -382,16 +382,16 @@ export function BeltGearSimulator() {
                     ? 'text-rose-600 dark:text-rose-400'
                     : activeTempC > 52
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {activeTempC.toFixed(1)} °C
               </div>
             </div>
 
-            <div className="glass-panel rounded-xl p-2.5 shadow-xs">
-              <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                <Disc className="h-3.5 w-3.5 text-amber-500" />
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
+                <Disc className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {driveMode === 'v-belt'
                   ? pick('Belt Slip', 'Slip Sabuk', 'スリップ率')
                   : pick('Backlash (j)', 'Backlash (j)', 'バックラッシ (j)')}
@@ -401,10 +401,10 @@ export function BeltGearSimulator() {
                   driveMode === 'v-belt'
                     ? vBeltResults.slipPercent > 2
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                     : spurResults.status !== 'Properly Tensioned'
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {driveMode === 'v-belt'
@@ -413,9 +413,9 @@ export function BeltGearSimulator() {
               </div>
             </div>
 
-            <div className="glass-panel rounded-xl p-2.5 shadow-xs">
-              <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                <Activity className="h-3.5 w-3.5 text-sky-500" />
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
+                <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Vibration RMS', 'Getaran RMS', '振動 RMS')}
               </div>
               <div
@@ -424,16 +424,16 @@ export function BeltGearSimulator() {
                     ? 'text-rose-600 dark:text-rose-400'
                     : activeVibMmS > 2.8
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {activeVibMmS.toFixed(2)} mm/s
               </div>
             </div>
 
-            <div className="glass-panel rounded-xl p-2.5 shadow-xs">
-              <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                <Volume2 className="h-3.5 w-3.5 text-violet-500" />
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
+                <Volume2 className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Acoustic Noise', 'Kebisingan Akustik', '騒音レベル')}
               </div>
               <div
@@ -442,7 +442,7 @@ export function BeltGearSimulator() {
                     ? 'text-rose-600 dark:text-rose-400'
                     : activeNoiseDba > 75
                       ? 'text-amber-600 dark:text-amber-400'
-                      : 'text-slate-900 dark:text-slate-100'
+                      : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {activeNoiseDba.toFixed(0)} dBA
@@ -452,7 +452,7 @@ export function BeltGearSimulator() {
 
           {/* Min Pulley Bending Fatigue Warning */}
           {driveMode === 'v-belt' && vBeltResults.minPulleyWarning && (
-            <div className="flex items-center gap-2.5 rounded-xl border border-amber-300 bg-amber-50 px-3.5 py-2.5 text-xs font-medium text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-200">
+            <div className="flex items-center gap-2.5 rounded-[22px] border border-amber-300 bg-amber-50 px-4 py-3 text-xs font-medium text-amber-900 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-200">
               <AlertTriangle className="h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" />
               <span>
                 <strong>
@@ -470,7 +470,7 @@ export function BeltGearSimulator() {
 
           {/* Centrifugal Tension Warning (v > 25 m/s) */}
           {driveMode === 'v-belt' && vBeltResults.centrifugalWarning && (
-            <div className="flex items-center gap-2.5 rounded-xl border border-rose-300 bg-rose-50 px-3.5 py-2.5 text-xs font-medium text-rose-900 dark:border-rose-500/40 dark:bg-rose-500/15 dark:text-rose-200">
+            <div className="flex items-center gap-2.5 rounded-[22px] border border-rose-300 bg-rose-50 px-4 py-3 text-xs font-medium text-rose-900 dark:border-rose-500/40 dark:bg-rose-500/15 dark:text-rose-200">
               <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
               <span>
                 <strong>
@@ -490,30 +490,30 @@ export function BeltGearSimulator() {
           )}
 
           {/* Diagnostic Note + Secondary Metrics */}
-          <div className="glass-panel rounded-xl p-3.5 shadow-xs">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-start gap-2.5">
-              <Wrench className="mt-0.5 h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
-              <div className="w-full space-y-2 text-xs">
-                <p className="font-medium text-slate-800 dark:text-slate-200">
+              <Wrench className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
+              <div className="w-full space-y-2.5 text-xs">
+                <p className="font-semibold text-[var(--md-on-surface)]">
                   {diagnosticNote}
                 </p>
                 {driveMode === 'v-belt' ? (
                   <>
-                    <div className="flex flex-wrap gap-x-5 gap-y-1 text-slate-600 dark:text-slate-400">
+                    <div className="flex flex-wrap gap-x-5 gap-y-1 text-[var(--md-on-surface-variant)]">
                       <span>
                         Span Deflection:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {vBeltResults.actualDeflectionMm.toFixed(1)} mm
                         </strong>{' '}
                         (Target:{' '}
-                        <strong className="font-mono">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {vBeltResults.targetDeflectionMm.toFixed(1)} mm
                         </strong>{' '}
                         @ {vBeltResults.nominalTestForceN} N)
                       </span>
                       <span>
                         Wrap Angle θ₁:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {vBeltResults.wrapAngleDeg.toFixed(1)}°
                         </strong>
                       </span>
@@ -523,7 +523,7 @@ export function BeltGearSimulator() {
                           className={`font-mono ${
                             vBeltResults.centrifugalWarning
                               ? 'text-rose-600 dark:text-rose-400'
-                              : 'text-slate-900 dark:text-slate-100'
+                              : 'text-[var(--md-on-surface)]'
                           }`}
                         >
                           {vBeltResults.beltSpeedMs.toFixed(1)} m/s
@@ -531,26 +531,26 @@ export function BeltGearSimulator() {
                       </span>
                       <span>
                         Bearing Radial Load:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {vBeltResults.radialBearingLoadN.toFixed(0)} N
                         </strong>
                       </span>
                     </div>
 
                     {/* Standard Belt Length Matcher */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-950/60">
-                      <span className="text-slate-600 dark:text-slate-400">
+                    <div className="flex flex-wrap items-center justify-between gap-2 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3.5 py-2.5">
+                      <span className="text-[var(--md-on-surface-variant)]">
                         {pick(
                           'Nearest Standard Belt:',
                           'Sabuk Standar Terdekat:',
                           '最寄りの標準ベルト:'
                         )}{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {vBeltResults.standardBeltDesignation}
                         </strong>{' '}
                         ({vBeltResults.standardBeltLengthMm} mm)
                       </span>
-                      <span className="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                      <span className="font-mono text-[11px] font-semibold text-[var(--md-primary)]">
                         ΔL = {vBeltResults.beltLengthDeltaMm >= 0 ? '+' : ''}
                         {vBeltResults.beltLengthDeltaMm.toFixed(1)} mm ({pick('Slide C', 'Geser C', '軸間調整 C')} ≈{' '}
                         {vBeltResults.beltLengthDeltaMm / 2 >= 0 ? '+' : ''}
@@ -560,52 +560,52 @@ export function BeltGearSimulator() {
                   </>
                 ) : (
                   <>
-                    <div className="flex flex-wrap gap-x-5 gap-y-1 text-slate-600 dark:text-slate-400">
+                    <div className="flex flex-wrap gap-x-5 gap-y-1 text-[var(--md-on-surface-variant)]">
                       <span>
                         Pitch Diameters:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           d₁={spurResults.pitchDiameter1Mm} mm, d₂=
                           {spurResults.pitchDiameter2Mm} mm
                         </strong>
                       </span>
                       <span>
                         Std. Center C₀:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {spurResults.standardCenterDistanceMm.toFixed(1)} mm
                         </strong>
                       </span>
                       <span>
                         Pitch-Line Vel.:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {spurResults.pitchLineVelocityMs.toFixed(2)} m/s
                         </strong>
                       </span>
                       <span>
                         Input Torque T₁:{' '}
-                        <strong className="font-mono text-slate-900 dark:text-slate-100">
+                        <strong className="font-mono text-[var(--md-on-surface)]">
                           {spurResults.inputTorqueNm.toFixed(1)} N·m
                         </strong>
                       </span>
                     </div>
 
                     {/* AGMA / ISO Tooth Contact & Bending Safety Indicator */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-950/60">
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-slate-600 dark:text-slate-400">
+                    <div className="flex flex-wrap items-center justify-between gap-2 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3.5 py-2.5">
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[var(--md-on-surface-variant)]">
                         <span>
                           {pick('AGMA Bending S_F:', 'Keamanan Tekuk S_F:', 'AGMA曲げ安全率 S_F:')}{' '}
-                          <strong className="font-mono text-slate-900 dark:text-slate-100">
+                          <strong className="font-mono text-[var(--md-on-surface)]">
                             {spurResults.bendingSafetyFactor.toFixed(2)}×
                           </strong>
                         </span>
                         <span>
                           {pick('Contact S_H:', 'Kontak S_H:', '歯面接触 S_H:')}{' '}
-                          <strong className="font-mono text-slate-900 dark:text-slate-100">
+                          <strong className="font-mono text-[var(--md-on-surface)]">
                             {spurResults.contactSafetyFactor.toFixed(2)}×
                           </strong>
                         </span>
                         <span>
                           {pick('Tangential F_t:', 'Gaya Tangensial F_t:', '接線荷重 F_t:')}{' '}
-                          <strong className="font-mono text-slate-900 dark:text-slate-100">
+                          <strong className="font-mono text-[var(--md-on-surface)]">
                             {spurResults.tangentialForceN.toFixed(0)} N
                           </strong>
                         </span>
@@ -634,9 +634,9 @@ export function BeltGearSimulator() {
         </div>
 
         {/* Right: Parameter Controls */}
-        <div className="glass-panel space-y-4 rounded-2xl p-4 shadow-xs lg:col-span-4">
-          <div className="flex items-center justify-between border-b border-slate-200 pb-2.5 dark:border-slate-800">
-            <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
+          <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {driveMode === 'v-belt'
                 ? pick(
                     'V-Belt Drive Parameters',
@@ -649,7 +649,7 @@ export function BeltGearSimulator() {
                     '平歯車パラメータ'
                   )}
             </h3>
-            <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+            <span className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               {pick('Live Tuning', 'Setelan Langsung', 'リアルタイム調整')}
             </span>
           </div>
@@ -659,23 +659,23 @@ export function BeltGearSimulator() {
               {/* V-Belt Cross-Section Selector */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     V-Belt Cross-Section
                   </span>
-                  <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                  <span className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                     D_min = {vBeltResults.minPulleyMm} mm
                   </span>
                 </div>
-                <div className="grid grid-cols-4 gap-1">
+                <div className="grid grid-cols-4 gap-1.5">
                   {BELT_SECTIONS.map((sec) => (
                     <button
                       key={sec}
                       type="button"
                       onClick={() => handleSelectBeltSection(sec)}
-                      className={`rounded-lg border py-1.5 text-xs font-semibold transition-colors ${
+                      className={`rounded-full border py-1.5 text-xs transition-colors ${
                         vBeltParams.beltSection === sec
-                          ? 'border-rose-500 bg-rose-600 text-white dark:bg-rose-500 dark:text-slate-950'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {sec}
@@ -754,8 +754,8 @@ export function BeltGearSimulator() {
                 }
               />
 
-              <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
-                <div className="mb-2 text-xs font-semibold text-rose-600 dark:text-rose-400">
+              <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
+                <div className="mb-2 text-xs font-bold text-[var(--md-primary)]">
                   Tension & Alignment Inspection
                 </div>
                 <div className="space-y-3.5">
@@ -808,7 +808,7 @@ export function BeltGearSimulator() {
                       misalignmentDeg: 0.1,
                     }))
                   }
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                  className="glass-pill rounded-full px-2 py-1.5 text-[11px] font-semibold"
                 >
                   Nominal
                 </button>
@@ -823,7 +823,7 @@ export function BeltGearSimulator() {
                       misalignmentDeg: 0.3,
                     }))
                   }
-                  className="rounded-lg border border-amber-200 bg-amber-50 px-2 py-1.5 text-[11px] font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300"
+                  className="rounded-full border border-amber-300/70 bg-amber-50/90 px-2 py-1.5 text-[11px] font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300"
                 >
                   Loose Belt
                 </button>
@@ -838,7 +838,7 @@ export function BeltGearSimulator() {
                       misalignmentDeg: 1.4,
                     }))
                   }
-                  className="rounded-lg border border-rose-200 bg-rose-50 px-2 py-1.5 text-[11px] font-semibold text-rose-800 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300"
+                  className="rounded-full border border-rose-300/70 bg-rose-50/90 px-2 py-1.5 text-[11px] font-semibold text-rose-800 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300"
                 >
                   Over-Tight
                 </button>
@@ -867,10 +867,10 @@ export function BeltGearSimulator() {
 
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-medium text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-[var(--md-on-surface)]">
                     Gear Module (m)
                   </span>
-                  <span className="rounded-md bg-slate-100 px-2 py-0.5 font-mono font-semibold text-slate-900 dark:bg-slate-800 dark:text-slate-100">
+                  <span className="rounded-full bg-[var(--md-surface-container-high)] px-2.5 py-0.5 font-mono font-bold text-[var(--md-primary)]">
                     {spurParams.moduleMm} mm
                   </span>
                 </div>
@@ -882,10 +882,10 @@ export function BeltGearSimulator() {
                       onClick={() =>
                         setSpurParams((p) => ({ ...p, moduleMm: m }))
                       }
-                      className={`rounded-md border py-1 text-xs font-semibold transition-colors ${
+                      className={`rounded-full border py-1 text-xs transition-colors ${
                         spurParams.moduleMm === m
-                          ? 'border-rose-500 bg-rose-600 text-white dark:bg-rose-500 dark:text-slate-950'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary)] font-bold text-[var(--md-on-primary)]'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] font-semibold text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {m}
@@ -917,8 +917,8 @@ export function BeltGearSimulator() {
                 }
               />
 
-              <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
-                <div className="mb-2 text-xs font-semibold text-rose-600 dark:text-rose-400">
+              <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
+                <div className="mb-2 text-xs font-bold text-[var(--md-primary)]">
                   Center Distance & Backlash Tuning
                 </div>
                 <SliderControl
@@ -941,7 +941,7 @@ export function BeltGearSimulator() {
                   onClick={() =>
                     setSpurParams((p) => ({ ...p, centerOffsetMm: 0.05 }))
                   }
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                  className="glass-pill rounded-full px-2 py-1.5 text-[11px] font-semibold"
                 >
                   Optimal
                 </button>
@@ -950,7 +950,7 @@ export function BeltGearSimulator() {
                   onClick={() =>
                     setSpurParams((p) => ({ ...p, centerOffsetMm: 0.75 }))
                   }
-                  className="rounded-lg border border-amber-200 bg-amber-50 px-2 py-1.5 text-[11px] font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300"
+                  className="rounded-full border border-amber-300/70 bg-amber-50/90 px-2 py-1.5 text-[11px] font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300"
                 >
                   High Backlash
                 </button>
@@ -959,7 +959,7 @@ export function BeltGearSimulator() {
                   onClick={() =>
                     setSpurParams((p) => ({ ...p, centerOffsetMm: -0.2 }))
                   }
-                  className="rounded-lg border border-rose-200 bg-rose-50 px-2 py-1.5 text-[11px] font-semibold text-rose-800 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300"
+                  className="rounded-full border border-rose-300/70 bg-rose-50/90 px-2 py-1.5 text-[11px] font-semibold text-rose-800 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300"
                 >
                   Binding
                 </button>

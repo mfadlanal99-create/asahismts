@@ -66,25 +66,25 @@ export function HardnessMachineSvg({
         oledBezel: '#020617',
         oledGlass: '#090d16',
         oledBorder: '#1e293b',
-        oledText: '#38bdf8',
+        oledText: 'var(--md-primary)',
         oledValue: '#10b981',
         oledMuted: '#64748b',
-        oledAccent: '#f43f5e',
+        oledAccent: 'var(--md-primary)',
         // Buttons
         consoleBg: '#0f172a',
         consoleBorder: '#334155',
-        // Microscope Right Panel
-        insetOuter: '#0f172a',
-        insetInner: '#020617',
-        insetBorder: '#334155',
-        scopeBezel: '#1e293b',
-        scopeGlass: '#030712',
-        reticleLine: '#0284c7',
-        reticleSubtle: '#1e293b',
-        cardBg: '#090d16',
-        textPrimary: '#f8fafc',
-        textSecondary: '#cbd5e1',
-        textMuted: '#64748b',
+        // Microscope Right Panel — harmonized with Material You theme
+        insetOuter: 'var(--md-surface-container)',
+        insetInner: 'var(--md-surface-container-low)',
+        insetBorder: 'var(--md-outline-variant)',
+        scopeBezel: 'var(--md-surface-container-high)',
+        scopeGlass: '#0b0e14',
+        reticleLine: 'var(--md-primary)',
+        reticleSubtle: 'var(--md-outline-variant)',
+        cardBg: 'var(--md-surface-container-low)',
+        textPrimary: 'var(--md-on-surface)',
+        textSecondary: 'var(--md-on-surface)',
+        textMuted: 'var(--md-on-surface-variant)',
       };
     }
     return {
@@ -111,25 +111,25 @@ export function HardnessMachineSvg({
       oledBezel: '#1e293b',
       oledGlass: '#090d16',
       oledBorder: '#334155',
-      oledText: '#38bdf8',
+      oledText: 'var(--md-primary)',
       oledValue: '#10b981',
       oledMuted: '#94a3b8',
-      oledAccent: '#f43f5e',
+      oledAccent: 'var(--md-primary)',
       // Buttons
       consoleBg: '#e2e8f0',
       consoleBorder: '#94a3b8',
-      // Microscope Right Panel
-      insetOuter: '#f8fafc',
-      insetInner: '#ffffff',
-      insetBorder: '#cbd5e1',
-      scopeBezel: '#e2e8f0',
-      scopeGlass: '#f8fafc',
-      reticleLine: '#0284c7',
-      reticleSubtle: '#e2e8f0',
-      cardBg: '#f1f5f9',
-      textPrimary: '#0f172a',
-      textSecondary: '#334155',
-      textMuted: '#64748b',
+      // Microscope Right Panel — harmonized with Material You theme
+      insetOuter: 'var(--md-surface-container)',
+      insetInner: 'var(--md-surface-container-low)',
+      insetBorder: 'var(--md-outline-variant)',
+      scopeBezel: 'var(--md-surface-container-high)',
+      scopeGlass: 'var(--md-surface-container-lowest)',
+      reticleLine: 'var(--md-primary)',
+      reticleSubtle: 'var(--md-outline-variant)',
+      cardBg: 'var(--md-surface-container-low)',
+      textPrimary: 'var(--md-on-surface)',
+      textSecondary: 'var(--md-on-surface)',
+      textMuted: 'var(--md-on-surface-variant)',
     };
   }, [isDark]);
 
@@ -1041,16 +1041,17 @@ export function HardnessMachineSvg({
             y="0"
             width="250"
             height="422"
-            rx="6"
+            rx="16"
             fill={c.insetOuter}
             stroke={c.insetBorder}
-            strokeWidth="1.5"
+            strokeWidth="1.4"
           />
 
           {/* Header Title Bar */}
-          <rect x="0" y="0" width="250" height="28" rx="6" fill={c.scopeBezel} />
+          <rect x="0" y="0" width="250" height="28" rx="16" fill={c.scopeBezel} />
+          <rect x="0" y="16" width="250" height="12" fill={c.scopeBezel} />
           <line x1="0" y1="28" x2="250" y2="28" stroke={c.insetBorder} strokeWidth="1" />
-          <circle cx="16" cy="14" r="3.2" fill="#38bdf8" />
+          <circle cx="16" cy="14" r="3.4" fill="var(--md-primary)" />
           <text
             x="26"
             y="17.5"
@@ -1058,7 +1059,7 @@ export function HardnessMachineSvg({
             fontSize="7.8"
             fontWeight="bold"
             letterSpacing="0.4"
-            fontFamily="sans-serif"
+            fontFamily="var(--font-sans)"
           >
             {scaleConfig.id === 'HRC' || scaleConfig.id === 'HRB'
               ? pick('INDENTATION CROSS-SECTION (200×)', 'PENAMPANG KEDALAMAN (200×)', '圧痕断面・侵入深さ (200×)')
@@ -1069,8 +1070,8 @@ export function HardnessMachineSvg({
           <g id="microscope-eyepiece" transform="translate(125, 138)">
             {/* Outer Knurled Objective Bezel */}
             <circle cx="0" cy="0" r="95" fill={c.scopeBezel} stroke={c.insetBorder} strokeWidth="2" />
-            {/* Dark Optical Tube / Field */}
-            <circle cx="0" cy="0" r="88" fill={c.scopeGlass} stroke="#334155" strokeWidth="1" />
+            {/* Optical Tube / Field */}
+            <circle cx="0" cy="0" r="88" fill={c.scopeGlass} stroke={c.insetBorder} strokeWidth="1" />
             {/* Antireflective Lens Glow */}
             <circle cx="0" cy="0" r="88" fill="url(#opticalGlassGlow)" />
 
@@ -1080,12 +1081,12 @@ export function HardnessMachineSvg({
             <circle cx="0" cy="0" r="25" fill="none" stroke={c.reticleSubtle} strokeWidth="0.8" strokeDasharray="2 3" />
 
             {/* Precision Optical Crosshairs with Graduation Ticks */}
-            <line x1="-88" y1="0" x2="88" y2="0" stroke={c.reticleLine} strokeWidth="0.8" />
-            <line x1="0" y1="-88" x2="0" y2="88" stroke={c.reticleLine} strokeWidth="0.8" />
+            <line x1="-88" y1="0" x2="88" y2="0" stroke={c.reticleLine} strokeOpacity="0.65" strokeWidth="0.8" />
+            <line x1="0" y1="-88" x2="0" y2="88" stroke={c.reticleLine} strokeOpacity="0.65" strokeWidth="0.8" />
             {[-60, -45, -30, -15, 15, 30, 45, 60].map((pos) => (
               <g key={pos}>
-                <line x1={pos} y1="-3" x2={pos} y2="3" stroke={c.reticleLine} strokeWidth="0.8" />
-                <line x1="-3" y1={pos} x2="3" y2={pos} stroke={c.reticleLine} strokeWidth="0.8" />
+                <line x1={pos} y1="-3" x2={pos} y2="3" stroke={c.reticleLine} strokeOpacity="0.7" strokeWidth="0.8" />
+                <line x1="-3" y1={pos} x2="3" y2={pos} stroke={c.reticleLine} strokeOpacity="0.7" strokeWidth="0.8" />
               </g>
             ))}
 
@@ -1095,8 +1096,8 @@ export function HardnessMachineSvg({
                 {/* Specimen Substrate Below Surface */}
                 <rect x="-82" y="0" width="164" height="78" fill={material.color} opacity={0.65} />
                 {/* Pristine Specimen Datum Surface (h₀) */}
-                <line x1="-82" y1="0" x2="82" y2="0" stroke="#f8fafc" strokeWidth="1.6" />
-                <text x="-76" y="-7" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+                <line x1="-82" y1="0" x2="82" y2="0" stroke={c.textPrimary} strokeWidth="1.6" />
+                <text x="-76" y="-7" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
                   SURFACE DATUM (h₀)
                 </text>
 
@@ -1109,8 +1110,8 @@ export function HardnessMachineSvg({
                         <polygon
                           points={`0,${Math.min(52, geometry.depthMm * 420)} -34,0 34,0`}
                           fill={isDark ? '#090d16' : '#cbd5e1'}
-                          stroke="#f43f5e"
-                          strokeWidth="1.2"
+                          stroke="var(--md-primary)"
+                          strokeWidth="1.4"
                         />
                         {/* Lip */}
                         <path d="M -34 0 Q -38 -2, -42 0 Z" fill={material.finishColor} />
@@ -1121,8 +1122,8 @@ export function HardnessMachineSvg({
                       <path
                         d={`M -38 0 Q 0 ${Math.min(52, geometry.depthMm * 360)} 38 0 Z`}
                         fill={isDark ? '#090d16' : '#cbd5e1'}
-                        stroke="#f43f5e"
-                        strokeWidth="1.2"
+                        stroke="var(--md-primary)"
+                        strokeWidth="1.4"
                       />
                     )}
 
@@ -1132,34 +1133,34 @@ export function HardnessMachineSvg({
                       y1="0"
                       x2="48"
                       y2={Math.min(52, geometry.depthMm * 420)}
-                      stroke="#f43f5e"
-                      strokeWidth="1.2"
+                      stroke="var(--md-primary)"
+                      strokeWidth="1.3"
                     />
-                    <polygon points={`48,0 45,6 51,6`} fill="#f43f5e" />
+                    <polygon points={`48,0 45,6 51,6`} fill="var(--md-primary)" />
                     <polygon
                       points={`48,${Math.min(52, geometry.depthMm * 420)} 45,${Math.min(52, geometry.depthMm * 420) - 6} 51,${Math.min(52, geometry.depthMm * 420) - 6}`}
-                      fill="#f43f5e"
+                      fill="var(--md-primary)"
                     />
 
                     {/* Non-overlapping Pill Badge for Depth Readout */}
                     <rect
                       x="54"
                       y={Math.max(4, Math.min(28, (geometry.depthMm * 420) / 2 - 9))}
-                      width="42"
+                      width="44"
                       height="17"
-                      rx="3"
-                      fill={isDark ? '#090d16' : '#ffffff'}
-                      stroke="#f43f5e"
+                      rx="8.5"
+                      fill="var(--md-primary-container)"
+                      stroke="var(--md-primary)"
                       strokeWidth="1"
                     />
                     <text
-                      x="75"
-                      y={Math.max(4, Math.min(28, (geometry.depthMm * 420) / 2 - 9)) + 12}
-                      fill="#f43f5e"
-                      fontSize="6.8"
+                      x="76"
+                      y={Math.max(4, Math.min(28, (geometry.depthMm * 420) / 2 - 9)) + 11.5}
+                      fill="var(--md-on-primary-container)"
+                      fontSize="6.6"
                       fontWeight="bold"
                       textAnchor="middle"
-                      fontFamily="monospace"
+                      fontFamily="var(--font-mono)"
                     >
                       {`h=${(geometry.depthMm * 1000).toFixed(0)}µm`}
                     </text>
@@ -1177,7 +1178,7 @@ export function HardnessMachineSvg({
                   cy="0"
                   r={Math.min(68, Math.max(16, geometry.diameterMm * 14.5))}
                   fill={isDark ? '#1e293b' : '#cbd5e1'}
-                  stroke="#38bdf8"
+                  stroke="var(--md-primary)"
                   strokeWidth="1.6"
                 />
                 <circle
@@ -1195,7 +1196,7 @@ export function HardnessMachineSvg({
                   y1="-75"
                   x2={-Math.min(68, Math.max(16, geometry.diameterMm * 14.5))}
                   y2="75"
-                  stroke="#0284c7"
+                  stroke="var(--md-primary)"
                   strokeWidth="1"
                   strokeDasharray="3 3"
                 />
@@ -1204,7 +1205,7 @@ export function HardnessMachineSvg({
                   y1="-75"
                   x2={Math.min(68, Math.max(16, geometry.diameterMm * 14.5))}
                   y2="75"
-                  stroke="#0284c7"
+                  stroke="var(--md-primary)"
                   strokeWidth="1"
                   strokeDasharray="3 3"
                 />
@@ -1215,37 +1216,37 @@ export function HardnessMachineSvg({
                   y1="-56"
                   x2={Math.min(68, Math.max(16, geometry.diameterMm * 14.5))}
                   y2="-56"
-                  stroke="#0284c7"
+                  stroke="var(--md-primary)"
                   strokeWidth="1.2"
                 />
                 <polygon
                   points={`${-Math.min(68, Math.max(16, geometry.diameterMm * 14.5))},-56 ${-Math.min(68, Math.max(16, geometry.diameterMm * 14.5)) + 6},-59 ${-Math.min(68, Math.max(16, geometry.diameterMm * 14.5)) + 6},-53`}
-                  fill="#0284c7"
+                  fill="var(--md-primary)"
                 />
                 <polygon
                   points={`${Math.min(68, Math.max(16, geometry.diameterMm * 14.5))},-56 ${Math.min(68, Math.max(16, geometry.diameterMm * 14.5)) - 6},-59 ${Math.min(68, Math.max(16, geometry.diameterMm * 14.5)) - 6},-53`}
-                  fill="#0284c7"
+                  fill="var(--md-primary)"
                 />
 
                 {/* Non-overlapping Diameter Pill */}
                 <rect
-                  x="-32"
+                  x="-34"
                   y="-70"
-                  width="64"
+                  width="68"
                   height="16"
-                  rx="3"
-                  fill={isDark ? '#090d16' : '#ffffff'}
-                  stroke="#0284c7"
+                  rx="8"
+                  fill="var(--md-primary-container)"
+                  stroke="var(--md-primary)"
                   strokeWidth="1"
                 />
                 <text
                   x="0"
-                  y="-59"
-                  fill="#0284c7"
+                  y="-59.5"
+                  fill="var(--md-on-primary-container)"
                   fontSize="7"
                   fontWeight="bold"
                   textAnchor="middle"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {`d = ${geometry.diameterMm.toFixed(2)} mm`}
                 </text>
@@ -1259,8 +1260,8 @@ export function HardnessMachineSvg({
                 <polygon
                   points={`0,${-Math.min(64, geometry.diameterMm * 115)} ${Math.min(64, geometry.diameterMm * 115)},0 0,${Math.min(64, geometry.diameterMm * 115)} ${-Math.min(64, geometry.diameterMm * 115)},0`}
                   fill={isDark ? '#1e293b' : '#cbd5e1'}
-                  stroke="#0284c7"
-                  strokeWidth="1.4"
+                  stroke="var(--md-primary)"
+                  strokeWidth="1.5"
                 />
                 {/* Internal Pyramid Ridge Crosshairs */}
                 <line
@@ -1268,58 +1269,60 @@ export function HardnessMachineSvg({
                   y1="0"
                   x2={Math.min(64, geometry.diameterMm * 115)}
                   y2="0"
-                  stroke="#0369a1"
-                  strokeWidth="0.8"
+                  stroke="var(--md-primary)"
+                  strokeWidth="0.9"
                 />
                 <line
                   x1="0"
                   y1={-Math.min(64, geometry.diameterMm * 115)}
                   x2="0"
                   y2={Math.min(64, geometry.diameterMm * 115)}
-                  stroke="#0369a1"
-                  strokeWidth="0.8"
+                  stroke="var(--md-primary)"
+                  strokeWidth="0.9"
                 />
 
                 {/* Shaded Triangular Facets */}
                 <polygon
                   points={`0,${-Math.min(64, geometry.diameterMm * 115)} ${Math.min(64, geometry.diameterMm * 115)},0 0,0`}
-                  fill="rgba(56, 189, 248, 0.25)"
+                  fill="var(--md-primary-container)"
+                  fillOpacity="0.45"
                 />
                 <polygon
                   points={`0,${Math.min(64, geometry.diameterMm * 115)} ${-Math.min(64, geometry.diameterMm * 115)},0 0,0`}
-                  fill="rgba(2, 132, 199, 0.35)"
+                  fill="var(--md-primary)"
+                  fillOpacity="0.28"
                 />
 
                 {/* Diagonal Readout Callout Box */}
                 <rect
-                  x="-32"
+                  x="-34"
                   y="46"
-                  width="64"
+                  width="68"
                   height="24"
-                  rx="3"
-                  fill={isDark ? '#090d16' : '#ffffff'}
-                  stroke="#0284c7"
+                  rx="8"
+                  fill="var(--md-primary-container)"
+                  stroke="var(--md-primary)"
                   strokeWidth="1"
                 />
                 <text
                   x="0"
                   y="57"
-                  fill="#0284c7"
+                  fill="var(--md-on-primary-container)"
                   fontSize="6"
                   fontWeight="bold"
                   textAnchor="middle"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {`d₁ = ${(geometry.d1Mm ?? geometry.diameterMm).toFixed(3)} mm`}
                 </text>
                 <text
                   x="0"
                   y="66"
-                  fill="#0284c7"
+                  fill="var(--md-on-primary-container)"
                   fontSize="6"
                   fontWeight="bold"
                   textAnchor="middle"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-mono)"
                 >
                   {`d₂ = ${(geometry.d2Mm ?? geometry.diameterMm).toFixed(3)} mm`}
                 </text>
@@ -1334,69 +1337,69 @@ export function HardnessMachineSvg({
               y="0"
               width="222"
               height="156"
-              rx="4"
+              rx="12"
               fill={c.cardBg}
               stroke={c.insetBorder}
               strokeWidth="1"
             />
 
             {/* Spec Title */}
-            <text x="12" y="16" fill={c.textPrimary} fontSize="7.2" fontWeight="bold" fontFamily="sans-serif">
+            <text x="12" y="16" fill={c.textPrimary} fontSize="7.2" fontWeight="bold" fontFamily="var(--font-sans)">
               {pick('METROLOGY SPECIFICATIONS', 'SPESIFIKASI METROLOGI', '計測・規格仕様')}
             </text>
             <line x1="12" y1="22" x2="210" y2="22" stroke={c.insetBorder} strokeWidth="0.8" />
 
             {/* Rows with Generous Clean Spacing */}
-            <text x="12" y="36" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="36" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               STANDARD:
             </text>
-            <text x="210" y="36" fill={c.textPrimary} fontSize="6" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="36" fill={c.textPrimary} fontSize="6" textAnchor="end" fontFamily="var(--font-mono)">
               {scaleConfig.standard}
             </text>
 
-            <text x="12" y="50" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="50" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               INDENTER:
             </text>
-            <text x="210" y="50" fill="#f43f5e" fontSize="5.5" fontWeight="bold" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="50" fill="var(--md-primary)" fontSize="5.5" fontWeight="bold" textAnchor="end" fontFamily="var(--font-mono)">
               {scaleConfig.indenterName}
             </text>
 
-            <text x="12" y="64" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="64" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               TOTAL LOAD:
             </text>
-            <text x="210" y="64" fill="#f59e0b" fontSize="6.5" fontWeight="bold" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="64" fill="var(--md-primary)" fontSize="6.5" fontWeight="bold" textAnchor="end" fontFamily="var(--font-mono)">
               {scaleConfig.totalLoadKgf} kgf ({((scaleConfig.totalLoadKgf * 9.80665) / 1000).toFixed(2)} kN)
             </text>
 
-            <text x="12" y="78" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="78" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               DWELL DURATION:
             </text>
-            <text x="210" y="78" fill={c.textPrimary} fontSize="6" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="78" fill={c.textPrimary} fontSize="6" textAnchor="end" fontFamily="var(--font-mono)">
               {totalDwellSec} seconds
             </text>
 
             <line x1="12" y1="86" x2="210" y2="86" stroke={c.insetBorder} strokeWidth="0.8" />
 
-            <text x="12" y="99" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="99" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               FORMULA:
             </text>
-            <text x="210" y="99" fill="#38bdf8" fontSize="5.5" fontWeight="bold" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="99" fill="var(--md-primary)" fontSize="5.5" fontWeight="bold" textAnchor="end" fontFamily="var(--font-mono)">
               {scaleConfig.readoutFormula}
             </text>
 
-            <text x="12" y="113" fill={c.textMuted} fontSize="6" fontFamily="monospace">
+            <text x="12" y="113" fill={c.textMuted} fontSize="6" fontFamily="var(--font-mono)">
               CALIBRATION ENVELOPE:
             </text>
-            <text x="210" y="113" fill="#10b981" fontSize="6" textAnchor="end" fontFamily="monospace">
+            <text x="210" y="113" fill="#10b981" fontSize="6" textAnchor="end" fontFamily="var(--font-mono)">
               {scaleConfig.minRecommended} – {scaleConfig.maxRecommended} {scaleConfig.unit}
             </text>
 
             {/* Material Treatment Note Container */}
-            <rect x="10" y="121" width="202" height="28" rx="2" fill={isDark ? '#0f172a' : '#e2e8f0'} />
-            <text x="16" y="132" fill={c.textSecondary} fontSize="5.2" fontWeight="bold" fontFamily="sans-serif">
+            <rect x="10" y="121" width="202" height="28" rx="8" fill="var(--md-surface-container-high)" />
+            <text x="16" y="132" fill={c.textSecondary} fontSize="5.2" fontWeight="bold" fontFamily="var(--font-sans)">
               {material.name}
             </text>
-            <text x="16" y="142" fill={c.textMuted} fontSize="4.6" fontFamily="sans-serif">
+            <text x="16" y="142" fill={c.textMuted} fontSize="4.6" fontFamily="var(--font-sans)">
               {material.treatment}
             </text>
           </g>

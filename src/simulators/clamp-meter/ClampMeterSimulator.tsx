@@ -44,29 +44,29 @@ export function ClampMeterSimulator() {
 
           {/* Diagnostic Readout Banner */}
           <div
-            className={`glass-panel rounded-2xl p-4 border transition-colors ${
+            className={`glass-panel rounded-[28px] border p-4 sm:p-5 transition-colors ${
               snapshot.nemaStatus === 'critical'
                 ? 'border-rose-500/60 bg-rose-50/70 dark:bg-rose-950/30'
                 : snapshot.nemaStatus === 'derate'
                   ? 'border-amber-500/60 bg-amber-50/70 dark:bg-amber-950/20'
-                  : 'border-slate-200 dark:border-slate-700/70'
+                  : 'border-[var(--md-outline-variant)]/60'
             }`}
           >
             <div className="flex items-start gap-3">
               {snapshot.nemaStatus === 'critical' ? (
-                <AlertTriangle className="h-5 w-5 text-rose-500 shrink-0 mt-0.5" />
+                <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-rose-500" />
               ) : (
-                <Radio className="h-5 w-5 text-sky-500 shrink-0 mt-0.5" />
+                <Radio className="mt-0.5 h-5 w-5 shrink-0 text-[var(--md-primary)]" />
               )}
               <div className="space-y-1">
-                <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Power & Unbalance Analysis',
                     'Analisis Daya & Ketidakseimbangan',
                     '電力・不平衡診断'
                   )}
                 </div>
-                <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                <p className="text-sm leading-relaxed text-[var(--md-on-surface)]">
                   {pick(
                     snapshot.diagnosticNote.en,
                     snapshot.diagnosticNote.id,
@@ -81,18 +81,18 @@ export function ClampMeterSimulator() {
         {/* RIGHT: Controls & Analyzer Telemetry */}
         <div className="lg:col-span-5 space-y-4">
           {/* Clamp Position & Inrush Toggle */}
-          <div className="glass-panel rounded-2xl p-5 space-y-4">
+          <div className="glass-panel space-y-4 rounded-[28px] p-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Clamp Jaw Target', 'Target Penjepit Clamp', 'クランプ対象導体')}
               </h3>
               <button
                 type="button"
                 onClick={() => setInrushEnabled((prev) => !prev)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold border transition cursor-pointer flex items-center gap-1.5 ${
+                className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                   inrushEnabled
-                    ? 'bg-amber-500 text-slate-950 border-amber-600'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700'
+                    ? 'm3-btn-filled'
+                    : 'glass-pill'
                 }`}
               >
                 <Zap className="h-3.5 w-3.5" />
@@ -106,10 +106,10 @@ export function ClampMeterSimulator() {
                   key={opt.id}
                   type="button"
                   onClick={() => setConductor(opt.id)}
-                  className={`py-2 px-2 rounded-xl text-xs font-bold border transition cursor-pointer ${
+                  className={`rounded-full border px-2 py-2 text-xs font-bold transition cursor-pointer ${
                     conductor === opt.id
-                      ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-sky-500 dark:text-slate-950 dark:border-sky-400 shadow-sm'
-                      : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-sky-400'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-2xs'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   {opt.label}
@@ -120,10 +120,10 @@ export function ClampMeterSimulator() {
             {/* Motor Load Slider */}
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-300">
+                <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Mechanical Shaft Load', 'Beban Poros Mekanis', '機械軸負荷')}
                 </span>
-                <span className="font-mono text-sky-600 dark:text-sky-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {loadPct}%
                 </span>
               </div>
@@ -134,15 +134,15 @@ export function ClampMeterSimulator() {
                 step={5}
                 value={loadPct}
                 onChange={(e) => setLoadPct(Number(e.target.value))}
-                className="w-full cursor-pointer"
+                className="w-full"
               />
             </div>
           </div>
 
           {/* 3-Phase Power & NEMA MG-1 Telemetry */}
-          <div className="glass-panel rounded-2xl p-5 space-y-3">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <Activity className="h-4 w-4 text-sky-500" />
+          <div className="glass-panel space-y-3 rounded-[28px] p-5">
+            <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+              <Activity className="h-4 w-4 text-[var(--md-primary)]" />
               {pick(
                 '3-Phase Power & NEMA MG-1',
                 'Daya 3-Fasa & NEMA MG-1',
@@ -151,36 +151,36 @@ export function ClampMeterSimulator() {
             </h3>
 
             <div className="grid grid-cols-2 gap-2.5 text-xs">
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-3">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Active Power (P)', 'Daya Aktif (P)', '有効電力 (P)')}
                 </div>
-                <div className="text-base font-bold font-mono text-sky-600 dark:text-sky-400">
+                <div className="font-mono text-base font-bold text-[var(--md-primary)]">
                   {snapshot.activePowerKw.toFixed(2)} kW
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-3">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Apparent Power (S)', 'Daya Semu (S)', '皮相電力 (S)')}
                 </div>
-                <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {snapshot.apparentPowerKva.toFixed(2)} kVA
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-3">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Power Factor (cos φ)', 'Faktor Daya (PF)', '力率 (cos φ)')}
                 </div>
-                <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {snapshot.powerFactor.toFixed(2)}
                 </div>
               </div>
-              <div className="rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/70 p-3">
-                <div className="text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+                <div className="text-[var(--md-on-surface-variant)]">
                   {pick('Current Unbalance', 'Ketidakseimbangan Arus', '電流不平衡率')}
                 </div>
                 <div
-                  className={`text-base font-bold font-mono ${
+                  className={`font-mono text-base font-bold ${
                     snapshot.nemaStatus === 'critical'
                       ? 'text-rose-500'
                       : snapshot.nemaStatus === 'derate'
@@ -195,8 +195,8 @@ export function ClampMeterSimulator() {
           </div>
 
           {/* Fault Scenario Selector */}
-          <div className="glass-panel rounded-2xl p-5 space-y-3">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          <div className="glass-panel space-y-3 rounded-[28px] p-5">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Feeder Fault Scenario', 'Skenario Gangguan Feeder', 'フィーダ故障シナリオ')}
             </h3>
             <div className="space-y-2">
@@ -205,10 +205,10 @@ export function ClampMeterSimulator() {
                   key={sc.id}
                   type="button"
                   onClick={() => setFault(sc.id)}
-                  className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold border transition cursor-pointer ${
+                  className={`w-full rounded-[20px] border px-3.5 py-2.5 text-left text-xs font-semibold transition cursor-pointer ${
                     fault === sc.id
-                      ? 'bg-[#001F6B] text-white border-[#002D9C] dark:bg-sky-500/20 dark:text-sky-300 dark:border-sky-500/50'
-                      : 'bg-white/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700 hover:border-sky-400'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                   }`}
                 >
                   {pick(sc.en, sc.idLabel, sc.ja)}

@@ -51,11 +51,11 @@ export function TroubleshootingPanel({
   };
 
   return (
-    <div className="rounded-2xl border border-rose-200 bg-rose-50/50 p-4 shadow-xs dark:border-rose-500/30 dark:bg-rose-950/20">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rose-200/80 pb-3 dark:border-rose-500/20">
+    <div className="glass-panel rounded-[28px] border border-[var(--md-primary)]/35 p-4 sm:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-3">
         <div className="flex items-center gap-2">
-          <Wrench className="h-4 w-4 text-rose-600 dark:text-rose-400" />
-          <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+          <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick(
               'Field Drive Troubleshooting Lab',
               'Lab Pemecahan Masalah Penggerak Lapangan',
@@ -63,7 +63,7 @@ export function TroubleshootingPanel({
             )}
           </h3>
           {isBlindMode && activeFault && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-800 dark:bg-amber-500/20 dark:text-amber-300">
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 dark:text-amber-300">
               <EyeOff className="h-3 w-3" />
               {pick('Blind Fault Active', 'Mode Gangguan Acak', 'ブラインド故障中')}
             </span>
@@ -74,7 +74,7 @@ export function TroubleshootingPanel({
           <button
             type="button"
             onClick={handleRandomBlind}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-rose-700 dark:bg-rose-500 dark:text-slate-950 dark:hover:bg-rose-400"
+            className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
           >
             <Shuffle className="h-3.5 w-3.5" />
             {pick('Blind Fault Challenge', 'Tantangan Gangguan Acak', 'ブラインド故障診断')}
@@ -82,7 +82,7 @@ export function TroubleshootingPanel({
           <button
             type="button"
             onClick={onExitTroubleshooting}
-            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+            className="glass-pill rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             {pick('Exit Lab', 'Keluar Lab', '実習終了')}
           </button>
@@ -98,10 +98,10 @@ export function TroubleshootingPanel({
               key={fault.id}
               type="button"
               onClick={() => onSelectFault(fault, false)}
-              className={`rounded-xl border px-3 py-2 text-left text-xs font-semibold transition-colors ${
+              className={`rounded-[20px] border px-3.5 py-2.5 text-left text-xs font-semibold transition-colors ${
                 selected
-                  ? 'border-rose-500 bg-white text-rose-700 shadow-xs dark:border-rose-400 dark:bg-slate-900 dark:text-rose-300'
-                  : 'border-slate-200 bg-white/80 text-slate-700 hover:border-rose-300 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-300'
+                  ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
               }`}
             >
               {pick(fault.title, fault.titleId, fault.titleJa)}
@@ -112,9 +112,9 @@ export function TroubleshootingPanel({
 
       {/* Active Fault Inspection & Diagnosis */}
       {activeFault && (
-        <div className="mt-3 space-y-3 rounded-xl border border-slate-200 bg-white p-3.5 dark:border-slate-800 dark:bg-slate-900/80">
+        <div className="mt-3 space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+            <div className="text-xs font-semibold text-[var(--md-on-surface)]">
               {isBlindMode ? (
                 <span className="inline-flex items-center gap-1.5 text-amber-700 dark:text-amber-300">
                   <HelpCircle className="h-3.5 w-3.5" />
@@ -141,13 +141,13 @@ export function TroubleshootingPanel({
           </div>
 
           {!isBlindMode && (
-            <p className="text-xs text-slate-600 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 activeFault.symptomSummary,
                 activeFault.symptomSummaryId,
                 activeFault.symptomSummaryJa
               )}{' '}
-              <span className="font-medium text-slate-800 dark:text-slate-200">
+              <span className="font-semibold text-[var(--md-on-surface)]">
                 {pick('Fix:', 'Perbaikan:', '対処法:')}{' '}
                 {pick(activeFault.fixHint, activeFault.fixHintId, activeFault.fixHintJa)}
               </span>
@@ -164,12 +164,12 @@ export function TroubleshootingPanel({
                       key={f.id}
                       type="button"
                       onClick={() => onGuessFault(f.id)}
-                      className={`rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                      className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors ${
                         picked
                           ? f.id === activeFault.id
                             ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300'
                             : 'border-rose-500 bg-rose-50 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]'
                       }`}
                     >
                       {pick(f.title, f.titleId, f.titleJa)}

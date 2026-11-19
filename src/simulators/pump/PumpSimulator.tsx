@@ -68,9 +68,9 @@ export function PumpSimulator() {
   return (
     <div className="space-y-4">
       {/* Preset & Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 glass-panel rounded-2xl p-3 ">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
           </span>
           {PUMP_PRESETS.map((preset) => {
@@ -81,10 +81,10 @@ export function PumpSimulator() {
                 type="button"
                 onClick={() => applyPreset(preset.id)}
                 title={preset.description}
-                className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-xs transition ${
                   active
-                    ? 'bg-cyan-600 text-white shadow-xs dark:bg-cyan-500 dark:text-slate-950'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'm3-btn-filled font-bold'
+                    : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
                 }`}
               >
                 {preset.label}
@@ -96,7 +96,7 @@ export function PumpSimulator() {
         <button
           type="button"
           onClick={resetAll}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+          className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           {pick('Reset', 'Reset', 'リセット')}
@@ -106,10 +106,10 @@ export function PumpSimulator() {
       {/* Diagnostic Alert Banner */}
       {op.condition !== 'optimal' ? (
         <div
-          className={`flex items-start gap-3 rounded-2xl border p-3.5 text-sm ${
+          className={`flex items-start gap-3 rounded-[24px] border p-4 text-sm ${
             op.condition === 'cavitation' || op.condition === 'deadhead'
-              ? 'border-red-200 bg-red-50 text-red-900 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200'
-              : 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200'
+              ? 'border-rose-300/70 bg-rose-50/90 text-rose-900 dark:border-rose-500/35 dark:bg-rose-950/35 dark:text-rose-200'
+              : 'border-amber-300/70 bg-amber-50/90 text-amber-900 dark:border-amber-500/35 dark:bg-amber-950/35 dark:text-amber-200'
           }`}
         >
           <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
@@ -140,7 +140,7 @@ export function PumpSimulator() {
                   '過大流量運転 (> 120% BEP) — 高NPSHr・モータ過負荷リスク'
                 )}
             </div>
-            <div className="mt-0.5 text-xs opacity-90">
+            <div className="mt-0.5 font-mono text-xs opacity-90">
               {op.condition === 'cavitation' &&
                 `NPSHa (${op.npshaM.toFixed(2)} m) < NPSHr (${op.npshrM.toFixed(2)} m). Pv = ${op.vaporPressureKpa.toFixed(1)} kPa.`}
               {op.condition === 'deadhead' &&
@@ -153,7 +153,7 @@ export function PumpSimulator() {
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-2.5 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-xs font-medium text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+        <div className="flex items-center gap-2.5 rounded-[24px] border border-emerald-300/70 bg-emerald-50/90 px-4 py-3 text-xs font-medium text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/35 dark:text-emerald-200">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <span>
             {pick(
@@ -168,38 +168,38 @@ export function PumpSimulator() {
       {/* Live KPI Readouts */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <KpiCard
-          icon={<Droplets className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />}
+          icon={<Droplets className="h-4 w-4 text-[var(--md-primary)]" />}
           label={pick('Flow Rate (Q)', 'Laju Aliran (Q)', '流量 (Q)')}
           value={`${op.flowM3h.toFixed(1)} m³/h`}
           sub={`BEP: ${op.bepFlowM3h.toFixed(1)} m³/h`}
         />
         <KpiCard
-          icon={<Gauge className="h-4 w-4 text-amber-600 dark:text-amber-400" />}
+          icon={<Gauge className="h-4 w-4 text-[var(--md-primary)]" />}
           label={pick('Total Head (H)', 'Total Head (H)', '全揚程 (H)')}
           value={`${op.headM.toFixed(1)} m`}
           sub={`Shutoff: ${op.shutoffHeadM.toFixed(1)} m`}
         />
         <KpiCard
-          icon={<Zap className="h-4 w-4 text-violet-600 dark:text-violet-400" />}
+          icon={<Zap className="h-4 w-4 text-[var(--md-primary)]" />}
           label={pick('Shaft Power', 'Daya Poros', '軸動力')}
           value={`${op.shaftPowerKw.toFixed(2)} kW`}
           sub={`Hyd: ${op.hydraulicPowerKw.toFixed(2)} kW`}
         />
         <KpiCard
-          icon={<Wind className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
+          icon={<Wind className="h-4 w-4 text-[var(--md-primary)]" />}
           label={pick('Efficiency (η)', 'Efisiensi (η)', '効率 (η)')}
           value={`${op.efficiencyPct.toFixed(1)} %`}
           sub="Max: 82.0 %"
         />
         <KpiCard
-          icon={<Thermometer className="h-4 w-4 text-sky-600 dark:text-sky-400" />}
+          icon={<Thermometer className={`h-4 w-4 ${op.isCavitating ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label="NPSHa / NPSHr"
           value={`${op.npshaM.toFixed(2)} / ${op.npshrM.toFixed(2)} m`}
           sub={`Margin: ${op.npshMarginM >= 0 ? '+' : ''}${op.npshMarginM.toFixed(2)} m`}
           alert={op.isCavitating}
         />
         <KpiCard
-          icon={<AlertTriangle className="h-4 w-4 text-slate-600 dark:text-slate-400" />}
+          icon={<AlertTriangle className={`h-4 w-4 ${op.sealRisk === 'critical' ? 'text-rose-500' : 'text-[var(--md-on-surface-variant)]'}`} />}
           label={pick('Seal & Flanges', 'Seal & Flensa', 'シール・圧力')}
           value={op.sealRisk.toUpperCase()}
           sub={`Ps ${op.suctionPressureKpa.toFixed(0)} / Pd ${op.dischargePressureKpa.toFixed(0)} kPa`}
@@ -211,16 +211,16 @@ export function PumpSimulator() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Test Rig + Controls */}
         <div className="space-y-4 lg:col-span-6">
-          <div className="glass-panel rounded-2xl p-4 ">
-            <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
                   'Interactive Pump Test Rig',
                   'Rig Uji Pompa Interaktif',
                   'インタラクティブ・ポンプ試験装置'
                 )}
               </h3>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 Pv = {op.vaporPressureKpa.toFixed(2)} kPa · ρ = {op.densityKgM3.toFixed(0)} kg/m³
               </span>
             </div>
@@ -230,19 +230,19 @@ export function PumpSimulator() {
           </div>
 
           {/* Sliders & Pump Configuration */}
-          <div className="glass-panel rounded-2xl p-4 ">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('Rig Controls', 'Kontrol Rig', '運転パラメータ')}
               </h3>
-              <div className="inline-flex rounded-lg border border-slate-200 bg-slate-100 p-0.5 dark:border-slate-700 dark:bg-slate-800">
+              <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 <button
                   type="button"
                   onClick={() => updateParam('parallelPumps', false)}
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                  className={`rounded-full px-3 py-1 text-[11px] transition ${
                     !params.parallelPumps
-                      ? 'bg-white text-slate-900 shadow-xs dark:bg-slate-700 dark:text-white'
-                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {pick('Single Pump (1×)', 'Pompa Tunggal (1×)', '単独運転 (1台)')}
@@ -250,10 +250,10 @@ export function PumpSimulator() {
                 <button
                   type="button"
                   onClick={() => updateParam('parallelPumps', true)}
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                  className={`rounded-full px-3 py-1 text-[11px] transition ${
                     params.parallelPumps
-                      ? 'bg-cyan-600 text-white shadow-xs dark:bg-cyan-500 dark:text-slate-950'
-                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {pick('Parallel (2×)', 'Paralel (2×)', '並列運転 (2台)')}
@@ -312,7 +312,7 @@ export function PumpSimulator() {
 
         {/* Right: H-Q / Efficiency Curve + NPSH + Seal & Shaft Deflection */}
         <div className="space-y-4 lg:col-span-6">
-          <div className="glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <PumpCurveCanvas
               params={params}
               op={op}
@@ -320,10 +320,10 @@ export function PumpSimulator() {
             />
 
             {/* Target Flow VFD Auto-Tune Bar */}
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-cyan-200/80 bg-cyan-50/70 p-2.5 dark:border-cyan-500/30 dark:bg-cyan-500/10">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="flex items-center gap-2 text-xs">
-                <Sparkles className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                <span className="font-semibold text-slate-800 dark:text-slate-200">
+                <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick('Target Flow:', 'Target Aliran:', '目標流量:')}
                 </span>
                 <input
@@ -333,15 +333,15 @@ export function PumpSimulator() {
                   step={5}
                   value={targetFlowInput}
                   onChange={(e) => setTargetFlowInput(Number(e.target.value))}
-                  className="w-16 rounded-md border border-slate-300 bg-white px-2 py-1 text-center font-mono text-xs font-semibold text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                  className="w-16 rounded-2xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2 py-1 text-center font-mono text-xs font-semibold text-[var(--md-on-surface)] focus:border-[var(--md-primary)] focus:outline-none"
                 />
-                <span className="text-[11px] text-slate-500 dark:text-slate-400">m³/h</span>
+                <span className="text-[11px] text-[var(--md-on-surface-variant)]">m³/h</span>
               </div>
 
               <button
                 type="button"
                 onClick={() => handleVfdAutoTune(targetFlowInput)}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-cyan-700 dark:bg-cyan-500 dark:text-slate-950 dark:hover:bg-cyan-400"
+                className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 {pick('VFD Auto-Tune (POR)', 'Auto-Tune VFD (POR)', 'VFD自動調整 (POR)')}
@@ -349,7 +349,7 @@ export function PumpSimulator() {
             </div>
 
             {vfdTuneResult && (
-              <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[11px] text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+              <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 rounded-[20px] border border-emerald-300/60 bg-emerald-50/80 px-3.5 py-2.5 text-[11px] text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-950/30 dark:text-emerald-200">
                 <span>
                   {pick(
                     `VFD tuned to ${vfdTuneResult.optimalRpm} RPM (100% open): ${vfdTuneResult.vfdPowerKw.toFixed(2)} kW vs ${vfdTuneResult.throttledPowerKw.toFixed(2)} kW throttled`,
@@ -357,7 +357,7 @@ export function PumpSimulator() {
                     `VFDを ${vfdTuneResult.optimalRpm} RPM (全開) に最適化: ${vfdTuneResult.vfdPowerKw.toFixed(2)} kW (弁絞り時 ${vfdTuneResult.throttledPowerKw.toFixed(2)} kW)`
                   )}
                 </span>
-                <span className="rounded-md bg-emerald-600 px-2 py-0.5 font-mono font-bold text-white dark:bg-emerald-500 dark:text-slate-950">
+                <span className="rounded-full bg-emerald-600 px-2.5 py-0.5 font-mono font-bold text-white">
                   {pick('Saves', 'Hemat', '省エネ')} {vfdTuneResult.savingsKw.toFixed(2)} kW ({vfdTuneResult.savingsPct.toFixed(0)}%)
                 </span>
               </div>
@@ -365,9 +365,9 @@ export function PumpSimulator() {
           </div>
 
           {/* Mechanical Seal & Shaft Deflection Life Indicator */}
-          <div className="glass-panel rounded-2xl p-4 ">
-            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
                   'Mechanical Seal & Shaft Deflection Life',
                   'Umur Mechanical Seal & Defleksi Poros',
@@ -375,10 +375,10 @@ export function PumpSimulator() {
                 )}
               </h3>
               <span
-                className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
                   op.inPor
-                    ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300'
-                    : 'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300'
+                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
                 }`}
               >
                 {op.inPor
@@ -390,22 +390,22 @@ export function PumpSimulator() {
             <div className="space-y-2.5 text-xs">
               <div>
                 <div className="mb-1 flex justify-between text-[11px]">
-                  <span className="font-medium text-slate-600 dark:text-slate-400">
+                  <span className="font-medium text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Radial Shaft Load (Volute Unbalance)',
                       'Beban Radial Poros (Ketidakseimbangan Volute)',
                       'ラジアル軸荷重（ボリュート不釣合）'
                     )}
                   </span>
-                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+                  <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                     {op.radialLoadPct.toFixed(0)} %
                   </span>
                 </div>
-                <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                   <div
                     className={`h-full rounded-full transition-all ${
                       op.radialLoadPct > 65
-                        ? 'bg-red-500'
+                        ? 'bg-rose-500'
                         : op.radialLoadPct > 35
                           ? 'bg-amber-500'
                           : 'bg-emerald-500'
@@ -417,22 +417,22 @@ export function PumpSimulator() {
 
               <div>
                 <div className="mb-1 flex justify-between text-[11px]">
-                  <span className="font-medium text-slate-600 dark:text-slate-400">
+                  <span className="font-medium text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Estimated Seal & Bearing Life Index',
                       'Indeks Estimasi Umur Seal & Bantalan',
                       '推定シール・軸受寿命指数'
                     )}
                   </span>
-                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+                  <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                     {op.sealLifePct.toFixed(0)} %
                   </span>
                 </div>
-                <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                   <div
                     className={`h-full rounded-full transition-all ${
                       op.sealLifePct < 40
-                        ? 'bg-red-500'
+                        ? 'bg-rose-500'
                         : op.sealLifePct < 75
                           ? 'bg-amber-500'
                           : 'bg-emerald-500'
@@ -442,7 +442,7 @@ export function PumpSimulator() {
                 </div>
               </div>
 
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              <p className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {op.isDeadHead
                   ? 'Dead-head operation causes maximum radial shaft deflection and rapid seal-face flashing.'
                   : op.isCavitating
@@ -454,12 +454,12 @@ export function PumpSimulator() {
 
               {/* API 682 Mechanical Seal Flush Plan Status */}
               <div
-                className={`mt-2 rounded-xl border p-2.5 text-[11px] ${
+                className={`mt-2 rounded-[22px] border p-3 text-[11px] ${
                   apiSealPlan.severity === 'critical'
-                    ? 'border-red-200 bg-red-50/80 text-red-900 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-200'
+                    ? 'border-rose-300/70 bg-rose-50/80 text-rose-900 dark:border-rose-500/35 dark:bg-rose-950/30 dark:text-rose-200'
                     : apiSealPlan.severity === 'caution'
-                      ? 'border-amber-200 bg-amber-50/80 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200'
-                      : 'border-emerald-200 bg-emerald-50/80 text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200'
+                      ? 'border-amber-300/70 bg-amber-50/80 text-amber-900 dark:border-amber-500/35 dark:bg-amber-950/30 dark:text-amber-200'
+                      : 'border-emerald-300/70 bg-emerald-50/80 text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/30 dark:text-emerald-200'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 font-semibold">
@@ -483,7 +483,7 @@ export function PumpSimulator() {
                             'API Plan 11 (吐出バイパス・フラッシュ)'
                           )}
                   </span>
-                  <span className="rounded bg-white/80 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase dark:bg-slate-900/60">
+                  <span className="rounded-full bg-[var(--md-surface-container-lowest)]/85 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-[var(--md-on-surface)]">
                     {apiSealPlan.plan}
                   </span>
                 </div>
@@ -530,20 +530,24 @@ function KpiCard({
 }) {
   return (
     <div
-      className={`rounded-xl border p-3 shadow-xs ${
+      className={
         alert
-          ? 'border-red-300 bg-red-50/70 dark:border-red-500/40 dark:bg-red-500/10'
-          : 'border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/70'
-      }`}
+          ? 'rounded-[24px] border border-rose-300/80 bg-rose-50/80 p-3.5 dark:border-rose-500/40 dark:bg-rose-950/30'
+          : 'glass-card rounded-[24px] p-3.5'
+      }
     >
-      <div className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+      <div className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--md-on-surface-variant)]">
         {icon}
         <span className="truncate">{label}</span>
       </div>
-      <div className="mt-1 font-mono text-sm font-bold text-slate-900 dark:text-slate-100">
+      <div
+        className={`mt-1 font-mono text-sm font-extrabold ${
+          alert ? 'text-rose-700 dark:text-rose-300' : 'text-[var(--md-on-surface)]'
+        }`}
+      >
         {value}
       </div>
-      <div className="mt-0.5 truncate text-[11px] text-slate-500 dark:text-slate-400">
+      <div className="mt-0.5 truncate text-[11px] text-[var(--md-on-surface-variant)]">
         {sub}
       </div>
     </div>
@@ -570,8 +574,8 @@ function ControlSlider({
   return (
     <label className="block space-y-1.5">
       <div className="flex items-center justify-between text-xs">
-        <span className="font-medium text-slate-700 dark:text-slate-300">{label}</span>
-        <span className="font-mono font-semibold text-cyan-700 dark:text-cyan-400">
+        <span className="font-medium text-[var(--md-on-surface)]">{label}</span>
+        <span className="font-mono font-bold text-[var(--md-primary)]">
           {valueLabel}
         </span>
       </div>
@@ -582,7 +586,7 @@ function ControlSlider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-cyan-600 dark:accent-cyan-400"
+        className="w-full"
       />
     </label>
   );

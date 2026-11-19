@@ -37,14 +37,12 @@ export function PressureGauge({
     ? '#ef4444'
     : isHigh
       ? '#f59e0b'
-      : isDark
-        ? '#38bdf8'
-        : '#0284c7';
+      : 'var(--md-primary)';
 
-  const faceBg = isDark ? '#0b1220' : '#ffffff';
-  const tickColor = isDark ? '#64748b' : '#94a3b8';
-  const textColor = isDark ? '#e2e8f0' : '#0f172a';
-  const subColor = isDark ? '#94a3b8' : '#64748b';
+  const faceBg = 'var(--md-surface-container-lowest)';
+  const tickColor = 'var(--md-outline)';
+  const textColor = 'var(--md-on-surface)';
+  const subColor = 'var(--md-on-surface-variant)';
 
   const ticks = [0, 40, 80, 120, 160, 200, 240];
 
@@ -61,10 +59,10 @@ export function PressureGauge({
   };
 
   return (
-    <div className="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-slate-900/80">
+    <div className="glass-card flex flex-col items-center rounded-[24px] p-3.5">
       <div className="flex w-full items-center justify-between text-xs">
-        <span className="font-bold text-slate-800 dark:text-slate-100">{label}</span>
-        <span className="text-[11px] text-slate-500 dark:text-slate-400">{sublabel}</span>
+        <span className="font-bold text-[var(--md-on-surface)]">{label}</span>
+        <span className="text-[11px] text-[var(--md-on-surface-variant)]">{sublabel}</span>
       </div>
 
       <svg viewBox="0 0 120 112" className="mt-1 h-28 w-32 select-none">
@@ -136,6 +134,7 @@ export function PressureGauge({
                 textAnchor="middle"
                 fontSize="6.8"
                 fontWeight="700"
+                fontFamily="var(--font-mono)"
                 fill={subColor}
               >
                 {t}
@@ -188,6 +187,7 @@ export function PressureGauge({
           fontSize="7.5"
           fontWeight="800"
           letterSpacing="0.8"
+          fontFamily="var(--font-sans)"
           fill={subColor}
         >
           BAR
@@ -195,13 +195,13 @@ export function PressureGauge({
       </svg>
 
       <div className="mt-0.5 flex items-baseline gap-1.5">
-        <span className="font-mono text-base font-bold text-slate-900 dark:text-white">
+        <span className="font-mono text-base font-bold text-[var(--md-on-surface)]">
           {pressureBar.toFixed(1)}
         </span>
-        <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <span className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
           bar
         </span>
-        <span className="text-[10px] text-slate-400 dark:text-slate-500">
+        <span className="font-mono text-[10px] text-[var(--md-on-surface-variant)]">
           ({Math.round(paToPsi(barToPa(pressureBar)))} psi)
         </span>
       </div>

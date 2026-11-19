@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Activity, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
 
 export interface PressureSample {
   p: number;
@@ -41,9 +40,7 @@ export function CompressorAnalytics({
   dutyCyclePct,
   specificPowerKwPerM3Min,
 }: CompressorAnalyticsProps) {
-  const { theme } = useTheme();
   const { pick } = useLanguage();
-  const isDark = theme === 'dark';
   const [selectedOrificeMm, setSelectedOrificeMm] = useState<number>(3);
 
   // Sawtooth chart dimensions
@@ -76,8 +73,8 @@ export function CompressorAnalytics({
   const loadY = toY(loadPressureBar);
   const unloadY = toY(unloadPressureBar);
 
-  const gridStroke = isDark ? '#1e293b' : '#e2e8f0';
-  const textFill = isDark ? '#94a3b8' : '#64748b';
+  const gridStroke = 'var(--md-outline-variant)';
+  const textFill = 'var(--md-on-surface-variant)';
   const selectedLeak = calcOrificeLeak(
     selectedOrificeMm,
     currentPressureBar,
@@ -87,11 +84,11 @@ export function CompressorAnalytics({
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {/* 1. Receiver Pressure Sawtooth & Load/Unload Duty-Cycle Chart */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+      <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
           <div className="flex items-center gap-2">
-            <Activity className="h-4 w-4 text-sky-600 dark:text-sky-400" />
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            <Activity className="h-4 w-4 text-[var(--md-primary)]" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Receiver Pressure Sawtooth & Duty Cycle',
                 'Gergaji Tekanan Receiver & Duty Cycle',
@@ -99,14 +96,14 @@ export function CompressorAnalytics({
               )}
             </h3>
           </div>
-          <span className="rounded-full bg-sky-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-sky-800 dark:bg-sky-500/20 dark:text-sky-300">
+          <span className="rounded-full bg-[var(--md-primary-container)] px-3 py-0.5 font-mono text-[11px] font-bold text-[var(--md-on-primary-container)]">
             {pick('Duty', 'Beban', '負荷率')}: {dutyCyclePct.toFixed(0)}%
           </span>
         </div>
 
         <svg
           viewBox={`0 0 ${w} ${h}`}
-          className="w-full h-auto select-none"
+          className="h-auto w-full select-none"
           role="img"
           aria-label="Receiver Pressure Sawtooth Chart"
         >
@@ -121,6 +118,7 @@ export function CompressorAnalytics({
                   x2={w - padR}
                   y2={y}
                   stroke={gridStroke}
+                  strokeOpacity="0.45"
                   strokeWidth="1"
                 />
                 <text
@@ -129,6 +127,7 @@ export function CompressorAnalytics({
                   textAnchor="end"
                   fontSize="9"
                   fill={textFill}
+                  fontFamily="var(--font-mono)"
                 >
                   {barVal}b
                 </text>
@@ -142,7 +141,7 @@ export function CompressorAnalytics({
             y={unloadY}
             width={plotW}
             height={Math.max(1, loadY - unloadY)}
-            fill={isDark ? '#0ea5e9' : '#38bdf8'}
+            fill="var(--md-primary)"
             opacity="0.1"
           />
 
@@ -161,9 +160,9 @@ export function CompressorAnalytics({
             y={unloadY - 12}
             width="76"
             height="11"
-            rx="3"
-            fill={isDark ? '#0f172a' : '#ffffff'}
-            fillOpacity="0.88"
+            rx="4"
+            fill="var(--md-surface-container)"
+            fillOpacity="0.92"
           />
           <text
             x={w - padR - 3}
@@ -172,6 +171,7 @@ export function CompressorAnalytics({
             fontSize="8.5"
             fontWeight="600"
             fill="#d97706"
+            fontFamily="var(--font-mono)"
           >
             Unload {unloadPressureBar.toFixed(1)} bar
           </text>
@@ -191,9 +191,9 @@ export function CompressorAnalytics({
             y={loadY + 2}
             width="66"
             height="11"
-            rx="3"
-            fill={isDark ? '#0f172a' : '#ffffff'}
-            fillOpacity="0.88"
+            rx="4"
+            fill="var(--md-surface-container)"
+            fillOpacity="0.92"
           />
           <text
             x={w - padR - 3}
@@ -202,6 +202,7 @@ export function CompressorAnalytics({
             fontSize="8.5"
             fontWeight="600"
             fill="#059669"
+            fontFamily="var(--font-mono)"
           >
             Load {loadPressureBar.toFixed(1)} bar
           </text>
@@ -210,7 +211,7 @@ export function CompressorAnalytics({
           {history.length > 1 && (
             <polyline
               fill="none"
-              stroke={isDark ? '#38bdf8' : '#0284c7'}
+              stroke="var(--md-primary)"
               strokeWidth="2.2"
               strokeLinejoin="round"
               points={points}
@@ -222,8 +223,8 @@ export function CompressorAnalytics({
             cx={w - padR}
             cy={lastY}
             r="3.5"
-            fill={lastSample.loaded ? '#0ea5e9' : '#94a3b8'}
-            stroke={isDark ? '#0f172a' : '#ffffff'}
+            fill={lastSample.loaded ? 'var(--md-primary)' : 'var(--md-outline)'}
+            stroke="var(--md-surface-container-low)"
             strokeWidth="1.5"
           />
 
@@ -238,26 +239,26 @@ export function CompressorAnalytics({
                 y={h - 21}
                 width={Math.max(1, segW + 0.4)}
                 height="6"
-                fill={sample.loaded ? '#0ea5e9' : isDark ? '#334155' : '#cbd5e1'}
+                fill={sample.loaded ? 'var(--md-primary)' : 'var(--md-surface-container-highest)'}
               />
             );
           })}
-          <text x={padL} y={h - 5} fontSize="8.5" fill={textFill}>
+          <text x={padL} y={h - 5} fontSize="8.5" fill={textFill} fontFamily="var(--font-sans)">
             {pick(
-              'Loaded (blue) vs Unloaded (gray) cycle history',
-              'Riwayat siklus Loaded (biru) vs Unloaded (abu)',
-              'ロード（青）vs アンロード（灰）サイクル履歴'
+              'Loaded (accent) vs Unloaded (neutral) cycle history',
+              'Riwayat siklus Loaded (aksen) vs Unloaded (netral)',
+              'ロード（強調色）vs アンロード（中立色）サイクル履歴'
             )}
           </text>
         </svg>
       </div>
 
       {/* 2. Orifice Air-Leak Cost Estimator */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+      <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
           <div className="flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+            <AlertCircle className="h-4 w-4 text-rose-500" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Orifice Air-Leak Cost Estimator',
                 'Estimator Biaya Kebocoran Orifice',
@@ -265,14 +266,14 @@ export function CompressorAnalytics({
               )}
             </h3>
           </div>
-          <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+          <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
             @ {currentPressureBar.toFixed(2)} bar(g)
           </span>
         </div>
 
         {/* Orifice Size Selector Buttons */}
         <div className="mb-3 flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 text-xs text-slate-500 dark:text-slate-400">
+          <span className="mr-1 text-xs font-medium text-[var(--md-on-surface-variant)]">
             {pick('Hole Ø:', 'Lubang Ø:', '穴径 Ø:')}
           </span>
           {ORIFICE_SIZES_MM.map((size) => {
@@ -282,10 +283,10 @@ export function CompressorAnalytics({
                 key={size}
                 type="button"
                 onClick={() => setSelectedOrificeMm(size)}
-                className={`rounded-lg px-2.5 py-1 font-mono text-xs font-semibold transition-colors ${
+                className={`rounded-full px-3 py-1 font-mono text-xs transition ${
                   active
-                    ? 'bg-rose-600 text-white shadow-xs dark:bg-rose-500 dark:text-white'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                    ? 'm3-btn-filled font-bold'
+                    : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
                 }`}
               >
                 {size} mm
@@ -296,27 +297,27 @@ export function CompressorAnalytics({
 
         {/* Highlighted Selected Orifice KPIs */}
         <div className="mb-3 grid grid-cols-3 gap-2">
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-            <div className="text-[10px] font-medium uppercase text-slate-500 dark:text-slate-400">
+          <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+            <div className="text-[10px] font-semibold uppercase text-[var(--md-on-surface-variant)]">
               {pick('Air Wasted', 'Udara Terbuang', '漏れ空気量')}
             </div>
-            <div className="mt-0.5 font-mono text-sm font-bold text-slate-900 dark:text-slate-100">
+            <div className="mt-0.5 font-mono text-sm font-extrabold text-[var(--md-on-surface)]">
               {selectedLeak.flowM3Min.toFixed(2)} m³/min
             </div>
           </div>
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-            <div className="text-[10px] font-medium uppercase text-slate-500 dark:text-slate-400">
+          <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
+            <div className="text-[10px] font-semibold uppercase text-[var(--md-on-surface-variant)]">
               {pick('Power Wasted', 'Daya Terbuang', '損失動力')}
             </div>
-            <div className="mt-0.5 font-mono text-sm font-bold text-amber-700 dark:text-amber-300">
+            <div className="mt-0.5 font-mono text-sm font-extrabold text-[var(--md-primary)]">
               {selectedLeak.wastedKw.toFixed(2)} kW
             </div>
           </div>
-          <div className="rounded-xl border border-rose-200 bg-rose-50 p-2.5 dark:border-rose-500/30 dark:bg-rose-500/10">
-            <div className="text-[10px] font-medium uppercase text-rose-700 dark:text-rose-300">
+          <div className="rounded-[20px] border border-rose-300/70 bg-rose-50/80 p-2.5 dark:border-rose-500/35 dark:bg-rose-950/30">
+            <div className="text-[10px] font-semibold uppercase text-rose-700 dark:text-rose-300">
               {pick('Annual Loss', 'Rugi Tahunan', '年間損失額')}
             </div>
-            <div className="mt-0.5 font-mono text-sm font-bold text-rose-700 dark:text-rose-300">
+            <div className="mt-0.5 font-mono text-sm font-extrabold text-rose-700 dark:text-rose-300">
               ${Math.round(selectedLeak.annualCostUsd).toLocaleString()}/yr
             </div>
           </div>
@@ -326,14 +327,14 @@ export function CompressorAnalytics({
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-200 text-[10px] uppercase text-slate-500 dark:border-slate-800 dark:text-slate-400">
-                <th className="py-1 font-semibold">{pick('Orifice', 'Orifice', '穴径')}</th>
-                <th className="py-1 font-semibold">{pick('Flow (m³/min)', 'Aliran (m³/min)', '流量 (m³/min)')}</th>
-                <th className="py-1 font-semibold">{pick('Power (kW)', 'Daya (kW)', '動力 (kW)')}</th>
-                <th className="py-1 text-right font-semibold">{pick('Cost ($/yr)', 'Biaya ($/thn)', '損失 ($/年)')}</th>
+              <tr className="border-b border-[var(--md-outline-variant)]/50 text-[10px] uppercase text-[var(--md-on-surface-variant)]">
+                <th className="px-2 py-1.5 font-bold">{pick('Orifice', 'Orifice', '穴径')}</th>
+                <th className="px-2 py-1.5 font-bold">{pick('Flow (m³/min)', 'Aliran (m³/min)', '流量 (m³/min)')}</th>
+                <th className="px-2 py-1.5 font-bold">{pick('Power (kW)', 'Daya (kW)', '動力 (kW)')}</th>
+                <th className="px-2 py-1.5 text-right font-bold">{pick('Cost ($/yr)', 'Biaya ($/thn)', '損失 ($/年)')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
+            <tbody className="divide-y divide-[var(--md-outline-variant)]/35">
               {ORIFICE_SIZES_MM.map((size) => {
                 const row = calcOrificeLeak(
                   size,
@@ -347,14 +348,14 @@ export function CompressorAnalytics({
                     onClick={() => setSelectedOrificeMm(size)}
                     className={`cursor-pointer transition-colors ${
                       isSel
-                        ? 'bg-rose-50/70 font-semibold text-rose-900 dark:bg-rose-500/10 dark:text-rose-200'
-                        : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800/40'
+                        ? 'bg-[var(--md-primary-container)]/70 font-semibold text-[var(--md-on-primary-container)]'
+                        : 'text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
-                    <td className="py-1 font-mono">{size} mm</td>
-                    <td className="py-1 font-mono">{row.flowM3Min.toFixed(2)}</td>
-                    <td className="py-1 font-mono">{row.wastedKw.toFixed(2)}</td>
-                    <td className="py-1 text-right font-mono">
+                    <td className="px-2 py-1.5 font-mono">{size} mm</td>
+                    <td className="px-2 py-1.5 font-mono">{row.flowM3Min.toFixed(2)}</td>
+                    <td className="px-2 py-1.5 font-mono">{row.wastedKw.toFixed(2)}</td>
+                    <td className="px-2 py-1.5 text-right font-mono">
                       ${Math.round(row.annualCostUsd).toLocaleString()}
                     </td>
                   </tr>

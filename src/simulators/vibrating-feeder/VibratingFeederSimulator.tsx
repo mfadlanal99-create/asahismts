@@ -41,11 +41,13 @@ type MaterialPreset = 'limestone' | 'coal' | 'iron-ore' | 'wood-chips' | 'wet-sa
 export function VibratingFeederSimulator() {
   const { pick } = useLanguage();
   const [inputs, setInputs] = useState<VibratingFeederInputs>(INITIAL_INPUTS);
+  const [activePreset, setActivePreset] = useState<MaterialPreset | null>('limestone');
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const metrics = useMemo(() => evaluateVibratingFeeder(inputs), [inputs]);
 
   function applyMaterialPreset(preset: MaterialPreset) {
+    setActivePreset(preset);
     if (preset === 'limestone') {
       setInputs((prev) => ({
         ...prev,
@@ -130,9 +132,9 @@ export function VibratingFeederSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Toolbar: Material Presets & Simulation Controls */}
-      <div className="sim-panel flex flex-wrap items-center justify-between gap-3 p-3.5">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="sim-header mr-1.5">
+          <span className="mr-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Material:', 'Material:', '搬送物:')}
           </span>
           {(
@@ -148,7 +150,11 @@ export function VibratingFeederSimulator() {
               key={id}
               type="button"
               onClick={() => applyMaterialPreset(id)}
-              className="rounded-lg bg-slate-100 px-2.5 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-amber-500/20 hover:text-amber-700 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:bg-amber-500/20 dark:hover:text-amber-300"
+              className={`rounded-full px-3 py-1.5 text-xs transition ${
+                activePreset === id
+                  ? 'm3-btn-filled font-bold'
+                  : 'glass-pill font-semibold text-[var(--md-on-surface-variant)]'
+              }`}
             >
               {label}
             </button>
@@ -159,16 +165,16 @@ export function VibratingFeederSimulator() {
           <button
             type="button"
             onClick={() => setIsPlaying((p) => !p)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             {isPlaying ? (
               <>
-                <Pause className="h-3.5 w-3.5 text-amber-500" />
+                <Pause className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Pause', 'Jeda', '一時停止')}
               </>
             ) : (
               <>
-                <Play className="h-3.5 w-3.5 text-emerald-500" />
+                <Play className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Run Feeder', 'Jalankan', '運転再開')}
               </>
             )}
@@ -176,8 +182,11 @@ export function VibratingFeederSimulator() {
 
           <button
             type="button"
-            onClick={() => setInputs(INITIAL_INPUTS)}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            onClick={() => {
+              setInputs(INITIAL_INPUTS);
+              setActivePreset('limestone');
+            }}
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset', 'Reset', 'リセット')}
@@ -186,16 +195,16 @@ export function VibratingFeederSimulator() {
       </div>
 
       {/* Main Aligned Grid */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 items-stretch">
+      <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-12">
         {/* Left Column: Live Cutaway SVG + Telemetry Cards + Diagnostic Banner */}
         <div className="flex flex-col gap-4 lg:col-span-8">
-          <div className="sim-panel p-3.5">
-            <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
                 <div className="sim-dial flex h-7 w-7 items-center justify-center">
-                  <Activity className="h-3.5 w-3.5 text-amber-500" />
+                  <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 </div>
-                <span className="sim-header">
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Live Side-Cutaway, Drag Gate & Vibration Scope',
                     'Potongan Samping, Geser Gerbang & Osiloskop',
@@ -203,7 +212,15 @@ export function VibratingFeederSimulator() {
                   )}
                 </span>
               </div>
-              <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[11px] font-bold text-amber-700 dark:text-amber-300">
+              <span
+                className={`rounded-full px-3 py-1 text-[11px] font-bold ${
+                  metrics.regime === 'aggressive-bounce'
+                    ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
+                    : metrics.regime === 'sub-threshold'
+                      ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+                      : 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                }`}
+              >
                 {regimeLabel}
               </span>
             </div>
@@ -220,80 +237,83 @@ export function VibratingFeederSimulator() {
 
           {/* 6 Engineering KPI Readout Cards */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Throw Index Kᵥ', 'Indeks Lempar Kᵥ', '投擲指数 Kᵥ')}</span>
-                <Activity className="h-3.5 w-3.5 text-amber-500" />
+                <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.throwIndexKv.toFixed(2)}
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.peakGForce.toFixed(2)} g ({metrics.peakAccelMs2.toFixed(1)} m/s²)
               </div>
             </div>
 
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Conveying & Bed', 'Kecepatan & Lapisan', '輸送速度・層厚')}</span>
-                <Gauge className="h-3.5 w-3.5 text-sky-500" />
+                <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.conveyingVelocityMMin.toFixed(1)} m/min
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Bed', 'Lapisan', '層厚')}: {metrics.materialBedDepthMm.toFixed(0)} mm
               </div>
             </div>
 
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Mass Flow Rate', 'Laju Aliran Massa', '質量流量')}</span>
-                <Layers className="h-3.5 w-3.5 text-emerald-500" />
+                <Layers className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {metrics.massFlowRateTH.toFixed(1)} t/h
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.volumetricFlowM3H.toFixed(1)} m³/h
               </div>
             </div>
 
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Springs & f/fₙ', 'Pegas & f/fₙ', 'ばね荷重・f/fₙ')}</span>
-                <Sliders className="h-3.5 w-3.5 text-violet-500" />
+                <Sliders className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
-                {metrics.resonanceRatio.toFixed(2)} <span className="text-xs font-semibold text-slate-500">(η {metrics.isolationEfficiencyPct.toFixed(0)}%)</span>
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
+                {metrics.resonanceRatio.toFixed(2)}{' '}
+                <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
+                  (η {metrics.isolationEfficiencyPct.toFixed(0)}%)
+                </span>
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.springStaticLoadKn.toFixed(2)} kN stat · {metrics.springDynamicLoadKn.toFixed(2)} kN dyn
               </div>
             </div>
 
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Motor Power & Current', 'Daya & Arus Motor', 'モータ出力・電流')}</span>
-                <Zap className="h-3.5 w-3.5 text-cyan-500" />
+                <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.motorPowerKw.toFixed(2)} kW
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.motorCurrentA.toFixed(1)} A · {metrics.driveRpm} RPM
               </div>
             </div>
 
-            <div className="sim-panel p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Liner Wear Index', 'Indeks Keausan Liner', 'ライナー摩耗指数')}</span>
-                <Flame className="h-3.5 w-3.5 text-orange-500" />
+                <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.linerWearIndex.toFixed(0)} / 100
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.linerWearIndex > 75
                   ? pick('High Impact Wear', 'Keausan Tinggi', '高衝撃摩耗')
                   : metrics.linerWearIndex > 45
@@ -305,12 +325,12 @@ export function VibratingFeederSimulator() {
 
           {/* Diagnostic & Fault Status Banner */}
           <div
-            className={`sim-panel flex flex-wrap items-center justify-between gap-3 p-3.5 ${
+            className={`flex flex-wrap items-center justify-between gap-3 rounded-[24px] border p-4 ${
               metrics.healthStatus === 'critical'
-                ? 'border-rose-400/50 bg-rose-500/10'
+                ? 'border-rose-400/50 bg-rose-500/10 text-rose-900 dark:text-rose-100'
                 : metrics.healthStatus === 'warning'
-                  ? 'border-amber-400/50 bg-amber-500/10'
-                  : 'border-emerald-400/40 bg-emerald-500/10'
+                  ? 'border-amber-400/50 bg-amber-500/10 text-amber-900 dark:text-amber-100'
+                  : 'border-emerald-400/40 bg-emerald-500/10 text-emerald-900 dark:text-emerald-100'
             }`}
           >
             <div className="flex items-start gap-2.5">
@@ -321,7 +341,7 @@ export function VibratingFeederSimulator() {
               ) : (
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
               )}
-              <div className="text-xs leading-relaxed text-slate-700 dark:text-slate-200">
+              <div className="text-xs leading-relaxed">
                 {inputs.faultMode === 'broken-spring' ? (
                   <>
                     <strong>
@@ -385,7 +405,7 @@ export function VibratingFeederSimulator() {
               <button
                 type="button"
                 onClick={clearFault}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-500"
+                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-500"
               >
                 <Wrench className="h-3.5 w-3.5" />
                 {pick('Repair / Clear Fault', 'Perbaiki Gangguan', '異常を修復')}
@@ -395,24 +415,24 @@ export function VibratingFeederSimulator() {
         </div>
 
         {/* Right Column: Organized Parameter Groups & Fault Injection */}
-        <div className="flex flex-col gap-3 lg:col-span-4">
+        <div className="flex flex-col gap-3.5 lg:col-span-4">
           {/* Group 1: Drive & Vibration */}
-          <div className="sim-panel space-y-2.5 p-3.5">
-            <div className="flex items-center justify-between">
-              <span className="sim-header">
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('1. Drive & Vibration', '1. Penggerak & Getaran', '1. 加振・駆動パラメータ')}
               </span>
-              <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+              <span className="font-mono text-[11px] font-bold text-[var(--md-primary)]">
                 {metrics.driveRpm} RPM
               </span>
             </div>
 
-            <div className="sim-box space-y-1 p-2">
+            <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-300">
+                <span className="text-[var(--md-on-surface)]">
                   {pick('Drive Frequency (f)', 'Frekuensi (f)', '駆動周波数 (f)')}
                 </span>
-                <span className="text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {inputs.driveFrequencyHz} Hz
                 </span>
               </div>
@@ -428,17 +448,17 @@ export function VibratingFeederSimulator() {
                     driveFrequencyHz: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-amber-500"
+                className="w-full"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Stroke (2A)', 'Stroke (2A)', '振幅 (2A)')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.strokeMm.toFixed(1)} mm
                   </span>
                 </div>
@@ -454,16 +474,16 @@ export function VibratingFeederSimulator() {
                       strokeMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Throw β', 'Sudut β', '投擲角 β')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.throwAngleDeg}°
                   </span>
                 </div>
@@ -473,31 +493,34 @@ export function VibratingFeederSimulator() {
                   max={40}
                   step={1}
                   value={inputs.throwAngleDeg}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setActivePreset(null);
                     setInputs((prev) => ({
                       ...prev,
                       throwAngleDeg: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
+                    }));
+                  }}
+                  className="w-full"
                 />
               </div>
             </div>
           </div>
 
           {/* Group 2: Trough & Gate Geometry */}
-          <div className="sim-panel space-y-2.5 p-3.5">
-            <span className="sim-header">
-              {pick('2. Trough & Gate Geometry', '2. Geometri Bak & Gerbang', '2. トラフ・ゲート形状')}
-            </span>
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+            <div className="border-b border-[var(--md-outline-variant)]/50 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                {pick('2. Trough & Gate Geometry', '2. Geometri Bak & Gerbang', '2. トラフ・ゲート形状')}
+              </span>
+            </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Width (W)', 'Lebar (W)', 'トラフ幅 (W)')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.troughWidthMm} mm
                   </span>
                 </div>
@@ -513,16 +536,16 @@ export function VibratingFeederSimulator() {
                       troughWidthMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Length (L)', 'Panjang (L)', 'トラフ長 (L)')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.troughLengthM.toFixed(1)} m
                   </span>
                 </div>
@@ -538,16 +561,16 @@ export function VibratingFeederSimulator() {
                       troughLengthM: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Gate (H)', 'Bukaan (H)', 'ゲート開度 (H)')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.gateOpeningMm} mm
                   </span>
                 </div>
@@ -563,16 +586,16 @@ export function VibratingFeederSimulator() {
                       gateOpeningMm: Number(e.target.value),
                     }))
                   }
-                  className="w-full accent-amber-500"
+                  className="w-full"
                 />
               </div>
 
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Slope α', 'Kemiringan α', '勾配 α')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.troughInclinationDeg}°
                   </span>
                 </div>
@@ -582,36 +605,37 @@ export function VibratingFeederSimulator() {
                   max={15}
                   step={1}
                   value={inputs.troughInclinationDeg}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setActivePreset(null);
                     setInputs((prev) => ({
                       ...prev,
                       troughInclinationDeg: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
+                    }));
+                  }}
+                  className="w-full"
                 />
               </div>
             </div>
           </div>
 
           {/* Group 3: Material & Isolation Springs */}
-          <div className="sim-panel space-y-2.5 p-3.5">
-            <div className="flex items-center justify-between">
-              <span className="sim-header">
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('3. Material & Springs', '3. Material & Pegas', '3. 搬送物・防振ばね')}
               </span>
-              <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+              <span className="font-mono text-[11px] font-bold text-[var(--md-primary)]">
                 fₙ = {metrics.naturalFrequencyHz.toFixed(1)} Hz
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Density (ρ)', 'Densitas (ρ)', 'かさ密度 (ρ)')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.bulkDensityTM3.toFixed(2)} t/m³
                   </span>
                 </div>
@@ -621,22 +645,23 @@ export function VibratingFeederSimulator() {
                   max={3.2}
                   step={0.05}
                   value={inputs.bulkDensityTM3}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setActivePreset(null);
                     setInputs((prev) => ({
                       ...prev,
                       bulkDensityTM3: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
+                    }));
+                  }}
+                  className="w-full"
                 />
               </div>
 
-              <div className="sim-box space-y-1 p-2">
+              <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <div className="flex justify-between text-[11px] font-semibold">
-                  <span className="text-slate-600 dark:text-slate-300">
+                  <span className="text-[var(--md-on-surface)]">
                     {pick('Moisture/μ', 'Lembap/Gesek', '水分・摩擦係数')}
                   </span>
-                  <span className="text-amber-600 dark:text-amber-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.moistureFrictionFactor.toFixed(2)}
                   </span>
                 </div>
@@ -646,23 +671,24 @@ export function VibratingFeederSimulator() {
                   max={1.3}
                   step={0.05}
                   value={inputs.moistureFrictionFactor}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setActivePreset(null);
                     setInputs((prev) => ({
                       ...prev,
                       moistureFrictionFactor: Number(e.target.value),
-                    }))
-                  }
-                  className="w-full accent-amber-500"
+                    }));
+                  }}
+                  className="w-full"
                 />
               </div>
             </div>
 
-            <div className="sim-box space-y-1 p-2">
+            <div className="space-y-1.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-300">
+                <span className="text-[var(--md-on-surface)]">
                   {pick('Spring Stiffness (k)', 'Kekakuan Pegas (k)', 'ばね定数 (k)')}
                 </span>
-                <span className="text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {inputs.springStiffnessNmm} N/mm
                 </span>
               </div>
@@ -678,16 +704,18 @@ export function VibratingFeederSimulator() {
                     springStiffnessNmm: Number(e.target.value),
                   }))
                 }
-                className="w-full accent-amber-500"
+                className="w-full"
               />
             </div>
           </div>
 
           {/* Fault Injection Panel */}
-          <div className="sim-panel space-y-2 p-3.5">
-            <span className="sim-header">
-              {pick('Fault Injection Lab', 'Simulasi Gangguan', '異常・故障注入ラボ')}
-            </span>
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+            <div className="border-b border-[var(--md-outline-variant)]/50 pb-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                {pick('Fault Injection Lab', 'Simulasi Gangguan', '異常・故障注入ラボ')}
+              </span>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               {faultButtons.map((btn) => {
                 const active = inputs.faultMode === btn.id;
@@ -699,12 +727,12 @@ export function VibratingFeederSimulator() {
                     onClick={() =>
                       setInputs((prev) => ({ ...prev, faultMode: btn.id }))
                     }
-                    className={`rounded-lg px-2.5 py-2 text-left text-xs font-semibold transition ${
+                    className={`rounded-[20px] border px-3 py-2.5 text-start text-xs font-semibold transition ${
                       active
                         ? isFault
-                          ? 'bg-rose-600 text-white shadow-sm'
-                          : 'bg-emerald-600 text-white shadow-sm'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                          ? 'border-rose-500 bg-rose-600 text-white shadow-sm'
+                          : 'border-emerald-500 bg-emerald-600 text-white shadow-sm'
+                        : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                     }`}
                   >
                     {btn.label}

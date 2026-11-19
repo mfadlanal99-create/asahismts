@@ -99,8 +99,8 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
 
   const flangeFill = isDark ? '#1e293b' : '#f1f5f9';
   const flangeStroke = isDark ? '#475569' : '#94a3b8';
-  const textPrimary = isDark ? '#f8fafc' : '#0f172a';
-  const textMuted = isDark ? '#94a3b8' : '#64748b';
+  const textPrimary = 'var(--md-on-surface)';
+  const textMuted = 'var(--md-on-surface-variant)';
 
   const getBoltCoords = (boltIdxZeroBased: number) => {
     const angle = -Math.PI / 2 + (boltIdxZeroBased * 2 * Math.PI) / boltCount;
@@ -112,17 +112,17 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
   };
 
   return (
-    <div className="glass-panel rounded-2xl p-5 shadow-xs">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-4 dark:border-slate-800">
+    <div className="glass-panel rounded-[28px] p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-4">
         <div>
-          <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+          <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
             {pick(
               'Flange Star-Pattern Tightening Mini-Lab',
               'Mini-Lab Pengencangan Flens Pola Bintang',
               'フランジ星型締付ミニラボ'
             )}
           </h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
+          <p className="text-xs text-[var(--md-on-surface-variant)]">
             {pick(
               `Click bolts in cross/star order across 3 passes (30% → 70% → 100% of ${targetTorqueNm.toFixed(0)} N·m).`,
               `Klik baut secara menyilang/pola bintang dalam 3 pass (30% → 70% → 100% dari ${targetTorqueNm.toFixed(0)} N·m).`,
@@ -132,16 +132,16 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-0.5 dark:border-slate-700 dark:bg-slate-800">
+          <div className="inline-flex gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             {([6, 8] as const).map((count) => (
               <button
                 key={count}
                 type="button"
                 onClick={() => resetLab(count)}
-                className={`rounded-md px-2.5 py-1 text-xs font-semibold transition ${
+                className={`rounded-full px-3 py-1 text-xs transition ${
                   boltCount === count
-                    ? 'bg-amber-500 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+                    ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                    : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
                 {count}-Bolt
@@ -152,7 +152,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
           <button
             type="button"
             onClick={() => setShowHint((h) => !h)}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
           >
             {showHint ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
             Hint
@@ -161,7 +161,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
           <button
             type="button"
             onClick={() => resetLab(boltCount)}
-            className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             Reset
@@ -173,7 +173,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
         {/* Interactive Flange SVG */}
         <svg
           viewBox="0 0 300 290"
-          className="mx-auto w-full max-w-[300px] rounded-xl border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70"
+          className="mx-auto w-full max-w-[300px] rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]"
           role="img"
           aria-label={`${boltCount}-bolt flange star pattern CAD diagram`}
         >
@@ -258,7 +258,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
             cx={cx}
             cy={cy}
             r={boreR}
-            fill={isDark ? '#020617' : '#ffffff'}
+            fill="var(--md-surface-container-lowest)"
             stroke={flangeStroke}
             strokeWidth="1.5"
           />
@@ -268,6 +268,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
             textAnchor="middle"
             fontSize="11"
             fontWeight="700"
+            fontFamily="var(--font-mono)"
             fill={textPrimary}
           >
             {isComplete ? 'SEALED' : `${currentPass.torquePercent}%`}
@@ -277,6 +278,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
             y={cy + 11}
             textAnchor="middle"
             fontSize="9"
+            fontFamily="var(--font-sans)"
             fill={textMuted}
           >
             {isComplete ? '100% Pass' : `Pass ${currentPass.pass}/3`}
@@ -296,10 +298,10 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                   y1={prev.y}
                   x2={curr.x}
                   y2={curr.y}
-                  stroke="#f59e0b"
+                  stroke="var(--md-primary)"
                   strokeWidth="1.8"
                   strokeDasharray="3 3"
-                  opacity="0.7"
+                  opacity="0.75"
                 />
               );
             })}
@@ -317,15 +319,17 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
               pct >= 100
                 ? '#10b981'
                 : isCurrentPassDone
-                ? '#f59e0b'
+                ? 'var(--md-primary)'
                 : isDark
                 ? '#334155'
                 : '#ffffff';
 
             const stroke = isNext
-              ? '#f59e0b'
-              : isCurrentPassDone || pct >= 100
+              ? 'var(--md-primary)'
+              : pct >= 100
               ? '#047857'
+              : isCurrentPassDone
+              ? 'var(--md-primary)'
               : flangeStroke;
 
             return (
@@ -349,7 +353,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                     cy={y}
                     r="21"
                     fill="none"
-                    stroke="#f59e0b"
+                    stroke="var(--md-primary)"
                     strokeWidth="2"
                     strokeDasharray="3 2"
                   />
@@ -379,8 +383,13 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                   textAnchor="middle"
                   fontSize="12"
                   fontWeight="700"
+                  fontFamily="var(--font-mono)"
                   fill={
-                    pct >= 100 || isCurrentPassDone ? '#ffffff' : textPrimary
+                    pct >= 100
+                      ? '#ffffff'
+                      : isCurrentPassDone
+                      ? 'var(--md-on-primary)'
+                      : textPrimary
                   }
                 >
                   {boltNum}
@@ -401,18 +410,18 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
               return (
                 <div
                   key={p.pass}
-                  className={`rounded-xl border p-2.5 text-xs transition ${
+                  className={`rounded-[20px] border p-2.5 text-xs transition ${
                     done
                       ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-300'
                       : active
-                      ? 'border-amber-300 bg-amber-50 text-amber-900 dark:border-amber-700/70 dark:bg-amber-950/40 dark:text-amber-200'
-                      : 'border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-400'
+                      ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                      : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface-variant)]'
                   }`}
                 >
                   <div className="font-bold">
                     Pass {p.pass} ({p.torquePercent}%)
                   </div>
-                  <div className="mt-0.5 text-[11px] opacity-85">
+                  <div className="mt-0.5 font-mono text-[11px] opacity-85">
                     {passNm.toFixed(1)} N·m
                   </div>
                 </div>
@@ -421,12 +430,12 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
           </div>
 
           {/* Sequence Guide */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-700 dark:text-slate-200">
+              <span className="font-semibold text-[var(--md-on-surface)]">
                 {boltCount}-Bolt Star Sequence
               </span>
-              <span className="font-mono text-slate-500 dark:text-slate-400">
+              <span className="font-mono text-[var(--md-on-surface-variant)]">
                 Mistakes: {mistakes}
               </span>
             </div>
@@ -437,12 +446,12 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                 return (
                   <span
                     key={`${bNum}-${idx}`}
-                    className={`inline-flex h-6 w-6 items-center justify-center rounded-md text-xs font-bold ${
+                    className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold font-mono ${
                       isDoneStep
                         ? 'bg-emerald-500 text-white'
                         : isCurrentStep && showHint
-                        ? 'bg-amber-500 text-white ring-2 ring-amber-300 dark:ring-amber-700'
-                        : 'border border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300'
+                        ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] ring-2 ring-[var(--md-primary)]/35'
+                        : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] text-[var(--md-on-surface-variant)]'
                     }`}
                   >
                     {bNum}
@@ -454,29 +463,29 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
 
           {/* Gasket Compression & Uniformity */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">Gasket Compression</span>
-                <span className="font-bold text-slate-900 dark:text-white">
+                <span className="text-[var(--md-on-surface-variant)]">Gasket Compression</span>
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {avgCompression.toFixed(0)}%
                 </span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                 <div
-                  className="h-full rounded-full bg-amber-500 transition-all"
+                  className="h-full rounded-full bg-[var(--md-primary)] transition-all"
                   style={{ width: `${avgCompression}%` }}
                 />
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-800/50">
+            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-500 dark:text-slate-400">Seat Uniformity</span>
-                <span className="font-bold text-slate-900 dark:text-white">
+                <span className="text-[var(--md-on-surface-variant)]">Seat Uniformity</span>
+                <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {uniformity.toFixed(0)}%
                 </span>
               </div>
-              <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="mt-2 h-2 overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                 <div
                   className={`h-full rounded-full transition-all ${
                     uniformity >= 70 ? 'bg-emerald-500' : 'bg-rose-500'
@@ -489,14 +498,14 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
 
           {/* Feedback Banner */}
           {errorMsg && (
-            <div className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 dark:border-rose-800/60 dark:bg-rose-950/40 dark:text-rose-200">
+            <div className="flex items-start gap-2 rounded-[22px] border border-rose-200 bg-rose-50 p-3 text-xs text-rose-800 dark:border-rose-800/60 dark:bg-rose-950/40 dark:text-rose-200">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
               <span>{errorMsg}</span>
             </div>
           )}
 
           {isComplete && (
-            <div className="flex items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-200">
+            <div className="flex items-start gap-2 rounded-[22px] border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-200">
               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
               <span>
                 Flange tightening complete! All {boltCount} studs reached 100% (
@@ -509,18 +518,18 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
       </div>
 
       {/* Multi-Pass Torque Audit Log Table */}
-      <div className="mt-5 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-800/60">
-          <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+      <div className="mt-5 overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-high)] px-4 py-2.5">
+          <span className="text-xs font-bold text-[var(--md-on-surface)]">
             {pick(
               'Multi-Pass Torque Audit Log (ASME PCC-1 Record)',
               'Log Audit Torsi Multi-Pass (Catatan ASME PCC-1)',
               '多パス締付トルク記録表 (ASME PCC-1)'
             )}
           </span>
-          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+          <span className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Gasket Compression:', 'Kompresi Gasket:', 'ガスケット圧縮率:')}{' '}
-            <strong className="text-slate-800 dark:text-slate-200">
+            <strong className="text-[var(--md-on-surface)]">
               {avgCompression.toFixed(0)}%
             </strong>{' '}
             · {pick('Uniformity:', 'Keseragaman:', '均一性:')}{' '}
@@ -537,7 +546,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-slate-200 bg-white text-[11px] font-semibold text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+            <thead className="border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               <tr>
                 <th className="px-3.5 py-2">{pick('Stud #', 'Baut #', 'ボルト #')}</th>
                 <th className="px-3.5 py-2">Pass 1 (30%)</th>
@@ -546,7 +555,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                 <th className="px-3.5 py-2 text-right">{pick('State', 'Status', '状態')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 bg-white dark:divide-slate-800/70 dark:bg-slate-900/40">
+            <tbody className="divide-y divide-[var(--md-outline-variant)]/40 bg-[var(--md-surface-container-low)]">
               {auditLog.map((entry, idx) => {
                 const studNum = idx + 1;
                 const pct = boltTorquesPct[idx] ?? 0;
@@ -556,30 +565,30 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
                     key={studNum}
                     className={
                       isNextStud
-                        ? 'bg-amber-50/60 dark:bg-amber-950/20'
+                        ? 'bg-[var(--md-primary-container)]/35'
                         : undefined
                     }
                   >
-                    <td className="px-3.5 py-2 font-mono font-bold text-slate-800 dark:text-slate-200">
+                    <td className="px-3.5 py-2 font-mono font-bold text-[var(--md-on-surface)]">
                       Bolt #{studNum}
                     </td>
-                    <td className="px-3.5 py-2 font-mono text-slate-600 dark:text-slate-300">
+                    <td className="px-3.5 py-2 font-mono text-[var(--md-on-surface-variant)]">
                       {entry.p1 !== null ? `${entry.p1.toFixed(1)} N·m` : '—'}
                     </td>
-                    <td className="px-3.5 py-2 font-mono text-slate-600 dark:text-slate-300">
+                    <td className="px-3.5 py-2 font-mono text-[var(--md-on-surface-variant)]">
                       {entry.p2 !== null ? `${entry.p2.toFixed(1)} N·m` : '—'}
                     </td>
-                    <td className="px-3.5 py-2 font-mono text-slate-600 dark:text-slate-300">
+                    <td className="px-3.5 py-2 font-mono text-[var(--md-on-surface-variant)]">
                       {entry.p3 !== null ? `${entry.p3.toFixed(1)} N·m` : '—'}
                     </td>
                     <td className="px-3.5 py-2 text-right">
                       <span
-                        className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                        className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
                           pct >= 100
                             ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300'
                             : pct > 0
-                            ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300'
-                            : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
+                            ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                            : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
                         }`}
                       >
                         {pct >= 100 ? 'FINAL 100%' : pct > 0 ? `${pct}%` : 'PENDING'}

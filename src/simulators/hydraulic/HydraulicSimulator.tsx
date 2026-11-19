@@ -226,12 +226,12 @@ export function HydraulicSimulator() {
   return (
     <div className="space-y-5">
       {/* Top Status & Quick Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 glass-panel rounded-2xl px-4 py-3 ">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-3.5">
         <div className="flex items-center gap-2.5">
           <span
             className={`inline-flex h-2.5 w-2.5 rounded-full ${
               !params.pumpOn
-                ? 'bg-slate-400'
+                ? 'bg-[var(--md-outline)]'
                 : telemetry.isCavitating || telemetry.isStalled
                   ? 'animate-pulse bg-red-500'
                   : telemetry.reliefOpen
@@ -239,7 +239,7 @@ export function HydraulicSimulator() {
                     : 'bg-emerald-500'
             }`}
           />
-          <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
+          <span className="text-sm font-semibold text-[var(--md-on-surface)]">
             {telemetry.statusText}
           </span>
         </div>
@@ -248,10 +248,10 @@ export function HydraulicSimulator() {
           <button
             type="button"
             onClick={() => updateParam('pumpOn', !params.pumpOn)}
-            className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+            className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition ${
               params.pumpOn
                 ? 'bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950'
-                : 'border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
+                : 'glass-pill'
             }`}
           >
             <Power className="h-3.5 w-3.5" />
@@ -263,7 +263,7 @@ export function HydraulicSimulator() {
           <button
             type="button"
             onClick={resetAll}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset Lab', 'Reset Lab', 'リセット')}
@@ -322,30 +322,30 @@ export function HydraulicSimulator() {
         {/* Right 5 cols: Circuit Controls, Fault Injection & Thermal Telemetry */}
         <div className="space-y-4 lg:col-span-5">
           {/* DCV & Circuit Parameters */}
-          <div className="glass-panel rounded-2xl p-4 ">
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Circuit Controls', 'Kontrol Sirkuit', '回路コントロール')}
             </h2>
 
             {/* 4/3 DCV Selector */}
             <div className="mt-3">
-              <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+              <label className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick(
                   '4/3 Directional Control Valve',
                   'Katup Arah 4/3 (DCV)',
                   '4/3 方向切換弁 (DCV)',
                 )}
               </label>
-              <div className="mt-1.5 grid grid-cols-3 gap-1.5 rounded-xl bg-slate-100 p-1 dark:bg-slate-800">
+              <div className="mt-1.5 grid grid-cols-3 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 {(['extend', 'neutral', 'retract'] as DcvPosition[]).map((pos) => (
                   <button
                     key={pos}
                     type="button"
                     onClick={() => updateParam('dcv', pos)}
-                    className={`rounded-lg py-2 text-xs font-semibold capitalize transition ${
+                    className={`rounded-full py-2 text-xs capitalize transition ${
                       params.dcv === pos
-                        ? 'bg-amber-500 text-white shadow-xs dark:text-slate-950'
-                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {pos === 'extend'
@@ -359,22 +359,24 @@ export function HydraulicSimulator() {
             </div>
 
             {/* Load-Holding Pilot Check Valve Toggle */}
-            <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-              <div className="flex items-center gap-2">
+            <div className="mt-4 flex items-center justify-between gap-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-2.5">
                 <Lock
                   className={`h-4 w-4 ${
-                    params.pilotCheckValve ? 'text-emerald-500' : 'text-slate-400'
+                    params.pilotCheckValve
+                      ? 'text-[var(--md-primary)]'
+                      : 'text-[var(--md-on-surface-variant)]'
                   }`}
                 />
                 <div>
-                  <div className="text-xs font-semibold text-slate-800 dark:text-slate-100">
+                  <div className="text-xs font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'Load-Holding Pilot Check',
                       'Pilot Check Penahan Beban',
                       '負荷保持パイロットチェック弁',
                     )}
                   </div>
-                  <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                  <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Prevents spool drift in Neutral',
                       'Mencegah silinder melorot di Netral',
@@ -388,37 +390,41 @@ export function HydraulicSimulator() {
                 role="switch"
                 aria-checked={params.pilotCheckValve}
                 onClick={() => updateParam('pilotCheckValve', !params.pilotCheckValve)}
-                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 transition-colors ${
                   params.pilotCheckValve
-                    ? 'bg-emerald-500'
-                    : 'bg-slate-300 dark:bg-slate-700'
+                    ? 'border-transparent bg-[var(--md-primary)]'
+                    : 'border-[var(--md-outline)]/60 bg-[var(--md-surface-container-highest)]'
                 }`}
               >
                 <span
-                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition ${
-                    params.pilotCheckValve ? 'translate-x-4' : 'translate-x-0'
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full shadow-xs transition ${
+                    params.pilotCheckValve
+                      ? 'translate-x-4 bg-[var(--md-on-primary)]'
+                      : 'translate-x-0 bg-[var(--md-outline)]'
                   }`}
                 />
               </button>
             </div>
 
             {/* Bladder Accumulator Surge Damping Toggle */}
-            <div className="mt-2.5 flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-              <div className="flex items-center gap-2">
+            <div className="mt-2.5 flex items-center justify-between gap-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+              <div className="flex items-center gap-2.5">
                 <GaugeIcon
                   className={`h-4 w-4 ${
-                    params.accumulatorEnabled ? 'text-emerald-500' : 'text-slate-400'
+                    params.accumulatorEnabled
+                      ? 'text-[var(--md-primary)]'
+                      : 'text-[var(--md-on-surface-variant)]'
                   }`}
                 />
                 <div>
-                  <div className="text-xs font-semibold text-slate-800 dark:text-slate-100">
+                  <div className="text-xs font-semibold text-[var(--md-on-surface)]">
                     {pick(
                       'N₂ Accumulator Surge Damping',
                       'Peredam Lonjakan Akumulator N₂',
                       'N₂ アキュムレータサージ減衰',
                     )}
                   </div>
-                  <div className="text-[10px] text-slate-500 dark:text-slate-400">
+                  <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                     {pick(
                       'Smooths dead-head & DCV pressure spikes',
                       'Meredam lonjakan tekanan dead-head & DCV',
@@ -434,15 +440,17 @@ export function HydraulicSimulator() {
                 onClick={() =>
                   updateParam('accumulatorEnabled', !params.accumulatorEnabled)
                 }
-                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 transition-colors ${
                   params.accumulatorEnabled
-                    ? 'bg-emerald-500'
-                    : 'bg-slate-300 dark:bg-slate-700'
+                    ? 'border-transparent bg-[var(--md-primary)]'
+                    : 'border-[var(--md-outline)]/60 bg-[var(--md-surface-container-highest)]'
                 }`}
               >
                 <span
-                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition ${
-                    params.accumulatorEnabled ? 'translate-x-4' : 'translate-x-0'
+                  className={`pointer-events-none inline-block h-4 w-4 transform rounded-full shadow-xs transition ${
+                    params.accumulatorEnabled
+                      ? 'translate-x-4 bg-[var(--md-on-primary)]'
+                      : 'translate-x-0 bg-[var(--md-outline)]'
                   }`}
                 />
               </button>
@@ -451,14 +459,14 @@ export function HydraulicSimulator() {
             {/* Relief Valve Cracking Pressure */}
             <div className="mt-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'Relief Cracking Pressure',
                     'Tekanan Cracking Relief',
                     'リリーフ設定圧力',
                   )}
                 </span>
-                <span className="font-mono font-bold text-amber-600 dark:text-amber-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {params.reliefCrackBar} bar
                 </span>
               </div>
@@ -471,9 +479,9 @@ export function HydraulicSimulator() {
                 onChange={(e) =>
                   updateParam('reliefCrackBar', Number(e.target.value))
                 }
-                className="mt-1.5 w-full accent-amber-500"
+                className="mt-1.5 w-full"
               />
-              <div className="flex justify-between text-[10px] text-slate-400">
+              <div className="flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>20 bar</span>
                 <span>210 bar</span>
               </div>
@@ -482,14 +490,14 @@ export function HydraulicSimulator() {
             {/* External Load */}
             <div className="mt-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'External Cylinder Load',
                     'Beban Eksternal Silinder',
                     'シリンダ外部負荷',
                   )}
                 </span>
-                <span className="font-mono font-bold text-red-600 dark:text-red-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {params.loadKn} kN
                 </span>
               </div>
@@ -500,9 +508,9 @@ export function HydraulicSimulator() {
                 step={2}
                 value={params.loadKn}
                 onChange={(e) => updateParam('loadKn', Number(e.target.value))}
-                className="mt-1.5 w-full accent-amber-500"
+                className="mt-1.5 w-full"
               />
-              <div className="flex justify-between text-[10px] text-slate-400">
+              <div className="flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>{pick('0 kN (No Load)', '0 kN (Tanpa Beban)', '0 kN (無負荷)')}</span>
                 <span>80 kN</span>
               </div>
@@ -511,14 +519,14 @@ export function HydraulicSimulator() {
             {/* Meter-Out Flow Control */}
             <div className="mt-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'Meter-Out Needle Valve',
                     'Katup Jarum Meter-Out',
                     'メータアウト絞り弁',
                   )}
                 </span>
-                <span className="font-mono font-bold text-sky-600 dark:text-sky-400">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {params.meterOutOpenPct}% {pick('open', 'buka', '開')}
                 </span>
               </div>
@@ -531,9 +539,9 @@ export function HydraulicSimulator() {
                 onChange={(e) =>
                   updateParam('meterOutOpenPct', Number(e.target.value))
                 }
-                className="mt-1.5 w-full accent-amber-500"
+                className="mt-1.5 w-full"
               />
-              <div className="flex justify-between text-[10px] text-slate-400">
+              <div className="flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>{pick('10% (Throttled)', '10% (Terdrossel)', '10% (絞り)')}</span>
                 <span>{pick('100% (Full)', '100% (Penuh)', '100% (全開)')}</span>
               </div>
@@ -542,14 +550,14 @@ export function HydraulicSimulator() {
             {/* Pump Flow */}
             <div className="mt-4">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-slate-200">
+                <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'Pump Displacement Flow',
                     'Debit Pompa Perpindahan',
                     'ポンプ吐出流量',
                   )}
                 </span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-100">
+                <span className="font-mono font-bold text-[var(--md-primary)]">
                   {params.pumpFlowLpm} L/min
                 </span>
               </div>
@@ -562,17 +570,17 @@ export function HydraulicSimulator() {
                 onChange={(e) =>
                   updateParam('pumpFlowLpm', Number(e.target.value))
                 }
-                className="mt-1.5 w-full accent-amber-500"
+                className="mt-1.5 w-full"
               />
             </div>
           </div>
 
           {/* Maintenance Fault Injection Panel */}
-          <div className="glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-amber-500" />
-                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+                <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
+                <h2 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
                     'Maintenance Fault Injection',
                     'Injeksi Gangguan Perawatan',
@@ -584,7 +592,7 @@ export function HydraulicSimulator() {
                 <button
                   type="button"
                   onClick={startBlindChallenge}
-                  className="inline-flex items-center gap-1 rounded-lg bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700 transition hover:bg-amber-100 dark:bg-amber-500/15 dark:text-amber-300 dark:hover:bg-amber-500/25"
+                  className="m3-btn-tonal inline-flex items-center gap-1 px-3 py-1.5 text-[11px] font-semibold"
                 >
                   <Shuffle className="h-3 w-3" />
                   {pick('Blind Test', 'Uji Buta', 'ブラインド診断')}
@@ -593,7 +601,7 @@ export function HydraulicSimulator() {
                 <button
                   type="button"
                   onClick={exitBlindChallenge}
-                  className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
+                  className="glass-pill rounded-full px-3 py-1.5 text-[11px] font-semibold"
                 >
                   {pick('Exit Test', 'Keluar Uji', '診断終了')}
                 </button>
@@ -609,22 +617,20 @@ export function HydraulicSimulator() {
                       key={f.id}
                       type="button"
                       onClick={() => updateParam('fault', f.id)}
-                      className={`w-full rounded-xl border p-2.5 text-left transition ${
+                      className={`w-full rounded-[20px] border p-3 text-left transition ${
                         active
-                          ? f.id === 'none'
-                            ? 'border-emerald-300 bg-emerald-50/70 dark:border-emerald-500/40 dark:bg-emerald-500/10'
-                            : 'border-red-300 bg-red-50/70 dark:border-red-500/40 dark:bg-red-500/10'
-                          : 'border-slate-200 bg-slate-50/60 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800/50 dark:hover:bg-slate-800'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
-                      <div className="flex items-center justify-between text-xs font-semibold text-slate-900 dark:text-white">
+                      <div className="flex items-center justify-between text-xs font-semibold">
                         <span>{f.label}</span>
                         {active && f.id !== 'none' && (
-                          <AlertTriangle className="h-3.5 w-3.5 text-red-500" />
+                          <AlertTriangle className="h-3.5 w-3.5 text-rose-500" />
                         )}
                       </div>
                       {active && (
-                        <p className="mt-1 text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                        <p className="mt-1 text-[11px] leading-relaxed opacity-90">
                           {f.symptomSummary}
                         </p>
                       )}
@@ -634,7 +640,7 @@ export function HydraulicSimulator() {
               </div>
             ) : (
               <div className="mt-3 space-y-3">
-                <div className="rounded-xl border border-amber-200 bg-amber-50/70 p-3 text-xs text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+                <div className="rounded-[20px] border border-amber-300/60 bg-amber-50/80 p-3 text-xs text-amber-900 dark:border-amber-500/30 dark:bg-amber-950/30 dark:text-amber-200">
                   <div className="flex items-center gap-1.5 font-bold">
                     <ShieldAlert className="h-4 w-4 shrink-0" />
                     Hidden Fault Active
@@ -646,20 +652,19 @@ export function HydraulicSimulator() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  <label className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                     Select Your Diagnosis:
                   </label>
                   {HYDRAULIC_FAULTS.filter((f) => f.id !== 'none').map((f) => (
                     <label
                       key={f.id}
-                      className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-slate-800/70"
+                      className="flex cursor-pointer items-center gap-2 rounded-2xl border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-2 text-xs font-medium text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]"
                     >
                       <input
                         type="radio"
                         name="blind-diagnosis"
                         checked={diagnosisGuess === f.id}
                         onChange={() => setDiagnosisGuess(f.id)}
-                        className="accent-amber-500"
                       />
                       <span>{f.label}</span>
                     </label>
@@ -669,24 +674,24 @@ export function HydraulicSimulator() {
                 <button
                   type="button"
                   onClick={submitDiagnosis}
-                  className="w-full rounded-xl bg-amber-500 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-amber-600 dark:text-slate-950"
+                  className="m3-btn-filled w-full py-2.5 text-xs font-bold"
                 >
                   Verify Diagnosis
                 </button>
 
                 {diagnosisResult && (
                   <div
-                    className={`rounded-xl border p-3 text-xs ${
+                    className={`rounded-[20px] border p-3 text-xs ${
                       diagnosisResult.correct
-                        ? 'border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200'
-                        : 'border-red-300 bg-red-50 text-red-900 dark:border-red-500/40 dark:bg-red-500/10 dark:text-red-200'
+                        ? 'border-emerald-300 bg-emerald-50 text-emerald-900 dark:border-emerald-500/40 dark:bg-emerald-950/30 dark:text-emerald-200'
+                        : 'border-rose-300 bg-rose-50 text-rose-900 dark:border-rose-500/40 dark:bg-rose-950/30 dark:text-rose-200'
                     }`}
                   >
                     <div className="flex items-center gap-1.5 font-bold">
                       {diagnosisResult.correct ? (
                         <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                       ) : (
-                        <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                        <AlertTriangle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
                       )}
                       {diagnosisResult.correct
                         ? 'Correct Diagnosis!'
@@ -702,15 +707,15 @@ export function HydraulicSimulator() {
           </div>
 
           {/* Thermal & Efficiency Telemetry (Right Column) */}
-          <div className="glass-panel rounded-2xl p-4 ">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Thermometer
                   className={`h-4 w-4 ${
-                    isOverheating ? 'text-red-500' : 'text-amber-500'
+                    isOverheating ? 'text-rose-500' : 'text-[var(--md-primary)]'
                   }`}
                 />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick(
                     'Thermal & Efficiency (ISO VG 46)',
                     'Termal & Efisiensi (ISO VG 46)',
@@ -719,7 +724,7 @@ export function HydraulicSimulator() {
                 </h3>
               </div>
               {isOverheating && (
-                <span className="inline-flex animate-pulse items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-[11px] font-bold text-red-700 dark:bg-red-500/20 dark:text-red-300">
+                <span className="inline-flex animate-pulse items-center gap-1 rounded-full bg-rose-100 px-2.5 py-0.5 text-[11px] font-bold text-rose-700 dark:bg-rose-500/20 dark:text-rose-300">
                   <Flame className="h-3 w-3" />
                   {pick('OVERHEATING (> 65 °C)', 'PANAS BERLEBIH (> 65 °C)', '過熱警告 (> 65 °C)')}
                 </span>
@@ -727,52 +732,52 @@ export function HydraulicSimulator() {
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Relief Heat Loss', 'Rugi Panas Relief', 'リリーフ熱損失')}
                 </div>
                 <div
                   className={`mt-0.5 font-mono text-base font-bold ${
                     telemetry.reliefHeatLossKw > 1
-                      ? 'text-red-600 dark:text-red-400'
-                      : 'text-slate-900 dark:text-white'
+                      ? 'text-rose-600 dark:text-rose-400'
+                      : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {telemetry.reliefHeatLossKw.toFixed(2)}{' '}
-                  <span className="text-xs font-normal text-slate-500">kW</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">kW</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Oil Temperature', 'Suhu Oli', '作動油温度')}
                 </div>
                 <div
                   className={`mt-0.5 font-mono text-base font-bold ${
                     isOverheating
-                      ? 'text-red-600 dark:text-red-400'
+                      ? 'text-rose-600 dark:text-rose-400'
                       : oilTempC > 55
                         ? 'text-amber-600 dark:text-amber-400'
-                        : 'text-slate-900 dark:text-white'
+                        : 'text-[var(--md-on-surface)]'
                   }`}
                 >
                   {oilTempC.toFixed(1)}{' '}
-                  <span className="text-xs font-normal text-slate-500">°C</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">°C</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Oil Viscosity', 'Viskositas Oli', '動粘度')}
                 </div>
-                <div className="mt-0.5 font-mono text-base font-bold text-slate-900 dark:text-white">
+                <div className="mt-0.5 font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {viscosityCst.toFixed(1)}{' '}
-                  <span className="text-xs font-normal text-slate-500">cSt</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">cSt</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-slate-800/50">
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('System Efficiency', 'Efisiensi Sistem', 'システム効率')}
                 </div>
                 <div
@@ -781,11 +786,11 @@ export function HydraulicSimulator() {
                       ? 'text-emerald-600 dark:text-emerald-400'
                       : telemetry.systemEfficiencyPct > 0
                         ? 'text-amber-600 dark:text-amber-400'
-                        : 'text-slate-500 dark:text-slate-400'
+                        : 'text-[var(--md-on-surface-variant)]'
                   }`}
                 >
                   {telemetry.systemEfficiencyPct.toFixed(0)}{' '}
-                  <span className="text-xs font-normal text-slate-500">%</span>
+                  <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">%</span>
                 </div>
               </div>
             </div>
@@ -795,59 +800,59 @@ export function HydraulicSimulator() {
 
       {/* Full-Width Live Power / Flow / Force Readouts */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-        <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Hydraulic Power', 'Daya Hidrolik', '油圧動力')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+          <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
             {telemetry.hydraulicPowerKw.toFixed(2)}{' '}
-            <span className="text-xs font-normal text-slate-500">kW</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">kW</span>
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Actuator Flow', 'Debit Aktuator', 'アクチュエータ流量')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-amber-600 dark:text-amber-400">
+          <div className="mt-1 font-mono text-lg font-bold text-[var(--md-primary)]">
             {telemetry.qActuatorLpm.toFixed(1)}{' '}
-            <span className="text-xs font-normal text-slate-500">L/min</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">L/min</span>
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Relief Bypass', 'Bypass Relief', 'リリーフバイパス')}
           </div>
           <div
             className={`mt-1 font-mono text-lg font-bold ${
               telemetry.qReliefLpm > 0.5
-                ? 'text-red-600 dark:text-red-400'
-                : 'text-slate-900 dark:text-white'
+                ? 'text-rose-600 dark:text-rose-400'
+                : 'text-[var(--md-on-surface)]'
             }`}
           >
             {telemetry.qReliefLpm.toFixed(1)}{' '}
-            <span className="text-xs font-normal text-slate-500">L/min</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">L/min</span>
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <div className="glass-card rounded-[24px] p-3.5">
+          <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Cylinder Speed', 'Kecepatan Silinder', 'シリンダ速度')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+          <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
             {telemetry.velocityMmS.toFixed(1)}{' '}
-            <span className="text-xs font-normal text-slate-500">mm/s</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">mm/s</span>
           </div>
         </div>
 
-        <div className="col-span-2 rounded-xl border border-slate-200 bg-white p-3 sm:col-span-1 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+        <div className="glass-card col-span-2 rounded-[24px] p-3.5 sm:col-span-1">
+          <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
             {pick('Net Force', 'Gaya Netto', '正味推力')}
           </div>
-          <div className="mt-1 font-mono text-lg font-bold text-slate-900 dark:text-white">
+          <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
             {telemetry.netForceKn.toFixed(1)}{' '}
-            <span className="text-xs font-normal text-slate-500">kN</span>
+            <span className="text-xs font-normal text-[var(--md-on-surface-variant)]">kN</span>
           </div>
         </div>
       </div>

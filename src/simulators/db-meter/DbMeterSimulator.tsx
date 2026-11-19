@@ -124,17 +124,17 @@ export function DbMeterSimulator() {
 
   const oshaBadgeClass =
     computed.osha.status === 'exceeded'
-      ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30'
+      ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/35'
       : computed.osha.status === 'action'
-        ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30'
-        : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
+        ? 'bg-amber-500/20 text-amber-800 dark:text-amber-200 border-amber-500/35'
+        : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/35';
 
   const nioshBadgeClass =
     computed.niosh.status === 'exceeded'
-      ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30'
+      ? 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-rose-500/35'
       : computed.niosh.status === 'action'
-        ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30'
-        : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30';
+        ? 'bg-amber-500/20 text-amber-800 dark:text-amber-200 border-amber-500/35'
+        : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/35';
 
   return (
     <div className="space-y-5">
@@ -158,30 +158,39 @@ export function DbMeterSimulator() {
           />
 
           {/* Octave Band Spectrum & Weighting Comparison */}
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-4">
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300 flex items-center gap-2">
-                <Volume2 className="h-4 w-4 text-emerald-500" />
+              <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
+                <Volume2 className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   `Octave-Band Spectrum (${weighting} Weighted)`,
                   `Spektrum Pita Oktaf (Pembobotan ${weighting})`,
                   `オクターブバンドスペクトル (${weighting} 特性)`
                 )}
               </h3>
-              <div className="flex items-center gap-2 text-xs font-mono">
-                <span className="px-2 py-0.5 rounded-md bg-[#001F6B]/10 dark:bg-blue-500/15 text-[#001F6B] dark:text-blue-300">
-                  dBA: {computed.equivalentDba.toFixed(1)}
-                </span>
-                <span className="px-2 py-0.5 rounded-md bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                  dBC: {computed.equivalentDbc.toFixed(1)}
-                </span>
-                <span className="px-2 py-0.5 rounded-md bg-slate-200/70 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
-                  dBZ: {computed.equivalentDbz.toFixed(1)}
-                </span>
+              <div className="flex items-center gap-1.5 font-mono text-xs">
+                {(
+                  [
+                    { key: 'dBA', val: computed.equivalentDba },
+                    { key: 'dBC', val: computed.equivalentDbc },
+                    { key: 'dBZ', val: computed.equivalentDbz },
+                  ] as const
+                ).map((item) => (
+                  <span
+                    key={item.key}
+                    className={`rounded-full px-2.5 py-0.5 ${
+                      weighting === item.key
+                        ? 'bg-[var(--md-primary-container)] font-bold text-[var(--md-on-primary-container)]'
+                        : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]'
+                    }`}
+                  >
+                    {item.key}: {item.val.toFixed(1)}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="grid grid-cols-8 gap-2 items-end h-32 pt-4">
+            <div className="grid h-32 grid-cols-8 items-end gap-2 pt-4">
               {OCTAVE_BANDS_HZ.map((hz, idx) => {
                 const val = computed.weightedBandsDb[idx];
                 const pct = Math.max(6, Math.min(100, ((val - 30) / 85) * 100));
@@ -192,17 +201,17 @@ export function DbMeterSimulator() {
                       ? 'bg-amber-500'
                       : 'bg-emerald-500';
                 return (
-                  <div key={hz} className="flex flex-col items-center gap-1 h-full justify-end">
-                    <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                  <div key={hz} className="flex h-full flex-col items-center justify-end gap-1">
+                    <span className="font-mono text-[10px] text-[var(--md-on-surface-variant)]">
                       {val.toFixed(0)}
                     </span>
-                    <div className="w-full bg-slate-200/60 dark:bg-slate-800/80 rounded-t-md h-20 flex items-end overflow-hidden">
+                    <div className="flex h-20 w-full items-end overflow-hidden rounded-t-lg bg-[var(--md-surface-container-highest)]">
                       <div
-                        className={`w-full ${barCol} transition-all duration-200 rounded-t-md`}
+                        className={`w-full ${barCol} rounded-t-lg transition-all duration-200`}
                         style={{ height: `${pct}%` }}
                       />
                     </div>
-                    <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-300">
+                    <span className="text-[10px] font-semibold text-[var(--md-on-surface)]">
                       {hz >= 1000 ? `${hz / 1000}k` : hz}
                     </span>
                   </div>
@@ -210,7 +219,7 @@ export function DbMeterSimulator() {
               })}
             </div>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 computed.source.dominantNote,
                 computed.source.dominantNoteId,
@@ -222,18 +231,18 @@ export function DbMeterSimulator() {
           {/* OSHA & NIOSH Occupational Noise Exposure Cards */}
           <div className="grid gap-4 sm:grid-cols-2">
             {/* OSHA Card */}
-            <div className="glass-panel rounded-2xl p-4 shadow-xs space-y-3">
-              <div className="flex items-center justify-between">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="flex items-center justify-between gap-2">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#001F6B] dark:text-blue-300">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-primary)]">
                     OSHA 29 CFR 1910.95
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     90 dBA Criterion • 5 dB Exchange
                   </div>
                 </div>
                 <span
-                  className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border flex items-center gap-1 ${oshaBadgeClass}`}
+                  className={`flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${oshaBadgeClass}`}
                 >
                   {computed.osha.status === 'safe' ? (
                     <CheckCircle2 className="h-3.5 w-3.5" />
@@ -248,20 +257,20 @@ export function DbMeterSimulator() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-xl bg-slate-100/80 dark:bg-slate-800/60 p-2.5">
-                  <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+              <div className="grid grid-cols-2 gap-2.5 text-xs">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     {pick('Max Exposure Time', 'Waktu Maksimum', '許容ばく露時間')}
                   </div>
-                  <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {formatExposureDuration(computed.osha.permissibleHours)}
                   </div>
                 </div>
-                <div className="rounded-xl bg-slate-100/80 dark:bg-slate-800/60 p-2.5">
-                  <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     {pick('8h TWA Dose', 'Dosis TWA 8 Jam', '8時間TWA線量')}
                   </div>
-                  <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {computed.osha.dose8hPercent.toFixed(0)}%
                   </div>
                 </div>
@@ -269,18 +278,18 @@ export function DbMeterSimulator() {
             </div>
 
             {/* NIOSH Card */}
-            <div className="glass-panel rounded-2xl p-4 shadow-xs space-y-3">
-              <div className="flex items-center justify-between">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="flex items-center justify-between gap-2">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#001F6B] dark:text-blue-300">
+                  <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-primary)]">
                     NIOSH REL (1998)
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     85 dBA Criterion • 3 dB Exchange
                   </div>
                 </div>
                 <span
-                  className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border flex items-center gap-1 ${nioshBadgeClass}`}
+                  className={`flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${nioshBadgeClass}`}
                 >
                   {computed.niosh.status === 'safe' ? (
                     <CheckCircle2 className="h-3.5 w-3.5" />
@@ -295,20 +304,20 @@ export function DbMeterSimulator() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-xl bg-slate-100/80 dark:bg-slate-800/60 p-2.5">
-                  <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+              <div className="grid grid-cols-2 gap-2.5 text-xs">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     {pick('Max Exposure Time', 'Waktu Maksimum', '許容ばく露時間')}
                   </div>
-                  <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {formatExposureDuration(computed.niosh.permissibleHours)}
                   </div>
                 </div>
-                <div className="rounded-xl bg-slate-100/80 dark:bg-slate-800/60 p-2.5">
-                  <div className="text-slate-500 dark:text-slate-400 text-[11px]">
+                <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+                  <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                     {pick('8h TWA Dose', 'Dosis TWA 8 Jam', '8時間TWA線量')}
                   </div>
-                  <div className="text-base font-bold font-mono text-slate-800 dark:text-slate-100">
+                  <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {computed.niosh.dose8hPercent.toFixed(0)}%
                   </div>
                 </div>
@@ -319,10 +328,10 @@ export function DbMeterSimulator() {
 
         {/* RIGHT COLUMN (5 cols): Controls */}
         <div className="lg:col-span-5 space-y-5">
-          <div className="glass-panel rounded-2xl p-5 shadow-xs space-y-5">
-            <div className="flex items-center justify-between border-b border-slate-200/70 dark:border-slate-700/70 pb-3">
-              <h2 className="text-base font-bold text-[#001F6B] dark:text-blue-300 flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-emerald-500" />
+          <div className="glass-panel space-y-5 rounded-[28px] p-4 sm:p-5">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-3">
+              <h2 className="flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
+                <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Acoustic Measurement Controls',
                   'Kontrol Pengukuran Akustik',
@@ -332,7 +341,7 @@ export function DbMeterSimulator() {
               <button
                 type="button"
                 onClick={handleResetPeak}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25 transition-colors cursor-pointer"
+                className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 {pick('Reset Peak', 'Reset Puncak', 'ピークリセット')}
@@ -341,7 +350,7 @@ export function DbMeterSimulator() {
 
             {/* Machine Acoustic Source */}
             <div className="space-y-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Machine Acoustic Source', 'Sumber Akustik Mesin', '機械音源')}
               </label>
               <div className="grid gap-2">
@@ -352,10 +361,10 @@ export function DbMeterSimulator() {
                       key={src.id}
                       type="button"
                       onClick={() => handleSelectSource(src.id)}
-                      className={`text-left px-3 py-2.5 rounded-xl border text-xs transition-all cursor-pointer ${
+                      className={`rounded-[20px] border px-3.5 py-2.5 text-left text-xs transition-all ${
                         active
-                          ? 'bg-[#001F6B] text-white border-[#002D9C] shadow-sm'
-                          : 'bg-slate-50/70 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/70 hover:border-emerald-400'
+                          ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs ring-1 ring-[var(--md-primary)]/30'
+                          : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                       }`}
                     >
                       <div className="font-semibold">
@@ -369,19 +378,19 @@ export function DbMeterSimulator() {
 
             {/* Frequency Weighting */}
             <div className="space-y-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Frequency Weighting (IEC 61672)', 'Pembobotan Frekuensi', '周波数重み付け')}
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 {(['dBA', 'dBC', 'dBZ'] as FrequencyWeighting[]).map((w) => (
                   <button
                     key={w}
                     type="button"
                     onClick={() => handleSelectWeighting(w)}
-                    className={`py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                    className={`rounded-full py-2 text-xs transition ${
                       weighting === w
-                        ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs'
-                        : 'bg-slate-50/70 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/70'
+                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                        : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     {w}
@@ -392,17 +401,17 @@ export function DbMeterSimulator() {
 
             {/* Time Weighting */}
             <div className="space-y-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Time Weighting', 'Pembobotan Waktu', '時間重み付け')}
               </label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
                 <button
                   type="button"
                   onClick={() => setTimeWeighting('FAST')}
-                  className={`py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                  className={`rounded-full py-2 text-xs transition ${
                     timeWeighting === 'FAST'
-                      ? 'bg-[#002D9C] text-white border-blue-500 shadow-xs'
-                      : 'bg-slate-50/70 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/70'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   FAST (125 ms)
@@ -410,10 +419,10 @@ export function DbMeterSimulator() {
                 <button
                   type="button"
                   onClick={() => setTimeWeighting('SLOW')}
-                  className={`py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                  className={`rounded-full py-2 text-xs transition ${
                     timeWeighting === 'SLOW'
-                      ? 'bg-[#002D9C] text-white border-blue-500 shadow-xs'
-                      : 'bg-slate-50/70 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/70'
+                      ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                      : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   SLOW (1 s)
@@ -424,10 +433,10 @@ export function DbMeterSimulator() {
             {/* Distance Slider */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                <span className="font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Microphone Distance', 'Jarak Mikrofon', 'マイク距離')}
                 </span>
-                <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                <span className="font-mono font-extrabold text-[var(--md-primary)]">
                   {distanceM.toFixed(1)} m ({computed.distanceAttenuationDb.toFixed(1)} dB)
                 </span>
               </div>
@@ -438,9 +447,9 @@ export function DbMeterSimulator() {
                 step={0.5}
                 value={distanceM}
                 onChange={(e) => setDistanceM(Number(e.target.value))}
-                className="w-full cursor-pointer"
+                className="w-full"
               />
-              <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+              <div className="flex justify-between font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 <span>1.0 m (Ref)</span>
                 <span>8.0 m</span>
                 <span>15.0 m</span>
@@ -452,10 +461,10 @@ export function DbMeterSimulator() {
               <button
                 type="button"
                 onClick={() => setEnclosureActive((prev) => !prev)}
-                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                className={`flex w-full items-center justify-between rounded-full border px-4 py-3 text-xs font-bold transition-all ${
                   enclosureActive
-                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
-                    : 'bg-slate-50/70 dark:bg-slate-800/50 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700/70'
+                    ? 'border-[var(--md-primary)] bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-xs'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                 }`}
               >
                 <span className="flex items-center gap-2">

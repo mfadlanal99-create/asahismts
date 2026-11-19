@@ -12,6 +12,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { useLanguage, type Language } from '../context/LanguageContext';
+import { useTheme, type PixelSeed } from '../context/ThemeContext';
 import { translateCategory } from '../i18n/simulatorRegistry';
 import type {
   SimulatorAccentColor,
@@ -24,6 +25,13 @@ const LANGUAGE_OPTIONS: { id: Language; label: string; title: string }[] = [
   { id: 'en', label: 'EN', title: 'English' },
   { id: 'id', label: 'ID', title: 'Bahasa Indonesia' },
   { id: 'ja', label: 'JA', title: '日本語' },
+];
+
+const PIXEL_SEEDS: { id: PixelSeed; label: string; swatch: string }[] = [
+  { id: 'sapphire', label: 'Sapphire Blue', swatch: '#0B57D0' },
+  { id: 'mint', label: 'Lemongrass Mint', swatch: '#146C2E' },
+  { id: 'lavender', label: 'Iris Lavender', swatch: '#65558F' },
+  { id: 'amber', label: 'Sunset Amber', swatch: '#E65100' },
 ];
 
 const HOME_CATEGORY_TABS = [
@@ -86,6 +94,7 @@ export type TopRibbonProps = HomeRibbonProps | SimulatorRibbonProps;
 
 export function TopRibbon(props: TopRibbonProps) {
   const { language, setLanguage, pick } = useLanguage();
+  const { seed, setSeed } = useTheme();
   const [labMenuOpen, setLabMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -114,32 +123,37 @@ export function TopRibbon(props: TopRibbonProps) {
 
   return (
     <div className="sticky top-3 z-40 mx-auto w-full max-w-none px-4 sm:px-6 lg:px-10 xl:px-12 print:hidden">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-3xl border border-white/20 bg-[#001F6B]/78 px-3 py-1.5 text-white shadow-[0_12px_32px_-10px_rgba(0,31,107,0.45),inset_0_1px_0_rgba(255,255,255,0.22)] backdrop-blur-xl dark:border-white/15 dark:bg-[#00164D]/75 lg:rounded-full">
-        {/* Left: Compact Asahi-SMTS Brand Mark + Wordmark */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-[28px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)]/90 px-3 py-2 text-[var(--md-on-surface)] shadow-[0_8px_28px_-10px_rgba(0,0,0,0.14)] backdrop-blur-2xl lg:rounded-full">
+        {/* Left: Pixel Launcher App Chip + Wordmark */}
         <button
           type="button"
           onClick={props.onHome}
-          className="inline-flex items-center gap-2 rounded-full py-1 pl-1 pr-2.5 text-left transition hover:bg-white/10"
+          className="inline-flex items-center gap-2.5 rounded-full py-1 pl-1 pr-3 text-left transition hover:bg-[var(--md-surface-container-high)]"
           title={pick(
             'Back to Asahi-SMTS Library',
             'Kembali ke Perpustakaan Asahi-SMTS',
             'Asahi-SMTS ライブラリへ戻る'
           )}
         >
-          <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#001F6B] dark:bg-white/15 dark:text-white">
-            <Wrench className="h-3.5 w-3.5" />
-            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#E73356] ring-2 ring-[#001F6B] dark:ring-[#00164D]" />
+          <span className="relative flex h-8 w-8 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-2xs">
+            <Wrench className="h-4 w-4" />
+            <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-[var(--md-primary)] ring-2 ring-[var(--md-surface-container-low)]" />
           </span>
-          <span className="text-sm font-bold tracking-tight text-white">
-            Asahi-SMTS
+          <span className="flex items-center gap-2">
+            <span className="text-sm font-extrabold tracking-tight text-[var(--md-on-surface)]">
+              Asahi-SMTS
+            </span>
+            <span className="hidden rounded-full bg-[var(--md-secondary-container)] px-2 py-0.5 text-[10px] font-bold tracking-wide text-[var(--md-on-secondary-container)] sm:inline-block">
+              Pixel UI
+            </span>
           </span>
         </button>
 
-        {/* Center: Segmented Pill Tabs */}
+        {/* Center: Android 17 Material 3 Segmented Dock */}
         {props.variant === 'home' ? (
           <nav
             aria-label={pick('Lab categories', 'Kategori lab', 'ラボカテゴリ')}
-            className="order-3 flex w-full items-center gap-1 overflow-x-auto rounded-full border border-white/40 bg-white/75 p-1 backdrop-blur-md dark:border-white/15 dark:bg-[#07101E]/65 lg:order-2 lg:w-auto"
+            className="order-3 flex w-full items-center gap-1 overflow-x-auto rounded-full border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-high)] p-1 lg:order-2 lg:w-auto"
           >
             {HOME_CATEGORY_TABS.map((tab) => {
               const isActive = props.selectedCategory === tab.id;
@@ -150,19 +164,19 @@ export function TopRibbon(props: TopRibbonProps) {
                   key={tab.id}
                   type="button"
                   onClick={() => props.onSelectCategory(tab.id)}
-                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition ${
+                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs transition xl:px-3 ${
                     isActive
-                      ? 'bg-[#001F6B] font-semibold text-white dark:bg-[#002D9C] dark:text-white'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
+                      ? 'bg-[var(--md-secondary-container)] font-semibold text-[var(--md-on-secondary-container)] shadow-2xs'
+                      : 'font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   <span>{tabLabel}</span>
                   {count !== undefined && (
                     <span
-                      className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] leading-none ${
+                      className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] font-bold leading-none ${
                         isActive
-                          ? 'bg-white/20 text-white'
-                          : 'bg-slate-100 text-slate-600 dark:bg-white/10 dark:text-slate-300'
+                          ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
+                          : 'bg-[var(--md-surface-container-highest)] text-[var(--md-on-surface-variant)]'
                       }`}
                     >
                       {count}
@@ -173,10 +187,10 @@ export function TopRibbon(props: TopRibbonProps) {
             })}
           </nav>
         ) : (
-          <div className="order-3 flex w-full flex-wrap items-center justify-center gap-1.5 lg:order-2 lg:w-auto">
+          <div className="order-3 flex w-full flex-wrap items-center justify-center gap-2 lg:order-2 lg:w-auto">
             <nav
               aria-label={pick('Simulator modes', 'Mode simulator', 'シミュレータモード')}
-              className="flex items-center gap-1 rounded-full border border-white/40 bg-white/75 p-1 backdrop-blur-md dark:border-white/15 dark:bg-[#07101E]/65"
+              className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-high)] p-1"
             >
               {SIMULATOR_MODES.map((m, idx) => {
                 const ModeIcon = m.icon;
@@ -188,10 +202,10 @@ export function TopRibbon(props: TopRibbonProps) {
                     type="button"
                     onClick={() => props.onChangeMode(m.id)}
                     title={`${modeLabel} (Alt+${idx + 1})`}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition ${
+                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs transition ${
                       isActive
-                        ? 'bg-[#001F6B] font-semibold text-white dark:bg-[#002D9C] dark:text-white'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white'
+                        ? 'bg-[var(--md-primary-container)] font-semibold text-[var(--md-on-primary-container)] shadow-2xs'
+                        : 'font-medium text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container)] hover:text-[var(--md-on-surface)]'
                     }`}
                   >
                     <ModeIcon className="h-3.5 w-3.5" />
@@ -209,14 +223,14 @@ export function TopRibbon(props: TopRibbonProps) {
                   onClick={() => setLabMenuOpen((prev) => !prev)}
                   aria-expanded={labMenuOpen}
                   aria-haspopup="listbox"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
+                  className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-3.5 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
                 >
-                  <span className="max-w-[105px] truncate">
+                  <span className="max-w-[115px] truncate">
                     {currentSim?.shortTitle ??
                       pick('Switch Lab', 'Ganti Lab', 'ラボ切替')}
                   </span>
                   <ChevronDown
-                    className={`h-3.5 w-3.5 text-white/80 transition-transform ${
+                    className={`h-3.5 w-3.5 transition-transform ${
                       labMenuOpen ? 'rotate-180' : ''
                     }`}
                   />
@@ -230,16 +244,16 @@ export function TopRibbon(props: TopRibbonProps) {
                       'Ganti lab simulator',
                       'シミュレータラボ切替'
                     )}
-                    className="glass-panel absolute right-0 mt-2 w-64 origin-top-right rounded-2xl p-1.5 shadow-xl"
+                    className="glass-panel absolute right-0 mt-2 w-72 origin-top-right p-2 shadow-xl"
                   >
-                    <div className="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                    <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                       {pick(
                         'Switch Maintenance Lab',
                         'Ganti Lab Pemeliharaan',
                         '保全ラボを切り替え'
                       )}
                     </div>
-                    <div className="max-h-72 space-y-0.5 overflow-y-auto">
+                    <div className="max-h-72 space-y-1 overflow-y-auto">
                       {props.simulators.map((sim) => {
                         const isCurrent = sim.id === props.currentSimulatorId;
                         return (
@@ -252,20 +266,20 @@ export function TopRibbon(props: TopRibbonProps) {
                               setLabMenuOpen(false);
                               props.onSelectSimulator?.(sim.id);
                             }}
-                            className={`flex w-full items-center justify-between gap-2 rounded-xl px-2.5 py-2 text-left text-xs transition ${
+                            className={`flex w-full items-center justify-between gap-2 rounded-2xl px-3 py-2 text-left text-xs transition ${
                               isCurrent
-                                ? 'bg-[#E6EDF8] font-semibold text-[#001F6B] dark:bg-[#3B82F6]/15 dark:text-[#60A5FA]'
-                                : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                                ? 'bg-[var(--md-secondary-container)] font-semibold text-[var(--md-on-secondary-container)]'
+                                : 'text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-high)]'
                             }`}
                           >
                             <div className="min-w-0">
                               <div className="truncate">{sim.shortTitle}</div>
-                              <div className="truncate text-[10px] text-slate-400 dark:text-slate-500">
+                              <div className="truncate text-[10px] text-[var(--md-on-surface-variant)]">
                                 {translateCategory(sim.category, language)}
                               </div>
                             </div>
                             {isCurrent && (
-                              <Check className="h-3.5 w-3.5 shrink-0 text-[#001F6B] dark:text-[#60A5FA]" />
+                              <Check className="h-3.5 w-3.5 shrink-0 text-[var(--md-primary)]" />
                             )}
                           </button>
                         );
@@ -278,8 +292,36 @@ export function TopRibbon(props: TopRibbonProps) {
           </div>
         )}
 
-        {/* Right: Compact Pill Utilities (Cmd+K, Handbook, About, Theme) */}
+        {/* Right: Quick Settings Utility Cluster */}
         <div className="order-2 flex items-center gap-1.5 lg:order-3">
+          {/* Material You Monet Seed Switcher */}
+          <div
+            role="group"
+            aria-label="Material You Color"
+            title="Material You Color"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-high)] px-2"
+          >
+            {PIXEL_SEEDS.map((opt) => {
+              const active = seed === opt.id;
+              return (
+                <button
+                  key={opt.id}
+                  type="button"
+                  onClick={() => setSeed(opt.id)}
+                  aria-label={`Material You Color: ${opt.label}`}
+                  title={`Material You Color · ${opt.label}`}
+                  aria-pressed={active}
+                  className={`flex h-4 w-4 items-center justify-center rounded-full transition-transform ${
+                    active
+                      ? 'scale-110 ring-2 ring-[var(--md-primary)] ring-offset-2 ring-offset-[var(--md-surface-container-high)]'
+                      : 'opacity-75 hover:scale-105 hover:opacity-100'
+                  }`}
+                  style={{ backgroundColor: opt.swatch }}
+                />
+              );
+            })}
+          </div>
+
           {props.onOpenCommandPalette && (
             <button
               type="button"
@@ -289,10 +331,10 @@ export function TopRibbon(props: TopRibbonProps) {
                 'Lompat Cepat (Ctrl+K)',
                 'クイックジャンプ (Ctrl+K)'
               )}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-2.5 text-xs font-medium text-white transition hover:bg-white/20"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-3 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
               <Search className="h-3.5 w-3.5" />
-              <kbd className="hidden font-mono text-[10px] text-white/75 sm:inline">
+              <kbd className="hidden font-mono text-[10px] text-[var(--md-on-surface-variant)] sm:inline">
                 ⌘K
               </kbd>
             </button>
@@ -307,10 +349,10 @@ export function TopRibbon(props: TopRibbonProps) {
                 'Buku Panduan Lapangan',
                 '保全フィールドハンドブック'
               )}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-2.5 text-xs font-medium text-white transition hover:bg-white/20"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-2.5 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)] 2xl:px-3"
             >
-              <BookMarked className="h-3.5 w-3.5 text-[#CFE0F5]" />
-              <span className="hidden xl:inline">
+              <BookMarked className="h-3.5 w-3.5 text-[var(--md-primary)]" />
+              <span className="hidden 2xl:inline">
                 {pick('Handbook', 'Panduan', 'ハンドブック')}
               </span>
             </button>
@@ -325,10 +367,10 @@ export function TopRibbon(props: TopRibbonProps) {
                 'Tentang Asahi-SMTS',
                 'Asahi-SMTS について'
               )}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-2.5 text-xs font-medium text-white transition hover:bg-white/20"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-2.5 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)] 2xl:px-3"
             >
-              <Info className="h-3.5 w-3.5 text-[#CFE0F5]" />
-              <span className="hidden xl:inline">
+              <Info className="h-3.5 w-3.5 text-[var(--md-primary)]" />
+              <span className="hidden 2xl:inline">
                 {pick('About', 'Tentang', '概要')}
               </span>
             </button>
@@ -337,7 +379,7 @@ export function TopRibbon(props: TopRibbonProps) {
           <div
             role="group"
             aria-label={pick('Language', 'Bahasa', '言語')}
-            className="inline-flex h-8 items-center rounded-full border border-white/25 bg-white/10 p-0.5"
+            className="inline-flex h-9 items-center rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] p-0.5"
           >
             {LANGUAGE_OPTIONS.map((opt) => {
               const active = language === opt.id;
@@ -348,10 +390,10 @@ export function TopRibbon(props: TopRibbonProps) {
                   onClick={() => setLanguage(opt.id)}
                   title={opt.title}
                   aria-pressed={active}
-                  className={`rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold transition ${
+                  className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold transition ${
                     active
-                      ? 'bg-white text-[#001F6B] shadow-xs dark:bg-[#002D9C] dark:text-white'
-                      : 'text-white/80 hover:text-white'
+                      ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-2xs'
+                      : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                   }`}
                 >
                   {opt.label}

@@ -44,21 +44,21 @@ export function DryVsLubeComparisonStrip({
   const molyOverloaded = molyRow.res.proofPercent > 100;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900/70">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3.5 dark:border-slate-800">
+    <div className="glass-panel rounded-[28px] p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-3.5">
         <div className="flex items-start gap-2.5">
-          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-950/50 dark:text-amber-400">
+          <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
             <ArrowRightLeft className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+            <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick(
                 `Dry vs. Lubricated Over-Torque Comparison (${bolt.size} · Class ${propClass.id})`,
                 `Perbandingan Over-Torque Kering vs. Berpelumas (${bolt.size} · Kelas ${propClass.id})`,
                 `無潤滑 vs 潤滑 オーバートルク比較 (${bolt.size} · 強度区分 ${propClass.id})`
               )}
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-[var(--md-on-surface-variant)]">
               {pick(
                 `Live preload & stress if ${torqueNm.toFixed(1)} N·m is applied across different thread lubrication conditions.`,
                 `Preload & tegangan langsung jika ${torqueNm.toFixed(1)} N·m diterapkan pada berbagai kondisi pelumasan ulir.`,
@@ -71,7 +71,7 @@ export function DryVsLubeComparisonStrip({
         <button
           type="button"
           onClick={() => onApplyDrySpec(Number(dryTargetTorque.toFixed(1)))}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-800 transition hover:bg-amber-100 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-300 dark:hover:bg-amber-950/70"
+          className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
         >
           {pick(
             `Apply Dry 75% Spec (${dryTargetTorque.toFixed(1)} N·m)`,
@@ -114,25 +114,25 @@ export function DryVsLubeComparisonStrip({
                 }
               : {
                   label: 'LOW PRELOAD',
-                  cls: 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300',
-                  bar: 'bg-slate-400',
+                  cls: 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]',
+                  bar: 'bg-[var(--md-outline)]',
                 };
 
           return (
             <div
               key={lube.id}
-              className={`rounded-xl border p-3.5 transition ${
+              className={`rounded-[22px] border p-3.5 transition ${
                 isCurrent
-                  ? 'border-amber-400 bg-amber-50/40 dark:border-amber-600/70 dark:bg-amber-950/20'
-                  : 'border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/40'
+                  ? 'border-[var(--md-primary)] bg-[var(--md-primary-container)]/40 ring-1 ring-[var(--md-primary)]/25'
+                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)]'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <span className="text-xs font-bold text-slate-900 dark:text-white">
+                  <span className="text-xs font-bold text-[var(--md-on-surface)]">
                     {lube.label}
                   </span>
-                  <span className="ml-1.5 font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                  <span className="ml-1.5 font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                     K={lube.kFactor.toFixed(2)}
                   </span>
                 </div>
@@ -144,30 +144,30 @@ export function DryVsLubeComparisonStrip({
               </div>
 
               <div className="mt-2.5 flex items-baseline justify-between font-mono text-xs">
-                <span className="text-slate-600 dark:text-slate-300">
-                  Fi = <strong className="text-slate-900 dark:text-white">{res.preloadKn.toFixed(1)} kN</strong>
+                <span className="text-[var(--md-on-surface-variant)]">
+                  Fi = <strong className="text-[var(--md-on-surface)]">{res.preloadKn.toFixed(1)} kN</strong>
                 </span>
-                <span className="text-slate-600 dark:text-slate-300">
-                  σt = <strong className="text-slate-900 dark:text-white">{res.tensileStressMpa.toFixed(0)} MPa</strong>
+                <span className="text-[var(--md-on-surface-variant)]">
+                  σt = <strong className="text-[var(--md-on-surface)]">{res.tensileStressMpa.toFixed(0)} MPa</strong>
                 </span>
-                <span className="font-bold text-slate-900 dark:text-white">
+                <span className="font-bold text-[var(--md-on-surface)]">
                   {res.proofPercent.toFixed(0)}%
                 </span>
               </div>
 
               {/* Proof % Bar with 100% Proof Threshold Marker */}
-              <div className="relative mt-2 h-2.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="relative mt-2 h-2.5 overflow-hidden rounded-full bg-[var(--md-surface-container-highest)]">
                 <div
                   className={`h-full rounded-full transition-all ${badge.bar}`}
                   style={{ width: `${barPct}%` }}
                 />
                 <div
                   title="100% Proof Load Limit"
-                  className="absolute top-0 bottom-0 w-0.5 bg-slate-900/70 dark:bg-white/80"
+                  className="absolute top-0 bottom-0 w-0.5 bg-[var(--md-on-surface)]/70"
                   style={{ left: `${proofMarkerPct}%` }}
                 />
               </div>
-              <div className="mt-1 flex justify-between text-[10px] text-slate-400 dark:text-slate-500">
+              <div className="mt-1 flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
                 <span>0%</span>
                 <span>100% Proof ({propClass.proofStrengthMpa} MPa)</span>
                 <span>140%</span>
@@ -178,7 +178,7 @@ export function DryVsLubeComparisonStrip({
       </div>
 
       {molyOverloaded && (
-        <div className="mt-3 flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs text-rose-800 dark:border-rose-800/60 dark:bg-rose-950/40 dark:text-rose-200">
+        <div className="mt-3 flex items-start gap-2 rounded-[22px] border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-xs text-rose-800 dark:border-rose-800/60 dark:bg-rose-950/40 dark:text-rose-200">
           <AlertOctagon className="mt-0.5 h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
           <span>
             <strong>Lubrication Trap Alert:</strong> At {torqueNm.toFixed(1)} N·m, a Moly-lubricated bolt (K=0.12) experiences{' '}

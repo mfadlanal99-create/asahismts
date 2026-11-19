@@ -87,21 +87,21 @@ export function CompetencyModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="competency-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm dark:bg-slate-950/60 print:static print:bg-white print:p-0"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-sm print:static print:bg-white print:p-0"
       onClick={onClose}
     >
       <div
-        className="glass-panel relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl shadow-2xl print:max-h-none print:rounded-none print:border-0 print:shadow-none"
+        className="glass-panel animate-modal-enter relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-[32px] border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)] shadow-2xl print:max-h-none print:rounded-none print:border-0 print:shadow-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 border-b border-slate-200/80 px-6 py-5 dark:border-white/10">
+        <div className="flex items-start justify-between gap-4 border-b border-[var(--md-outline-variant)]/50 px-6 py-5">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#001F6B]/8 text-[#001F6B] dark:bg-white/5 dark:text-[#60A5FA]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Asahi-SMTS Competency Record',
                   'Catatan Kompetensi Asahi-SMTS',
@@ -110,7 +110,7 @@ export function CompetencyModal({
               </div>
               <h2
                 id="competency-modal-title"
-                className="text-lg font-bold tracking-tight text-[#0F172A] dark:text-white sm:text-xl"
+                className="text-lg font-extrabold tracking-tight text-[var(--md-on-surface)] sm:text-xl"
               >
                 {pick(
                   'Mechanical Maintenance Training Report',
@@ -125,7 +125,7 @@ export function CompetencyModal({
             type="button"
             onClick={onClose}
             aria-label="Close competency report"
-            className="glass-pill inline-flex h-8 w-8 items-center justify-center rounded-xl text-slate-500 transition hover:bg-white hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white print:hidden"
+            className="glass-pill inline-flex h-9 w-9 items-center justify-center rounded-full print:hidden"
           >
             <X className="h-4 w-4" />
           </button>
@@ -135,10 +135,10 @@ export function CompetencyModal({
         <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
           {/* Trainee & Readiness Summary */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="glass-card rounded-2xl p-4">
+            <div className="glass-card rounded-[24px] p-4">
               <label
                 htmlFor="trainee-name-input"
-                className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
+                className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]"
               >
                 {pick(
                   'Trainee / Technician Name',
@@ -156,16 +156,16 @@ export function CompetencyModal({
                   'Masukkan nama lengkap peserta...',
                   '氏名を入力...'
                 )}
-                className="w-full rounded-xl border border-[#001F6B]/20 bg-white px-3 py-2 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:border-[#002D9C] focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-white dark:focus:border-[#60A5FA]"
+                className="w-full rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-4 py-2 text-sm font-medium text-[var(--md-on-surface)] placeholder:text-[var(--md-on-surface-variant)] focus:border-[var(--md-primary)] focus:outline-none"
               />
             </div>
 
-            <div className="glass-card grid grid-cols-3 gap-2 rounded-2xl p-4 text-center">
+            <div className="glass-card grid grid-cols-3 gap-2 rounded-[24px] p-4 text-center">
               <div>
-                <div className="font-mono text-lg font-extrabold text-[#001F6B] dark:text-[#60A5FA]">
+                <div className="font-mono text-lg font-extrabold text-[var(--md-primary)]">
                   {readinessPct}%
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Readiness', 'Kesiapan', '習熟度')}
                 </div>
               </div>
@@ -173,15 +173,15 @@ export function CompetencyModal({
                 <div className="font-mono text-lg font-extrabold text-emerald-600 dark:text-emerald-400">
                   {masteredCount}/{totalLabs}
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Mastered', 'Dikuasai', '習得済み')}
                 </div>
               </div>
               <div>
-                <div className="font-mono text-lg font-extrabold text-violet-600 dark:text-violet-400">
+                <div className="font-mono text-lg font-extrabold text-[var(--md-primary)]">
                   {avgQuizPct}%
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                   {pick('Avg Quiz', 'Rata-rata Kuis', '平均クイズ')}
                 </div>
               </div>
@@ -189,10 +189,10 @@ export function CompetencyModal({
           </div>
 
           {/* Per-Lab Completion Table */}
-          <div className="glass-card overflow-hidden rounded-2xl">
+          <div className="glass-card overflow-hidden rounded-[24px]">
             <table className="w-full border-collapse text-left text-xs">
               <thead>
-                <tr className="border-b border-white/60 bg-white/40 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400">
+                <tr className="border-b border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-high)] text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   <th className="px-4 py-3">
                     {pick('Simulator Lab', 'Lab Simulator', 'シミュレータラボ')}
                   </th>
@@ -210,7 +210,7 @@ export function CompetencyModal({
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+              <tbody className="divide-y divide-[var(--md-outline-variant)]/35">
                 {simulators.map((sim) => {
                   const sp = getSimulatorProgress(sim.id);
                   const mastered = isSimulatorMastered(sim);
@@ -224,13 +224,13 @@ export function CompetencyModal({
                   return (
                     <tr
                       key={sim.id}
-                      className="bg-white dark:bg-slate-900/50"
+                      className="bg-[var(--md-surface-container-low)] transition hover:bg-[var(--md-surface-container)]"
                     >
                       <td className="px-4 py-3">
-                        <div className="font-semibold text-slate-900 dark:text-slate-100">
+                        <div className="font-semibold text-[var(--md-on-surface)]">
                           {sim.shortTitle}
                         </div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                        <div className="text-[11px] text-[var(--md-on-surface-variant)]">
                           {translateCategory(sim.category, language)}
                         </div>
                       </td>
@@ -238,27 +238,27 @@ export function CompetencyModal({
                         {sp.visited ? (
                           <CheckCircle2 className="mx-auto h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                         ) : (
-                          <span className="text-slate-400">—</span>
+                          <span className="text-[var(--md-on-surface-variant)]">—</span>
                         )}
                       </td>
-                      <td className="px-3 py-3 text-center font-mono text-slate-700 dark:text-slate-300">
+                      <td className="px-3 py-3 text-center font-mono text-[var(--md-on-surface)]">
                         {sp.solvedPracticeIds.length}/{sim.practice.length}
                       </td>
-                      <td className="px-3 py-3 text-center font-mono text-slate-700 dark:text-slate-300">
+                      <td className="px-3 py-3 text-center font-mono text-[var(--md-on-surface)]">
                         {quizPct !== null ? `${quizPct}%` : '—'}
                       </td>
                       <td className="px-4 py-3 text-right">
                         {mastered ? (
-                          <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-[var(--md-tertiary-container)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--md-on-tertiary-container)]">
                             <Award className="h-3 w-3" />
                             {pick('Mastered', 'Dikuasai', '習得済み')}
                           </span>
                         ) : sp.visited ? (
-                          <span className="inline-block rounded-full border border-[#001F6B]/25 bg-[#E6EDF8] px-2.5 py-0.5 text-[11px] font-medium text-[#001F6B] dark:border-[#3B82F6]/30 dark:bg-[#001F6B]/25 dark:text-[#60A5FA]">
+                          <span className="inline-block rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--md-on-primary-container)]">
                             {pick('In Progress', 'Berlangsung', '受講中')}
                           </span>
                         ) : (
-                          <span className="inline-block rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] text-slate-500 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-400">
+                          <span className="inline-block rounded-full bg-[var(--md-surface-container-highest)] px-2.5 py-0.5 text-[11px] text-[var(--md-on-surface-variant)]">
                             {pick('Not Started', 'Belum Mulai', '未開始')}
                           </span>
                         )}
@@ -271,26 +271,26 @@ export function CompetencyModal({
           </div>
 
           {/* Official Seal & Attribution */}
-          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs dark:border-slate-800 dark:bg-slate-950/70">
-            <span className="inline-flex items-center gap-2 font-medium text-slate-700 dark:text-slate-300">
-              <UserCheck className="h-4 w-4 text-[#001F6B] dark:text-[#60A5FA]" />
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-4 py-3 text-xs">
+            <span className="inline-flex items-center gap-2 font-medium text-[var(--md-on-surface-variant)]">
+              <UserCheck className="h-4 w-4 text-[var(--md-primary)]" />
               Asahimas Smart Maintenance Training System (Asahi-SMTS) · Made by{' '}
-              <strong className="font-semibold text-slate-900 dark:text-white">
+              <strong className="font-bold text-[var(--md-on-surface)]">
                 M. Fadlan Alamsyah
               </strong>
             </span>
-            <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">
+            <span className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
               {reportDate}
             </span>
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50/80 px-6 py-4 dark:border-slate-800 dark:bg-slate-950/60 print:hidden">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container)] px-6 py-4 print:hidden">
           <button
             type="button"
             onClick={resetAllProgress}
-            className="glass-pill inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-600 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 dark:text-slate-300 dark:hover:border-rose-500/40 dark:hover:bg-rose-950/30 dark:hover:text-rose-300"
+            className="glass-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700 dark:hover:border-rose-500/40 dark:hover:bg-rose-950/30 dark:hover:text-rose-300"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             {pick('Reset Progress', 'Reset Progres', '進捗をリセット')}
@@ -299,7 +299,7 @@ export function CompetencyModal({
           <button
             type="button"
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#001F6B] px-5 py-2 text-sm font-semibold text-white shadow-sm shadow-[#001F6B]/20 transition hover:bg-[#002D9C] dark:bg-[#002D9C] dark:text-white dark:hover:bg-[#3B82F6]"
+            className="m3-btn-filled inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold"
           >
             <Printer className="h-4 w-4" />
             {pick('Print Report', 'Cetak Laporan', 'レポートを印刷')}

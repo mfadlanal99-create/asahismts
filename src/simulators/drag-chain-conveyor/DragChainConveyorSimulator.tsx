@@ -257,47 +257,47 @@ export function DragChainConveyorSimulator() {
         {/* LEFT COLUMN: Visualization, Presets & Live Telemetry */}
         <div className="flex flex-col gap-4 lg:col-span-8">
           {/* Material Presets + Transport Controls */}
-          <div className="sim-panel flex flex-wrap items-center justify-between gap-2 p-3">
+          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="sim-header mr-1">
+              <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Material:', 'Material:', '材料:')}
               </span>
               <button
                 type="button"
                 onClick={() => applyPreset('grain')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-violet-50 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-violet-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick('Dry Grain', 'Biji Kering', '乾燥穀物')}
               </button>
               <button
                 type="button"
                 onClick={() => applyPreset('wood-chips')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-violet-50 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-violet-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick('Wood Chips', 'Serpih Kayu', '木質チップ')}
               </button>
               <button
                 type="button"
                 onClick={() => applyPreset('coal-ash')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-violet-50 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-violet-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick('Coal / Ash', 'Batu Bara', '石炭・灰')}
               </button>
               <button
                 type="button"
                 onClick={() => applyPreset('clinker')}
-                className="rounded-lg bg-white/80 px-2.5 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-violet-50 dark:bg-slate-800/80 dark:text-slate-200 dark:ring-slate-700 dark:hover:bg-violet-950/40"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-semibold"
               >
                 {pick('Inclined Clinker', 'Klinker Miring', '傾斜クリンカ')}
               </button>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {metrics.health !== 'normal' && (
                 <button
                   type="button"
                   onClick={restoreNormal}
-                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-emerald-500"
+                  className="m3-btn-tonal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
                 >
                   <Wrench className="h-3.5 w-3.5" />
                   {pick('Clear Fault', 'Pulihkan', '異常解除')}
@@ -306,7 +306,7 @@ export function DragChainConveyorSimulator() {
               <button
                 type="button"
                 onClick={() => setIsPlaying((p) => !p)}
-                className="inline-flex items-center gap-1 rounded-lg bg-violet-600 px-2.5 py-1 text-xs font-bold text-white shadow-sm hover:bg-violet-500"
+                className="m3-btn-filled inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold"
               >
                 {isPlaying ? (
                   <Pause className="h-3.5 w-3.5" />
@@ -321,7 +321,7 @@ export function DragChainConveyorSimulator() {
                 type="button"
                 onClick={() => setInputs(INITIAL_INPUTS)}
                 title={pick('Reset', 'Reset', 'リセット')}
-                className="inline-flex items-center rounded-lg bg-slate-200/80 p-1.5 text-slate-700 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                className="glass-pill inline-flex items-center justify-center rounded-full p-2"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </button>
@@ -329,7 +329,7 @@ export function DragChainConveyorSimulator() {
           </div>
 
           {/* Main Animated SVG + Tension/Shear-Pin Meter Bar */}
-          <div className="sim-panel p-3">
+          <div className="glass-panel rounded-[28px] p-3.5">
             <DragChainConveyorSvg
               inputs={inputs}
               metrics={metrics}
@@ -341,108 +341,108 @@ export function DragChainConveyorSimulator() {
 
           {/* 6-Card Industrial Telemetry Grid */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Mass & Vol. Flow', 'Aliran Massa & Vol.', '質量・体積流量')}
                 </span>
-                <Activity className="h-3.5 w-3.5 text-violet-500" />
+                <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.massFlowTh.toFixed(1)} t/h
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.volumetricFlowM3h.toFixed(1)} m³/h (η=
                 {(metrics.effectiveEfficiency * 100).toFixed(0)}%)
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Chain Pull (T₁)', 'Tarikan Rantai (T₁)', 'チェーン張力 (T₁)')}
                 </span>
-                <Gauge className="h-3.5 w-3.5 text-sky-500" />
+                <Gauge className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
               <div
-                className={`mt-1 text-lg font-extrabold ${
+                className={`mt-1 font-mono text-lg font-extrabold ${
                   metrics.shearPinTripped
                     ? 'text-rose-600 dark:text-rose-400'
-                    : 'text-slate-900 dark:text-slate-100'
+                    : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {metrics.t1Kn.toFixed(2)} kN
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 T₂={metrics.t2Kn.toFixed(2)} kN · Fₑ={metrics.feKn.toFixed(2)} kN
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Drive Power & Current', 'Daya & Arus Motor', '駆動動力・電流')}
                 </span>
-                <Zap className="h-3.5 w-3.5 text-emerald-500" />
+                <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.motorPowerKw.toFixed(2)} kW
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.motorCurrentA.toFixed(1)} A (400V) ·{' '}
                 {pick('Shaft:', 'Poros:', '軸:')} {metrics.shaftPowerKw.toFixed(2)} kW
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Sprocket RPM & Torque', 'RPM & Torsi Sproket', 'スプロケット回転・トルク')}
                 </span>
-                <Cog className="h-3.5 w-3.5 text-violet-500" />
+                <Cog className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.sprocketRpm.toFixed(1)} RPM
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {metrics.driveTorqueNm.toFixed(0)} N·m · Ø
                 {metrics.sprocketPitchDiaMm.toFixed(0)} mm
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Sag & Carryback', 'Sag & Carryback', 'たるみ・持ち帰り')}
                 </span>
-                <Activity className="h-3.5 w-3.5 text-amber-500" />
+                <Activity className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
               <div
-                className={`mt-1 text-lg font-extrabold ${
+                className={`mt-1 font-mono text-lg font-extrabold ${
                   metrics.takeUpStatus === 'slack' || metrics.carrybackPct > 10
                     ? 'text-amber-600 dark:text-amber-400'
-                    : 'text-slate-900 dark:text-slate-100'
+                    : 'text-[var(--md-on-surface)]'
                 }`}
               >
                 {metrics.catenarySagMm.toFixed(0)} mm
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick('Carryback:', 'Carryback:', '持ち帰り:')}{' '}
                 {metrics.carrybackPct.toFixed(1)}%
               </div>
             </div>
 
-            <div className="sim-box p-3">
-              <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                <span className="sim-header">
+            <div className="glass-card rounded-[24px] p-3.5">
+              <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider">
                   {pick('Bed Cross-Section', 'Luas Penampang', '層断面積')}
                 </span>
-                <Box className="h-3.5 w-3.5 text-sky-500" />
+                <Box className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
-              <div className="mt-1 text-lg font-extrabold text-slate-900 dark:text-slate-100">
+              <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
                 {metrics.bedAreaCm2.toFixed(0)} cm²
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
+              <div className="font-mono text-[11px] text-[var(--md-on-surface-variant)]">
                 {inputs.casingWidthMm} × {metrics.effectiveBedHeightMm} mm
               </div>
             </div>
@@ -450,12 +450,12 @@ export function DragChainConveyorSimulator() {
 
           {/* Diagnostic Status Banner */}
           <div
-            className={`sim-box flex items-start gap-3 p-3.5 ${
+            className={`flex items-start gap-3 rounded-[24px] border p-4 ${
               metrics.health === 'critical'
-                ? 'border-rose-300/80 bg-rose-50/70 dark:border-rose-500/30 dark:bg-rose-950/30'
+                ? 'border-rose-300/80 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'
                 : metrics.health === 'warning'
-                  ? 'border-amber-300/80 bg-amber-50/70 dark:border-amber-500/30 dark:bg-amber-950/30'
-                  : 'border-emerald-300/80 bg-emerald-50/70 dark:border-emerald-500/30 dark:bg-emerald-950/25'
+                  ? 'border-amber-300/80 bg-amber-50/80 dark:border-amber-500/30 dark:bg-amber-950/30'
+                  : 'border-emerald-300/80 bg-emerald-50/80 dark:border-emerald-500/30 dark:bg-emerald-950/25'
             }`}
           >
             {metrics.health === 'critical' ? (
@@ -466,10 +466,10 @@ export function DragChainConveyorSimulator() {
               <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
             )}
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-slate-900 dark:text-slate-100">
+              <div className="text-xs font-bold text-[var(--md-on-surface)]">
                 {statusText.title}
               </div>
-              <p className="mt-0.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+              <p className="mt-0.5 text-xs leading-relaxed text-[var(--md-on-surface-variant)]">
                 {statusText.detail}
               </p>
             </div>
@@ -477,13 +477,13 @@ export function DragChainConveyorSimulator() {
         </div>
 
         {/* RIGHT COLUMN: Parameter Groups & Fault Injection */}
-        <div className="sim-panel flex flex-col justify-between gap-3.5 p-4 lg:col-span-4">
+        <div className="glass-panel flex flex-col justify-between gap-3.5 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <div className="space-y-3">
             {/* Header with Shear-Pin Load Dial */}
-            <div className="flex items-center justify-between border-b border-slate-200/70 pb-2.5 dark:border-slate-700/60">
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-violet-500" />
-                <span className="sim-header">
+                <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Conveyor Parameters',
                     'Parameter Konveyor',
@@ -500,25 +500,25 @@ export function DragChainConveyorSimulator() {
                 )}
               >
                 <span
-                  className={`text-[11px] font-extrabold leading-none ${
+                  className={`font-mono text-[11px] font-extrabold leading-none ${
                     dialPercent >= 100
                       ? 'text-rose-600 dark:text-rose-400'
                       : dialPercent >= 75
                         ? 'text-amber-600 dark:text-amber-400'
-                        : 'text-violet-600 dark:text-violet-400'
+                        : 'text-[var(--md-primary)]'
                   }`}
                 >
                   {dialPercent}%
                 </span>
-                <span className="text-[8px] font-bold uppercase text-slate-500">
+                <span className="text-[8px] font-bold uppercase text-[var(--md-on-surface-variant)]">
                   PIN
                 </span>
               </div>
             </div>
 
             {/* Fault Injection Section (Upper Control Panel) */}
-            <div className="sim-box space-y-2 p-2.5">
-              <div className="sim-header">
+            <div className="space-y-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('Fault Injection', 'Injeksi Gangguan', '故障シミュレーション')}
               </div>
               <div className="grid grid-cols-2 gap-1.5">
@@ -529,12 +529,12 @@ export function DragChainConveyorSimulator() {
                       key={opt.id}
                       type="button"
                       onClick={() => updateField('fault', opt.id)}
-                      className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
+                      className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                         active
                           ? opt.id === 'none'
-                            ? 'bg-emerald-600 text-white shadow-sm'
-                            : 'bg-rose-600 text-white shadow-sm'
-                          : 'bg-white/80 text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 dark:text-slate-300 dark:ring-slate-700'
+                            ? 'bg-emerald-600 text-white shadow-xs'
+                            : 'bg-rose-600 text-white shadow-xs'
+                          : 'border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-highest)]'
                       }`}
                     >
                       {pick(opt.en, opt.idLabel, opt.ja)}
@@ -545,16 +545,16 @@ export function DragChainConveyorSimulator() {
             </div>
 
             {/* Group 1: Drive & Chain */}
-            <div className="sim-box space-y-2 p-2.5 text-xs">
-              <div className="sim-header">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('Drive & Chain', 'Penggerak & Rantai', '駆動・チェーン')}
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Speed (v)', 'Kecepatan', '速度')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.chainSpeedMs.toFixed(2)} m/s
                     </span>
                   </div>
@@ -567,14 +567,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('chainSpeedMs', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Flight Pitch', 'Pitch Flight', 'フライト間隔')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.flightPitchMm} mm
                     </span>
                   </div>
@@ -587,16 +587,16 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('flightPitchMm', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Chain Pitch', 'Pitch Rantai', 'チェーンピッチ')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.chainPitchMm} mm
                     </span>
                   </div>
@@ -609,14 +609,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('chainPitchMm', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Teeth (z)', 'Gigi (z)', '歯数 (z)')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.sprocketTeeth}T
                     </span>
                   </div>
@@ -629,16 +629,16 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('sprocketTeeth', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Take-Up', 'Take-Up', 'テークアップ')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.takeUpScrewMm} mm
                     </span>
                   </div>
@@ -651,14 +651,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('takeUpScrewMm', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Chain Wear', 'Aus Rantai', 'チェーン摩耗')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.chainWearPct.toFixed(1)}%
                     </span>
                   </div>
@@ -671,15 +671,15 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('chainWearPct', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
             </div>
 
             {/* Group 2: Casing & Bed Geometry */}
-            <div className="sim-box space-y-2 p-2.5 text-xs">
-              <div className="sim-header">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Casing & Bed Geometry',
                   'Geometri Casing & Lapisan',
@@ -687,11 +687,11 @@ export function DragChainConveyorSimulator() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Width (W)', 'Lebar (W)', '幅 (W)')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.casingWidthMm} mm
                     </span>
                   </div>
@@ -704,14 +704,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('casingWidthMm', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Casing H', 'Tinggi Casing', '高さ')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.casingHeightMm} mm
                     </span>
                   </div>
@@ -724,17 +724,17 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('casingHeightMm', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
 
               <label className="block">
-                <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                   <span>
                     {pick('Material Bed Height (H)', 'Tinggi Lapisan (H)', '材料層高さ (H)')}
                   </span>
-                  <span className="font-bold text-violet-600 dark:text-violet-400">
+                  <span className="font-mono font-bold text-[var(--md-primary)]">
                     {inputs.bedHeightMm} mm
                   </span>
                 </div>
@@ -747,15 +747,15 @@ export function DragChainConveyorSimulator() {
                   onChange={(e) =>
                     updateField('bedHeightMm', Number(e.target.value))
                   }
-                  className="w-full accent-violet-600"
+                  className="w-full"
                 />
               </label>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Length (L)', 'Panjang (L)', '機長 (L)')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.conveyorLengthM} m
                     </span>
                   </div>
@@ -768,14 +768,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('conveyorLengthM', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Incline (θ)', 'Kemiringan', '傾斜角')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.inclinationDeg}°
                     </span>
                   </div>
@@ -788,15 +788,15 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('inclinationDeg', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
             </div>
 
             {/* Group 3: Material & Friction */}
-            <div className="sim-box space-y-2 p-2.5 text-xs">
-              <div className="sim-header">
+            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Material & Friction',
                   'Material & Gesekan',
@@ -804,11 +804,11 @@ export function DragChainConveyorSimulator() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Density (ρ)', 'Densitas', 'かさ密度')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.bulkDensityTM3.toFixed(2)} t/m³
                     </span>
                   </div>
@@ -821,14 +821,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('bulkDensityTM3', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Efficiency (η)', 'Efisiensi', '搬送効率')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.efficiencyPct}%
                     </span>
                   </div>
@@ -841,16 +841,16 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('efficiencyPct', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
 
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2.5">
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Mat. Friction μₘ', 'Gesekan μₘ', '材料摩擦 μₘ')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.materialFriction.toFixed(2)}
                     </span>
                   </div>
@@ -863,14 +863,14 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('materialFriction', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
 
                 <label className="block">
-                  <div className="mb-0.5 flex justify-between font-medium text-slate-700 dark:text-slate-300">
+                  <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
                     <span>{pick('Rail Friction μ_c', 'Gesekan μ_c', 'レール摩擦 μ_c')}</span>
-                    <span className="font-bold text-violet-600 dark:text-violet-400">
+                    <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.chainFriction.toFixed(2)}
                     </span>
                   </div>
@@ -883,7 +883,7 @@ export function DragChainConveyorSimulator() {
                     onChange={(e) =>
                       updateField('chainFriction', Number(e.target.value))
                     }
-                    className="w-full accent-violet-600"
+                    className="w-full"
                   />
                 </label>
               </div>
