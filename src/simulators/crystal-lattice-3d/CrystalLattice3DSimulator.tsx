@@ -346,6 +346,7 @@ export function CrystalLattice3DSimulator() {
 
   const handleResetCellParams = useCallback(() => {
     setIsBainAnimating(false);
+    setBainProgress(activeLattice.id === 'bct' ? 100 : 0);
     setBOverA(activeMaterial ? activeMaterial.bOverA : activeLattice.defaultBOverA);
     setCOverA(activeMaterial ? activeMaterial.cOverA : activeLattice.defaultCOverA);
     setAAngstrom(activeMaterial ? activeMaterial.aAngstrom : 3.6);
@@ -356,42 +357,50 @@ export function CrystalLattice3DSimulator() {
     setExplodeFactor(0);
   }, [activeLattice, activeMaterial]);
 
-  // Apply Bain Transformation ratio when Bain Animator moves
-  const applyBainStep = useCallback((progressPct: number, carbonPct: number) => {
-    const bctSpec = CRYSTAL_LATTICES.find((l) => l.id === 'bct');
-    if (!bctSpec) return;
-    if (selectedId !== 'bct') {
-      setSelectedId('bct');
-      setActiveMaterialId('martensite');
-      setAAngstrom(2.852);
-      setBOverA(1.0);
-      setAlphaDeg(90);
-      setBetaDeg(90);
-      setGammaDeg(90);
-    }
-    setBainProgress(progressPct);
-    const maxBctRatio = Math.SQRT2; // 1.414 = Pure FCC Austenite viewed as BCT
-    const minBctRatio = 1 + 0.045 * carbonPct; // Interstitial C prevents contraction to 1.000
-    const t = progressPct / 100;
-    const nextCA = maxBctRatio - t * (maxBctRatio - minBctRatio);
-    setCOverA(Number(nextCA.toFixed(3)));
-    setDefectMode(carbonPct > 0.05 ? 'interstitial-c' : 'none');
-  }, [selectedId]);
+  // Compute target c/a ratio for crystal-preserving Bain / uniaxial c-axis distortion
+  const computeDistortedCA = useCallback(
+    (progressPct: number, carbonPct: number, spec: CrystalLatticeSpec) => {
+      const t = progressPct / 100;
+      if (spec.id === 'bct') {
+        const maxBctRatio = Math.SQRT2; // 1.414 = FCC Austenite cell in BCT axes
+        const minBctRatio = 1 + 0.045 * carbonPct; // C traps tetragonality
+        return Number((maxBctRatio - t * (maxBctRatio - minBctRatio)).toFixed(3));
+      }
+      if (spec.id === 'fcc') {
+        // Exact Bain compression along c: 1.000 -> 1/sqrt(2) = 0.707 (BCC symmetry)
+        const minFccRatio = 1 / Math.SQRT2 + 0.032 * carbonPct;
+        return Number((1.0 - t * (1.0 - minFccRatio)).toFixed(3));
+      }
+      // Smooth uniaxial c-axis compression for any other crystal without changing crystal type
+      const baseC = spec.defaultCOverA;
+      return Number((baseC * (1 - 0.28 * t)).toFixed(3));
+    },
+    []
+  );
+
+  // Apply Bain / uniaxial c-axis distortion directly to the CURRENT selected crystal
+  const applyBainStep = useCallback(
+    (progressPct: number, carbonPct: number) => {
+      setBainProgress(progressPct);
+      setCOverA(computeDistortedCA(progressPct, carbonPct, activeLattice));
+      if (activeLattice.id === 'bct' || activeLattice.id === 'fcc') {
+        setDefectMode(carbonPct > 0.05 && progressPct > 5 ? 'interstitial-c' : 'none');
+      }
+    },
+    [activeLattice, computeDistortedCA]
+  );
 
   useEffect(() => {
     if (!isBainAnimating) return;
     const id = window.setInterval(() => {
       setBainProgress((prev) => {
         const next = prev >= 100 ? 0 : prev + 2;
-        const maxBctRatio = Math.SQRT2;
-        const minBctRatio = 1 + 0.045 * bainCarbonPct;
-        const nextCA = maxBctRatio - (next / 100) * (maxBctRatio - minBctRatio);
-        setCOverA(Number(nextCA.toFixed(3)));
+        setCOverA(computeDistortedCA(next, bainCarbonPct, activeLattice));
         return next;
       });
     }, 35);
     return () => window.clearInterval(id);
-  }, [isBainAnimating, bainCarbonPct]);
+  }, [isBainAnimating, bainCarbonPct, activeLattice, computeDistortedCA]);
 
   const applyCameraPreset = useCallback(
     (preset: 'iso' | '100' | '010' | '001' | '111') => {
@@ -1344,6 +1353,23 @@ export function CrystalLattice3DSimulator() {
                           onClick={() => {
                             setCustomMillerEnabled(false);
                             setMillerPlane(mp.id);
+                            if (mp.id === '100' || mp.id === '10-10') {
+                              setMillerH(1);
+                              setMillerK(0);
+                              setMillerL(0);
+                            } else if (mp.id === '110') {
+                              setMillerH(1);
+                              setMillerK(1);
+                              setMillerL(0);
+                            } else if (mp.id === '111') {
+                              setMillerH(1);
+                              setMillerK(1);
+                              setMillerL(1);
+                            } else if (mp.id === '0001') {
+                              setMillerH(0);
+                              setMillerK(0);
+                              setMillerL(1);
+                            }
                           }}
                           className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold transition ${
                             !customMillerEnabled && millerPlane === mp.id
@@ -1578,7 +1604,7 @@ export function CrystalLattice3DSimulator() {
               {sidebarTab === 'miller' && (
                 <>
                   {/* Custom Miller Plane + Direction & Schmid Factor */}
-                  <div className="space-y-3 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3.5">
+                  <div className="space-y-2 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-[var(--md-on-surface)]">
                         {pick('Custom Plane (h k l)', 'Bidang (h k l)', 'カスタムミラー面')}
@@ -1596,7 +1622,7 @@ export function CrystalLattice3DSimulator() {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-3 gap-1.5">
                       {(
                         [
                           ['h', millerH, setMillerH],
@@ -1617,21 +1643,20 @@ export function CrystalLattice3DSimulator() {
                               setCustomMillerEnabled(true);
                               setter(Math.max(-3, Math.min(3, Number(e.target.value) || 0)));
                             }}
-                            className="w-full rounded-xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2 py-1 text-center font-mono text-xs font-bold text-[var(--md-on-surface)]"
+                            className="w-full rounded-xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2 py-0.5 text-center font-mono text-xs font-bold text-[var(--md-on-surface)]"
                           />
                         </label>
                       ))}
                     </div>
 
                     {activeLattice.system === 'hexagonal' && (
-                      <div className="rounded-xl bg-[var(--md-secondary-container)] px-2.5 py-1.5 text-center font-mono text-[11px] font-bold text-[var(--md-on-secondary-container)]">
-                        4-Index Miller-Bravais: ({millerH} {millerK}{' '}
-                        {millerMetrics.iIndex} {millerL})
+                      <div className="rounded-xl bg-[var(--md-secondary-container)] px-2 py-1 text-center font-mono text-[10px] font-bold text-[var(--md-on-secondary-container)]">
+                        4-Index: ({millerH} {millerK} {millerMetrics.iIndex} {millerL})
                       </div>
                     )}
 
                     {/* Slip Direction [uvw] */}
-                    <div className="flex items-center justify-between border-t border-[var(--md-outline-variant)]/40 pt-2">
+                    <div className="flex items-center justify-between border-t border-[var(--md-outline-variant)]/40 pt-1.5">
                       <span className="text-xs font-bold text-[var(--md-on-surface)]">
                         {pick('Slip Vector [u v w]', 'Arah Selip [u v w]', 'すべり方向 [u v w]')}
                       </span>
@@ -1648,7 +1673,7 @@ export function CrystalLattice3DSimulator() {
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-3 gap-1.5">
                       {(
                         [
                           ['u', dirU, setDirU],
@@ -1669,7 +1694,7 @@ export function CrystalLattice3DSimulator() {
                               setSlipDirEnabled(true);
                               setter(Math.max(-3, Math.min(3, Number(e.target.value) || 0)));
                             }}
-                            className="w-full rounded-xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2 py-1 text-center font-mono text-xs font-bold text-[var(--md-on-surface)]"
+                            className="w-full rounded-xl border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-2 py-0.5 text-center font-mono text-xs font-bold text-[var(--md-on-surface)]"
                           />
                         </label>
                       ))}
@@ -1677,7 +1702,7 @@ export function CrystalLattice3DSimulator() {
 
                     {/* Quantitative Plane Readouts + 2D Planar Packing Inset */}
                     <div className="grid grid-cols-2 gap-1.5 font-mono text-[11px]">
-                      <div className="rounded-xl bg-[var(--md-surface-container)] p-2">
+                      <div className="rounded-xl bg-[var(--md-surface-container)] px-2.5 py-1.5">
                         <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                           d_hkl Spacing
                         </div>
@@ -1685,7 +1710,7 @@ export function CrystalLattice3DSimulator() {
                           {millerMetrics.dSpacingAng.toFixed(3)} Å
                         </div>
                       </div>
-                      <div className="rounded-xl bg-[var(--md-surface-container)] p-2">
+                      <div className="rounded-xl bg-[var(--md-surface-container)] px-2.5 py-1.5">
                         <div className="text-[10px] text-[var(--md-on-surface-variant)]">
                           Planar Density
                         </div>
@@ -1695,7 +1720,7 @@ export function CrystalLattice3DSimulator() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--md-surface-container)] px-2.5 py-2 text-[11px]">
+                    <div className="flex items-center justify-between gap-2 rounded-xl bg-[var(--md-surface-container)] px-2.5 py-1.5 text-[11px]">
                       <div>
                         <span className="font-semibold text-[var(--md-on-surface-variant)]">
                           [uvw] ∈ (hkl):{' '}
@@ -1723,7 +1748,7 @@ export function CrystalLattice3DSimulator() {
                       </div>
                       <svg
                         viewBox="-75 -55 150 110"
-                        className="h-24 w-full rounded-xl bg-[var(--md-surface-container-low)]"
+                        className="h-16 w-full rounded-xl bg-[var(--md-surface-container-low)]"
                       >
                         <rect
                           x="-73"
@@ -1752,17 +1777,17 @@ export function CrystalLattice3DSimulator() {
                   </div>
 
                   {/* 3D Crystal Defects Switcher */}
-                  <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3.5">
+                  <div className="rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3">
                     <div className="text-xs font-bold text-[var(--md-on-surface)]">
                       {pick('3D Crystal Defect Mode', 'Mode Cacat Kristal 3D', '3D 格子欠陥モデル')}
                     </div>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
+                    <div className="mt-1.5 flex flex-wrap gap-1">
                       {CRYSTAL_DEFECTS.map((def) => (
                         <button
                           key={def.id}
                           type="button"
                           onClick={() => setDefectMode(def.id)}
-                          className={`rounded-full px-2.5 py-1 font-mono text-[11px] font-bold transition ${
+                          className={`rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition ${
                             defectMode === def.id
                               ? 'bg-[var(--md-primary)] text-[var(--md-on-primary)]'
                               : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:bg-[var(--md-secondary-container)]'
@@ -1772,7 +1797,7 @@ export function CrystalLattice3DSimulator() {
                         </button>
                       ))}
                     </div>
-                    <p className="mt-2 text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
+                    <p className="mt-1.5 text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
                       {activeDefectInfo.description[language]}
                     </p>
                   </div>
@@ -1782,43 +1807,53 @@ export function CrystalLattice3DSimulator() {
               {/* TAB 3: BAIN PHASE TRANSFORMATION & THEORETICAL DENSITY / ATOM INSPECTOR */}
               {sidebarTab === 'bain' && (
                 <>
-                  {/* 3D Bain Transformation Animator */}
-                  <div className="space-y-3 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[var(--md-on-surface)]">
-                        {pick(
-                          'Bain Distortion (FCC ↔ BCT ↔ BCC)',
-                          'Distorsi Bain (FCC ↔ BCT ↔ BCC)',
-                          'ベイン変態 (FCC ↔ BCT ↔ BCC)'
-                        )}
+                  {/* 3D Bain / Uniaxial Distortion Animator (Crystal-Preserving) */}
+                  <div className="space-y-2.5 rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-3">
+                    <div className="flex items-center justify-between gap-1.5">
+                      <span className="truncate text-xs font-bold text-[var(--md-on-surface)]">
+                        {activeLattice.id === 'bct' || activeLattice.id === 'fcc'
+                          ? pick('Bain Strain (c/a)', 'Regangan Bain (c/a)', 'ベイン歪み (c/a)')
+                          : pick('c-Axis Strain (c/a)', 'Regangan Sumbu-c', 'c軸歪み (c/a)')}
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (selectedId !== 'bct') {
-                            applyBainStep(bainProgress, bainCarbonPct);
-                          }
-                          setIsBainAnimating((p) => !p);
-                        }}
-                        className="m3-btn-filled inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold"
-                      >
-                        {isBainAnimating ? (
-                          <Pause className="h-3 w-3" />
-                        ) : (
-                          <Play className="h-3 w-3" />
+                      <div className="flex shrink-0 items-center gap-1">
+                        {selectedId !== 'bct' && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const mart = REAL_CRYSTAL_MATERIALS.find((m) => m.id === 'martensite');
+                              if (mart) handleSelectRealMaterial(mart);
+                            }}
+                            title="Switch to Fe-C Martensite BCT Demo"
+                            className="rounded-full bg-[var(--md-surface-container-high)] px-2 py-1 font-mono text-[10px] font-bold text-[var(--md-primary)] transition hover:bg-[var(--md-primary-container)]"
+                          >
+                            Fe-C BCT
+                          </button>
                         )}
-                        {isBainAnimating ? 'Pause' : 'Animate'}
-                      </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsBainAnimating((p) => !p)}
+                          className="m3-btn-filled inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold"
+                        >
+                          {isBainAnimating ? (
+                            <Pause className="h-3 w-3" />
+                          ) : (
+                            <Play className="h-3 w-3" />
+                          )}
+                          {isBainAnimating ? 'Pause' : 'Animate'}
+                        </button>
+                      </div>
                     </div>
 
                     <label className="block space-y-1">
                       <div className="flex justify-between text-[11px] font-semibold">
                         <span>
-                          {bainProgress < 15
-                            ? 'γ-Fe (FCC · c/a = 1.414)'
-                            : bainProgress > 88 && bainCarbonPct < 0.05
-                              ? 'α-Fe (BCC · c/a = 1.000)'
-                              : `Martensite BCT (c/a = ${cOverA.toFixed(3)})`}
+                          {activeLattice.id === 'bct'
+                            ? bainProgress < 15
+                              ? 'γ-Fe (FCC · c/a = 1.414)'
+                              : bainProgress > 88 && bainCarbonPct < 0.05
+                                ? 'α-Fe (BCC · c/a = 1.000)'
+                                : `Martensite BCT (c/a = ${cOverA.toFixed(3)})`
+                            : `${activeLattice.shortName} (c/a = ${cOverA.toFixed(3)})`}
                         </span>
                         <span className="font-mono font-bold text-[var(--md-primary)]">
                           {bainProgress}%
@@ -1840,7 +1875,7 @@ export function CrystalLattice3DSimulator() {
 
                     <label className="block space-y-1">
                       <div className="flex justify-between text-[11px] font-semibold">
-                        <span>Carbon Wt% (Steel)</span>
+                        <span>Carbon Wt% (Steel Pinning)</span>
                         <span className="font-mono font-bold text-[var(--md-primary)]">
                           {bainCarbonPct.toFixed(2)}% C
                         </span>
@@ -1854,7 +1889,7 @@ export function CrystalLattice3DSimulator() {
                         onChange={(e) => {
                           const cVal = Number(e.target.value);
                           setBainCarbonPct(cVal);
-                          if (selectedId === 'bct') {
+                          if (activeLattice.id === 'bct' || activeLattice.id === 'fcc') {
                             applyBainStep(bainProgress, cVal);
                           }
                         }}
@@ -1864,9 +1899,9 @@ export function CrystalLattice3DSimulator() {
 
                     <p className="text-[11px] leading-snug text-[var(--md-on-surface-variant)]">
                       {pick(
-                        'Compresses c/a from √2 (1.414 FCC BCT cell) toward 1.000 (BCC); trapped Carbon pins BCT tetragonality c/a = 1 + 0.045·%C.',
-                        'Menekan rasio c/a dari √2 (1,414 sel BCT pada FCC) ke 1,000 (BCC); karbon terperangkap mengunci Martensit BCT.',
-                        'FCC格子内のBCT単位(c/a=√2)がc軸圧縮されてBCC(1.000)へ無拡散変態し、固溶Cが正方歪みを保持します。'
+                        'Compresses c/a along the vertical axis without changing your selected crystal structure; use "Fe-C BCT" to load Martensite directly.',
+                        'Menekan rasio c/a secara halus pada kristal aktif Anda; gunakan tombol "Fe-C BCT" jika ingin beralih ke Martensit baja.',
+                        '選択中の結晶構造を保ったままc軸歪み(c/a圧縮)を連続変化させます（マルテンサイト切替は「Fe-C BCT」ボタン）。'
                       )}
                     </p>
                   </div>
