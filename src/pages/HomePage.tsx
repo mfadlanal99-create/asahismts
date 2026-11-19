@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Atom,
   Award,
-  BookMarked,
   BookOpen,
   Box,
   Calendar,
@@ -303,15 +302,6 @@ export function HomePage({
                     'Laporan Kompetensi',
                     '習熟度レポート'
                   )}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={onOpenHandbook}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-4 py-3 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
-                >
-                  <BookMarked className="h-3.5 w-3.5 text-[var(--md-primary)]" />
-                  {pick('Field Handbook', 'Buku Panduan', '現場ハンドブック')}
                 </button>
               </div>
 
