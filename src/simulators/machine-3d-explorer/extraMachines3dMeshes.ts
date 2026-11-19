@@ -1041,19 +1041,17 @@ function buildUrasFrameHousing(baseHex: string): PartMesh {
 function buildUrasStatorCore(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
-  // Double-varnished Class-F shrink-fit stator core with cutaway aligned to barrel window
-  const th0 = 0.54 * Math.PI;
-  const th1 = 2.06 * Math.PI;
-  addCylinderCutX(faces, edges, -16, 16, 22.2, 22.2, 16.5, 16.5, 16, th0, th1, {
+  // Complete 360-degree Class-F shrink-fit laminated stator core + double-varnished copper end turns
+  addCylinderSection(faces, edges, -16, 16, 22.2, 22.2, 16.5, 16.5, 20, {
     colorHex: '#64748B',
   });
-  addCylinderCutX(faces, edges, -21, -16, 21, 21.8, 17, 17, 16, th0 - 0.1, th1 + 0.1, {
+  addCylinderSection(faces, edges, -21, -16, 21.0, 21.8, 17.0, 17.0, 18, {
     colorHex: baseHex,
   });
-  addCylinderCutX(faces, edges, 16, 21, 21.8, 21, 17, 17, 16, th0 - 0.1, th1 + 0.1, {
+  addCylinderSection(faces, edges, 16, 21, 21.8, 21.0, 17.0, 17.0, 18, {
     colorHex: baseHex,
   });
-  return compileMesh(faces, edges, [-18, 22, -14], baseHex);
+  return compileMesh(faces, edges, [14, 21, 0], baseHex);
 }
 
 function buildUrasRotorShaft(baseHex: string): PartMesh {
@@ -1065,7 +1063,7 @@ function buildUrasRotorShaft(baseHex: string): PartMesh {
   // Woodruff keyways on both shaft ends for fixed counterweight lock
   addBox(faces, edges, -39, 9.0, 0, 4.5, 1.3, 1.6, '#F59E0B');
   addBox(faces, edges, 39, 9.0, 0, 4.5, 1.3, 1.6, '#F59E0B');
-  return compileMesh(faces, edges, [0, 16, 0], baseHex);
+  return compileMesh(faces, edges, [-12, 15, 8], baseHex);
 }
 
 function buildUrasBearingsBrackets(baseHex: string): PartMesh {
@@ -1087,7 +1085,7 @@ function buildUrasBearingsBrackets(baseHex: string): PartMesh {
       colorHex: '#FBBF24',
     });
   }
-  return compileMesh(faces, edges, [-28, 32, 0], baseHex);
+  return compileMesh(faces, edges, [-28, 30, 0], baseHex);
 }
 
 function buildUrasFixedWeights(baseHex: string): PartMesh {
@@ -1098,7 +1096,7 @@ function buildUrasFixedWeights(baseHex: string): PartMesh {
   addSemiCircleEccentricX(faces, edges, -38.8, -33.2, 11.5, 26.5, 0.2, Math.PI, 10, baseHex, '#9A3412');
   addCylinderSection(faces, edges, 33, 39, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
   addSemiCircleEccentricX(faces, edges, 33.2, 38.8, 11.5, 26.5, 0.2, Math.PI, 10, baseHex, '#9A3412');
-  return compileMesh(faces, edges, [-36, -24, 0], baseHex);
+  return compileMesh(faces, edges, [-36, -22, 10], baseHex);
 }
 
 function buildUrasAdjWeights(baseHex: string): PartMesh {
