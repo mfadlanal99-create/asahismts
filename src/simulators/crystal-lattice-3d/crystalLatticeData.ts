@@ -1,0 +1,1218 @@
+export type CrystalSystemId =
+  | 'cubic'
+  | 'tetragonal'
+  | 'orthorhombic'
+  | 'hexagonal'
+  | 'rhombohedral'
+  | 'monoclinic'
+  | 'triclinic'
+  | 'compound';
+
+export type LatticeStructureId =
+  | 'sc'
+  | 'bcc'
+  | 'fcc'
+  | 'st'
+  | 'bct'
+  | 'so'
+  | 'bco'
+  | 'baco'
+  | 'fco'
+  | 'hex-p'
+  | 'hcp'
+  | 'rhomb'
+  | 'sm'
+  | 'bacm'
+  | 'triclinic'
+  | 'diamond'
+  | 'nacl'
+  | 'cscl';
+
+export type AtomSiteRole =
+  | 'corner'
+  | 'body'
+  | 'face'
+  | 'base'
+  | 'edge'
+  | 'interior'
+  | 'species-b';
+
+export type MillerPlaneId = 'none' | '100' | '110' | '111' | '0001' | '10-10';
+
+export interface LocalizedText {
+  en: string;
+  id: string;
+  ja: string;
+}
+
+export interface LatticeAtomSpec {
+  id: string;
+  /** Fractional coordinates (u, v, w) or Cartesian hex-prism coordinates when isHexPrismCartesian */
+  u: number;
+  v: number;
+  w: number;
+  role: AtomSiteRole;
+  elementSymbol?: string;
+  speciesIndex?: 1 | 2;
+  /** True for full 17-atom HCP prism coordinates mapped directly in normalized hex space */
+  isHexPrismCoord?: boolean;
+  /** Contribution weight inside one unit cell / prism (e.g. 1/8, 1/2, 1/4, 1/6, 1) */
+  cellWeightLabel: string;
+}
+
+export interface InterstitialSiteSpec {
+  id: string;
+  u: number;
+  v: number;
+  w: number;
+  kind: 'octahedral' | 'tetrahedral';
+  isHexPrismCoord?: boolean;
+}
+
+export interface CrystalLatticeSpec {
+  id: LatticeStructureId;
+  system: Exclude<CrystalSystemId, 'compound'>;
+  categoryGroup: CrystalSystemId;
+  isBravaisCanonical: boolean;
+  pearsonSymbol: string;
+  strutzbricht?: string;
+  name: LocalizedText;
+  shortName: string;
+  /** Axial & angular relation text */
+  cellConstraints: string;
+  /** Canonical unit cell parameters */
+  defaultBOverA: number;
+  defaultCOverA: number;
+  defaultAlphaDeg: number;
+  defaultBetaDeg: number;
+  defaultGammaDeg: number;
+  allowBSlider: boolean;
+  allowCSlider: boolean;
+  allowAngleSlider: 'none' | 'beta' | 'rhombohedral' | 'triclinic';
+  effectiveAtomsPerCell: string;
+  atomCountBreakdown: LocalizedText;
+  coordinationNumber: string;
+  apfPercent: number;
+  apfLabel: string;
+  radiusFormula: string;
+  /** Normalized touching radius in canonical model coordinates (where a = 1) for Hard-Sphere mode */
+  canonicalSphereRadius: number;
+  /** Relative display scale for Ball-and-Stick mode */
+  canonicalBallRadius: number;
+  /** Maximum nearest-neighbor bond distance threshold in rendered Cartesian (a=1) space */
+  bondCutoff: number;
+  secondSpeciesScale?: number;
+  slipSystems: LocalizedText;
+  mechanicalBehavior: LocalizedText;
+  exampleMaterials: string[];
+  /** Whether geometry uses full 6-sided HCP hexagonal prism wireframe */
+  isFullHexPrism?: boolean;
+  atoms: LatticeAtomSpec[];
+  interstitials?: InterstitialSiteSpec[];
+}
+
+export const SYSTEM_LABELS: Record<
+  'all' | CrystalSystemId,
+  LocalizedText
+> = {
+  all: { en: 'All (18)', id: 'Semua (18)', ja: 'すべて (18)' },
+  cubic: { en: 'Cubic (3)', id: 'Kubik (3)', ja: '立方晶 (3)' },
+  tetragonal: { en: 'Tetragonal (2)', id: 'Tetragonal (2)', ja: '正方晶 (2)' },
+  orthorhombic: { en: 'Orthorhombic (4)', id: 'Ortorombik (4)', ja: '斜方晶 (4)' },
+  hexagonal: { en: 'Hexagonal (2)', id: 'Heksagonal (2)', ja: '六方晶 (2)' },
+  rhombohedral: { en: 'Rhombohedral (1)', id: 'Rombohedral (1)', ja: '菱面体 (1)' },
+  monoclinic: { en: 'Monoclinic (2)', id: 'Monoklinik (2)', ja: '単斜晶 (2)' },
+  triclinic: { en: 'Triclinic (1)', id: 'Triklinik (1)', ja: '三斜晶 (1)' },
+  compound: { en: 'Engineering & B1/B2 (3)', id: 'Teknik & Senyawa (3)', ja: '工学・化合物 (3)' },
+};
+
+const CUBE_CORNERS: LatticeAtomSpec[] = [
+  { id: 'c000', u: 0, v: 0, w: 0, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c100', u: 1, v: 0, w: 0, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c010', u: 0, v: 1, w: 0, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c110', u: 1, v: 1, w: 0, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c001', u: 0, v: 0, w: 1, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c101', u: 1, v: 0, w: 1, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c011', u: 0, v: 1, w: 1, role: 'corner', cellWeightLabel: '1/8' },
+  { id: 'c111', u: 1, v: 1, w: 1, role: 'corner', cellWeightLabel: '1/8' },
+];
+
+const BODY_CENTER: LatticeAtomSpec = {
+  id: 'body-center',
+  u: 0.5,
+  v: 0.5,
+  w: 0.5,
+  role: 'body',
+  cellWeightLabel: '1',
+};
+
+const BASE_C_CENTERS: LatticeAtomSpec[] = [
+  { id: 'base-bot', u: 0.5, v: 0.5, w: 0, role: 'base', cellWeightLabel: '1/2' },
+  { id: 'base-top', u: 0.5, v: 0.5, w: 1, role: 'base', cellWeightLabel: '1/2' },
+];
+
+const ALL_FACE_CENTERS: LatticeAtomSpec[] = [
+  { id: 'f-z0', u: 0.5, v: 0.5, w: 0, role: 'face', cellWeightLabel: '1/2' },
+  { id: 'f-z1', u: 0.5, v: 0.5, w: 1, role: 'face', cellWeightLabel: '1/2' },
+  { id: 'f-y0', u: 0.5, v: 0, w: 0.5, role: 'face', cellWeightLabel: '1/2' },
+  { id: 'f-y1', u: 0.5, v: 1, w: 0.5, role: 'face', cellWeightLabel: '1/2' },
+  { id: 'f-x0', u: 0, v: 0.5, w: 0.5, role: 'face', cellWeightLabel: '1/2' },
+  { id: 'f-x1', u: 1, v: 0.5, w: 0.5, role: 'face', cellWeightLabel: '1/2' },
+];
+
+function buildHcpPrismAtoms(): LatticeAtomSpec[] {
+  const atoms: LatticeAtomSpec[] = [];
+  // Bottom (w=0) and Top (w=1) hexagon rings at radius = 1 around center (0,0) in XY hex-prism coordinates
+  for (let k = 0; k < 6; k++) {
+    const theta = (k * Math.PI) / 3;
+    const x = Math.cos(theta);
+    const y = Math.sin(theta);
+    atoms.push({
+      id: `hcp-bot-${k}`,
+      u: x,
+      v: y,
+      w: -0.5,
+      role: 'corner',
+      isHexPrismCoord: true,
+      cellWeightLabel: '1/6',
+    });
+    atoms.push({
+      id: `hcp-top-${k}`,
+      u: x,
+      v: y,
+      w: 0.5,
+      role: 'corner',
+      isHexPrismCoord: true,
+      cellWeightLabel: '1/6',
+    });
+  }
+  // Basal centers (A-layer centers)
+  atoms.push({
+    id: 'hcp-basal-bot',
+    u: 0,
+    v: 0,
+    w: -0.5,
+    role: 'base',
+    isHexPrismCoord: true,
+    cellWeightLabel: '1/2',
+  });
+  atoms.push({
+    id: 'hcp-basal-top',
+    u: 0,
+    v: 0,
+    w: 0.5,
+    role: 'base',
+    isHexPrismCoord: true,
+    cellWeightLabel: '1/2',
+  });
+  // Mid-plane B-layer triangle (w = 0, radius = 1 / sqrt(3))
+  const rMid = 1 / Math.sqrt(3);
+  for (let j = 0; j < 3; j++) {
+    const theta = (j * 2 * Math.PI) / 3 + Math.PI / 6;
+    atoms.push({
+      id: `hcp-mid-${j}`,
+      u: rMid * Math.cos(theta),
+      v: rMid * Math.sin(theta),
+      w: 0,
+      role: 'interior',
+      isHexPrismCoord: true,
+      cellWeightLabel: '1',
+    });
+  }
+  return atoms;
+}
+
+const EDGE_CENTER_OCTAHEDRAL: LatticeAtomSpec[] = [
+  { id: 'e-01', u: 0.5, v: 0, w: 0, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-02', u: 0.5, v: 1, w: 0, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-03', u: 0.5, v: 0, w: 1, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-04', u: 0.5, v: 1, w: 1, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-05', u: 0, v: 0.5, w: 0, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-06', u: 1, v: 0.5, w: 0, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-07', u: 0, v: 0.5, w: 1, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-08', u: 1, v: 0.5, w: 1, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-09', u: 0, v: 0, w: 0.5, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-10', u: 1, v: 0, w: 0.5, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-11', u: 0, v: 1, w: 0.5, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'e-12', u: 1, v: 1, w: 0.5, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1/4' },
+  { id: 'oct-center', u: 0.5, v: 0.5, w: 0.5, role: 'species-b', speciesIndex: 2, cellWeightLabel: '1' },
+];
+
+export const CRYSTAL_LATTICES: CrystalLatticeSpec[] = [
+  // ======================== 1. CUBIC (3 Bravais) ========================
+  {
+    id: 'sc',
+    system: 'cubic',
+    categoryGroup: 'cubic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'cP',
+    name: {
+      en: 'Simple Cubic (SC)',
+      id: 'Kubik Sederhana (SC)',
+      ja: '単純立方格子 (SC)',
+    },
+    shortName: 'SC · cP',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 = 1.0 atom/cell',
+      id: '8 sudut × 1/8 = 1,0 atom/sel',
+      ja: '8頂点 × 1/8 = 1.0 原子/単位格子',
+    },
+    coordinationNumber: '6',
+    apfPercent: 52.4,
+    apfLabel: '52.4% (π/6)',
+    radiusFormula: 'R = a / 2 = 0.500 a',
+    canonicalSphereRadius: 0.5,
+    canonicalBallRadius: 0.145,
+    bondCutoff: 1.08,
+    slipSystems: {
+      en: '{100} ⟨010⟩ (low close-packing density)',
+      id: '{100} ⟨010⟩ (kerapatan susunan rendah)',
+      ja: '{100} ⟨010⟩（低最密充填密度）',
+    },
+    mechanicalBehavior: {
+      en: 'Large central void causes poor packing efficiency; rare among pure metals (only α-Polonium crystallizes cleanly as SC).',
+      id: 'Rongga tengah besar menghasilkan kepadatan rendah; sangat jarang pada logam murni (hanya α-Polonium).',
+      ja: '中心部の空隙が大きく充填率が低いため、純金属ではα-ポロニウムのみに見られる稀な構造です。',
+    },
+    exampleMaterials: ['α-Polonium (α-Po)'],
+    atoms: CUBE_CORNERS,
+    interstitials: [
+      { id: 'sc-void', u: 0.5, v: 0.5, w: 0.5, kind: 'octahedral' },
+    ],
+  },
+  {
+    id: 'bcc',
+    system: 'cubic',
+    categoryGroup: 'cubic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'cI',
+    strutzbricht: 'A2',
+    name: {
+      en: 'Body-Centered Cubic (BCC)',
+      id: 'Kubik Berpusat Badan (BCC)',
+      ja: '体心立方格子 (BCC)',
+    },
+    shortName: 'BCC · cI',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '2',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 1 center = 2 atoms/cell',
+      id: '8 sudut × 1/8 + 1 pusat = 2 atom/sel',
+      ja: '8頂点 × 1/8 + 体心1 = 2 原子/単位格子',
+    },
+    coordinationNumber: '8',
+    apfPercent: 68.0,
+    apfLabel: '68.0% (√3·π/8)',
+    radiusFormula: '4R = √3·a  ⇒  R = 0.433 a',
+    canonicalSphereRadius: Math.sqrt(3) / 4,
+    canonicalBallRadius: 0.135,
+    bondCutoff: 0.96,
+    slipSystems: {
+      en: '48 systems: {110}, {112}, {123} along ⟨111⟩',
+      id: '48 sistem: {110}, {112}, {123} arah ⟨111⟩',
+      ja: '48すべり系: {110}, {112}, {123} ⟨111⟩方向',
+    },
+    mechanicalBehavior: {
+      en: 'High strength and Peierls-Nabarro friction; exhibits a sharp Ductile-to-Brittle Transition Temperature (DBTT) in ferritic steels.',
+      id: 'Kekuatan tinggi dengan gesekan kisi Peierls-Nabarro besar; menunjukkan suhu transisi ulet-ke-getas (DBTT) yang tajam pada baja feritik.',
+      ja: '高い降伏強度とパイエルス応力を持ち、フェライト鋼では低温で明瞭な延性-脆性遷移（DBTT）を示します。',
+    },
+    exampleMaterials: ['α-Fe (Ferrite)', 'Cr', 'W', 'Mo', 'V', 'Nb', 'Ta'],
+    atoms: [...CUBE_CORNERS, BODY_CENTER],
+    interstitials: [
+      { id: 'bcc-oct-1', u: 0.5, v: 0.5, w: 0, kind: 'octahedral' },
+      { id: 'bcc-oct-2', u: 0.5, v: 0, w: 0.5, kind: 'octahedral' },
+      { id: 'bcc-tet-1', u: 0.5, v: 0.25, w: 0, kind: 'tetrahedral' },
+      { id: 'bcc-tet-2', u: 0.5, v: 0.75, w: 0, kind: 'tetrahedral' },
+    ],
+  },
+  {
+    id: 'fcc',
+    system: 'cubic',
+    categoryGroup: 'cubic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'cF',
+    strutzbricht: 'A1',
+    name: {
+      en: 'Face-Centered Cubic (FCC)',
+      id: 'Kubik Berpusat Muka (FCC)',
+      ja: '面心立方格子 (FCC)',
+    },
+    shortName: 'FCC · cF',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '4',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 6 faces × 1/2 = 4 atoms/cell',
+      id: '8 sudut × 1/8 + 6 sisi × 1/2 = 4 atom/sel',
+      ja: '8頂点 × 1/8 + 6面心 × 1/2 = 4 原子/単位格子',
+    },
+    coordinationNumber: '12',
+    apfPercent: 74.0,
+    apfLabel: '74.0% (√2·π/6)',
+    radiusFormula: '4R = √2·a  ⇒  R = 0.354 a',
+    canonicalSphereRadius: Math.sqrt(2) / 4,
+    canonicalBallRadius: 0.125,
+    bondCutoff: 0.78,
+    slipSystems: {
+      en: '12 close-packed systems: {111} ⟨110⟩ (ABCABC)',
+      id: '12 sistem rapat: {111} ⟨110⟩ (urutan ABCABC)',
+      ja: '12個の最密すべり系: {111} ⟨110⟩（ABCABC積層）',
+    },
+    mechanicalBehavior: {
+      en: 'Maximum packing efficiency with close-packed {111} slip planes; remains ductile and tough even at cryogenic temperatures (no DBTT).',
+      id: 'Efisiensi pengemasan maksimum dengan bidang selip rapat {111}; tetap ulet hingga suhu kriogenik tanpa DBTT.',
+      ja: '最大充填率74%と最密{111}面を持ち、極低温域でも脆性遷移を示さず優れた延性を維持します。',
+    },
+    exampleMaterials: ['γ-Fe (Austenite)', 'Al', 'Cu', 'Ni (SS304/316)', 'Au', 'Ag', 'Pt'],
+    atoms: [...CUBE_CORNERS, ...ALL_FACE_CENTERS],
+    interstitials: [
+      { id: 'fcc-oct-c', u: 0.5, v: 0.5, w: 0.5, kind: 'octahedral' },
+      { id: 'fcc-tet-1', u: 0.25, v: 0.25, w: 0.25, kind: 'tetrahedral' },
+      { id: 'fcc-tet-2', u: 0.75, v: 0.75, w: 0.25, kind: 'tetrahedral' },
+    ],
+  },
+
+  // ======================== 2. TETRAGONAL (2 Bravais) ========================
+  {
+    id: 'st',
+    system: 'tetragonal',
+    categoryGroup: 'tetragonal',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'tP',
+    name: {
+      en: 'Simple Tetragonal (ST)',
+      id: 'Tetragonal Sederhana (ST)',
+      ja: '単純正方格子 (ST)',
+    },
+    shortName: 'ST · tP',
+    cellConstraints: 'a = b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.38,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 = 1.0 atom/cell',
+      id: '8 sudut × 1/8 = 1,0 atom/sel',
+      ja: '8頂点 × 1/8 = 1.0 原子/単位格子',
+    },
+    coordinationNumber: '6 (4 basal + 2 axial)',
+    apfPercent: 38.0,
+    apfLabel: '≤ 52.4% (c/a dependent)',
+    radiusFormula: 'R = a / 2 (stretched along c)',
+    canonicalSphereRadius: 0.5,
+    canonicalBallRadius: 0.135,
+    bondCutoff: 1.48,
+    slipSystems: {
+      en: '{100} ⟨010⟩ basal or {110} ⟨001⟩ prismatic',
+      id: '{100} ⟨010⟩ basal atau {110} ⟨001⟩ prismatik',
+      ja: '{100} ⟨010⟩ 底面または {110} ⟨001⟩ 柱面',
+    },
+    mechanicalBehavior: {
+      en: 'Elongated c-axis breaks cubic symmetry into 4-fold rotational symmetry along [001], producing anisotropic stiffness and thermal expansion.',
+      id: 'Sumbu-c memanjang memecah simetri kubik menjadi simetri 4-lipat, menyebabkan kekakuan & ekspansi termal anisotropik.',
+      ja: 'c軸方向の伸縮により立方対称性が破れ、4回回転対称性と弾性・熱膨張の異方性が生じます。',
+    },
+    exampleMaterials: ['Rutile TiO₂ sublattice', 'BaTiO₃ (Ferroelectric)', 'γ-CuZn'],
+    atoms: CUBE_CORNERS,
+  },
+  {
+    id: 'bct',
+    system: 'tetragonal',
+    categoryGroup: 'tetragonal',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'tI',
+    strutzbricht: 'L\'2 (Martensite)',
+    name: {
+      en: 'Body-Centered Tetragonal (BCT)',
+      id: 'Tetragonal Berpusat Badan (BCT)',
+      ja: '体心正方格子 (BCT)',
+    },
+    shortName: 'BCT · tI',
+    cellConstraints: 'a = b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.18,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '2',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 1 center = 2 Fe atoms/cell',
+      id: '8 sudut × 1/8 + 1 pusat = 2 atom Fe/sel',
+      ja: '8頂点 × 1/8 + 体心1 = 2 Fe原子/単位格子',
+    },
+    coordinationNumber: '8 (distorted)',
+    apfPercent: 62.0,
+    apfLabel: '~62% – 69.9% (depends on c/a)',
+    radiusFormula: 'c/a = 1 + 0.045 × (%C) in Fe-C Martensite',
+    canonicalSphereRadius: 0.43,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 1.12,
+    slipSystems: {
+      en: 'Tetragonally distorted {110} — dislocation motion pinned',
+      id: 'Terdistorsi tetragonal {110} — pergerakan dislokasi terkunci',
+      ja: '正方歪みを受けた {110} — 転位移動が強くピン止め',
+    },
+    mechanicalBehavior: {
+      en: 'Supersaturated Carbon trapped at z-octahedral interstitial sites shears FCC austenite into BCT Martensite — creating extreme hardness in tool steels and shafts.',
+      id: 'Karbon lewat jenuh yang terjebak di celah oktahedral menggeser austenit menjadi Martensit BCT — menghasilkan kekerasan ekstrem pada baja perkakas.',
+      ja: '過飽和炭素がオーステナイトから無拡散変態（マルテンサイト変態）を起こし、極めて高い硬度と耐摩耗性を生みます。',
+    },
+    exampleMaterials: ['Fe-C Martensite (Hardened Steel)', 'β-Sn (White Tin)', 'Indium (In)'],
+    atoms: [...CUBE_CORNERS, BODY_CENTER],
+    interstitials: [
+      { id: 'bct-c-top', u: 0.5, v: 0.5, w: 0, kind: 'octahedral' },
+      { id: 'bct-c-bot', u: 0.5, v: 0.5, w: 1, kind: 'octahedral' },
+    ],
+  },
+
+  // ======================== 3. ORTHORHOMBIC (4 Bravais) ========================
+  {
+    id: 'so',
+    system: 'orthorhombic',
+    categoryGroup: 'orthorhombic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'oP',
+    name: {
+      en: 'Simple Orthorhombic (SO)',
+      id: 'Ortorombik Sederhana (SO)',
+      ja: '単純斜方格子 (SO)',
+    },
+    shortName: 'SO · oP',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.24,
+    defaultCOverA: 1.5,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 = 1.0 atom/cell',
+      id: '8 sudut × 1/8 = 1,0 atom/sel',
+      ja: '8頂点 × 1/8 = 1.0 原子/単位格子',
+    },
+    coordinationNumber: '6 (3 orthogonal pairs)',
+    apfPercent: 28.0,
+    apfLabel: '28% – 45% (low packing)',
+    radiusFormula: 'R ≤ min(a, b, c) / 2',
+    canonicalSphereRadius: 0.45,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 1.62,
+    slipSystems: {
+      en: 'Anisotropic along shortest axis ⟨100⟩',
+      id: 'Anisotropik sepanjang sumbu terpendek ⟨100⟩',
+      ja: '最短軸 ⟨100⟩ 方向に沿った異方性すべり',
+    },
+    mechanicalBehavior: {
+      en: 'Three mutually perpendicular axes of unequal lengths produce strongly directional modulus, cleavage, and piezoelectric or ferroelectric behavior.',
+      id: 'Tiga sumbu saling tegak lurus dengan panjang berbeda menghasilkan modulus, belahan kristal, dan sifat anisotropik kuat.',
+      ja: '互いに直交する3軸の長さがすべて異なるため、弾性率や劈開面に明確な方向性（異方性）が現れます。',
+    },
+    exampleMaterials: ['Cementite (Fe₃C framework)', 'α-Np', 'Olivine (Mg,Fe)₂SiO₄'],
+    atoms: CUBE_CORNERS,
+  },
+  {
+    id: 'bco',
+    system: 'orthorhombic',
+    categoryGroup: 'orthorhombic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'oI',
+    name: {
+      en: 'Body-Centered Orthorhombic (BCO)',
+      id: 'Ortorombik Berpusat Badan (BCO)',
+      ja: '体心斜方格子 (BCO)',
+    },
+    shortName: 'BCO · oI',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.24,
+    defaultCOverA: 1.5,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '2',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 1 body center = 2 atoms/cell',
+      id: '8 sudut × 1/8 + 1 pusat badan = 2 atom/sel',
+      ja: '8頂点 × 1/8 + 体心1 = 2 原子/単位格子',
+    },
+    coordinationNumber: '8',
+    apfPercent: 48.0,
+    apfLabel: '~48% – 62%',
+    radiusFormula: '4R = √(a² + b² + c²)',
+    canonicalSphereRadius: 0.42,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 1.15,
+    slipSystems: {
+      en: '{110} / {011} orthogonal diagonal planes',
+      id: 'Bidang diagonal ortogonal {110} / {011}',
+      ja: '直交対角面 {110} / {011}',
+    },
+    mechanicalBehavior: {
+      en: 'Adding a body-centered lattice point stiffens the elongated orthorhombic prism against shear distortion.',
+      id: 'Penambahan titik kisi pusat badan memperkaku prisma ortorombik memanjang terhadap distorsi geser.',
+      ja: '体心位置の原子により、伸長した斜方晶プリズムのせん断剛性が向上します。',
+    },
+    exampleMaterials: ['Mg₂SiO₄ High-P phases', 'KNO₃-III', 'V-Cr-Ti Orthorhombic'],
+    atoms: [...CUBE_CORNERS, BODY_CENTER],
+  },
+  {
+    id: 'baco',
+    system: 'orthorhombic',
+    categoryGroup: 'orthorhombic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'oS (oC)',
+    name: {
+      en: 'Base-Centered Orthorhombic (C-Orth)',
+      id: 'Ortorombik Berpusat Alas (Base-Centered)',
+      ja: '底心斜方格子 (oS / oC)',
+    },
+    shortName: 'C-Orth · oS',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.24,
+    defaultCOverA: 1.5,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '2',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 2 basal faces × 1/2 = 2 atoms/cell',
+      id: '8 sudut × 1/8 + 2 sisi alas × 1/2 = 2 atom/sel',
+      ja: '8頂点 × 1/8 + 底面2 × 1/2 = 2 原子/単位格子',
+    },
+    coordinationNumber: '8 (basal-centered)',
+    apfPercent: 45.0,
+    apfLabel: '~45% – 58%',
+    radiusFormula: 'Basal diagonal: 4R = √(a² + b²)',
+    canonicalSphereRadius: 0.4,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 0.92,
+    slipSystems: {
+      en: '(001) basal plane layered cleavage',
+      id: 'Belahan berlapis pada bidang basal (001)',
+      ja: '(001) 底面層状劈開',
+    },
+    mechanicalBehavior: {
+      en: 'Centering only the top and bottom (001) faces creates a distinctly layered crystal with preferred cleavage parallel to the ab-plane.',
+      id: 'Pemusatan hanya pada muka atas dan bawah (001) menciptakan struktur berlapis dengan belahan paralel bidang ab.',
+      ja: '上下の(001)底面のみに格子点を持つため、ab面に平行な層状構造・劈開特性を示します。',
+    },
+    exampleMaterials: ['α-Uranium (α-U)', 'Gallium (Ga)', 'Yellow Arsenic'],
+    atoms: [...CUBE_CORNERS, ...BASE_C_CENTERS],
+  },
+  {
+    id: 'fco',
+    system: 'orthorhombic',
+    categoryGroup: 'orthorhombic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'oF',
+    name: {
+      en: 'Face-Centered Orthorhombic (FCO)',
+      id: 'Ortorombik Berpusat Muka (FCO)',
+      ja: '面心斜方格子 (FCO · oF)',
+    },
+    shortName: 'FCO · oF',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = β = γ = 90°',
+    defaultBOverA: 1.24,
+    defaultCOverA: 1.5,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '4',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 6 faces × 1/2 = 4 atoms/cell',
+      id: '8 sudut × 1/8 + 6 sisi × 1/2 = 4 atom/sel',
+      ja: '8頂点 × 1/8 + 6面心 × 1/2 = 4 原子/単位格子',
+    },
+    coordinationNumber: '12 (anisotropic)',
+    apfPercent: 56.0,
+    apfLabel: '~56% – 70%',
+    radiusFormula: 'R ≤ √(a² + b²) / 4',
+    canonicalSphereRadius: 0.34,
+    canonicalBallRadius: 0.12,
+    bondCutoff: 1.05,
+    slipSystems: {
+      en: 'Pseudo-close-packed {111} along shortest face diagonals',
+      id: '{111} semu-rapat sepanjang diagonal sisi terpendek',
+      ja: '最短面対角線に沿う擬似最密 {111} 系',
+    },
+    mechanicalBehavior: {
+      en: 'All 6 faces carry centered lattice points, preserving high coordination while breaking cubic isotropy across unequal a, b, and c.',
+      id: 'Keenam muka memiliki titik pusat, mempertahankan koordinasi tinggi namun memecah isotropi kubik akibat perbedaan a, b, c.',
+      ja: '6つの全面に格子点を持つため高配位数を保ちながら、a・b・c長の差による異方性を示します。',
+    },
+    exampleMaterials: ['α-Sulfur (S₈)', 'Ti₂AlNb (O-phase)', 'Plutonium (γ-Pu)'],
+    atoms: [...CUBE_CORNERS, ...ALL_FACE_CENTERS],
+  },
+
+  // ======================== 4. HEXAGONAL (hP Bravais + Full HCP Prism) ========================
+  {
+    id: 'hex-p',
+    system: 'hexagonal',
+    categoryGroup: 'hexagonal',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'hP',
+    name: {
+      en: 'Simple Hexagonal Bravais Cell (hP)',
+      id: 'Kisi Bravais Heksagonal Sederhana (hP)',
+      ja: '単純六方ブラベー格子 (hP)',
+    },
+    shortName: 'Hex (hP)',
+    cellConstraints: 'a = b ≠ c  ·  α = β = 90°, γ = 120°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.45,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 120,
+    allowBSlider: false,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: 'Primitive 120° rhombic prism: 4×(1/12) + 4×(1/6) = 1.0 atom/cell',
+      id: 'Prisma rombik primitif 120°: total = 1,0 atom/sel',
+      ja: '120°菱形プリズム基本格子 = 1.0 原子/単位格子',
+    },
+    coordinationNumber: '8 (6 in basal ring + 2 axial)',
+    apfPercent: 60.5,
+    apfLabel: '60.5% (ideal c/a = 1)',
+    radiusFormula: 'R = a / 2 (basal close touch)',
+    canonicalSphereRadius: 0.48,
+    canonicalBallRadius: 0.135,
+    bondCutoff: 1.52,
+    slipSystems: {
+      en: 'Basal (0001) ⟨112̄0⟩',
+      id: 'Bidang basal (0001) ⟨112̄0⟩',
+      ja: '底面すべり (0001) ⟨112̄0⟩',
+    },
+    mechanicalBehavior: {
+      en: 'The true primitive hexagonal Bravais lattice is a 60°/120° rhombic prism; three primitive cells tile symmetrically to form the familiar 6-sided hexagonal prism.',
+      id: 'Kisi Bravais heksagonal primitif sebenarnya berupa prisma belah ketupat 60°/120°; tiga sel primitif bergabung membentuk prisma heksagonal 6 sisi.',
+      ja: '本来の六方ブラベー単純格子は60°/120°の菱形プリズムであり、これが3つ集まって正六角柱構造を形成します。',
+    },
+    exampleMaterials: ['Graphite C (layer framework)', 'WC (Tungsten Carbide)', 'SiC'],
+    atoms: CUBE_CORNERS,
+  },
+  {
+    id: 'hcp',
+    system: 'hexagonal',
+    categoryGroup: 'hexagonal',
+    isBravaisCanonical: false,
+    pearsonSymbol: 'hP2 (Full Prism)',
+    strutzbricht: 'A3',
+    name: {
+      en: 'Hexagonal Close-Packed (HCP Full Prism)',
+      id: 'Heksagonal Tertutup Rapat (HCP Prisma Penuh)',
+      ja: '六方最密充填構造 (HCP 6角柱)',
+    },
+    shortName: 'HCP · A3',
+    cellConstraints: 'a = b ≠ c  ·  c/a = 1.633  ·  γ = 120°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.633,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 120,
+    allowBSlider: false,
+    allowCSlider: true,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '6 (prism) / 2 (prim)',
+    atomCountBreakdown: {
+      en: '12 corners × 1/6 + 2 basal × 1/2 + 3 B-layer = 6 atoms/prism',
+      id: '12 sudut × 1/6 + 2 alas × 1/2 + 3 tengah = 6 atom/prisma',
+      ja: '12頂点×1/6 + 上下底心2×1/2 + 中間B層3 = 6 原子/六角柱',
+    },
+    coordinationNumber: '12',
+    apfPercent: 74.0,
+    apfLabel: '74.0% (ideal c/a = 1.633)',
+    radiusFormula: 'R = a / 2 = 0.500 a  |  Ideal c/a = √(8/3)',
+    canonicalSphereRadius: 0.5,
+    canonicalBallRadius: 0.14,
+    bondCutoff: 1.08,
+    slipSystems: {
+      en: '3 basal systems (0001) ⟨112̄0⟩ (ABABAB)',
+      id: '3 sistem basal utama (0001) ⟨112̄0⟩ (ABABAB)',
+      ja: '3つの底面すべり系 (0001) ⟨112̄0⟩（ABAB積層）',
+    },
+    mechanicalBehavior: {
+      en: 'Shares maximum 74% density with FCC, yet only 3 primary basal slip systems exist — resulting in anisotropic work-hardening and twinning in Titanium & Magnesium.',
+      id: 'Memiliki kepadatan 74% setara FCC, namun hanya punya 3 sistem selip basal utama — menyebabkan kembaran (twinning) & keuletan terbatas pada Ti dan Mg.',
+      ja: 'FCCと同じ最大充填率74%ですが独立すべり系が少ないため、チタンやマグネシウムでは変形双晶や異方性加工硬化が生じます。',
+    },
+    exampleMaterials: ['Ti (Ti-6Al-4V)', 'Mg', 'Zn', 'Co', 'Zr', 'Cd', 'Be'],
+    isFullHexPrism: true,
+    atoms: buildHcpPrismAtoms(),
+    interstitials: [
+      { id: 'hcp-oct-1', u: 0.35, v: 0.2, w: 0.25, kind: 'octahedral', isHexPrismCoord: true },
+      { id: 'hcp-oct-2', u: -0.35, v: 0.2, w: -0.25, kind: 'octahedral', isHexPrismCoord: true },
+    ],
+  },
+
+  // ======================== 5. RHOMBOHEDRAL / TRIGONAL (1 Bravais) ========================
+  {
+    id: 'rhomb',
+    system: 'rhombohedral',
+    categoryGroup: 'rhombohedral',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'hR',
+    name: {
+      en: 'Rhombohedral / Trigonal (hR)',
+      id: 'Rombohedral / Trigonal (hR)',
+      ja: '菱面体晶 / 三方晶 (hR)',
+    },
+    shortName: 'Rhomb · hR',
+    cellConstraints: 'a = b = c  ·  α = β = γ ≠ 90°',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 74,
+    defaultBetaDeg: 74,
+    defaultGammaDeg: 74,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'rhombohedral',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 sheared cube corners × 1/8 = 1.0 atom/cell',
+      id: '8 sudut tergeser × 1/8 = 1,0 atom/sel',
+      ja: '8頂点 × 1/8 = 1.0 原子/単位格子（三方対称）',
+    },
+    coordinationNumber: '6 (3-fold trigonal axis [111])',
+    apfPercent: 56.0,
+    apfLabel: '~52% – 66% (angle-dependent)',
+    radiusFormula: 'Cube stretched/compressed along [111] body diagonal',
+    canonicalSphereRadius: 0.45,
+    canonicalBallRadius: 0.135,
+    bondCutoff: 1.1,
+    slipSystems: {
+      en: 'Rhombohedral {101̄1} & basal {0001} at elevated T',
+      id: 'Bidang rombohedral {101̄1} & basal pada suhu tinggi',
+      ja: '菱面体面 {101̄1} および高温域底面すべり',
+    },
+    mechanicalBehavior: {
+      en: 'Three equal lattice vectors tilted by an equal angle (α = β = γ ≠ 90°) yield a 3-fold rotational axis along the body diagonal; common in corundum ceramics & bismuth.',
+      id: 'Tiga vektor kisi sama panjang dengan sudut α = β = γ ≠ 90° membentuk simetri 3-lipat di diagonal utama; khas pada keramik alumina & bismut.',
+      ja: '3辺が等しく角α=β=γが90°でない構造で、体対角線方向に3回回転対称軸を持ちます（アルミナ、Bi等）。',
+    },
+    exampleMaterials: ['Bi (Bismuth)', 'Sb', 'α-Al₂O₃ (Corundum)', 'SiO₂ (Quartz)', 'Hg'],
+    atoms: CUBE_CORNERS,
+  },
+
+  // ======================== 6. MONOCLINIC (2 Bravais) ========================
+  {
+    id: 'sm',
+    system: 'monoclinic',
+    categoryGroup: 'monoclinic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'mP',
+    name: {
+      en: 'Simple Monoclinic (SM)',
+      id: 'Monoklinik Sederhana (SM)',
+      ja: '単純単斜格子 (SM · mP)',
+    },
+    shortName: 'SM · mP',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = γ = 90°, β ≠ 90°',
+    defaultBOverA: 1.18,
+    defaultCOverA: 1.38,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 112,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'beta',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 tilted corners × 1/8 = 1.0 atom/cell',
+      id: '8 sudut miring × 1/8 = 1,0 atom/sel',
+      ja: '傾斜8頂点 × 1/8 = 1.0 原子/単位格子',
+    },
+    coordinationNumber: '6 – 7 (monoclinic distortion)',
+    apfPercent: 34.0,
+    apfLabel: '~34% – 48%',
+    radiusFormula: 'Tilted c-axis at β = 112° relative to a-axis',
+    canonicalSphereRadius: 0.42,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 1.5,
+    slipSystems: {
+      en: 'Strongly restricted by inclined β angle; brittle ceramic behavior',
+      id: 'Sangat terbatas oleh kemiringan sudut β; perilaku keramik getas',
+      ja: '単斜角 β によりすべり系が強く制限され、脆性破壊しやすい構造',
+    },
+    mechanicalBehavior: {
+      en: 'Zirconia (ZrO₂) undergoes a 4% volume expansion when transforming from tetragonal to monoclinic mP on cooling — exploited in transformation-toughened ceramics.',
+      id: 'Zirkonia (ZrO₂) mengalami ekspansi volume 4% saat bertransformasi ke monoklinik mP — dimanfaatkan dalam keramik tahan retak.',
+      ja: 'ジルコニア（ZrO₂）が正方晶から単斜晶へ相変態する際の約4%の体積膨張は、セラミックスの変態強靭化に利用されます。',
+    },
+    exampleMaterials: ['Monoclinic ZrO₂ (Baddeleyite)', 'β-Sulfur', 'β-Pu'],
+    atoms: CUBE_CORNERS,
+  },
+  {
+    id: 'bacm',
+    system: 'monoclinic',
+    categoryGroup: 'monoclinic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'mS (mC)',
+    name: {
+      en: 'Base-Centered Monoclinic (C-Mono)',
+      id: 'Monoklinik Berpusat Alas (mS)',
+      ja: '底心単斜格子 (mS / mC)',
+    },
+    shortName: 'C-Mono · mS',
+    cellConstraints: 'a ≠ b ≠ c  ·  α = γ = 90°, β ≠ 90°',
+    defaultBOverA: 1.18,
+    defaultCOverA: 1.38,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 112,
+    defaultGammaDeg: 90,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'beta',
+    effectiveAtomsPerCell: '2',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 + 2 basal faces × 1/2 = 2 atoms/cell',
+      id: '8 sudut × 1/8 + 2 sisi alas × 1/2 = 2 atom/sel',
+      ja: '8頂点 × 1/8 + 底面2 × 1/2 = 2 原子/単位格子',
+    },
+    coordinationNumber: '8 (layered monoclinic)',
+    apfPercent: 46.0,
+    apfLabel: '~46% – 58%',
+    radiusFormula: 'Tilted prism with centered (001) C-basal faces',
+    canonicalSphereRadius: 0.39,
+    canonicalBallRadius: 0.125,
+    bondCutoff: 1.02,
+    slipSystems: {
+      en: '(001) & (010) planar cleavage with 2-fold [010] symmetry',
+      id: 'Belahan bidang (001) & (010) dengan simetri 2-lipat [010]',
+      ja: '2回対称軸 [010] を伴う (001)/(010) 層状劈開',
+    },
+    mechanicalBehavior: {
+      en: 'Centering on the (001) face of an inclined monoclinic prism preserves a single 2-fold mirror symmetry plane and defines silicate minerals like orthoclase & gypsum.',
+      id: 'Pemusatan pada muka (001) prisma miring mempertahankan simetri cermin tunggal; khas pada mineral gipsum & ortoklas.',
+      ja: '傾斜した単斜プリズムの(001)面中心に格子点を持ち、石膏や正長石などの鉱物・高分子結晶で現れます。',
+    },
+    exampleMaterials: ['Gypsum (CaSO₄·2H₂O)', 'Orthoclase', 'NiTi B19′ Martensite'],
+    atoms: [...CUBE_CORNERS, ...BASE_C_CENTERS],
+  },
+
+  // ======================== 7. TRICLINIC (1 Bravais) ========================
+  {
+    id: 'triclinic',
+    system: 'triclinic',
+    categoryGroup: 'triclinic',
+    isBravaisCanonical: true,
+    pearsonSymbol: 'aP',
+    name: {
+      en: 'Triclinic (aP)',
+      id: 'Triklinik (aP)',
+      ja: '三斜格子 (aP)',
+    },
+    shortName: 'Triclinic · aP',
+    cellConstraints: 'a ≠ b ≠ c  ·  α ≠ β ≠ γ ≠ 90°',
+    defaultBOverA: 1.16,
+    defaultCOverA: 1.36,
+    defaultAlphaDeg: 76,
+    defaultBetaDeg: 105,
+    defaultGammaDeg: 112,
+    allowBSlider: true,
+    allowCSlider: true,
+    allowAngleSlider: 'triclinic',
+    effectiveAtomsPerCell: '1',
+    atomCountBreakdown: {
+      en: '8 corners × 1/8 = 1.0 atom/cell (lowest symmetry)',
+      id: '8 sudut × 1/8 = 1,0 atom/sel (simetri terendah)',
+      ja: '8頂点 × 1/8 = 1.0 原子/単位格子（最小対称性）',
+    },
+    coordinationNumber: '6 (fully oblique)',
+    apfPercent: 32.0,
+    apfLabel: '~32% – 44% (oblique packing)',
+    radiusFormula: 'All 3 lengths and 3 interaxial angles independent',
+    canonicalSphereRadius: 0.4,
+    canonicalBallRadius: 0.13,
+    bondCutoff: 1.55,
+    slipSystems: {
+      en: 'No rotational symmetry axes (only inversion center or P1)',
+      id: 'Tanpa sumbu rotasi simetri — ikatan sangat terarah',
+      ja: '回転対称軸なし — 強い異方性と特定面への劈開',
+    },
+    mechanicalBehavior: {
+      en: 'Most general crystal geometry where a ≠ b ≠ c and α ≠ β ≠ γ ≠ 90°; exhibits zero rotational symmetry axes and highly complex optical & elastic tensors.',
+      id: 'Geometri kristal paling umum (seluruh sisi dan sudut berbeda); tanpa sumbu simetri putar dengan tensor elastis kompleks.',
+      ja: 'すべての軸長と軸角が異なる最も一般的な結晶系であり、回転対称軸を持たず複雑な光学・弾性異方性を示します。',
+    },
+    exampleMaterials: ['CuSO₄·5H₂O', 'Microcline Feldspar', 'Boric Acid (H₃BO₃)', 'PET Polymer'],
+    atoms: CUBE_CORNERS,
+  },
+
+  // ======================== 8. ENGINEERING & COMPOUND CRYSTALS (3) ========================
+  {
+    id: 'diamond',
+    system: 'cubic',
+    categoryGroup: 'compound',
+    isBravaisCanonical: false,
+    pearsonSymbol: 'cF8 (Diamond)',
+    strutzbricht: 'A4',
+    name: {
+      en: 'Diamond Cubic (Covalent sp³)',
+      id: 'Kubik Intan / Diamond Cubic (sp³)',
+      ja: 'ダイヤモンド立方格子 (sp³ 共有結合)',
+    },
+    shortName: 'Diamond · cF8',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90° (FCC + 4 tet)',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '8',
+    atomCountBreakdown: {
+      en: '4 (FCC host) + 4 (1/4,1/4,1/4 tetrahedral) = 8 atoms/cell',
+      id: '4 (induk FCC) + 4 (tetrahedral dalam) = 8 atom/sel',
+      ja: '4 (FCC枠) + 4 (正四面体内部) = 8 原子/単位格子',
+    },
+    coordinationNumber: '4 (109.5° tetrahedral sp³)',
+    apfPercent: 34.0,
+    apfLabel: '34.0% (π√3 / 16)',
+    radiusFormula: '8R = √3·a  ⇒  R = 0.2165 a',
+    canonicalSphereRadius: Math.sqrt(3) / 8,
+    canonicalBallRadius: 0.1,
+    bondCutoff: 0.48,
+    slipSystems: {
+      en: '{111} ⟨110⟩ only at high homologous T (> 0.6 Tm)',
+      id: '{111} ⟨110⟩ hanya aktif pada suhu sangat tinggi',
+      ja: '{111} ⟨110⟩（共有結合のため低温では極めて高い硬さ・脆性）',
+    },
+    mechanicalBehavior: {
+      en: 'Very low 34% open APF combined with rigid directional covalent sp³ bonds gives extreme hardness (10 Mohs), massive thermal conductivity, and semiconductor bandgaps.',
+      id: 'Meskipun kepadatan atom hanya 34%, ikatan kovalen sp³ terarah menghasilkan kekerasan ekstrem (intan) serta sifat semikonduktor (Si, Ge).',
+      ja: '充填率は34%と疎ですが、強固な正四面体sp³共有結合により最高硬度（ダイヤモンド）や半導体特性（Si, Ge）を生み出します。',
+    },
+    exampleMaterials: ['Diamond (C)', 'Silicon (Si)', 'Germanium (Ge)', 'α-Sn (Gray Tin)'],
+    atoms: [
+      ...CUBE_CORNERS,
+      ...ALL_FACE_CENTERS,
+      { id: 'dia-1', u: 0.25, v: 0.25, w: 0.25, role: 'interior', cellWeightLabel: '1' },
+      { id: 'dia-2', u: 0.75, v: 0.75, w: 0.25, role: 'interior', cellWeightLabel: '1' },
+      { id: 'dia-3', u: 0.75, v: 0.25, w: 0.75, role: 'interior', cellWeightLabel: '1' },
+      { id: 'dia-4', u: 0.25, v: 0.75, w: 0.75, role: 'interior', cellWeightLabel: '1' },
+    ],
+  },
+  {
+    id: 'nacl',
+    system: 'cubic',
+    categoryGroup: 'compound',
+    isBravaisCanonical: false,
+    pearsonSymbol: 'cF8 · B1',
+    strutzbricht: 'B1 (Rock Salt)',
+    name: {
+      en: 'Rock Salt / Ceramic B1 (NaCl / TiN)',
+      id: 'Keramik Garam Batu B1 (NaCl / TiN)',
+      ja: '岩塩型 B1 セラミック構造 (NaCl / TiN)',
+    },
+    shortName: 'Rock Salt · B1',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90° (Dual FCC)',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '4 + 4 = 8 ions',
+    atomCountBreakdown: {
+      en: '4 FCC cations + (12 edges×1/4 + 1 center = 4 anions)',
+      id: '4 kation FCC + (12 rusuk×1/4 + 1 pusat = 4 anion)',
+      ja: 'FCC陽イオン4 + (12辺×1/4 + 体心1 = 陰イオン4)',
+    },
+    coordinationNumber: '6 : 6 (octahedral)',
+    apfPercent: 66.0,
+    apfLabel: '66% – 79% (r_c / r_a = 0.414–0.732)',
+    radiusFormula: 'a = 2 (r_cation + r_anion)',
+    canonicalSphereRadius: 0.29,
+    canonicalBallRadius: 0.115,
+    secondSpeciesScale: 0.76,
+    bondCutoff: 0.56,
+    slipSystems: {
+      en: '{110} ⟨11̄0⟩ (charge repulsion blocks {100} slip)',
+      id: '{110} ⟨11̄0⟩ (tolakan muatan ion mencegah selip mudah)',
+      ja: '{110} ⟨11̄0⟩（同符号イオンの静電反発により室温では脆性）',
+    },
+    mechanicalBehavior: {
+      en: 'Two interpenetrating FCC sublattices (metal + nonmetal/halide) form refractory carbides & nitrides (TiN gold tool coating, TiC, MgO) with ultra-high melting points.',
+      id: 'Dua sub-kisi FCC saling menyusup membentuk karbida & nitrida tahan aus seperti lapisan pahat TiN (emas), TiC, dan MgO.',
+      ja: '2つのFCC副格子が1/2周期ずれて貫入した構造で、切削工具のTiNコーティングやTiC・MgOなどの超硬・耐火セラミックスを形成します。',
+    },
+    exampleMaterials: ['TiN (Tool Coating)', 'TiC', 'MgO', 'NaCl', 'FeO', 'VC'],
+    atoms: [
+      ...CUBE_CORNERS.map((a) => ({ ...a, speciesIndex: 1 as const })),
+      ...ALL_FACE_CENTERS.map((a) => ({ ...a, speciesIndex: 1 as const })),
+      ...EDGE_CENTER_OCTAHEDRAL,
+    ],
+  },
+  {
+    id: 'cscl',
+    system: 'cubic',
+    categoryGroup: 'compound',
+    isBravaisCanonical: false,
+    pearsonSymbol: 'cP2 · B2',
+    strutzbricht: 'B2 (Ordered Intermetallic)',
+    name: {
+      en: 'CsCl / Ordered B2 Intermetallic (NiTi)',
+      id: 'Intermetalik Teratur B2 (CsCl / NiTi)',
+      ja: 'CsCl型 B2 規則金属間化合物 (NiTi等)',
+    },
+    shortName: 'B2 Intermetallic',
+    cellConstraints: 'a = b = c  ·  α = β = γ = 90° (Ordered AB)',
+    defaultBOverA: 1.0,
+    defaultCOverA: 1.0,
+    defaultAlphaDeg: 90,
+    defaultBetaDeg: 90,
+    defaultGammaDeg: 90,
+    allowBSlider: false,
+    allowCSlider: false,
+    allowAngleSlider: 'none',
+    effectiveAtomsPerCell: '1 + 1 = 2 (AB)',
+    atomCountBreakdown: {
+      en: 'Species A: 8 corners×1/8 = 1  +  Species B: 1 center = 1',
+      id: 'Spesies A: 8 sudut×1/8 = 1  +  Spesies B: 1 pusat = 1',
+      ja: 'A種(頂点×1/8 = 1) + B種(体心 = 1) 計2原子/単位格子',
+    },
+    coordinationNumber: '8 : 8 (cubic B2)',
+    apfPercent: 68.4,
+    apfLabel: '68.4% (for equal radii r_A ≈ r_B)',
+    radiusFormula: '√3·a = 2(r_A + r_B)  ·  Ordered SC Bravais + basis',
+    canonicalSphereRadius: 0.43,
+    canonicalBallRadius: 0.135,
+    secondSpeciesScale: 1.06,
+    bondCutoff: 0.96,
+    slipSystems: {
+      en: '{110} ⟨001⟩ (superdislocations preserve AB chemical order)',
+      id: '{110} ⟨001⟩ (dislokasi super menjaga keteraturan ikatan AB)',
+      ja: '{110} ⟨001⟩（規則構造を保つ超格子転位・マルテンサイト記憶効果）',
+    },
+    mechanicalBehavior: {
+      en: 'Chemically ordered cousin of BCC where center atom differs from corners (simple cubic Bravais with 2-atom basis); enables Nitinol shape-memory alloys and high-temp aluminides.',
+      id: 'Mirip BCC namun atom pusat berbeda spesies kimia dari sudut; mendasari paduan memori bentuk Nitinol (NiTi) & aluminida suhu tinggi.',
+      ja: '体心位置と頂点が異なる元素で構成される規則格子（実体は2原子基底の単純立方格子）で、NiTi形状記憶合金や耐熱金属間化合物の基本構造です。',
+    },
+    exampleMaterials: ['NiTi (Nitinol Austenitic)', 'β-Brass (CuZn)', 'FeAl', 'NiAl', 'CsCl'],
+    atoms: [
+      ...CUBE_CORNERS.map((a) => ({ ...a, speciesIndex: 1 as const })),
+      {
+        id: 'b2-center',
+        u: 0.5,
+        v: 0.5,
+        w: 0.5,
+        role: 'species-b',
+        speciesIndex: 2,
+        cellWeightLabel: '1',
+      },
+    ],
+  },
+];
+
+export const MILLER_PLANES: {
+  id: MillerPlaneId;
+  label: string;
+  description: LocalizedText;
+}[] = [
+  {
+    id: 'none',
+    label: 'None',
+    description: {
+      en: 'Hide crystallographic plane overlay',
+      id: 'Sembunyikan bidang kristalografi',
+      ja: '結晶面オーバーレイを非表示',
+    },
+  },
+  {
+    id: '100',
+    label: '(100)',
+    description: {
+      en: 'Cube face / front cleavage plane [normal along a]',
+      id: 'Bidang muka kubus / belahan depan [normal sumbu a]',
+      ja: '(100) 正面ファセット / 劈開面 [a軸に垂直]',
+    },
+  },
+  {
+    id: '110',
+    label: '(110)',
+    description: {
+      en: 'Primary BCC slip plane — high atomic density diagonal plane',
+      id: 'Bidang selip utama BCC — bidang diagonal rapat atom',
+      ja: '(110) BCC主すべり面 — 体対角方向の最密面',
+    },
+  },
+  {
+    id: '111',
+    label: '(111)',
+    description: {
+      en: 'Closest-packed FCC slip plane — ABC stacking plane',
+      id: 'Bidang selip terpadat FCC — bidang tumpukan ABC',
+      ja: '(111) FCC最密充填すべり面 — ABC積層面',
+    },
+  },
+  {
+    id: '0001',
+    label: '(0001) Basal',
+    description: {
+      en: 'Hexagonal Basal Slip Plane (HCP Titanium / Magnesium)',
+      id: 'Bidang Selip Basal Heksagonal (HCP Titanium / Magnesium)',
+      ja: '(0001) 六方晶底面すべり面（Ti / Mg）',
+    },
+  },
+  {
+    id: '10-10',
+    label: '(101̄0) Prism',
+    description: {
+      en: 'Hexagonal Prismatic Plane / Secondary Titanium slip plane',
+      id: 'Bidang Prismatik Heksagonal / Bidang selip sekunder Titanium',
+      ja: '(101̄0) 六方晶柱面 / チタンの二次すべり面',
+    },
+  },
+];

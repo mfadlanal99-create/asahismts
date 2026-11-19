@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react';
 import {
   ArrowRight,
+  Atom,
   Award,
   BookMarked,
   BookOpen,
@@ -272,6 +273,22 @@ export function HomePage({
                   )}
                   <span className="rounded-full bg-[var(--md-on-primary)]/18 px-2 py-0.5 font-mono text-[10px] font-extrabold">
                     360° CAD
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => onSelectSimulator('crystal-lattice-3d')}
+                  className="m3-btn-tonal inline-flex items-center gap-2 px-5 py-3 text-xs font-semibold shadow-2xs"
+                >
+                  <Atom className="h-4 w-4 text-[var(--md-primary)]" />
+                  {pick(
+                    '3D Crystal Lattices',
+                    'Kristal 3D & Bravais',
+                    '3D 結晶格子'
+                  )}
+                  <span className="rounded-full bg-[var(--md-primary-container)] px-2 py-0.5 font-mono text-[10px] font-extrabold text-[var(--md-on-primary-container)]">
+                    14+4
                   </span>
                 </button>
 

@@ -22,6 +22,7 @@ import { hardnessMeta } from '../simulators/hardness/hardnessMeta';
 import { hydraulicMeta } from '../simulators/hydraulic/hydraulicMeta';
 import { lubeMeta } from '../simulators/lube/lubeMeta';
 import { machine3dExplorerMeta } from '../simulators/machine-3d-explorer/machine3dExplorerMeta';
+import { crystalLattice3dMeta } from '../simulators/crystal-lattice-3d/crystalLattice3dMeta';
 import { motorBasicsMeta } from '../simulators/motor-basics/motorBasicsMeta';
 import { oilGreaseBasicsMeta } from '../simulators/oil-grease-basics/oilGreaseBasicsMeta';
 import { pneumaticMeta } from '../simulators/pneumatic/pneumaticMeta';
@@ -55,6 +56,16 @@ export const SIMULATOR_REGISTRY: SimulatorRegistryEntry[] = [
       import('../simulators/machine-3d-explorer/Machine3DExplorerSimulator').then(
         (m) => ({
           default: m.Machine3DExplorerSimulator,
+        })
+      )
+    ),
+  },
+  {
+    meta: crystalLattice3dMeta,
+    Component: lazy(() =>
+      import('../simulators/crystal-lattice-3d/CrystalLattice3DSimulator').then(
+        (m) => ({
+          default: m.CrystalLattice3DSimulator,
         })
       )
     ),
