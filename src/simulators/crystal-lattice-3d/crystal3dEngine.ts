@@ -1,5 +1,6 @@
 import {
   type AtomSiteRole,
+  type CrystalDefectMode,
   type CrystalLatticeSpec,
   type LatticeAtomSpec,
   type MillerPlaneId,
@@ -15,7 +16,11 @@ export interface CrystalCameraState {
   panY: number;
 }
 
-export type CrystalDisplayMode = 'ball-stick' | 'hard-sphere' | 'coordination';
+export type CrystalDisplayMode =
+  | 'ball-stick'
+  | 'hard-sphere'
+  | 'sliced-cell'
+  | 'coordination';
 
 export interface RenderCrystalOptions {
   lattice: CrystalLatticeSpec;
@@ -32,6 +37,9 @@ export interface RenderCrystalOptions {
   showAxes: boolean;
   showInterstitials: boolean;
   millerPlane: MillerPlaneId;
+  customMiller?: { enabled: boolean; h: number; k: number; l: number };
+  slipDirection?: { enabled: boolean; u: number; v: number; w: number };
+  defectMode?: CrystalDefectMode;
   hoveredAtomId: string | null;
   selectedAtomId: string | null;
   isDark: boolean;
@@ -481,6 +489,225 @@ function getMillerPlaneVertices(
   return null;
 }
 
+function getCustomMillerPolygon(
+  h: number,
+  k: number,
+  l: number,
+  lattice: CrystalLatticeSpec,
+  basis: CellBasisVectors,
+  cOverA: number
+): Vec3[] | null {
+  if (h === 0 && k === 0 && l === 0) return null;
+
+  if (lattice.isFullHexPrism) {
+    if (h === 0 && k === 0) {
+      const ring: Vec3[] = [];
+      for (let m = 0; m < 6; m++) {
+        const th = (m * Math.PI) / 3;
+        ring.push([Math.cos(th), 0, Math.sin(th)]);
+      }
+      return ring;
+    }
+    const nx = h + 0.5 * k;
+    const ny = k * 0.866;
+    const nz = l / Math.max(0.8, cOverA);
+    const len = Math.hypot(nx, ny, nz) || 1;
+    const ux = nx / len;
+    const uy = nz / len;
+    const uz = ny / len;
+    // Build rectangular prism cross-section perpendicular to (ux, uy, uz)
+    const ref: Vec3 = Math.abs(uy) < 0.8 ? [0, 1, 0] : [1, 0, 0];
+    const t1x = ref[1] * uz - ref[2] * uy;
+    const t1y = ref[2] * ux - ref[0] * uz;
+    const t1z = ref[0] * uy - ref[1] * ux;
+    const l1 = Math.hypot(t1x, t1y, t1z) || 1;
+    const t1: Vec3 = [(t1x / l1) * 0.9, (t1y / l1) * 0.9, (t1z / l1) * 0.9];
+    const t2: Vec3 = [
+      (uy * t1[2] - uz * t1[1]) * 0.9,
+      (uz * t1[0] - ux * t1[2]) * 0.9,
+      (ux * t1[1] - uy * t1[0]) * 0.9,
+    ];
+    return [
+      add3(t1, t2),
+      sub3(t1, t2),
+      sub3(scale3(t1, -1), t2),
+      add3(scale3(t1, -1), t2),
+    ];
+  }
+
+  // Shift origin so negative Miller indices slice cleanly inside [0, 1]^3
+  const u0 = h < 0 ? 1 : 0;
+  const v0 = k < 0 ? 1 : 0;
+  const w0 = l < 0 ? 1 : 0;
+  const target = 1 + h * u0 + k * v0 + l * w0;
+
+  const cubeCorners: [number, number, number][] = [
+    [0, 0, 0],
+    [1, 0, 0],
+    [1, 1, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 1, 1],
+  ];
+  const edgePairs: [number, number][] = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7],
+  ];
+
+  const evalPlane = (p: [number, number, number]) =>
+    h * p[0] + k * p[1] + l * p[2] - target;
+
+  const hits: [number, number, number][] = [];
+  for (const [i, j] of edgePairs) {
+    const a = cubeCorners[i];
+    const b = cubeCorners[j];
+    const fa = evalPlane(a);
+    const fb = evalPlane(b);
+    if (Math.abs(fa) < 1e-5 && Math.abs(fb) < 1e-5) {
+      hits.push(a, b);
+      continue;
+    }
+    if ((fa <= 1e-5 && fb >= -1e-5) || (fa >= -1e-5 && fb <= 1e-5)) {
+      const denom = fa - fb;
+      if (Math.abs(denom) > 1e-6) {
+        const t = fa / denom;
+        if (t >= -1e-4 && t <= 1 + 1e-4) {
+          hits.push([
+            a[0] + t * (b[0] - a[0]),
+            a[1] + t * (b[1] - a[1]),
+            a[2] + t * (b[2] - a[2]),
+          ]);
+        }
+      }
+    }
+  }
+
+  // Deduplicate fractional points
+  const uniqueHits: [number, number, number][] = [];
+  for (const p of hits) {
+    if (
+      !uniqueHits.some(
+        (q) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]) < 1e-3
+      )
+    ) {
+      uniqueHits.push(p);
+    }
+  }
+  if (uniqueHits.length < 3) return null;
+
+  // Sort cyclically around centroid using fractional plane normal
+  const cu = uniqueHits.reduce((s, p) => s + p[0], 0) / uniqueHits.length;
+  const cv = uniqueHits.reduce((s, p) => s + p[1], 0) / uniqueHits.length;
+  const cw = uniqueHits.reduce((s, p) => s + p[2], 0) / uniqueHits.length;
+  const nLen = Math.hypot(h, k, l) || 1;
+  const nn: [number, number, number] = [h / nLen, k / nLen, l / nLen];
+  const ref: [number, number, number] = Math.abs(nn[2]) < 0.85 ? [0, 0, 1] : [1, 0, 0];
+  const e1: [number, number, number] = [
+    ref[1] * nn[2] - ref[2] * nn[1],
+    ref[2] * nn[0] - ref[0] * nn[2],
+    ref[0] * nn[1] - ref[1] * nn[0],
+  ];
+  const l1 = Math.hypot(e1[0], e1[1], e1[2]) || 1;
+  e1[0] /= l1;
+  e1[1] /= l1;
+  e1[2] /= l1;
+  const e2: [number, number, number] = [
+    nn[1] * e1[2] - nn[2] * e1[1],
+    nn[2] * e1[0] - nn[0] * e1[2],
+    nn[0] * e1[1] - nn[1] * e1[0],
+  ];
+
+  uniqueHits.sort((a, b) => {
+    const da = [a[0] - cu, a[1] - cv, a[2] - cw];
+    const db = [b[0] - cu, b[1] - cv, b[2] - cw];
+    const angA = Math.atan2(
+      da[0] * e2[0] + da[1] * e2[1] + da[2] * e2[2],
+      da[0] * e1[0] + da[1] * e1[1] + da[2] * e1[2]
+    );
+    const angB = Math.atan2(
+      db[0] * e2[0] + db[1] * e2[1] + db[2] * e2[2],
+      db[0] * e1[0] + db[1] * e1[1] + db[2] * e1[2]
+    );
+    return angA - angB;
+  });
+
+  return uniqueHits.map(([uu, vv, ww]) =>
+    fracToModelPos(uu, vv, ww, basis, cOverA)
+  );
+}
+
+function computeConvexHull2D(pts: [number, number][]): [number, number][] {
+  if (pts.length <= 3) return pts;
+  const sorted = [...pts].sort((a, b) => (a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1]));
+  const cross = (o: [number, number], a: [number, number], b: [number, number]) =>
+    (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+
+  const lower: [number, number][] = [];
+  for (const p of sorted) {
+    while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) {
+      lower.pop();
+    }
+    lower.push(p);
+  }
+  const upper: [number, number][] = [];
+  for (let i = sorted.length - 1; i >= 0; i--) {
+    const p = sorted[i];
+    while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) {
+      upper.pop();
+    }
+    upper.push(p);
+  }
+  lower.pop();
+  upper.pop();
+  return lower.concat(upper);
+}
+
+function getUnitCellBoundaryVertices(
+  lattice: CrystalLatticeSpec,
+  basis: CellBasisVectors,
+  cOverA: number
+): Vec3[] {
+  if (lattice.isFullHexPrism) {
+    const pts: Vec3[] = [];
+    for (let k = 0; k < 6; k++) {
+      const th = (k * Math.PI) / 3;
+      const x = Math.cos(th);
+      const z = Math.sin(th);
+      pts.push([x, 0.5 * cOverA, z]);
+      pts.push([x, -0.5 * cOverA, z]);
+    }
+    return pts;
+  }
+  return [
+    fracToModelPos(0, 0, 0, basis, cOverA),
+    fracToModelPos(1, 0, 0, basis, cOverA),
+    fracToModelPos(1, 1, 0, basis, cOverA),
+    fracToModelPos(0, 1, 0, basis, cOverA),
+    fracToModelPos(0, 0, 1, basis, cOverA),
+    fracToModelPos(1, 0, 1, basis, cOverA),
+    fracToModelPos(1, 1, 1, basis, cOverA),
+    fracToModelPos(0, 1, 1, basis, cOverA),
+  ];
+}
+
+function pickDefectTargetAtomId(
+  atoms: { renderId: string; spec: LatticeAtomSpec; isReplica: boolean }[]
+): string | null {
+  const prim = atoms.filter((a) => !a.isReplica);
+  const byRole = (role: AtomSiteRole) => prim.find((a) => a.spec.role === role);
+  const pick =
+    byRole('body') ??
+    byRole('interior') ??
+    byRole('face') ??
+    byRole('base') ??
+    prim.find((a) => a.renderId === 'c111') ??
+    prim[0];
+  return pick ? pick.renderId : null;
+}
+
 export function renderCrystalScene(
   ctx: CanvasRenderingContext2D,
   width: number,
@@ -521,7 +748,10 @@ export function renderCrystalScene(
   ctx.restore();
 
   const basis = computeCellBasis(bOverA, cOverA, alphaDeg, betaDeg, gammaDeg);
-  const spherePad = opts.displayMode === 'hard-sphere' ? 0.72 : 0.36;
+  const spherePad =
+    opts.displayMode === 'hard-sphere' || opts.displayMode === 'sliced-cell'
+      ? 0.72
+      : 0.36;
   const maxSpan =
     Math.max(
       lattice.isFullHexPrism ? 2.15 : 1.15,
@@ -622,8 +852,10 @@ export function renderCrystalScene(
       const spScale = atom.speciesIndex === 2 && lattice.secondSpeciesScale
         ? lattice.secondSpeciesScale
         : 1;
+      const isPackingRadius =
+        opts.displayMode === 'hard-sphere' || opts.displayMode === 'sliced-cell';
       const baseR =
-        (opts.displayMode === 'hard-sphere'
+        (isPackingRadius
           ? lattice.canonicalSphereRadius
           : lattice.canonicalBallRadius * (opts.displayMode === 'coordination' ? 0.84 : 1)) *
         spScale *
@@ -697,8 +929,19 @@ export function renderCrystalScene(
   }
   ctx.restore();
 
-  // --- 4. Draw Translucent Miller Index Plane Overlay ---
-  const planeVerts = getMillerPlaneVertices(opts.millerPlane, lattice, basis, cOverA);
+  // --- 4. Draw Translucent Miller Index Plane Overlay (Custom hkl or Preset) ---
+  const useCustomPlane = Boolean(opts.customMiller?.enabled);
+  const planeVerts = useCustomPlane && opts.customMiller
+    ? getCustomMillerPolygon(
+        opts.customMiller.h,
+        opts.customMiller.k,
+        opts.customMiller.l,
+        lattice,
+        basis,
+        cOverA
+      )
+    : getMillerPlaneVertices(opts.millerPlane, lattice, basis, cOverA);
+
   if (planeVerts && planeVerts.length >= 3) {
     const projPlane = planeVerts.map(project);
     ctx.save();
@@ -722,7 +965,12 @@ export function renderCrystalScene(
     ctx.font = '700 11px "Google Sans Mono", monospace';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const labelText = `(${opts.millerPlane === '10-10' ? '101̄0' : opts.millerPlane})`;
+    const labelText =
+      useCustomPlane && opts.customMiller
+        ? lattice.system === 'hexagonal'
+          ? `(${opts.customMiller.h} ${opts.customMiller.k} ${-(opts.customMiller.h + opts.customMiller.k)} ${opts.customMiller.l})`
+          : `(${opts.customMiller.h} ${opts.customMiller.k} ${opts.customMiller.l})`
+        : `(${opts.millerPlane === '10-10' ? '101̄0' : opts.millerPlane})`;
     const tw = ctx.measureText(labelText).width;
     ctx.fillStyle = opts.isDark ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.9)';
     ctx.beginPath();
@@ -730,6 +978,72 @@ export function renderCrystalScene(
     ctx.fill();
     ctx.fillStyle = opts.isDark ? '#7dd3fc' : '#1d4ed8';
     ctx.fillText(labelText, avgX, avgY + 0.5);
+    ctx.restore();
+  }
+
+  // --- 4b. Draw Slip Direction Vector [u v w] ---
+  if (
+    opts.slipDirection?.enabled &&
+    (opts.slipDirection.u !== 0 ||
+      opts.slipDirection.v !== 0 ||
+      opts.slipDirection.w !== 0)
+  ) {
+    const su = opts.slipDirection.u;
+    const sv = opts.slipDirection.v;
+    const sw = opts.slipDirection.w;
+    const oU = su < 0 ? 0.85 : 0.15;
+    const oV = sv < 0 ? 0.85 : 0.15;
+    const oW = sw < 0 ? 0.85 : 0.15;
+    const maxC = Math.max(Math.abs(su), Math.abs(sv), Math.abs(sw), 1);
+    const span = 0.7 / maxC;
+    const pStart3 = lattice.isFullHexPrism
+      ? ([0, 0, 0] as Vec3)
+      : fracToModelPos(oU, oV, oW, basis, cOverA);
+    const pEnd3 = lattice.isFullHexPrism
+      ? ([
+          (su / maxC) * 0.8,
+          -(sw / maxC) * 0.65 * cOverA,
+          (sv / maxC) * 0.8,
+        ] as Vec3)
+      : fracToModelPos(
+          oU + su * span,
+          oV + sv * span,
+          oW + sw * span,
+          basis,
+          cOverA
+        );
+    const ps = project(pStart3);
+    const pe = project(pEnd3);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(ps.sx, ps.sy);
+    ctx.lineTo(pe.sx, pe.sy);
+    ctx.strokeStyle = '#10b981';
+    ctx.lineWidth = 3.0;
+    ctx.stroke();
+
+    const ang = Math.atan2(pe.sy - ps.sy, pe.sx - ps.sx);
+    ctx.beginPath();
+    ctx.moveTo(pe.sx, pe.sy);
+    ctx.lineTo(pe.sx - 10 * Math.cos(ang - 0.38), pe.sy - 10 * Math.sin(ang - 0.38));
+    ctx.lineTo(pe.sx - 10 * Math.cos(ang + 0.38), pe.sy - 10 * Math.sin(ang + 0.38));
+    ctx.closePath();
+    ctx.fillStyle = '#10b981';
+    ctx.fill();
+
+    ctx.font = '800 11px "Google Sans Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const dirTxt = `[${su} ${sv} ${sw}]`;
+    const dw = ctx.measureText(dirTxt).width;
+    const lx = pe.sx + 16 * Math.cos(ang);
+    const ly = pe.sy + 16 * Math.sin(ang);
+    ctx.fillStyle = opts.isDark ? 'rgba(6, 78, 59, 0.9)' : 'rgba(209, 250, 229, 0.95)';
+    ctx.beginPath();
+    ctx.roundRect(lx - dw * 0.5 - 6, ly - 9, dw + 12, 18, 999);
+    ctx.fill();
+    ctx.fillStyle = opts.isDark ? '#6ee7b7' : '#065f46';
+    ctx.fillText(dirTxt, lx, ly + 0.5);
     ctx.restore();
   }
 
@@ -860,11 +1174,40 @@ export function renderCrystalScene(
 
   const anySelected = opts.selectedAtomId !== null;
   const emphasizePoly = opts.displayMode === 'coordination';
+  const isSlicedCell = opts.displayMode === 'sliced-cell' && !opts.showSupercell;
+  const defectMode = opts.defectMode ?? 'none';
+
+  // Choose host target atom inside primary unit cell for vacancy / substitutional demos
+  const defectTargetAtomId = pickDefectTargetAtomId(expanded);
+
+  if (isSlicedCell) {
+    const boundaryPts = getUnitCellBoundaryVertices(lattice, basis, cOverA).map((v) => {
+      const p = project(v);
+      return [p.sx, p.sy] as [number, number];
+    });
+    const hull = computeConvexHull2D(boundaryPts);
+    if (hull.length >= 3) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(hull[0][0], hull[0][1]);
+      for (let h = 1; h < hull.length; h++) {
+        ctx.lineTo(hull[h][0], hull[h][1]);
+      }
+      ctx.closePath();
+      ctx.clip();
+    }
+  }
 
   for (const op of ops) {
     if (op.kind === 'bond') {
       const a = projectedAtoms[op.bond.aIdx];
       const b = projectedAtoms[op.bond.bIdx];
+      if (
+        defectMode === 'vacancy' &&
+        (a.renderId === defectTargetAtomId || b.renderId === defectTargetAtomId)
+      ) {
+        continue;
+      }
       drawBondCylinder(
         ctx,
         a.sx,
@@ -899,11 +1242,64 @@ export function renderCrystalScene(
       ctx.restore();
     } else {
       const a = projectedAtoms[op.idx];
+      const isDefectTarget = a.renderId === defectTargetAtomId;
+
+      if (defectMode === 'vacancy' && isDefectTarget) {
+        // Draw dashed glowing Vacancy cage V[]
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(a.sx, a.sy, a.screenR * 0.92, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(244, 63, 94, 0.14)';
+        ctx.fill();
+        ctx.setLineDash([4, 3]);
+        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = '#f43f5e';
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.font = '800 10px "Google Sans Mono", monospace';
+        ctx.fillStyle = opts.isDark ? '#fda4af' : '#be123c';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('V□', a.sx, a.sy);
+        ctx.restore();
+        continue;
+      }
+
       const isSelected = a.renderId === opts.selectedAtomId;
       const isHovered = a.renderId === opts.hoveredAtomId;
       const isNeighbor =
         anySelected && !isSelected && selectedNeighborIds.has(a.renderId);
       const dimmed = anySelected && !isSelected && !isNeighbor;
+
+      if (defectMode === 'substitutional' && isDefectTarget) {
+        const subR = a.screenR * 1.32;
+        ctx.save();
+        const subGrad = ctx.createRadialGradient(
+          a.sx - subR * 0.3,
+          a.sy - subR * 0.3,
+          subR * 0.1,
+          a.sx,
+          a.sy,
+          subR
+        );
+        subGrad.addColorStop(0, '#f5d0fe');
+        subGrad.addColorStop(0.5, '#c026d3');
+        subGrad.addColorStop(1, '#581c87');
+        ctx.beginPath();
+        ctx.arc(a.sx, a.sy, subR, 0, Math.PI * 2);
+        ctx.fillStyle = subGrad;
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#fae8ff';
+        ctx.stroke();
+        ctx.font = '800 10px "Google Sans Mono", monospace';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('S+', a.sx, a.sy);
+        ctx.restore();
+        continue;
+      }
 
       drawAtomSphere(ctx, a.sx, a.sy, a.screenR, a.spec.role, {
         isSelected,
@@ -915,6 +1311,152 @@ export function renderCrystalScene(
         isDark: opts.isDark,
       });
     }
+  }
+
+  if (isSlicedCell) {
+    ctx.restore(); // End unit cell clip
+    // Re-stroke crisp unit cell cut boundary frame on top of sliced spheres
+    ctx.save();
+    ctx.strokeStyle = opts.isDark
+      ? 'rgba(226, 232, 240, 0.72)'
+      : 'rgba(15, 23, 42, 0.65)';
+    ctx.lineWidth = 1.8;
+    for (const edge of unitEdges) {
+      const p0 = project(edge.p0);
+      const p1 = project(edge.p1);
+      ctx.beginPath();
+      ctx.moveTo(p0.sx, p0.sy);
+      ctx.lineTo(p1.sx, p1.sy);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Draw fractional occupancy weight pills on visible atoms inside unit cell
+    ctx.save();
+    ctx.font = '800 9px "Google Sans Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (const a of projectedAtoms) {
+      if (a.isReplica) continue;
+      const lbl = a.spec.cellWeightLabel;
+      const bw = ctx.measureText(lbl).width + 8;
+      ctx.fillStyle = opts.isDark ? 'rgba(15, 23, 42, 0.82)' : 'rgba(255, 255, 255, 0.9)';
+      ctx.beginPath();
+      ctx.roundRect(a.sx - bw * 0.5, a.sy - 7, bw, 14, 999);
+      ctx.fill();
+      ctx.fillStyle = opts.isDark ? '#f8fafc' : '#0f172a';
+      ctx.fillText(lbl, a.sx, a.sy + 0.5);
+    }
+    ctx.restore();
+  }
+
+  // --- 7. Draw Interstitial Carbon / Dislocation Core Defect Overlays ---
+  if (defectMode === 'interstitial-c') {
+    const cModel = lattice.isFullHexPrism
+      ? ([0.34, -0.25 * cOverA, 0.2] as Vec3)
+      : lattice.id === 'bcc' || lattice.id === 'bct' || lattice.id === 'bco'
+        ? fracToModelPos(0.5, 0.5, 0.0, basis, cOverA)
+        : fracToModelPos(0.5, 0.5, 0.5, basis, cOverA);
+    const pc = project(cModel);
+    const cTop = project(add3(cModel, [0, -0.26, 0]));
+    const cBot = project(add3(cModel, [0, 0.26, 0]));
+
+    ctx.save();
+    // Tetragonal dipole strain arrows along +/- c
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(pc.sx, pc.sy);
+    ctx.lineTo(cTop.sx, cTop.sy);
+    ctx.moveTo(pc.sx, pc.sy);
+    ctx.lineTo(cBot.sx, cBot.sy);
+    ctx.stroke();
+
+    const rC = Math.max(8, 0.095 * pc.scale);
+    const cg = ctx.createRadialGradient(
+      pc.sx - rC * 0.3,
+      pc.sy - rC * 0.3,
+      rC * 0.1,
+      pc.sx,
+      pc.sy,
+      rC
+    );
+    cg.addColorStop(0, '#fca5a5');
+    cg.addColorStop(0.5, '#dc2626');
+    cg.addColorStop(1, '#450a0a');
+    ctx.beginPath();
+    ctx.arc(pc.sx, pc.sy, rC, 0, Math.PI * 2);
+    ctx.fillStyle = cg;
+    ctx.fill();
+    ctx.lineWidth = 1.6;
+    ctx.strokeStyle = '#fef2f2';
+    ctx.stroke();
+    ctx.font = '800 9px "Google Sans Mono", monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('C', pc.sx, pc.sy + 0.5);
+    ctx.restore();
+  } else if (defectMode === 'dislocation') {
+    const corePos = lattice.isFullHexPrism
+      ? ([0, 0, 0] as Vec3)
+      : fracToModelPos(0.5, 0.5, 0.5, basis, cOverA);
+    const topPos = lattice.isFullHexPrism
+      ? ([0, -0.5 * cOverA, 0] as Vec3)
+      : fracToModelPos(0.5, 0.5, 1.05, basis, cOverA);
+    const bEnd = lattice.isFullHexPrism
+      ? ([0.55, 0, 0] as Vec3)
+      : fracToModelPos(0.95, 0.5, 0.5, basis, cOverA);
+
+    const pCore = project(corePos);
+    const pTop = project(topPos);
+    const pB = project(bEnd);
+
+    ctx.save();
+    // Extra half-plane wedged downward
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 3.2;
+    ctx.beginPath();
+    ctx.moveTo(pTop.sx, pTop.sy);
+    ctx.lineTo(pCore.sx, pCore.sy);
+    ctx.stroke();
+
+    // Dislocation core circle & inverted-T symbol ⊥
+    ctx.beginPath();
+    ctx.arc(pCore.sx, pCore.sy, 11, 0, Math.PI * 2);
+    ctx.fillStyle = opts.isDark ? 'rgba(120, 53, 15, 0.92)' : 'rgba(254, 243, 199, 0.95)';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#f59e0b';
+    ctx.stroke();
+
+    ctx.font = '900 13px "Google Sans Mono", monospace';
+    ctx.fillStyle = opts.isDark ? '#fde68a' : '#92400e';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⊥', pCore.sx, pCore.sy + 0.5);
+
+    // Burgers vector b arrow
+    ctx.beginPath();
+    ctx.moveTo(pCore.sx + 12, pCore.sy);
+    ctx.lineTo(pB.sx, pB.sy);
+    ctx.strokeStyle = '#ec4899';
+    ctx.lineWidth = 2.6;
+    ctx.stroke();
+
+    const bang = Math.atan2(pB.sy - pCore.sy, pB.sx - pCore.sx);
+    ctx.beginPath();
+    ctx.moveTo(pB.sx, pB.sy);
+    ctx.lineTo(pB.sx - 9 * Math.cos(bang - 0.4), pB.sy - 9 * Math.sin(bang - 0.4));
+    ctx.lineTo(pB.sx - 9 * Math.cos(bang + 0.4), pB.sy - 9 * Math.sin(bang + 0.4));
+    ctx.closePath();
+    ctx.fillStyle = '#ec4899';
+    ctx.fill();
+
+    ctx.font = '800 11px "Google Sans Mono", monospace';
+    ctx.fillStyle = '#ec4899';
+    ctx.fillText('b', pB.sx + 10 * Math.cos(bang), pB.sy + 10 * Math.sin(bang));
+    ctx.restore();
   }
 
   // Front-to-back ordered RenderedAtomInfo list for hit testing

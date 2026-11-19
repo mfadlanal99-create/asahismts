@@ -1216,3 +1216,810 @@ export const MILLER_PLANES: {
     },
   },
 ];
+
+// =====================================================================
+// ACADEMIC / PROFESSOR SUITE: REAL MATERIALS, DEFECTS, DENSITY & XRD
+// =====================================================================
+
+export type CrystalDefectMode =
+  | 'none'
+  | 'vacancy'
+  | 'substitutional'
+  | 'interstitial-c'
+  | 'dislocation';
+
+export interface CrystalDefectInfo {
+  id: CrystalDefectMode;
+  symbol: string;
+  name: LocalizedText;
+  description: LocalizedText;
+}
+
+export const CRYSTAL_DEFECTS: CrystalDefectInfo[] = [
+  {
+    id: 'none',
+    symbol: 'Perfect',
+    name: {
+      en: 'Ideal Defect-Free Lattice',
+      id: 'Kisi Ideal Sempurna',
+      ja: '理想完全結晶',
+    },
+    description: {
+      en: 'Periodic translationally invariant crystal without point or line defects.',
+      id: 'Kristal periodik sempurna tanpa cacat titik maupun garis.',
+      ja: '点欠陥や線欠陥を含まない完全周期結晶格子です。',
+    },
+  },
+  {
+    id: 'vacancy',
+    symbol: 'V□',
+    name: {
+      en: 'Vacancy Point Defect (Schottky)',
+      id: 'Kekosongan Atom / Vakansi',
+      ja: '原子空孔（点欠陥）',
+    },
+    description: {
+      en: 'Missing lattice atom pulls surrounding neighbors inward, accelerating self-diffusion & high-temp creep.',
+      id: 'Atom hilang menarik atom tetangga ke dalam, mempercepat difusi atom & rangkak (creep) suhu tinggi.',
+      ja: '格子原子の欠落により周囲原子が内向き緩和し、拡散および高温クリープを支配します。',
+    },
+  },
+  {
+    id: 'substitutional',
+    symbol: 'S+',
+    name: {
+      en: 'Substitutional Solute Strain (Hume-Rothery)',
+      id: 'Atom Substitusi (Penguatan Larut)',
+      ja: '置換型固溶原子（固溶強化）',
+    },
+    description: {
+      en: 'Larger foreign solute atom induces compressive hydrostatic stress field that impedes dislocation glide.',
+      id: 'Atom asing lebih besar menghasilkan medan tekan radial yang menghambat laju dislokasi (penguatan paduan).',
+      ja: '異なる原子半径の溶質原子が局所圧縮応力場を生じ、転位運動を阻害して強度を高めます。',
+    },
+  },
+  {
+    id: 'interstitial-c',
+    symbol: 'C_int',
+    name: {
+      en: 'Interstitial Carbon (Octahedral / Tetragonal)',
+      id: 'Karbon Interstisial (Pengerasan Baja)',
+      ja: '侵入型炭素原子（マルテンサイト歪み）',
+    },
+    description: {
+      en: 'Small interstitial solute (C, N) expands the z/c-axis dipole strongly, causing rapid solid-solution strengthening.',
+      id: 'Atom kecil C/N menyusup di celah oktahedral dan mendorong sumbu-c secara kuat — mekanisme pengerasan baja.',
+      ja: '侵入型C原子がc軸方向に強い異方歪み（双極子歪み）を与え、鉄鋼の著しい硬化を引き起こします。',
+    },
+  },
+  {
+    id: 'dislocation',
+    symbol: '⊥',
+    name: {
+      en: 'Edge Dislocation & Burgers Vector b',
+      id: 'Dislokasi Tepi & Vektor Burgers b',
+      ja: '刃状転位・バーガースベクトル b',
+    },
+    description: {
+      en: 'Extra half-plane of atoms above slip plane produces compression above (⊥) and tension below — enabling ductile slip.',
+      id: 'Setengah bidang atom ekstra menciptakan daerah tekan di atas inti (⊥) dan tarik di bawahnya saat deformasi plastis.',
+      ja: 'すべり面上に余分な半原子面（⊥）が存在し、上側に圧縮・下側に引張応力場を形成して塑性変形を担います。',
+    },
+  },
+];
+
+export interface RealCrystalMaterialSpec {
+  id: string;
+  symbol: string;
+  name: string;
+  structureId: LatticeStructureId;
+  aAngstrom: number;
+  bOverA: number;
+  cOverA: number;
+  atomicRadiusAngstrom: number;
+  /** Grams per mol of ONE formula unit or ONE atom corresponding to formulaUnitsPerCell */
+  molarMassGPerMol: number;
+  /** Effective atoms / formula units inside the conventional / full-prism cell */
+  formulaUnitsPerCell: number;
+  experimentalDensityGcm3: number;
+  note: LocalizedText;
+}
+
+export const REAL_CRYSTAL_MATERIALS: RealCrystalMaterialSpec[] = [
+  {
+    id: 'cu',
+    symbol: 'Cu',
+    name: 'Copper (Cu · FCC)',
+    structureId: 'fcc',
+    aAngstrom: 3.615,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.278,
+    molarMassGPerMol: 63.546,
+    formulaUnitsPerCell: 4,
+    experimentalDensityGcm3: 8.96,
+    note: {
+      en: 'High conductivity FCC metal with 12 {111}⟨110⟩ slip systems.',
+      id: 'Logam konduktor tinggi FCC dengan 12 sistem selip rapat.',
+      ja: '12個の{111}⟨110⟩最密すべり系を持つ高伝導性FCC金属です。',
+    },
+  },
+  {
+    id: 'al',
+    symbol: 'Al',
+    name: 'Aluminum (Al · FCC)',
+    structureId: 'fcc',
+    aAngstrom: 4.049,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.431,
+    molarMassGPerMol: 26.982,
+    formulaUnitsPerCell: 4,
+    experimentalDensityGcm3: 2.7,
+    note: {
+      en: 'Lightweight structural aerospace FCC alloy base.',
+      id: 'Basis paduan ringan struktural FCC.',
+      ja: '航空・機械構造に用いられる軽量FCC金属です。',
+    },
+  },
+  {
+    id: 'alpha-fe',
+    symbol: 'α-Fe',
+    name: 'Ferrite (α-Fe · BCC)',
+    structureId: 'bcc',
+    aAngstrom: 2.866,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.241,
+    molarMassGPerMol: 55.845,
+    formulaUnitsPerCell: 2,
+    experimentalDensityGcm3: 7.87,
+    note: {
+      en: 'Room-temp magnetic carbon steel ferrite; undergoes DBTT below freezing.',
+      id: 'Ferit baja karbon magnetik pada suhu ruang; memiliki suhu transisi getas DBTT.',
+      ja: '室温で安定な強磁性フェライト鉄（BCC）で、低温でDBTTを示します。',
+    },
+  },
+  {
+    id: 'gamma-fe',
+    symbol: 'γ-Fe',
+    name: 'Austenite (γ-Fe · FCC)',
+    structureId: 'fcc',
+    aAngstrom: 3.571,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.262,
+    molarMassGPerMol: 55.845,
+    formulaUnitsPerCell: 4,
+    experimentalDensityGcm3: 8.15,
+    note: {
+      en: 'Non-magnetic high-temp steel phase & room-temp SS304/316 matrix.',
+      id: 'Fase non-magnetik suhu tinggi & matriks baja tahan karat SS304/316.',
+      ja: '非磁性高温鋼相およびSS304/316オーステナイト鋼の母相です。',
+    },
+  },
+  {
+    id: 'martensite',
+    symbol: 'α′-Fe',
+    name: 'Martensite (Fe-0.8C · BCT)',
+    structureId: 'bct',
+    aAngstrom: 2.852,
+    bOverA: 1.0,
+    cOverA: 1.045,
+    atomicRadiusAngstrom: 1.241,
+    molarMassGPerMol: 56.29,
+    formulaUnitsPerCell: 2,
+    experimentalDensityGcm3: 7.79,
+    note: {
+      en: 'Quenched supersaturated tool-steel phase; C atoms lock c/a elongation.',
+      id: 'Fase baja quench dengan karbon terperangkap memanjangkan sumbu c.',
+      ja: '焼入れで炭素を過飽和固溶した高硬度マルテンサイト（BCT）です。',
+    },
+  },
+  {
+    id: 'w',
+    symbol: 'W',
+    name: 'Tungsten (W · BCC)',
+    structureId: 'bcc',
+    aAngstrom: 3.165,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.37,
+    molarMassGPerMol: 183.84,
+    formulaUnitsPerCell: 2,
+    experimentalDensityGcm3: 19.25,
+    note: {
+      en: 'Ultra-high melting refractory BCC metal (Tm = 3422 °C).',
+      id: 'Logam refraktori tahan panas tertinggi (Tm = 3422 °C).',
+      ja: '最高融点（3422°C）を持つ高比重耐火BCC金属です。',
+    },
+  },
+  {
+    id: 'ti',
+    symbol: 'α-Ti',
+    name: 'Titanium (α-Ti · HCP)',
+    structureId: 'hcp',
+    aAngstrom: 2.951,
+    bOverA: 1.0,
+    cOverA: 1.588,
+    atomicRadiusAngstrom: 1.475,
+    molarMassGPerMol: 47.867,
+    formulaUnitsPerCell: 6,
+    experimentalDensityGcm3: 4.51,
+    note: {
+      en: 'Sub-ideal c/a (1.588) facilitates prismatic + basal slip in aerospace Ti.',
+      id: 'Rasio c/a 1,588 memudahkan selip prismatik & basal pada titanium.',
+      ja: '理想比より小さいc/a=1.588により柱面すべりも活動します。',
+    },
+  },
+  {
+    id: 'si',
+    symbol: 'Si',
+    name: 'Silicon (Si · Diamond cF8)',
+    structureId: 'diamond',
+    aAngstrom: 5.431,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.176,
+    molarMassGPerMol: 28.085,
+    formulaUnitsPerCell: 8,
+    experimentalDensityGcm3: 2.33,
+    note: {
+      en: 'Canonical semiconductor & XRD goniometer calibration standard (5.431 Å).',
+      id: 'Standar semikonduktor & kalibrasi difraktometer XRD (a = 5,431 Å).',
+      ja: '半導体およびX線回折(XRD)角度校正の標準結晶（a = 5.431 Å）です。',
+    },
+  },
+  {
+    id: 'tin',
+    symbol: 'TiN',
+    name: 'Titanium Nitride (TiN · B1)',
+    structureId: 'nacl',
+    aAngstrom: 4.242,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 2.121,
+    molarMassGPerMol: 61.874,
+    formulaUnitsPerCell: 4,
+    experimentalDensityGcm3: 5.22,
+    note: {
+      en: 'Gold-colored PVD hard ceramic cutting-tool coating (B1 NaCl structure).',
+      id: 'Lapisan keramik keras berwarna emas pada pahat potong PVD.',
+      ja: '切削工具のPVD金色硬質皮膜として広く用いられるB1型セラミックです。',
+    },
+  },
+  {
+    id: 'niti',
+    symbol: 'NiTi',
+    name: 'Nitinol Austenite (NiTi · B2)',
+    structureId: 'cscl',
+    aAngstrom: 3.015,
+    bOverA: 1.0,
+    cOverA: 1.0,
+    atomicRadiusAngstrom: 1.305,
+    molarMassGPerMol: 106.56,
+    formulaUnitsPerCell: 1,
+    experimentalDensityGcm3: 6.45,
+    note: {
+      en: 'Ordered B2 parent phase of shape-memory & superelastic actuators.',
+      id: 'Fase induk teratur B2 dari paduan memori bentuk Nitinol.',
+      ja: '形状記憶・超弾性を示すNiTi合金の規則B2母相です。',
+    },
+  },
+];
+
+const AVOGADRO = 6.02214076e23;
+
+export function computeUnitCellVolumeAng3(
+  spec: CrystalLatticeSpec,
+  aAngstrom: number,
+  bOverA: number,
+  cOverA: number,
+  alphaDeg: number,
+  betaDeg: number,
+  gammaDeg: number
+): number {
+  const b = aAngstrom * bOverA;
+  const c = aAngstrom * cOverA;
+
+  if (spec.isFullHexPrism) {
+    // Full 6-sided hexagonal prism of side length a = 3 primitive rhombi
+    return (3 * Math.sqrt(3) * 0.5) * aAngstrom * aAngstrom * c;
+  }
+
+  const d2r = Math.PI / 180;
+  const ca = Math.cos(alphaDeg * d2r);
+  const cb = Math.cos(betaDeg * d2r);
+  const cg = Math.cos(gammaDeg * d2r);
+  const rad = Math.max(0.05, 1 - ca * ca - cb * cb - cg * cg + 2 * ca * cb * cg);
+  return aAngstrom * b * c * Math.sqrt(rad);
+}
+
+export function computeTheoreticalDensity(
+  spec: CrystalLatticeSpec,
+  aAngstrom: number,
+  bOverA: number,
+  cOverA: number,
+  alphaDeg: number,
+  betaDeg: number,
+  gammaDeg: number,
+  molarMassGPerMol: number,
+  formulaUnitsPerCell: number
+): { volumeAng3: number; densityGcm3: number } {
+  const volumeAng3 = computeUnitCellVolumeAng3(
+    spec,
+    aAngstrom,
+    bOverA,
+    cOverA,
+    alphaDeg,
+    betaDeg,
+    gammaDeg
+  );
+  const volumeCm3 = volumeAng3 * 1e-24;
+  const densityGcm3 = (formulaUnitsPerCell * molarMassGPerMol) / (volumeCm3 * AVOGADRO);
+  return { volumeAng3, densityGcm3 };
+}
+
+export interface XrdPeak {
+  h: number;
+  k: number;
+  l: number;
+  label: string;
+  dSpacingAng: number;
+  twoThetaDeg: number;
+  intensityPct: number;
+  multiplicity: number;
+}
+
+export interface XrdPatternResult {
+  peaks: XrdPeak[];
+  forbiddenExamples: string[];
+  selectionRuleSummary: LocalizedText;
+  wavelengthAng: number;
+}
+
+function invertMetricTensor(
+  a: number,
+  b: number,
+  c: number,
+  alphaDeg: number,
+  betaDeg: number,
+  gammaDeg: number
+): [number, number, number, number, number, number, number, number, number] {
+  const d2r = Math.PI / 180;
+  const ca = Math.cos(alphaDeg * d2r);
+  const cb = Math.cos(betaDeg * d2r);
+  const cg = Math.cos(gammaDeg * d2r);
+
+  const g00 = a * a;
+  const g11 = b * b;
+  const g22 = c * c;
+  const g01 = a * b * cg;
+  const g02 = a * c * cb;
+  const g12 = b * c * ca;
+
+  const c00 = g11 * g22 - g12 * g12;
+  const c01 = -(g01 * g22 - g12 * g02);
+  const c02 = g01 * g12 - g11 * g02;
+  const c11 = g00 * g22 - g02 * g02;
+  const c12 = -(g00 * g12 - g01 * g02);
+  const c22 = g00 * g11 - g01 * g01;
+
+  const det = Math.max(1e-6, g00 * c00 + g01 * c01 + g02 * c02);
+  return [
+    c00 / det,
+    c01 / det,
+    c02 / det,
+    c01 / det,
+    c11 / det,
+    c12 / det,
+    c02 / det,
+    c12 / det,
+    c22 / det,
+  ];
+}
+
+function getConventionalBasisForXrd(
+  specId: LatticeStructureId
+): { u: number; v: number; w: number; f: number }[] {
+  switch (specId) {
+    case 'bcc':
+    case 'bct':
+    case 'bco':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0.5, f: 1 },
+      ];
+    case 'fcc':
+    case 'fco':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0, f: 1 },
+        { u: 0.5, v: 0, w: 0.5, f: 1 },
+        { u: 0, v: 0.5, w: 0.5, f: 1 },
+      ];
+    case 'baco':
+    case 'bacm':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0, f: 1 },
+      ];
+    case 'hcp':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 1 / 3, v: 2 / 3, w: 0.5, f: 1 },
+      ];
+    case 'diamond':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0, f: 1 },
+        { u: 0.5, v: 0, w: 0.5, f: 1 },
+        { u: 0, v: 0.5, w: 0.5, f: 1 },
+        { u: 0.25, v: 0.25, w: 0.25, f: 1 },
+        { u: 0.75, v: 0.75, w: 0.25, f: 1 },
+        { u: 0.75, v: 0.25, w: 0.75, f: 1 },
+        { u: 0.25, v: 0.75, w: 0.75, f: 1 },
+      ];
+    case 'nacl':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0, f: 1 },
+        { u: 0.5, v: 0, w: 0.5, f: 1 },
+        { u: 0, v: 0.5, w: 0.5, f: 1 },
+        { u: 0.5, v: 0, w: 0, f: 0.55 },
+        { u: 0, v: 0.5, w: 0, f: 0.55 },
+        { u: 0, v: 0, w: 0.5, f: 0.55 },
+        { u: 0.5, v: 0.5, w: 0.5, f: 0.55 },
+      ];
+    case 'cscl':
+      return [
+        { u: 0, v: 0, w: 0, f: 1 },
+        { u: 0.5, v: 0.5, w: 0.5, f: 0.62 },
+      ];
+    default:
+      return [{ u: 0, v: 0, w: 0, f: 1 }];
+  }
+}
+
+export function computeXrdPeaks(
+  spec: CrystalLatticeSpec,
+  aAngstrom: number,
+  bOverA: number,
+  cOverA: number,
+  alphaDeg: number,
+  betaDeg: number,
+  gammaDeg: number,
+  source: 'Cu-Ka' | 'Mo-Ka'
+): XrdPatternResult {
+  const wavelengthAng = source === 'Cu-Ka' ? 1.5406 : 0.7107;
+  const b = aAngstrom * bOverA;
+  const c = aAngstrom * cOverA;
+
+  // Use conventional 120° metric for HCP / Hex-P
+  const effAlpha = spec.system === 'hexagonal' ? 90 : alphaDeg;
+  const effBeta = spec.system === 'hexagonal' ? 90 : betaDeg;
+  const effGamma = spec.system === 'hexagonal' ? 120 : gammaDeg;
+
+  const gInv = invertMetricTensor(aAngstrom, b, c, effAlpha, effBeta, effGamma);
+  const basis = getConventionalBasisForXrd(spec.id);
+
+  interface RawBin {
+    h: number;
+    k: number;
+    l: number;
+    d: number;
+    twoTheta: number;
+    rawIntensity: number;
+    count: number;
+  }
+
+  const bins: RawBin[] = [];
+  const forbiddenSet = new Set<string>();
+
+  const maxIdx = 3;
+  for (let h = -maxIdx; h <= maxIdx; h++) {
+    for (let k = -maxIdx; k <= maxIdx; k++) {
+      for (let l = -maxIdx; l <= maxIdx; l++) {
+        if (h === 0 && k === 0 && l === 0) continue;
+
+        const invD2 =
+          h * h * gInv[0] +
+          k * k * gInv[4] +
+          l * l * gInv[8] +
+          2 * h * k * gInv[1] +
+          2 * h * l * gInv[2] +
+          2 * k * l * gInv[5];
+
+        if (invD2 <= 1e-6) continue;
+        const d = 1 / Math.sqrt(invD2);
+        const sinTheta = wavelengthAng / (2 * d);
+        if (sinTheta <= 0.08 || sinTheta >= 0.96) continue;
+
+        const thetaRad = Math.asin(sinTheta);
+        const twoTheta = (2 * thetaRad * 180) / Math.PI;
+        if (twoTheta < 14 || twoTheta > 125) continue;
+
+        // Structure factor F_hkl
+        let re = 0;
+        let im = 0;
+        for (const site of basis) {
+          const phase = 2 * Math.PI * (h * site.u + k * site.v + l * site.w);
+          re += site.f * Math.cos(phase);
+          im += site.f * Math.sin(phase);
+        }
+        const f2 = re * re + im * im;
+
+        // Record representative extinct low-index positive planes
+        if (f2 < 1e-4) {
+          if (h >= 0 && k >= 0 && l >= 0 && h + k + l <= 4) {
+            forbiddenSet.add(`(${h}${k}${l})`);
+          }
+          continue;
+        }
+
+        // Lorentz-polarization + thermal Debye-Waller attenuation
+        const cosTh = Math.cos(thetaRad);
+        const cos2Th = Math.cos(2 * thetaRad);
+        const lp = (1 + cos2Th * cos2Th) / (sinTheta * sinTheta * cosTh);
+        const dw = Math.exp(-1.15 * sinTheta * sinTheta);
+        const contrib = f2 * lp * dw;
+
+        // Prefer non-negative canonical display indices
+        const prefH = Math.abs(h);
+        const prefK = Math.abs(k);
+        const prefL = Math.abs(l);
+
+        const existing = bins.find((bin) => Math.abs(bin.twoTheta - twoTheta) < 0.25);
+        if (existing) {
+          existing.rawIntensity += contrib;
+          existing.count += 1;
+          if (h >= 0 && k >= 0 && l >= 0 && prefH >= existing.h) {
+            existing.h = h;
+            existing.k = k;
+            existing.l = l;
+          }
+        } else {
+          bins.push({
+            h: prefH,
+            k: prefK,
+            l: prefL,
+            d,
+            twoTheta,
+            rawIntensity: contrib,
+            count: 1,
+          });
+        }
+      }
+    }
+  }
+
+  bins.sort((a, b) => a.twoTheta - b.twoTheta);
+  const topBins = bins.slice(0, 14);
+  const maxRaw = Math.max(1e-6, ...topBins.map((p) => p.rawIntensity));
+
+  const peaks: XrdPeak[] = topBins.map((p) => {
+    const label =
+      spec.system === 'hexagonal'
+        ? `(${p.h}${p.k}${-(p.h + p.k)}${p.l})`
+        : `(${p.h}${p.k}${p.l})`;
+    return {
+      h: p.h,
+      k: p.k,
+      l: p.l,
+      label,
+      dSpacingAng: p.d,
+      twoThetaDeg: p.twoTheta,
+      intensityPct: Math.max(4, Math.round((p.rawIntensity / maxRaw) * 100)),
+      multiplicity: p.count,
+    };
+  });
+
+  let selectionRuleSummary: LocalizedText = {
+    en: 'Primitive (P) lattice: all (hkl) planes satisfy F_hkl ≠ 0 (no systematic absences).',
+    id: 'Kisi Primitif (P): semua bidang (hkl) menghasilkan puncak XRD tanpa pemadaman.',
+    ja: '単純格子(P)：すべての (hkl) 反射が許容（系統的消滅則なし）。',
+  };
+
+  if (spec.id === 'bcc' || spec.id === 'bct' || spec.id === 'bco') {
+    selectionRuleSummary = {
+      en: 'Body-Centered (I) Extinction Rule: Allowed only when h + k + l = even; odd sums vanish cleanly.',
+      id: 'Aturan Pemadaman I (BCC/BCT): Muncul hanya jika h + k + l = genap; jumlah ganjil hilang.',
+      ja: '体心(I)消滅則：h + k + l = 偶数 の反射のみ出現（奇数和は消滅）。',
+    };
+  } else if (spec.id === 'fcc' || spec.id === 'fco') {
+    selectionRuleSummary = {
+      en: 'Face-Centered (F) Extinction Rule: h, k, l must be UNMIXED (all even or all odd).',
+      id: 'Aturan Pemadaman F (FCC): h, k, l harus seragam (semua genap atau semua ganjil).',
+      ja: '面心(F)消滅則：h, k, l がすべて偶数またはすべて奇数のときのみ出現。',
+    };
+  } else if (spec.id === 'diamond') {
+    selectionRuleSummary = {
+      en: 'Diamond Cubic: Unmixed parity AND if all even, h + k + l = 4n (so (200) is extinct!).',
+      id: 'Kubik Intan: Paritas seragam DAN jika genap, h + k + l = 4n (bidang (200) padam total).',
+      ja: 'ダイヤモンド格子：同偶奇かつ全偶数なら h + k + l = 4n（(200)が完全消滅）。',
+    };
+  } else if (spec.id === 'hcp') {
+    selectionRuleSummary = {
+      en: 'HCP Extinction Rule: Forbidden when h + 2k = 3n with l odd (characteristic basal & pyramidal reflections).',
+      id: 'Aturan Pemadaman HCP: Padam bila h + 2k = 3n dengan l ganjil.',
+      ja: 'HCP消滅則：h + 2k = 3n かつ l が奇数の反射が消滅。',
+    };
+  } else if (spec.id === 'nacl') {
+    selectionRuleSummary = {
+      en: 'Rock Salt (B1): Unmixed (hkl); all-odd reflections weaker due to (f_A − f_B)² destructive contrast.',
+      id: 'Garam Batu (B1): Paritas seragam; indeks ganjil lebih lemah karena selisih faktor hamburan (f_A − f_B)².',
+      ja: '岩塩型(B1)：同偶奇のみ許容、全奇数は構造因子 (f_A − f_B)² により弱反射。',
+    };
+  } else if (spec.id === 'cscl') {
+    selectionRuleSummary = {
+      en: 'Ordered B2 (CsCl): Superlattice odd-(h+k+l) peaks visible due to (f_A − f_B)² chemical ordering!',
+      id: 'Intermetalik Teratur B2: Puncak superkisi h+k+l ganjil muncul akibat keteraturan kimia AB!',
+      ja: '規則B2構造：原子配列の規則性により h+k+l 奇数の超格子反射線が出現。',
+    };
+  }
+
+  return {
+    peaks,
+    forbiddenExamples: Array.from(forbiddenSet).slice(0, 6),
+    selectionRuleSummary,
+    wavelengthAng,
+  };
+}
+
+export interface CrystallographicMetricsResult {
+  iIndex: number;
+  dSpacingAng: number;
+  isDirectionInPlane: boolean;
+  schmidFactor: number;
+  planarAtomsCount: number;
+  planarAreaNm2: number;
+  planarDensityNm2: number;
+  projected2DAtoms: { x: number; y: number; role: AtomSiteRole }[];
+}
+
+export function computeCrystallographicMetrics(
+  spec: CrystalLatticeSpec,
+  h: number,
+  k: number,
+  l: number,
+  u: number,
+  v: number,
+  w: number,
+  aAngstrom: number,
+  bOverA: number,
+  cOverA: number,
+  alphaDeg: number,
+  betaDeg: number,
+  gammaDeg: number
+): CrystallographicMetricsResult {
+  const iIndex = -(h + k);
+  const b = aAngstrom * bOverA;
+  const c = aAngstrom * cOverA;
+
+  const effAlpha = spec.system === 'hexagonal' ? 90 : alphaDeg;
+  const effBeta = spec.system === 'hexagonal' ? 90 : betaDeg;
+  const effGamma = spec.system === 'hexagonal' ? 120 : gammaDeg;
+
+  const gInv = invertMetricTensor(aAngstrom, b, c, effAlpha, effBeta, effGamma);
+  const invD2 =
+    h * h * gInv[0] +
+    k * k * gInv[4] +
+    l * l * gInv[8] +
+    2 * h * k * gInv[1] +
+    2 * h * l * gInv[2] +
+    2 * k * l * gInv[5];
+
+  const dSpacingAng = invD2 > 1e-8 ? 1 / Math.sqrt(invD2) : 0;
+  const isDirectionInPlane = h * u + k * v + l * w === 0;
+
+  // Schmid factor relative to single-slip tensile reference [1, 2, 3]
+  const tx = 1;
+  const ty = 2 * bOverA;
+  const tz = 3 * cOverA;
+  const tMag = Math.hypot(tx, ty, tz) || 1;
+
+  const nx = h / (aAngstrom || 1);
+  const ny = k / (b || 1);
+  const nz = l / (c || 1);
+  const nMag = Math.hypot(nx, ny, nz) || 1;
+
+  const dx = u * aAngstrom;
+  const dy = v * b;
+  const dz = w * c;
+  const dMag = Math.hypot(dx, dy, dz) || 1;
+
+  const cosPhi = Math.abs((nx * tx + ny * ty + nz * tz) / (nMag * tMag));
+  const cosLambda = Math.abs((dx * tx + dy * ty + dz * tz) / (dMag * tMag));
+  const schmidFactor =
+    (h !== 0 || k !== 0 || l !== 0) && (u !== 0 || v !== 0 || w !== 0)
+      ? Math.min(0.5, cosPhi * cosLambda)
+      : 0;
+
+  // Approximate planar area A_plane ≈ V_cell / d_hkl (in nm²)
+  const volAng3 = computeUnitCellVolumeAng3(
+    spec,
+    aAngstrom,
+    bOverA,
+    cOverA,
+    alphaDeg,
+    betaDeg,
+    gammaDeg
+  );
+  const planarAreaAng2 = dSpacingAng > 0.05 ? volAng3 / dSpacingAng : aAngstrom * b;
+  const planarAreaNm2 = Math.max(0.01, planarAreaAng2 / 100);
+
+  // Sample atoms sitting on plane h*ua + k*va + l*wa = planeOffset (pick richest intercept through unit cell)
+  const sampleAtoms: { u: number; v: number; w: number; role: AtomSiteRole }[] = [];
+  if (spec.isFullHexPrism) {
+    for (const a of spec.atoms) {
+      sampleAtoms.push({ u: a.u * 0.5 + 0.5, v: a.v * 0.5 + 0.5, w: a.w + 0.5, role: a.role });
+    }
+  } else {
+    for (const a of spec.atoms) {
+      sampleAtoms.push({ u: a.u, v: a.v, w: a.w, role: a.role });
+    }
+  }
+
+  // Choose intercept d0 that passes through maximal atoms inside [0,1]³
+  let d0 = h + k + l > 0 ? 1 : h + k + l < 0 ? -1 : 0;
+  if (spec.isFullHexPrism && l !== 0 && h === 0 && k === 0) {
+    d0 = 0; // basal center plane
+  } else if (Math.abs(h) + Math.abs(k) + Math.abs(l) > 0) {
+    // Check d0 = 0 vs d0 = 1 vs max(0, h)+max(0,k)+max(0,l) -> pick richer intercept
+    const cands = [0, 1, Math.max(0, h) + Math.max(0, k) + Math.max(0, l), 0.5];
+    let bestCount = -1;
+    for (const cand of cands) {
+      let cnt = 0;
+      for (const a of sampleAtoms) {
+        if (Math.abs(h * a.u + k * a.v + l * a.w - cand) < 0.06) cnt++;
+      }
+      if (cnt > bestCount) {
+        bestCount = cnt;
+        d0 = cand;
+      }
+    }
+  }
+
+  // Build local orthonormal 2D basis (e1, e2) in the plane normal to (nx, ny, nz)
+  const nn = [nx / nMag, ny / nMag, nz / nMag];
+  const ref: [number, number, number] = Math.abs(nn[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+  const e1x = ref[1] * nn[2] - ref[2] * nn[1];
+  const e1y = ref[2] * nn[0] - ref[0] * nn[2];
+  const e1z = ref[0] * nn[1] - ref[1] * nn[0];
+  const e1Len = Math.hypot(e1x, e1y, e1z) || 1;
+  const e1 = [e1x / e1Len, e1y / e1Len, e1z / e1Len];
+  const e2 = [
+    nn[1] * e1[2] - nn[2] * e1[1],
+    nn[2] * e1[0] - nn[0] * e1[2],
+    nn[0] * e1[1] - nn[1] * e1[0],
+  ];
+
+  const projected2DAtoms: { x: number; y: number; role: AtomSiteRole }[] = [];
+  for (const a of sampleAtoms) {
+    if (Math.abs(h * a.u + k * a.v + l * a.w - d0) < 0.06) {
+      const px = a.u - 0.5;
+      const py = (a.v - 0.5) * bOverA;
+      const pz = (a.w - 0.5) * cOverA;
+      projected2DAtoms.push({
+        x: px * e1[0] + py * e1[1] + pz * e1[2],
+        y: px * e2[0] + py * e2[1] + pz * e2[2],
+        role: a.role,
+      });
+    }
+  }
+
+  const planarAtomsCount = Math.max(1, projected2DAtoms.length);
+  const planarDensityNm2 = planarAtomsCount / planarAreaNm2;
+
+  return {
+    iIndex,
+    dSpacingAng,
+    isDirectionInPlane,
+    schmidFactor,
+    planarAtomsCount,
+    planarAreaNm2,
+    planarDensityNm2,
+    projected2DAtoms,
+  };
+}
+
