@@ -3565,7 +3565,14 @@ export function renderCadScene(
       ? ([0, 0, 0] as Vec3)
       : computePartDisplacement(part, explodeFactor, explodeMode);
 
-    const ox = isolatedPartId ? 0 : part.basePosition[0] + disp[0];
+    const bilateralXSplit =
+      !isolatedPartId &&
+      (part.id === 'uras-weight-covers' || part.id === 'mot-end-shields')
+        ? Math.abs(disp[0])
+        : 0;
+    const ox = isolatedPartId
+      ? 0
+      : part.basePosition[0] + (bilateralXSplit > 0 ? 0 : disp[0]);
     let oy = isolatedPartId ? 0 : part.basePosition[1] + disp[1];
     const oz = isolatedPartId ? 0 : part.basePosition[2] + disp[2];
 
@@ -3603,6 +3610,7 @@ export function renderCadScene(
     if (
       !isolatedPartId &&
       explodeFactor > 0.03 &&
+      bilateralXSplit === 0 &&
       (Math.abs(disp[0]) > 2 || Math.abs(disp[1]) > 2)
     ) {
       const pHome = projectCam(
@@ -3626,12 +3634,21 @@ export function renderCadScene(
 
     const rotates = Boolean(part.rotates);
     const rotatesAroundZ =
-      rotates && (part.id.startsWith('belt-') || part.id.startsWith('chain-'));
+      rotates &&
+      (part.id.startsWith('belt-') ||
+        part.id.startsWith('chain-') ||
+        part.id.startsWith('gb-'));
     const rotatesAroundY =
       rotates &&
       (part.id === 'teka-turbine-rotor-arms' || part.id === 'teka-intensive-agitator');
-    // Belt pulleys spin clockwise (-shaftAngle) so top moves +X; drag sprockets spin CCW (+shaftAngle) so bottom drags +X
-    const sinZ = part.id.startsWith('belt-') ? -sinRot : sinRot;
+    // Belt pulleys & intermediate gearbox shaft spin in reverse; gearbox stages scale by ratio
+    let zRotSpeed = 1;
+    if (part.id === 'gb-input-pinion') zRotSpeed = 1.8;
+    else if (part.id === 'gb-intermediate-shaft') zRotSpeed = -0.85;
+    else if (part.id === 'gb-bull-gear-output') zRotSpeed = 0.38;
+    else if (part.id.startsWith('belt-')) zRotSpeed = -1;
+    const cosZ = rotatesAroundZ ? Math.cos(shaftAngleRad * zRotSpeed) : cosRot;
+    const sinZ = rotatesAroundZ ? Math.sin(shaftAngleRad * zRotSpeed) : sinRot;
     const shininess = part.appearance.shininess;
     const specStr = part.appearance.specularStrength * 165;
 
@@ -3641,8 +3658,8 @@ export function renderCadScene(
       let ny = face.normal[1];
       let nz = face.normal[2];
       if (rotatesAroundZ) {
-        const nxRot = nx * cosRot - ny * sinZ;
-        const nyRot = nx * sinZ + ny * cosRot;
+        const nxRot = nx * cosZ - ny * sinZ;
+        const nyRot = nx * sinZ + ny * cosZ;
         nx = nxRot;
         ny = nyRot;
       } else if (rotatesAroundY) {
@@ -3674,8 +3691,8 @@ export function renderCadScene(
         let vy = v[1];
         let vz = v[2];
         if (rotatesAroundZ) {
-          const vxR = vx * cosRot - vy * sinZ;
-          const vyR = vx * sinZ + vy * cosRot;
+          const vxR = vx * cosZ - vy * sinZ;
+          const vyR = vx * sinZ + vy * cosZ;
           vx = vxR;
           vy = vyR;
         } else if (rotatesAroundY) {
@@ -3693,6 +3710,9 @@ export function renderCadScene(
         } else if (flexSkakoSpring) {
           const t = vy >= 0 ? Math.min(1, vy / 19.5) : Math.min(1, -vy / 18.2);
           vy += -skakoStroke * 0.55 * (1 - t) + skakoStroke * t;
+        }
+        if (bilateralXSplit > 0) {
+          vx += vx < 0 ? -bilateralXSplit : bilateralXSplit;
         }
         const c = toCameraSpace(ox + vx, oy + vy, oz + vz);
         const p = projectCam(c);
@@ -3750,12 +3770,12 @@ export function renderCadScene(
       let by = edge.b[1];
       let bz = edge.b[2];
       if (rotatesAroundZ) {
-        const axR = ax * cosRot - ay * sinZ;
-        const ayR = ax * sinZ + ay * cosRot;
+        const axR = ax * cosZ - ay * sinZ;
+        const ayR = ax * sinZ + ay * cosZ;
         ax = axR;
         ay = ayR;
-        const bxR = bx * cosRot - by * sinZ;
-        const byR = bx * sinZ + by * cosRot;
+        const bxR = bx * cosZ - by * sinZ;
+        const byR = bx * sinZ + by * cosZ;
         bx = bxR;
         by = byR;
       } else if (rotatesAroundY) {
@@ -3784,6 +3804,10 @@ export function renderCadScene(
         const tb = by >= 0 ? Math.min(1, by / 19.5) : Math.min(1, -by / 18.2);
         ay += -skakoStroke * 0.55 * (1 - ta) + skakoStroke * ta;
         by += -skakoStroke * 0.55 * (1 - tb) + skakoStroke * tb;
+      }
+      if (bilateralXSplit > 0) {
+        ax += ax < 0 ? -bilateralXSplit : bilateralXSplit;
+        bx += bx < 0 ? -bilateralXSplit : bilateralXSplit;
       }
       const ca = toCameraSpace(ox + ax, oy + ay, oz + az);
       const cb = toCameraSpace(ox + bx, oy + by, oz + bz);
@@ -4032,7 +4056,13 @@ export function renderCadScene(
     }
 
     if (showCallouts && !isolatedPartId) {
-      const ancX = ox + mesh.calloutLocalAnchor[0];
+      const biOff =
+        bilateralXSplit > 0
+          ? mesh.calloutLocalAnchor[0] < 0
+            ? -bilateralXSplit
+            : bilateralXSplit
+          : 0;
+      const ancX = ox + mesh.calloutLocalAnchor[0] + biOff;
       const ancY = oy + mesh.calloutLocalAnchor[1];
       const ancZ = oz + mesh.calloutLocalAnchor[2];
       const pAnchor = projectCam(toCameraSpace(ancX, ancY, ancZ));
