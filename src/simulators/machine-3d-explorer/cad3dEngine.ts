@@ -3589,9 +3589,9 @@ export function renderCadScene(
     const bilateralXNeg = isBilateralX ? Math.abs(disp[0]) : 0;
     const bilateralXPos = isBilateralX
       ? part.id === 'mot-end-shields'
-        ? Math.abs(disp[0]) * 2.2
+        ? Math.abs(disp[0]) * 1.08
         : part.id === 'mot-bearings'
-          ? Math.abs(disp[0]) * 3.5
+          ? Math.abs(disp[0]) * 1.16
           : Math.abs(disp[0])
       : 0;
     const bilateralZSplit =

@@ -47,7 +47,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Air Gap Clearance: ≥ 50 mm | Cowl Bolts: 4 × M6 (8 N·m)',
     basePosition: [-54, 0, 0],
-    explodeVector: [-92, 0, 0],
+    explodeVector: [-152, 0, 0],
     explodeStage: 1,
     isHousing: true,
     rotates: false,
@@ -90,7 +90,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Shaft Circlip Retained | Bi-Directional Radial Vanes',
     basePosition: [-50, 0, 0],
-    explodeVector: [-62, 0, 0],
+    explodeVector: [-106, 0, 0],
     explodeStage: 1,
     rotates: true,
     appearance: {
@@ -132,7 +132,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Terminal Studs: 6 × M6 (4.5 N·m) | Config: 400V Δ / 690V Y',
     basePosition: [0, 41, 0],
-    explodeVector: [0, 36, 0],
+    explodeVector: [0, 62, 0],
     explodeStage: 1,
     rotates: false,
     appearance: {
@@ -174,7 +174,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Frame Size: IEC 160M | Soft-Foot ≤ 0.05 mm',
     basePosition: [0, 0, 0],
-    explodeVector: [0, -48, 0],
+    explodeVector: [0, -68, 0],
     explodeStage: 3,
     isHousing: true,
     rotates: false,
@@ -217,7 +217,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Insulation Class F (155 °C) | Air Gap: 0.55 mm Radial',
     basePosition: [0, 0, 0],
-    explodeVector: [0, 0, 0],
+    explodeVector: [0, 56, 0],
     explodeStage: 3,
     rotates: false,
     appearance: {
@@ -259,8 +259,8 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Shaft DE: Ø42 k6 | Rated Slip: 2.3% (1,465 RPM)',
     basePosition: [0, 0, 0],
-    explodeVector: [44, 0, 0],
-    explodeStage: 2,
+    explodeVector: [0, 0, 0],
+    explodeStage: 3,
     rotates: true,
     appearance: {
       baseHex: '#0284C7',
@@ -301,7 +301,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Bearing: 6309-2Z/C3 | Inner Race Fit: 45 mm k5',
     basePosition: [0, 0, 0],
-    explodeVector: [18, 0, 0],
+    explodeVector: [38, 0, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -343,7 +343,7 @@ export const MOTOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Housing Bore: Ø100 H7 | End-Shield M10: 46 N·m',
     basePosition: [0, 0, 0],
-    explodeVector: [40, 0, 0],
+    explodeVector: [76, 0, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {

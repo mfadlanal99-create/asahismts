@@ -825,28 +825,23 @@ function buildMotStatorFrame(baseHex: string): PartMesh {
 function buildMotStatorWinding(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
-  // M400-50A silicon-steel laminated core stack (cutaway partially? Keep full core, or slightly recessed radius so rotor shows inside!)
-  // Laminated core with 110-deg cutaway sector matching frame window so skewed rotor bars gleam inside!!
-  const th0 = 0.56 * Math.PI;
-  const th1 = 2.06 * Math.PI;
-  addCylinderCutX(faces, edges, -22, 22, 29.5, 29.5, 20.6, 20.6, 18, th0, th1, {
+  // Complete 360-degree M400-50A silicon-steel laminated core stack + VPI copper end turns + lacing rings
+  addCylinderSection(faces, edges, -22, 22, 29.5, 29.5, 20.6, 20.6, 20, {
     colorHex: '#64748B',
   });
-  // Visible VPI copper end-turn bundles on NDE (-29..-22) and DE (+22..+29)
-  addCylinderCutX(faces, edges, -28.5, -22, 27.5, 28.5, 21.5, 21.5, 18, th0 - 0.15, th1 + 0.1, {
+  addCylinderSection(faces, edges, -28.5, -22, 27.5, 28.5, 21.5, 21.5, 18, {
     colorHex: baseHex,
   });
-  addCylinderCutX(faces, edges, 22, 28.5, 28.5, 27.5, 21.5, 21.5, 18, th0 - 0.15, th1 + 0.1, {
+  addCylinderSection(faces, edges, 22, 28.5, 28.5, 27.5, 21.5, 21.5, 18, {
     colorHex: baseHex,
   });
-  // White/yellow lacing cord rings binding copper coil knuckles
-  addCylinderCutX(faces, edges, -26.5, -25.2, 28.2, 28.2, 21.3, 21.3, 16, th0 - 0.15, th1 + 0.1, {
+  addCylinderSection(faces, edges, -26.5, -25.2, 28.2, 28.2, 21.3, 21.3, 16, {
     colorHex: '#FEF08A',
   });
-  addCylinderCutX(faces, edges, 25.2, 26.5, 28.2, 28.2, 21.3, 21.3, 16, th0 - 0.15, th1 + 0.1, {
+  addCylinderSection(faces, edges, 25.2, 26.5, 28.2, 28.2, 21.3, 21.3, 16, {
     colorHex: '#FEF08A',
   });
-  return compileMesh(faces, edges, [24, 24, -18], baseHex);
+  return compileMesh(faces, edges, [22, 26, 0], baseHex);
 }
 
 function buildMotSquirrelRotor(baseHex: string): PartMesh {
@@ -880,7 +875,7 @@ function buildMotSquirrelRotor(baseHex: string): PartMesh {
   addCylinderSection(faces, edges, 34, 78, 7.4, 7.4, 0, 0, 14, { colorHex: '#E2E8F0' });
   // DE shaft keyway & parallel key (x = +52..+74)
   addBox(faces, edges, 63, 7.6, 0, 11, 1.3, 1.5, '#F59E0B');
-  return compileMesh(faces, edges, [64, 10, 0], baseHex);
+  return compileMesh(faces, edges, [4, 16, 12], baseHex);
 }
 
 function buildMotBearings(baseHex: string): PartMesh {
@@ -918,7 +913,7 @@ function buildMotEndShields(baseHex: string): PartMesh {
   addCylinderSection(faces, edges, 36, 43, 35.5, 22, 14.2, 14.2, 18, { colorHex: baseHex });
   addCylinderSection(faces, edges, 42, 46, 18, 18, 8.0, 8.0, 14, { colorHex: '#10B981' });
   addBoltRing(faces, edges, 39, 41, 31.5, 1.6, 6, '#CBD5E1');
-  return compileMesh(faces, edges, [41, 24, 0], baseHex);
+  return compileMesh(faces, edges, [42, -22, 16], baseHex);
 }
 
 function buildMotCoolingFan(baseHex: string): PartMesh {
