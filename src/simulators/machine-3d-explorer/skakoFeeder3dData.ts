@@ -47,7 +47,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Supply: 300/400V AC via SKAKOTROL | Core Bolt: 145 N·m',
     basePosition: [0, -9, 0],
-    explodeVector: [0, -14, 46],
+    explodeVector: [0, -14, 62],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -89,7 +89,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Magnetic Air Gap: 1.8–2.4 mm | Frame Bolts: 120 N·m',
     basePosition: [0, -9, 0],
-    explodeVector: [0, -10, -46],
+    explodeVector: [0, -10, -64],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -173,7 +173,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Tie Stud Locknuts: 240 N·m (Matched L/R Height)',
     basePosition: [0, 5, 0],
-    explodeVector: [0, 48, 0],
+    explodeVector: [0, 38, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -215,7 +215,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Resonant Pairing Tolerance: ±1.0% | Wire Ø18–22 mm Alloy Steel',
     basePosition: [0, 5, 0],
-    explodeVector: [-54, 10, 0],
+    explodeVector: [-68, 10, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -257,7 +257,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Yoke & Shear Bolts (M14): 155 N·m',
     basePosition: [0, 4, 0],
-    explodeVector: [52, 24, 0],
+    explodeVector: [68, 14, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -299,7 +299,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Conductor: 1.5–2.5 mm² (+Length Compensation) | Min Loop R ≥ 120 mm',
     basePosition: [0, -12, 24],
-    explodeVector: [0, -16, 56],
+    explodeVector: [44, -18, 66],
     explodeStage: 1,
     rotates: false,
     appearance: {
@@ -341,7 +341,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Ingress Protection: IP65 | Seam Clamp & Flange Bolts: 22 N·m',
     basePosition: [0, 10, 0],
-    explodeVector: [0, 64, 0],
+    explodeVector: [0, 96, 0],
     explodeStage: 1,
     isHousing: true,
     rotates: false,
@@ -384,7 +384,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Drive Model: SKAKO 50D | Side Saddle Mounting Bolts (M20): 320 N·m',
     basePosition: [0, -12, 0],
-    explodeVector: [0, -48, 0],
+    explodeVector: [0, -58, 0],
     explodeStage: 3,
     rotates: false,
     appearance: {
@@ -426,7 +426,7 @@ export const SKAKO_FEEDER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Tuning Weight Stack Bolts (M12 10.9): 110 N·m',
     basePosition: [0, 10, 0],
-    explodeVector: [0, 34, -38],
+    explodeVector: [0, 54, -56],
     explodeStage: 1,
     rotates: false,
     appearance: {

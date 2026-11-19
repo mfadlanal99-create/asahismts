@@ -173,7 +173,7 @@ export const AIR_KNOCKER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Piston Stroke: 48 mm | Impact Wallop: 7.4–10.3 kg·m/s (0.3–0.7 MPa)',
     basePosition: [0, 8, 0],
-    explodeVector: [0, 8, 46],
+    explodeVector: [0, 8, 56],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -215,7 +215,7 @@ export const AIR_KNOCKER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Wire: SWP-B Spring Steel | Max Condenser Drain: < 1% Water',
     basePosition: [0, -6, 0],
-    explodeVector: [-44, -4, 0],
+    explodeVector: [-56, -4, 0],
     explodeStage: 2,
     rotates: false,
     appearance: {
@@ -257,7 +257,7 @@ export const AIR_KNOCKER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Overall Body ØA × H: Ø121 × 215 mm | Weight: 5.1 kg (Total 9.5 kg)',
     basePosition: [0, 0, 0],
-    explodeVector: [48, 0, 0],
+    explodeVector: [64, 0, 0],
     explodeStage: 2,
     isHousing: true,
     rotates: false,

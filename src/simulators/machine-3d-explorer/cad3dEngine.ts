@@ -3585,7 +3585,9 @@ export function renderCadScene(
         part.id === 'uras-fixed-weights' ||
         part.id === 'uras-bearings-brackets' ||
         part.id === 'mot-end-shields' ||
-        part.id === 'mot-bearings');
+        part.id === 'mot-bearings' ||
+        part.id === 'screw-end-seals' ||
+        part.id === 'screw-end-bearings');
     const bilateralXNeg = isBilateralX ? Math.abs(disp[0]) : 0;
     const bilateralXPos = isBilateralX
       ? part.id === 'mot-end-shields'

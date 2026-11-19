@@ -258,7 +258,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'End-Cap M10 Bolts: 46 N·m | Max Lip Speed: 14 m/s',
     basePosition: [0, 0, 0],
-    explodeVector: [0, 0, 58],
+    explodeVector: [0, 0, 72],
     explodeStage: 1,
     rotates: false,
     appearance: {
@@ -300,7 +300,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Oil Spec: ISO VG 320 Synthetic PAG/PAO | Sump Vol: 14.5 L',
     basePosition: [44, -18, 25],
-    explodeVector: [0, -12, 34],
+    explodeVector: [16, -24, 48],
     explodeStage: 1,
     rotates: false,
     appearance: {

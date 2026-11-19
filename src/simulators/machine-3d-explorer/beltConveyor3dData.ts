@@ -300,7 +300,7 @@ export const BELT_CONVEYOR_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Steel Chute-to-Belt Gap: 15 – 20 mm | Clamp Bolts: 35 N·m',
     basePosition: [-66, 28, 0],
-    explodeVector: [-38, 56, 0],
+    explodeVector: [-42, 78, 0],
     explodeStage: 1,
     isHousing: true,
     rotates: false,
