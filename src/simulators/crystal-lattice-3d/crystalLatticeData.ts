@@ -1751,7 +1751,7 @@ export function computeXrdPeaks(
 
         // Record representative extinct low-index positive planes
         if (f2 < 1e-4) {
-          if (h >= 0 && k >= 0 && l >= 0 && h + k + l <= 4) {
+          if (h >= 0 && k >= 0 && l >= 0 && h >= k && h + k + l <= 5) {
             forbiddenSet.add(`(${h}${k}${l})`);
           }
           continue;
@@ -1764,25 +1764,22 @@ export function computeXrdPeaks(
         const dw = Math.exp(-1.15 * sinTheta * sinTheta);
         const contrib = f2 * lp * dw;
 
-        // Prefer non-negative canonical display indices
-        const prefH = Math.abs(h);
-        const prefK = Math.abs(k);
-        const prefL = Math.abs(l);
-
+        const allNonNeg = h >= 0 && k >= 0 && l >= 0;
         const existing = bins.find((bin) => Math.abs(bin.twoTheta - twoTheta) < 0.25);
         if (existing) {
           existing.rawIntensity += contrib;
           existing.count += 1;
-          if (h >= 0 && k >= 0 && l >= 0 && prefH >= existing.h) {
+          const existingNonNeg = existing.h >= 0 && existing.k >= 0 && existing.l >= 0;
+          if (allNonNeg && (!existingNonNeg || h >= existing.h)) {
             existing.h = h;
             existing.k = k;
             existing.l = l;
           }
         } else {
           bins.push({
-            h: prefH,
-            k: prefK,
-            l: prefL,
+            h,
+            k,
+            l,
             d,
             twoTheta,
             rawIntensity: contrib,
@@ -1900,55 +1897,99 @@ export function computeCrystallographicMetrics(
   const effBeta = spec.system === 'hexagonal' ? 90 : betaDeg;
   const effGamma = spec.system === 'hexagonal' ? 120 : gammaDeg;
 
-  const gInv = invertMetricTensor(aAngstrom, b, c, effAlpha, effBeta, effGamma);
-  const invD2 =
-    h * h * gInv[0] +
-    k * k * gInv[4] +
-    l * l * gInv[8] +
-    2 * h * k * gInv[1] +
-    2 * h * l * gInv[2] +
-    2 * k * l * gInv[5];
+  // Build exact 3D direct lattice basis vectors (va, vb, vc) in Angstroms
+  const d2r = Math.PI / 180;
+  const ca = Math.cos(effAlpha * d2r);
+  const cb = Math.cos(effBeta * d2r);
+  const cg = Math.cos(effGamma * d2r);
+  const sg = Math.max(0.15, Math.sin(effGamma * d2r));
 
-  const dSpacingAng = invD2 > 1e-8 ? 1 / Math.sqrt(invD2) : 0;
+  const va: [number, number, number] = [aAngstrom, 0, 0];
+  const vb: [number, number, number] = [b * cg, b * sg, 0];
+  const cx = c * cb;
+  const cy = (c * (ca - cb * cg)) / sg;
+  const cz = Math.sqrt(Math.max(0.05, c * c - cx * cx - cy * cy));
+  const vc: [number, number, number] = [cx, cy, cz];
+
+  const cross = (
+    p: [number, number, number],
+    q: [number, number, number]
+  ): [number, number, number] => [
+    p[1] * q[2] - p[2] * q[1],
+    p[2] * q[0] - p[0] * q[2],
+    p[0] * q[1] - p[1] * q[0],
+  ];
+
+  // Exact primitive/conventional cell volume V = va · (vb x vc)
+  const vbXvc = cross(vb, vc);
+  const volConv = Math.max(
+    1e-6,
+    va[0] * vbXvc[0] + va[1] * vbXvc[1] + va[2] * vbXvc[2]
+  );
+
+  // Reciprocal basis vectors b1, b2, b3 (without 2pi) so n_hkl = h*b1 + k*b2 + l*b3 is exact in ALL 7 crystal systems
+  const vcXva = cross(vc, va);
+  const vaXvb = cross(va, vb);
+  const b1: [number, number, number] = [vbXvc[0] / volConv, vbXvc[1] / volConv, vbXvc[2] / volConv];
+  const b2: [number, number, number] = [vcXva[0] / volConv, vcXva[1] / volConv, vcXva[2] / volConv];
+  const b3: [number, number, number] = [vaXvb[0] / volConv, vaXvb[1] / volConv, vaXvb[2] / volConv];
+
+  const nx = h * b1[0] + k * b2[0] + l * b3[0];
+  const ny = h * b1[1] + k * b2[1] + l * b3[1];
+  const nz = h * b1[2] + k * b2[2] + l * b3[2];
+  const nMag = Math.hypot(nx, ny, nz);
+
+  // Exact d_hkl = 1 / |h*b1 + k*b2 + l*b3|
+  const dSpacingAng = nMag > 1e-8 ? 1 / nMag : 0;
   const isDirectionInPlane = h * u + k * v + l * w === 0;
 
-  // Schmid factor relative to single-slip tensile reference [1, 2, 3]
-  const tx = 1;
-  const ty = 2 * bOverA;
-  const tz = 3 * cOverA;
-  const tMag = Math.hypot(tx, ty, tz) || 1;
-
-  const nx = h / (aAngstrom || 1);
-  const ny = k / (b || 1);
-  const nz = l / (c || 1);
-  const nMag = Math.hypot(nx, ny, nz) || 1;
-
-  const dx = u * aAngstrom;
-  const dy = v * b;
-  const dz = w * c;
+  // Exact 3D slip direction d_uvw = u*va + v*vb + w*vc
+  const dx = u * va[0] + v * vb[0] + w * vc[0];
+  const dy = u * va[1] + v * vb[1] + w * vc[1];
+  const dz = u * va[2] + v * vb[2] + w * vc[2];
   const dMag = Math.hypot(dx, dy, dz) || 1;
 
-  const cosPhi = Math.abs((nx * tx + ny * ty + nz * tz) / (nMag * tMag));
+  // Reference single-slip tensile axis T = 1*va + 2*vb + 3*vc
+  const tx = va[0] + 2 * vb[0] + 3 * vc[0];
+  const ty = va[1] + 2 * vb[1] + 3 * vc[1];
+  const tz = va[2] + 2 * vb[2] + 3 * vc[2];
+  const tMag = Math.hypot(tx, ty, tz) || 1;
+
+  const cosPhi = nMag > 1e-8 ? Math.abs((nx * tx + ny * ty + nz * tz) / (nMag * tMag)) : 0;
   const cosLambda = Math.abs((dx * tx + dy * ty + dz * tz) / (dMag * tMag));
   const schmidFactor =
     (h !== 0 || k !== 0 || l !== 0) && (u !== 0 || v !== 0 || w !== 0)
       ? Math.min(0.5, cosPhi * cosLambda)
       : 0;
 
-  // Approximate planar area A_plane ≈ V_cell / d_hkl (in nm²)
-  const volAng3 = computeUnitCellVolumeAng3(
-    spec,
-    aAngstrom,
-    bOverA,
-    cOverA,
-    alphaDeg,
-    betaDeg,
-    gammaDeg
-  );
-  const planarAreaAng2 = dSpacingAng > 0.05 ? volAng3 / dSpacingAng : aAngstrom * b;
-  const planarAreaNm2 = Math.max(0.01, planarAreaAng2 / 100);
+  // Exact Planar Atomic Density (atoms / nm^2) via distinct (h*u + k*v + l*w) mod 1 layer count
+  const basis = getConventionalBasisForXrd(spec.id);
+  const gcd2 = (x: number, y: number): number => (y === 0 ? x : gcd2(y, x % y));
+  const gcdHkl = Math.max(1, gcd2(gcd2(Math.abs(h), Math.abs(k)), Math.abs(l)));
+  const rh = h / gcdHkl;
+  const rk = k / gcdHkl;
+  const rl = l / gcdHkl;
 
-  // Sample atoms sitting on plane h*ua + k*va + l*wa = planeOffset (pick richest intercept through unit cell)
+  const layerPhases: number[] = [];
+  for (const site of basis) {
+    const rawPhase = (((rh * site.u + rk * site.v + rl * site.w) % 1) + 1) % 1;
+    const wrapped = Math.abs(rawPhase - 1) < 1e-3 ? 0 : rawPhase;
+    if (!layerPhases.some((p) => Math.abs(p - wrapped) < 1e-3)) {
+      layerPhases.push(wrapped);
+    }
+  }
+  const mLayers = Math.max(1, layerPhases.length);
+  const dPrimitivePlane = dSpacingAng * gcdHkl;
+  const planarAreaAng2 = dPrimitivePlane > 0.05 ? volConv / dPrimitivePlane : aAngstrom * b;
+  const planarAreaNm2 = Math.max(0.01, planarAreaAng2 / 100);
+  const nBasisConv = basis.length;
+  // Exact textbook PD = (n_conv * d_{hkl,prim}) / (m_layers * V_conv) in atoms/nm^2
+  const planarDensityNm2 =
+    dPrimitivePlane > 0.05
+      ? ((nBasisConv * dPrimitivePlane) / (mLayers * volConv)) * 100
+      : nBasisConv / planarAreaNm2;
+
+  // Sample atoms sitting on the active plane inside [0,1]^3 for 2D Atom Slice Inset
   const sampleAtoms: { u: number; v: number; w: number; role: AtomSiteRole }[] = [];
   if (spec.isFullHexPrism) {
     for (const a of spec.atoms) {
@@ -1960,12 +2001,10 @@ export function computeCrystallographicMetrics(
     }
   }
 
-  // Choose intercept d0 that passes through maximal atoms inside [0,1]³
   let d0 = h + k + l > 0 ? 1 : h + k + l < 0 ? -1 : 0;
   if (spec.isFullHexPrism && l !== 0 && h === 0 && k === 0) {
-    d0 = 0; // basal center plane
+    d0 = 0;
   } else if (Math.abs(h) + Math.abs(k) + Math.abs(l) > 0) {
-    // Check d0 = 0 vs d0 = 1 vs max(0, h)+max(0,k)+max(0,l) -> pick richer intercept
     const cands = [0, 1, Math.max(0, h) + Math.max(0, k) + Math.max(0, l), 0.5];
     let bestCount = -1;
     for (const cand of cands) {
@@ -1980,36 +2019,30 @@ export function computeCrystallographicMetrics(
     }
   }
 
-  // Build local orthonormal 2D basis (e1, e2) in the plane normal to (nx, ny, nz)
-  const nn = [nx / nMag, ny / nMag, nz / nMag];
+  // Build local orthonormal 2D basis (e1, e2) in the exact Cartesian plane normal to n_hkl
+  const nSafe = nMag > 1e-8 ? nMag : 1;
+  const nn: [number, number, number] = [nx / nSafe, ny / nSafe, nz / nSafe];
   const ref: [number, number, number] = Math.abs(nn[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
-  const e1x = ref[1] * nn[2] - ref[2] * nn[1];
-  const e1y = ref[2] * nn[0] - ref[0] * nn[2];
-  const e1z = ref[0] * nn[1] - ref[1] * nn[0];
-  const e1Len = Math.hypot(e1x, e1y, e1z) || 1;
-  const e1 = [e1x / e1Len, e1y / e1Len, e1z / e1Len];
-  const e2 = [
-    nn[1] * e1[2] - nn[2] * e1[1],
-    nn[2] * e1[0] - nn[0] * e1[2],
-    nn[0] * e1[1] - nn[1] * e1[0],
-  ];
+  const e1Raw = cross(ref, nn);
+  const e1Len = Math.hypot(e1Raw[0], e1Raw[1], e1Raw[2]) || 1;
+  const e1: [number, number, number] = [e1Raw[0] / e1Len, e1Raw[1] / e1Len, e1Raw[2] / e1Len];
+  const e2 = cross(nn, e1);
 
   const projected2DAtoms: { x: number; y: number; role: AtomSiteRole }[] = [];
   for (const a of sampleAtoms) {
     if (Math.abs(h * a.u + k * a.v + l * a.w - d0) < 0.06) {
-      const px = a.u - 0.5;
-      const py = (a.v - 0.5) * bOverA;
-      const pz = (a.w - 0.5) * cOverA;
+      const rx = (a.u - 0.5) * va[0] + (a.v - 0.5) * vb[0] + (a.w - 0.5) * vc[0];
+      const ry = (a.u - 0.5) * va[1] + (a.v - 0.5) * vb[1] + (a.w - 0.5) * vc[1];
+      const rz = (a.u - 0.5) * va[2] + (a.v - 0.5) * vb[2] + (a.w - 0.5) * vc[2];
       projected2DAtoms.push({
-        x: px * e1[0] + py * e1[1] + pz * e1[2],
-        y: px * e2[0] + py * e2[1] + pz * e2[2],
+        x: (rx * e1[0] + ry * e1[1] + rz * e1[2]) / aAngstrom,
+        y: (rx * e2[0] + ry * e2[1] + rz * e2[2]) / aAngstrom,
         role: a.role,
       });
     }
   }
 
   const planarAtomsCount = Math.max(1, projected2DAtoms.length);
-  const planarDensityNm2 = planarAtomsCount / planarAreaNm2;
 
   return {
     iIndex,
