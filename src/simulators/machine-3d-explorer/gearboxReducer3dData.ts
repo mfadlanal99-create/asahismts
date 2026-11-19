@@ -47,7 +47,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Split Flange Bolts: 185 N·m | Backlash: 0.14–0.22 mm',
     basePosition: [0, 0, 0],
-    explodeVector: [0, 64, 0],
+    explodeVector: [0, 74, 0],
     explodeStage: 1,
     isHousing: true,
     rotates: false,
@@ -90,7 +90,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Shaft Ø42 k6 | AGMA Class 11 | Gear Mesh Frequency 1×Z₁',
     basePosition: [-46, 0, 0],
-    explodeVector: [-36, 12, 48],
+    explodeVector: [-32, 16, 0],
     explodeStage: 2,
     rotates: true,
     appearance: {
@@ -132,7 +132,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Stage-1 Ratio: 4.15 | Stage-2 Pinion: 58–62 HRC',
     basePosition: [-8, 0, 0],
-    explodeVector: [0, 34, -44],
+    explodeVector: [0, 32, 0],
     explodeStage: 2,
     rotates: true,
     appearance: {
@@ -174,7 +174,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Output Ø75 m6 | Total Ratio: 18.5:1 | Torque Cap: 8,400 N·m',
     basePosition: [36, 0, 0],
-    explodeVector: [44, 12, -52],
+    explodeVector: [36, 16, 0],
     explodeStage: 2,
     rotates: true,
     appearance: {
@@ -216,8 +216,8 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Axial End-Play: 0.04–0.08 mm (Cold) | ISO 10816 < 2.8 mm/s',
     basePosition: [0, 0, 0],
-    explodeVector: [0, 22, 42],
-    explodeStage: 3,
+    explodeVector: [0, 0, 32],
+    explodeStage: 2,
     rotates: false,
     appearance: {
       baseHex: '#94A3B8',
@@ -258,7 +258,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'End-Cap M10 Bolts: 46 N·m | Max Lip Speed: 14 m/s',
     basePosition: [0, 0, 0],
-    explodeVector: [0, 0, 56],
+    explodeVector: [0, 0, 58],
     explodeStage: 1,
     rotates: false,
     appearance: {
@@ -300,7 +300,7 @@ export const GEARBOX_REDUCER_3D_PARTS: Machine3DPartSpec[] = [
     },
     clearanceOrTorque: 'Oil Spec: ISO VG 320 Synthetic PAG/PAO | Sump Vol: 14.5 L',
     basePosition: [44, -18, 25],
-    explodeVector: [12, -10, 42],
+    explodeVector: [0, -12, 34],
     explodeStage: 1,
     rotates: false,
     appearance: {

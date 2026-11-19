@@ -3565,16 +3565,30 @@ export function renderCadScene(
       ? ([0, 0, 0] as Vec3)
       : computePartDisplacement(part, explodeFactor, explodeMode);
 
-    const bilateralXSplit =
+    const isBilateralX =
       !isolatedPartId &&
-      (part.id === 'uras-weight-covers' || part.id === 'mot-end-shields')
-        ? Math.abs(disp[0])
+      (part.id === 'uras-weight-covers' ||
+        part.id === 'uras-adj-weights' ||
+        part.id === 'uras-fixed-weights' ||
+        part.id === 'uras-bearings-brackets' ||
+        part.id === 'mot-end-shields' ||
+        part.id === 'mot-bearings');
+    const bilateralXNeg = isBilateralX ? Math.abs(disp[0]) : 0;
+    const bilateralXPos = isBilateralX
+      ? part.id === 'mot-end-shields'
+        ? Math.abs(disp[0]) * 2.2
+        : part.id === 'mot-bearings'
+          ? Math.abs(disp[0]) * 3.5
+          : Math.abs(disp[0])
+      : 0;
+    const bilateralZSplit =
+      !isolatedPartId &&
+      (part.id === 'gb-tapered-bearings' || part.id === 'gb-lip-seals')
+        ? Math.abs(disp[2])
         : 0;
-    const ox = isolatedPartId
-      ? 0
-      : part.basePosition[0] + (bilateralXSplit > 0 ? 0 : disp[0]);
+    const ox = isolatedPartId ? 0 : part.basePosition[0] + (isBilateralX ? 0 : disp[0]);
     let oy = isolatedPartId ? 0 : part.basePosition[1] + disp[1];
-    const oz = isolatedPartId ? 0 : part.basePosition[2] + disp[2];
+    const oz = isolatedPartId ? 0 : part.basePosition[2] + (bilateralZSplit > 0 ? 0 : disp[2]);
 
     // Apply physics-driven reciprocating & dual-mass resonant motion when Drive is running
     if (!isolatedPartId) {
@@ -3610,8 +3624,9 @@ export function renderCadScene(
     if (
       !isolatedPartId &&
       explodeFactor > 0.03 &&
-      bilateralXSplit === 0 &&
-      (Math.abs(disp[0]) > 2 || Math.abs(disp[1]) > 2)
+      !isBilateralX &&
+      bilateralZSplit === 0 &&
+      (Math.abs(disp[0]) > 2 || Math.abs(disp[1]) > 2 || Math.abs(disp[2]) > 2)
     ) {
       const pHome = projectCam(
         toCameraSpace(part.basePosition[0], part.basePosition[1], part.basePosition[2])
@@ -3638,9 +3653,6 @@ export function renderCadScene(
       (part.id.startsWith('belt-') ||
         part.id.startsWith('chain-') ||
         part.id.startsWith('gb-'));
-    const rotatesAroundY =
-      rotates &&
-      (part.id === 'teka-turbine-rotor-arms' || part.id === 'teka-intensive-agitator');
     // Belt pulleys & intermediate gearbox shaft spin in reverse; gearbox stages scale by ratio
     let zRotSpeed = 1;
     if (part.id === 'gb-input-pinion') zRotSpeed = 1.8;
@@ -3662,11 +3674,6 @@ export function renderCadScene(
         const nyRot = nx * sinZ + ny * cosZ;
         nx = nxRot;
         ny = nyRot;
-      } else if (rotatesAroundY) {
-        const nxRot = nx * cosRot + nz * sinRot;
-        const nzRot = -nx * sinRot + nz * cosRot;
-        nx = nxRot;
-        nz = nzRot;
       } else if (rotates) {
         const nyRot = ny * cosRot - nz * sinRot;
         const nzRot = ny * sinRot + nz * cosRot;
@@ -3695,11 +3702,6 @@ export function renderCadScene(
           const vyR = vx * sinZ + vy * cosZ;
           vx = vxR;
           vy = vyR;
-        } else if (rotatesAroundY) {
-          const vxR = vx * cosRot + vz * sinRot;
-          const vzR = -vx * sinRot + vz * cosRot;
-          vx = vxR;
-          vz = vzR;
         } else if (rotates) {
           const vyR = vy * cosRot - vz * sinRot;
           const vzR = vy * sinRot + vz * cosRot;
@@ -3711,8 +3713,11 @@ export function renderCadScene(
           const t = vy >= 0 ? Math.min(1, vy / 19.5) : Math.min(1, -vy / 18.2);
           vy += -skakoStroke * 0.55 * (1 - t) + skakoStroke * t;
         }
-        if (bilateralXSplit > 0) {
-          vx += vx < 0 ? -bilateralXSplit : bilateralXSplit;
+        if (isBilateralX) {
+          vx += vx < 0 ? -bilateralXNeg : bilateralXPos;
+        }
+        if (bilateralZSplit > 0) {
+          vz += vz < 0 ? -bilateralZSplit : bilateralZSplit;
         }
         const c = toCameraSpace(ox + vx, oy + vy, oz + vz);
         const p = projectCam(c);
@@ -3778,15 +3783,6 @@ export function renderCadScene(
         const byR = bx * sinZ + by * cosZ;
         bx = bxR;
         by = byR;
-      } else if (rotatesAroundY) {
-        const axR = ax * cosRot + az * sinRot;
-        const azR = -ax * sinRot + az * cosRot;
-        ax = axR;
-        az = azR;
-        const bxR = bx * cosRot + bz * sinRot;
-        const bzR = -bx * sinRot + bz * cosRot;
-        bx = bxR;
-        bz = bzR;
       } else if (rotates) {
         const ayR = ay * cosRot - az * sinRot;
         const azR = ay * sinRot + az * cosRot;
@@ -3805,9 +3801,13 @@ export function renderCadScene(
         ay += -skakoStroke * 0.55 * (1 - ta) + skakoStroke * ta;
         by += -skakoStroke * 0.55 * (1 - tb) + skakoStroke * tb;
       }
-      if (bilateralXSplit > 0) {
-        ax += ax < 0 ? -bilateralXSplit : bilateralXSplit;
-        bx += bx < 0 ? -bilateralXSplit : bilateralXSplit;
+      if (isBilateralX) {
+        ax += ax < 0 ? -bilateralXNeg : bilateralXPos;
+        bx += bx < 0 ? -bilateralXNeg : bilateralXPos;
+      }
+      if (bilateralZSplit > 0) {
+        az += az < 0 ? -bilateralZSplit : bilateralZSplit;
+        bz += bz < 0 ? -bilateralZSplit : bilateralZSplit;
       }
       const ca = toCameraSpace(ox + ax, oy + ay, oz + az);
       const cb = toCameraSpace(ox + bx, oy + by, oz + bz);
@@ -4056,15 +4056,20 @@ export function renderCadScene(
     }
 
     if (showCallouts && !isolatedPartId) {
-      const biOff =
-        bilateralXSplit > 0
-          ? mesh.calloutLocalAnchor[0] < 0
-            ? -bilateralXSplit
-            : bilateralXSplit
+      const biOffX = isBilateralX
+        ? mesh.calloutLocalAnchor[0] < 0
+          ? -bilateralXNeg
+          : bilateralXPos
+        : 0;
+      const biOffZ =
+        bilateralZSplit > 0
+          ? mesh.calloutLocalAnchor[2] < 0
+            ? -bilateralZSplit
+            : bilateralZSplit
           : 0;
-      const ancX = ox + mesh.calloutLocalAnchor[0] + biOff;
+      const ancX = ox + mesh.calloutLocalAnchor[0] + biOffX;
       const ancY = oy + mesh.calloutLocalAnchor[1];
-      const ancZ = oz + mesh.calloutLocalAnchor[2];
+      const ancZ = oz + mesh.calloutLocalAnchor[2] + biOffZ;
       const pAnchor = projectCam(toCameraSpace(ancX, ancY, ancZ));
       const pPin = projectCam(
         toCameraSpace(

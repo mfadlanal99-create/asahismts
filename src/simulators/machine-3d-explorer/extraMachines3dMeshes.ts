@@ -547,21 +547,11 @@ function buildGbUpperHousing(baseHex: string): PartMesh {
   // Split-line perimeter bolt flange at y = +1.5
   addBox(faces, edges, -4, 1.5, 0, 72, 1.6, 26, '#334155', true);
 
-  // Machined bearing cap arches along front (+Z) & rear (-Z) walls aligned with 3 shafts
+  // Upper bearing saddle boss blocks strictly above y = 0 split line along front (+Z) & rear (-Z)
   for (const sx of [-46, -8, 36]) {
-    const capR = sx === 36 ? 15 : sx === -8 ? 13 : 11;
-    addCylinderZ(faces, edges, 21, 24.5, capR, capR, capR - 2, capR - 2, 12, {
-      cx: sx,
-      cy: 0,
-      colorHex: '#334155',
-      isHousingShell: true,
-    });
-    addCylinderZ(faces, edges, -24.5, -21, capR, capR, capR - 2, capR - 2, 12, {
-      cx: sx,
-      cy: 0,
-      colorHex: '#334155',
-      isHousingShell: true,
-    });
+    const hw = sx === 36 ? 13 : sx === -8 ? 11 : 9.5;
+    addBox(faces, edges, sx, 6.2, 22.8, hw, 4.2, 1.8, '#334155', true);
+    addBox(faces, edges, sx, 6.2, -22.8, hw, 4.2, 1.8, '#334155', true);
   }
 
   // External vertical casting stiffening ribs & cooling fins along front & rear
@@ -603,10 +593,13 @@ function buildGbLowerSumpBase(baseHex: string): PartMesh {
   addBox(faces, edges, -65, -15, 0, 2.2, 15, 22, baseHex, true);
   addBox(faces, edges, 71, -15, 0, 2.2, 15, 22, baseHex, true);
   addBox(faces, edges, 3, -15, -22, 69, 15, 2.2, baseHex, true);
-  // Front wall (+Z = +22): solid bottom bay up to y = -8 so internal bull & pinion mesh stays visible in upper pocket!
+  // Front wall (+Z = +22): lower tub bay up to y = -8 + lower bearing arch bosses strictly below y = 0
   addBox(faces, edges, 3, -19, 22, 69, 11, 2.2, baseHex, true);
-  addBox(faces, edges, -61, -4, 22, 6, 4, 2.2, baseHex, true);
-  addBox(faces, edges, 67, -4, 22, 6, 4, 2.2, baseHex, true);
+  for (const sx of [-46, -8, 36]) {
+    const hw = sx === 36 ? 13 : sx === -8 ? 11 : 9.5;
+    addBox(faces, edges, sx, -6.2, 22.8, hw, 4.2, 1.8, '#334155', true);
+    addBox(faces, edges, sx, -6.2, -22.8, hw, 4.2, 1.8, '#334155', true);
+  }
 
   // Horizontal split-line bolting flange at y = -1.5 with perimeter hex bolts
   addBox(faces, edges, 3, -1.2, -24.5, 72, 1.4, 2.8, '#334155', true);
@@ -762,233 +755,7 @@ function buildGbOilSightDrain(baseHex: string): PartMesh {
 }
 
 // ============================================================================
-// 2. TEKA THZ 4500 A TURBINE / PLANETARY PAN MIXER
-// ============================================================================
-
-function buildTekaPanTrough(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [0, -14, 0] -> world pan wall y = -28..+8
-  // Cutaway front-left arc leaves 85 deg inspection sector open in the outer wall OR solid outer wall with chamfered top flange
-  // Let's make outer drum full with prominent stiffener ring bands, bolt flanges & a 65-deg inspection cutaway facing front (+Z, -X)
-  addCylinderY(faces, edges, -14, 18, 72, 72, 67, 67, 24, {
-    colorHex: baseHex,
-    isHousingShell: true,
-    thetaStart: 0.35 * Math.PI,
-    thetaEnd: 2.02 * Math.PI,
-  });
-  // Pan floor ring plate (y = -18..-14)
-  addCylinderY(faces, edges, -18, -14, 73, 73, 21, 21, 24, {
-    colorHex: '#1E293B',
-    isHousingShell: true,
-  });
-  // Upper & lower circumferential stiffening box rings
-  addCylinderY(faces, edges, 16, 20, 76, 76, 67, 67, 24, {
-    colorHex: '#334155',
-    isHousingShell: true,
-    thetaStart: 0.35 * Math.PI,
-    thetaEnd: 2.02 * Math.PI,
-  });
-  addCylinderY(faces, edges, -16, -12, 75.5, 75.5, 72, 72, 24, {
-    colorHex: '#334155',
-    isHousingShell: true,
-  });
-  // Inner conical ring-trough center pedestal (r = 25 -> 20)
-  addCylinderY(faces, edges, -14, 18, 25, 21, 0, 0, 18, {
-    colorHex: '#475569',
-    isHousingShell: true,
-  });
-  // 4 heavy gusseted I-column support legs down to base pads
-  for (const a of [0.25 * Math.PI, 0.75 * Math.PI, 1.25 * Math.PI, 1.75 * Math.PI]) {
-    const lx = Math.cos(a) * 60;
-    const lz = Math.sin(a) * 60;
-    addBox(faces, edges, lx, -27, lz, 4.8, 10, 4.8, '#1E293B', true);
-    addBox(faces, edges, lx, -37.5, lz, 7.2, 1.6, 7.2, '#0F172A', true);
-  }
-  return compileMesh(faces, edges, [-72, 6, 0], baseHex);
-}
-
-function buildTekaWearLiners(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // Segmented Hardox 500 floor tiles (12 radial bevelled sectors inside ring-trough!) + inner wall liner ring
-  const segs = 12;
-  for (let i = 0; i < segs; i++) {
-    const a0 = (i / segs) * Math.PI * 2 + 0.015;
-    const a1 = ((i + 1) / segs) * Math.PI * 2 - 0.015;
-    addCylinderY(faces, edges, -13.8, -11.6, 66.2, 66.2, 26.5, 26.5, 2, {
-      colorHex: i % 2 === 0 ? baseHex : '#64748B',
-      thetaStart: a0,
-      thetaEnd: a1,
-    });
-  }
-  // Inner & outer sacrificial wall liner bands
-  addCylinderY(faces, edges, -11.6, 8, 66.8, 66.8, 65.2, 65.2, 22, {
-    colorHex: baseHex,
-    thetaStart: 0.35 * Math.PI,
-    thetaEnd: 2.02 * Math.PI,
-  });
-  return compileMesh(faces, edges, [-44, -10, 26], baseHex);
-}
-
-function buildTekaDustHood(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [0, 14, 0] -> rests at world y = +4..+11 on top rim of pan!
-  addCylinderY(faces, edges, -8, -4, 76, 76, 25, 25, 26, {
-    colorHex: baseHex,
-    isHousingShell: true,
-  });
-  addCylinderY(faces, edges, -4, -1, 74, 70, 25, 25, 26, {
-    colorHex: '#64748B',
-    isHousingShell: true,
-  });
-  // Perimeter mounting lip + clamping bolts
-  addCylinderY(faces, edges, -9.5, -8, 78, 78, 72, 72, 26, {
-    colorHex: '#334155',
-    isHousingShell: true,
-  });
-  // 2 raised hinged inspection doors with amber safety latches
-  for (const sign of [-1, 1]) {
-    addBox(faces, edges, sign * 46, -0.5, sign * 18, 13, 1.8, 12, '#94A3B8', true);
-    addBox(faces, edges, sign * 46, 1.5, sign * 25, 5, 1.0, 1.2, '#F59E0B', true);
-  }
-  // Aggregate / cement feed inlet chute + rubber dust-filter vent collar
-  addCylinderY(faces, edges, -1, 11, 11, 11, 8.8, 8.8, 14, {
-    cx: -14,
-    cz: 42,
-    colorHex: '#334155',
-    isHousingShell: true,
-  });
-  addCylinderY(faces, edges, 10, 12.5, 14, 14, 8.8, 8.8, 14, {
-    cx: -14,
-    cz: 42,
-    colorHex: '#64748B',
-    isHousingShell: true,
-  });
-  return compileMesh(faces, edges, [-14, 12, 42], baseHex);
-}
-
-function buildTekaPlanetaryGearbox(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [0, 12, 0] -> heavy central TEKA blue planetary reduction column + bevel crown
-  addCylinderY(faces, edges, -12, 6, 24, 21, 0, 0, 18, { colorHex: baseHex });
-  addCylinderY(faces, edges, -14, -12, 27, 27, 0, 0, 18, { colorHex: '#1E3A8A' });
-  addCylinderY(faces, edges, 6, 9, 25, 25, 0, 0, 18, { colorHex: '#3B82F6' });
-  // Top spiral-bevel input gearbox head aligned with horizontal cardan shaft (y = +11 relative -> world +23)
-  addBox(faces, edges, 0, 13, 0, 13, 7, 13, '#1E40AF');
-  addCylinderSection(faces, edges, -18, -11, 7.5, 8.5, 0, 0, 14, {
-    colorHex: '#475569',
-  });
-  // Integrated hydraulic power pack tank & top e-motor for discharge gate on +Z/+X bridge
-  addBox(faces, edges, 22, 6, -18, 9, 6, 9, '#334155');
-  addCylinderY(faces, edges, 12, 21, 4.8, 4.8, 0, 0, 12, { cx: 22, cz: -18, colorHex: '#0284C7' });
-  return compileMesh(faces, edges, [0, 20, 0], baseHex);
-}
-
-function buildTekaDriveMotorCoupling(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [-44, 23, 0] -> TEFC drive motor + yellow fluid turbo-coupling + cardan shaft to central gearbox [0,23,0]
-  // Motor pedestal saddle on upper bridge
-  addBox(faces, edges, -16, -10.5, 0, 16, 1.5, 11, '#334155');
-  // Finned electric motor body (x: -28..-4)
-  addCylinderSection(faces, edges, -28, -4, 9.8, 9.8, 0, 0, 16, { colorHex: baseHex });
-  for (let i = 0; i < 8; i++) {
-    addRadialFinX(faces, edges, -26, -6, 9.5, 11.2, 0.7, (i / 8) * Math.PI * 2, '#1D4ED8', false);
-  }
-  addBox(faces, edges, -16, 11, 0, 4.5, 3, 4.5, '#1E293B');
-  // Fluid turbo-coupling drum (Voith style, bright amber-orange!)
-  addCylinderSection(faces, edges, -4, 9, 10.5, 10.5, 0, 0, 16, { colorHex: '#F59E0B' });
-  // U-joint cardan shaft reaching gearbox bevel input (x = +9..+31 -> world x = -35..-13)
-  addBox(faces, edges, 11, 0, 0, 3, 3.6, 3.6, '#475569');
-  addCylinderSection(faces, edges, 14, 27, 2.8, 2.8, 0, 0, 12, { colorHex: '#E2E8F0' });
-  addBox(faces, edges, 29, 0, 0, 3, 3.6, 3.6, '#475569');
-  return compileMesh(faces, edges, [-16, 14, 0], baseHex);
-}
-
-function buildTekaTurbineRotorArms(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [0, -6, 0] -> central heavy rotating turbine bell + 6 spring-loaded swept mixing arms
-  addCylinderY(faces, edges, -5, 5, 29, 26, 20, 20, 20, { colorHex: '#475569' });
-  addCylinderY(faces, edges, 3, 6, 31, 31, 22, 22, 20, { colorHex: '#94A3B8' });
-
-  const radii = [36, 46, 56, 64, 52, 40];
-  for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2 + 0.15;
-    const r = radii[i];
-    const ca = Math.cos(a);
-    const sa = Math.sin(a);
-    const nx = -sa;
-    const nz = ca;
-    // Pivoted arm carrier with yellow torsion coil block at hub
-    addBox(faces, edges, ca * 30, 3, sa * 30, 3.2, 3.2, 3.2, '#F59E0B');
-    // Slanted radial arm down toward pan floor (-21 relative -> world -27)
-    const steps = 3;
-    for (let s = 0; s < steps; s++) {
-      const t0 = s / steps;
-      const t1 = (s + 1) / steps;
-      const ra = 28 + (r - 28) * t0;
-      const rb = 28 + (r - 28) * t1;
-      const ya = 2 - t0 * 14;
-      const yb = 2 - t1 * 14;
-      const hw = 1.6;
-      const p = (rad: number, yy: number, side: number): Vec3 => [
-        rad * ca + side * nx * hw,
-        yy,
-        rad * sa + side * nz * hw,
-      ];
-      faces.push({
-        verts: [p(ra, ya + 1.5, -1), p(rb, yb + 1.5, -1), p(rb, yb + 1.5, 1), p(ra, ya + 1.5, 1)],
-        colorHex: '#94A3B8',
-        cullBackface: false,
-      });
-      faces.push({
-        verts: [p(ra, ya - 1.5, -1), p(ra, ya + 1.5, -1), p(rb, yb + 1.5, -1), p(rb, yb - 1.5, -1)],
-        colorHex: '#64748B',
-        cullBackface: false,
-      });
-    }
-    // Reversible Hardox cast mixing paddle shovel near floor
-    addBox(faces, edges, ca * r, -16, sa * r, 4.5, 5.5, 2.2, baseHex);
-  }
-  return compileMesh(faces, edges, [-46, 2, 16], baseHex);
-}
-
-function buildTekaIntensiveAgitator(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [44, 6, 18] -> high-speed eccentric whirl star agitator sitting cleanly inside pan trough!
-  addCylinderY(faces, edges, 12, 30, 8.0, 8.0, 0, 0, 14, { colorHex: '#0284C7' });
-  addCylinderY(faces, edges, 8, 12, 11.5, 11.5, 0, 0, 14, { colorHex: '#475569' });
-  // Vertical chrome whirl shaft down into floor clearance (y = -28..+8)
-  addCylinderY(faces, edges, -28, 8, 2.8, 2.8, 0, 0, 10, { colorHex: '#E2E8F0' });
-  // 2-tier 3-blade star mixer head
-  for (const sy of [-26, -18]) {
-    for (let i = 0; i < 3; i++) {
-      const a = (i / 3) * Math.PI * 2 + (sy === -18 ? 0.5 : 0);
-      addBox(faces, edges, Math.cos(a) * 7.5, sy, Math.sin(a) * 7.5, 5.2, 2.4, 1.8, baseHex);
-    }
-  }
-  return compileMesh(faces, edges, [0, 30, 0], baseHex);
-}
-
-function buildTekaDischargeGate(baseHex: string): PartMesh {
-  const faces: RawFaceDef[] = [];
-  const edges: EdgeDef[] = [];
-  // basePosition [0, -29, 46] -> directly beneath pan front floor!
-  addBox(faces, edges, 0, 0, 0, 14, 5.5, 11, baseHex);
-  addBox(faces, edges, 0, -5.5, 0, 12, 3.0, 9, '#334155');
-  // Hydraulic rotary/linear cylinder actuator extending right (+X)
-  addCylinderSection(faces, edges, 16, 36, 3.6, 3.6, 0, 0, 12, { colorHex: '#0284C7' });
-  addCylinderSection(faces, edges, 6, 16, 1.8, 1.8, 0, 0, 10, { colorHex: '#F8FAFC' });
-  return compileMesh(faces, edges, [24, 0, 6], baseHex);
-}
-
-// ============================================================================
-// 3. 3-PHASE TEFC SQUIRREL-CAGE INDUCTION MOTOR (IEC 160M)
+// 2. 3-PHASE TEFC SQUIRREL-CAGE INDUCTION MOTOR (IEC 160M)
 // ============================================================================
 
 function buildMotStatorFrame(baseHex: string): PartMesh {
@@ -1326,24 +1093,26 @@ function buildUrasBearingsBrackets(baseHex: string): PartMesh {
 function buildUrasFixedWeights(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
-  // basePosition [-41, 0, 0] -> Left dual eccentric counterweight pair (inner fixed plate + outer phase-scale plate!)
-  addCylinderSection(faces, edges, -6.5, 6.5, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
-  addSemiCircleEccentricX(faces, edges, 0.8, 6.2, 11.5, 26.5, 0.2, Math.PI, 10, baseHex, '#9A3412');
-  addSemiCircleEccentricX(faces, edges, -6.2, -0.8, 11.5, 26.5, 0.75, Math.PI, 10, '#EA580C', '#FDBA74');
-  // Clamp pinch ear & Grade 10.9 socket screw
-  addBox(faces, edges, -3.5, -14, -12, 3.2, 3.5, 3.5, '#E2E8F0');
-  return compileMesh(faces, edges, [0, -25, 0], baseHex);
+  // Bilateral coaxial inner fixed counterweight rings on BOTH ends: left (-39..-33) & right (+33..+39)
+  addCylinderSection(faces, edges, -39, -33, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
+  addSemiCircleEccentricX(faces, edges, -38.8, -33.2, 11.5, 26.5, 0.2, Math.PI, 10, baseHex, '#9A3412');
+  addCylinderSection(faces, edges, 33, 39, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
+  addSemiCircleEccentricX(faces, edges, 33.2, 38.8, 11.5, 26.5, 0.2, Math.PI, 10, baseHex, '#9A3412');
+  return compileMesh(faces, edges, [-36, -24, 0], baseHex);
 }
 
 function buildUrasAdjWeights(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
-  // basePosition [+41, 0, 0] -> Right dual eccentric counterweight pair (phase-matched to left end!)
-  addCylinderSection(faces, edges, -6.5, 6.5, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
-  addSemiCircleEccentricX(faces, edges, -6.2, -0.8, 11.5, 26.5, 0.2, Math.PI, 10, '#64748B', '#475569');
-  addSemiCircleEccentricX(faces, edges, 0.8, 6.2, 11.5, 26.5, 0.75, Math.PI, 10, baseHex, '#FDE047');
-  addBox(faces, edges, 3.5, -14, -12, 3.2, 3.5, 3.5, '#E2E8F0');
-  return compileMesh(faces, edges, [0, 26, 0], baseHex);
+  // Bilateral coaxial outer phase-adjustable counterweight plates on BOTH ends: left (-46..-40) & right (+40..+46)
+  addCylinderSection(faces, edges, -46, -40, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
+  addSemiCircleEccentricX(faces, edges, -45.8, -40.2, 11.5, 26.5, 0.85, Math.PI, 10, baseHex, '#FDE047');
+  addBox(faces, edges, -43, -14, -12, 2.8, 3.5, 3.5, '#E2E8F0');
+
+  addCylinderSection(faces, edges, 40, 46, 12.2, 12.2, 8.8, 8.8, 14, { colorHex: '#475569' });
+  addSemiCircleEccentricX(faces, edges, 40.2, 45.8, 11.5, 26.5, 0.85, Math.PI, 10, baseHex, '#FDE047');
+  addBox(faces, edges, 43, -14, -12, 2.8, 3.5, 3.5, '#E2E8F0');
+  return compileMesh(faces, edges, [43, 24, 0], baseHex);
 }
 
 function buildUrasWeightCovers(baseHex: string): PartMesh {
@@ -1415,23 +1184,6 @@ export function buildExtraMachineMesh(partId: string, baseHex: string): PartMesh
       return buildGbLipSeals(baseHex);
     case 'gb-oil-sight-drain':
       return buildGbOilSightDrain(baseHex);
-
-    case 'teka-pan-trough':
-      return buildTekaPanTrough(baseHex);
-    case 'teka-wear-liners':
-      return buildTekaWearLiners(baseHex);
-    case 'teka-dust-hood':
-      return buildTekaDustHood(baseHex);
-    case 'teka-planetary-gearbox':
-      return buildTekaPlanetaryGearbox(baseHex);
-    case 'teka-drive-motor-coupling':
-      return buildTekaDriveMotorCoupling(baseHex);
-    case 'teka-turbine-rotor-arms':
-      return buildTekaTurbineRotorArms(baseHex);
-    case 'teka-intensive-agitator':
-      return buildTekaIntensiveAgitator(baseHex);
-    case 'teka-discharge-gate':
-      return buildTekaDischargeGate(baseHex);
 
     case 'mot-stator-frame':
       return buildMotStatorFrame(baseHex);

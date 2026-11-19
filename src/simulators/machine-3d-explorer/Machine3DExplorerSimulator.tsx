@@ -42,10 +42,6 @@ import {
   GEARBOX_REDUCER_INFO,
 } from './gearboxReducer3dData';
 import {
-  TEKA_MIXER_3D_PARTS,
-  TEKA_MIXER_INFO,
-} from './tekaMixer3dData';
-import {
   MOTOR_3D_PARTS,
   MOTOR_3D_INFO,
 } from './motor3dData';
@@ -66,7 +62,6 @@ type MachineId =
   | 'skako'
   | 'screw'
   | 'gearbox'
-  | 'teka'
   | 'motor'
   | 'uras';
 
@@ -189,22 +184,6 @@ const MACHINE_CONFIGS: {
       ja: '割りケース平行軸2段ヘリカル減速機（i=18.5:1）・円すいころ軸受・オイルシール。',
     },
     standardTag: 'AGMA / ISO 6336',
-  },
-  {
-    id: 'teka',
-    info: TEKA_MIXER_INFO,
-    parts: TEKA_MIXER_3D_PARTS,
-    shortLabel: {
-      en: 'TEKA THZ 4500 A Pan Mixer',
-      id: 'Mixer TEKA THZ 4500 A',
-      ja: 'TEKA THZ 4500 A タービンミキサ',
-    },
-    summary: {
-      en: '4,500 L ring-trough turbine pan mixer with central planetary gearbox, fluid coupling, whirl star & Hardox liners.',
-      id: 'Mixer bak-cincin 4.500 L dengan gearbox planetary pusat, kopling fluida, pengaduk bintang & pelat Hardox.',
-      ja: '4,500 L リングトラフ式遊星ミキサ・流体継手・高速アジテータ・Hardoxライナ。',
-    },
-    standardTag: 'TEKA THZ 4500 A',
   },
   {
     id: 'motor',
