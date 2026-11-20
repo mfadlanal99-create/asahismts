@@ -1,13 +1,18 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowLeft, Printer } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Printer } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
+import {
+  getSimulatorTutorial,
+  shouldAutoOpenTutorial,
+} from '../data/tutorials';
 import { translateCategory, translateDifficulty } from '../i18n/simulatorRegistry';
 import type { SimulatorMeta, SimulatorMode } from '../types/simulator';
 import { ExploreTab } from './ExploreTab';
 import { PracticeTab } from './PracticeTab';
 import { QuizTab } from './QuizTab';
 import { SimulatorIcon } from './SimulatorIcon';
+import { SimulatorTutorialModal } from './SimulatorTutorialModal';
 import { TopRibbon } from './TopRibbon';
 
 interface SimulatorLayoutProps {
@@ -32,12 +37,56 @@ export function SimulatorLayout({
   children,
 }: SimulatorLayoutProps) {
   const [mode, setMode] = useState<SimulatorMode>('simulate');
+  const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [prevSimId, setPrevSimId] = useState(meta.id);
   const { language, pick } = useLanguage();
   const { markVisited } = useProgress();
+  const tutorialSteps = getSimulatorTutorial(meta.id);
+
+  if (prevSimId !== meta.id) {
+    setPrevSimId(meta.id);
+    setTutorialOpen(false);
+  }
 
   useEffect(() => {
     markVisited(meta.id);
   }, [markVisited, meta.id]);
+
+  useEffect(() => {
+    if (tutorialSteps.length === 0 || !shouldAutoOpenTutorial(meta.id)) {
+      return;
+    }
+
+    let openTimer: number | undefined;
+    let observer: MutationObserver | undefined;
+
+    const scheduleOpen = () => {
+      openTimer = window.setTimeout(() => {
+        setTutorialOpen(true);
+      }, 150);
+    };
+
+    const isWelcomeOpen = () =>
+      document.querySelector('[aria-labelledby="welcome-modal-title"]') !== null;
+
+    if (!isWelcomeOpen()) {
+      scheduleOpen();
+    } else {
+      observer = new MutationObserver(() => {
+        if (!isWelcomeOpen()) {
+          observer?.disconnect();
+          observer = undefined;
+          scheduleOpen();
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      if (openTimer !== undefined) window.clearTimeout(openTimer);
+      observer?.disconnect();
+    };
+  }, [meta.id, tutorialSteps.length]);
 
   useEffect(() => {
     const modes: SimulatorMode[] = ['simulate', 'explore', 'practice', 'quiz'];
@@ -121,6 +170,22 @@ export function SimulatorLayout({
           </div>
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-center print:hidden">
+            {tutorialSteps.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setTutorialOpen(true)}
+                title={pick(
+                  'Open interactive simulator tutorial',
+                  'Buka tutorial interaktif simulator',
+                  'シミュレータの操作ガイドを開く'
+                )}
+                className="m3-btn-tonal inline-flex shrink-0 items-center gap-1.5 px-4 py-2 text-xs font-bold"
+              >
+                <HelpCircle className="h-3.5 w-3.5" />
+                {pick('Tutorial', 'Tutorial', 'チュートリアル')}
+              </button>
+            )}
+
             <button
               type="button"
               onClick={() => window.print()}
@@ -186,6 +251,13 @@ export function SimulatorLayout({
           </span>
         </div>
       </footer>
+
+      <SimulatorTutorialModal
+        isOpen={tutorialOpen}
+        meta={meta}
+        steps={tutorialSteps}
+        onClose={() => setTutorialOpen(false)}
+      />
     </div>
   );
 }
