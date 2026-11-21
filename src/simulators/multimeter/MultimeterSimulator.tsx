@@ -269,7 +269,7 @@ export function MultimeterSimulator() {
         {/* ==================== LEFT COLUMN: MULTIMETER + 6-SCENARIO ESD SVG ==================== */}
         <div className="lg:col-span-8 space-y-4">
           {/* Scenario Tabs */}
-          <div className="glass-panel flex flex-wrap gap-1.5 rounded-[28px] p-2">
+          <div className="glass-panel flex flex-wrap gap-1.5 rounded-[28px] p-2" data-tour="dmm-scenarios">
             {SCENARIO_TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -332,7 +332,7 @@ export function MultimeterSimulator() {
           />
 
           {/* Probe Overlay Controls */}
-          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
+          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5" data-tour="dmm-probes">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
@@ -395,6 +395,7 @@ export function MultimeterSimulator() {
 
           {/* Diagnostic Readout Note */}
           <div
+            data-tour="dmm-diagnostic-note"
             className={`glass-panel rounded-[28px] p-4 ${
               hasHazard
                 ? 'border border-rose-500/60 bg-rose-50/70 dark:bg-rose-950/30'
@@ -417,7 +418,7 @@ export function MultimeterSimulator() {
         {/* ==================== RIGHT COLUMN: SCENARIO & METER CONTROLS ==================== */}
         <div className="lg:col-span-4 space-y-4">
           {/* Digital vs Analog Quick Mode */}
-          <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+          <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1" data-tour="dmm-style-toggle">
             <button
               type="button"
               onClick={() => setMeterStyle('digital')}
@@ -600,7 +601,7 @@ export function MultimeterSimulator() {
 
           {/* Meter Dial / Range Controls */}
           {meterStyle === 'digital' ? (
-            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5" data-tour="dmm-dial">
               <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Digital Rotary Dial', 'Selektor Digital', 'デジタルダイヤル')}
               </div>
@@ -626,7 +627,7 @@ export function MultimeterSimulator() {
               </div>
             </div>
           ) : (
-            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+            <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5" data-tour="dmm-dial">
               <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Analog Range & Zero Ω Adj', 'Rentang Analog & Zero Ω', 'アナログレンジ＆0Ω調整')}
               </div>
@@ -665,7 +666,7 @@ export function MultimeterSimulator() {
           )}
 
           {/* Red Lead Input Jack Selector */}
-          <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5" data-tour="dmm-red-jack">
             <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Red Test Lead Jack', 'Jack Kabel Merah', '赤リード接続端子')}
             </div>

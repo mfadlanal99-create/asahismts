@@ -413,7 +413,7 @@ export function Machine3DExplorerSimulator() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3" data-tour="m3d-catalog">
           {MACHINE_CONFIGS.map((machine) => (
             <button
               key={machine.id}
@@ -481,7 +481,7 @@ export function Machine3DExplorerSimulator() {
         </div>
 
         {/* Compact CAD View & Drive Toolbar */}
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5" data-tour="m3d-toolbar">
           {/* Camera View Presets */}
           <div className="flex items-center rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-0.5 text-[11px] font-semibold">
             {(
@@ -578,7 +578,7 @@ export function Machine3DExplorerSimulator() {
       {/* Main Split Workspace: 3D Viewport + Integrated Assembly Tree */}
       <div className="grid lg:grid-cols-[1fr_296px]">
         {/* Left: 3D CAD Viewport */}
-        <div className="min-w-0">
+        <div className="min-w-0" data-tour="m3d-viewport">
           <Machine3DViewport
             parts={activeParts}
             cameraPreset={cameraPreset}
@@ -605,7 +605,7 @@ export function Machine3DExplorerSimulator() {
         </div>
 
         {/* Right: CAD Assembly Tree / Bill of Materials */}
-        <aside className="flex flex-col border-t border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] lg:h-[580px] lg:border-l lg:border-t-0">
+        <aside className="flex flex-col border-t border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container)] lg:h-[580px] lg:border-l lg:border-t-0" data-tour="m3d-bom">
           <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Assembly Tree', 'Daftar Komponen', '部品ツリー (BOM)')}

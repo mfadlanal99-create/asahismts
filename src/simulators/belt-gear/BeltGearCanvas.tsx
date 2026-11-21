@@ -307,7 +307,7 @@ export function BeltGearCanvas({
   ]);
 
   return (
-    <div className="glass-panel relative flex items-center justify-center overflow-hidden rounded-[28px] p-2">
+    <div data-tour="belt-gear-canvas" className="glass-panel relative flex items-center justify-center overflow-hidden rounded-[28px] p-2">
       <svg
         viewBox="0 0 760 400"
         className="block h-auto w-full select-none"

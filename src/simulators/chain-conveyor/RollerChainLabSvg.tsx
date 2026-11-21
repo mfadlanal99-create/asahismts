@@ -390,7 +390,7 @@ export function RollerChainLabSvg({
   return (
     <div className="space-y-4">
       {/* Main 2D CAD Sprocket & Articulated Roller Chain Drive Card */}
-      <div className="glass-panel overflow-hidden rounded-[28px]">
+      <div data-tour="chain-canvas" className="glass-panel overflow-hidden rounded-[28px]">
         {/* Card Header Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">

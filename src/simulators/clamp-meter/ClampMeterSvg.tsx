@@ -111,7 +111,7 @@ export function ClampMeterSvg({
   const clampOffsetY = clampY - 105; // Base jaw center at y=105
 
   return (
-    <div className="glass-panel rounded-[28px] p-4">
+    <div data-tour="clamp-svg" className="glass-panel rounded-[28px] p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 680 440"

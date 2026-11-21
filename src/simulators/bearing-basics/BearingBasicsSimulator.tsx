@@ -131,7 +131,7 @@ export function BearingBasicsSimulator() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            <div data-tour="bearing-basics-types" className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {(Object.keys(BEARING_SPECS) as BearingTypeId[]).map((id) => {
                 const b = BEARING_SPECS[id];
                 const active = bearingId === id;
@@ -160,7 +160,7 @@ export function BearingBasicsSimulator() {
             </div>
 
             {/* Seal / Shield Type Selector */}
-            <div className="mt-1 flex flex-col gap-2">
+            <div data-tour="bearing-basics-seals" className="mt-1 flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick('Protection Enclosure / Seal:', 'Pelindung / Seal:', '防じん・シール構造:')}
@@ -213,7 +213,7 @@ export function BearingBasicsSimulator() {
             </div>
 
             {/* Applied Load Sliders (Radial Fr & Axial Fa) */}
-            <div className="mt-1 grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div data-tour="bearing-basics-loads" className="mt-1 grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between text-xs">
                   <span className="font-medium text-[var(--md-on-surface)]">
@@ -273,7 +273,7 @@ export function BearingBasicsSimulator() {
           </div>
 
           {/* 2. Interactive Application Matcher */}
-          <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="bearing-basics-matcher" className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center gap-2">
               <Compass className="h-4 w-4 text-[var(--md-primary)]" />
               <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface)] uppercase">
@@ -367,7 +367,7 @@ export function BearingBasicsSimulator() {
 
         {/* RIGHT COLUMN (lg:col-span-7): Pure-2D CAD SVG & Engineering Notes */}
         <div className="flex flex-col gap-5 lg:col-span-7">
-          <div className="glass-panel flex w-full items-center justify-center rounded-[28px] p-3 sm:p-4">
+          <div data-tour="bearing-basics-cutaway" className="glass-panel flex w-full items-center justify-center rounded-[28px] p-3 sm:p-4">
             <BearingBasicsSvg
               bearingSpec={currentBearingSpec}
               sealType={effectiveSealType}
@@ -379,7 +379,7 @@ export function BearingBasicsSimulator() {
           </div>
 
           {/* Bearing Engineering Readout Strip */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="bearing-basics-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="glass-card rounded-[24px] p-3.5">
               <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Dynamic Cr', 'Dinamis Cr', '動定格 Cr')}
@@ -419,7 +419,7 @@ export function BearingBasicsSimulator() {
           </div>
 
           {/* Shop Practice Rule of Thumb */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="bearing-basics-diagnostics" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-start gap-2.5">
               {currentBearingSpec.id === '51105' && radialLoadKn > 0 ? (
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />

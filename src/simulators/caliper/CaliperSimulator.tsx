@@ -262,7 +262,10 @@ export function CaliperSimulator() {
       <div className="glass-panel rounded-[28px] p-4 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Instrument Selector */}
-          <div className="flex flex-wrap items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+          <div
+            data-tour="caliper-instrument-selector"
+            className="flex flex-wrap items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1"
+          >
             {(
               [
                 ['vernier-002', pick('Vernier 0.02 mm', 'Jangka Sorong 0.02 mm', 'ノギス 0.02 mm')],
@@ -287,40 +290,45 @@ export function CaliperSimulator() {
 
           {/* Mode & Loupe Toggles */}
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setShowLoupe((v) => !v)}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
-                showLoupe
-                  ? 'border-[var(--md-primary)]/40 bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
-                  : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
-              }`}
-            >
-              <Search className="h-3.5 w-3.5" />
-              {pick('Loupe', 'Kaca Pembesar', 'ルーペ')} {showLoupe ? pick('On', 'Aktif', 'ON') : pick('Off', 'Nonaktif', 'OFF')}
-            </button>
+            <div data-tour="caliper-loupe" className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setShowLoupe((v) => !v)}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  showLoupe
+                    ? 'border-[var(--md-primary)]/40 bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                    : 'border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+                }`}
+              >
+                <Search className="h-3.5 w-3.5" />
+                {pick('Loupe', 'Kaca Pembesar', 'ルーペ')} {showLoupe ? pick('On', 'Aktif', 'ON') : pick('Off', 'Nonaktif', 'OFF')}
+              </button>
 
-            {showLoupe && (
-              <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-xs">
-                {[2.5, 3, 4].map((z) => (
-                  <button
-                    key={z}
-                    type="button"
-                    onClick={() => setLoupeZoom(z)}
-                    className={`rounded-full px-2.5 py-1 transition-colors ${
-                      loupeZoom === z
-                        ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
-                        : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
-                    }`}
-                  >
-                    {z}×
-                  </button>
-                ))}
-              </div>
-            )}
+              {showLoupe && (
+                <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-xs">
+                  {[2.5, 3, 4].map((z) => (
+                    <button
+                      key={z}
+                      type="button"
+                      onClick={() => setLoupeZoom(z)}
+                      className={`rounded-full px-2.5 py-1 transition-colors ${
+                        loupeZoom === z
+                          ? 'bg-[var(--md-secondary-container)] font-bold text-[var(--md-on-secondary-container)]'
+                          : 'font-medium text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+                      }`}
+                    >
+                      {z}×
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* Lab Sub-Mode Switcher */}
-            <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+            <div
+              data-tour="caliper-submodes"
+              className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1"
+            >
               <button
                 type="button"
                 onClick={() => handleSwitchLabMode('measure')}
@@ -364,7 +372,7 @@ export function CaliperSimulator() {
         {/* Preset Parts & Zero Error Row (or QC Batch Strip when in QC mode) */}
         {labMode !== 'qc' ? (
           <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--md-outline-variant)]/50">
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div data-tour="caliper-parts" className="flex flex-wrap items-center gap-1.5">
               <span className="text-xs font-semibold text-[var(--md-on-surface-variant)] mr-1">
                 {pick('Test Parts:', 'Benda Uji:', '測定ワーク:')}
               </span>
@@ -395,7 +403,7 @@ export function CaliperSimulator() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div data-tour="caliper-zero-error" className="flex items-center gap-2">
               <label className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--md-on-surface-variant)] cursor-pointer">
                 <input
                   type="checkbox"
@@ -529,7 +537,10 @@ export function CaliperSimulator() {
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-[11px]">
+                <div
+                  data-tour="caliper-parallax"
+                  className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1 text-[11px]"
+                >
                   <span className="px-2 py-0.5 text-[var(--md-on-surface-variant)] font-medium">
                     {pick('View Angle:', 'Sudut Pandang:', '視点角度:')}
                   </span>
@@ -559,7 +570,10 @@ export function CaliperSimulator() {
               </div>
             </div>
 
-            <div className="flex w-full items-center justify-center">
+            <div
+              data-tour="caliper-canvas"
+              className="flex w-full items-center justify-center rounded-2xl"
+            >
               {instrument === 'micrometer-001' ? (
                 <MicrometerSvg
                   observedMm={observedMm}
@@ -596,7 +610,10 @@ export function CaliperSimulator() {
             </div>
 
             {/* Fine & Coarse Adjustment Controls */}
-            <div className="mt-4 pt-3 border-t border-[var(--md-outline-variant)]/50 flex flex-wrap items-center gap-4">
+            <div
+              data-tour="caliper-fine-controls"
+              className="mt-4 pt-3 border-t border-[var(--md-outline-variant)]/50 flex flex-wrap items-center gap-4"
+            >
               <div className="flex-1 min-w-[220px]">
                 <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)] mb-1.5">
                   <span>Position Slider (0 – {config.maxMm} mm)</span>
@@ -667,7 +684,7 @@ export function CaliperSimulator() {
         </div>
 
         {/* Right Column: Readout / QC / Test Yourself (4 cols) */}
-        <div className="lg:col-span-4 space-y-4">
+        <div data-tour="caliper-readout" className="lg:col-span-4 space-y-4">
           {labMode === 'qc' ? (
             <div className="glass-panel rounded-[28px] p-4 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">

@@ -110,7 +110,7 @@ export function IrThermometerSimulator() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" data-tour="ir-mode-bar">
           <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
@@ -153,7 +153,7 @@ export function IrThermometerSimulator() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Interactive Viewport SVG + Target Zone Quick Aim */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="glass-panel overflow-hidden rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel overflow-hidden rounded-[28px] p-4 sm:p-5" data-tour="ir-viewport">
             <IrThermometerSvg
               sceneId={sceneId}
               mode={mode}
@@ -171,7 +171,7 @@ export function IrThermometerSimulator() {
           </div>
 
           {/* Quick Aim Targets in Current Scene */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="ir-quick-aim">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <span className="flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
                 <Eye className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -216,7 +216,7 @@ export function IrThermometerSimulator() {
         {/* Right: Diagnostic Readouts & Instrument Controls */}
         <div className="space-y-4 lg:col-span-5">
           {/* Readout KPI Cards */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3" data-tour="ir-error-readout">
             <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
               <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Displayed Reading', 'Pembacaan Alat', '指示温度')}
@@ -252,7 +252,7 @@ export function IrThermometerSimulator() {
           {/* Controls Card */}
           <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             {/* Inspection Scene Selector */}
-            <div>
+            <div data-tour="ir-scenes">
               <label className="mb-2 flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
                 <Layers className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Industrial Inspection Scene', 'Skenario Inspeksi Industri', '産業設備検査シーン')}
@@ -280,7 +280,7 @@ export function IrThermometerSimulator() {
             </div>
 
             {/* Distance-to-Spot (D:S) & Distance */}
-            <div className="space-y-2.5 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div className="space-y-2.5 border-t border-[var(--md-outline-variant)]/50 pt-3" data-tour="ir-optics">
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
                   <Ruler className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -324,7 +324,7 @@ export function IrThermometerSimulator() {
             </div>
 
             {/* Emissivity (ε) & Presets */}
-            <div className="space-y-2.5 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div className="space-y-2.5 border-t border-[var(--md-outline-variant)]/50 pt-3" data-tour="ir-emissivity">
               <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span className="flex items-center gap-1.5">
                   <Sliders className="h-3.5 w-3.5 text-[var(--md-primary)]" />

@@ -344,7 +344,7 @@ export const ThermalExpansionSvg: FC<ThermalExpansionSvgProps> = ({
   }, [mode, barSvg, shrinkSvg, bimetalSvg]);
 
   return (
-    <div className="glass-panel overflow-hidden rounded-[28px]">
+    <div data-tour="thermal-canvas" className="glass-panel overflow-hidden rounded-[28px]">
       {/* Clean HTML CAD Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex flex-wrap items-center gap-2">

@@ -160,7 +160,7 @@ export function LubeSimulator() {
               {equipment.description}
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5" data-tour="lube-scenarios">
             <span className="mr-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               {pick('Fault Scenarios:', 'Skenario Gangguan:', '異常シナリオ:')}
             </span>
@@ -198,7 +198,7 @@ export function LubeSimulator() {
         {/* Controls Grid */}
         <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {/* Equipment Selector */}
-          <div>
+          <div data-tour="lube-equipment">
             <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Equipment Type', 'Jenis Peralatan', '対象機器')}
             </label>
@@ -227,7 +227,7 @@ export function LubeSimulator() {
           </div>
 
           {/* ISO VG Grade Selector */}
-          <div>
+          <div data-tour="lube-vg">
             <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('ISO VG Viscosity Grade', 'Grade Viskositas ISO VG', 'ISO VG 粘度グレード')}
             </label>
@@ -269,7 +269,7 @@ export function LubeSimulator() {
           </div>
 
           {/* Temperature & Water Contamination Sliders */}
-          <div className="space-y-3">
+          <div className="space-y-3" data-tour="lube-temp-water">
             <div>
               <div className="mb-1.5 flex items-center justify-between text-xs">
                 <span className="font-bold text-[var(--md-on-surface)]">
@@ -324,7 +324,7 @@ export function LubeSimulator() {
           </div>
 
           {/* Wear Particle Level */}
-          <div>
+          <div data-tour="lube-wear-rul">
             <label className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]">
               {pick('Wear Particle Level', 'Tingkat Partikel Keausan', '摩耗粉レベル')}
             </label>
@@ -397,7 +397,7 @@ export function LubeSimulator() {
       </div>
 
       {/* Live Visuals Row */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2" data-tour="lube-visuals">
         <ViscosityTempChart
           equipment={equipment}
           selectedVg={selectedVg}
@@ -421,7 +421,7 @@ export function LubeSimulator() {
       {/* Bottom Engineering Analysis Grid */}
       <div className="grid gap-5 lg:grid-cols-3">
         {/* 1. ISO 4406 Cleanliness Code */}
-        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="lube-iso4406">
           <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
             <div className="flex items-center gap-2">
               <Microscope className="h-4 w-4 text-[var(--md-primary)]" />
@@ -534,7 +534,7 @@ export function LubeSimulator() {
         </div>
 
         {/* 2. Used Oil Lab Report Diagnosis */}
-        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="lube-lab-report">
           <div className="mb-3 flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
             <ShieldAlert className="h-4 w-4 text-[var(--md-primary)]" />
             <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
@@ -589,7 +589,7 @@ export function LubeSimulator() {
         </div>
 
         {/* 3. Grease Relubrication Calculator */}
-        <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+        <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="lube-grease-calc">
           <div className="mb-3 flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
             <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
             <h3 className="text-sm font-bold text-[var(--md-on-surface)]">

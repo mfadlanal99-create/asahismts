@@ -157,7 +157,7 @@ export function RiggingLiftingSimulator() {
     <div className="space-y-5">
       {/* Top Safety Status Banner */}
       {alarms.length === 0 ? (
-        <div className="flex items-start gap-3 rounded-[24px] border border-emerald-300 bg-emerald-50/90 p-4 text-emerald-950 dark:border-emerald-800/80 dark:bg-emerald-950/40 dark:text-emerald-200">
+        <div data-tour="rigging-safety-banner" className="flex items-start gap-3 rounded-[24px] border border-emerald-300 bg-emerald-50/90 p-4 text-emerald-950 dark:border-emerald-800/80 dark:bg-emerald-950/40 dark:text-emerald-200">
           <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div className="text-xs sm:text-sm">
             <p className="font-bold">
@@ -177,7 +177,7 @@ export function RiggingLiftingSimulator() {
           </div>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div data-tour="rigging-safety-banner" className="space-y-2">
           {alarms.map((al) => (
             <div
               key={al.id}
@@ -202,7 +202,7 @@ export function RiggingLiftingSimulator() {
       )}
 
       {/* Equipment Presets Selector Strip */}
-      <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+      <div data-tour="rigging-presets" className="glass-panel rounded-[28px] p-4 sm:p-5">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
           <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             <Scale className="h-4 w-4 text-[var(--md-primary)]" />
@@ -261,7 +261,7 @@ export function RiggingLiftingSimulator() {
         {/* Left Column: Rigging Controls (5 cols) */}
         <div className="space-y-4 lg:col-span-5">
           {/* Control Card 1: Horizontal Sling Angle & Spreader Beam */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="rigging-angle" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 <Triangle className="h-4 w-4 text-[var(--md-primary)]" />
@@ -338,7 +338,7 @@ export function RiggingLiftingSimulator() {
           </div>
 
           {/* Control Card 2: Hitch Configuration & Sling Rated WLL */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
+          <div data-tour="rigging-hitch-wll" className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
@@ -423,7 +423,7 @@ export function RiggingLiftingSimulator() {
           </div>
 
           {/* Control Card 3: Center-of-Gravity (CoG) Offset & Crane Hook Horizontal Position */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
+          <div data-tour="rigging-cog-hook" className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-4">
             {/* CoG Offset Slider */}
             <div>
               <div className="flex items-center justify-between">
@@ -549,7 +549,7 @@ export function RiggingLiftingSimulator() {
           />
 
           {/* Telemetry & WLL Utilization Breakdown Cards */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div data-tour="rigging-telemetry" className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {/* Card 1: Leg 1 & Leg 2 WLL Utilization Bars */}
             <div className="glass-card rounded-[24px] p-4">
               <div className="flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
@@ -677,7 +677,7 @@ export function RiggingLiftingSimulator() {
           </div>
 
           {/* 1/sin(θ) Sling Angle Multiplier Reference Strip */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="rigging-angle-table" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-2.5 flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
               <span>
                 {pick(

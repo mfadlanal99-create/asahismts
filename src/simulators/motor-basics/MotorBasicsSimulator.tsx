@@ -143,7 +143,7 @@ export function MotorBasicsSimulator() {
             </h2>
 
             {/* Motor Type */}
-            <div className="space-y-1.5">
+            <div className="space-y-1.5" data-tour="motor-family">
               <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Electric Motor Family', 'Jenis Motor Listrik', '電動機の種類')}
               </label>
@@ -166,7 +166,7 @@ export function MotorBasicsSimulator() {
             </div>
 
             {/* Mounting & IP Rating */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3" data-tour="motor-mount-ip">
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Mounting (IEC)', 'Tipe Mounting', '取付方式')}
@@ -213,7 +213,7 @@ export function MotorBasicsSimulator() {
             </div>
 
             {/* Poles & Grid Frequency */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3" data-tour="motor-poles-freq">
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-[var(--md-on-surface)]">
                   {pick('Magnetic Poles', 'Jumlah Kutub', '極数')}
@@ -265,7 +265,7 @@ export function MotorBasicsSimulator() {
             </div>
 
             {/* Star vs Delta Segmented Control */}
-            <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+            <div className="grid grid-cols-2 gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1" data-tour="motor-star-delta">
               <button
                 type="button"
                 onClick={() => setTerminalConnection('star')}
@@ -292,7 +292,7 @@ export function MotorBasicsSimulator() {
           </div>
 
           {/* LIVE TELEMETRY & WIRING SUMMARY */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-3">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5 space-y-3" data-tour="motor-telemetry">
             <h3 className="border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Nameplate Speed, Torque & Terminal Telemetry',

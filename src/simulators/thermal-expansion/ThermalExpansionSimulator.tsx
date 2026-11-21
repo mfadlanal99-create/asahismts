@@ -228,7 +228,7 @@ export const ThermalExpansionSimulator: FC = () => {
       {/* Top Controls Ribbon */}
       <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4 sm:p-5">
         {/* Mode Selector Tabs */}
-        <div className="flex flex-wrap items-center rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+        <div data-tour="thermal-modes" className="flex flex-wrap items-center rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setMode('bar-constraint')}
@@ -268,7 +268,7 @@ export const ThermalExpansionSimulator: FC = () => {
         </div>
 
         {/* Action Buttons: Presets, Reset, Export */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div data-tour="thermal-presets" className="flex flex-wrap items-center gap-2">
           {/* Quick Presets Dropdown */}
           <div className="flex items-center gap-1.5">
             <span className="hidden text-xs font-semibold text-[var(--md-on-surface-variant)] sm:inline">
@@ -325,7 +325,7 @@ export const ThermalExpansionSimulator: FC = () => {
           />
 
           {/* Telemetry Metric Cards */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="thermal-telemetry" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {mode === 'bar-constraint' && (
               <>
                 <div className="glass-card flex flex-col rounded-[24px] p-3.5">
@@ -549,7 +549,7 @@ export const ThermalExpansionSimulator: FC = () => {
 
         {/* Right 5 Cols: Interactive Parameter Control Sidebar */}
         <div className="space-y-4 lg:col-span-5">
-          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="thermal-controls" className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <span className="flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
                 <Flame className="h-4 w-4 text-[var(--md-primary)]" />

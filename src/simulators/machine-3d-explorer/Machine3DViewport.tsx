@@ -571,6 +571,7 @@ export function Machine3DViewport({
       {/* Compact Bottom-Center Explode Scrubber Dock */}
       {!isolatedPartId && (
         <div
+          data-tour="m3d-explode"
           className={`pointer-events-auto absolute bottom-3 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-low)]/92 px-3.5 py-2 text-xs shadow-md backdrop-blur-xl ${
             selectedPart
               ? 'left-1/2 w-[min(92%,460px)] sm:left-[calc(50%-174px)] sm:w-[min(420px,calc(100%-380px))]'

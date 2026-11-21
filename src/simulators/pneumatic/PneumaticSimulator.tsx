@@ -598,7 +598,7 @@ export function PneumaticSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Toolbar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5 sm:px-5">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5 sm:px-5" data-tour="pneu-toolbar">
         <div className="flex flex-wrap items-center gap-2.5">
           <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
@@ -728,7 +728,7 @@ export function PneumaticSimulator() {
       )}
 
       {/* Plant Fault Troubleshooting Bar */}
-      <div className="glass-panel rounded-[28px] p-3.5 sm:px-5">
+      <div className="glass-panel rounded-[28px] p-3.5 sm:px-5" data-tour="pneu-faults">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="mr-1 inline-flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
@@ -910,9 +910,9 @@ export function PneumaticSimulator() {
       {/* Main Workspace Grid: Canvas + Telemetry */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left Column: 2D CAD Cutaway / ISO 1219 Schematic + Displacement-Step Chart */}
-        <div className="space-y-4 lg:col-span-8">
+        <div className="space-y-4 lg:col-span-8" data-tour="pneu-viewport">
           {workspaceMode === 'presets' && (
-            <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[24px] px-4 py-2.5">
+            <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[24px] px-4 py-2.5" data-tour="pneu-view-mode">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Visualizer Mode', 'Mode Tampilan', '表示モード')}
               </span>
@@ -1260,7 +1260,7 @@ export function PneumaticSimulator() {
         {/* Right Telemetry & Inspector Panel */}
         <div className="space-y-4 lg:col-span-4">
           {/* Live Cylinder Readouts */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pneu-telemetry">
             <div className="mb-3 flex items-center justify-between">
               <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
                 <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
@@ -1360,7 +1360,7 @@ export function PneumaticSimulator() {
           </div>
 
           {/* Air Consumption & Compressed-Air Energy Cost */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pneu-air-cost">
             <div className="mb-3 flex items-center justify-between">
               <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
                 <Zap className="h-4 w-4 text-[var(--md-primary)]" />

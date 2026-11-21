@@ -142,7 +142,7 @@ export function VibrationMeterSvg({
         : '#10B981';
 
   return (
-    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4">
+    <div data-tour="vmeter-canvas" className="glass-panel rounded-[28px] p-3.5 sm:p-4">
       <svg
         ref={svgRef}
         viewBox="0 0 760 400"

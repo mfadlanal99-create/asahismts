@@ -226,7 +226,7 @@ export function HydraulicSimulator() {
   return (
     <div className="space-y-5">
       {/* Top Status & Quick Action Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-3.5">
+      <div data-tour="hydraulic-status" className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-5 py-3.5">
         <div className="flex items-center gap-2.5">
           <span
             className={`inline-flex h-2.5 w-2.5 rounded-full ${
@@ -284,7 +284,7 @@ export function HydraulicSimulator() {
           />
 
           {/* Three Live Pressure Gauges */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div data-tour="hydraulic-gauges" className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <PressureGauge
               label={pick('P1 — Pump', 'P1 — Pompa', 'P1 — ポンプ')}
               sublabel={pick('System Supply', 'Suplai Sistem', 'システム供給')}
@@ -328,7 +328,7 @@ export function HydraulicSimulator() {
             </h2>
 
             {/* 4/3 DCV Selector */}
-            <div className="mt-3">
+            <div data-tour="hydraulic-dcv" className="mt-3">
               <label className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick(
                   '4/3 Directional Control Valve',
@@ -457,7 +457,7 @@ export function HydraulicSimulator() {
             </div>
 
             {/* Relief Valve Cracking Pressure */}
-            <div className="mt-4">
+            <div data-tour="hydraulic-relief" className="mt-4">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-semibold text-[var(--md-on-surface)]">
                   {pick(
@@ -576,7 +576,7 @@ export function HydraulicSimulator() {
           </div>
 
           {/* Maintenance Fault Injection Panel */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="hydraulic-faults" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
@@ -707,7 +707,7 @@ export function HydraulicSimulator() {
           </div>
 
           {/* Thermal & Efficiency Telemetry (Right Column) */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="hydraulic-thermal" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Thermometer

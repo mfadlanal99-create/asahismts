@@ -195,7 +195,7 @@ export function CompressorSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Scenario & Blind Diagnosis Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
+      <div data-tour="compressor-scenarios" className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
@@ -233,6 +233,7 @@ export function CompressorSimulator() {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            data-tour="compressor-blind"
             onClick={startBlindDiagnosis}
             className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs transition ${
               blindMode
@@ -351,7 +352,7 @@ export function CompressorSimulator() {
       )}
 
       {/* Live KPI Readout Strip */}
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+      <div data-tour="compressor-kpis" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
         <KpiCard
           icon={<Gauge className={`h-4 w-4 ${sol.pressureStarved ? 'text-rose-500' : 'text-[var(--md-primary)]'}`} />}
           label={pick('Discharge Pressure', 'Tekanan Keluaran', '吐出圧力')}
@@ -403,7 +404,7 @@ export function CompressorSimulator() {
       {/* Main Workspace: Schematic + Controls */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         <div className="space-y-4 lg:col-span-8">
-          <div className="flex items-center justify-center">
+          <div data-tour="compressor-skid" className="flex items-center justify-center">
             <CompressorSkidSvg
               params={params}
               dyn={dyn}
@@ -431,37 +432,39 @@ export function CompressorSimulator() {
             )}
           </h3>
 
-          <SliderControl
-            label={pick('Load Pressure Setpoint', 'Setpoint Tekanan Load', 'ロード圧力設定 (Cut-in)')}
-            value={params.loadPressureBar}
-            min={5.5}
-            max={8.5}
-            step={0.1}
-            unit="bar"
-            onChange={(v) => updateParam('loadPressureBar', v)}
-          />
+          <div data-tour="compressor-setpoints" className="space-y-3.5">
+            <SliderControl
+              label={pick('Load Pressure Setpoint', 'Setpoint Tekanan Load', 'ロード圧力設定 (Cut-in)')}
+              value={params.loadPressureBar}
+              min={5.5}
+              max={8.5}
+              step={0.1}
+              unit="bar"
+              onChange={(v) => updateParam('loadPressureBar', v)}
+            />
 
-          <SliderControl
-            label={pick('Unload Pressure Setpoint', 'Setpoint Tekanan Unload', 'アンロード圧力設定 (Cut-out)')}
-            value={params.unloadPressureBar}
-            min={6.5}
-            max={9.5}
-            step={0.1}
-            unit="bar"
-            onChange={(v) => updateParam('unloadPressureBar', v)}
-          />
+            <SliderControl
+              label={pick('Unload Pressure Setpoint', 'Setpoint Tekanan Unload', 'アンロード圧力設定 (Cut-out)')}
+              value={params.unloadPressureBar}
+              min={6.5}
+              max={9.5}
+              step={0.1}
+              unit="bar"
+              onChange={(v) => updateParam('unloadPressureBar', v)}
+            />
 
-          <SliderControl
-            label={pick('Plant Air Demand', 'Kebutuhan Udara Pabrik', '工場エア需要')}
-            value={params.plantDemandM3Min}
-            min={1.0}
-            max={12.0}
-            step={0.2}
-            unit="m³/min"
-            onChange={(v) => updateParam('plantDemandM3Min', v)}
-          />
+            <SliderControl
+              label={pick('Plant Air Demand', 'Kebutuhan Udara Pabrik', '工場エア需要')}
+              value={params.plantDemandM3Min}
+              min={1.0}
+              max={12.0}
+              step={0.2}
+              unit="m³/min"
+              onChange={(v) => updateParam('plantDemandM3Min', v)}
+            />
+          </div>
 
-          <div className="border-t border-[var(--md-outline-variant)]/50 pt-3">
+          <div data-tour="compressor-faults" className="border-t border-[var(--md-outline-variant)]/50 pt-3">
             <div className="mb-2.5 flex items-center justify-between">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(

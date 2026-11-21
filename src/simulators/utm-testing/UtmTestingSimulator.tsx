@@ -306,7 +306,7 @@ export function UtmTestingSimulator() {
       {/* Top Controls Bar */}
       <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Mode & Material Selectors */}
-        <div className="flex flex-col gap-2.5 md:col-span-5">
+        <div data-tour="utm-specimen" className="flex flex-col gap-2.5 md:col-span-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Test Mode & Specimen', 'Mode Uji & Spesimen', '試験モード・試験片')}
@@ -381,7 +381,7 @@ export function UtmTestingSimulator() {
         </div>
 
         {/* Specimen Geometry Sliders */}
-        <div className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
+        <div data-tour="utm-geometry" className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Specimen Dimensions', 'Dimensi Spesimen', '試験片寸法')}
@@ -441,7 +441,7 @@ export function UtmTestingSimulator() {
         </div>
 
         {/* Crosshead Speed & Action Controls */}
-        <div className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-3 md:border-l md:pl-4">
+        <div data-tour="utm-controls" className="flex flex-col justify-between gap-2.5 border-[var(--md-outline-variant)]/50 md:col-span-3 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Speed & Run', 'Kecepatan & Kontrol', '速度・制御')}
@@ -484,6 +484,7 @@ export function UtmTestingSimulator() {
 
             {/* Emergency Stop Button in bar */}
             <button
+              data-tour="utm-estop"
               type="button"
               onClick={handleEmergencyStop}
               title={pick('Emergency Stop', 'Berhenti Darurat', '非常停止')}
@@ -625,7 +626,7 @@ export function UtmTestingSimulator() {
       {/* Main Interactive Workspace Grid (SVG 6 cols + Charts & Readouts 6 cols) */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: UTM Load Frame CAD SVG View (lg:col-span-6) */}
-        <div className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+        <div data-tour="utm-frame" className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5 lg:col-span-6">
           <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-3">
             <div className="flex items-center gap-2">
               <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
@@ -664,7 +665,7 @@ export function UtmTestingSimulator() {
         {/* Right: Charts, Digital Readouts & Extracted Properties (lg:col-span-6) */}
         <div className="flex flex-col gap-4 lg:col-span-6">
           {/* Digital Telemetry Readouts (4 cards) */}
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          <div data-tour="utm-telemetry" className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {/* 1. Force kN */}
             <div className="glass-card flex flex-col rounded-[24px] p-3.5">
               <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
@@ -729,7 +730,7 @@ export function UtmTestingSimulator() {
           />
 
           {/* Extracted Mechanical Properties Matrix (ASTM E8 / E9) */}
-          <div className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="utm-results" className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
                 <Layers className="h-4 w-4 text-[var(--md-primary)]" />

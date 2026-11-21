@@ -158,7 +158,7 @@ export function GearStrengthSimulator() {
       {/* Top Banner: Quick Presets, Controls & Status Indicator */}
       <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Gear Mode Switcher */}
-        <div className="flex flex-col gap-2 md:col-span-4">
+        <div data-tour="gear-mode" className="flex flex-col gap-2 md:col-span-4">
           <label className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
             {pick('Gear Configuration Mode', 'Mode Konfigurasi Roda Gigi', '歯車形式・駆動モード')}
           </label>
@@ -234,7 +234,7 @@ export function GearStrengthSimulator() {
         </div>
 
         {/* Quick Presets & Actions */}
-        <div className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
+        <div data-tour="gear-presets" className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
               {pick('Engineering Benchmarks', 'Benchmark Rekayasa', '標準ベンチマーク')}
@@ -291,6 +291,7 @@ export function GearStrengthSimulator() {
 
           {/* Safety Status Alert Banner */}
           <div
+            data-tour="gear-safety"
             className={`flex items-start gap-3 rounded-[24px] border p-4 transition-colors ${
               analysisResult.status === 'SAFE'
                 ? 'border-emerald-500/35 bg-emerald-500/10 text-emerald-900 dark:text-emerald-200'
@@ -342,7 +343,7 @@ export function GearStrengthSimulator() {
           </div>
 
           {/* Key Metric Summary Cards (Large, High-Legibility Glass Cards) */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="gear-metrics" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="glass-card rounded-[24px] p-3.5">
               <span className="text-xs font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Nominal Torque T₁', 'Torsi Nominal T₁', '入力トルク T₁')}
@@ -563,7 +564,7 @@ export function GearStrengthSimulator() {
         {/* Right Column: Controls, Sliders & Material Selection (lg:col-span-5) */}
         <div className="flex flex-col gap-4 lg:col-span-5">
           {/* Material Selection Card */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="gear-material" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 {pick('Gear Material & Heat Treatment', 'Material Roda Gigi & Perlakuan Panas', '歯車材質・熱処理仕様')}
@@ -695,7 +696,7 @@ export function GearStrengthSimulator() {
           </div>
 
           {/* Operating Parameters Card */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="gear-kinematics" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 {pick('Power & Kinematic Inputs', 'Input Daya & Kinematika', '動力・運動諸元設定')}

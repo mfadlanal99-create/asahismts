@@ -96,7 +96,7 @@ export function VibrationMeterSimulator() {
           />
 
           {/* 4-Point Route Comparison Grid */}
-          <div className="glass-panel space-y-3.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="vmeter-route" className="glass-panel space-y-3.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 <MapPin className="h-4 w-4 text-[var(--md-primary)]" />
@@ -164,7 +164,7 @@ export function VibrationMeterSimulator() {
           </div>
 
           {/* Diagnostic Interpretation Card */}
-          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="vmeter-diagnostic" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {scenarioId === 'healthy' ? (
@@ -229,7 +229,7 @@ export function VibrationMeterSimulator() {
             </div>
 
             {/* Measurement Mode */}
-            <div className="space-y-2">
+            <div data-tour="vmeter-modes" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Measurement Mode', 'Mode Pengukuran', '測定モード')}
               </label>
@@ -262,7 +262,7 @@ export function VibrationMeterSimulator() {
             </div>
 
             {/* Probe Point Selector */}
-            <div className="space-y-2">
+            <div data-tour="vmeter-probe" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Magnetic Probe Placement', 'Posisi Probe Magnetik', 'マグネットプローブ位置')}
               </label>
@@ -285,7 +285,7 @@ export function VibrationMeterSimulator() {
             </div>
 
             {/* Machine RPM */}
-            <div className="space-y-2">
+            <div data-tour="vmeter-rpm" className="space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Machine Speed (RPM)', 'Putaran Mesin (RPM)', '機械回転数 (RPM)')}
@@ -322,7 +322,7 @@ export function VibrationMeterSimulator() {
             </div>
 
             {/* ISO 10816-3 Machine Class & Foundation */}
-            <div className="space-y-2">
+            <div data-tour="vmeter-iso-class" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(
                   'ISO 10816-3 Power & Foundation Class',
@@ -354,7 +354,7 @@ export function VibrationMeterSimulator() {
             </div>
 
             {/* Fault Scenarios */}
-            <div className="space-y-2">
+            <div data-tour="vmeter-faults" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Fault Scenario', 'Skenario Kerusakan', '故障シナリオ')}
               </label>

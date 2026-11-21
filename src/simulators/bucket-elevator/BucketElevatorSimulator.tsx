@@ -107,7 +107,7 @@ export function BucketElevatorSimulator() {
     <div className="space-y-4">
       {/* Top Action, Elevator Type & Fault Injection Bar */}
       <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
-        <div className="flex flex-wrap items-center gap-1.5">
+        <div data-tour="bucket-faults" className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Fault Injection:', 'Injeksi Gangguan:', '異常注入:')}
           </span>
@@ -155,7 +155,7 @@ export function BucketElevatorSimulator() {
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div data-tour="bucket-type" className="flex flex-wrap items-center gap-2">
           <div className="flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             {(
               [
@@ -221,7 +221,7 @@ export function BucketElevatorSimulator() {
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-12">
         {/* Left Column: Cutaway SVG + Live KPI Cards */}
         <div className="flex flex-col gap-4 lg:col-span-7">
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="bucket-cutaway" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
                 <Layers className="h-4 w-4 text-[var(--md-primary)]" />
@@ -258,7 +258,7 @@ export function BucketElevatorSimulator() {
 
           {/* Diagnostic Banner + 6 KPI Boxes */}
           <div className="glass-panel flex flex-1 flex-col justify-between gap-3.5 rounded-[28px] p-4 sm:p-5">
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            <div data-tour="bucket-kpis" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
                 <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                   {pick('Mass Capacity', 'Kapasitas Massa', '質量輸送量')}
@@ -326,7 +326,7 @@ export function BucketElevatorSimulator() {
               </div>
             </div>
 
-            <div className={`rounded-[22px] border p-3.5 text-xs ${healthColorClass}`}>
+            <div data-tour="bucket-health-banner" className={`rounded-[22px] border p-3.5 text-xs ${healthColorClass}`}>
               <div className="flex items-start gap-2">
                 {metrics.healthStatus === 'optimal' ? (
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
@@ -434,7 +434,7 @@ export function BucketElevatorSimulator() {
             </div>
 
             {/* Bulk Material Presets */}
-            <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
+            <div data-tour="bucket-material" className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="mb-2 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Bulk Material Preset:',
@@ -467,7 +467,7 @@ export function BucketElevatorSimulator() {
             </div>
 
             {/* Group 1: Drive & Head Pulley */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="bucket-drive" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Drive & Head Pulley',
@@ -574,7 +574,7 @@ export function BucketElevatorSimulator() {
             </div>
 
             {/* Group 2: Bucket & Casing Geometry */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="bucket-geometry" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Bucket & Casing Geometry',

@@ -215,7 +215,7 @@ export function ConditionMonitoringPanel({
         : 'bg-[var(--md-surface-container)] text-[var(--md-on-surface)] border-[var(--md-outline-variant)]/60';
 
   return (
-    <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+    <div data-tour="bearing-diagnostics" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
       {/* Header + Health State Selector */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">

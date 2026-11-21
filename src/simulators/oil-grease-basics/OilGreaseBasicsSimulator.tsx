@@ -121,7 +121,7 @@ export function OilGreaseBasicsSimulator() {
   return (
     <div className="w-full space-y-5">
       {/* Top Mode Selector Tabs */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5" data-tour="ogb-mode-bar">
         <div className="flex flex-wrap items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
@@ -177,7 +177,7 @@ export function OilGreaseBasicsSimulator() {
           {mode === 'oil' ? (
             <>
               {/* "Which Oil for This Machine?" Beginner Selector */}
-              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5" data-tour="ogb-oil-helper">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
@@ -240,7 +240,7 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* Oil Family Selection Card */}
-              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5" data-tour="ogb-oil-family">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                     {pick(
@@ -354,7 +354,7 @@ export function OilGreaseBasicsSimulator() {
               </div>
 
               {/* Operating Temperature Slider */}
-              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+              <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5" data-tour="ogb-temp-slider">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <Thermometer className="h-4 w-4 text-[var(--md-primary)]" />
@@ -558,7 +558,7 @@ export function OilGreaseBasicsSimulator() {
           )}
 
           {/* Quick Technical Tip Card */}
-          <div className="flex items-start gap-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs text-[var(--md-on-surface-variant)]">
+          <div className="flex items-start gap-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs text-[var(--md-on-surface-variant)]" data-tour="ogb-field-tip">
             <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
             <div className="space-y-1">
               <span className="font-bold text-[var(--md-on-surface)]">
@@ -596,7 +596,7 @@ export function OilGreaseBasicsSimulator() {
         {/* ========================================================= */}
         <div className="flex flex-col gap-4 lg:col-span-7">
           {/* Pure-2D CAD SVG Visualizer */}
-          <div className="glass-panel flex items-center justify-center overflow-hidden rounded-[28px] p-2.5">
+          <div className="glass-panel flex items-center justify-center overflow-hidden rounded-[28px] p-2.5" data-tour="ogb-viewport">
             <OilGreaseBasicsSvg
               mode={mode}
               oilFamilyId={selectedFamilyId}

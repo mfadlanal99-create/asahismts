@@ -132,7 +132,7 @@ export function ValvePackingSimulator() {
   return (
     <div className="space-y-4">
       {/* Preset & Action Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
+      <div data-tour="valve-presets" className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
@@ -232,12 +232,12 @@ export function ValvePackingSimulator() {
       {/* Main Grid: SVG + Readouts on Left, Controls on Right */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         <div className="space-y-4 lg:col-span-8">
-          <div className="flex items-center justify-center">
+          <div data-tour="valve-canvas" className="flex items-center justify-center">
             <ValveCutawaySvg params={params} telemetry={telemetry} />
           </div>
 
           {/* Live Readout Cards */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="valve-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
                 <span>{pick('Flow Rate (Q)', 'Laju Aliran (Q)', '流量 (Q)')}</span>
@@ -341,7 +341,7 @@ export function ValvePackingSimulator() {
         </div>
 
         {/* Right Column: Interactive Controls */}
-        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
+        <div data-tour="valve-controls" className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <h3 className="border-b border-[var(--md-outline-variant)]/50 pb-2.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
             {pick(
               'Valve & Packing Controls',
@@ -506,7 +506,7 @@ export function ValvePackingSimulator() {
           </div>
 
           {/* Steam Trap / Seat Fault Injection */}
-          <div>
+          <div data-tour="valve-faults">
             <label
               htmlFor="fault-injection-select"
               className="mb-1.5 block text-xs font-bold text-[var(--md-on-surface)]"

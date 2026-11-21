@@ -707,7 +707,7 @@ export function ScrewConveyorSvg({
     hotspots.find((h) => h.id === activeProbe) ?? hotspots[1];
 
   return (
-    <div className="space-y-3 overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-2.5">
+    <div data-tour="screw-canvas" className="space-y-3 overflow-hidden rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)] p-2.5">
       <svg
         viewBox="0 0 820 420"
         className="w-full h-auto select-none rounded-[16px]"

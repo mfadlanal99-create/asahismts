@@ -82,7 +82,7 @@ export function CompressorAnalytics({
   );
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <div data-tour="compressor-analytics" className="grid grid-cols-1 gap-4 lg:grid-cols-2">
       {/* 1. Receiver Pressure Sawtooth & Load/Unload Duty-Cycle Chart */}
       <div className="glass-panel rounded-[28px] p-4 sm:p-5">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">

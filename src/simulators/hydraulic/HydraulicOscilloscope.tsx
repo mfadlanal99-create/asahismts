@@ -76,7 +76,7 @@ export function HydraulicOscilloscope({
   const velZeroY = yForVel(0);
 
   return (
-    <div className="glass-panel overflow-hidden rounded-[28px]">
+    <div data-tour="hydraulic-oscilloscope" className="glass-panel overflow-hidden rounded-[28px]">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-2.5">
         <div className="flex items-center gap-2">
           <Activity className="h-4 w-4 text-[var(--md-primary)]" />

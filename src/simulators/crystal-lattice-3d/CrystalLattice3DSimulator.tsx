@@ -809,7 +809,7 @@ export function CrystalLattice3DSimulator() {
       <section className="glass-panel rounded-[28px] p-4 sm:p-5">
         {/* Top Row: System Filters + Strip/Gallery Toggle */}
         <div className="flex flex-wrap items-center justify-between gap-2.5">
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div data-tour="crystal-system-filter" className="flex flex-wrap items-center gap-1.5">
             {(Object.keys(SYSTEM_LABELS) as ('all' | CrystalSystemId)[]).map(
               (sysKey) => {
                 const active = systemFilter === sysKey;
@@ -860,7 +860,7 @@ export function CrystalLattice3DSimulator() {
         </div>
 
         {/* Real Engineering Material Database Quick-Load Bar */}
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-[var(--md-outline-variant)]/45 pt-3">
+        <div data-tour="crystal-real-materials" className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-[var(--md-outline-variant)]/45 pt-3">
           <span className="inline-flex items-center gap-1 pr-1 text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             <FlaskConical className="h-3.5 w-3.5 text-[var(--md-primary)]" />
             {pick('Real Materials:', 'Material Nyata:', '実在結晶:')}
@@ -1037,7 +1037,7 @@ export function CrystalLattice3DSimulator() {
           </div>
 
           <div className="flex flex-wrap items-center gap-1.5">
-            <div className="flex items-center rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] p-0.5 text-[11px] font-semibold">
+            <div data-tour="crystal-camera-presets" className="flex items-center rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] p-0.5 text-[11px] font-semibold">
               {(
                 [
                   ['iso', 'Iso'],
@@ -1092,6 +1092,7 @@ export function CrystalLattice3DSimulator() {
         >
           {/* Left: Interactive 3D Canvas Viewport */}
           <div
+            data-tour="crystal-viewport"
             ref={containerRef}
             className={`relative w-full select-none overflow-hidden ${
               isFullscreen ? 'min-h-[420px] flex-1 lg:h-full' : 'h-[470px] lg:h-[560px]'
@@ -1186,7 +1187,7 @@ export function CrystalLattice3DSimulator() {
             </div>
 
             {/* Bottom-Center 4-Mode Floating Capsule Dock */}
-            <div className="pointer-events-auto absolute bottom-3.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container)]/92 p-1 shadow-md backdrop-blur-xl">
+            <div data-tour="crystal-display-dock" className="pointer-events-auto absolute bottom-3.5 left-1/2 flex -translate-x-1/2 items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container)]/92 p-1 shadow-md backdrop-blur-xl">
               {(
                 [
                   ['ball-stick', pick('Ball & Stick', 'Bola & Batang', '球棒')],
@@ -1235,6 +1236,7 @@ export function CrystalLattice3DSimulator() {
                 </button>
                 <button
                   type="button"
+                  data-tour="crystal-defect-tab"
                   onClick={() => setSidebarTab('miller')}
                   className={`inline-flex items-center justify-center gap-1 rounded-full py-1.5 transition ${
                     sidebarTab === 'miller'
@@ -1266,7 +1268,7 @@ export function CrystalLattice3DSimulator() {
               {sidebarTab === 'controls' && (
                 <>
                   {/* 2x2 Material You Quick Settings Overlay Toggles */}
-                  <div className="grid grid-cols-2 gap-2">
+                  <div data-tour="crystal-toggles" className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => {
@@ -2001,7 +2003,7 @@ export function CrystalLattice3DSimulator() {
       </section>
 
       {/* 3. Clean Tabbed Bottom Deck (KPI Summary Cards <-> Simulated XRD Diffractometer) */}
-      <section className="glass-panel rounded-[28px] p-4 sm:p-5">
+      <section data-tour="crystal-deck" className="glass-panel rounded-[28px] p-4 sm:p-5">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] p-1 text-xs font-bold">
             <button

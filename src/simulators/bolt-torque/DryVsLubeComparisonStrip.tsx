@@ -44,7 +44,7 @@ export function DryVsLubeComparisonStrip({
   const molyOverloaded = molyRow.res.proofPercent > 100;
 
   return (
-    <div className="glass-panel rounded-[28px] p-5">
+    <div data-tour="bolt-dry-vs-lube" className="glass-panel rounded-[28px] p-5">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-3.5">
         <div className="flex items-start gap-2.5">
           <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">

@@ -186,7 +186,7 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* 1. Nominal Diameter */}
-          <div>
+          <div data-tour="fits-diameter">
             <div className="flex items-center justify-between text-xs">
               <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
@@ -218,7 +218,7 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* 2. Hole Class (H6, H7, H8) */}
-          <div>
+          <div data-tour="fits-hole">
             <div className="flex items-center justify-between text-xs">
               <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
@@ -276,7 +276,7 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* 3. Shaft Class (f7, g6, h6, k6, m6, p6, s6) */}
-          <div>
+          <div data-tour="fits-shaft">
             <div className="flex items-center justify-between text-xs">
               <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
@@ -367,7 +367,7 @@ export function FitsTolerancesSimulator() {
           </div>
 
           {/* 5. Induction Heater / Cryo Shaft Temperature (-80 °C to +160 °C) */}
-          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+          <div data-tour="fits-shrink-temp" className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex items-center justify-between text-xs">
               <label
                 htmlFor="thermal-temp-slider"
@@ -464,6 +464,7 @@ export function FitsTolerancesSimulator() {
         <div className="space-y-4 lg:col-span-7">
           {/* Fit Classification Banner */}
           <div
+            data-tour="fits-banner"
             className={`flex items-start gap-3 rounded-[24px] border p-4 ${fitStatusBanner.classes}`}
           >
             <BannerIcon
@@ -487,7 +488,7 @@ export function FitsTolerancesSimulator() {
           />
 
           {/* 4 Live Engineering Readout Cards */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="fits-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {/* Card 1: Resulting Clearance / Interference */}
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
@@ -607,7 +608,7 @@ export function FitsTolerancesSimulator() {
       </div>
 
       {/* Bottom Interactive Go / No-Go Plug & Snap Gauge Quality Control Inspector */}
-      <div className="glass-panel rounded-[28px] p-5">
+      <div data-tour="fits-qc-bench" className="glass-panel rounded-[28px] p-5">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-3">
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-[var(--md-primary)]" />

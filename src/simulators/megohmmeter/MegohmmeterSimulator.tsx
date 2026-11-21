@@ -199,7 +199,7 @@ export function MegohmmeterSimulator() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" data-tour="meg-hv-actions">
           <button
             type="button"
             onClick={handleToggleTest}
@@ -237,7 +237,7 @@ export function MegohmmeterSimulator() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Interactive Instrument SVG + Polarization Curve */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="glass-panel overflow-hidden rounded-[28px] p-3.5">
+          <div className="glass-panel overflow-hidden rounded-[28px] p-3.5" data-tour="meg-svg">
             <MegohmmeterSvg
               voltage={voltage}
               lead={lead}
@@ -252,7 +252,7 @@ export function MegohmmeterSimulator() {
           </div>
 
           {/* Time-Accelerated Polarization Curve R(t) */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="meg-curve">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Activity className="h-4 w-4 text-[var(--md-primary)]" />
@@ -377,7 +377,7 @@ export function MegohmmeterSimulator() {
         {/* Right: Controls & Diagnostic Readouts */}
         <div className="space-y-4 lg:col-span-5">
           {/* Verdict Banner */}
-          <div className={`flex items-center gap-2.5 rounded-[24px] border p-3.5 ${verdictBadge.bg}`}>
+          <div className={`flex items-center gap-2.5 rounded-[24px] border p-3.5 ${verdictBadge.bg}`} data-tour="meg-verdict">
             {verdictBadge.icon}
             <span className="text-xs font-bold">{verdictBadge.label}</span>
           </div>
@@ -444,7 +444,7 @@ export function MegohmmeterSimulator() {
           {/* Controls Card */}
           <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             {/* Test Voltage */}
-            <div>
+            <div data-tour="meg-voltage">
               <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
                 <Zap className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('DC Test Voltage', 'Tegangan Uji DC', 'DC試験電圧')}
@@ -491,7 +491,7 @@ export function MegohmmeterSimulator() {
             </div>
 
             {/* Ambient Winding Temperature */}
-            <div>
+            <div data-tour="meg-temp">
               <div className="mb-1.5 flex items-center justify-between text-xs font-bold text-[var(--md-on-surface)]">
                 <span className="flex items-center gap-1.5">
                   <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -513,7 +513,7 @@ export function MegohmmeterSimulator() {
             </div>
 
             {/* Motor Condition Presets */}
-            <div>
+            <div data-tour="meg-conditions">
               <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[var(--md-on-surface)]">
                 <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {pick('Motor Winding Condition', 'Kondisi Belitan Motor', 'モータ巻線状態')}

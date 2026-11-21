@@ -177,7 +177,7 @@ export function UtmCharts({
   };
 
   return (
-    <div className="glass-panel flex w-full flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
+    <div data-tour="utm-charts" className="glass-panel flex w-full flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
       {/* Chart Header & Mode Toggle Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
         <div className="flex items-center gap-2">

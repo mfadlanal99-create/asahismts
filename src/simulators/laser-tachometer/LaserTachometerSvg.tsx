@@ -457,7 +457,7 @@ export function LaserTachometerSvg({
   );
 
   return (
-    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4">
+    <div className="glass-panel rounded-[28px] p-3.5 sm:p-4" data-tour="tach-viewport">
       <svg
         ref={svgRef}
         viewBox="0 0 880 460"

@@ -232,7 +232,7 @@ export function GearStrengthSvg({
         : { bg: '#ef4444', text: '#ffffff', label: 'FAIL' };
 
   return (
-    <div className="glass-panel relative flex w-full items-center justify-center overflow-hidden rounded-[28px] p-4 sm:p-5">
+    <div data-tour="gear-svg" className="glass-panel relative flex w-full items-center justify-center overflow-hidden rounded-[28px] p-4 sm:p-5">
       <svg
         viewBox={`0 0 ${svgW} ${svgH}`}
         className="w-full h-auto max-h-[480px] select-none"

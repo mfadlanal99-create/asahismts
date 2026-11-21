@@ -112,7 +112,7 @@ export function FlangeStarMiniLab({ targetTorqueNm }: FlangeStarMiniLabProps) {
   };
 
   return (
-    <div className="glass-panel rounded-[28px] p-5">
+    <div data-tour="bolt-flange-star" className="glass-panel rounded-[28px] p-5">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-4">
         <div>
           <h3 className="text-sm font-bold text-[var(--md-on-surface)]">

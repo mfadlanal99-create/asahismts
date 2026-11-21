@@ -302,7 +302,7 @@ export function HardnessSimulator() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left Column: Industrial Machine SVG CAD View (lg:col-span-7) */}
         <div className="flex flex-col gap-4 lg:col-span-7">
-          <div className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5">
+          <div data-tour="hardness-machine" className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5">
             <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-[var(--md-primary)] animate-pulse" />
@@ -387,7 +387,7 @@ export function HardnessSimulator() {
             </div>
 
             {/* 1. Scale Selector (HRC, HRB, HBW, HV) */}
-            <div className="space-y-2">
+            <div data-tour="hardness-scale" className="space-y-2">
               <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Hardness Scale & Indenter Method', 'Metode & Skala Kekerasan', '硬さスケール・圧子方式')}
               </label>
@@ -428,7 +428,7 @@ export function HardnessSimulator() {
             </div>
 
             {/* 2. Material Specimen Selector */}
-            <div className="space-y-2">
+            <div data-tour="hardness-specimen" className="space-y-2">
               <label className="text-xs font-bold text-[var(--md-on-surface)]">
                 {pick('Specimen Material', 'Material Benda Uji', '試験片材質')}
               </label>
@@ -474,7 +474,7 @@ export function HardnessSimulator() {
             </div>
 
             {/* 3. Dwell Time Slider & Auto-Cycle Switch */}
-            <div className="grid grid-cols-2 gap-3 pt-1">
+            <div data-tour="hardness-dwell" className="grid grid-cols-2 gap-3 pt-1">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="flex items-center gap-1 font-bold text-[var(--md-on-surface)]">
@@ -522,7 +522,7 @@ export function HardnessSimulator() {
             </div>
 
             {/* 4. Action Buttons */}
-            <div className="flex items-center gap-2 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div data-tour="hardness-cycle" className="flex items-center gap-2 border-t border-[var(--md-outline-variant)]/50 pt-3">
               <button
                 type="button"
                 onClick={handleStartCycle}
@@ -555,7 +555,7 @@ export function HardnessSimulator() {
           </div>
 
           {/* ASTM E140 Conversion Card */}
-          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="hardness-e140" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
                 <FileSpreadsheet className="h-4 w-4 text-[var(--md-primary)]" />
@@ -668,7 +668,7 @@ export function HardnessSimulator() {
       </div>
 
       {/* Test Log Table Card */}
-      <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+      <div data-tour="hardness-log" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
         <div className="flex flex-col justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
             <span className="text-sm font-bold text-[var(--md-on-surface)]">

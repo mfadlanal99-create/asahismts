@@ -132,7 +132,7 @@ export function VibratingFeederSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Toolbar: Material Presets & Simulation Controls */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
+      <div data-tour="feeder-presets" className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Material:', 'Material:', '搬送物:')}
@@ -198,7 +198,7 @@ export function VibratingFeederSimulator() {
       <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-12">
         {/* Left Column: Live Cutaway SVG + Telemetry Cards + Diagnostic Banner */}
         <div className="flex flex-col gap-4 lg:col-span-8">
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="feeder-canvas" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <div className="flex items-center gap-2">
                 <div className="sim-dial flex h-7 w-7 items-center justify-center">
@@ -236,7 +236,7 @@ export function VibratingFeederSimulator() {
           </div>
 
           {/* 6 Engineering KPI Readout Cards */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div data-tour="feeder-telemetry" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span>{pick('Throw Index Kᵥ', 'Indeks Lempar Kᵥ', '投擲指数 Kᵥ')}</span>
@@ -325,6 +325,7 @@ export function VibratingFeederSimulator() {
 
           {/* Diagnostic & Fault Status Banner */}
           <div
+            data-tour="feeder-diagnostic"
             className={`flex flex-wrap items-center justify-between gap-3 rounded-[24px] border p-4 ${
               metrics.healthStatus === 'critical'
                 ? 'border-rose-400/50 bg-rose-500/10 text-rose-900 dark:text-rose-100'
@@ -417,7 +418,7 @@ export function VibratingFeederSimulator() {
         {/* Right Column: Organized Parameter Groups & Fault Injection */}
         <div className="flex flex-col gap-3.5 lg:col-span-4">
           {/* Group 1: Drive & Vibration */}
-          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+          <div data-tour="feeder-drive" className="glass-panel space-y-2.5 rounded-[28px] p-4">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('1. Drive & Vibration', '1. Penggerak & Getaran', '1. 加振・駆動パラメータ')}
@@ -507,7 +508,7 @@ export function VibratingFeederSimulator() {
           </div>
 
           {/* Group 2: Trough & Gate Geometry */}
-          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+          <div data-tour="feeder-trough" className="glass-panel space-y-2.5 rounded-[28px] p-4">
             <div className="border-b border-[var(--md-outline-variant)]/50 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('2. Trough & Gate Geometry', '2. Geometri Bak & Gerbang', '2. トラフ・ゲート形状')}
@@ -619,7 +620,7 @@ export function VibratingFeederSimulator() {
           </div>
 
           {/* Group 3: Material & Isolation Springs */}
-          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+          <div data-tour="feeder-springs" className="glass-panel space-y-2.5 rounded-[28px] p-4">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('3. Material & Springs', '3. Material & Pegas', '3. 搬送物・防振ばね')}
@@ -710,7 +711,7 @@ export function VibratingFeederSimulator() {
           </div>
 
           {/* Fault Injection Panel */}
-          <div className="glass-panel space-y-2.5 rounded-[28px] p-4">
+          <div data-tour="feeder-faults" className="glass-panel space-y-2.5 rounded-[28px] p-4">
             <div className="border-b border-[var(--md-outline-variant)]/50 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('Fault Injection Lab', 'Simulasi Gangguan', '異常・故障注入ラボ')}

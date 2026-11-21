@@ -258,7 +258,7 @@ export function BoreGaugeSimulator() {
               )}
             </span>
 
-            <div className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+            <div data-tour="bore-gauge-bezel" className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
               <span className="px-2 text-[var(--md-on-surface-variant)] font-medium">
                 {pick('Bezel Zero:', 'Nol Bezel:', 'ゼロ補正:')}
               </span>
@@ -283,7 +283,7 @@ export function BoreGaugeSimulator() {
         </div>
 
         {/* Preset Selector Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+        <div data-tour="bore-gauge-presets" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
           {presetOptions.map((item) => {
             const active = presetId === item.id;
             return (
@@ -315,7 +315,7 @@ export function BoreGaugeSimulator() {
         {/* Interactive Probe Controls: Depth Plane, Measurement Axis, Rocking Angle */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 pt-3 border-t border-[var(--md-outline-variant)]/50">
           {/* Probe Depth Plane */}
-          <div className="md:col-span-4 space-y-1.5">
+          <div data-tour="bore-gauge-depth" className="md:col-span-4 space-y-1.5">
             <label className="block text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick(
                 '1. Probe Depth Plane',
@@ -394,7 +394,7 @@ export function BoreGaugeSimulator() {
           </div>
 
           {/* Gauge Rocking Angle (-8° to +8°) */}
-          <div className="md:col-span-4 space-y-1.5">
+          <div data-tour="bore-gauge-rocking" className="md:col-span-4 space-y-1.5">
             <div className="flex items-center justify-between">
               <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick(
@@ -482,7 +482,7 @@ export function BoreGaugeSimulator() {
       {/* Main 12-Column Split Layout: 7-col CAD Stage + 5-col 6-Point Mapping & Verdict */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
         {/* Left Column (7/12): Unified CAD Machine Illustration + Off-Null Warning */}
-        <div className="lg:col-span-7 space-y-3">
+        <div data-tour="bore-gauge-canvas" className="lg:col-span-7 space-y-3">
           <BoreGaugeSvg
             presetId={presetId}
             activeProfile={activeProfile}
@@ -507,7 +507,7 @@ export function BoreGaugeSimulator() {
         </div>
 
         {/* Right Column (5/12): 6-Point Bore Mapping Matrix, Live Diagnostics & Verdict */}
-        <div className="lg:col-span-5 glass-panel rounded-[28px] p-4 space-y-3.5">
+        <div data-tour="bore-gauge-mapping" className="lg:col-span-5 glass-panel rounded-[28px] p-4 space-y-3.5">
           <div className="space-y-2">
             <div>
               <h3 className="text-sm font-bold text-[var(--md-on-surface)] flex items-center gap-2">
@@ -683,7 +683,7 @@ export function BoreGaugeSimulator() {
           </div>
 
           {/* Summary Cards: Max Ovality & Max Taper (2-col) + OEM Service Verdict */}
-          <div className="grid grid-cols-2 gap-2.5">
+          <div data-tour="bore-gauge-verdict" className="grid grid-cols-2 gap-2.5">
             <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 {pick('Max Ovality', 'Ovalitas Maks', '最大楕円度')}

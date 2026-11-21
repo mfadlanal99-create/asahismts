@@ -158,7 +158,7 @@ export function DbMeterSimulator() {
           />
 
           {/* Octave Band Spectrum & Weighting Comparison */}
-          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="db-spectrum" className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 <Volume2 className="h-4 w-4 text-[var(--md-primary)]" />
@@ -229,7 +229,7 @@ export function DbMeterSimulator() {
           </div>
 
           {/* OSHA & NIOSH Occupational Noise Exposure Cards */}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div data-tour="db-compliance" className="grid gap-4 sm:grid-cols-2">
             {/* OSHA Card */}
             <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between gap-2">
@@ -349,7 +349,7 @@ export function DbMeterSimulator() {
             </div>
 
             {/* Machine Acoustic Source */}
-            <div className="space-y-2">
+            <div data-tour="db-source" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Machine Acoustic Source', 'Sumber Akustik Mesin', '機械音源')}
               </label>
@@ -377,7 +377,7 @@ export function DbMeterSimulator() {
             </div>
 
             {/* Frequency Weighting */}
-            <div className="space-y-2">
+            <div data-tour="db-weighting" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Frequency Weighting (IEC 61672)', 'Pembobotan Frekuensi', '周波数重み付け')}
               </label>
@@ -400,7 +400,7 @@ export function DbMeterSimulator() {
             </div>
 
             {/* Time Weighting */}
-            <div className="space-y-2">
+            <div data-tour="db-time-weighting" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Time Weighting', 'Pembobotan Waktu', '時間重み付け')}
               </label>
@@ -431,7 +431,7 @@ export function DbMeterSimulator() {
             </div>
 
             {/* Distance Slider */}
-            <div className="space-y-2">
+            <div data-tour="db-distance" className="space-y-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Microphone Distance', 'Jarak Mikrofon', 'マイク距離')}
@@ -457,7 +457,7 @@ export function DbMeterSimulator() {
             </div>
 
             {/* Acoustic Enclosure Toggle */}
-            <div className="pt-1">
+            <div data-tour="db-enclosure" className="pt-1">
               <button
                 type="button"
                 onClick={() => setEnclosureActive((prev) => !prev)}

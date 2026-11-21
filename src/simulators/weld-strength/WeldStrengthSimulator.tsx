@@ -156,7 +156,7 @@ export function WeldStrengthSimulator() {
   return (
     <div className="flex flex-col gap-5">
       {/* Top Controls Toolbar: Joint Mode, Presets, and Actions */}
-      <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
+      <div data-tour="weld-modes" className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--md-outline-variant)]/50 pb-3">
           {/* Mode Switcher Tabs */}
           <div className="flex flex-wrap items-center gap-2">
@@ -248,7 +248,7 @@ export function WeldStrengthSimulator() {
           <WeldStrengthSvg inputs={inputs} results={results} />
 
           {/* Real-Time Stress & Safety Summary Pill Bar */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="weld-summary" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {/* 1. Design Throat a */}
             <div className="glass-card flex flex-col rounded-[24px] p-3.5">
               <span className="text-[10px] font-bold tracking-wider text-[var(--md-on-surface-variant)] uppercase">
@@ -341,7 +341,7 @@ export function WeldStrengthSimulator() {
         {/* Right Side: Interactive Sliders, Electrode Selector, Mechanics Breakdown (5 cols) */}
         <div className="flex flex-col gap-4 lg:col-span-5">
           {/* Electrode / Filler Grade Selector Card */}
-          <div className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="weld-electrode" className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <span className="flex items-center gap-2 text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 <Flame className="h-4 w-4 text-[var(--md-primary)]" />
@@ -374,7 +374,7 @@ export function WeldStrengthSimulator() {
           </div>
 
           {/* Parameters & Sliders Card */}
-          <div className="glass-panel flex flex-col gap-3.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="weld-dimensions" className="glass-panel flex flex-col gap-3.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <span className="flex items-center gap-2 text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">
                 <Wrench className="h-4 w-4 text-[var(--md-primary)]" />
@@ -735,7 +735,7 @@ export function WeldStrengthSimulator() {
           </div>
 
           {/* Engineering Mechanics Deep Dive Breakdown Card */}
-          <div className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="weld-breakdown" className="glass-panel flex flex-col gap-2.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <Layers className="h-4 w-4 text-[var(--md-primary)]" />
               <span className="text-xs font-bold tracking-wider text-[var(--md-on-surface)] uppercase">

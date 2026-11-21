@@ -60,7 +60,7 @@ export function FastenersBasicsSimulator() {
             propertyClass={propertyClass}
           />
 
-          <div className="glass-panel rounded-[28px] p-5 space-y-4">
+          <div data-tour="fasteners-stack" className="glass-panel rounded-[28px] p-5 space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface)] flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-[var(--md-primary)]" />
               {pick(
@@ -141,7 +141,7 @@ export function FastenersBasicsSimulator() {
             </h2>
 
             {/* Bolt Head Type */}
-            <div className="space-y-1.5">
+            <div data-tour="fasteners-head" className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Bolt Head Style', 'Bentuk Kepala Baut', 'ボルト頭部形状')}
               </label>
@@ -164,7 +164,7 @@ export function FastenersBasicsSimulator() {
             </div>
 
             {/* Nut Type */}
-            <div className="space-y-1.5">
+            <div data-tour="fasteners-nut" className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Nut Locking Type', 'Tipe Mur Pengunci', 'ナット形式')}
               </label>
@@ -187,7 +187,7 @@ export function FastenersBasicsSimulator() {
             </div>
 
             {/* Washer Type */}
-            <div className="space-y-1.5">
+            <div data-tour="fasteners-washer" className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Washer Type', 'Jenis Ring', '座金（ワッシャー）')}
               </label>
@@ -210,7 +210,7 @@ export function FastenersBasicsSimulator() {
             </div>
 
             {/* Metric Diameter */}
-            <div className="space-y-1.5">
+            <div data-tour="fasteners-size" className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Metric Size & Wrench (AF)', 'Ukuran Metrik & Kunci Pas', '呼び径・工具サイズ')}
               </label>
@@ -236,7 +236,7 @@ export function FastenersBasicsSimulator() {
             </div>
 
             {/* Property Class */}
-            <div className="space-y-1.5">
+            <div data-tour="fasteners-grade" className="space-y-1.5">
               <label className="text-xs font-semibold text-[var(--md-on-surface)]">
                 {pick('Property Class / Grade', 'Kelas Kekuatan (Grade)', '強度区分・材質グレード')}
               </label>
@@ -260,7 +260,7 @@ export function FastenersBasicsSimulator() {
           </div>
 
           {/* TELEMETRY & DECODER SUMMARY CARD */}
-          <div className="glass-panel rounded-[28px] p-5 space-y-3">
+          <div data-tour="fasteners-telemetry" className="glass-panel rounded-[28px] p-5 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick(
                 'Property Class & Torque Telemetry',

@@ -68,7 +68,7 @@ export function PumpSimulator() {
   return (
     <div className="space-y-4">
       {/* Preset & Action Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4">
+      <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-4" data-tour="pump-scenarios">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
@@ -106,6 +106,7 @@ export function PumpSimulator() {
       {/* Diagnostic Alert Banner */}
       {op.condition !== 'optimal' ? (
         <div
+          data-tour="pump-alert"
           className={`flex items-start gap-3 rounded-[24px] border p-4 text-sm ${
             op.condition === 'cavitation' || op.condition === 'deadhead'
               ? 'border-rose-300/70 bg-rose-50/90 text-rose-900 dark:border-rose-500/35 dark:bg-rose-950/35 dark:text-rose-200'
@@ -153,7 +154,7 @@ export function PumpSimulator() {
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-2.5 rounded-[24px] border border-emerald-300/70 bg-emerald-50/90 px-4 py-3 text-xs font-medium text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/35 dark:text-emerald-200">
+        <div className="flex items-center gap-2.5 rounded-[24px] border border-emerald-300/70 bg-emerald-50/90 px-4 py-3 text-xs font-medium text-emerald-900 dark:border-emerald-500/35 dark:bg-emerald-950/35 dark:text-emerald-200" data-tour="pump-alert">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <span>
             {pick(
@@ -211,7 +212,7 @@ export function PumpSimulator() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Test Rig + Controls */}
         <div className="space-y-4 lg:col-span-6">
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pump-rig">
             <div className="mb-3 flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(
@@ -230,7 +231,7 @@ export function PumpSimulator() {
           </div>
 
           {/* Sliders & Pump Configuration */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pump-controls">
             <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick('Rig Controls', 'Kontrol Rig', '運転パラメータ')}
@@ -312,7 +313,7 @@ export function PumpSimulator() {
 
         {/* Right: H-Q / Efficiency Curve + NPSH + Seal & Shaft Deflection */}
         <div className="space-y-4 lg:col-span-6">
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pump-curve">
             <PumpCurveCanvas
               params={params}
               op={op}
@@ -365,7 +366,7 @@ export function PumpSimulator() {
           </div>
 
           {/* Mechanical Seal & Shaft Deflection Life Indicator */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel rounded-[28px] p-4 sm:p-5" data-tour="pump-seal-life">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 {pick(

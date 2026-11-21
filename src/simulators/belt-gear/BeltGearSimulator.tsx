@@ -178,7 +178,7 @@ export function BeltGearSimulator() {
       {/* Top Toolbar */}
       <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+          <div data-tour="belt-gear-mode" className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setDriveMode('v-belt')}
@@ -207,6 +207,7 @@ export function BeltGearSimulator() {
 
           <button
             type="button"
+            data-tour="belt-gear-troubleshooting"
             onClick={toggleTroubleshooting}
             className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs transition-colors ${
               showTroubleshooting
@@ -287,7 +288,7 @@ export function BeltGearSimulator() {
       )}
 
       {/* Live Readouts Strip */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div data-tour="belt-gear-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <div className="glass-card rounded-[24px] p-3.5">
           <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {pick('Speed Ratio (i)', 'Rasio Kecepatan (i)', '変速比 (i)')}
@@ -368,7 +369,7 @@ export function BeltGearSimulator() {
           />
 
           {/* Live Drive Diagnostics Telemetry Strip */}
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          <div data-tour="belt-gear-diagnostics" className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
                 <Thermometer className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -490,7 +491,7 @@ export function BeltGearSimulator() {
           )}
 
           {/* Diagnostic Note + Secondary Metrics */}
-          <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+          <div data-tour="belt-gear-notes" className="glass-panel rounded-[28px] p-4 sm:p-5">
             <div className="flex items-start gap-2.5">
               <Wrench className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
               <div className="w-full space-y-2.5 text-xs">
@@ -634,7 +635,7 @@ export function BeltGearSimulator() {
         </div>
 
         {/* Right: Parameter Controls */}
-        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
+        <div data-tour="belt-gear-controls" className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
           <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-2.5">
             <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {driveMode === 'v-belt'

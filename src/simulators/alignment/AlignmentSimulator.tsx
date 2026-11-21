@@ -134,7 +134,7 @@ export function AlignmentSimulator() {
     <div className="space-y-4">
       {/* Top Preset & Status Bar */}
       <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-2">
+        <div data-tour="alignment-presets" className="flex flex-wrap items-center gap-2">
           <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             {pick('Presets:', 'Preset:', 'プリセット:')}
           </span>
@@ -203,7 +203,7 @@ export function AlignmentSimulator() {
           )}
 
           {/* Laser vs Dial View Toggle */}
-          <div className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+          <div data-tour="alignment-view-toggle" className="inline-flex rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
             <button
               type="button"
               onClick={() => setMeasurementView('dial')}
@@ -285,7 +285,7 @@ export function AlignmentSimulator() {
           },
         ];
         return (
-          <div className="glass-panel grid grid-cols-2 gap-2.5 rounded-[28px] p-3 sm:grid-cols-5">
+          <div data-tour="alignment-wizard" className="glass-panel grid grid-cols-2 gap-2.5 rounded-[28px] p-3 sm:grid-cols-5">
             {steps.map((s) => (
               <div
                 key={s.num}
@@ -323,7 +323,7 @@ export function AlignmentSimulator() {
           </div>
 
           {/* Shaft Rotation Controls */}
-          <div className="flex flex-col gap-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 sm:flex-row sm:items-center sm:justify-between">
+          <div data-tour="alignment-sweep" className="flex flex-col gap-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-1.5">
               {CARDINAL_ANGLES.map((c) => (
                 <button
@@ -381,7 +381,7 @@ export function AlignmentSimulator() {
         </div>
 
         {/* Dial Gauges or Laser View & Cardinal Table */}
-        <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 xl:col-span-5">
+        <div data-tour="alignment-gauges" className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 xl:col-span-5">
           {measurementView === 'laser' ? (
             <LaserAlignmentPanel
               solution={solution}
@@ -490,7 +490,7 @@ export function AlignmentSimulator() {
       {/* Soft-Foot Diagnostic & Actionable Alignment Worksheet */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 sim-equal-grid">
         {/* Soft-Foot Diagnostic & Shim Check */}
-        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+        <div data-tour="alignment-soft-foot" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
@@ -625,7 +625,7 @@ export function AlignmentSimulator() {
         </div>
 
         {/* Actionable Alignment Worksheet */}
-        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+        <div data-tour="alignment-worksheet" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5 lg:col-span-6">
           <div className="flex items-center justify-between gap-2">
             <div>
               <h3 className="flex items-center gap-1.5 text-sm font-bold text-[var(--md-on-surface)]">
@@ -932,7 +932,7 @@ export function AlignmentSimulator() {
         </div>
 
         {/* 3. Machine Geometry & Bar Sag */}
-        <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+        <div data-tour="alignment-geometry" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
               {pick('Machine Geometry & Bar Sag', 'Geometri Mesin & Sag Batang', '機械寸法・バーたわみ')}

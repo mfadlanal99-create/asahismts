@@ -78,7 +78,7 @@ export function ValveDiagnosticsPanel({
   );
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div data-tour="valve-diagnostics" className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {/* 1. Inherent Valve Flow Characteristic Curve */}
       <div className="glass-panel rounded-[28px] p-4">
         <div className="mb-2.5 flex items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2">

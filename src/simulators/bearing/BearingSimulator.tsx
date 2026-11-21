@@ -196,7 +196,7 @@ export function BearingSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Action & Preset Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
+      <div data-tour="bearing-presets" className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             <Cog className="h-4 w-4 text-[var(--md-primary)]" />
@@ -262,7 +262,7 @@ export function BearingSimulator() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Controls Panel */}
         <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5 lg:col-span-4">
-          <div>
+          <div data-tour="bearing-series">
             <label
               htmlFor="bearing-select"
               className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]"
@@ -304,7 +304,7 @@ export function BearingSimulator() {
           </div>
 
           {/* Operating Loads & Speed */}
-          <div className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+          <div data-tour="bearing-loads" className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
             <div className="space-y-1">
               <div className="flex justify-between text-xs">
                 <span className="font-medium text-[var(--md-on-surface)]">
@@ -387,7 +387,7 @@ export function BearingSimulator() {
           </div>
 
           {/* ISO Shaft & Housing Fits */}
-          <div className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+          <div data-tour="bearing-fits" className="space-y-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
             <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('ISO 286 Shaft & Housing Fits', 'Suaian Poros & Rumah ISO 286', 'ISO 286 軸・ハウジングはめあい')}
             </div>
@@ -465,7 +465,7 @@ export function BearingSimulator() {
 
         {/* Right Column: Visual + KPI Readouts + Condition Warnings */}
         <div className="space-y-4 lg:col-span-8">
-          <div className="glass-panel flex items-center justify-center rounded-[28px] p-4 sm:p-5">
+          <div data-tour="bearing-visual" className="glass-panel flex items-center justify-center rounded-[28px] p-4 sm:p-5">
             <BearingVisual
               spec={spec}
               metrics={metrics}
@@ -478,7 +478,7 @@ export function BearingSimulator() {
           </div>
 
           {/* Live Readouts */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+          <div data-tour="bearing-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
                 {pick('Equiv. Load (P)', 'Beban Ekuivalen (P)', '動等価荷重 (P)')}
@@ -556,7 +556,7 @@ export function BearingSimulator() {
           />
 
           {/* Bearing Mounting & Induction Heater Advisor */}
-          <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="bearing-heater" className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Flame className="h-4 w-4 text-[var(--md-primary)]" />

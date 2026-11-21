@@ -125,7 +125,7 @@ export function VibrationSimulator() {
       {/* Top Configuration & Speed Control Bar */}
       <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Machine Preset & Support Mode (col-span-5) */}
-        <div className="flex flex-col gap-2 md:col-span-5">
+        <div data-tour="vibration-scenario" className="flex flex-col gap-2 md:col-span-5">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">
               {pick('Machine Scenario & Foundation Support', 'Skenario Mesin & Tipe Fondasi', '機械シナリオ・基礎支持形式')}
@@ -181,7 +181,7 @@ export function VibrationSimulator() {
         </div>
 
         {/* Operating Speed (RPM) Slider & Resonance (col-span-4) */}
-        <div className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
+        <div data-tour="vibration-speed" className="flex flex-col justify-between gap-2 border-[var(--md-outline-variant)]/50 md:col-span-4 md:border-l md:pl-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">
               {pick('Operating Speed', 'Kecepatan Operasi', '運転回転速度')}
@@ -272,7 +272,7 @@ export function VibrationSimulator() {
       </div>
 
       {/* Balancing Controls Card (Initial Unbalance & Correction Mass) */}
-      <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
+      <div data-tour="vibration-balancing" className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 md:grid-cols-12">
         {/* Initial Heavy Spot Controls (col-span-5) */}
         <div className="flex flex-col gap-2.5 md:col-span-5">
           <div className="flex items-center gap-2">
@@ -474,7 +474,7 @@ export function VibrationSimulator() {
       {/* Main Interactive Workspace Grid (SVG 6 cols + Telemetry & Charts 6 cols) */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* Left: Interactive CAD Machine Rig SVG (lg:col-span-6) */}
-        <div className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5 lg:col-span-6">
+        <div data-tour="vibration-rig" className="glass-panel flex flex-col overflow-hidden rounded-[28px] p-4 sm:p-5 lg:col-span-6">
           <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/50 pb-3">
             <div className="flex items-center gap-2">
               <Activity className="h-4 w-4 text-[var(--md-primary)]" />
@@ -501,7 +501,7 @@ export function VibrationSimulator() {
         {/* Right: Digital Telemetry, ISO Severity Banner & Charts (lg:col-span-6) */}
         <div className="flex flex-col gap-4 lg:col-span-6">
           {/* 4 Telemetry Metrics Cards */}
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          <div data-tour="vibration-telemetry" className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {/* 1. Overall RMS Velocity */}
             <div className="glass-card flex flex-col rounded-[24px] p-3.5">
               <span className="text-[10px] font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">
@@ -556,6 +556,7 @@ export function VibrationSimulator() {
 
           {/* ISO 10816 / ISO 20816 Severity Classification Status Card */}
           <div
+            data-tour="vibration-iso"
             className={`flex flex-col gap-2 rounded-[24px] border p-4 transition-all ${
               state.isoZone === 'A'
                 ? 'border-emerald-500/40 bg-emerald-50/60 dark:border-emerald-500/30 dark:bg-emerald-950/25'

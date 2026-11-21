@@ -167,7 +167,7 @@ export function CouplingSimulator() {
     <div className="space-y-5">
       {/* Sub-tab Switcher */}
       <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
-        <div className="inline-flex flex-wrap rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
+        <div data-tour="coupling-subtabs" className="inline-flex flex-wrap rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] p-1">
           <button
             type="button"
             onClick={() => setSubTab('balancing')}
@@ -243,7 +243,7 @@ export function CouplingSimulator() {
           {/* Left Column: Rotor Disk, Polar Plot & ISO 10816 Meter */}
           <div className="space-y-4 lg:col-span-7">
             {/* ISO 10816-3 RMS Meter */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-iso-meter" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
                   <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
@@ -307,7 +307,7 @@ export function CouplingSimulator() {
             </div>
 
             {/* Visuals: Rotor Disk + Polar Vector Plot */}
-            <div className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 sm:grid-cols-2">
+            <div data-tour="coupling-rotor-polar" className="glass-panel grid grid-cols-1 gap-4 rounded-[28px] p-4 sm:p-5 sm:grid-cols-2">
               <div className="flex flex-col items-center">
                 <div className="mb-2 flex w-full items-center justify-between text-xs font-semibold text-[var(--md-on-surface)]">
                   <span>
@@ -362,7 +362,7 @@ export function CouplingSimulator() {
             </div>
 
             {/* Live 1X Time-Waveform Vibration Sine Plot */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-waveform" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="mb-2 flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-[var(--md-on-surface)]">
                 <span>
                   {pick(
@@ -391,7 +391,7 @@ export function CouplingSimulator() {
             </div>
 
             {/* Vector Math Solution Card */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-vector-solution" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="mb-2.5 flex items-center gap-2 text-sm font-bold text-[var(--md-on-surface)]">
                 <Sparkles className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
@@ -461,7 +461,7 @@ export function CouplingSimulator() {
           {/* Right Column: Step-by-Step Technician Controls */}
           <div className="space-y-4 lg:col-span-5">
             {/* Step 1: Initial Run */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-step1" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
@@ -503,7 +503,7 @@ export function CouplingSimulator() {
             </div>
 
             {/* Step 2: Trial Weight */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-step2" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(
@@ -580,7 +580,7 @@ export function CouplingSimulator() {
             </div>
 
             {/* Step 3: Correction Weight */}
-            <div className="glass-panel rounded-[28px] p-4 sm:p-5">
+            <div data-tour="coupling-step3" className="glass-panel rounded-[28px] p-4 sm:p-5">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
                   {pick(

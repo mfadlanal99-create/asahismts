@@ -111,7 +111,7 @@ export function BeltConveyorSimulator() {
         {/* LEFT COLUMN: Presets, Animated CAD Schematic, Telemetry & Diagnostics */}
         <div className="flex flex-col gap-4 lg:col-span-8">
           {/* Scenario Presets + Transport Controls */}
-          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
+          <div data-tour="belt-conveyor-presets" className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Scenarios:', 'Skenario:', 'シナリオ:')}
@@ -195,7 +195,7 @@ export function BeltConveyorSimulator() {
           </div>
 
           {/* Main Animated CAD Schematic */}
-          <div className="glass-panel rounded-[28px] p-3.5">
+          <div data-tour="belt-conveyor-schematic" className="glass-panel rounded-[28px] p-3.5">
             <BeltConveyorSvg
               inputs={inputs}
               metrics={metrics}
@@ -204,7 +204,7 @@ export function BeltConveyorSimulator() {
           </div>
 
           {/* 6-Card Live Tracking & Drive Telemetry Grid */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div data-tour="belt-conveyor-telemetry" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
@@ -320,6 +320,7 @@ export function BeltConveyorSimulator() {
 
           {/* Diagnostic Status Banner */}
           <div
+            data-tour="belt-conveyor-diagnostics"
             className={`flex items-start gap-3 rounded-[24px] border p-4 ${
               metrics.isFrameRubbing
                 ? 'border-rose-300/80 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'
@@ -420,7 +421,7 @@ export function BeltConveyorSimulator() {
             </div>
 
             {/* Tail Pulley Take-Up Screws */}
-            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+            <div data-tour="belt-conveyor-takeup" className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Tail Pulley Screw Take-Ups',
@@ -497,7 +498,7 @@ export function BeltConveyorSimulator() {
             </div>
 
             {/* Training Idler & Chute Loading */}
-            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+            <div data-tour="belt-conveyor-idler-chute" className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Idler Steering & Chute Feed',
@@ -578,7 +579,7 @@ export function BeltConveyorSimulator() {
             </div>
 
             {/* Drive Speed & Fault Injection */}
-            <div className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+            <div data-tour="belt-conveyor-faults" className="space-y-3 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Drive Speed & Frame Fault',

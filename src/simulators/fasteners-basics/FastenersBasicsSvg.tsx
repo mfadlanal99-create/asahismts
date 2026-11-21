@@ -199,7 +199,7 @@ export function FastenersBasicsSvg({
   }, [nut, washer, pick, c]);
 
   return (
-    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-2 select-none">
+    <div data-tour="fasteners-svg" className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-2 select-none">
       <svg
         viewBox="0 0 920 500"
         className="w-full max-h-[480px] h-auto drop-shadow-sm"

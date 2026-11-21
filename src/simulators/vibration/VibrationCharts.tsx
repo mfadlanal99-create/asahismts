@@ -457,7 +457,7 @@ export function VibrationCharts({ state, bodePoints }: VibrationChartsProps) {
   };
 
   return (
-    <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
+    <div data-tour="vibration-charts" className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
       {/* Chart Switcher Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
         <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface-variant)] uppercase">

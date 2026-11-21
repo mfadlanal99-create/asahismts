@@ -175,7 +175,7 @@ export function ChainConveyorSimulator() {
           {/* Left Column: 2D Canvas + 10-Pitch Vernier Gauge + Readouts */}
           <div className="space-y-4 lg:col-span-8">
             {/* Field Scenarios Bar */}
-            <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
+            <div data-tour="chain-presets" className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Presets:', 'Preset:', 'プリセット:')}
@@ -229,7 +229,7 @@ export function ChainConveyorSimulator() {
             />
 
             {/* Key Engineering Readout Cards */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div data-tour="chain-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <div className="glass-card rounded-[24px] p-3.5">
                 <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span className="font-semibold">
@@ -323,7 +323,7 @@ export function ChainConveyorSimulator() {
               </h3>
 
               {/* ANSI / RS Chain Size Selector (RS 40 to RS 160) */}
-              <div className="mb-4">
+              <div data-tour="chain-size" className="mb-4">
                 <label className="mb-1.5 block text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'ANSI / RS Roller Chain Size',
@@ -362,7 +362,7 @@ export function ChainConveyorSimulator() {
               </div>
 
               {/* Sprocket Teeth z1 & z2 */}
-              <div className="mb-3 grid grid-cols-2 gap-3">
+              <div data-tour="chain-sprockets" className="mb-3 grid grid-cols-2 gap-3">
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
                     <span className="font-medium text-[var(--md-on-surface)]">
@@ -468,7 +468,7 @@ export function ChainConveyorSimulator() {
               </div>
 
               {/* Pin-Bushing Wear Elongation % */}
-              <div className="mb-3">
+              <div data-tour="chain-wear" className="mb-3">
                 <div className="mb-1 flex justify-between text-xs">
                   <span className="font-semibold text-[var(--md-on-surface)]">
                     {pick(
@@ -547,7 +547,7 @@ export function ChainConveyorSimulator() {
               </div>
 
               {/* Lubrication Method Selector */}
-              <div>
+              <div data-tour="chain-lube">
                 <label className="mb-1.5 block text-xs font-semibold text-[var(--md-on-surface)]">
                   {pick(
                     'Lubrication Regime',
@@ -592,6 +592,7 @@ export function ChainConveyorSimulator() {
 
             {/* Diagnostic Summary Box */}
             <div
+              data-tour="chain-diagnostics"
               className={`rounded-[24px] border p-4 ${
                 chainMetrics.overallHealth === 'critical'
                   ? 'border-rose-200 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'

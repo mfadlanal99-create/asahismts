@@ -44,6 +44,7 @@ export function ClampMeterSimulator() {
 
           {/* Diagnostic Readout Banner */}
           <div
+            data-tour="clamp-diagnostics"
             className={`glass-panel rounded-[28px] border p-4 sm:p-5 transition-colors ${
               snapshot.nemaStatus === 'critical'
                 ? 'border-rose-500/60 bg-rose-50/70 dark:bg-rose-950/30'
@@ -88,6 +89,7 @@ export function ClampMeterSimulator() {
               </h3>
               <button
                 type="button"
+                data-tour="clamp-inrush"
                 onClick={() => setInrushEnabled((prev) => !prev)}
                 className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                   inrushEnabled
@@ -100,7 +102,7 @@ export function ClampMeterSimulator() {
               </button>
             </div>
 
-            <div className="grid grid-cols-4 gap-2">
+            <div data-tour="clamp-jaw-target" className="grid grid-cols-4 gap-2">
               {CONDUCTOR_OPTIONS.map((opt) => (
                 <button
                   key={opt.id}
@@ -118,7 +120,7 @@ export function ClampMeterSimulator() {
             </div>
 
             {/* Motor Load Slider */}
-            <div className="space-y-1.5 pt-1">
+            <div data-tour="clamp-load" className="space-y-1.5 pt-1">
               <div className="flex justify-between text-xs font-semibold">
                 <span className="text-[var(--md-on-surface-variant)]">
                   {pick('Mechanical Shaft Load', 'Beban Poros Mekanis', '機械軸負荷')}
@@ -140,7 +142,7 @@ export function ClampMeterSimulator() {
           </div>
 
           {/* 3-Phase Power & NEMA MG-1 Telemetry */}
-          <div className="glass-panel space-y-3 rounded-[28px] p-5">
+          <div data-tour="clamp-telemetry" className="glass-panel space-y-3 rounded-[28px] p-5">
             <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               <Activity className="h-4 w-4 text-[var(--md-primary)]" />
               {pick(
@@ -195,7 +197,7 @@ export function ClampMeterSimulator() {
           </div>
 
           {/* Fault Scenario Selector */}
-          <div className="glass-panel space-y-3 rounded-[28px] p-5">
+          <div data-tour="clamp-faults" className="glass-panel space-y-3 rounded-[28px] p-5">
             <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
               {pick('Feeder Fault Scenario', 'Skenario Gangguan Feeder', 'フィーダ故障シナリオ')}
             </h3>

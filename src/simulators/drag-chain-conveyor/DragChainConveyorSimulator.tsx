@@ -257,7 +257,7 @@ export function DragChainConveyorSimulator() {
         {/* LEFT COLUMN: Visualization, Presets & Live Telemetry */}
         <div className="flex flex-col gap-4 lg:col-span-8">
           {/* Material Presets + Transport Controls */}
-          <div className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
+          <div data-tour="drag-presets" className="glass-panel flex flex-wrap items-center justify-between gap-2 rounded-[28px] p-3.5">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 {pick('Material:', 'Material:', '材料:')}
@@ -329,7 +329,7 @@ export function DragChainConveyorSimulator() {
           </div>
 
           {/* Main Animated SVG + Tension/Shear-Pin Meter Bar */}
-          <div className="glass-panel rounded-[28px] p-3.5">
+          <div data-tour="drag-svg" className="glass-panel rounded-[28px] p-3.5">
             <DragChainConveyorSvg
               inputs={inputs}
               metrics={metrics}
@@ -340,7 +340,7 @@ export function DragChainConveyorSimulator() {
           </div>
 
           {/* 6-Card Industrial Telemetry Grid */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div data-tour="drag-telemetry" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
@@ -450,6 +450,7 @@ export function DragChainConveyorSimulator() {
 
           {/* Diagnostic Status Banner */}
           <div
+            data-tour="drag-diagnostics"
             className={`flex items-start gap-3 rounded-[24px] border p-4 ${
               metrics.health === 'critical'
                 ? 'border-rose-300/80 bg-rose-50/80 dark:border-rose-500/30 dark:bg-rose-950/30'
@@ -517,7 +518,7 @@ export function DragChainConveyorSimulator() {
             </div>
 
             {/* Fault Injection Section (Upper Control Panel) */}
-            <div className="space-y-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+            <div data-tour="drag-faults" className="space-y-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('Fault Injection', 'Injeksi Gangguan', '故障シミュレーション')}
               </div>
@@ -545,7 +546,7 @@ export function DragChainConveyorSimulator() {
             </div>
 
             {/* Group 1: Drive & Chain */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="drag-drive" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('Drive & Chain', 'Penggerak & Rantai', '駆動・チェーン')}
               </div>
@@ -678,7 +679,7 @@ export function DragChainConveyorSimulator() {
             </div>
 
             {/* Group 2: Casing & Bed Geometry */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="drag-geometry" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Casing & Bed Geometry',
@@ -795,7 +796,7 @@ export function DragChainConveyorSimulator() {
             </div>
 
             {/* Group 3: Material & Friction */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="drag-material" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   'Material & Friction',

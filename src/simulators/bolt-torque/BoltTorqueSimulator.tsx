@@ -245,7 +245,7 @@ export function BoltTorqueSimulator() {
           </div>
 
           {/* Metric Bolt Size */}
-          <div>
+          <div data-tour="bolt-size">
             <div className="flex items-center justify-between text-xs">
               <label className="font-semibold text-[var(--md-on-surface)]">
                 {pick(
@@ -309,7 +309,7 @@ export function BoltTorqueSimulator() {
           </div>
 
           {/* Surface / Lubrication */}
-          <div>
+          <div data-tour="bolt-lube">
             <label className="text-xs font-semibold text-[var(--md-on-surface)]">
               {pick(
                 'Surface & Lubrication Condition (Nut Factor K)',
@@ -355,7 +355,7 @@ export function BoltTorqueSimulator() {
           </div>
 
           {/* Torque Wrench Slider */}
-          <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
+          <div data-tour="bolt-wrench" className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <label
                 htmlFor="torque-slider"
@@ -450,7 +450,7 @@ export function BoltTorqueSimulator() {
 
         {/* Right Visualization & Live Readouts */}
         <div className="space-y-4 lg:col-span-7">
-          <div className="glass-panel rounded-[28px] p-5">
+          <div data-tour="bolt-readout" className="glass-panel rounded-[28px] p-5">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
@@ -542,6 +542,7 @@ export function BoltTorqueSimulator() {
 
             {/* Status / Warning Banner */}
             <div
+              data-tour="bolt-diagnostics"
               className={`mt-4 flex items-start gap-2.5 rounded-[22px] border p-3.5 text-xs ${statusBanner.classes}`}
             >
               <BannerIcon className={`mt-0.5 h-4 w-4 shrink-0 ${statusBanner.iconColor}`} />

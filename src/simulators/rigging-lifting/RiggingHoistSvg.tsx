@@ -386,7 +386,7 @@ export function RiggingHoistSvg({
   const pinchArrowY = Math.min(padPin1.y, padPin2.y) - 32;
 
   return (
-    <div className="glass-panel overflow-hidden rounded-[28px]">
+    <div data-tour="rigging-canvas" className="glass-panel overflow-hidden rounded-[28px]">
       {/* CAD Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-3">
         <div className="flex items-center gap-2">

@@ -124,7 +124,7 @@ export function LaserTachometerSimulator() {
 
           {/* Live Readout Cards */}
           {mode === 'laser' ? (
-            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5" data-tour="tach-readouts">
               <div className="flex items-center justify-between">
                 <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   <ScanLine className="h-4 w-4 text-[var(--md-primary)]" />
@@ -202,7 +202,7 @@ export function LaserTachometerSimulator() {
               </div>
             </div>
           ) : (
-            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+            <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5" data-tour="tach-readouts">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 <Zap className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
@@ -254,7 +254,7 @@ export function LaserTachometerSimulator() {
         {/* RIGHT COLUMN: CONTROLS (5 cols) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Instrument Mode & Transport */}
-          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5" data-tour="tach-mode-panel">
             <div className="flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                 <Gauge className="h-4 w-4 text-[var(--md-primary)]" />
@@ -388,7 +388,7 @@ export function LaserTachometerSimulator() {
           </div>
 
           {/* Motor Drive & VFD Physics Controls */}
-          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5">
+          <div className="glass-panel space-y-4 rounded-[28px] p-4 sm:p-5" data-tour="tach-vfd-drive">
             <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
               {pick('VFD Motor Drive Controls', 'Kontrol Penggerak Motor VFD', 'VFDモータ駆動制御')}
@@ -481,7 +481,7 @@ export function LaserTachometerSimulator() {
             </div>
 
             {/* Drive Summary */}
-            <div className="grid grid-cols-3 gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-center">
+            <div className="grid grid-cols-3 gap-2 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-center" data-tour="tach-drive-summary">
               <div>
                 <div className="text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
                   Ns = 120f/P
@@ -510,7 +510,7 @@ export function LaserTachometerSimulator() {
           </div>
 
           {/* Field Tip Card */}
-          <div className="glass-panel flex items-start gap-2.5 rounded-[28px] p-4 text-xs text-[var(--md-on-surface-variant)]">
+          <div className="glass-panel flex items-start gap-2.5 rounded-[28px] p-4 text-xs text-[var(--md-on-surface-variant)]" data-tour="tach-field-tip">
             <Activity className="mt-0.5 h-4 w-4 shrink-0 text-[var(--md-primary)]" />
             <p className="leading-relaxed">
               {pick(

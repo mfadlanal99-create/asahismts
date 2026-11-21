@@ -13,6 +13,7 @@ import { PracticeTab } from './PracticeTab';
 import { QuizTab } from './QuizTab';
 import { SimulatorIcon } from './SimulatorIcon';
 import { SimulatorTutorialModal } from './SimulatorTutorialModal';
+import { SimulatorVirtualAssistant } from './SimulatorVirtualAssistant';
 import { TopRibbon } from './TopRibbon';
 
 interface SimulatorLayoutProps {
@@ -38,6 +39,7 @@ export function SimulatorLayout({
 }: SimulatorLayoutProps) {
   const [mode, setMode] = useState<SimulatorMode>('simulate');
   const [tutorialOpen, setTutorialOpen] = useState(false);
+  const [tutorialInitialStep, setTutorialInitialStep] = useState(0);
   const [prevSimId, setPrevSimId] = useState(meta.id);
   const { language, pick } = useLanguage();
   const { markVisited } = useProgress();
@@ -46,6 +48,7 @@ export function SimulatorLayout({
   if (prevSimId !== meta.id) {
     setPrevSimId(meta.id);
     setTutorialOpen(false);
+    setTutorialInitialStep(0);
   }
 
   useEffect(() => {
@@ -173,7 +176,10 @@ export function SimulatorLayout({
             {tutorialSteps.length > 0 && (
               <button
                 type="button"
-                onClick={() => setTutorialOpen(true)}
+                onClick={() => {
+                  setTutorialInitialStep(0);
+                  setTutorialOpen(true);
+                }}
                 title={pick(
                   'Open interactive simulator tutorial',
                   'Buka tutorial interaktif simulator',
@@ -252,10 +258,21 @@ export function SimulatorLayout({
         </div>
       </footer>
 
+      <SimulatorVirtualAssistant
+        meta={meta}
+        steps={tutorialSteps}
+        isTutorialOpen={tutorialOpen}
+        onJumpToTutorialStep={(idx) => {
+          setTutorialInitialStep(idx);
+          setTutorialOpen(true);
+        }}
+      />
+
       <SimulatorTutorialModal
         isOpen={tutorialOpen}
         meta={meta}
         steps={tutorialSteps}
+        initialStepIndex={tutorialInitialStep}
         onClose={() => setTutorialOpen(false)}
       />
     </div>

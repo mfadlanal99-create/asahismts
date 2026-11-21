@@ -261,7 +261,7 @@ export function MotorBasicsSvg({
   }, [isMotorSpinning, motorCalc.ratedRpm]);
 
   return (
-    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-3 select-none">
+    <div className="glass-panel w-full relative flex items-center justify-center overflow-hidden rounded-[28px] p-3 select-none" data-tour="motor-cutaway">
       <svg
         viewBox="0 0 920 500"
         className="w-full max-h-[480px] h-auto drop-shadow-sm"

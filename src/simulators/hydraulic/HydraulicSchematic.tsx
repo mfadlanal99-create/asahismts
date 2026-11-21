@@ -456,7 +456,7 @@ export function HydraulicSchematic({
   const viscosityCst = computeOilViscosityCst(oilTempC);
 
   return (
-    <div className="glass-panel overflow-hidden rounded-[28px]">
+    <div data-tour="hydraulic-schematic" className="glass-panel overflow-hidden rounded-[28px]">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--md-outline-variant)]/50 px-4 py-2.5">
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">

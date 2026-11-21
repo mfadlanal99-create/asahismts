@@ -119,7 +119,7 @@ export function ScrewConveyorSimulator() {
   return (
     <div className="space-y-4">
       {/* Top Action & Fault Injection Bar */}
-      <div className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
+      <div data-tour="screw-faults" className="glass-panel flex flex-wrap items-center justify-between gap-3 rounded-[28px] p-3.5">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className="mr-1 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
             <ShieldAlert className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -224,7 +224,7 @@ export function ScrewConveyorSimulator() {
         <div className="flex flex-col gap-4 lg:col-span-8">
           <div className="glass-panel space-y-3.5 rounded-[28px] p-4">
             {/* Material Selector Strip */}
-            <div className="flex flex-wrap items-center justify-between gap-2">
+            <div data-tour="screw-material" className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="mr-1 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                   {pick('Bulk Material:', 'Material Curah:', '搬送物:')}
@@ -258,7 +258,7 @@ export function ScrewConveyorSimulator() {
             <ScrewConveyorSvg inputs={inputs} metrics={metrics} phase={phase} />
 
             {/* 6 Live Telemetry KPIs */}
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            <div data-tour="screw-telemetry" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
                 <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                   <span>{pick('Mass / Vol Flow', 'Kapasitas Aliran', '質量・体積流量')}</span>
@@ -371,7 +371,7 @@ export function ScrewConveyorSimulator() {
           </div>
 
           {/* Diagnostic Summary */}
-          <div className="glass-panel flex-1 space-y-2.5 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="screw-diagnostic" className="glass-panel flex-1 space-y-2.5 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
                 <Flame className="h-3.5 w-3.5 text-[var(--md-primary)]" />
@@ -449,7 +449,7 @@ export function ScrewConveyorSimulator() {
             </div>
 
             {/* Group 1: Auger Geometry */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="screw-geometry" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick('1. Auger Geometry', '1. Geometri Auger', '1. オーガ幾何諸元')}
               </div>
@@ -576,7 +576,7 @@ export function ScrewConveyorSimulator() {
             </div>
 
             {/* Group 2: Operating & Trough Fill */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="screw-operating" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   '2. Operating & Trough Fill',
@@ -659,7 +659,7 @@ export function ScrewConveyorSimulator() {
             </div>
 
             {/* Group 3: Material & CEMA Factors */}
-            <div className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
+            <div data-tour="screw-factors" className="space-y-2.5 rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5 text-xs">
               <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-primary)]">
                 {pick(
                   '3. Material & CEMA Factors',

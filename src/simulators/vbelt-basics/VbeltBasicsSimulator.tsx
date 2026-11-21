@@ -114,7 +114,7 @@ export function VbeltBasicsSimulator() {
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+            <div data-tour="vbelt-profiles" className="grid grid-cols-3 gap-2 sm:grid-cols-4">
               {(Object.keys(BELT_SPECS) as BeltProfileCode[]).map((code) => {
                 const b = BELT_SPECS[code];
                 const active = beltProfile === code;
@@ -142,7 +142,7 @@ export function VbeltBasicsSimulator() {
             </div>
 
             {/* Pulley Groove Seating Condition Selector */}
-            <div className="mt-1 flex flex-col gap-2">
+            <div data-tour="vbelt-groove" className="mt-1 flex flex-col gap-2">
               <span className="text-[11px] font-bold text-[var(--md-on-surface)]">
                 {pick('Groove Seating Health Condition:', 'Kondisi Kedudukan Alur Puli:', 'プーリ溝着座状態:')}
               </span>
@@ -189,7 +189,7 @@ export function VbeltBasicsSimulator() {
             </div>
 
             {/* Belt Tension & Motor Speed Sliders */}
-            <div className="mt-1 grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
+            <div data-tour="vbelt-tension" className="mt-1 grid grid-cols-2 gap-3 border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div className="flex flex-col gap-1.5">
                 <div className="flex justify-between text-xs">
                   <span className="font-semibold text-[var(--md-on-surface)]">
@@ -233,7 +233,7 @@ export function VbeltBasicsSimulator() {
           </div>
 
           {/* 2. Interactive Belt Code Decoder */}
-          <div className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
+          <div data-tour="vbelt-decoder" className="glass-panel flex flex-col gap-3 rounded-[28px] p-4 sm:p-5">
             <div className="flex items-center gap-2 border-b border-[var(--md-outline-variant)]/50 pb-2.5">
               <Search className="h-4 w-4 text-[var(--md-primary)]" />
               <span className="text-xs font-bold tracking-wide text-[var(--md-on-surface)] uppercase">
@@ -307,7 +307,7 @@ export function VbeltBasicsSimulator() {
 
         {/* RIGHT COLUMN (lg:col-span-7): Pure-2D CAD SVG & Engineering Notes */}
         <div className="flex flex-col gap-5 lg:col-span-7">
-          <div className="glass-panel flex w-full items-center justify-center rounded-[28px] p-3">
+          <div data-tour="vbelt-canvas" className="glass-panel flex w-full items-center justify-center rounded-[28px] p-3">
             <VbeltBasicsSvg
               beltSpec={currentBeltSpec}
               pulleyCondition={pulleyCondition}
@@ -317,7 +317,7 @@ export function VbeltBasicsSimulator() {
           </div>
 
           {/* Live Belt Physics Readout Strip */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div data-tour="vbelt-readouts" className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="glass-card rounded-[24px] p-3.5">
               <span className="block text-[10px] font-bold text-[var(--md-on-surface-variant)] uppercase">
                 {pick('Flank Force Fn', 'Gaya Samping Fn', '側壁抗力 Fn')}

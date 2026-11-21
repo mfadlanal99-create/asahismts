@@ -189,6 +189,7 @@ export function TopRibbon(props: TopRibbonProps) {
         ) : (
           <div className="order-3 flex w-full flex-wrap items-center justify-center gap-2 lg:order-2 lg:w-auto">
             <nav
+              data-tour="mode-tabs"
               aria-label={pick('Simulator modes', 'Mode simulator', 'シミュレータモード')}
               className="flex items-center gap-1 rounded-full border border-[var(--md-outline-variant)]/45 bg-[var(--md-surface-container-high)] p-1"
             >
