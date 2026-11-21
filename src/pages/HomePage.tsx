@@ -709,19 +709,20 @@ export function HomePage({
 
       {/* Material 3 Surface Footer */}
       <footer className="border-t border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-low)]">
-        <div className="mx-auto flex w-full max-w-none flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-[var(--md-on-surface-variant)] sm:flex-row sm:px-6 lg:px-10 xl:px-12">
-          <span>
+        <div className="mx-auto grid w-full max-w-none grid-cols-1 items-center gap-2 px-4 py-5 text-center text-xs text-[var(--md-on-surface-variant)] sm:grid-cols-3 sm:px-6 lg:px-10 xl:px-12">
+          <span className="sm:text-left">
             <strong className="font-bold text-[var(--md-on-surface)]">
               Asahi-SMTS
             </strong>{' '}
             — Asahimas Smart Maintenance Training System
           </span>
-          <span>
+          <span className="text-center">
             {pick('Made by', 'Dibuat oleh', '制作')}{' '}
             <strong className="font-bold text-[var(--md-on-surface)]">
               M. Fadlan Alamsyah
             </strong>
           </span>
+          <span className="hidden sm:block" aria-hidden="true" />
         </div>
       </footer>
     </div>
