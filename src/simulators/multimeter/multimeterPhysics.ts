@@ -419,7 +419,7 @@ export function computeDigitalReadout(
       rangeLabel: 'FAULT',
       note: {
         en: 'LEAD ERROR! Red lead is in a current jack (mA/10A) across a voltage source — internal fuse blown!',
-        id: 'KESALAHAN KABEL! Probe merah di jack arus (mA/10A) pada sumber tegangan — sekring putus!',
+        id: 'KESALAHAN KABEL! Probe merah di terminal arus (mA/10A) pada sumber tegangan — sekring putus!',
         ja: 'リード接続エラー！電流端子（mA/10A）のまま電圧源に接続し、内蔵ヒューズが溶断しました！',
       },
     };
@@ -592,7 +592,7 @@ export function computeDigitalReadout(
       rangeLabel,
       note: {
         en: 'Current measurement via fused mA/10A jack.',
-        id: 'Pengukuran arus melalui jack bersekring mA/10A.',
+        id: 'Pengukuran arus melalui terminal bersekring mA/10A.',
         ja: 'ヒューズ保護付き mA/10A 端子による電流測定。',
       },
     };
@@ -613,7 +613,7 @@ export function computeDigitalReadout(
       rangeLabel,
       note: {
         en: 'WARNING: External voltage detected in Ω/Continuity mode! Isolate power first.',
-        id: 'PERINGATAN: Tegangan eksternal terdeteksi di mode Ω/Kontinuitas! Matikan daya dulu.',
+        id: 'PERINGATAN: Tegangan eksternal terdeteksi di mode Ω/Kontinuitas! Putuskan daya terlebih dahulu.',
         ja: '警告: 抵抗/導通モード中に外部電圧を検出！電源を遮断してください。',
       },
     };
@@ -634,7 +634,7 @@ export function computeDigitalReadout(
         rangeLabel: 'DIODE',
         note: {
           en: 'Forward-biased silicon PN junction (~0.585 V). Swap leads to confirm OL.',
-          id: 'Sambungan PN silikon bias maju (~0,585 V). Balik probe untuk pastikan OL.',
+          id: 'Sambungan PN silikon bias maju (~0,585 V). Tukar probe untuk memastikan OL.',
           ja: 'シリコンダイオード順方向降下（約0.585 V）。逆接続でOLを確認。',
         },
       };
@@ -731,7 +731,7 @@ export function computeAnalogReadout(
       isReversePolarity: false,
       note: {
         en: 'Analog VOM-20K is OFF (needle parked at left).',
-        id: 'VOM Analog dalam posisi OFF (jarum di kiri).',
+        id: 'Avometer Analog dalam posisi OFF (jarum di kiri).',
         ja: 'アナログテスタ VOM-20K はOFFです。',
       },
     };
@@ -746,7 +746,7 @@ export function computeAnalogReadout(
       isReversePolarity: false,
       note: {
         en: 'LEAD ERROR! Return Red lead to V-Ω-Hz jack.',
-        id: 'KESALAHAN KABEL! Kembalikan probe merah ke jack V-Ω-Hz.',
+        id: 'KESALAHAN KABEL! Kembalikan probe merah ke terminal V-Ω-Hz.',
         ja: 'リードエラー！赤リードを V-Ω-Hz 端子に戻してください。',
       },
     };
@@ -764,7 +764,7 @@ export function computeAnalogReadout(
         isReversePolarity: true,
         note: {
           en: 'Needle pegged against left stop! Swap Red/Black leads for positive DC deflection.',
-          id: 'Jarum mentok ke kiri! Tukar kabel Merah/Hitam untuk defleksi positif.',
+          id: 'Jarum tertahan di batas kiri! Tukar kabel Merah/Hitam untuk defleksi positif.',
           ja: '針が左端ストッパーに振り切れています！赤・黒リードを入れ替えてください。',
         },
       };

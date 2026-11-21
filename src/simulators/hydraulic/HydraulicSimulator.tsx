@@ -542,7 +542,7 @@ export function HydraulicSimulator() {
                 className="mt-1.5 w-full"
               />
               <div className="flex justify-between text-[10px] text-[var(--md-on-surface-variant)]">
-                <span>{pick('10% (Throttled)', '10% (Terdrossel)', '10% (絞り)')}</span>
+                <span>{pick('10% (Throttled)', '10% (Tercekik)', '10% (絞り)')}</span>
                 <span>{pick('100% (Full)', '100% (Penuh)', '100% (全開)')}</span>
               </div>
             </div>

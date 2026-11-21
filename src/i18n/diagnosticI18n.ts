@@ -5,7 +5,7 @@ registerSimulatorTranslations('multimeter', {
     title: 'Multimeter Digital & Analog (DMM / VOM)',
     shortTitle: 'Multimeter',
     description:
-      'Latih pengukuran tegangan AC/DC, resistansi, kontinuitas, dan uji dioda pada meja kerja ESD interaktif dengan deteksi kesalahan colokan.',
+      'Latih pengukuran tegangan AC/DC, resistansi, kontinuitas, dan uji dioda pada meja kerja ESD interaktif dengan deteksi kesalahan koneksi probe.',
   },
   ja: {
     title: 'デジタル・アナログマルチメータ (DMM / VOM)',
@@ -35,7 +35,7 @@ registerSimulatorTranslations('db-meter', {
     title: 'Alat Ukur Tingkat Kebisingan / dB Meter',
     shortTitle: 'dB Meter',
     description:
-      'Simulasikan pengukuran kebisingan industri IEC 61672 Kelas 1 dengan pembobotan dBA/dBC/dBZ, FAST/SLOW, jarak hukum kuadrat terbalik, dan dosis OSHA/NIOSH.',
+      'Simulasikan pengukuran kebisingan industri IEC 61672 Kelas 1 dengan pembobotan dBA/dBC/dBZ, FAST/SLOW, pelemahan jarak (hukum kuadrat terbalik), dan dosis paparan OSHA/NIOSH.',
   },
   ja: {
     title: '騒音計・音圧レベル (dB) メータ',
@@ -50,7 +50,7 @@ registerSimulatorTranslations('vibration-meter', {
     title: 'Vibration Meter Genggam (ISO 10816-3)',
     shortTitle: 'Vibration Meter',
     description:
-      'Tempelkan probe akselerometer magnetik pada titik NDE/DE motor dan pompa untuk mengevaluasi kecepatan RMS, akselerasi, perpindahan, dan kondisi bantalan BDU.',
+      'Tempelkan probe akselerometer magnetik pada titik NDE/DE motor dan pompa untuk mengevaluasi kecepatan RMS, percepatan, perpindahan, dan indeks kerusakan bantalan (BDU).',
   },
   ja: {
     title: 'ポータブル振動計 (ISO 10816-3)',
@@ -80,7 +80,7 @@ registerSimulatorTranslations('ir-thermometer', {
     title: 'Termometer IR & Kamera Termal',
     shortTitle: 'Termometer IR',
     description:
-      'Inspeksi titik panas panel MCC, bantalan, steam trap, dan stator dengan rasio Jarak-ke-Titik (D:S) serta kalibrasi emisivitas.',
+      'Inspeksi titik panas panel MCC, bantalan, steam trap, dan stator dengan rasio Jarak-terhadap-Titik (D:S) serta kalibrasi emisivitas.',
   },
   ja: {
     title: '放射温度計・サーモグラフィカメラ',

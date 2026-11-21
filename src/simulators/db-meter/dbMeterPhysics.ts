@@ -77,7 +77,7 @@ export const ACOUSTIC_SOURCES: AcousticSourceSpec[] = [
     bandLevels1mZ: [79, 82, 85, 89, 88, 84, 79, 73],
     fluctuationDb: 1.0,
     dominantNote: 'Tonal gear-mesh frequency peak (500–1000 Hz)',
-    dominantNoteId: 'Puncak tonal frekuensi gigi (500–1000 Hz)',
+    dominantNoteId: 'Puncak tonal frekuensi kontak roda gigi (500–1000 Hz)',
     dominantNoteJa: '歯車噛み合い周波数ピーク (500–1000 Hz)',
   },
   {
@@ -88,7 +88,7 @@ export const ACOUSTIC_SOURCES: AcousticSourceSpec[] = [
     bandLevels1mZ: [76, 78, 79, 77, 75, 72, 68, 63],
     fluctuationDb: 0.9,
     dominantNote: 'Low-mid cooling fan airflow & 2x line hum (125–250 Hz)',
-    dominantNoteId: 'Aliran udara kipas & dengung 2x jala-jala (125–250 Hz)',
+    dominantNoteId: 'Aliran udara kipas pendingin & dengung 2× frekuensi jala-jala (125–250 Hz)',
     dominantNoteJa: '冷却ファン気流音・低中域 (125–250 Hz)',
   },
 ];

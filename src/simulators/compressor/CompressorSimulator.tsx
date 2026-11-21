@@ -373,7 +373,7 @@ export function CompressorSimulator() {
           value={`${sol.pressureDewPointC.toFixed(1)} °C`}
           sub={
             sol.waterCarryover
-              ? pick('Water Carryover!', 'Water Carryover!', '水キャリーオーバー!')
+              ? pick('Water Carryover!', 'Air Terbawa (Carryover)!', '水キャリーオーバー!')
               : `${pick('Target', 'Target', '目標')} ≤ 3.5 °C`
           }
           alert={sol.pressureDewPointC > 8}

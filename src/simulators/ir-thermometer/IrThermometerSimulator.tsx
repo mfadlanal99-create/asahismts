@@ -100,7 +100,7 @@ export function IrThermometerSimulator() {
             <h2 className="text-sm font-extrabold tracking-tight text-[var(--md-on-surface)]">
               {pick(
                 'IR Spot Pyrometer & Thermal Imaging Camera',
-                'Pirometer Spot IR & Kamera Pencitraan Termal',
+                'Termometer Inframerah (IR) & Kamera Pencitraan Termal',
                 '放射温度計 (IRスポット) & サーモグラフィ'
               )}
             </h2>
@@ -122,7 +122,7 @@ export function IrThermometerSimulator() {
               }`}
             >
               <Crosshair className="h-3.5 w-3.5" />
-              {pick('Spot Pyrometer', 'Pirometer Spot', 'スポット温度計')}
+              {pick('Spot Pyrometer', 'Termometer Spot IR', 'スポット温度計')}
             </button>
             <button
               type="button"
@@ -134,7 +134,7 @@ export function IrThermometerSimulator() {
               }`}
             >
               <Camera className="h-3.5 w-3.5" />
-              {pick('Thermal Overlay', 'Overlay Termal', 'サーモ表示')}
+              {pick('Thermal Overlay', 'Citra Termal', 'サーモ表示')}
             </button>
           </div>
 
@@ -225,7 +225,7 @@ export function IrThermometerSimulator() {
                 {measurement.displayedTempC.toFixed(1)} °C
               </div>
               <div className="text-[10px] text-[var(--md-on-surface-variant)]">
-                {pick('True Center:', 'Asli Pusat:', '中心真値:')} {measurement.trueCenterTempC.toFixed(1)} °C
+                {pick('True Center:', 'Suhu Asli Pusat:', '中心真値:')} {measurement.trueCenterTempC.toFixed(1)} °C
               </div>
             </div>
 
@@ -368,7 +368,7 @@ export function IrThermometerSimulator() {
             <div className="space-y-2.5 border-t border-[var(--md-outline-variant)]/50 pt-3">
               <div>
                 <div className="mb-1.5 flex justify-between text-xs font-semibold text-[var(--md-on-surface-variant)]">
-                  <span>{pick('Reflected Ambient Temp (T_refl)', 'Suhu Pantul Sekitar (T_refl)', '反射周囲温度 (T_refl)')}</span>
+                  <span>{pick('Reflected Ambient Temp (T_refl)', 'Suhu Pantulan Sekitar (T_refl)', '反射周囲温度 (T_refl)')}</span>
                   <span className="font-mono font-bold text-[var(--md-primary)]">{reflectedTempC} °C</span>
                 </div>
                 <input

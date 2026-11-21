@@ -411,7 +411,7 @@ export function CaliperSimulator() {
                   onChange={(e) => setZeroErrorEnabled(e.target.checked)}
                   className="rounded"
                 />
-                {pick('Zero Error', 'Kesalahan Nol', 'ゼロ誤差')}
+                {pick('Zero Error', 'Kesalahan Titik Nol', 'ゼロ誤差')}
               </label>
               {zeroErrorEnabled && (
                 <select

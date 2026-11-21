@@ -660,7 +660,7 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Welcome! This cutaway simulator models the trade-off between fugitive emissions sealing and stem friction in industrial valves. Let’s walk through presets, controls, readouts, and fault diagnostics.',
-        id: 'Selamat datang! Simulator penampang melintang ini memodelkan kompromi antara penyegelan emisi fugitif (fugitive emissions) dan gesekan batang pada katup industri. Mari telusuri preset, kontrol, pembacaan, dan diagnostik gangguannya.',
+        id: 'Selamat datang! Simulator penampang melintang ini memodelkan kompromi antara penyegelan kebocoran emisi proses (fugitive emissions) dan gesekan batang pada katup industri. Mari telusuri preset, kontrol, pembacaan, dan diagnostik gangguannya.',
         ja: 'ようこそ！工業用バルブのグランドパッキンにおける漏洩防止とステム摩擦のトレードオフを断面図で再現します。プリセット、操作、計測値、故障診断を順に確認しましょう。',
       },
       tip: {
@@ -679,7 +679,7 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Use the top Scenarios bar to jump between Optimal Seal, Fugitive Leak, Stem Binding, Passing Seat / Trap, and Worn Packing, or click Reset to return to the baseline optimal control valve.',
-        id: 'Gunakan bilah Skenario di bagian atas untuk beralih antara Segel Optimal, Kebocoran Fugitif, Batang Katup Macet, Kebocoran Dudukan / Steam Trap, dan Paking Aus, atau klik Reset untuk kembali ke kondisi katup kontrol optimal awal.',
+        id: 'Gunakan bilah Skenario di bagian atas untuk beralih antara Segel Optimal, Kebocoran Emisi Proses, Batang Katup Macet, Kebocoran Dudukan / Steam Trap, dan Paking Aus, atau klik Reset untuk kembali ke kondisi katup kontrol optimal awal.',
         ja: '上部のシナリオボタンで「最適シール」「グランド漏洩」「ステム固着」「シート・トラップ漏れ」「パッキン摩耗」をワンクリックで再現でき、リセットで初期状態に戻せます。',
       },
       targetSelector: '[data-tour="valve-presets"]',
@@ -694,7 +694,7 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Inspect the live cross-section showing gland follower compression, braided packing rings, stem movement, fugitive leak plumes, and downstream seat/trap blow-by.',
-        id: 'Amati penampang melintang secara langsung yang menampilkan penekanan gland follower, susunan cincin paking anyam, pergerakan batang katup, kepulan kebocoran emisi fugitif, serta aliran bocor (blow-by) pada dudukan/steam trap.',
+        id: 'Amati penampang melintang secara langsung yang menampilkan penekanan gland follower, susunan cincin paking anyam, pergerakan batang katup, kepulan kebocoran emisi proses, serta aliran bocor (blow-by) pada dudukan/steam trap.',
         ja: 'グランドフォロアの圧縮、編組パッキンリング、ステム上下動、漏洩ガス、下流シート・トラップの吹き抜けを断面図で観察できます。',
       },
       targetSelector: '[data-tour="valve-canvas"]',
@@ -739,7 +739,7 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Examine the Inherent Valve Flow Characteristic Curve alongside the Gland Torque operating window to keep fugitive emissions below 500 ppm EPA M21 without binding the stem.',
-        id: 'Periksa Kurva Karakteristik Aliran Bawaan Katup beserta rentang operasi Torsi Gland untuk menjaga emisi fugitif tetap di bawah ambang 500 ppm EPA M21 tanpa menyebabkan batang katup macet.',
+        id: 'Periksa Kurva Karakteristik Aliran Bawaan Katup beserta rentang operasi Torsi Gland untuk menjaga kebocoran emisi proses tetap di bawah ambang 500 ppm EPA M21 tanpa menyebabkan batang katup macet.',
         ja: '固有流量特性曲線とグランドトルク最適域を確認し、EPA M21（500 ppm以下）を満たしつつステム固着を避ける締付範囲を見極めます。',
       },
       targetSelector: '[data-tour="valve-diagnostics"]',
@@ -1258,7 +1258,7 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Welcome! Perform a 4-point predictive maintenance route on a coupled motor-pump train using a handheld vibration analyzer to isolate unbalance, misalignment, looseness, and bearing wear.',
-        id: 'Selamat datang! Lakukan inspeksi rute pemeliharaan prediktif 4 titik pada rangkaian motor-pompa terkopel menggunakan alat ukur getaran genggam untuk mengisolasi ketidakseimbangan (unbalance), ketidakselarasan poros (misalignment), kelonggaran mekanis, dan keausan bantalan.',
+        id: 'Selamat datang! Lakukan inspeksi rute pemeliharaan prediktif 4 titik pada rangkaian motor-pompa terkopel menggunakan alat ukur getaran genggam untuk mengisolasi ketidakseimbangan (unbalance), ketidaksejajaran poros (misalignment), kelonggaran mekanis, dan keausan bantalan.',
         ja: 'ようこそ！電動機・ポンプ連結機を対象に、携帯型振動計による4点巡回点検を行い、不釣合・芯ずれ・ガタ・軸受摩耗の切り分けを実践します。',
       },
       tip: {
@@ -1382,14 +1382,14 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Inject faults from the Fault Scenario list—such as unbalance, misalignment, looseness, bearing wear, or cavitation—and troubleshoot by comparing M-DE/M-NDE vs. P-DE/P-NDE readings in the 4-point matrix.',
-        id: 'Simulasikan gangguan dari daftar Skenario Gangguan—seperti ketidakseimbangan (unbalance), ketidakselarasan (misalignment), kelonggaran mekanis, keausan bantalan, atau kavitasi—lalu lakukan diagnosis masalah dengan membandingkan pembacaan M-DE/M-NDE terhadap P-DE/P-NDE pada matriks 4 titik.',
+        id: 'Simulasikan gangguan dari daftar Skenario Gangguan—seperti ketidakseimbangan (unbalance), ketidaksejajaran (misalignment), kelonggaran mekanis, keausan bantalan, atau kavitasi—lalu lakukan diagnosis masalah dengan membandingkan pembacaan M-DE/M-NDE terhadap P-DE/P-NDE pada matriks 4 titik.',
         ja: '「故障シナリオ」を切り替えてモータ側（M-DE/M-NDE）とポンプ側（P-DE/P-NDE）の振動差を比較し、どの機器の異常かを切り分けましょう。',
       },
       faqs: [
         {
           q: {
             en: 'How do I distinguish misalignment from bearing wear?',
-            id: 'Bagaimana cara membedakan ketidakselarasan poros (misalignment) dari keausan bantalan?',
+            id: 'Bagaimana cara membedakan ketidaksejajaran poros (misalignment) dari keausan bantalan?',
             ja: '芯ずれ（ミスアライメント）と軸受摩耗はどう見分けますか？',
           },
           a: {

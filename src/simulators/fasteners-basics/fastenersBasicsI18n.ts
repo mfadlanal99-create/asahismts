@@ -5,7 +5,7 @@ registerSimulatorTranslations('fasteners-basics', {
     title: 'Lab Pemula: Baut, Mur, Ring & Kelas Kekuatan',
     shortTitle: 'Baut, Mur & Ring Dasar',
     description:
-      'Simulator edukasi teknik pemula untuk elemen pengencang mekanis. Pelajari identifikasi kepala baut (Hex, Allen Socket, Countersunk, Carriage, Stud), jenis mur pengunci (Nyloc, Flange, Castle + Cotter), ring anti-kendor (Flat, Split Spring, Nord-Lock), dekoder angka kelas kekuatan metrik ISO (4.8, 8.8, 10.9, 12.9, A2/A4), serta tabel kunci pas (M6–M16).',
+      'Simulator edukasi teknik pemula untuk elemen pengencang mekanis. Pelajari identifikasi kepala baut (Hex, Allen Socket, Countersunk, Carriage, Stud), jenis mur pengunci (Nyloc, Flange, Castle + Cotter), ring antikendur (Flat, Split Spring, Nord-Lock), dekoder angka kelas kekuatan metrik ISO (4.8, 8.8, 10.9, 12.9, A2/A4), serta tabel kunci pas (M6–M16).',
     explore: [
       {
         title: 'Sistem Kelas Kekuatan Baut Metrik ISO (Property Class)',
@@ -50,12 +50,12 @@ registerSimulatorTranslations('fasteners-basics', {
         },
       },
       {
-        title: 'Jenis Mur, Ring & Mekanisme Penguncian Anti-Kendor',
+        title: 'Jenis Mur, Ring & Mekanisme Penguncian Antikendur',
         summary:
-          'Kendornya sambungan baut akibat getaran siklik transversal adalah penyebab kegagalan mekanikal paling sering. Berbagai jenis mur dan ring dirancang untuk mengatasi getaran: dari mur friksi standar, mur nilon (Nyloc), mur flens bergerigi, ring pegas belah, ring baji Nord-Lock bersertifikat uji Junker, hingga penguncian mekanis positif mur mahkota (castle nut) dengan pin cotter.',
+          'Kendurnya sambungan baut akibat getaran siklik transversal adalah penyebab kegagalan mekanikal paling sering. Berbagai jenis mur dan ring dirancang untuk mengatasi getaran: dari mur friksi standar, mur nilon (Nyloc), mur flens bergerigi, ring pegas belah, ring baji Nord-Lock bersertifikat uji Junker, hingga penguncian mekanis positif mur mahkota (castle nut) dengan pin cotter.',
         equations: [
           {
-            label: 'Penyebab Kendor (Getaran Transversal)',
+            label: 'Penyebab Kendur (Getaran Transversal)',
             formula: 'F_transversal > μ · F_klem',
             note: 'Bila gaya geser melebihi gesekan tapak dan ulir, baut akan berputar mundur secara alami.',
           },
@@ -73,11 +73,11 @@ registerSimulatorTranslations('fasteners-basics', {
             'Opsi: Mur standar + Ring pegas DIN 127 vs Pasangan Ring Baji Nord-Lock DIN 25201',
           ],
           steps: [
-            'Analisis DIN 127 (Ring pegas): Pada uji getaran Junker dinamis, ring pegas cepat menjadi pipih dan justru mempercepat kendornya baut.',
+            'Analisis DIN 127 (Ring pegas): Pada uji getaran Junker dinamis, ring pegas cepat menjadi pipih dan justru mempercepat kendurnya baut.',
             'Analisis Nord-Lock: Menggunakan prinsip baji (cam angle α > thread pitch angle β), memanfaatkan beban tarik bukan sekadar friksi.',
             'Rekomendasi: Pasang ring baji ganda Nord-Lock berpelumas ringan dengan baut kelas 8.8 atau 10.9.',
           ],
-          answer: 'Pilih Ring Baji Nord-Lock DIN 25201 untuk keandalan anti-kendor maksimal.',
+          answer: 'Pilih Ring Baji Nord-Lock DIN 25201 untuk keandalan antikendur maksimal.',
         },
       },
       {
@@ -195,7 +195,7 @@ registerSimulatorTranslations('fasteners-basics', {
       {
         id: 'q2',
         question:
-          'Apakah prinsip kerja utama dari sepasang ring baji Nord-Lock (DIN 25201) dalam mencegah kendornya sambungan akibat getaran berat?',
+          'Apakah prinsip kerja utama dari sepasang ring baji Nord-Lock (DIN 25201) dalam mencegah kendurnya sambungan akibat getaran berat?',
         options: [
           'Memanfaatkan sudut kemiringan baji (α) yang lebih besar dari kisar ulir baut (β) sehingga getaran justru menciptakan efek pasak pengencang',
           'Menggunakan lem perekat anaerobik cair di dalam alur ring',
@@ -236,7 +236,7 @@ registerSimulatorTranslations('fasteners-basics', {
         question:
           'Apa temuan utama pengujian getaran transversal Junker terhadap Ring Pegas Belah (Split Spring Lock Washer DIN 127)?',
         options: [
-          'Ring pegas cepat memipih pada beban klem normal dan sering mempercepat kendornya baut di bawah getaran siklik',
+          'Ring pegas cepat memipih pada beban klem normal dan sering mempercepat kendurnya baut di bawah getaran siklik',
           'Ring pegas memiliki daya kunci lebih kuat dari Nord-Lock maupun pin cotter',
           'Ring pegas menghilangkan kebutuhan akan mur pengunci di mesin bergetar berat',
           'Ring pegas hanya boleh dipasang di bawah kepala baut Countersunk',

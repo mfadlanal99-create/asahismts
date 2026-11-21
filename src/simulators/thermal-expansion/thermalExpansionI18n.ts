@@ -2,10 +2,10 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('thermal-expansion', {
   id: {
-    title: 'Ekspansi Termal & Shrink Fit',
-    shortTitle: 'Ekspansi Termal',
+    title: 'Pemuaian Termal & Suaian Susut (Shrink Fit)',
+    shortTitle: 'Pemuaian Termal',
     description:
-      'Simulator termo-mekanis interaktif. Eksplorasi pemuaian termal linier dan volumetrik, tegangan termal terkekang dengan celah ekspansi, perakitan poros-hub suaian pasak susut (shrink fit), dan defleksi elemen termostat strip bimetal Timoshenko.',
+      'Simulator termo-mekanis interaktif. Eksplorasi pemuaian termal linier dan volumetrik, tegangan termal terkekang dengan celah ekspansi, perakitan poros-hub suaian susut (shrink fit), dan defleksi elemen termostat strip bimetal Timoshenko.',
     explore: [
       {
         title: 'Ekspansi Termal Linier & Volumetrik',
@@ -272,7 +272,7 @@ registerSimulatorTranslations('thermal-expansion', {
       {
         id: 'q6',
         question:
-          'Bahaya kegagalan struktural fatal apakah yang mengancam rel kereta api sambungan las menerus (CWR) atau pipa panjang ketika sambungan ekspansi tidak mencukupi saat musim panas ekstrim?',
+          'Bahaya kegagalan struktural fatal apakah yang mengancam rel kereta api sambungan las menerus (CWR) atau pipa panjang ketika sambungan ekspansi tidak mencukupi saat musim panas ekstrem?',
         options: [
           'Tekuk tekan termal (thermal buckling / sun kink) akibat akumulasi gaya dorong tekan aksial raksasa yang tertahan',
           'Pengecilan penampang lokal (necking) dan patah tarik ulet',

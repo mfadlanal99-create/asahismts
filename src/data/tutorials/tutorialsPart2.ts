@@ -351,7 +351,7 @@ export const TUTORIALS_PART_2: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Welcome! Perform single-plane rotor dynamic balancing using influence coefficients and inspect coupling misalignment, keyway shear stress, and torsional backlash.',
-        id: 'Selamat datang! Lakukan penyeimbangan dinamis (dynamic balancing) rotor satu bidang menggunakan koefisien pengaruh serta inspeksi ketidakselarasan (misalignment) kopling, tegangan geser pasak, dan kelonggaran (backlash) torsi.',
+        id: 'Selamat datang! Lakukan penyeimbangan dinamis (dynamic balancing) rotor satu bidang menggunakan koefisien pengaruh serta inspeksi ketidaksejajaran (misalignment) kopling, tegangan geser pasak, dan celah puntir (backlash) torsi.',
         ja: 'ようこそ！影響係数法による1面動釣合い試験と、カップリングのミスアライメント・キー応力・ねじりバックラッシ点検を実践できます。',
       },
       tip: {
@@ -370,7 +370,7 @@ export const TUTORIALS_PART_2: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Switch between Single-Plane Dynamic Balancing Lab and Coupling & Keyway Inspection to evaluate spider/gear wear, key stress (DIN 6885), and misalignment tolerances.',
-        id: 'Berpindah antara Lab Penyeimbangan Dinamis 1-Bidang dan Inspeksi Kopling & Alur Pasak untuk mengevaluasi keausan elemen kopling, tegangan pasak (DIN 6885), dan toleransi ketidakselarasan.',
+        id: 'Berpindah antara Lab Penyeimbangan Dinamis 1-Bidang dan Inspeksi Kopling & Alur Pasak untuk mengevaluasi keausan elemen kopling, tegangan pasak (DIN 6885), dan toleransi ketidaksejajaran.',
         ja: '「1面動釣合い試験ラボ」と「カップリング・キー溝点検」を切り替え、摩耗・キー応力・許容ミスアライメントを評価します。',
       },
       targetSelector: '[data-tour="coupling-subtabs"]',
@@ -817,7 +817,7 @@ export const TUTORIALS_PART_2: Record<string, TutorialStep[]> = {
       badge: { en: 'Overview', id: 'Ikhtisar', ja: '概要' },
       title: {
         en: 'En-Masse Drag Chain Conveyor Lab',
-        id: 'Lab Konveyor Rantai Seret En-Masse',
+        id: 'Lab Konveyor Rantai Drag En-Masse',
         ja: 'エンマス・ドラッグチェーンコンベヤラボ',
       },
       description: {
@@ -1088,7 +1088,7 @@ export const TUTORIALS_PART_2: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Check Rm, Re, Dry Torque (K=0.20), and Target Clamp Load (75% Fp). Troubleshoot joint failures: never mix a Class 4.6 nut onto a 10.9 bolt (nut thread stripping) or exceed 75% proof load.',
-        id: 'Periksa Rm, Re, Torsi Kering (K=0,20), dan Target Gaya Jepit (75% Fp). Cegah kegagalan sambungan: jangan pernah memasang mur Kelas 4.6 pada baut 10.9 (ulir mur akan terkelupas/rusak) atau melampaui 75% beban bukti (proof load).',
+        id: 'Periksa Rm, Re, Torsi Kering (K=0,20), dan Target Gaya Jepit (75% Fp). Cegah kegagalan sambungan: jangan pernah memasang mur Kelas 4.6 pada baut 10.9 (ulir mur akan rusak) atau melampaui 75% beban bukti (proof load).',
         ja: 'Rm・Re・ドライ締付トルク(K=0.20)・目標軸力(75% Fp)を確認し、高強度ボルトへの低強度ナット混用（ねじ山せん断）や過大締付けを防ぎます。',
       },
       faqs: [

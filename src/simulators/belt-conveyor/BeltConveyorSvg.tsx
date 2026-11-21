@@ -838,7 +838,7 @@ export function BeltConveyorSvg({
             fontWeight="700"
             fontFamily="var(--font-mono)"
           >
-            {pick('TRAINING IDLER', 'TRAINING IDLER', '調心アイドラ')} (
+            {pick('TRAINING IDLER', 'ROL PENUMPU PENGARAH', '調心アイドラ')} (
             {inputs.trainingIdlerSkewDeg > 0 ? '+' : ''}
             {inputs.trainingIdlerSkewDeg.toFixed(1)}°)
           </text>

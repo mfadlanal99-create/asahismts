@@ -74,7 +74,7 @@ export function CommandPalette({
         ),
         subtitle: pick(
           'ISO Fits, Bolt Torque, Alignment & Fluid Power reference',
-          'Referensi Suaian ISO, Torsi Baut, Alignment & Tenaga Fluida',
+          'Referensi Suaian ISO, Torsi Baut, Penyelarasan Poros & Tenaga Fluida',
           'ISOはめあい・ボルトトルク・芯出し・流体動力リファレンス'
         ),
         kind: 'action',
@@ -207,7 +207,7 @@ export function CommandPalette({
             }}
             placeholder={pick(
               'Jump to a simulator lab, handbook, report, or theme...',
-              'Lompat ke lab simulator, panduan, laporan, atau tema...',
+              'Buka lab simulator, panduan, laporan, atau tema...',
               'シミュレータ・ハンドブック・レポート・テーマへ移動...'
             )}
             className="w-full bg-transparent text-sm font-medium text-[var(--md-on-surface)] outline-none placeholder:text-[var(--md-on-surface-variant)]"

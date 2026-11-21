@@ -389,7 +389,7 @@ export function MultimeterSimulator() {
               )}
               {soundEnabled
                 ? pick('Beeper On', 'Buzzer Aktif', 'ブザーON')
-                : pick('Muted', 'Bisu', 'ミュート')}
+                : pick('Muted', 'Nonaktif', 'ミュート')}
             </button>
           </div>
 
@@ -488,7 +488,7 @@ export function MultimeterSimulator() {
           {scenario === 'led' && (
             <div className="glass-panel flex items-center justify-between rounded-[28px] p-4 sm:p-5">
               <span className="text-xs font-bold text-[var(--md-on-surface)]">
-                {pick('Circuit Toggle Switch (SW1)', 'Saklar Sirkuit (SW1)', '回路スイッチ (SW1)')}
+                {pick('Circuit Toggle Switch (SW1)', 'Sakelar Rangkaian (SW1)', '回路スイッチ (SW1)')}
               </span>
               <button
                 type="button"
@@ -668,7 +668,7 @@ export function MultimeterSimulator() {
           {/* Red Lead Input Jack Selector */}
           <div className="glass-panel space-y-2.5 rounded-[28px] p-4 sm:p-5" data-tour="dmm-red-jack">
             <div className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
-              {pick('Red Test Lead Jack', 'Jack Kabel Merah', '赤リード接続端子')}
+              {pick('Red Test Lead Jack', 'Terminal Kabel Merah', '赤リード接続端子')}
             </div>
             <div className="grid grid-cols-3 gap-2">
               {(

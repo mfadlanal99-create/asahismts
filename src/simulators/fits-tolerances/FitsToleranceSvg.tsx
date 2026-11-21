@@ -90,7 +90,7 @@ export function FitsToleranceSvg({
             badgeClass:
               'bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-700/60',
             dotClass: 'bg-amber-500',
-            label: pick('TRANSITION FIT', 'SUAIAN TRANSISI', '中間ばめ'),
+            label: pick('TRANSITION FIT', 'SUAIAN PAS', '中間ばめ'),
           }
         : {
             stroke: isDark ? '#fb7185' : '#e11d48',

@@ -1553,7 +1553,7 @@ export function BucketElevatorSvg({
         {activeHotspot === 'boot-takeup' && (
           <>
             <text x="12" y="40" fill={hudTextMuted} fontSize="10" fontFamily="var(--font-sans)">
-              {pick('Take-Up Tension', 'Tegangan Take-Up', '張り張力')}:
+              {pick('Take-Up Tension', 'Tegangan Penegang (Take-Up)', '張り張力')}:
             </text>
             <text
               x="214"
@@ -1718,7 +1718,7 @@ export function BucketElevatorSvg({
                 ? pick('FAULT: BOOT CHOKE OVERLOAD', 'GANGGUAN: BOOT TERSUMBAT', '異常: ブーツ詰まり過負荷')
                 : inputs.fault === 'missing-bucket'
                   ? pick('FAULT: MISSING BUCKET', 'GANGGUAN: BUCKET HILANG', '異常: バケット欠損')
-                  : pick('FAULT: BELT MISALIGNMENT', 'GANGGUAN: SABUK MIRING', '異常: ベルト蛇行')}
+                  : pick('FAULT: BELT MISALIGNMENT', 'GANGGUAN: KETIDAKSEJAJARAN SABUK', '異常: ベルト蛇行')}
           </text>
           <text
             x="12"

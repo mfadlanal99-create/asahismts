@@ -5,7 +5,7 @@ registerSimulatorTranslations('belt-gear', {
     title: 'Simulator Perawatan Penggerak Sabuk & Roda Gigi',
     shortTitle: 'Sabuk & Roda Gigi',
     description:
-      'Periksa ketegangan V-belt dengan metode defleksi-gaya C/64, cek kesejajaran puli dan slip sabuk, serta setel jarak pusat, backlash, dan kecepatan garis pitch roda gigi lurus.',
+      'Periksa ketegangan V-belt dengan metode defleksi-gaya C/64, cek kesejajaran puli dan slip sabuk, serta setel jarak pusat, celah gigi (backlash), dan kecepatan garis bagi (pitch) roda gigi lurus.',
     explore: [
       {
         title: 'Rasio Sabuk & Panjang Pitch',
@@ -121,9 +121,9 @@ registerSimulatorTranslations('belt-gear', {
         },
       },
       {
-        title: 'Multiplikasi Torsi & Perawatan Backlash',
+        title: 'Multiplikasi Torsi & Perawatan Celah Gigi (Backlash)',
         summary:
-          'Penurunan kecepatan melipatgandakan torsi output sebanding dengan rasio kecepatan dan efisiensi mekanis. Pada roda gigi lurus, celah backlash terkontrol diperlukan untuk lapisan film pelumas dan pemuaian termal.',
+          'Penurunan kecepatan melipatgandakan torsi output sebanding dengan rasio kecepatan dan efisiensi mekanis. Pada roda gigi lurus, celah gigi (backlash) terkontrol diperlukan untuk lapisan film pelumas dan pemuaian termal.',
         equations: [
           {
             label: 'Torsi Input',

@@ -116,7 +116,7 @@ registerSimulatorTranslations('vibration', {
           {
             label: 'Batas Fondasi Fleksibel Kelas II (ISO 10816-3)',
             formula: 'Zona A ≤ 1.80,  Zona B ≤ 4.50,  Zona C ≤ 7.10,  Zona D > 7.10 mm/s',
-            note: 'Fondasi fleksibel memperbolehkan batas gerak rumah bantalan lebih tinggi karena kepatuhan struktur.',
+            note: 'Fondasi fleksibel memperbolehkan batas gerak rumah bantalan lebih tinggi karena kelenturan struktur.',
           },
         ],
         workedExample: {

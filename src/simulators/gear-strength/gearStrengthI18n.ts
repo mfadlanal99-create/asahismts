@@ -204,7 +204,7 @@ registerSimulatorTranslations('gear-strength', {
           'Mengasumsikan gesekan antar gigi lebih besar dari gaya normal',
         ],
         explanation:
-          'Lewis menginspeksikan parabola di dalam profil gigi yang menyentuh radius fillet akar gigi. Karena balok kantilever parabolik memiliki tegangan lentur serat luar yang konstan di sepanjang panjangnya, titik singgung dengan akar gigi menandai penampang kritis dengan tegangan tarik maksimum.',
+          'Lewis menginskripsikan parabola di dalam profil gigi yang menyentuh radius fillet akar gigi. Karena balok kantilever parabolik memiliki tegangan lentur serat luar yang konstan di sepanjang panjangnya, titik singgung dengan akar gigi menandai penampang kritis dengan tegangan tarik maksimum.',
       },
       {
         id: 'q2',

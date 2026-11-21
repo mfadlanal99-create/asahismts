@@ -786,7 +786,7 @@ export function UtmTestingSimulator() {
               {/* Peak Force Recorded */}
               <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <span className="text-[10px] text-[var(--md-on-surface-variant)]">
-                  {pick('Peak Force Fmax', 'Gaya Maksimal', '最大荷重 Fmax')}
+                  {pick('Peak Force Fmax', 'Gaya Maksimum', '最大荷重 Fmax')}
                 </span>
                 <span className="font-mono font-bold text-[var(--md-primary)]">
                   {peakForceKn.toFixed(2)} kN
@@ -816,7 +816,7 @@ export function UtmTestingSimulator() {
               {/* Modulus of Resilience Ur */}
               <div className="flex flex-col rounded-[20px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-2.5">
                 <span className="text-[10px] text-[var(--md-on-surface-variant)]">
-                  {pick('Resilience (Ur)', 'Kelentingan (Ur)', 'レジリエンス (Ur)')}
+                  {pick('Resilience (Ur)', 'Resiliensi (Ur)', 'レジリエンス (Ur)')}
                 </span>
                 <span className="font-mono font-bold text-[var(--md-on-surface)]">
                   {extractedProps.resilience} MJ/m³

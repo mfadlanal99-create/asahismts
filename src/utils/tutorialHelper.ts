@@ -258,7 +258,7 @@ export function answerTutorialQuestion(params: {
         tip ? `\n\n💡 Tip: ${tip}` : ''
       }`,
       id: `Ringkasan "${currentStep.title.id}" di ${meta.title}: ${desc}${
-        tip ? `\n\n💡 Tips: ${tip}` : ''
+        tip ? `\n\n💡 Kiat: ${tip}` : ''
       }`,
       ja: `${meta.title}の「${currentStep.title.ja}」について: ${desc}${
         tip ? `\n\n💡 ヒント: ${tip}` : ''

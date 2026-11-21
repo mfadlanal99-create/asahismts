@@ -58,7 +58,7 @@ export const CLAMP_FAULT_SCENARIOS: {
   {
     id: 'voltage-unbalance',
     en: 'Fault: 3% Supply Voltage Unbalance',
-    idLabel: 'Gangguan: Ketidakseimbangan Tegangan 3%',
+    idLabel: 'Gangguan: Ketidakseimbangan Tegangan Suplai 3%',
     ja: '故障: 電源電圧不平衡 3%',
   },
 ];
@@ -143,32 +143,32 @@ export function computeClampMeterSnapshot(
 
   let diagnosticNote = {
     en: 'Balanced 3-phase motor load within NEMA MG-1 limits (< 5% unbalance).',
-    id: 'Beban motor 3-fasa seimbang dalam batas NEMA MG-1 (< 5% ketidakseimbangan).',
+    id: 'Beban motor 3-fasa seimbang dalam batas NEMA MG-1 (ketidakseimbangan < 5%).',
     ja: '三相電動機負荷は平衡しており、NEMA MG-1基準内（不平衡率5%未満）です。',
   };
 
   if (fault === 'single-phasing') {
     diagnosticNote = {
       en: 'CRITICAL: Single-phasing! L2 carries 0.0 A while L1/L3 draw ~173% current. Trip thermal overload immediately.',
-      id: 'KRITIS: Single-phasing! L2 0,0 A sedangkan L1/L3 menarik ~173% arus. Segera amankan motor.',
+      id: 'KRITIS: Hilang satu fasa (single-phasing)! L2 0,0 A sedangkan L1/L3 menarik ~173% arus normal. Segera trip relai beban lebih termal.',
       ja: '重大: 単相運転！L2が0.0 AでL1/L3が約173%過電流。直ちに停止してください。',
     };
   } else if (fault === 'locked-rotor') {
     diagnosticNote = {
       en: 'CRITICAL: Locked rotor (~5.5× FLA) with low PF (0.34). Shaft is mechanically seized.',
-      id: 'KRITIS: Rotor terkunci (~5,5× FLA) dengan PF rendah (0,34). Poros macet secara mekanis.',
+      id: 'KRITIS: Rotor terkunci (~5,5× FLA) dengan faktor daya rendah (0,34). Poros macet secara mekanis.',
       ja: '重大: ローターロック（定格の約5.5倍電流）、力率0.34。軸が機械的に固着しています。',
     };
   } else if (fault === 'voltage-unbalance') {
     diagnosticNote = {
       en: `WARNING: ${unbalancePct.toFixed(1)}% current unbalance driven by supply voltage asymmetry. Motor winding heating rises sharply.`,
-      id: `PERINGATAN: Ketidakseimbangan arus ${unbalancePct.toFixed(1)}% akibat tegangan tidak seimbang. Panas belitan meningkat tajam.`,
+      id: `PERINGATAN: Ketidakseimbangan arus ${unbalancePct.toFixed(1)}% akibat tegangan suplai tidak seimbang. Pemanasan belitan meningkat tajam.`,
       ja: `警告: 電源電圧不平衡により電流不平衡率が${unbalancePct.toFixed(1)}%に達しています。巻線過熱に注意。`,
     };
   } else if (conductor === 'PE_N') {
     diagnosticNote = {
       en: 'Clamping PE/Neutral measures earth leakage / zero-sequence current (~0.06 A normal).',
-      id: 'Menjepit PE/Netral mengukur arus bocor tanah / urutan nol (~0,06 A normal).',
+      id: 'Menjepit konduktor PE/Netral mengukur arus bocor tanah / urutan nol (~0,06 A normal).',
       ja: 'PE/中性線をクランプして漏れ電流・零相電流（正常時約0.06 A）を測定しています。',
     };
   }

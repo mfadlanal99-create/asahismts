@@ -236,7 +236,7 @@ export function MegohmmeterSvg({
       role="img"
       aria-label={pick(
         'Megohmmeter Insulation Resistance Tester and 3-Phase Motor Diagram',
-        'Diagram Megohmmeter Penguji Tahanan Isolasi dan Motor 3-Fasa',
+        'Diagram Alat Ukur Tahanan Isolasi (Megger) dan Motor 3-Fasa',
         'メガー絶縁抵抗計および三相モータ結線図'
       )}
     >

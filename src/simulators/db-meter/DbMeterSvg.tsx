@@ -169,7 +169,7 @@ export function DbMeterSvg({
         role="img"
         aria-label={pick(
           'IEC 61672 Class 1 Sound Level Meter and Acoustic Source Diagram',
-          'Diagram Alat Ukur Tingkat Suara IEC 61672 Kelas 1 dan Sumber Akustik',
+          'Diagram Alat Ukur Tingkat Kebisingan (dB Meter) IEC 61672 Kelas 1 dan Sumber Akustik',
           'IEC 61672 クラス1騒音計と音源の模式図'
         )}
       >
@@ -702,7 +702,7 @@ export function DbMeterSvg({
           <text x="600" y="354" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" textAnchor="middle" fill="#94A3B8">
             {pick(
               'Drag meter on floorplan or click buttons',
-              'Geser meter di lantai atau klik tombol',
+              'Geser alat ukur di area lantai atau klik tombol',
               'メーターをドラッグまたはボタンをクリック'
             )}
           </text>

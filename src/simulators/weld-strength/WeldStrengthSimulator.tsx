@@ -173,7 +173,7 @@ export function WeldStrengthSimulator() {
                     : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
-                {pick('1. Lap / T-Fillet', '1. Fillet Tumpang / T', '1. 重ね／T形すみ肉')}
+                {pick('1. Lap / T-Fillet', '1. Las Sudut Tumpang / T', '1. 重ね／T形すみ肉')}
               </button>
               <button
                 type="button"
@@ -195,7 +195,7 @@ export function WeldStrengthSimulator() {
                     : 'font-semibold text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
                 }`}
               >
-                {pick('3. Butt Groove Weld', '3. Kampuh Tumpul', '3. 突合せ開先溶接')}
+                {pick('3. Butt Groove Weld', '3. Las Tumpul (Kampuh)', '3. 突合せ開先溶接')}
               </button>
             </div>
           </div>

@@ -5,7 +5,7 @@ registerSimulatorTranslations('coupling', {
     title: 'Simulator Penyeimbangan Rotor, Kopling & Alur Pasak',
     shortTitle: 'Balancing & Kopling',
     description:
-      'Lakukan penyeimbangan rotor dinamis satu bidang metode koefisien pengaruh sesuai standar ISO 10816 / 1940, serta inspeksi backlash torsi, fretting alur pasak, dan faktor layanan kopling.',
+      'Lakukan penyeimbangan rotor dinamis satu bidang metode koefisien pengaruh sesuai standar ISO 10816 / 1940, serta inspeksi celah puntir (backlash) torsi, fretting alur pasak, dan faktor layanan kopling.',
     explore: [
       {
         title: 'Metode Vektor Penyeimbangan Koefisien Pengaruh',
@@ -82,7 +82,7 @@ registerSimulatorTranslations('coupling', {
         },
       },
       {
-        title: 'Jenis Kopling, Backlash Torsi & Inspeksi Suaian Alur Pasak',
+        title: 'Jenis Kopling, Celah Puntir (Backlash) Torsi & Inspeksi Suaian Alur Pasak',
         summary:
           'Kopling fleksibel mengakomodasi ketidaksejajaran dan meredam kejut torsi, namun keausan elastomer, kekurangan gemuk, dan kelonggaran pasak mempercepat backlash, korosi fretting, dan tegangan geser pasak.',
         equations: [

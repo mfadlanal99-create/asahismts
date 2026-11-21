@@ -539,7 +539,7 @@ export function Machine3DExplorerSimulator() {
             }`}
           >
             <RotateCw className={`h-3.5 w-3.5 ${autoRotate ? 'animate-spin' : ''}`} />
-            {pick('Orbit', 'Putar', '回転')}
+            {pick('Orbit', 'Orbit', '回転')}
           </button>
 
           <div className="flex items-center gap-2 rounded-full border border-[var(--md-outline-variant)]/55 bg-[var(--md-surface-container-high)] px-2.5 py-1">
@@ -553,7 +553,7 @@ export function Machine3DExplorerSimulator() {
               }`}
             >
               {isRunning ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
-              {pick('Drive', 'Putar', '駆動')}
+              {pick('Drive', 'Jalankan', '駆動')}
             </button>
             <input
               type="range"

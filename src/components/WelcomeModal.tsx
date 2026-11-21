@@ -35,7 +35,7 @@ const LEARNING_MODES = [
     idTitle: 'Materi',
     jaTitle: '理論学習',
     enDesc: 'Maintenance theory, standards & worked examples',
-    idDesc: 'Teori pemeliharaan, standar & contoh soal terbahas',
+    idDesc: 'Teori pemeliharaan, standar & contoh soal beserta pembahasan',
     jaDesc: '保全理論・規格・例題解説',
     icon: BookOpen,
     color: 'text-emerald-600 dark:text-emerald-400',
@@ -146,7 +146,7 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
               <p className="mt-1.5 text-xs leading-relaxed text-[var(--md-on-surface-variant)] sm:text-sm">
                 {pick(
                   'Interactive plant reliability & mechanical maintenance suite with 40 hands-on simulators across precision measurement, diagnostic instruments, rotating equipment, machine elements, and fluid power.',
-                  'Paket keandalan pabrik & pemeliharaan mekanik interaktif dengan 40 simulator praktis di bidang pengukuran presisi, instrumen diagnostik, peralatan rotasi, elemen mesin, dan tenaga fluida.',
+                  'Paket pelatihan keandalan pabrik & pemeliharaan mekanik interaktif berisi 40 simulator praktis di bidang pengukuran presisi, instrumen diagnostik, peralatan rotasi, elemen mesin, dan tenaga fluida.',
                   '精密測定・診断計測器・回転機械・機械要素・流体動力の5分野40種類の実践シミュレータを備えたインタラクティブ保全訓練システム。'
                 )}
               </p>
@@ -219,7 +219,7 @@ export function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
             />
             {pick(
               "Don't show again on startup",
-              'Jangan tampilkan lagi saat mulai',
+              'Jangan tampilkan lagi saat memulai',
               '起動時に次回から表示しない'
             )}
           </label>

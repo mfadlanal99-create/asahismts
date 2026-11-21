@@ -117,7 +117,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
           {(isMastered || (bestPct !== null && bestPct >= 80)) && (
             <span className="inline-flex items-center gap-1 rounded-full bg-[var(--md-tertiary-container)] px-3 py-1 text-[11px] font-bold text-[var(--md-on-tertiary-container)]">
               <BadgeCheck className="h-3.5 w-3.5" />
-              {pick('Mastered', 'Terkompetensi', '習得済み')} (&ge;80%)
+              {pick('Mastered', 'Dikuasai', '習得済み')} (&ge;80%)
             </span>
           )}
         </div>
@@ -131,7 +131,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
               className="h-3.5 w-3.5 rounded"
             />
             <Shuffle className="h-3 w-3" />
-            {pick('Shuffle on Retake', 'Acak Saat Ulang', '再挑戦時にシャッフル')}
+            {pick('Shuffle on Retake', 'Acak Saat Mengulang', '再挑戦時にシャッフル')}
           </label>
 
           {!submitted ? (
@@ -141,7 +141,7 @@ export function QuizTab({ simulatorId, questions }: QuizTabProps) {
               onClick={handleSubmit}
               className="m3-btn-filled px-4 py-2 text-xs font-bold disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {pick('Submit Quiz', 'Kirim Kuis', 'クイズを提出')}
+              {pick('Submit Quiz', 'Selesaikan Kuis', 'クイズを提出')}
             </button>
           ) : (
             <button

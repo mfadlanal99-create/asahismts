@@ -2,10 +2,10 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('alignment', {
   id: {
-    title: 'Simulator Dial Gauge & Pelurusan Poros',
-    shortTitle: 'Pelurusan Poros',
+    title: 'Simulator Dial Gauge & Penyelarasan Poros',
+    shortTitle: 'Penyelarasan Poros',
     description:
-      'Diagnosis offset paralel dan ketidaklurusan sudut menggunakan dial indicator rim-and-face, kompensasi sag batang, dan hitung shim kaki motor.',
+      'Diagnosis offset paralel dan ketidaksejajaran sudut menggunakan dial indicator rim-and-face, kompensasi lenturan batang (bar sag), serta hitung shim kaki motor.',
     explore: [
       {
         title: 'Metode Dial Indicator Rim & Face',
@@ -52,7 +52,7 @@ registerSimulatorTranslations('alignment', {
           {
             label: 'Aturan Validitas',
             formula: 'T + B = L + R',
-            note: 'Jika | (T + B) - (L + R) | melebihi 0.02 mm, curigai braket bergeser, baut longgar, atau soft foot.',
+            note: 'Jika | (T + B) - (L + R) | melebihi 0.02 mm, curigai braket bergeser, baut longgar, atau kaki tidak rata (soft foot).',
           },
           {
             label: 'Pembacaan Bawah Terkompensasi Sag',
@@ -79,7 +79,7 @@ registerSimulatorTranslations('alignment', {
       {
         title: 'Rumus Shim Kaki & Pergeseran Horizontal',
         summary:
-          'Setelah offset dan angularitas kopling diketahui, proyeksikan garis sumbu poros ke kaki depan (inboard) dan kaki belakang (outboard) motor. Selalu perbaiki soft foot terlebih dahulu dengan memberi shim pada kaki yang goyang sebelum melakukan penyetelan vertikal dan horizontal akhir.',
+          'Setelah offset dan angularitas kopling diketahui, proyeksikan garis sumbu poros ke kaki depan (inboard) dan kaki belakang (outboard) motor. Selalu perbaiki kaki tidak rata (soft foot) terlebih dahulu dengan memberi shim pada kaki yang goyang sebelum melakukan penyetelan vertikal dan horizontal akhir.',
         equations: [
           {
             label: 'Shim Kaki Depan',
@@ -153,7 +153,7 @@ registerSimulatorTranslations('alignment', {
     quiz: [
       {
         question:
-          'Mengapa sag batang harus diukur dan dikompensasi dalam pelurusan poros menggunakan dial indicator?',
+          'Mengapa sag batang harus diukur dan dikompensasi dalam penyelarasan poros menggunakan dial indicator?',
         options: [
           'Gravitasi melengkungkan braket indicator ke bawah, membuat pembacaan rim pukul 6 bernilai negatif semu',
           'Pemuaian termal memanjangkan braket ke atas pada pukul 12',
@@ -177,15 +177,15 @@ registerSimulatorTranslations('alignment', {
       },
       {
         question:
-          'Kapan soft foot harus diperiksa dan diperbaiki selama pekerjaan pelurusan?',
+          'Kapan kaki tidak rata (soft foot) harus diperiksa dan diperbaiki selama pekerjaan penyelarasan?',
         options: [
           'Hanya setelah penyetelan jack horizontal akhir selesai',
-          'Pertama kali, sebelum mengambil pembacaan pelurusan akhir dan melakukan shimming',
+          'Pertama kali, sebelum mengambil pembacaan penyelarasan akhir dan melakukan shimming',
           'Hanya pada mesin yang beroperasi di bawah 1000 RPM',
           'Tidak pernah—mengencangkan baut jangkar menghilangkan soft foot secara otomatis',
         ],
         explanation:
-          'Soft foot mendistorsi rangka motor saat baut jangkar dikencangkan sehingga menggeser kelurusan poros secara tak terduga. Selalu hilangkan soft foot (> 0.05 mm) sebelum pelurusan akhir.',
+          'Kaki tidak rata (soft foot) mendistorsi rangka motor saat baut jangkar dikencangkan sehingga menggeser kelurusan poros secara tak terduga. Selalu hilangkan soft foot (> 0.05 mm) sebelum penyelarasan akhir.',
       },
       {
         question:

@@ -2150,12 +2150,12 @@ export const TUTORIALS_PART_1: Record<string, TutorialStep[]> = {
       },
       title: {
         en: 'Vernier Caliper & Micrometer Metrology Lab',
-        id: 'Lab Metrologi Jangka Sorong & Mikrometer',
+        id: 'Lab Metrologi Jangka Sorong & Mikrometer Sekrup',
         ja: 'ノギス・マイクロメータ精密測定ラボ',
       },
       description: {
         en: 'Welcome! This simulator trains you to read 0.02 mm / 0.05 mm Vernier Calipers and 0.01 mm Micrometers, diagnose zero-error & parallax faults, and pass QC tolerance inspections. Let’s walk through every control.',
-        id: 'Selamat datang! Simulator ini melatih Anda membaca Jangka Sorong 0,02 mm / 0,05 mm serta Mikrometer 0,01 mm, mendiagnosis kesalahan nol dan paralaks, serta lolos inspeksi toleransi QC. Mari kita telusuri setiap fiturnya.',
+        id: 'Selamat datang! Simulator ini melatih Anda membaca Jangka Sorong 0,02 mm / 0,05 mm serta Mikrometer Sekrup 0,01 mm, mendiagnosis kesalahan titik nol dan kesalahan paralaks, serta lolos inspeksi toleransi QC. Mari kita telusuri setiap fiturnya.',
         ja: 'ようこそ！このシミュレータでは0.02/0.05 mmノギスと0.01 mmマイクロメータの読取、ゼロ誤差・視差エラーの診断、QC公差検査を実践できます。各機能を順番に案内します。',
       },
       tip: {
@@ -2173,17 +2173,17 @@ export const TUTORIALS_PART_1: Record<string, TutorialStep[]> = {
       },
       title: {
         en: 'Instrument Selector (Least Count)',
-        id: 'Pemilih Alat Ukur (Ketelitian)',
+        id: 'Pemilih Alat Ukur (Nilai Skala Terkecil)',
         ja: '測定器セレクタ（最小読取値）',
       },
       description: {
         en: 'Switch between Vernier 0.02 mm (50 divisions), Vernier 0.05 mm (20 divisions), and Outside Micrometer 0.01 mm. Choose the micrometer when checking tight ±0.02 mm shaft tolerances.',
-        id: 'Pilih antara Jangka Sorong 0,02 mm (50 skala), 0,05 mm (20 skala), atau Mikrometer Luar 0,01 mm. Gunakan mikrometer saat memeriksa toleransi poros yang sangat rapat (±0,02 mm).',
+        id: 'Pilih antara Jangka Sorong 0,02 mm (50 skala), 0,05 mm (20 skala), atau Mikrometer Sekrup Luar 0,01 mm. Gunakan mikrometer sekrup saat memeriksa toleransi poros yang sangat rapat (±0,02 mm).',
         ja: 'ノギス0.02 mm（50等分）、ノギス0.05 mm（20等分）、外側マイクロメータ0.01 mmを切り替えます。±0.02 mm級の厳しい公差にはマイクロメータが適しています。',
       },
       tip: {
         en: 'Smaller Least Count (0.01 mm) gives finer resolution, while Vernier Calipers also handle inside and depth steps.',
-        id: 'Nilai ketelitian (Least Count) yang lebih kecil (0,01 mm) memberikan resolusi lebih tinggi, sedangkan Jangka Sorong juga dapat mengukur diameter dalam dan kedalaman.',
+        id: 'Nilai Skala Terkecil (Least Count) yang lebih kecil (0,01 mm) memberikan resolusi lebih tinggi, sedangkan Jangka Sorong juga dapat mengukur diameter dalam dan kedalaman.',
         ja: '最小読取値が小さいほど高精度ですが、ノギスは内径や段差・深さ測定にも対応できます。',
       },
       faqs: [
@@ -2284,24 +2284,24 @@ export const TUTORIALS_PART_1: Record<string, TutorialStep[]> = {
       },
       title: {
         en: 'Zero Error Fault Injection & Compensation',
-        id: 'Simulasi Kesalahan Nol & Kompensasi',
+        id: 'Simulasi Kesalahan Titik Nol & Kompensasi',
         ja: 'ゼロ誤差の診断と補正計算',
       },
       description: {
         en: 'Real calipers wear or get bumped out of zero! Enable Zero Error and select a + or − offset to simulate calibration drift. Troubleshoot by closing the jaws to 0.00 mm, noting the offset, and applying: True Dimension = Observed − Zero Error.',
-        id: 'Alat ukur asli dapat mengalami penyimpangan nol akibat keausan atau benturan! Aktifkan Kesalahan Nol lalu pilih offset + atau − untuk menyimulasikan pergeseran kalibrasi. Cara mengatasi gangguan: rapatkan rahang ke 0,00 mm, catat penyimpangannya, lalu terapkan: Dimensi Sebenarnya = Bacaan Terukur − Kesalahan Nol.',
+        id: 'Alat ukur asli dapat mengalami penyimpangan titik nol akibat keausan atau benturan! Aktifkan Kesalahan Titik Nol lalu pilih offset + atau − untuk menyimulasikan pergeseran kalibrasi. Cara mengatasi gangguan: rapatkan rahang ke 0,00 mm, catat penyimpangannya, lalu terapkan: Dimensi Sebenarnya = Bacaan Terukur − Kesalahan Titik Nol.',
         ja: '実機では摩耗や衝撃でゼロ点がずれます。ゼロ誤差を有効にして＋/−オフセットを設定し、ジョウを閉じてズレ量を確認後、「真の寸法 ＝ 測定値 − ゼロ誤差」で補正しましょう。',
       },
       tip: {
         en: 'Watch signs carefully: subtracting a negative zero error (e.g. −0.04 mm) adds +0.04 mm to your reading!',
-        id: 'Perhatikan tanda positif/negatif dengan cermat: mengurangi kesalahan nol negatif (mis. −0,04 mm) berarti MENAMBAHKAN +0,04 mm ke hasil baca!',
+        id: 'Perhatikan tanda positif/negatif dengan cermat: mengurangi kesalahan titik nol negatif (mis. −0,04 mm) berarti MENAMBAHKAN +0,04 mm ke hasil baca!',
         ja: '符号に注意！負のゼロ誤差（例: −0.04 mm）を引くと、測定値に +0.04 mm が加算されます。',
       },
       faqs: [
         {
           q: {
             en: 'Positive vs negative zero error?',
-            id: 'Apa perbedaan kesalahan nol positif dan negatif?',
+            id: 'Apa perbedaan kesalahan titik nol positif dan negatif?',
             ja: '正のゼロ誤差と負のゼロ誤差の見分け方は？',
           },
           a: {
@@ -2406,7 +2406,7 @@ export const TUTORIALS_PART_1: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Use the Position Slider for fast travel across the full scale, ±1 LC / ±10 LC buttons for exact single-division stepping, and Zero to close the jaws completely when checking for zero error.',
-        id: 'Gunakan Penggeser Posisi untuk pergeseran cepat sepanjang skala, tombol ±1 LC / ±10 LC untuk langkah presisi satu skala terkecil, dan tombol Zero untuk merapatkan rahang saat memeriksa kesalahan nol.',
+        id: 'Gunakan Penggeser Posisi untuk pergeseran cepat sepanjang skala, tombol ±1 LC / ±10 LC untuk langkah presisi satu skala terkecil, dan tombol Zero untuk merapatkan rahang saat memeriksa kesalahan titik nol.',
         ja: 'スライダーで大きく移動し、±1 LC / ±10 LC ボタンで1目盛単位の微調整、Zero ボタンでジョウを完全閉鎖してゼロ点確認を行います。',
       },
       tip: {
@@ -2430,7 +2430,7 @@ export const TUTORIALS_PART_1: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'In Measure mode, inspect the 3-step breakdown (MSR + VSR×LC = Observed Sum, plus Zero-Error Correction). In Test Yourself or QC mode, this panel turns into your answer box and PASS/REJECT form.',
-        id: 'Pada mode Ukur, lihat rincian 3 langkah (MSR + VSR×LC = Hasil Terukur, serta Koreksi Kesalahan Nol). Pada mode Uji Mandiri atau QC, panel ini menjadi kotak input jawaban & tombol LULUS/TOLAK.',
+        id: 'Pada mode Ukur, lihat rincian 3 langkah (MSR + VSR×LC = Hasil Terukur, serta Koreksi Kesalahan Titik Nol). Pada mode Uji Mandiri atau QC, panel ini menjadi kotak input jawaban & tombol LULUS/TOLAK.',
         ja: '測定モードでは「主尺＋副尺×LC＝測定値」とゼロ誤差補正の3段階内訳を表示します。セルフテストやQCモードでは、ここが解答入力・合否判定パネルに変わります。',
       },
       tip: {

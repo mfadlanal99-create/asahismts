@@ -36,7 +36,7 @@ export function ValvePackingSimulator() {
     telemetry.status === 'Stem Binding Risk'
       ? pick('Stem Binding Risk', 'Risiko Macet Batang', 'ステム固着リスク')
       : telemetry.status === 'Fugitive Leak'
-        ? pick('Fugitive Leak', 'Kebocoran Buronan', 'グランド漏洩')
+        ? pick('Fugitive Leak', 'Kebocoran Emisi Proses', 'グランド漏洩')
         : pick('Optimal Seal', 'Segel Optimal', '最適シール');
 
   const presetLabel = (id: string, fallback: string) => {
@@ -44,7 +44,7 @@ export function ValvePackingSimulator() {
       case 'optimal-control':
         return pick('Optimal Seal', 'Segel Optimal', '最適シール');
       case 'under-tightened':
-        return pick('Fugitive Leak', 'Kebocoran Buronan', 'グランド漏洩');
+        return pick('Fugitive Leak', 'Kebocoran Emisi Proses', 'グランド漏洩');
       case 'over-tightened':
         return pick('Stem Binding', 'Batang Macet', 'ステム固着');
       case 'passing-seat':
@@ -222,7 +222,7 @@ export function ValvePackingSimulator() {
             —{' '}
             {pick(
               telemetry.statusDetail,
-              'Kompresi gland menyeimbangkan pengendalian emisi buronan terhadap gesekan batang.',
+              'Kompresi gland menyeimbangkan pengendalian emisi proses terhadap gesekan batang.',
               'グランド圧縮により漏洩抑制とステム摩擦のバランスが最適に保たれています。',
             )}
           </span>

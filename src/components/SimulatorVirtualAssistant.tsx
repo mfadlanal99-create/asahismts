@@ -163,7 +163,7 @@ export function SimulatorVirtualAssistant({
                   <span className="truncate text-xs font-extrabold text-[var(--md-on-surface)]">
                     {pick(
                       'Virtual Lab Assistant',
-                      'Asisten Virtual Lab',
+                      'Asisten Lab Virtual',
                       'バーチャルアシスタント'
                     )}
                   </span>

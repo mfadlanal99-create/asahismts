@@ -21,7 +21,7 @@ const HANDBOOK_TABS: {
   {
     id: 'alignment',
     en: 'Alignment & Vib',
-    idLabel: 'Alignment & Getaran',
+    idLabel: 'Penyelarasan & Getaran',
     ja: '芯出し・振動',
     icon: Crosshair,
   },
@@ -233,7 +233,7 @@ export function ReferenceModal({ isOpen, onClose }: ReferenceModalProps) {
                 <p className="text-sm font-medium text-[var(--md-on-surface)]">
                   {pick(
                     'Standard coarse metric bolt tightening torque (N·m) at ~75% proof load (Dry K ≈ 0.20, Oiled K ≈ 0.15):',
-                    'Torsi pengencangan baut metrik ulir kasar standar (N·m) pada beban bukti ~75% (Kering K ≈ 0,20, Terlumasi K ≈ 0,15):',
+                    'Torsi pengencangan baut metrik ulir kasar standar (N·m) pada beban uji ~75% (Kering K ≈ 0,20, Terlumasi K ≈ 0,15):',
                     '標準メートル並目ボルト締付トルク (N·m) 耐力比 ~75% (ドライ K ≈ 0.20、給油 K ≈ 0.15):'
                   )}
                 </p>
@@ -466,12 +466,12 @@ export function ReferenceModal({ isOpen, onClose }: ReferenceModalProps) {
           <span>
             {pick(
               'Asahi-SMTS Quick Maintenance Engineering Standard',
-              'Standar Cepat Teknik Pemeliharaan Asahi-SMTS',
+              'Referensi Cepat Standar Teknik Pemeliharaan Asahi-SMTS',
               'Asahi-SMTS 迅速保全エンジニアリング規格'
             )}
           </span>
           <span className="glass-pill rounded-full px-3 py-0.5 font-mono text-[10px]">
-            {pick('Press Esc to close', 'Tekan Esc untuk tutup', 'Escで閉じる')}
+            {pick('Press Esc to close', 'Tekan Esc untuk menutup', 'Escで閉じる')}
           </span>
         </div>
       </div>

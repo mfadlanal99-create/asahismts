@@ -752,7 +752,7 @@ export function Machine3DViewport({
               className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
               <ChevronLeft className="h-3.5 w-3.5" />
-              {pick('Prev', 'Prev', '前へ')}
+              {pick('Prev', 'Sblm', '前へ')}
             </button>
             <span className="font-mono text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
               {selectedIndex + 1} / {parts.length}
@@ -762,7 +762,7 @@ export function Machine3DViewport({
               onClick={() => stepPart(1)}
               className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"
             >
-              {pick('Next', 'Next', '次へ')}
+              {pick('Next', 'Brkt', '次へ')}
               <ChevronRight className="h-3.5 w-3.5" />
             </button>
           </div>

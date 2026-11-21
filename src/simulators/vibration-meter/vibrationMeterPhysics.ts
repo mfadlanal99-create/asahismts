@@ -208,7 +208,7 @@ export const FAULT_SCENARIOS: FaultScenarioSpec[] = [
     diagnosis:
       'Localized high-frequency acceleration (g Peak) and Bearing Damage Units (BDU > 120) spike sharply at Pump DE even while overall Velocity remains moderate.',
     diagnosisId:
-      'Lonjakan tajam akselerasi frekuensi tinggi (g Peak) & BDU (> 120) terlokalisasi di Pump DE meskipun Velocity keseluruhan masih sedang.',
+      'Lonjakan tajam akselerasi frekuensi tinggi (g Peak) & BDU (> 120) terlokalisasi di Pump DE meskipun kecepatan getaran (Velocity) keseluruhan masih sedang.',
     diagnosisJa:
       'Pump DEで高周波加速度(g Peak)とBDU(> 120)が急上昇しています。全体速度が中程度でも初期軸受損傷の兆候です。',
     action: 'Schedule DE bearing replacement; check lubrication contamination and housing fit.',

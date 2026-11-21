@@ -204,7 +204,7 @@ export function HomePage({
               <p className="mt-3.5 max-w-2xl text-sm leading-relaxed text-[var(--md-on-surface-variant)] sm:text-base">
                 {pick(
                   'Practice precision measurement, diagnostic instruments (multimeter, clamp meter, megohmmeter, laser tachometer, vibration & dB meters), laser shaft alignment, bearing diagnostics, machine elements, hydraulics, and pump curves.',
-                  'Berlatih pengukuran presisi, instrumen diagnostik (multimeter, tang ampere, megohmmeter, takometer laser, meter getaran & dB), alignment poros laser, diagnostik bearing, elemen mesin, hidrolik, dan kurva pompa.',
+                  'Berlatih pengukuran presisi, instrumen diagnostik (multimeter, tang ampere, megohmmeter, takometer laser, pengukur getaran & dB), penyelarasan poros laser, diagnostik bantalan, elemen mesin, hidraulik, dan kurva pompa.',
                   '精密測定、診断計測器（マルチメータ、クランプメータ、絶縁抵抗計、レーザー回転計、振動計・騒音計）、レーザー芯出し、軸受診断、機械要素、油空圧、ポンプ性能曲線を実践的に習得できます。'
                 )}
               </p>
@@ -247,7 +247,7 @@ export function HomePage({
                   className="hidden shrink-0 items-center gap-1 rounded-full bg-[var(--md-surface-container-low)] px-3 py-1.5 font-mono text-[11px] font-bold text-[var(--md-on-surface-variant)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)] sm:inline-flex"
                   title={pick(
                     'Open Quick Jump (Ctrl+K)',
-                    'Buka Lompat Cepat (Ctrl+K)',
+                    'Buka Navigasi Cepat (Ctrl+K)',
                     'クイックジャンプを開く (Ctrl+K)'
                   )}
                 >
@@ -267,7 +267,7 @@ export function HomePage({
                   <Box className="h-4 w-4" />
                   {pick(
                     '3D Exploded-View Machine',
-                    'Mesin 3D Exploded-View',
+                    'Tampilan Terurai Mesin 3D',
                     '3D 分解ビューマシン'
                   )}
                   <span className="rounded-full bg-[var(--md-on-primary)]/18 px-2 py-0.5 font-mono text-[10px] font-extrabold">
@@ -283,7 +283,7 @@ export function HomePage({
                   <Atom className="h-4 w-4 text-[var(--md-primary)]" />
                   {pick(
                     '3D Crystal Lattices',
-                    'Kristal 3D & Bravais',
+                    'Kisi Kristal 3D',
                     '3D 結晶格子'
                   )}
                   <span className="rounded-full bg-[var(--md-primary-container)] px-2 py-0.5 font-mono text-[10px] font-extrabold text-[var(--md-on-primary-container)]">

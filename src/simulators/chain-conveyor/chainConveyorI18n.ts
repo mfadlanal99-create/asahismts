@@ -8,7 +8,7 @@ registerSimulatorTranslations('chain-conveyor', {
       'Inspeksi perpanjangan pitch rantai rol ANSI dengan alat ukur vernier 10-pitch, analisis variasi kecepatan kordal poligonal, serta atur kelendutan sisi kendur (catenary sag) dan rezim pelumasan.',
     explore: [
       {
-        title: 'Pitch Rantai Rol ANSI/ISO & Batas Keausan Perpanjangan 3%',
+        title: 'Jarak Bagi (Pitch) Rantai Rol ANSI/ISO & Batas Keausan Perpanjangan 3%',
         summary:
           'Rantai rol standar ANSI B29.1 diberi nomor dalam satuan seperdelapan inci pitch (misalnya #40 = 4/8 in = 12,70 mm, #80 = 8/8 in = 25,40 mm). Saat pin dan bushing berartikulasi di bawah beban, keausan abrasif dan adhesif memperbesar pitch efektif. Ketika perpanjangan mencapai 1,5% pada sproket diperkeras/besar (z > 60) atau 3,0% pada penggerak industri standar, rol akan naik ke ujung gigi sproket sehingga menyebabkan keausan gigi berbentuk kait (hook wear) dan rantai melompat.',
         equations: [

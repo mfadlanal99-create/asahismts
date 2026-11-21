@@ -226,7 +226,7 @@ export function MultimeterSvg({
         role="img"
         aria-label={pick(
           'Interactive Multimeter & ESD Workbench',
-          'Multimeter Interaktif & Meja Kerja ESD',
+          'Multimeter (Avometer) Interaktif & Meja Kerja ESD',
           'インタラクティブマルチメータおよびESD作業台'
         )}
       >

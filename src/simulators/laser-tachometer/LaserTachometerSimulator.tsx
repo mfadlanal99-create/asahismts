@@ -155,7 +155,7 @@ export function LaserTachometerSimulator() {
                 </div>
                 <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
                   <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
-                    {pick('Pulse Rate (RPS / Hz)', 'Frekuensi Pulsa (Hz)', 'パルス周波数 (RPS/Hz)')}
+                    {pick('Pulse Rate (RPS / Hz)', 'Frekuensi Pulsa (RPS / Hz)', 'パルス周波数 (RPS/Hz)')}
                   </div>
                   <div className="mt-0.5 font-mono text-xl font-bold text-[var(--md-on-surface)]">
                     {isOnTarget && laserActive ? drive.rps.toFixed(2) : '--.--'}{' '}
@@ -215,7 +215,7 @@ export function LaserTachometerSimulator() {
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 <div className="rounded-[22px] border border-[var(--md-primary)]/45 bg-[var(--md-primary-container)]/60 p-3.5">
                   <div className="text-[11px] font-semibold text-[var(--md-on-primary-container)]/80">
-                    {pick('Flash Rate', 'Laju Kilat', '発光周波数')}
+                    {pick('Flash Rate', 'Frekuensi Kilatan', '発光周波数')}
                   </div>
                   <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                     {strobe.strobeFpm.toFixed(0)} FPM
@@ -239,7 +239,7 @@ export function LaserTachometerSimulator() {
                 </div>
                 <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
                   <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
-                    {pick('Alias Drift', 'Geser Alias', 'ドリフト速度')}
+                    {pick('Alias Drift', 'Pergeseran Alias', 'ドリフト速度')}
                   </div>
                   <div className="mt-0.5 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                     {strobe.apparentRpm >= 0 ? '+' : ''}
@@ -329,7 +329,7 @@ export function LaserTachometerSimulator() {
               <div className="space-y-3 pt-1">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-[var(--md-on-surface)]">
-                    {pick('Strobe Flash Rate (FPM)', 'Laju Kilat Strobo (FPM)', 'ストロボ発光周波数 (FPM)')}
+                    {pick('Strobe Flash Rate (FPM)', 'Frekuensi Kilatan Strobo (FPM)', 'ストロボ発光周波数 (FPM)')}
                   </span>
                   <span className="font-mono font-extrabold text-[var(--md-primary)]">
                     {strobeFpm} FPM

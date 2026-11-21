@@ -1219,8 +1219,8 @@ export function PneumaticSimulator() {
             } else if (Math.abs(vel) > 0.5) {
               const dir =
                 vel > 0
-                  ? pick('Extending →', 'Memanjang →', '前進 →')
-                  : pick('← Retracting', '← Memendek', '← 後退');
+                  ? pick('Extending →', 'Maju →', '前進 →')
+                  : pick('← Retracting', '← Mundur', '← 後退');
               if (fcvList.length > 0) {
                 flowDirectionLabel = `${pick('Meter-Out', 'Meter-Out', 'メータアウト')} ${avgThrottle}% (${dir})`;
               } else {

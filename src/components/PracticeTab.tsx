@@ -247,7 +247,7 @@ export function PracticeTab({
                   <>
                     <CheckCircle2 className="h-4 w-4 shrink-0" />
                     <span>
-                      {pick('Correct! Target is', 'Benar! Targetnya', '正解！目標値は')}{' '}
+                      {pick('Correct! Target is', 'Benar! Nilai targetnya', '正解！目標値は')}{' '}
                       {problem.targetValue} {problem.unit} (±{problem.tolerance}{' '}
                       {problem.unit}).
                     </span>
@@ -258,7 +258,7 @@ export function PracticeTab({
                     <span>
                       {pick(
                         `Not quite within ±${problem.tolerance} ${problem.unit}. Try checking your units or open the hint.`,
-                        `Belum dalam toleransi ±${problem.tolerance} ${problem.unit}. Periksa satuan atau buka petunjuk.`,
+                        `Di luar batas toleransi ±${problem.tolerance} ${problem.unit}. Periksa kembali satuan atau buka petunjuk.`,
                         `±${problem.tolerance} ${problem.unit} の許容範囲外です。単位を確認するかヒントを開いてください。`
                       )}
                     </span>

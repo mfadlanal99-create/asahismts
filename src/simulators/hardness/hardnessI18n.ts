@@ -5,7 +5,7 @@ registerSimulatorTranslations('hardness', {
     title: 'Mesin Uji Kekerasan Rockwell, Brinell & Vickers',
     shortTitle: 'Uji Kekerasan',
     description:
-      'Simulator mesin uji kekerasan industri meja (benchtop) mencakup metode Rockwell (HRC, HRB), Brinell (HBW 10/3000), dan Vickers (HV 30). Dilengkapi landasan sekrup penaik interaktif, turret multi-indenter, siklus otomatis Beban Awal/Beban Utama/Dwell/Pelepasan Beban, inset optik mikroskopis lekukan dinamis, serta tabel konversi ASTM E140 multi-skala.',
+      'Simulator mesin uji kekerasan industri tipe meja (benchtop) mencakup metode Rockwell (HRC, HRB), Brinell (HBW 10/3000), dan Vickers (HV 30). Dilengkapi landasan sekrup peninggi interaktif, turret multi-indenter, siklus otomatis Beban Awal/Beban Utama/Dwell/Pelepasan Beban, inset optik mikroskopis lekukan dinamis, serta tabel konversi ASTM E140 multi-skala.',
     explore: [
       {
         title: 'Prinsip Kekerasan Rockwell (ASTM E18 / ISO 6508)',
@@ -85,7 +85,7 @@ registerSimulatorTranslations('hardness', {
       {
         title: 'Konversi Standar ASTM E140 & Korelasi Kekuatan Tarik (UTS)',
         summary:
-          'Standar ASTM E140 menetapkan tabel konversi empiris antara skala kekerasan Rockwell, Brinell, Vickers, dan Knoop untuk baja nir-austenitik dan logam struktural. Karena uji kekerasan mengukur ketahanan luluh plastis terlokalisir di bawah kekangan multi-aksial, nilai kekerasan memiliki korelasi linear yang kuat dengan kekuatan tarik ultimit (UTS). Untuk baja karbon dan paduan rendah, berlaku aturan praktis UTS (MPa) ≈ 3.45 × HBW.',
+          'Standar ASTM E140 menetapkan tabel konversi empiris antara skala kekerasan Rockwell, Brinell, Vickers, dan Knoop untuk baja non-austenitik dan logam struktural. Karena uji kekerasan mengukur ketahanan luluh plastis terlokalisir di bawah kekangan multi-aksial, nilai kekerasan memiliki korelasi linear yang kuat dengan kekuatan tarik ultimit (UTS). Untuk baja karbon dan paduan rendah, berlaku aturan praktis UTS (MPa) ≈ 3.45 × HBW.',
         equations: [
           {
             label: 'Korelasi Empiris UTS Baja Struktural',
@@ -146,7 +146,7 @@ registerSimulatorTranslations('hardness', {
         solutionSteps: [
           'Hitung D² - d²: 10.0² - 3.25² = 100 - 10.5625 = 89.4375.',
           'Hitung akar kuadrat: √(89.4375) = 9.4571 mm.',
-          'Hitung suku pembagi penyebut: D - √(D² - d²) = 10.0 - 9.4571 = 0.5429 mm.',
+          'Hitung suku penyebut: D - √(D² - d²) = 10.0 - 9.4571 = 0.5429 mm.',
           'Hitung faktor luas: π · D · 0.5429 = 3.14159 · 10 · 0.5429 = 17.055 mm².',
           'Hitung HBW = 2 · 3000 / 17.055 = 6000 / 17.055 = 351.8 HBW (target ~351.4).',
         ],
@@ -168,7 +168,7 @@ registerSimulatorTranslations('hardness', {
       {
         id: 'p4',
         prompt:
-          'Flensa baja struktural yang diuji dengan penguji Brinell menghasilkan kekerasan 126 HBW. Menggunakan korelasi praktis ASTM E140 untuk baja karbon struktural (UTS ≈ 3.45 · HBW), perkirakan Kekuatan Tarik Ultimit (UTS) dalam satuan MPa.',
+          'Flensa baja struktural yang diuji dengan mesin uji Brinell menghasilkan kekerasan 126 HBW. Menggunakan korelasi praktis ASTM E140 untuk baja karbon struktural (UTS ≈ 3.45 · HBW), perkirakan Kekuatan Tarik Ultimit (UTS) dalam satuan MPa.',
         hint: 'Kalikan nilai kekerasan Brinell dengan faktor konversi 3.45 MPa per HBW.',
         targetValue: 434.7,
         unit: 'MPa',
@@ -207,7 +207,7 @@ registerSimulatorTranslations('hardness', {
         ],
         correctIndex: 0,
         explanation:
-          'Beban minor pendahuluan (10 kgf) berfungsi menembus ketidakteraturan mikro permukaan, minyak, dan oksida guna memastikan kontak padat dengan material murni, menetapkan posisi nol acuan (h₀), serta mengeliminasi kelenturan rangka mesin.',
+          'Beban minor pendahuluan (10 kgf) berfungsi menembus ketidakteraturan mikro permukaan, minyak, dan oksida guna memastikan kontak mantap dengan material murni, menetapkan posisi nol acuan (h₀), serta mengeliminasi kelenturan rangka mesin.',
       },
       {
         id: 'q2',
@@ -242,10 +242,10 @@ registerSimulatorTranslations('hardness', {
         question:
           'Pada pengujian Brinell standar (HBW 10/3000), mengapa rasio diameter jejak lekukan d terhadap diameter bola D harus dijaga dalam rentang 0.24 hingga 0.60 (2.4 mm ≤ d ≤ 6.0 mm)?',
         options: [
-          'Rasio di bawah 0.24 menimbulkan galat pengukuran optik yang tinggi, sementara rasio di atas 0.60 menimbulkan penenggelaman bola berlebih dan penumpukan deformasi dingin lateral yang menyalahi keserupaan geometris',
+          'Rasio di bawah 0.24 menimbulkan galat pengukuran optik yang tinggi, sementara rasio di atas 0.60 menimbulkan penenggelaman bola berlebih dan penumpukan deformasi dingin lateral yang menyalahi kesebangunan geometris',
           'Rasio di luar rentang tersebut akan memecahkan bola karbida tungsten',
           'Lensa mikroskop tidak mampu memfokuskan jejak yang lebih lebar dari 6.0 mm',
-          'Sekrup penaik mesin akan kehabisan batas langkah gerak vertikal',
+          'Sekrup peninggi landasan mesin akan kehabisan batas langkah gerak vertikal',
         ],
         correctIndex: 0,
         explanation:

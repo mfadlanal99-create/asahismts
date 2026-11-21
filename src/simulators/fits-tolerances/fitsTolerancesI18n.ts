@@ -44,14 +44,14 @@ registerSimulatorTranslations('fits-tolerances', {
         },
       },
       {
-        title: 'Mekanika Suaian Longgar, Transisi & Sesak (Interference)',
+        title: 'Mekanika Suaian Longgar, Pas (Transisi) & Sesak (Interference)',
         summary:
-          'Membandingkan zona toleransi lubang (ES, EI) terhadap zona toleransi poros (es, ei) menentukan apakah pasangan selalu memiliki celah bebas (Clearance/Longgar), selalu membutuhkan gaya tekan atau pemanasan termal (Interference/Sesak), atau dapat menghasilkan celah tipis maupun kesesakan tipis tergantung ukuran aktual hasil pemesinan (Transition/Transisi).',
+          'Membandingkan zona toleransi lubang (ES, EI) terhadap zona toleransi poros (es, ei) menentukan apakah pasangan selalu memiliki celah bebas (Clearance/Suaian Longgar), selalu membutuhkan gaya tekan atau pemanasan termal (Interference/Suaian Sesak), atau dapat menghasilkan celah tipis maupun kesesakan tipis tergantung ukuran aktual hasil pemesinan (Transition/Suaian Pas).',
         equations: [
           {
             label: 'Kelonggaran Ekstrem (Bertanda C = D_lubang − d_poros)',
             formula: 'C_max = ES − ei   |   C_min = EI − es',
-            note: 'Suaian longgar bila C_min ≥ 0 µm; Suaian transisi bila C_max > 0 µm dan C_min < 0 µm',
+            note: 'Suaian longgar bila C_min ≥ 0 µm; Suaian pas (transisi) bila C_max > 0 µm dan C_min < 0 µm',
           },
           {
             label: 'Kesesakan Ekstrem (δ = d_poros − D_lubang = −C)',
@@ -65,7 +65,7 @@ registerSimulatorTranslations('fits-tolerances', {
           },
         ],
         workedExample: {
-          title: 'Mengevaluasi Suaian Transisi Hub Roda Gigi Ø50 H7/k6',
+          title: 'Mengevaluasi Suaian Pas (Transisi) Hub Roda Gigi Ø50 H7/k6',
           given: [
             'Diameter nominal: d = 50 mm',
             'Lubang H7: ES = +25 µm, EI = 0 µm',
@@ -76,7 +76,7 @@ registerSimulatorTranslations('fits-tolerances', {
             'Hitung Kelonggaran Minimum (lubang terkecil − poros terbesar): C_min = EI − es = 0 − (+18) = −18 µm',
             'Karena C_min = −18 µm, kesesakan maksimum adalah δ_max = +18 µm',
           ],
-          answer: 'Suaian transisi dari kelonggaran 23 µm hingga kesesakan 18 µm (konsentrisitas tinggi untuk roda gigi berpasak).',
+          answer: 'Suaian pas (transisi) dari kelonggaran 23 µm hingga kesesakan 18 µm (konsentrisitas tinggi untuk roda gigi berpasak).',
         },
       },
       {

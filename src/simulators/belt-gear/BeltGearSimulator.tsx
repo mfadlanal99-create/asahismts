@@ -216,7 +216,7 @@ export function BeltGearSimulator() {
             }`}
           >
             <Wrench className="h-3.5 w-3.5" />
-            {pick('Troubleshooting Mode', 'Mode Pemecahan Masalah', '故障診断モード')}
+            {pick('Troubleshooting Mode', 'Mode Diagnosis Gangguan', '故障診断モード')}
           </button>
         </div>
 
@@ -345,7 +345,7 @@ export function BeltGearSimulator() {
           <div className="text-[11px] font-bold uppercase tracking-wide text-[var(--md-on-surface-variant)]">
             {driveMode === 'v-belt'
               ? pick('Belt Slip / Eff.', 'Slip Sabuk / Ef.', 'スリップ / 効率')
-              : pick('Backlash / Eff.', 'Backlash / Ef.', 'バックラッシ / 効率')}
+              : pick('Backlash / Eff.', 'Celah Gigi / Ef.', 'バックラッシ / 効率')}
           </div>
           <div className="mt-1 font-mono text-lg font-extrabold text-[var(--md-on-surface)]">
             {driveMode === 'v-belt'
@@ -395,7 +395,7 @@ export function BeltGearSimulator() {
                 <Disc className="h-3.5 w-3.5 text-[var(--md-primary)]" />
                 {driveMode === 'v-belt'
                   ? pick('Belt Slip', 'Slip Sabuk', 'スリップ率')
-                  : pick('Backlash (j)', 'Backlash (j)', 'バックラッシ (j)')}
+                  : pick('Backlash (j)', 'Celah Gigi / Backlash (j)', 'バックラッシ (j)')}
               </div>
               <div
                 className={`mt-0.5 font-mono text-sm font-bold ${

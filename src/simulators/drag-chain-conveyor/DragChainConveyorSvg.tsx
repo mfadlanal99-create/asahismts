@@ -742,7 +742,7 @@ export function DragChainConveyorSvg({
       wearVal: `${activeZone.wearPct.toFixed(1)}%`,
     },
     'tail-takeup': {
-      label: pick('Tail Take-Up', 'Take-Up Ekor', 'テールテークアップ'),
+      label: pick('Tail Take-Up', 'Penegang Ekor (Take-Up)', 'テールテークアップ'),
       wearLabel: pick('Stroke Used', 'Langkah Baut', 'ストローク'),
       wearVal: `${activeZone.wearPct.toFixed(0)}%`,
     },
@@ -1176,7 +1176,7 @@ export function DragChainConveyorSvg({
                   fontSize="9.5"
                   fontWeight="800"
                 >
-                  {pick('MATERIAL JAM', 'MACET MATERIAL', '材料詰まり')}
+                  {pick('MATERIAL JAM', 'MATERIAL TERSUMBAT', '材料詰まり')}
                 </text>
               </g>
             )}
@@ -1433,7 +1433,7 @@ export function DragChainConveyorSvg({
                 fontSize="9"
                 fontWeight="700"
               >
-                {pick('TAKE-UP SCREW', 'BAUT TAKE-UP', 'テークアップねじ')}
+                {pick('TAKE-UP SCREW', 'BAUT PENEGANG (TAKE-UP)', 'テークアップねじ')}
               </text>
             </g>
 

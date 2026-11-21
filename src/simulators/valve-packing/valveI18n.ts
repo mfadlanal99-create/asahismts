@@ -3,9 +3,9 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 registerSimulatorTranslations('valve-packing', {
   id: {
     title: 'Pemeliharaan Katup Industri, Gland Packing & Steam Trap',
-    shortTitle: 'Katup & Packing',
+    shortTitle: 'Katup & Paking',
     description:
-      'Hitung kapasitas katup kontrol dengan Cv, seimbangkan torsi gland follower terhadap stiction batang dan emisi buronan, serta diagnosis kebocoran dudukan dan steam trap yang meniup.',
+      'Hitung kapasitas katup kontrol dengan Cv, seimbangkan torsi gland follower terhadap stiction batang dan kebocoran emisi proses, serta diagnosis kebocoran dudukan dan steam trap yang meniup.',
     explore: [
       {
         title: 'Ukuran Aliran Cv & Karakteristik Trim Katup',
@@ -55,7 +55,7 @@ registerSimulatorTranslations('valve-packing', {
           {
             label: 'Tegangan Penyegelan Radial Minimum',
             formula: 'P_req = 1.2 MPa + 2.1 · P_line',
-            note: 'Tegangan radial packing harus melebihi P_req untuk mencegah kebocoran buronan',
+            note: 'Tegangan radial packing harus melebihi P_req untuk mencegah kebocoran emisi proses',
           },
         ],
         workedExample: {
@@ -186,7 +186,7 @@ registerSimulatorTranslations('valve-packing', {
       },
       {
         question:
-          'Berdasarkan deteksi kebocoran EPA Method 21, konsentrasi emisi buronan berapakah yang umumnya memicu perbaikan wajib packing katup?',
+          'Berdasarkan deteksi kebocoran EPA Method 21, konsentrasi emisi proses berapakah yang umumnya memicu perbaikan wajib paking katup?',
         options: ['5 ppm', '50 ppm', '500 ppm', '50,000 ppm'],
         explanation:
           'Program LDAR standar di bawah EPA Method 21 menetapkan 500 ppm sebagai ambang tindakan untuk kebocoran batang katup pada packing emisi rendah modern.',

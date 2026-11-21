@@ -203,7 +203,7 @@ export function CompetencyModal({
                     {pick('Practice', 'Latihan', '演習')}
                   </th>
                   <th className="px-3 py-3 text-center">
-                    {pick('Best Quiz', 'Kuis Terbaik', '最高点')}
+                    {pick('Best Quiz', 'Skor Kuis Terbaik', '最高点')}
                   </th>
                   <th className="px-4 py-3 text-right">
                     {pick('Status', 'Status', '状態')}
@@ -255,11 +255,11 @@ export function CompetencyModal({
                           </span>
                         ) : sp.visited ? (
                           <span className="inline-block rounded-full bg-[var(--md-primary-container)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--md-on-primary-container)]">
-                            {pick('In Progress', 'Berlangsung', '受講中')}
+                            {pick('In Progress', 'Dalam Proses', '受講中')}
                           </span>
                         ) : (
                           <span className="inline-block rounded-full bg-[var(--md-surface-container-highest)] px-2.5 py-0.5 text-[11px] text-[var(--md-on-surface-variant)]">
-                            {pick('Not Started', 'Belum Mulai', '未開始')}
+                            {pick('Not Started', 'Belum Dimulai', '未開始')}
                           </span>
                         )}
                       </td>

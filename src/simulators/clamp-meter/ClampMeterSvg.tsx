@@ -122,7 +122,7 @@ export function ClampMeterSvg({
         role="img"
         aria-label={pick(
           'Clamp Meter & 3-Phase Motor Feeder Analyzer',
-          'Clamp Meter & Penganalisis Daya Motor 3-Fasa',
+          'Tang Ampere & Penganalisis Daya Motor 3-Fasa',
           'クランプメータおよび三相電動機電力アナライザ'
         )}
       >

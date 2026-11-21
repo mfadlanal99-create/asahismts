@@ -377,12 +377,12 @@ export function LaserTachometerSvg({
     switch (strobe.syncStatus) {
       case 'true-freeze':
         return {
-          text: pick('1:1 TRUE FREEZE-FRAME', 'BEKU SEJATI 1:1', '1:1 完全静止 (同期)'),
+          text: pick('1:1 TRUE FREEZE-FRAME', 'SINKRON SEJATI 1:1', '1:1 完全静止 (同期)'),
           color: c.badgeEmerald,
         };
       case 'harmonic-multiple':
         return {
-          text: `${strobe.harmonicOrder}× ${pick('HARMONIC DOUBLE-IMAGE', 'HARMONIK GANDA', '高調波マルチ像')}`,
+          text: `${strobe.harmonicOrder}× ${pick('HARMONIC DOUBLE-IMAGE', 'BAYANGAN GANDA HARMONIK', '高調波マルチ像')}`,
           color: c.badgeAmber,
         };
       case 'sub-harmonic':
@@ -392,12 +392,12 @@ export function LaserTachometerSvg({
         };
       case 'drift-forward':
         return {
-          text: pick('ALIAS DRIFT: FORWARD (+)', 'GESER ALIAS: MAJU (+)', 'エイリアスドリフト: 正転 (+)'),
+          text: pick('ALIAS DRIFT: FORWARD (+)', 'PERGESERAN ALIAS: MAJU (+)', 'エイリアスドリフト: 正転 (+)'),
           color: c.primary,
         };
       case 'drift-backward':
         return {
-          text: pick('ALIAS DRIFT: BACKWARD (−)', 'GESER ALIAS: MUNDUR (−)', 'エイリアスドリフト: 逆転 (−)'),
+          text: pick('ALIAS DRIFT: BACKWARD (−)', 'PERGESERAN ALIAS: MUNDUR (−)', 'エイリアスドリフト: 逆転 (−)'),
           color: c.primary,
         };
       default:

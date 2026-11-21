@@ -98,7 +98,7 @@ export function IrThermometerSvg({
       role="img"
       aria-label={pick(
         'IR Thermometer and Thermal Camera Inspection Scene',
-        'Tampilan Inspeksi Termometer IR dan Kamera Termal',
+        'Tampilan Inspeksi Termometer Inframerah (IR) dan Kamera Termal',
         '放射温度計・サーモグラフィ検査画面'
       )}
       onPointerDown={(e) => {
@@ -276,7 +276,7 @@ export function IrThermometerSvg({
               fontFamily="var(--font-sans)"
               fill="var(--md-on-surface)"
             >
-              {pick('SHINY SHAFT (ε=0.15)', 'POROS MENGKILAP', '光沢軸 (ε=0.15)')}
+              {pick('SHINY SHAFT (ε=0.15)', 'POROS MENGILAP', '光沢軸 (ε=0.15)')}
             </text>
           </g>
         )}
@@ -475,7 +475,7 @@ export function IrThermometerSvg({
       <text x="656" y="62" textAnchor="middle" fontSize="10" fontWeight="800" fontFamily="var(--font-sans)" fill="#FFFFFF">
         {mode === 'thermal'
           ? pick('THERMAL CAM', 'KAMERA TERMAL', 'サーモカメラ')
-          : pick('IR PYROMETER', 'PIROMETER IR', 'IR放射温度計')}
+          : pick('IR PYROMETER', 'TERMOMETER IR', 'IR放射温度計')}
       </text>
 
       {/* Main Digital Temperature Readout */}
@@ -505,7 +505,7 @@ export function IrThermometerSvg({
       </text>
 
       <text x="600" y="220" fontSize="9.5" fontWeight="600" fontFamily="var(--font-sans)" fill="#94A3B8">
-        {pick('Spot Avg:', 'Rata2 Spot:', 'スポット平均:')}
+        {pick('Spot Avg:', 'Rata-rata Spot:', 'スポット平均:')}
       </text>
       <text x="712" y="220" textAnchor="end" fontSize="10.5" fontWeight="700" fontFamily="var(--font-mono)" fill="#F8FAFC">
         {measurement.spotAvgTrueTempC.toFixed(1)}°C

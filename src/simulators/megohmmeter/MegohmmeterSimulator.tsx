@@ -212,7 +212,7 @@ export function MegohmmeterSimulator() {
             {phase === 'charging' || phase === 'testing' ? (
               <>
                 <Square className="h-3.5 w-3.5 fill-current" />
-                {pick('Stop & Discharge', 'Henti & Buang Muatan', '停止・放電')}
+                {pick('Stop & Discharge', 'Hentikan & Buang Muatan', '停止・放電')}
               </>
             ) : (
               <>
@@ -398,7 +398,7 @@ export function MegohmmeterSimulator() {
 
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="text-[11px] font-semibold text-[var(--md-on-surface-variant)]">
-                {pick('Corrected R_c40 (40°C)', 'Koreksi R_c40 (40°C)', '40°C補正値 R_c40')}
+                {pick('Corrected R_c40 (40°C)', 'R_c40 Terkoreksi (40°C)', '40°C補正値 R_c40')}
               </div>
               <div className="mt-0.5 font-mono text-lg font-extrabold text-[var(--md-primary)]">
                 {rc40Fmt.value} {rc40Fmt.unit}
@@ -435,7 +435,7 @@ export function MegohmmeterSimulator() {
                 {metrics.pi >= 2.0
                   ? pick('IEEE 43 Good (≥2.0)', 'IEEE 43 Baik (≥2,0)', 'IEEE 43 良好 (≥2.0)')
                   : metrics.pi >= 1.0
-                  ? pick('Marginal (1.0–2.0)', 'Marjinal (1,0–2,0)', '境界域 (1.0–2.0)')
+                  ? pick('Marginal (1.0–2.0)', 'Marginal (1,0–2,0)', '境界域 (1.0–2.0)')
                   : pick('Danger (<1.0)', 'Bahaya (<1,0)', '危険 (<1.0)')}
               </div>
             </div>

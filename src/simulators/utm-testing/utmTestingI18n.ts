@@ -37,9 +37,9 @@ registerSimulatorTranslations('utm-testing', {
           title: 'Perhitungan Modulus Young dari Data Uji Tarik Elastis',
           given: [
             'Diameter awal batang uji d₀ = 12.8 mm (luas penampang A₀ = 128.68 mm²)',
-            'Panjang ukur ekstensiometer L₀ = 50.0 mm',
+            'Panjang ukur ekstensometer L₀ = 50.0 mm',
             'Gaya tarik elastis F = 25.0 kN (25,000 N)',
-            'Perpanjangan terukur pada ekstensiometer ΔL = 0.0485 mm',
+            'Perpanjangan terukur pada ekstensometer ΔL = 0.0485 mm',
           ],
           steps: [
             'Hitung tegangan rekayasa: σ = F / A₀ = 25,000 N / 128.68 mm² = 194.28 MPa.',
@@ -53,7 +53,7 @@ registerSimulatorTranslations('utm-testing', {
       {
         title: 'Kekuatan Luluh 0.2% Offset, UTS, Necking & Keuletan (%EL, %RA)',
         summary:
-          'Banyak logam tidak memiliki titik luluh diskrit (upper/lower yield). Standar ASTM E8 menetapkan kekuatan luluh offset 0.2% (Rp0.2) dengan menarik garis sejajar modulus E dari regangan ε = 0.002 (0.2%). Titik puncak kurva rekayasa menandai Ultimate Tensile Strength (UTS). Melewati UTS, pengerasan regang (strain hardening) kalah oleh penipisan penampang lokal (necking), hingga terjadi patah.',
+          'Banyak logam tidak memiliki titik luluh diskrit (upper/lower yield). Standar ASTM E8 menetapkan kekuatan luluh offset 0.2% (Rp0.2) dengan menarik garis sejajar modulus E dari regangan ε = 0.002 (0.2%). Titik puncak kurva rekayasa menandai Ultimate Tensile Strength (UTS). Melewati UTS, pengerasan regangan (strain hardening) kalah oleh penipisan penampang lokal (necking), hingga terjadi patah.',
         equations: [
           {
             label: 'Kekuatan Luluh 0.2% Offset (Rp0.2)',
@@ -129,7 +129,7 @@ registerSimulatorTranslations('utm-testing', {
           steps: [
             'Hitung regangan tekan: ε_c = |25.0 - 20.0| / 25.0 = 5.0 / 25.0 = 0.20 (20.0%).',
             'Hitung tegangan tekan nominal: σ_c = 65,000 N / 176.71 mm² = 367.8 MPa.',
-            'Pada paduan aluminium atau tembaga, gesekan platen menahan ujung specimen sehingga diameter tengah membesar menjadi ~16.8 mm (efek barreling cembung).',
+            'Pada paduan aluminium atau tembaga, gesekan platen menahan ujung spesimen sehingga diameter tengah membesar menjadi ~16.8 mm (efek barreling cembung).',
             'Sebaliknya, jika spesimen berupa besi cor kelabu ASTM A48, material akan mengalami rekahan miring rapuh 45° saat tegangan geser melampaui kekuatan gesernya.',
           ],
           answer: 'Regangan Tekan = 20.0%, Tegangan = 367.8 MPa (Deformasi Barreling)',
@@ -140,7 +140,7 @@ registerSimulatorTranslations('utm-testing', {
       {
         id: 'p1',
         prompt:
-          'Spesimen uji tarik silindris baja standar dengan panjang ukur awal L₀ = 50.0 mm dan diameter d₀ = 12.8 mm dibebani dalam batas elastis linier. Pada gaya tarik F = 25.0 kN, ekstensiometer mencatat perpanjangan ΔL = 0.0485 mm. Hitung Modulus Young (E) material dalam satuan GPa.',
+          'Spesimen uji tarik silindris baja standar dengan panjang ukur awal L₀ = 50.0 mm dan diameter d₀ = 12.8 mm dibebani dalam batas elastis linier. Pada gaya tarik F = 25.0 kN, ekstensometer mencatat perpanjangan ΔL = 0.0485 mm. Hitung Modulus Young (E) material dalam satuan GPa.',
         hint: 'Cari luas A₀ = π/4 * d₀², tegangan σ = F/A₀, regangan ε = ΔL/L₀, lalu E = σ/ε (bagi 1000 untuk GPa).',
         solutionSteps: [
           'A₀ = π * (12.8 mm)² / 4 = 128.68 mm²',
@@ -202,7 +202,7 @@ registerSimulatorTranslations('utm-testing', {
           'Batas proporsional sangat sulit ditentukan secara objektif pada kurva kontinu karena peralihan elastis ke plastis bersifat gradual',
           'Batas proporsional selalu bernilai nol untuk logam',
           'Regangan 0.2% adalah titik di mana material langsung patah seketika',
-          'Standar ASTM melarang penggunaan alat ukur ekstensiometer presisi',
+          'Standar ASTM melarang penggunaan alat ukur ekstensometer presisi',
         ],
         explanation:
           'Pada mayoritas logam komersial, kurva elastis beralih ke plastis secara melengkung halus tanpa batas diskrit yang tegas. Metode offset 0.2% (garis sejajar kemiringan E yang bergeser sejauh 0.002 regangan) memberikan standar penentuan batas luluh praktis yang dapat diulang dengan akurat.',
@@ -212,13 +212,13 @@ registerSimulatorTranslations('utm-testing', {
         question:
           'Mengapa kurva tegangan rekayasa (engineering stress) menurun setelah melampaui titik UTS, padahal material semakin mengeras (strain hardening)?',
         options: [
-          'Tegangan rekayasa dihitung membagi gaya F dengan luas awal A₀, sehingga penipisan luas lokal (necking) drastis menurunkan total beban penahan',
-          'Kisi kristal logam meleleh akibat temperatur ruangan',
+          'Tegangan rekayasa dihitung dengan membagi gaya F dengan luas awal A₀, sehingga penipisan luas lokal (necking) menurunkan total beban yang dapat ditahan secara drastis',
+          'Kisi kristal logam meleleh pada temperatur ruangan',
           'Modulus Young material berubah menjadi negatif',
           'Gaya gesek pada pencekam hidrolik selip',
         ],
         explanation:
-          'Setelah titik UTS, deformasi terpusat pada leher (necking) di mana luas penampang setempat mengecil jauh lebih cepat daripada peningkatan kekuatan akibat pengerasan regang. Karena tegangan rekayasa membagi gaya dengan penampang awal yang konstan A₀, kurvanya tampak menurun meskipun tegangan sejati (true stress = F / A_sesaat) terus meningkat.',
+          'Setelah titik UTS, deformasi terpusat pada leher (necking) di mana luas penampang setempat mengecil jauh lebih cepat daripada peningkatan kekuatan akibat pengerasan regangan. Karena tegangan rekayasa membagi gaya dengan penampang awal yang konstan A₀, kurvanya tampak menurun meskipun tegangan sejati (true stress = F / A_sesaat) terus meningkat.',
       },
       {
         id: 'q3',
@@ -266,7 +266,7 @@ registerSimulatorTranslations('utm-testing', {
         options: [
           'Serpihan grafit runcing bertindak sebagai takik pemusat tegangan getas pada beban tarik, namun mampu mentransmisikan gaya dan menutup rapat pada beban tekan',
           'Besi cor memiliki modulus elastisitas yang jauh lebih tinggi dari titanium',
-          'Besi cor mengalami pengerasan regang ekstrim dalam uji tarik',
+          'Besi cor mengalami pengerasan regangan ekstrem dalam uji tarik',
           'Pencekam UTM mengubah komposisi kimia besi saat uji tekan',
         ],
         explanation:

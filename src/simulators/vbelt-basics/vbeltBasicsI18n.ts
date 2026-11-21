@@ -2,8 +2,8 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('vbelt-basics', {
   id: {
-    title: 'Dasar Sabuk V-Belt & Sabuk Penggerak',
-    shortTitle: 'V-Belt & Fisika Baji',
+    title: 'Dasar Sabuk-V & Sabuk Penggerak',
+    shortTitle: 'Sabuk-V & Fisika Baji',
     description:
       'Lab penampang 2D CAD interaktif untuk sabuk penggerak industri (Klasik A/B/C, Narrow Wedge SPZ/SPA/SPB, Cogged AX/BX, Timing HTD 5M/8M, Poly-V PJ/PK, Flat) lengkap dengan fisika efek baji, diagnosis kegagalan bottoming-out, dan dekoder kode sabuk.',
     explore: [
@@ -96,7 +96,7 @@ registerSimulatorTranslations('vbelt-basics', {
       {
         id: 'p4',
         prompt:
-          'Dekode kode sabuk V-belt klasik "B-65": berapa panjang keliling dalam nominalnya dalam milimeter? (1 inci = 25,4 mm)',
+          'Dekode kode sabuk-V klasik "B-65": berapa panjang keliling dalam nominalnya dalam milimeter? (1 inci = 25,4 mm)',
         hint: 'Pada kode V-belt klasik Imperial, angka setelah tanda hubung adalah panjang dalam inci.',
         solutionSteps: ['65 inci × 25,4 mm/inci = 1.651,0 mm panjang keliling dalam.'],
       },

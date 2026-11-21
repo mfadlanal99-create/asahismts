@@ -2,42 +2,42 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('caliper', {
   id: {
-    title: 'Simulator Jangka Sorong & Mikrometer',
+    title: 'Simulator Jangka Sorong & Mikrometer Sekrup',
     shortTitle: 'Jangka Sorong & Mikrometer',
     description:
-      'Lab metrologi presisi interaktif untuk membaca jangka sorong 0.02 mm & 0.05 mm serta mikrometer luar 0.01 mm, lengkap dengan kaca pembesar (loupe), kompensasi kesalahan nol, dan mode uji mandiri.',
+      'Lab metrologi presisi interaktif untuk membaca jangka sorong 0.02 mm & 0.05 mm serta mikrometer sekrup luar 0.01 mm, lengkap dengan kaca pembesar (loupe), kompensasi kesalahan titik nol, dan mode uji mandiri.',
     explore: [
       {
-        title: 'Ketelitian (Least Count) & Resolusi Skala',
+        title: 'Nilai Skala Terkecil (NST / Least Count) & Resolusi Skala',
         summary:
-          'Ketelitian (LC) adalah pertambahan terkecil yang dapat dibaca alat ukur. Skala nonius (vernier) mencapai resolusi sub-milimeter dengan membuat N divisi nonius sedikit lebih pendek dari bilangan bulat divisi skala utama; mikrometer mencapai 0.01 mm dengan ulir presisi berpitch 0.5 mm dan 50 divisi bidal (thimble).',
+          'Nilai Skala Terkecil (NST / LC) adalah pertambahan terkecil yang dapat dibaca alat ukur. Skala nonius mencapai resolusi sub-milimeter dengan membuat N bagian skala nonius sedikit lebih pendek dari bilangan bulat bagian skala utama; mikrometer sekrup mencapai 0.01 mm dengan ulir presisi berpitch 0.5 mm dan 50 bagian skala putar (bidal/thimble).',
         equations: [
           {
-            label: 'Ketelitian Jangka Sorong (Umum)',
+            label: 'Nilai Skala Terkecil Jangka Sorong (Umum)',
             formula: 'LC = 1 MSD / N',
-            note: 'Dengan 1 MSD = 1.00 mm dan N = jumlah divisi nonius (50 -> 0.02 mm; 20 -> 0.05 mm).',
+            note: 'Dengan 1 MSD (Skala Utama) = 1.00 mm dan N = jumlah bagian skala nonius (50 -> 0.02 mm; 20 -> 0.05 mm).',
           },
           {
-            label: 'Panjang Divisi Nonius',
+            label: 'Panjang Satu Bagian Skala Nonius',
             formula: '1 VSD = ((k * MSD) - LC)',
             note: 'Jangka sorong 0.02 mm: 50 VSD = 49 mm (1 VSD = 0.98 mm). Jangka sorong 0.05 mm: 20 VSD = 39 mm (1 VSD = 1.95 mm).',
           },
           {
-            label: 'Ketelitian Mikrometer',
+            label: 'Nilai Skala Terkecil Mikrometer Sekrup',
             formula: 'LC = Pitch / N_thimble = 0.50 mm / 50 = 0.01 mm',
-            note: 'Satu putaran penuh bidal memajukan spindel sebesar 0.50 mm.',
+            note: 'Satu putaran penuh bidal (thimble) memajukan spindel sebesar 0.50 mm.',
           },
         ],
         workedExample: {
-          title: 'Menghitung Ketelitian Jangka Sorong 20-Divisi',
+          title: 'Menghitung Nilai Skala Terkecil Jangka Sorong 20-Bagian',
           given: [
-            'Divisi skala utama (1 MSD) = 1.00 mm',
-            '20 divisi skala nonius membentang sepanjang 39 mm pada skala utama',
+            'Bagian skala utama (1 MSD) = 1.00 mm',
+            '20 bagian skala nonius membentang sepanjang 39 mm pada skala utama',
           ],
           steps: [
-            'Panjang 1 divisi nonius: 1 VSD = 39 mm / 20 = 1.95 mm.',
-            'Setiap divisi nonius dibandingkan terhadap 2 divisi skala utama (2.00 mm).',
-            'Ketelitian (LC) = 2.00 mm - 1.95 mm = 0.05 mm (atau 1.00 mm / 20).',
+            'Panjang 1 bagian skala nonius: 1 VSD = 39 mm / 20 = 1.95 mm.',
+            'Setiap bagian skala nonius dibandingkan terhadap 2 bagian skala utama (2.00 mm).',
+            'Nilai Skala Terkecil (LC) = 2.00 mm - 1.95 mm = 0.05 mm (atau 1.00 mm / 20).',
           ],
           answer: 'LC = 0.05 mm',
         },
@@ -75,29 +75,29 @@ registerSimulatorTranslations('caliper', {
         },
       },
       {
-        title: 'Kesalahan Nol (Zero Error), Paralaks & Teknik Ukur',
+        title: 'Kesalahan Titik Nol, Kesalahan Paralaks & Teknik Pengukuran',
         summary:
-          'Sebelum mengukur, rapatkan rahang (atau pertemukan anvil & spindel dengan ratchet stop) dan pastikan angka nol sejajar. Penyimpangan apa pun adalah kesalahan nol sistematis yang harus dikurangkan secara aljabar dari setiap pembacaan teramati. Selalu lihat skala secara tegak lurus untuk menghindari kesalahan paralaks.',
+          'Sebelum mengukur, rapatkan rahang (atau pertemukan anvil & spindel dengan ratchet stop) dan pastikan tanda nol sejajar. Penyimpangan apa pun merupakan kesalahan titik nol sistematis yang harus dikurangkan secara aljabar dari setiap pembacaan teramati. Selalu lihat skala secara tegak lurus untuk menghindari kesalahan paralaks, dan gunakan ratchet stop pada mikrometer sekrup untuk memberikan gaya ukur yang konsisten.',
         equations: [
           {
-            label: 'Koreksi Kesalahan Nol',
+            label: 'Koreksi Kesalahan Titik Nol',
             formula: 'True Reading = Observed Reading - Zero Error',
-            note: 'Kesalahan nol positif (+e) terbaca terlalu tinggi sehingga dikurangkan; kesalahan nol negatif (-e) menambah |e|.',
+            note: 'Kesalahan titik nol positif (+e) terbaca terlalu tinggi sehingga dikurangkan; kesalahan titik nol negatif (-e) terbaca terlalu rendah sehingga menambah |e|.',
           },
           {
-            label: 'Kesalahan Nol Negatif (Nonius)',
+            label: 'Kesalahan Titik Nol Negatif (Skala Nonius)',
             formula: 'Zero Error = -(N - coinciding_div) * LC',
-            note: 'Saat 0 nonius berada di kiri 0 skala utama, hitung mundur dari N.',
+            note: 'Saat angka 0 nonius berada di kiri 0 skala utama, hitung mundur dari N.',
           },
         ],
         workedExample: {
-          title: 'Mengoreksi Pengukuran dengan Kesalahan Nol Negatif',
+          title: 'Mengoreksi Pengukuran dengan Kesalahan Titik Nol Negatif',
           given: [
-            'Jangka sorong 0.02 mm memiliki kesalahan nol -0.04 mm saat rahang dirapatkan',
+            'Jangka sorong 0.02 mm memiliki kesalahan titik nol -0.04 mm saat rahang dirapatkan',
             'Pembacaan teramati pada diameter luar poros pompa = 24.32 mm',
           ],
           steps: [
-            'Identifikasi kesalahan nol beserta tandanya: Zero Error = -0.04 mm.',
+            'Identifikasi kesalahan titik nol beserta tandanya: Zero Error = -0.04 mm.',
             'Terapkan rumus koreksi: True Reading = Observed - Zero Error.',
             'True Reading = 24.32 mm - (-0.04 mm) = 24.32 + 0.04 = 24.36 mm.',
           ],
@@ -118,8 +118,8 @@ registerSimulatorTranslations('caliper', {
       },
       {
         prompt:
-          'Jangka sorong 0.05 mm memiliki kesalahan nol positif +0.05 mm. Saat mengukur lubang bearing, MSR = 32 mm dan divisi nonius ke-10 berimpit. Hitung diameter lubang sebenarnya dalam mm.',
-        hint: 'Hitung pembacaan teramati (32 + 10 * 0.05), lalu kurangi kesalahan nol +0.05 mm.',
+          'Jangka sorong 0.05 mm memiliki kesalahan titik nol positif +0.05 mm. Saat mengukur lubang bantalan (bearing), MSR = 32 mm dan garis nonius ke-10 berimpit. Hitung diameter lubang sebenarnya dalam mm.',
+        hint: 'Hitung pembacaan teramati (32 + 10 * 0.05), lalu kurangi kesalahan titik nol +0.05 mm.',
         solutionSteps: [
           'Pembacaan teramati = 32.00 + (10 * 0.05) = 32.50 mm.',
           'Pembacaan sebenarnya = Observed - Zero Error = 32.50 - (+0.05) = 32.45 mm.',
@@ -127,7 +127,7 @@ registerSimulatorTranslations('caliper', {
       },
       {
         prompt:
-          'Mikrometer luar (LC 0.01 mm, pitch 0.5 mm) menunjukkan tanda 12 mm dan tanda 0.5 mm berikutnya pada selubung. Divisi bidal ke-24 sejajar dengan garis datum. Berapa pembacaannya dalam mm?',
+          'Mikrometer sekrup luar (NST 0.01 mm, pitch 0.5 mm) menunjukkan tanda 12 mm dan tanda 0.5 mm berikutnya pada selubung. Skala putar (bidal) ke-24 sejajar dengan garis datum. Berapa pembacaannya dalam mm?',
         hint: 'Pembacaan selubung adalah 12.50 mm karena tanda 0.5 mm setelah 12 mm terlihat.',
         solutionSteps: [
           'Mm bulat selubung = 12.00 mm, ditambah tanda 0.5 mm terlihat = 12.50 mm.',
@@ -137,7 +137,7 @@ registerSimulatorTranslations('caliper', {
       },
       {
         prompt:
-          'Mikrometer memiliki kesalahan nol negatif -0.03 mm. Saat mengukur shim presisi, selubung menunjukkan 6.50 mm dan bidal terbaca 30. Berapa ketebalan shim sebenarnya dalam mm?',
+          'Mikrometer sekrup memiliki kesalahan titik nol negatif -0.03 mm. Saat mengukur shim presisi, selubung menunjukkan 6.50 mm dan bidal terbaca 30. Berapa ketebalan shim sebenarnya dalam mm?',
         hint: 'Teramati = 6.50 + 0.30 = 6.80 mm. Mengurangkan -0.03 mm berarti menambah 0.03 mm.',
         solutionSteps: [
           'Pembacaan teramati = 6.50 + (30 * 0.01) = 6.80 mm.',
@@ -146,12 +146,12 @@ registerSimulatorTranslations('caliper', {
       },
       {
         prompt:
-          'Sebuah skala nonius metrik khusus memiliki 25 divisi sama panjang yang membentang 24 mm pada skala utama 1 mm. Berapa ketelitiannya (least count) dalam mm?',
+          'Sebuah skala nonius metrik khusus memiliki 25 bagian sama panjang yang membentang 24 mm pada skala utama 1 mm. Berapa nilai skala terkecilnya (NST / least count) dalam mm?',
         hint: '1 VSD = 24 / 25 = 0.96 mm. Kurangkan dari 1.00 mm.',
         solutionSteps: [
           '1 MSD = 1.00 mm.',
           '1 VSD = 24 mm / 25 = 0.96 mm.',
-          'Ketelitian (LC) = 1.00 - 0.96 = 0.04 mm.',
+          'Nilai Skala Terkecil (LC) = 1.00 - 0.96 = 0.04 mm.',
         ],
       },
     ],
@@ -167,32 +167,32 @@ registerSimulatorTranslations('caliper', {
         question:
           'Bagian mana dari jangka sorong yang dirancang khusus untuk mengukur diameter dalam (ID) lubang?',
         options: [
-          'Rahang luar bawah',
-          'Rahang dalam pisau atas',
-          'Batang kedalaman di ujung mistar',
+          'Rahang ukur luar (rahang bawah)',
+          'Rahang ukur dalam (rahang atas)',
+          'Batang pengukur kedalaman di ujung mistar',
           'Sekrup pengunci ibu jari',
         ],
         explanation:
-          'Rahang atas yang lebih kecil memiliki sisi pisau menghadap keluar untuk mengukur diameter dalam (ID) dan lebar alur.',
+          'Rahang atas yang lebih kecil memiliki sisi ukur menghadap keluar untuk mengukur diameter dalam (ID) dan lebar alur.',
       },
       {
         question:
-          'Mengapa Anda harus selalu memutar ratchet stop, bukan memutar bidal langsung, saat merapatkan mikrometer pada benda kerja?',
+          'Mengapa Anda harus selalu memutar ratchet stop, bukan memutar bidal langsung, saat merapatkan mikrometer sekrup pada benda kerja?',
         options: [
           'Untuk memutar spindel lebih cepat pada jarak jauh',
           'Untuk memberikan gaya ukur yang konsisten dan mencegah lenturan rangka atau penekanan benda kerja',
           'Untuk mengunci spindel pada pembacaan saat ini',
-          'Untuk mereset kesalahan nol secara otomatis',
+          'Untuk mereset kesalahan titik nol secara otomatis',
         ],
         explanation:
           'Ratchet stop akan slip pada torsi terkalibrasi, mencegah pengencangan berlebih yang melenturkan rangka C atau menekan benda lunak.',
       },
       {
         question:
-          'Mikrometer memiliki kesalahan nol +0.02 mm. Jika pembacaan teramati pada poros adalah 15.48 mm, berapa diameter sebenarnya?',
+          'Mikrometer sekrup memiliki kesalahan titik nol +0.02 mm. Jika pembacaan teramati pada poros adalah 15.48 mm, berapa diameter sebenarnya?',
         options: ['15.50 mm', '15.46 mm', '15.48 mm', '15.52 mm'],
         explanation:
-          'Pembacaan Sebenarnya = Teramati - Kesalahan Nol = 15.48 - (+0.02) = 15.46 mm.',
+          'Pembacaan Sebenarnya = Teramati - Kesalahan Titik Nol = 15.48 - (+0.02) = 15.46 mm.',
       },
       {
         question:
@@ -203,12 +203,12 @@ registerSimulatorTranslations('caliper', {
       },
       {
         question:
-          'Bagaimana cara meminimalkan kesalahan paralaks saat membaca skala jangka sorong atau mikrometer?',
+          'Bagaimana cara meminimalkan kesalahan paralaks saat membaca skala jangka sorong atau mikrometer sekrup?',
         options: [
           'Dengan melihat skala pada sudut 45 derajat dari kanan',
           'Dengan melihat garis skala lurus tegak lurus (90°) terhadap bidang skala',
           'Dengan mengencangkan sekrup pengunci sebelum melihat skala',
-          'Dengan menggandakan ketelitian alat',
+          'Dengan menggandakan nilai skala terkecil alat',
         ],
         explanation:
           'Melihat secara tegak lurus (90° terhadap skala) mencegah pergeseran semu antara tepi nonius/bidal dan garis skala utama.',

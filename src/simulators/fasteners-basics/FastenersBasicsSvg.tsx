@@ -928,7 +928,7 @@ export function FastenersBasicsSvg({
           {/* Section 4: Tightening Torque for active Class @ 75% Proof Preload */}
           <g transform="translate(16, 312)">
             <text x="0" y="0" fill={c.textMuted} fontSize="9.5" fontWeight="800" letterSpacing="0.5" fontFamily="var(--font-sans)">
-              {pick(`TIGHTENING TORQUE (${propertyClass} @ 75% Fp)`, `TORSI KENCANG (${propertyClass}, 75% Fp)`, `推奨締付トルク（${propertyClass} 75%）`)}
+              {pick(`TIGHTENING TORQUE (${propertyClass} @ 75% Fp)`, `TORSI PENGENCANGAN (${propertyClass}, 75% Fp)`, `推奨締付トルク（${propertyClass} 75%）`)}
             </text>
             <g transform="translate(0, 8)">
               <rect x="0" y="0" width="152" height="52" rx="12" fill={c.cardSubBg} stroke={c.cardBorder} strokeWidth="1" />

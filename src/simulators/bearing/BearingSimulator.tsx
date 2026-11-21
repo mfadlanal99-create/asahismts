@@ -228,7 +228,7 @@ export function BearingSimulator() {
             onClick={() => applyPreset('tight-fit')}
             className="rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] px-3 py-1.5 text-xs font-medium text-[var(--md-on-surface)] transition hover:border-[var(--md-primary)]/40 hover:bg-[var(--md-primary-container)] hover:text-[var(--md-on-primary-container)]"
           >
-            {pick('Heavy Fit Preload', 'Preload Suaian Sesak', '過大しめしろ予圧')}
+            {pick('Heavy Fit Preload', 'Beban Awal (Preload) Suaian Sesak', '過大しめしろ予圧')}
           </button>
         </div>
 
@@ -563,7 +563,7 @@ export function BearingSimulator() {
                 <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
                   {pick(
                     'Bearing Mounting & Induction Heater Advisor',
-                    'Penasihat Pemasangan & Pemanas Induksi Bearing',
+                    'Panduan Pemasangan & Pemanas Induksi Bantalan',
                     '軸受組付・誘導加熱ヒーターアドバイザー'
                   )}
                 </span>

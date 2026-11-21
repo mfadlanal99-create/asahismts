@@ -115,12 +115,12 @@ export function BoltTorqueSimulator() {
         return {
           title: pick(
             'STRIPPED / FRACTURE FAILURE',
-            'GAGAL SLEK / PUTUS TARIK',
+            'GAGAL ULIR RUSAK / PUTUS TARIK',
             'ねじ山破損・破断'
           ),
           message: pick(
             `Tensile stress (${calc.tensileStressMpa.toFixed(0)} MPa) exceeds Ultimate Tensile Strength (${propClass.tensileStrengthMpa} MPa). Threads strip or shank snaps!`,
-            `Tegangan tarik (${calc.tensileStressMpa.toFixed(0)} MPa) melebihi Kuat Tarik Maksimum (${propClass.tensileStrengthMpa} MPa). Ulir slek atau batang baut putus!`,
+            `Tegangan tarik (${calc.tensileStressMpa.toFixed(0)} MPa) melebihi Kuat Tarik Maksimum (${propClass.tensileStrengthMpa} MPa). Ulir rusak atau batang baut putus!`,
             `引張応力 (${calc.tensileStressMpa.toFixed(0)} MPa) が引張強さ (${propClass.tensileStrengthMpa} MPa) を超過しています。ねじ山破損または破断が発生します！`
           ),
           classes:
@@ -482,7 +482,7 @@ export function BoltTorqueSimulator() {
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
               <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
                 <div className="text-[11px] font-medium text-[var(--md-on-surface-variant)]">
-                  {pick('Applied Torque (T)', 'Torsi Diterapkan (T)', '印加トルク (T)')}
+                  {pick('Applied Torque (T)', 'Torsi Pengencangan (T)', '印加トルク (T)')}
                 </div>
                 <div className="mt-1 font-mono text-lg font-bold text-[var(--md-on-surface)]">
                   {calc.torqueNm.toFixed(1)}{' '}

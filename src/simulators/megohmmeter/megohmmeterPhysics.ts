@@ -108,7 +108,7 @@ export const MOTOR_PRESETS: Record<MotorConditionId, MotorConditionPreset> = {
     labelId: 'Isolasi Menua & Getas',
     labelJa: '経年劣化・脆化絶縁',
     descEn: 'Thermally aged varnish with micro-voids; marginal PI and drops at 2500 V.',
-    descId: 'Pernis menua dengan retakan mikro; PI marjinal dan turun pada 2500 V.',
+    descId: 'Pernis menua dengan retakan mikro; PI marginal dan turun pada 2500 V.',
     descJa: '熱劣化ワニスと微細クラック。PIは境界域で、2500V印加時に低下。',
     rInf40: 260,
     rAbs40: 420,

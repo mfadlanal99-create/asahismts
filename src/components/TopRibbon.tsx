@@ -131,7 +131,7 @@ export function TopRibbon(props: TopRibbonProps) {
           className="inline-flex items-center gap-2.5 rounded-full py-1 pl-1 pr-3 text-left transition hover:bg-[var(--md-surface-container-high)]"
           title={pick(
             'Back to Asahi-SMTS Library',
-            'Kembali ke Perpustakaan Asahi-SMTS',
+            'Kembali ke Katalog Asahi-SMTS',
             'Asahi-SMTS ライブラリへ戻る'
           )}
         >
@@ -329,7 +329,7 @@ export function TopRibbon(props: TopRibbonProps) {
               onClick={props.onOpenCommandPalette}
               title={pick(
                 'Quick Jump (Ctrl+K)',
-                'Lompat Cepat (Ctrl+K)',
+                'Navigasi Cepat (Ctrl+K)',
                 'クイックジャンプ (Ctrl+K)'
               )}
               className="inline-flex h-9 items-center gap-1.5 rounded-full border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container-high)] px-3 text-xs font-semibold text-[var(--md-on-surface)] transition hover:bg-[var(--md-secondary-container)] hover:text-[var(--md-on-secondary-container)]"

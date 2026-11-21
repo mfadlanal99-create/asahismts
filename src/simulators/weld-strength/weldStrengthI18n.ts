@@ -5,12 +5,12 @@ registerSimulatorTranslations('weld-strength', {
     title: 'Simulator Kekuatan Las & Tegangan Sambungan',
     shortTitle: 'Kekuatan Las',
     description:
-      'Simulator mekanika struktural interaktif untuk sambungan las. Evaluasi tebal leher las fillet (a = 0.707s), luas efektif leher, distribusi tegangan geser di bawah beban transversal dan paralel, kelompok las braket kantilever eksentrik dengan kombinasi geser primer dan torsi sekunder, serta sambungan tumpul penetrasi penuh/sebagian sesuai standar AWS D1.1 dan ISO 2560.',
+      'Simulator mekanika struktural interaktif untuk sambungan las. Evaluasi tebal leher las sudut/fillet (a = 0.707s), luas efektif leher, distribusi tegangan geser di bawah beban transversal dan paralel, kelompok las braket kantilever eksentrik dengan kombinasi geser primer dan torsi sekunder, serta las tumpul (butt weld) penetrasi penuh/sebagian sesuai standar AWS D1.1 dan ISO 2560.',
     explore: [
       {
-        title: 'Geometri Las Fillet: Tebal Leher a = 0.707s & Luas Efektif',
+        title: 'Geometri Las Sudut (Fillet): Tebal Leher a = 0.707s & Luas Efektif',
         summary:
-          'Las fillet menyambung dua pelat logam yang saling bertumpuk atau tegak lurus dengan profil manik segitiga. Di bawah beban geser atau tarik, kegagalan umumnya terjadi pada bidang penampang terkecil dari akar las hingga permukaan luar: tebal leher teoritis (throat thickness, a). Untuk las fillet sama kaki sudut 45°, tebal leher adalah a = s · cos(45°) ≈ 0.7071s, dengan s adalah ukuran kaki las. Luas bidang pikul efektif adalah Aw = a · L_eff.',
+          'Las sudut (fillet weld) menyambung dua pelat logam yang saling bertumpuk atau tegak lurus dengan profil manik segitiga. Di bawah beban geser atau tarik, kegagalan umumnya terjadi pada bidang penampang terkecil dari akar las hingga permukaan luar: tebal leher teoritis (throat thickness, a). Untuk las sudut sama kaki 45°, tebal leher adalah a = s · cos(45°) ≈ 0.7071s, dengan s adalah ukuran kaki las. Luas bidang pikul efektif adalah Aw = a · L_eff.',
         equations: [
           {
             label: 'Tebal Leher Teoritis (Sama Kaki)',
@@ -278,14 +278,14 @@ registerSimulatorTranslations('weld-strength', {
         question:
           'Mengapa cembungan mahkota luar (reinforcement cap) pada permukaan pelat biasanya diabaikan dalam perhitungan tebal leher efektif las?',
         options: [
-          'Mahkota luar tidak menambah kekuatan statis leher secara signifikan dan menimbulkan sudut diskontinuitas tajam (takik) pada kaki las yang memicu keretakan fatik',
+          'Mahkota luar tidak menambah kekuatan statis leher secara signifikan dan menimbulkan sudut diskontinuitas tajam (takik las) pada kaki las yang memicu keretakan fatik',
           'Logam mahkota penguat memiliki massa jenis nol',
           'Alat ukur kaliper las tidak mampu menjangkau puncak cembungan',
           'Mahkota las selalu digerinda hingga rata pada semua sambungan baja struktural',
         ],
         correctIndex: 0,
         explanation:
-          'Pedoman desain internasional (AWS D1.1, AISC 360, EN 1993-1-8) mengabaikan mahkota luar karena tidak menambah ketahanan terhadap patah akar, dan transisi sudut kaki las yang curam bertindak sebagai pemusat tegangan takik (Kt ≈ 1.2–1.6) di bawah beban dinamis.',
+          'Pedoman desain internasional (AWS D1.1, AISC 360, EN 1993-1-8) mengabaikan mahkota luar karena tidak menambah ketahanan terhadap patah akar, dan transisi sudut kaki las yang curam bertindak sebagai pemusat tegangan takik las (Kt ≈ 1.2–1.6) di bawah beban dinamis.',
       },
       {
         id: 'q6',

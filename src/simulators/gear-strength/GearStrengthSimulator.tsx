@@ -804,7 +804,7 @@ export function GearStrengthSimulator() {
 
                 <div className="flex flex-col gap-1.5">
                   <div className="flex justify-between text-xs font-medium text-[var(--md-on-surface-variant)]">
-                    <span>{pick('Gear Teeth z₂', 'Gigi Gear z₂', '大歯車歯数 z₂')}</span>
+                    <span>{pick('Gear Teeth z₂', 'Jumlah Gigi z₂', '大歯車歯数 z₂')}</span>
                     <span className="font-mono font-bold text-[var(--md-primary)]">
                       {gearTeeth}
                     </span>

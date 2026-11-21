@@ -163,7 +163,7 @@ registerSimulatorTranslations('bucket-elevator', {
       {
         id: 'be-quiz-4',
         question:
-          'Apa fungsi utama rakitan screw take-up pada puli ekor (boot)?',
+          'Apa fungsi utama rakitan ulir penegang (screw take-up) pada puli ekor (boot)?',
         options: [
           'Memperbesar volume bucket',
           'Menjaga tegangan sabuk/rantai yang tepat dan mencegah slip pada puli kepala',

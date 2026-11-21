@@ -2,7 +2,7 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('bolt-torque', {
   id: {
-    title: 'Simulator Torsi Baut & Kunci Momen',
+    title: 'Simulator Torsi Pengencangan Baut & Kunci Momen',
     shortTitle: 'Torsi Baut',
     description:
       'Pelajari mekanika torsi-preload (T = K·d·Fi), pengaruh faktor mur (K) pelumasan, batas proof load, dan urutan pengencangan flens pola bintang multi-pass.',
@@ -44,9 +44,9 @@ registerSimulatorTranslations('bolt-torque', {
         },
       },
       {
-        title: 'Proof Load, Tegangan Tarik & Keamanan Luluh',
+        title: 'Proof Load, Tegangan Tarik & Batas Luluh',
         summary:
-          'Baut bekerja seperti pegas kaku. Pengencangan meregangkannya dalam daerah elastis agar sambungan terjepit kuat. Melewati Proof Strength (Sp) ISO 898-1 menyebabkan deformasi plastis permanen, hilangnya preload akibat getaran, atau ulir slek/dol.',
+          'Baut bekerja seperti pegas kaku. Pengencangan meregangkannya dalam daerah elastis agar sambungan terjepit kuat. Melewati Proof Strength (Sp) ISO 898-1 menyebabkan deformasi plastis permanen, hilangnya preload akibat getaran, atau ulir rusak.',
         equations: [
           {
             label: 'Tegangan Tarik Baut',
@@ -73,7 +73,7 @@ registerSimulatorTranslations('bolt-torque', {
           steps: [
             'Hitung preload aktual: Fi = T / (K · d) = 91.0 / (0.12 × 12) = 63.19 kN',
             'Hitung tegangan tarik: σt = (63.19 × 1000) / 84.3 = 749.6 MPa',
-            'Bandingkan dengan Proof Strength: (749.6 / 600) × 100 = 124.9% Proof (melewati Luluh Sy = 640 MPa!)',
+            'Bandingkan dengan Proof Strength: (749.6 / 600) × 100 = 124.9% Proof (melewati Batas Luluh Sy = 640 MPa!)',
           ],
           answer: 'Baut mengalami luluh permanen pada 125% Proof Load — ganti baut dan turunkan torsi.',
         },

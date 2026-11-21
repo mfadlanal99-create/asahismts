@@ -2,10 +2,10 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('bearing', {
   id: {
-    title: 'Simulator Pemilihan Bearing, Umur L10 & Suaian ISO',
-    shortTitle: 'Bearing & Suaian',
+    title: 'Simulator Pemilihan Bantalan (Bearing), Umur L10 & Suaian ISO',
+    shortTitle: 'Bantalan & Suaian',
     description:
-      'Pilih bearing bola dan rol, evaluasi umur kelelahan ISO 281 L10/L10h, hitung beban dinamis ekuivalen, dan verifikasi suaian poros/rumah ISO 286.',
+      'Pilih bantalan (bearing) bola dan rol, evaluasi umur kelelahan ISO 281 L10/L10h, hitung beban dinamis ekuivalen, dan verifikasi suaian poros/rumah ISO 286.',
     explore: [
       {
         title: '1. Umur Rating Dasar & Modifikasi ISO 281 (L10, L10h, Lna)',

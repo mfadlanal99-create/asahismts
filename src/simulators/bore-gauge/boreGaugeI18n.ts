@@ -10,7 +10,7 @@ registerSimulatorTranslations('bore-gauge', {
       {
         title: 'Teknik Goyang (Rocking) Dial Bore Gauge & Titik Balik (Null Point)',
         summary:
-          'Dial bore gauge दो-titik (dilengkapi jembatan pemusat/centering shoes berpegas) harus digoyangkan perlahan melewati garis sumbu vertikal silinder. Saat batang ukur miring sebesar sudut θ, garis kontak membentuk tali busur miring D / cos(θ) yang lebih panjang dari diameter sebenarnya. Titik balik ekstrem jarum (pembacaan diameter minimum) menunjukkan posisi tegak lurus sejati (θ = 0°).',
+          'Dial bore gauge dua-titik (dilengkapi jembatan pemusat/centering shoes berpegas) harus digoyangkan perlahan melewati garis sumbu vertikal silinder. Saat batang ukur miring sebesar sudut θ, garis kontak membentuk tali busur miring D / cos(θ) yang lebih panjang dari diameter sebenarnya. Titik balik ekstrem jarum (pembacaan diameter minimum) menunjukkan posisi tegak lurus sejati (θ = 0°).',
         equations: [
           {
             label: 'Bentang Ukur Miring (Efek Sudut Goyang θ)',
@@ -94,7 +94,7 @@ registerSimulatorTranslations('bore-gauge', {
           {
             label: 'Perhitungan Diameter Mutlak dari Simpangan Dial',
             formula: 'D_measured = D_ring + Δ_dial - e_zero',
-            note: 'D_ring adalah diameter master ring gauge, Δ_dial adalah simpangan ukuran lubang, dan e_zero adalah kesalahan penyetelan nol.',
+            note: 'D_ring adalah diameter master ring gauge, Δ_dial adalah simpangan ukuran lubang, dan e_zero adalah kesalahan penyetelan titik nol.',
           },
         ],
         workedExample: {
@@ -105,7 +105,7 @@ registerSimulatorTranslations('bore-gauge', {
             'Saat diukur pada silinder, simpangan ukuran pada titik balik menunjukkan +0.045 mm (lubang lebih besar dari ring gauge)',
           ],
           steps: [
-            'Karena dial disetel nol pada D_ring = 85.000 mm без kesalahan nol (e_zero = 0):',
+            'Karena dial disetel nol pada D_ring = 85.000 mm tanpa kesalahan titik nol (e_zero = 0):',
             'Tambahkan simpangan ukuran (+0.045 mm) ke diameter master ring.',
             'D_measured = 85.000 mm + 0.045 mm = 85.045 mm.',
           ],

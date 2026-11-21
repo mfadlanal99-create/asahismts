@@ -135,7 +135,7 @@ export function BucketElevatorSimulator() {
               },
               {
                 id: 'misalignment',
-                label: pick('Misalignment', 'Sabuk Miring', 'ベルト蛇行'),
+                label: pick('Misalignment', 'Ketidaksejajaran Sabuk', 'ベルト蛇行'),
                 activeCls: 'bg-rose-500 text-white shadow-sm',
               },
             ] as const

@@ -221,7 +221,7 @@ export function VibrationMeterSimulator() {
                 <Sliders className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Vibration Meter & Fault Controls',
-                  'Kontrol Alat Ukur & Skenario Gangguan',
+                  'Kontrol Alat Ukur Getaran & Skenario Gangguan',
                   '振動計・故障シナリオ設定'
                 )}
               </h2>
@@ -356,7 +356,7 @@ export function VibrationMeterSimulator() {
             {/* Fault Scenarios */}
             <div data-tour="vmeter-faults" className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
-                {pick('Fault Scenario', 'Skenario Kerusakan', '故障シナリオ')}
+                {pick('Fault Scenario', 'Skenario Gangguan', '故障シナリオ')}
               </label>
               <div className="grid gap-1.5">
                 {FAULT_SCENARIOS.map((sc) => {

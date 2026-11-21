@@ -670,8 +670,8 @@ export function FitsTolerancesSimulator() {
                 {holeGaugePass
                   ? pick('BORE PASS', 'LUBANG LULUS', '穴 合格')
                   : !holeGoEnters
-                    ? pick('UNDERSIZE (REWORK)', 'KEKECILAN (REWORK)', '穴径不足 (再加工)')
-                    : pick('OVERSIZE (SCRAP)', 'KEBESARAN (AFKIR)', '穴拡大過多 (不良)')}
+                    ? pick('UNDERSIZE (REWORK)', 'TERLALU KECIL (REWORK)', '穴径不足 (再加工)')
+                    : pick('OVERSIZE (SCRAP)', 'TERLALU BESAR (AFKIR)', '穴拡大過多 (不良)')}
               </span>
             </div>
 
@@ -775,8 +775,8 @@ export function FitsTolerancesSimulator() {
                 {shaftGaugePass
                   ? pick('SHAFT PASS', 'POROS LULUS', '軸 合格')
                   : !shaftGoPasses
-                    ? pick('OVERSIZE (REWORK)', 'KEBESARAN (REWORK)', '軸太すぎ (再研削)')
-                    : pick('UNDERSIZE (SCRAP)', 'KEKECILAN (AFKIR)', '軸細すぎ (不良)')}
+                    ? pick('OVERSIZE (REWORK)', 'TERLALU BESAR (REWORK)', '軸太すぎ (再研削)')
+                    : pick('UNDERSIZE (SCRAP)', 'TERLALU KECIL (AFKIR)', '軸細すぎ (不良)')}
               </span>
             </div>
 

@@ -90,7 +90,7 @@ export const OIL_FAMILIES: OilFamily[] = [
     badgeBg: 'bg-orange-800/10 text-orange-700 dark:text-orange-300 border-orange-800/20',
     description: {
       en: 'Contains strong alkaline detergent and dispersant packages to neutralize acidic combustion blow-by gases and keep soot and carbon particulates finely suspended until drained.',
-      id: 'Mengandung paket deterjen alkalin kuat dan dispersan untuk menetralkan asam hasil pembakaran serta menjaga jelaga jelaga tetap tersuspensi tanpa menggumpal.',
+      id: 'Mengandung paket deterjen alkalin kuat dan dispersan untuk menetralkan asam hasil pembakaran serta menjaga jelaga tetap tersuspensi tanpa menggumpal.',
       ja: '高濃度の清浄分散剤（カルシウム系等）と全アルカリ価（TBN）を含み、燃料燃焼時に生じる酸性生成物を中和し、煤やカーボン粒子を微細分散してスラッジ化を抑制。',
     },
   },

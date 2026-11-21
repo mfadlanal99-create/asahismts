@@ -2,15 +2,15 @@ import { registerSimulatorTranslations } from '../../i18n/simulatorRegistry';
 
 registerSimulatorTranslations('belt-conveyor', {
   id: {
-    title: 'Penggerak & Pelacakan Sabuk Konveyor',
+    title: 'Penggerak & Pelacakan Konveyor Sabuk',
     shortTitle: 'Konveyor Sabuk',
     description:
-      'Diagnosis dan koreksi penyimpangan (mistracking) sabuk konveyor menggunakan baut take-up puli ekor, training idler otomatis, dan pemusatan curahan chute sambil memantau tegangan tepi, putaran puli kepala, dan daya penggerak.',
+      'Diagnosis dan koreksi penyimpangan (mistracking) konveyor sabuk menggunakan baut penegang sabuk (take-up) puli ekor, rol penumpu pengarah (training idler) otomatis, dan pemusatan curahan chute sambil memantau tegangan tepi, putaran puli kepala, dan daya penggerak.',
     explore: [
       {
-        title: 'Aturan Pelacakan Sabuk & Penyetelan Take-Up Puli Ekor',
+        title: 'Aturan Pelacakan Sabuk & Penyetelan Penegang Sabuk (Take-Up) Puli Ekor',
         summary:
-          'Sabuk konveyor mengikuti dua prinsip kemudi utama: (1) sabuk bergerak menuju ujung rol atau puli yang disentuhnya PERTAMA KALI searah laju sabuk ("First Contact Rule"), dan (2) pada puli ekor dengan baut take-up, ekstensi ulir yang tidak sama memiringkan sumbu puli dan menimbulkan perbedaan tegangan tepi sehingga sabuk bergeser ke sisi dengan tegangan lebih rendah.',
+          'Konveyor sabuk mengikuti dua prinsip kemudi utama: (1) sabuk bergerak menuju ujung rol penumpu (idler) atau puli yang disentuhnya PERTAMA KALI searah laju sabuk ("First Contact Rule"), dan (2) pada puli ekor dengan baut penegang sabuk (take-up), ekstensi ulir yang tidak sama memiringkan sumbu puli dan menimbulkan perbedaan tegangan tepi sehingga sabuk bergeser ke sisi dengan tegangan lebih rendah.',
         equations: [
           {
             label: 'Kontribusi Kemudi Take-Up Ekor',
@@ -46,7 +46,7 @@ registerSimulatorTranslations('belt-conveyor', {
         },
       },
       {
-        title: 'Training Idler, Beban Chute Tidak Sentris & Ruang Bebas Rangka',
+        title: 'Rol Penumpu Pengarah (Training Idler), Beban Chute Tidak Sentris & Ruang Bebas Rangka',
         summary:
           'Training idler otomatis berporos putar di tengah untuk memberikan sudut skew terkontrol yang mengarahkan sabuk kembali ke garis tengah. Sebaliknya, pemuatan material yang tidak sentris dari corong chute membebani salah satu rol sayap troughing miring secara berlebih, mendorong sabuk secara lateral ke sisi berlawanan (bermuatan ringan). Ruang bebas lateral aman umumnya ±25 mm sebelum tepi sabuk aus dan sambungan rusak.',
         equations: [
@@ -129,7 +129,7 @@ registerSimulatorTranslations('belt-conveyor', {
       {
         id: 'bc-prac-2',
         prompt:
-          'Ketidaklurusan puli kepala sebesar −1,1° menyebabkan penyimpangan lateral 14,0 × (−1,1) = −15,4 mm. Berapakah sudut skew training idler α_skew (dalam derajat) yang diperlukan untuk meniadakan penyimpangan ini menggunakan Δy_idler = 5,5 × α_skew?',
+          'Ketidaksejajaran puli kepala sebesar −1,1° menyebabkan penyimpangan lateral 14,0 × (−1,1) = −15,4 mm. Berapakah sudut skew rol penumpu pengarah (training idler) α_skew (dalam derajat) yang diperlukan untuk meniadakan penyimpangan ini menggunakan Δy_idler = 5,5 × α_skew?',
         hint: 'Selesaikan 5,5 × α_skew = +15,4°.',
         targetValue: 2.8,
         unit: '°',

@@ -130,7 +130,7 @@ export function BeltConveyorSimulator() {
               >
                 {pick(
                   'Unequal Take-Up (Right Rub)',
-                  'Take-Up Timpang (Gesek Kanan)',
+                  'Penegang Sabuk (Take-Up) Timpang',
                   'テイクアップ不均等（右接触）'
                 )}
               </button>
@@ -181,7 +181,7 @@ export function BeltConveyorSimulator() {
                 )}
                 {isPlaying
                   ? pick('Pause', 'Jeda', '一時停止')
-                  : pick('Run', 'Jalan', '運転')}
+                  : pick('Run', 'Jalankan', '運転')}
               </button>
               <button
                 type="button"
@@ -236,7 +236,7 @@ export function BeltConveyorSimulator() {
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
-                  {pick('Take-Up Steering', 'Efek Baut Take-Up', 'テイクアップ操舵')}
+                  {pick('Take-Up Steering', 'Efek Penegang (Take-Up)', 'テイクアップ操舵')}
                 </span>
                 <Wrench className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
@@ -253,7 +253,7 @@ export function BeltConveyorSimulator() {
             <div className="glass-card rounded-[24px] p-3.5">
               <div className="flex items-center justify-between text-xs text-[var(--md-on-surface-variant)]">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
-                  {pick('Training Idler', 'Training Idler', '調心アイドラ操舵')}
+                  {pick('Training Idler', 'Rol Penumpu Pengarah', '調心アイドラ操舵')}
                 </span>
                 <Cog className="h-3.5 w-3.5 text-[var(--md-primary)]" />
               </div>
@@ -617,7 +617,7 @@ export function BeltConveyorSimulator() {
                 <div>
                   <div className="mb-1 flex justify-between text-xs">
                     <span className="font-medium text-[var(--md-on-surface)]">
-                      {pick('Head Skew', 'Miring Kepala', 'ヘッド傾き')}
+                      {pick('Head Skew', 'Kemiringan Puli Kepala', 'ヘッド傾き')}
                     </span>
                     <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.headPulleyMisalignDeg > 0 ? '+' : ''}
@@ -652,14 +652,14 @@ export function BeltConveyorSimulator() {
                 )}
               </div>
               <div className="flex justify-between text-[var(--md-on-surface-variant)]">
-                <span>{pick('Take-Up Δ(L−R):', 'Take-Up Δ(Ki−Ka):', 'テイクアップ差:')}</span>
+                <span>{pick('Take-Up Δ(L−R):', 'Penegang Sabuk Δ(Ki−Ka):', 'テイクアップ差:')}</span>
                 <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.takeUpWanderContributionMm > 0 ? '+' : ''}
                   {metrics.takeUpWanderContributionMm.toFixed(1)} mm
                 </span>
               </div>
               <div className="flex justify-between text-[var(--md-on-surface-variant)]">
-                <span>{pick('Training Idler:', 'Training Idler:', '調心アイドラ:')}</span>
+                <span>{pick('Training Idler:', 'Rol Penumpu Pengarah:', '調心アイドラ:')}</span>
                 <span className="font-mono font-semibold text-[var(--md-on-surface)]">
                   {metrics.idlerWanderContributionMm > 0 ? '+' : ''}
                   {metrics.idlerWanderContributionMm.toFixed(1)} mm

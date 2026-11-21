@@ -144,10 +144,10 @@ export function AlignmentSimulator() {
               preset.id === 'parallel'
                 ? pick('Parallel Offset', 'Offset Paralel', '平行偏心')
                 : preset.id === 'angular'
-                  ? pick('Angular Misalignment', 'Ketidaklurusan Sudut', '偏角ミスアライメント')
+                  ? pick('Angular Misalignment', 'Ketidaksejajaran Sudut', '偏角ミスアライメント')
                   : preset.id === 'combined'
-                    ? pick('Combined + Soft Foot', 'Kombinasi + Soft Foot', '複合＋ソフトフット')
-                    : pick('Aligned (In Tolerance)', 'Lurus (Dalam Toleransi)', '芯出し完了（許容範囲内）');
+                    ? pick('Combined + Soft Foot', 'Kombinasi + Kaki Tidak Rata (Soft Foot)', '複合＋ソフトフット')
+                    : pick('Aligned (In Tolerance)', 'Sejajar (Dalam Toleransi)', '芯出し完了（許容範囲内）');
             return (
               <button
                 key={preset.id}
@@ -181,7 +181,7 @@ export function AlignmentSimulator() {
               <AlertTriangle className="h-3.5 w-3.5" />
               {pick(
                 'Misaligned — Adjustment Needed',
-                'Tidak Lurus — Perlu Penyetelan',
+                'Tidak Sejajar — Perlu Penyetelan',
                 'ミスアライメント — 調整が必要'
               )}
             </span>
@@ -196,7 +196,7 @@ export function AlignmentSimulator() {
               <AlertTriangle className="h-3.5 w-3.5" />
               {pick(
                 `Soft Foot (${maxResidualSoftFoot.toFixed(2)} mm) — Shim Foot`,
-                `Soft Foot (${maxResidualSoftFoot.toFixed(2)} mm) — Shim Kaki`,
+                `Kaki Tidak Rata (${maxResidualSoftFoot.toFixed(2)} mm) — Shim Kaki`,
                 `ソフトフット (${maxResidualSoftFoot.toFixed(2)} mm) — シム挿入`
               )}
             </button>
@@ -260,12 +260,12 @@ export function AlignmentSimulator() {
         const steps = [
           {
             num: 1,
-            label: pick('Soft Foot', 'Soft Foot', 'ソフトフット'),
+            label: pick('Soft Foot', 'Kaki Tidak Rata', 'ソフトフット'),
             done: solution.softFootOk,
           },
           {
             num: 2,
-            label: pick('Rough Align', 'Lurus Kasar', '粗芯出し'),
+            label: pick('Rough Align', 'Penyelarasan Kasar', '粗芯出し'),
             done: roughOk,
           },
           {
@@ -501,12 +501,12 @@ export function AlignmentSimulator() {
                       : 'text-rose-600 dark:text-rose-400'
                   }`}
                 />
-                Step 1: {pick('Soft-Foot Diagnostic & Shim Check', 'Diagnosis Soft-Foot & Cek Shim', 'ステップ1: ソフトフット診断とシム確認')}
+                Step 1: {pick('Soft-Foot Diagnostic & Shim Check', 'Diagnosis Kaki Tidak Rata (Soft Foot) & Cek Shim', 'ステップ1: ソフトフット診断とシム確認')}
               </h3>
               <p className="text-[11px] text-[var(--md-on-surface-variant)]">
                 {pick(
                   'Loosen each motor anchor bolt to measure dial lift; shim any foot > 0.05 mm before aligning.',
-                  'Kendurkan tiap baut kaki motor untuk mengukur angkatan dial; beri shim kaki > 0.05 mm sebelum meluruskan.',
+                  'Kendurkan tiap baut jangkar motor untuk mengukur angkatan dial; beri shim kaki > 0.05 mm sebelum penyelarasan.',
                   '各アンカーボルトを緩めて浮き量を測定し、0.05 mm を超える脚は芯出し前にシム補正してください。'
                 )}
               </p>
@@ -632,7 +632,7 @@ export function AlignmentSimulator() {
                 <ClipboardList className="h-4 w-4 text-[var(--md-primary)]" />
                 {pick(
                   'Step 2: Actionable Alignment Worksheet',
-                  'Langkah 2: Lembar Kerja Koreksi Pelurusan',
+                  'Langkah 2: Lembar Kerja Koreksi Penyelarasan',
                   'ステップ2: 芯出し補正ワークシート'
                 )}
               </h3>
@@ -753,7 +753,7 @@ export function AlignmentSimulator() {
               className="m3-btn-filled inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold"
             >
               <Sparkles className="h-3.5 w-3.5" />
-              {pick('Auto-Align', 'Lurus Otomatis', '自動芯出し')}
+              {pick('Auto-Align', 'Selaraskan Otomatis', '自動芯出し')}
             </button>
           </div>
 
@@ -825,13 +825,13 @@ export function AlignmentSimulator() {
         {/* 2. Alignment Diagnostics */}
         <div className="glass-panel space-y-3 rounded-[28px] p-4 sm:p-5">
           <h3 className="text-sm font-bold text-[var(--md-on-surface)]">
-            {pick('Coupling Alignment Diagnostics', 'Diagnostik Pelurusan Kopling', 'カップリング芯出し診断')}
+            {pick('Coupling Alignment Diagnostics', 'Diagnostik Penyelarasan Kopling', 'カップリング芯出し診断')}
           </h3>
 
           <div className="grid grid-cols-2 gap-2.5">
             <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
               <div className="text-[11px] text-[var(--md-on-surface-variant)]">
-                {pick('Hot Running V-Offset', 'Offset-V Jalan Panas', '熱間運転垂直偏心')}
+                {pick('Hot Running V-Offset', 'Offset-V Operasi Panas', '熱間運転垂直偏心')}
               </div>
               <div className="mt-0.5 font-mono text-sm font-bold text-[var(--md-on-surface)]">
                 {solution.hotVerticalOffsetMm >= 0 ? '+' : ''}
@@ -897,7 +897,7 @@ export function AlignmentSimulator() {
               >
                 {solution.offsetInTolerance
                   ? pick('PASS', 'LULUS', '合格')
-                  : pick('OUT OF LIMIT', 'LEWAT BATAS', '許容外')}
+                  : pick('OUT OF LIMIT', 'MELEBIHI BATAS', '許容外')}
               </span>
             </div>
             <div className="mt-1 flex items-center justify-between">
@@ -911,11 +911,11 @@ export function AlignmentSimulator() {
               >
                 {solution.angularityInTolerance
                   ? pick('PASS', 'LULUS', '合格')
-                  : pick('OUT OF LIMIT', 'LEWAT BATAS', '許容外')}
+                  : pick('OUT OF LIMIT', 'MELEBIHI BATAS', '許容外')}
               </span>
             </div>
             <div className="mt-1 flex items-center justify-between">
-              <span>{pick('Soft Foot (≤ 0.05 mm):', 'Soft Foot (≤ 0.05 mm):', 'ソフトフット (≤ 0.05 mm):')}</span>
+              <span>{pick('Soft Foot (≤ 0.05 mm):', 'Kaki Tidak Rata / Soft Foot (≤ 0.05 mm):', 'ソフトフット (≤ 0.05 mm):')}</span>
               <span
                 className={
                   solution.softFootOk
@@ -1068,7 +1068,7 @@ export function AlignmentSimulator() {
 
             <div className="space-y-1">
               <div className="flex justify-between text-[var(--md-on-surface)]">
-                <span>{pick('Simulated Soft Foot', 'Simulasi Soft Foot', '模擬ソフトフット')}</span>
+                <span>{pick('Simulated Soft Foot', 'Simulasi Kaki Tidak Rata (Soft Foot)', '模擬ソフトフット')}</span>
                 <span className="font-mono font-semibold text-[var(--md-primary)]">
                   {misalignment.softFootMm.toFixed(2)} mm
                 </span>

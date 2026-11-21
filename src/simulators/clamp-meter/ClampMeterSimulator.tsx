@@ -85,7 +85,7 @@ export function ClampMeterSimulator() {
           <div className="glass-panel space-y-4 rounded-[28px] p-5">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
-                {pick('Clamp Jaw Target', 'Target Penjepit Clamp', 'クランプ対象導体')}
+                {pick('Clamp Jaw Target', 'Target Penjepit Tang Ampere', 'クランプ対象導体')}
               </h3>
               <button
                 type="button"
@@ -98,7 +98,7 @@ export function ClampMeterSimulator() {
                 }`}
               >
                 <Zap className="h-3.5 w-3.5" />
-                {pick('INRUSH', 'INRUSH', '突入電流')}
+                {pick('INRUSH', 'ARUS AWAL (INRUSH)', '突入電流')}
               </button>
             </div>
 
@@ -171,7 +171,7 @@ export function ClampMeterSimulator() {
               </div>
               <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3.5">
                 <div className="text-[var(--md-on-surface-variant)]">
-                  {pick('Power Factor (cos φ)', 'Faktor Daya (PF)', '力率 (cos φ)')}
+                  {pick('Power Factor (cos φ)', 'Faktor Daya (cos φ)', '力率 (cos φ)')}
                 </div>
                 <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                   {snapshot.powerFactor.toFixed(2)}

@@ -91,7 +91,7 @@ export function CompressorAnalytics({
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
               {pick(
                 'Receiver Pressure Sawtooth & Duty Cycle',
-                'Gergaji Tekanan Receiver & Duty Cycle',
+                'Gelombang Gergaji Tekanan Receiver & Siklus Beban',
                 'レシーバ圧力ノコギリ波・負荷率'
               )}
             </h3>

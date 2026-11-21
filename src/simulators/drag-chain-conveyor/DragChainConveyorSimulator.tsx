@@ -315,7 +315,7 @@ export function DragChainConveyorSimulator() {
                 )}
                 {isPlaying
                   ? pick('Pause', 'Jeda', '一時停止')
-                  : pick('Run', 'Jalan', '運転')}
+                  : pick('Run', 'Jalankan', '運転')}
               </button>
               <button
                 type="button"
@@ -574,7 +574,7 @@ export function DragChainConveyorSimulator() {
 
                 <label className="block">
                   <div className="mb-0.5 flex justify-between font-medium text-[var(--md-on-surface)]">
-                    <span>{pick('Flight Pitch', 'Pitch Flight', 'フライト間隔')}</span>
+                    <span>{pick('Flight Pitch', 'Jarak Bagi (Pitch) Flight', 'フライト間隔')}</span>
                     <span className="font-mono font-bold text-[var(--md-primary)]">
                       {inputs.flightPitchMm} mm
                     </span>

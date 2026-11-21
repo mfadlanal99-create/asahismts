@@ -260,7 +260,7 @@ export function DbMeterSimulator() {
               <div className="grid grid-cols-2 gap-2.5 text-xs">
                 <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
                   <div className="text-[11px] text-[var(--md-on-surface-variant)]">
-                    {pick('Max Exposure Time', 'Waktu Maksimum', '許容ばく露時間')}
+                    {pick('Max Exposure Time', 'Waktu Paparan Maksimum', '許容ばく露時間')}
                   </div>
                   <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {formatExposureDuration(computed.osha.permissibleHours)}
@@ -307,7 +307,7 @@ export function DbMeterSimulator() {
               <div className="grid grid-cols-2 gap-2.5 text-xs">
                 <div className="rounded-[22px] border border-[var(--md-outline-variant)]/60 bg-[var(--md-surface-container)] p-3">
                   <div className="text-[11px] text-[var(--md-on-surface-variant)]">
-                    {pick('Max Exposure Time', 'Waktu Maksimum', '許容ばく露時間')}
+                    {pick('Max Exposure Time', 'Waktu Paparan Maksimum', '許容ばく露時間')}
                   </div>
                   <div className="font-mono text-base font-bold text-[var(--md-on-surface)]">
                     {formatExposureDuration(computed.niosh.permissibleHours)}
@@ -471,7 +471,7 @@ export function DbMeterSimulator() {
                   <Shield className="h-4 w-4" />
                   {pick(
                     'Acoustic Enclosure Attenuation (-12 dB)',
-                    'Penutup Akustik / Enclosure (-12 dB)',
+                    'Peredam Penutup Akustik (-12 dB)',
                     '防音エンクロージャ (-12 dB)'
                   )}
                 </span>
