@@ -538,7 +538,7 @@ export function SimulatorTutorialModal({
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span className="inline-flex items-center gap-1 rounded-full bg-[var(--md-secondary-container)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--md-on-secondary-container)]">
                       <Sparkles className="h-2.5 w-2.5" />
-                      {pick('Interactive Tour', 'Tur Interaktif', '操作ガイド')}
+                      {pick('Interactive Tour', 'Panduan Interaktif', '操作ガイド')}
                     </span>
                     <span className="rounded-full bg-[var(--md-surface-container-highest)] px-2 py-0.5 font-mono text-[10px] font-semibold text-[var(--md-on-surface-variant)]">
                       {pick(
@@ -645,7 +645,7 @@ export function SimulatorTutorialModal({
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300">
-                      {pick('Pro Tip', 'Tips Pro', 'プロのヒント')}
+                      {pick('Pro Tip', 'Tips Praktis', 'プロのヒント')}
                     </div>
                     <p className="mt-0.5 text-[11px] text-[var(--md-on-surface-variant)]">
                       {pick(
@@ -680,7 +680,7 @@ export function SimulatorTutorialModal({
                 />
                 {pick(
                   "Don't auto-show tutorials",
-                  'Jangan tampilkan tutorial otomatis',
+                  'Jangan tampilkan panduan secara otomatis',
                   'チュートリアルを自動表示しない'
                 )}
               </label>

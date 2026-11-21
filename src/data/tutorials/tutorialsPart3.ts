@@ -12,12 +12,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Welcome! Practice non-contact infrared thermography on live industrial equipment. Compare Displayed Reading against True Center temperature and diagnose how optics (D:S) and emissivity (ε) cause measurement errors.',
-        id: 'Selamat datang! Latih termografi inframerah non-kontak pada peralatan industri. Bandingkan Pembacaan Alat dengan suhu Asli Pusat serta diagnosis pengaruh optik (D:S) dan emisivitas (ε) terhadap galat ukur.',
+        id: 'Selamat datang! Praktikkan termografi inframerah nonkontak pada peralatan industri. Bandingkan Pembacaan Alat dengan Suhu Pusat Sebenarnya serta diagnosis pengaruh rasio optik (D:S) dan emisivitas (ε) terhadap galat pengukuran.',
         ja: 'ようこそ！産業設備の非接触赤外線温度計測を実習します。指示温度と中心真値を比較し、光学比（D:S）や放射率（ε）が誤差に与える影響を診断しましょう。',
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -26,17 +26,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 1 · View Mode', id: 'Fitur 1 · Mode Tampil', ja: '機能1 · 表示モード' },
       title: {
         en: 'Spot Pyrometer vs. Thermal Overlay',
-        id: 'Pirometer Spot vs. Overlay Termal',
+        id: 'Pirometer Spot vs. Tampilan Termal',
         ja: 'スポット温度計とサーモ表示の切替',
       },
       description: {
         en: 'Switch between Spot Pyrometer and Thermal Overlay in the top bar, or click Reset to restore defaults. In Thermal mode, pick Ironbow or Rainbow palettes in the lower control panel.',
-        id: 'Beralih antara Pirometer Spot dan Overlay Termal di bilah atas, atau klik Reset untuk mengembalikan pengaturan awal. Pada mode Termal, pilih palet warna Ironbow atau Rainbow di panel bawah.',
+        id: 'Beralihlah antara Pirometer Spot dan Tampilan Termal (Overlay) di bilah atas, atau klik Reset untuk mengembalikan pengaturan awal. Pada mode Termal, pilih palet warna Ironbow atau Rainbow di panel kontrol bawah.',
         ja: '上部バーで「スポット温度計」と「サーモ表示」を切り替え、「リセット」で初期状態に戻せます。サーモ表示では下部パネルでIronbow / Rainbowパレットを選択できます。',
       },
       tip: {
         en: 'Use Thermal Overlay to scan the whole equipment housing for hot spots before taking a precision spot reading.',
-        id: 'Gunakan Overlay Termal untuk memindai seluruh bodi peralatan sebelum membidik titik panas secara presisi.',
+        id: 'Gunakan Tampilan Termal untuk memindai seluruh badan peralatan guna menemukan titik panas sebelum membidik secara presisi.',
         ja: 'まずサーモ表示で設備全体の高温箇所を特定し、その後スポット計測で精査するのが現場の基本です。',
       },
       targetSelector: '[data-tour="ir-mode-bar"]',
@@ -46,17 +46,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 2 · Aiming', id: 'Fitur 2 · Bidikan', ja: '機能2 · 照準操作' },
       title: {
         en: 'Interactive Thermography Viewport',
-        id: 'Viewport Termografi Interaktif',
+        id: 'Area Simulasi Termografi Interaktif',
         ja: '対話型サーモグラフィビューポート',
       },
       description: {
         en: 'Click or drag anywhere on the equipment SVG to aim the IR crosshair. The outer ring shows the true D:S spot circle so you can visually check whether background surfaces spill into your measurement.',
-        id: 'Klik atau seret di mana saja pada SVG peralatan untuk mengarahkan bidikan IR. Lingkaran luar menunjukkan ukuran spot D:S agar Anda dapat melihat apakah latar belakang ikut terukur.',
+        id: 'Klik atau seret pada gambar peralatan untuk mengarahkan bidikan IR. Lingkaran luar menunjukkan ukuran area ukur (spot) D:S sehingga Anda dapat memeriksa apakah permukaan latar belakang ikut terukur.',
         ja: '設備SVG上の任意の位置をクリックまたはドラッグしてIR照準を合わせます。外側の円が実際のD:Sスポット径を示し、背景温度の混入を視覚的に確認できます。',
       },
       tip: {
         en: 'Keep the entire D:S spot circle inside the hot target—never let the circle spill onto cooler surrounding air or steel.',
-        id: 'Pastikan seluruh lingkaran spot D:S berada di dalam target panas—jangan sampai melebar ke latar yang lebih dingin.',
+        id: 'Pastikan seluruh lingkaran spot D:S berada di dalam target panas—jangan sampai melebar ke permukaan sekitar atau baja yang lebih dingin.',
         ja: 'D:Sスポット円全体が測定対象の内側に収まるように照準と距離を調整してください。',
       },
       targetSelector: '[data-tour="ir-viewport"]',
@@ -66,29 +66,29 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 3 · Targets', id: 'Fitur 3 · Target', ja: '機能3 · 検査点' },
       title: {
         en: 'Quick-Aim Zones & Electrical Tape Patch',
-        id: 'Target Inspeksi Cepat & Isolasi Listrik',
+        id: 'Zona Inspeksi Cepat & Pita Isolasi Listrik',
         ja: '検査ポイント選択と絶縁テープ補正',
       },
       description: {
         en: 'Click any Quick-Aim Inspection Zones pill to snap to critical test points. On shiny low-ε metals, click + Apply Electrical Tape Patch (ε = 0.95) to create a high-emissivity reference surface.',
-        id: 'Klik tombol Target Inspeksi Cepat untuk membidik titik uji kritis. Pada logam mengilap ber-ε rendah, klik + Tempel Isolasi Listrik (ε = 0,95) untuk membuat permukaan referensi beremisivitas tinggi.',
+        id: 'Klik tombol Zona Inspeksi Cepat untuk membidik titik uji kritis secara langsung. Pada logam mengilap beremisivitas rendah, klik + Tempel Isolasi Listrik (ε = 0,95) untuk membuat permukaan referensi beremisivitas tinggi.',
         ja: '「検査ポイント選択」ボタンで主要点検箇所へ素早く照準を合わせられます。光沢金属など低放射率対象には「+ 絶縁テープを貼る」（ε = 0.95）で基準面を作れます。',
       },
       tip: {
         en: 'Black PVC electrical tape is a standard field trick for measuring bare copper busbars or polished stainless shafts.',
-        id: 'Isolasi listrik hitam adalah trik lapangan standar untuk mengukur busbar tembaga polos atau poros baja mengilap.',
+        id: 'Pita isolasi listrik PVC hitam merupakan teknik lapangan standar untuk mengukur busbar tembaga polos atau poros baja mengilap.',
         ja: '黒色絶縁テープは、裸銅ブスバーや研磨シャフトを正確に測るための現場定番テクニックです。',
       },
       faqs: [
         {
           q: {
             en: 'Why apply electrical tape on shiny metal?',
-            id: 'Mengapa menempel isolasi listrik pada logam mengilap?',
+            id: 'Mengapa perlu menempelkan pita isolasi listrik pada logam mengilap?',
             ja: '光沢金属に絶縁テープを貼る理由は？',
           },
           a: {
             en: 'Bare shiny metals have very low emissivity (ε ≈ 0.05–0.20) and act like mirrors reflecting ambient heat. Matte black tape raises ε to 0.95 so the pyrometer reads true surface temperature.',
-            id: 'Logam mengilap memiliki emisivitas sangat rendah (ε ≈ 0,05–0,20) dan memantulkan panas sekitar. Isolasi hitam menaikkan ε menjadi 0,95 agar pembacaan akurat.',
+            id: 'Logam mengilap memiliki emisivitas sangat rendah (ε ≈ 0,05–0,20) dan memantulkan radiasi panas sekitar seperti cermin. Pita isolasi hitam matte menaikkan ε menjadi 0,95 agar pembacaan pirometer akurat.',
             ja: '光沢金属は放射率が非常に低く（ε ≈ 0.05〜0.20）周囲の熱を反射するため誤差が大きくなります。黒テープでε=0.95にすることで真値に近づきます。',
           },
           keywords: ['tape', 'shiny', 'metal', 'emissivity', 'isolasi', 'logam', 'テープ'],
@@ -111,7 +111,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Each scene has different hot-spot dimensions and surface finishes—check both D:S and ε whenever you switch scenes.',
-        id: 'Setiap skenario memiliki ukuran titik panas dan jenis permukaan berbeda—selalu cek D:S dan ε saat berpindah skenario.',
+        id: 'Setiap skenario memiliki ukuran titik panas dan kondisi permukaan yang berbeda—selalu periksa D:S dan ε setiap kali berpindah skenario.',
         ja: 'シーンごとに対象サイズと表面状態が異なるため、切替時はD:Sとεの両方を再確認してください。',
       },
       targetSelector: '[data-tour="ir-scenes"]',
@@ -126,7 +126,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Toggle Optics Ratio (D:S) between 12:1 and 30:1, and drag the Inspection Distance (D) slider from 15 to 300 cm. Watch Spot Ø grow with distance and dilute hot-spot readings when the spot exceeds the target.',
-        id: 'Ubah Rasio Optik (D:S) antara 12:1 dan 30:1, lalu geser Jarak Inspeksi (D) dari 15 hingga 300 cm. Amati diameter spot (Spot Ø) membesar dan mengencerkan pembacaan titik panas.',
+        id: 'Ubah Rasio Optik (D:S) antara 12:1 dan 30:1, lalu atur penggeser Jarak Inspeksi (D) dari 15 hingga 300 cm. Amati diameter spot (Spot Ø) yang membesar dan mendilusi pembacaan titik panas apabila melebihi ukuran target.',
         ja: '光学比（D:S）を12:1と30:1で切り替え、測定距離（D）スライダー（15〜300 cm）を調整します。距離が伸びてスポット径（Spot Ø）が対象より大きくなると測定値が平均化されます。',
       },
       tip: {
@@ -146,32 +146,32 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Adjust Instrument Emissivity (ε = 0.10–1.00) or click a material preset button, and tune Reflected Ambient Temp (T_refl, 15–45 °C) below to see how background reflection skews low-ε measurements.',
-        id: 'Atur Emisivitas Alat (ε = 0,10–1,00) atau pilih prasetel material, lalu atur Suhu Pantul Sekitar (T_refl, 15–45 °C) di bawahnya untuk melihat pengaruh pantulan panas pada permukaan ber-ε rendah.',
+        id: 'Atur Emisivitas Alat (ε = 0,10–1,00) atau pilih prasetel material, lalu atur Suhu Pantul Sekitar (T_refl, 15–45 °C) di bagian bawah untuk melihat pengaruh pantulan panas pada permukaan beremisivitas rendah.',
         ja: '放射率設定（ε = 0.10〜1.00）や材質プリセットを調整し、下部の反射周囲温度（T_refl, 15〜45 °C）で低放射率表面における周囲熱反射の影響を確認できます。',
       },
       tip: {
         en: 'Setting ε too high on a shiny surface causes the pyrometer to under-read dramatically.',
-        id: 'Menyetel ε terlalu tinggi pada permukaan mengilap membuat pirometer membaca jauh lebih rendah dari suhu asli.',
+        id: 'Menyetel ε terlalu tinggi pada permukaan mengilap menyebabkan pirometer menampilkan suhu jauh lebih rendah daripada suhu sebenarnya.',
         ja: '光沢面に対してεを高く設定しすぎると、指示温度が真値より大幅に低く表示されます。',
       },
       targetSelector: '[data-tour="ir-emissivity"]',
     },
     {
       id: 'ir-diagnostics',
-      badge: { en: 'Feature 7 · Troubleshoot', id: 'Fitur 7 · Troubleshooting', ja: '機能7 · 誤差診断' },
+      badge: { en: 'Feature 7 · Troubleshoot', id: 'Fitur 7 · Diagnosis Masalah', ja: '機能7 · 誤差診断' },
       title: {
         en: 'Troubleshooting Total Error (ΔT)',
-        id: 'Troubleshooting Total Galat (ΔT)',
+        id: 'Diagnosis Total Galat (ΔT)',
         ja: '総合誤差 (ΔT) の原因切り分け',
       },
       description: {
         en: 'Compare Displayed Reading against True Center. When Total Error (ΔT) turns red (> ±5 °C), check the D:S vs. ε split: move closer or switch to 30:1 if D:S error dominates, or match ε / apply tape if ε error dominates.',
-        id: 'Bandingkan Pembacaan Alat dengan Asli Pusat. Saat Total Galat (ΔT) merah (> ±5 °C), periksa pecahan D:S vs. ε: kurangi jarak/pilih 30:1 bila galat D:S besar, atau sesuaikan ε/pasang isolasi bila galat ε dominan.',
+        id: 'Bandingkan Pembacaan Alat dengan Suhu Pusat Sebenarnya. Saat Total Galat (ΔT) berwarna merah (> ±5 °C), periksa rincian galat D:S vs. ε: dekati target atau pilih optik 30:1 bila galat D:S besar, atau sesuaikan ε maupun pasang pita isolasi bila galat ε dominan.',
         ja: '指示温度と中心真値を比較します。総合誤差（ΔT）が赤色（±5 °C超）になったらD:S誤差とε誤差の内訳を確認し、距離を詰める／30:1へ切替、または放射率調整・テープ貼付で誤差を解消します。',
       },
       tip: {
         en: 'Goal: bring both D:S error and ε error near 0.0 °C so |ΔT| stays green.',
-        id: 'Target: bawa galat D:S dan galat ε mendekati 0,0 °C agar |ΔT| tetap hijau.',
+        id: 'Sasaran: tekan galat D:S dan galat ε mendekati 0,0 °C agar |ΔT| tetap hijau.',
         ja: 'D:S誤差とε誤差の両方を0.0 °C付近に抑え、|ΔT|が緑色になる状態を目指しましょう。',
       },
       faqs: [
@@ -183,7 +183,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
           },
           a: {
             en: 'As distance D increases, the Spot Ø widens beyond the hot target and averages in cooler background pixels (D:S spot-averaging error). Step closer or use 30:1 optics.',
-            id: 'Saat jarak D bertambah, diameter Spot Ø melebar melebihi target panas dan ikut merata-ratakan latar yang dingin. Dekatkan jarak atau gunakan optik 30:1.',
+            id: 'Saat jarak D bertambah, diameter Spot Ø melebar melebihi target panas dan ikut merata-ratakan suhu latar yang lebih dingin (galat perataan spot D:S). Dekati target atau gunakan optik 30:1.',
             ja: '距離Dが伸びるとスポット径が対象より大きくなり、周囲の低温背景を平均化してしまうためです（D:S誤差）。近づくか30:1光学系を使用します。',
           },
           keywords: ['drop', 'distance', 'spot', 'error', 'turun', 'jarak', '距離', '誤差'],
@@ -196,12 +196,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use the header tabs or keyboard shortcuts Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study theory, test scenarios, and verify your thermography skills.',
-        id: 'Gunakan tab header atau pintasan keyboard Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari teori, berlatih skenario, dan mengikuti kuis.',
+        id: 'Gunakan tab di bagian atas atau pintasan papan ketik Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari teori, berlatih skenario, dan menguji keterampilan termografi Anda.',
         ja: '上部タブまたはショートカット Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で理論学習から理解度確認まで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -219,12 +219,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Welcome! Measure rotating shaft speed without contact using either an optical 650 nm Laser Tachometer or a harmonic Stroboscope coupled to a variable-frequency motor drive.',
-        id: 'Selamat datang! Ukur kecepatan poros berputar secara non-kontak menggunakan Takometer Laser optik 650 nm atau Stroboskop harmonik yang terhubung ke penggerak motor VFD.',
+        id: 'Selamat datang! Ukur kecepatan poros berputar secara nonkontak menggunakan Takometer Laser optik 650 nm atau Stroboskop harmonik yang terhubung ke penggerak motor frekuensi variabel (VFD).',
         ja: 'ようこそ！650 nm光学レーザータコメータとストロボスコープの2方式で、VFD駆動モータの非接触回転速度計測と高調波現象を学びます。',
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -238,24 +238,24 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Switch Instrument Mode between Laser Tachometer and Stroboscope, and use Pause Shaft / Run Shaft to freeze or resume rotation. Toggle the 650 nm Laser Emitter or tune Strobe Flash Rate (200–6000 FPM) with 1×/2×/½× shortcuts.',
-        id: 'Pilih Mode Instrumen antara Takometer Laser dan Stroboskop, serta gunakan Jeda/Putar Poros. Aktifkan Pemancar Laser 650 nm atau atur Laju Kilat Strobo (200–6000 FPM) dengan pintasan 1×/2×/½×.',
+        id: 'Pilih Mode Instrumen antara Takometer Laser dan Stroboskop, serta gunakan Jeda/Putar Poros untuk menghentikan atau melanjutkan putaran. Aktifkan Pemancar Laser 650 nm atau atur Laju Kilat Strobo (200–6000 FPM) dengan pintasan 1×/2×/½×.',
         ja: '「レーザータコメータ」と「ストロボスコープ」を切り替え、「回転停止 / 再開」で軸を制御します。650 nmレーザー照射のON/STANDBYやストロボ発光周波数（1×/2×/½×含む）を設定できます。',
       },
       tip: {
         en: 'In Stroboscope mode, click 2× RPM to see two phantom tape marks 180° apart, then click 1× RPM to confirm true speed.',
-        id: 'Di mode Stroboskop, klik 2× RPM untuk melihat dua bayangan pita 180° berseberangan, lalu klik 1× RPM untuk kecepatan asli.',
+        id: 'Pada mode Stroboskop, klik 2× RPM untuk mengamati dua bayangan pita yang terpisah 180°, lalu klik 1× RPM untuk memastikan kecepatan sebenarnya.',
         ja: 'ストロボモードで「2× RPM」を押すと180°対向の二重像が現れます。「1× RPM」で真の同期速度を確認できます。',
       },
       faqs: [
         {
           q: {
             en: 'How do I avoid harmonic errors with a stroboscope?',
-            id: 'Bagaimana menghindari kesalahan harmonik pada stroboskop?',
+            id: 'Bagaimana cara menghindari kesalahan harmonik pada stroboskop?',
             ja: 'ストロボ計測で高調波による誤読を防ぐには？',
           },
           a: {
             en: 'Start high and work down, or check for a single stationary mark. At 2× RPM you see two marks 180° apart; at ½× RPM you still see one mark, so double FPM—if you still see one mark, you were at ½×.',
-            id: 'Periksa jumlah bayangan: pada 2× RPM muncul dua tanda 180° berseberangan; pada ½× RPM muncul satu tanda, jadi gandakan FPM untuk memastikan.',
+            id: 'Mulailah dari laju kilat tinggi lalu turunkan bertahap, atau periksa jumlah tanda diam: pada 2× RPM muncul dua tanda terpisah 180°; pada ½× RPM tetap muncul satu tanda, jadi gandakan FPM untuk memastikannya.',
             ja: '2× RPMでは2つの像が180°対向して見えます。½× RPMでは像が1つに見えますが、FPMを2倍にしても像が1つなら真値です。',
           },
           keywords: ['harmonic', 'stroboscope', '2x', 'double', 'harmonik', 'bayangan', '高調波'],
@@ -268,17 +268,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 2 · Aiming', id: 'Fitur 2 · Bidikan', ja: '機能2 · 照準操作' },
       title: {
         en: 'Interactive Shaft & Reflective Tape Aiming',
-        id: 'Poros Interaktif & Bidik Pita Reflektif',
+        id: 'Poros Interaktif & Bidikan Pita Reflektif',
         ja: '回転軸ビューポートと反射テープ照準',
       },
       description: {
         en: 'Drag or click inside the CAD viewport to aim the 650 nm optical beam onto the rotating reflective tape target. If the beam misses the tape or laser is in STANDBY, the live RPM readout drops to "---.-".',
-        id: 'Geser atau klik pada viewport CAD untuk mengarahkan sinar optik 650 nm tepat ke pita reflektif poros. Jika sinar meleset atau laser STANDBY, pembacaan RPM akan menampilkan "---.-".',
+        id: 'Seret atau klik di dalam area simulasi CAD untuk mengarahkan sinar optik 650 nm tepat ke pita reflektif pada poros berputar. Jika sinar tidak mengenai pita atau laser dalam status STANDBY, pembacaan RPM akan menampilkan "---.-".',
         ja: 'CADビューポート内で650 nmレーザー照準をドラッグまたはクリックし、回転軸上の反射テープに合わせます。テープから外れるか待機中だとRPM表示は「---.-」になります。',
       },
       tip: {
         en: 'In real plants, keep the laser at a slight 10–15° angle to avoid specular glare from shiny shafts.',
-        id: 'Di lapangan, arahkan laser sedikit miring 10–15° agar tidak silau pantulan poros mengilap.',
+        id: 'Di lingkungan pabrik nyata, arahkan laser sedikit miring 10–15° untuk menghindari pantulan silau dari poros mengilap.',
         ja: '実機では光沢軸からの正反射を避けるため、レーザーを10〜15°傾けて照射するのが基本です。',
       },
       targetSelector: '[data-tour="tach-viewport"]',
@@ -325,20 +325,20 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'tach-diagnostics',
-      badge: { en: 'Feature 5 · Troubleshoot', id: 'Fitur 5 · Troubleshooting', ja: '機能5 · 診断・誤差' },
+      badge: { en: 'Feature 5 · Troubleshoot', id: 'Fitur 5 · Diagnosis Masalah', ja: '機能5 · 診断・誤差' },
       title: {
         en: 'Hold Memory & Harmonic Alias Troubleshooting',
-        id: 'Memori Hold & Diagnosis Alias Harmonik',
+        id: 'Memori Penahanan (Hold) & Diagnosis Alias Harmonik',
         ja: 'ホールド計測と高調波エイリアス診断',
       },
       description: {
         en: 'Troubleshoot speed drops by comparing MIN/AVG/MAX Hold against Ns (or click Reset Min/Max). In Stroboscope mode, verify Apparent Images = 1 and Alias Drift = 0.0 RPM—2× FPM creates false double images.',
-        id: 'Diagnosis penurunan putaran dengan membandingkan MIN/AVG/MAX Hold terhadap Ns (atau klik Reset Min/Maks). Di mode Stroboskop, pastikan Jumlah Bayangan = 1 dan Geser Alias = 0,0 RPM agar tidak tertipu harmonik 2×.',
+        id: 'Diagnosis penurunan putaran dengan membandingkan nilai MIN/AVG/MAX Hold terhadap Ns (atau klik Reset Min/Maks). Pada mode Stroboskop, pastikan Jumlah Bayangan = 1 dan Geser Alias = 0,0 RPM agar tidak keliru membaca citra ganda harmonik 2×.',
         ja: 'MIN/AVG/MAXホールド値とNsを比較して負荷によるすべり増加を診断します。ストロボモードでは見かけの像数=1、ドリフト=0.0 RPMを確認し、2×高調波の二重像による誤読を防ぎます。',
       },
       tip: {
         en: 'If Laser RPM shows "---.-", check two things: is LASER ON active, and is the red dot aimed on the reflective tape?',
-        id: 'Jika RPM Laser menampilkan "---.-", periksa dua hal: apakah LASER AKTIF dan apakah titik merah mengenai pita reflektif?',
+        id: 'Jika RPM Laser menampilkan "---.-", periksa dua hal: apakah LASER AKTIF sudah menyala, dan apakah titik merah mengarah tepat ke pita reflektif?',
         ja: 'レーザーRPMが「---.-」のままなら、レーザーON状態と反射テープへの照準位置を確認してください。',
       },
       faqs: [
@@ -350,7 +350,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
           },
           a: {
             en: 'Either the 650 nm Laser Emitter is in STANDBY, or the optical beam is aimed off the reflective tape strip on the shaft.',
-            id: 'Pemancar Laser 650 nm masih dalam mode SIAGA, atau sinar optik belum diarahkan tepat ke pita reflektif pada poros.',
+            id: 'Pemancar Laser 650 nm masih dalam status SIAGA (STANDBY), atau sinar optik belum diarahkan tepat ke pita reflektif pada poros.',
             ja: '650 nmレーザーが待機中（STANDBY）になっているか、照準が軸上の反射テープから外れているためです。',
           },
           keywords: ['---', 'blank', 'no reading', 'standby', 'tape', 'tidak terbaca'],
@@ -363,12 +363,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Switch tabs with Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to review speed formulas, complete guided measurements, and test your knowledge.',
-        id: 'Gunakan pintasan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari rumus, menyelesaikan latihan terpandu, dan mengikuti kuis.',
+        id: 'Gunakan pintasan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari rumus kecepatan, menyelesaikan latihan terpandu, dan mengikuti kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で各モードを切り替え、計算式と実測演習を確認しましょう。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -381,17 +381,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Overview', id: 'Ringkasan', ja: '概要' },
       title: {
         en: 'Tribology & Oil Analysis Workbench',
-        id: 'Meja Kerja Tribologi & Analisis Oli',
+        id: 'Laboratorium Tribologi & Analisis Oli',
         ja: 'トライボロジー・潤滑油診断ラボ',
       },
       description: {
         en: 'Welcome! Evaluate elastohydrodynamic (EHL) oil film thickness, Stribeck lubrication regimes, ISO 4406 particle cleanliness, used-oil lab reports, and bearing grease relubrication intervals.',
-        id: 'Selamat datang! Evaluasi ketebalan film oli EHL, rezim pelumasan Stribeck, kode kebersihan ISO 4406, laporan lab oli bekas, serta kalkulator pelumasan ulang gemuk bantalan.',
+        id: 'Selamat datang! Evaluasi ketebalan film oli elastohidrodinamik (EHL), rezim pelumasan Stribeck, kode kebersihan ISO 4406, laporan lab oli bekas, serta interval pelumasan ulang gemuk bantalan.',
         ja: 'ようこそ！EHL油膜厚さ、ストライベック曲線、ISO 4406清浄度、使用油ラボ診断、軸受グリース補給量計算を統合的にシミュレーションします。',
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -405,12 +405,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Click Healthy Gearbox, Water Ingress, Thermal Overload, or Under-Viscous Bearing to inject realistic plant lubrication faults and watch every chart and lab flag respond immediately.',
-        id: 'Klik Gearbox Sehat, Masuknya Air, Beban Panas Berlebih, atau Bantalan Kurang Kental untuk menyuntikkan gangguan pelumasan nyata dan mengamati respons seluruh grafik.',
+        id: 'Klik Gearbox Sehat, Masuknya Air, Beban Panas Berlebih, atau Bantalan Kurang Kental untuk mensimulasikan gangguan pelumasan pabrik secara nyata dan mengamati respons seluruh grafik serta indikator lab.',
         ja: '「正常減速機」「水分混入」「過熱・熱酸化」「低粘度軸受」をクリックすると、実設備の潤滑トラブルが再現され全グラフと診断が連動します。',
       },
       tip: {
         en: 'Try Water Ingress first—water destroys EHL film strength and triggers corrosion warnings even when viscosity looks normal.',
-        id: 'Coba Masuknya Air dulu—air merusak kekuatan film EHL dan memicu peringatan korosi meski viskositas tampak normal.',
+        id: 'Coba Masuknya Air terlebih dahulu—air merusak kekuatan film EHL dan memicu peringatan korosi meskipun viskositas tampak normal.',
         ja: 'まず「水分混入」を試してください。粘度が正常に見えてもEHL油膜強度が低下し腐食リスクが高まります。',
       },
       targetSelector: '[data-tour="lube-scenarios"]',
@@ -425,12 +425,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Select an Equipment Type card (Hydraulic Unit, Worm Gear, Pump Bearing, etc.) to load its OEM-recommended ISO VG grade, optimal temperature band, and water contamination limit.',
-        id: 'Pilih kartu Jenis Peralatan untuk memuat rekomendasi grade ISO VG OEM, rentang suhu optimal, dan batas kontaminasi air spesifik mesin tersebut.',
+        id: 'Pilih kartu Jenis Peralatan (Unit Hidrolik, Worm Gear, Bantalan Pompa, dll.) untuk memuat rekomendasi grade ISO VG OEM, rentang suhu optimal, dan batas kontaminasi air spesifik mesin tersebut.',
         ja: '対象機器カード（油圧ユニット、ウォーム減速機、ポンプ軸受など）を選ぶと、OEM推奨ISO VG、適正油温範囲、水分許容限界が読み込まれます。',
       },
       tip: {
         en: 'Each machine class has a different ISO 4406 cleanliness target—servo hydraulics require much cleaner oil than worm gears.',
-        id: 'Setiap mesin punya target kebersihan ISO 4406 berbeda—sistem hidrolik menuntut oli jauh lebih bersih daripada worm gear.',
+        id: 'Setiap kelas mesin memiliki target kebersihan ISO 4406 yang berbeda—sistem hidrolik servo menuntut oli jauh lebih bersih daripada roda gigi cacing (worm gear).',
         ja: '機器ごとにISO 4406清浄度目標が異なり、油圧システムは減速機より厳しい清浄度が求められます。',
       },
       targetSelector: '[data-tour="lube-equipment"]',
@@ -445,7 +445,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Pick an ISO VG grade from 32 to 680. The green dot marks the OEM-recommended grade for your selected machine; choosing too low starves the film, while too high wastes churning power.',
-        id: 'Pilih grade ISO VG dari 32 hingga 680. Titik hijau menandai rekomendasi OEM; memilih terlalu rendah menipiskan film oli, terlalu tinggi memboroskan daya adukan.',
+        id: 'Pilih grade ISO VG dari 32 hingga 680. Titik hijau menandai grade rekomendasi OEM untuk mesin terpilih; memilih terlalu rendah menipiskan film oli, sedangkan terlalu tinggi memboroskan daya akibat rugi pengadukan.',
         ja: 'ISO VG 32〜680を選択します。緑点がOEM推奨グレードです。低すぎると油膜切れ、高すぎると攪拌損失による発熱を招きます。',
       },
       tip: {
@@ -465,12 +465,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Drag Operating Temp (20–110 °C) and Water Contamination (0–2000 ppm) against the displayed Optimal range and Water Limit. Rising temperature thins viscosity exponentially.',
-        id: 'Geser Suhu Operasi (20–110 °C) dan Kontaminasi Air (0–2000 ppm) sambil membandingkan dengan batas Optimal dan Limit. Kenaikan suhu mengencerkan viskositas secara eksponensial.',
+        id: 'Atur penggeser Suhu Operasi (20–110 °C) dan Kontaminasi Air (0–2000 ppm) terhadap rentang Optimal dan Batas Air yang ditampilkan. Kenaikan suhu mengencerkan viskositas secara eksponensial.',
         ja: '運転油温（20〜110 °C）と水分混入量（0〜2000 ppm）を適正範囲・限界値と見比べながら調整します。高温は粘度を急激に低下させます。',
       },
       tip: {
         en: 'Every +10 °C above 60 °C halves oil oxidation life (Arrhenius rule) and drops film thickness.',
-        id: 'Setiap kenaikan +10 °C di atas 60 °C memotong separuh umur oksidasi oli (aturan Arrhenius).',
+        id: 'Setiap kenaikan +10 °C di atas 60 °C memotong separuh umur oksidasi oli (aturan Arrhenius) dan menurunkan ketebalan film.',
         ja: 'アレニウス則により油温が10 °C上がるごとに潤滑油の酸化寿命は半減します。',
       },
       targetSelector: '[data-tour="lube-temp-water"]',
@@ -485,12 +485,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Toggle Wear Particle Level (Normal, Elevated, Severe) and monitor the live Oil Oxidation & Remaining Useful Life (RUL %) progress bar and estimated drain interval.',
-        id: 'Ubah Tingkat Partikel Keausan (Normal, Meningkat, Parah) lalu pantau bilah Oksidasi Oli & Sisa Umur (RUL %) serta estimasi jam ganti oli.',
+        id: 'Ubah Tingkat Partikel Keausan (Normal, Meningkat, Parah), lalu pantau bilah Oksidasi Oli & Sisa Umur Pakai (RUL %) serta estimasi interval penggantian oli.',
         ja: '摩耗粉レベル（正常/注意/危険）を切り替え、下の油酸化・残存寿命（RUL %）バーと交換目安時間の変化を確認します。',
       },
       tip: {
         en: 'Severe wear particles accelerate three-body abrasion and demand immediate filtration or oil drain.',
-        id: 'Partikel aus parah memicu abrasi tiga-benda dan menuntut filtrasi atau penggantian oli segera.',
+        id: 'Partikel keausan tingkat parah mempercepat abrasi tiga benda dan menuntut filtrasi atau penggantian oli segera.',
         ja: '危険レベルの摩耗粉は三体アブレシブ摩耗を引き起こすため、早急なろ過・更油が必要です。',
       },
       targetSelector: '[data-tour="lube-wear-rul"]',
@@ -537,7 +537,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'lube-diagnostics',
-      badge: { en: 'Feature 8 · Troubleshoot', id: 'Fitur 8 · Troubleshooting', ja: '機能8 · ラボ診断' },
+      badge: { en: 'Feature 8 · Troubleshoot', id: 'Fitur 8 · Diagnosis Masalah', ja: '機能8 · ラボ診断' },
       title: {
         en: 'Used Oil Lab Report Diagnosis',
         id: 'Diagnosis Laporan Lab Oli Bekas',
@@ -545,24 +545,24 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Troubleshoot active lubrication faults by reading the 4 lab flags (Water, Viscosity, Oxidation, Wear) and following each amber Action recommendation to restore Healthy status.',
-        id: 'Diagnosis gangguan pelumasan aktif dengan membaca 4 indikator lab (Air, Viskositas, Oksidasi, Keausan) lalu ikuti setiap rekomendasi Action untuk memulihkan status Normal.',
+        id: 'Diagnosis gangguan pelumasan aktif dengan membaca 4 indikator lab (Air, Viskositas, Oksidasi, Keausan), lalu ikuti setiap rekomendasi Tindakan (Action) berwarna kuning untuk memulihkan status Sehat.',
         ja: '4つの診断フラグ（水分・粘度・酸化・摩耗）と改善アクション（Action）を確認し、異常シナリオから正常運転への復旧手順を特定します。',
       },
       tip: {
         en: 'Never just top up contaminated oil—address the root cause (cooler, breather, seal, or filter) shown in the Action line.',
-        id: 'Jangan sekadar menambah oli baru pada oli terkontaminasi—atasi akar masalah pada baris Action.',
+        id: 'Jangan sekadar menambah oli baru pada oli yang terkontaminasi—atasi akar masalah (pendingin, breather, seal, atau filter) yang tertera pada baris Tindakan.',
         ja: '汚染された油に継ぎ足しするだけでは解決しません。Action欄の根本原因（冷却・ブリーザ・フィルタ等）に対処しましょう。',
       },
       faqs: [
         {
           q: {
             en: 'How do I fix a low λ ratio or viscosity warning?',
-            id: 'Bagaimana mengatasi peringatan rasio λ rendah atau viskositas?',
+            id: 'Bagaimana cara mengatasi peringatan rasio λ rendah atau viskositas?',
             ja: 'λ比低下や粘度警告を改善するには？',
           },
           a: {
             en: 'Either lower Operating Temp (fix cooling), step up to the OEM-recommended ISO VG grade, or remove water contamination that weakens the oil film.',
-            id: 'Turunkan Suhu Operasi (perbaiki pendingin), naikkan ke grade ISO VG rekomendasi OEM, atau hilangkan kontaminasi air.',
+            id: 'Turunkan Suhu Operasi (perbaiki sistem pendingin), naikkan ke grade ISO VG rekomendasi OEM, atau hilangkan kontaminasi air yang melemahkan film oli.',
             ja: '運転油温を下げる（冷却改善）、OEM推奨ISO VGへ適正化する、または水分混入を除去することでλ比を回復できます。',
           },
           keywords: ['lambda', 'viscosity', 'warning', 'fix', 'viskositas', 'perbaiki', '粘度'],
@@ -575,12 +575,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Navigate with Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to master tribology theory, fault cases, and certification questions.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk menguasai teori tribologi, studi kasus gangguan, dan soal kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk menguasai teori tribologi, studi kasus gangguan, dan soal sertifikasi.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で切り替えながら潤滑診断の理解を深めましょう。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -603,7 +603,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -617,12 +617,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Pick any of the 9 industrial assemblies (Process Pump, Conveyors, Air Knocker, Vibrators, Gearbox, TEFC Motor) to open the 3D CAD Studio. Return to this grid anytime via Choose Machine.',
-        id: 'Pilih salah satu dari 9 rakitan industri untuk membuka Studio CAD 3D. Anda dapat kembali ke katalog ini kapan saja lewat tombol Pilih Mesin.',
+        id: 'Pilih salah satu dari 9 rakitan mesin industri (Pompa Proses, Konveyor, Air Knocker, Vibrator, Gearbox, Motor TEFC) untuk membuka Studio CAD 3D. Anda dapat kembali ke katalog ini kapan saja melalui tombol Pilih Mesin.',
         ja: '9種類の産業機械（ポンプ、コンベヤ、エアーノッカー、バイブレータ、減速機、TEFCモータ等）から選択して3Dビューアを開きます。「機械選択」でいつでも戻れます。',
       },
       tip: {
         en: 'Start with the Process Pump or Gearbox Reducer to see multi-stage shaft, seal, and bearing disassembly.',
-        id: 'Mulai dengan Pompa Proses atau Gearbox untuk melihat pembongkaran poros, seal, dan bantalan bertahap.',
+        id: 'Mulailah dengan Pompa Proses atau Gearbox Reducer untuk melihat pembongkaran poros, seal, dan bantalan secara bertahap.',
         ja: '最初はプロセスポンプや減速機を選ぶと、軸・シール・軸受の段階分解を分かりやすく確認できます。',
       },
       targetSelector: '[data-tour="m3d-catalog"]',
@@ -632,17 +632,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 2 · CAD Bar', id: 'Fitur 2 · Bilah CAD', ja: '機能2 · 表示・駆動' },
       title: {
         en: 'Camera Presets, X-Ray, Pins & Drive RPM',
-        id: 'Prasetel Kamera, X-Ray, Pin & Drive RPM',
+        id: 'Prasetel Kamera, X-Ray, Pin & Putaran Drive RPM',
         ja: '視点プリセット・透過・番号・駆動制御',
       },
       description: {
         en: 'Inside the 3D Studio, use Iso/Front/Side/Top presets, toggle X-Ray to see internal shafts, Pins for BOM numbers, Orbit for auto-rotation, and Drive + RPM (150–1750) to run the machine.',
-        id: 'Di dalam Studio 3D, gunakan prasetel Iso/Depan/Samping/Atas, aktifkan X-Ray untuk melihat poros internal, Pin untuk nomor BOM, Putar untuk rotasi, dan Drive + RPM untuk menjalankan mesin.',
+        id: 'Di dalam Studio 3D, gunakan prasetel Iso/Depan/Samping/Atas, aktifkan X-Ray untuk melihat poros internal, Pin untuk nomor BOM, Putar untuk rotasi otomatis, serta Drive + RPM (150–1750) untuk menjalankan mesin.',
         ja: '3Dビューア上部バーで視点プリセット（立体/正面/側面/上面）、透過（X-Ray）、番号ピン、自動回転、駆動ボタンとRPM（150〜1750）を操作できます。',
       },
       tip: {
         en: 'Turn on X-Ray while running Drive to watch internal impellers, gears, and rotors spin inside closed housings.',
-        id: 'Aktifkan X-Ray sambil menyalakan Drive untuk melihat impeler, roda gigi, dan rotor berputar di dalam rumah mesin.',
+        id: 'Aktifkan X-Ray sambil menyalakan Drive untuk melihat impeler, roda gigi, dan rotor berputar di dalam rumah mesin yang tertutup.',
         ja: '「透過」をONにしたまま「駆動」を押すと、ケーシング内部のインペラや歯車の回転を透視確認できます。',
       },
       targetSelector: '[data-tour="m3d-toolbar"]',
@@ -652,17 +652,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 3 · 3D Canvas', id: 'Fitur 3 · Kanvas 3D', ja: '機能3 · 3D画面' },
       title: {
         en: '360° Orbit, Zoom & Direct Part Picking',
-        id: 'Putar 360°, Zoom & Pilih Komponen Langsung',
+        id: 'Putar 360°, Perbesar & Pilih Komponen Langsung',
         ja: '360°回転・ズーム・部品直接クリック',
       },
       description: {
         en: 'Drag on the 3D canvas to orbit 360°, scroll to zoom (or use top-left +/-/Reset), and click any 3D part or numbered BOM pin to highlight and inspect it.',
-        id: 'Seret kanvas 3D untuk memutar 360°, gulir untuk zoom (atau tombol kiri atas), lalu klik komponen 3D atau pin BOM bernomor untuk memeriksa spesifikasinya.',
+        id: 'Seret kanvas 3D untuk memutar 360°, gulir untuk memperbesar/memperkecil (atau gunakan tombol +/-/Reset di kiri atas), lalu klik komponen 3D atau pin BOM bernomor untuk menyorot dan memeriksa spesifikasinya.',
         ja: '3Dキャンバスをドラッグして360°回転、ホイール（または左上ボタン）でズームし、部品や番号ピンを直接クリックして仕様を確認できます。',
       },
       tip: {
         en: 'Use the Reset View button in the top-left corner if you ever zoom too far in.',
-        id: 'Gunakan tombol Reset di pojok kiri atas jika tampilan ter-zoom terlalu dekat.',
+        id: 'Gunakan tombol Reset View di pojok kiri atas apabila tampilan diperbesar terlalu dekat.',
         ja: '拡大しすぎた場合は左上のリセットボタンで標準視点に戻せます。',
       },
       targetSelector: '[data-tour="m3d-viewport"]',
@@ -672,12 +672,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 4 · Explode', id: 'Fitur 4 · Bongkar', ja: '機能4 · 分解表示' },
       title: {
         en: 'Exploded View Scrubber & Staged/Linear',
-        id: 'Slider Bongkar & Mode Bertahap/Linear',
+        id: 'Penggeser Bongkar & Mode Bertahap/Linear',
         ja: '分解スライダーと段階/比例モード',
       },
       description: {
         en: 'Drag the Explode slider (0–100%) in the bottom dock, click Play/Pause to animate disassembly, and toggle between Staged (sequence-order) and Proportional (linear) explode modes.',
-        id: 'Geser slider Bongkar (0–100%) di dok bawah, klik Play/Pause untuk animasi bongkar-pasang, dan pilih mode Bertahap atau Proporsional.',
+        id: 'Atur penggeser Bongkar (0–100%) di dok bawah, klik Play/Pause untuk animasi pembongkaran, lalu pilih antara mode Bertahap (sesuai urutan) atau Proporsional (linear).',
         ja: '下部ドックの「分解」スライダー（0〜100%）や再生ボタンで分解アニメーションを実行し、「段階 / 比例」の分解方式を切り替えられます。',
       },
       tip: {
@@ -689,32 +689,32 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'm3d-bom',
-      badge: { en: 'Feature 5 · Troubleshoot', id: 'Fitur 5 · Troubleshooting', ja: '機能5 · 故障・保守' },
+      badge: { en: 'Feature 5 · Troubleshoot', id: 'Fitur 5 · Diagnosis Masalah', ja: '機能5 · 故障・保守' },
       title: {
         en: 'Assembly Tree, Failure Modes & Solo Isolation',
-        id: 'Daftar Komponen, Mode Kerusakan & Isolasi',
+        id: 'Daftar Komponen, Mode Kerusakan & Isolasi Tunggal',
         ja: '部品ツリー (BOM) と故障モード診断',
       },
       description: {
         en: 'Click any part in the Assembly Tree (BOM) to open its Part Inspector: troubleshoot wear by checking Failure Modes and Maintenance & Tolerance limits, or click Isolate Part in 3D for solo inspection.',
-        id: 'Klik komponen di Daftar Komponen (BOM) untuk membuka Inspektor: periksa Mode Kerusakan dan Toleransi Perawatan untuk troubleshooting keausan, atau klik Isolasi 3D untuk inspeksi tunggal.',
+        id: 'Klik komponen di Daftar Komponen (BOM) untuk membuka Inspektor Komponen: periksa Mode Kerusakan dan batas Toleransi Perawatan untuk mendiagnosis keausan, atau klik Isolasi 3D untuk inspeksi tunggal.',
         ja: '部品ツリー（BOM）から部品を選ぶと、材質・機能・故障モード・保守公差基準を確認でき、摩耗や損傷の原因診断に役立ちます。単独表示（Solo）で個別拡大も可能です。',
       },
       tip: {
         en: 'Use Prev / Next in the Part Inspector to step systematically through every wear item in the BOM.',
-        id: 'Gunakan tombol Prev / Next di Inspektor untuk memeriksa setiap komponen aus dalam BOM secara berurutan.',
+        id: 'Gunakan tombol Prev / Next di Inspektor Komponen untuk memeriksa setiap komponen aus dalam BOM secara berurutan.',
         ja: 'インスペクタの「前へ / 次へ」でBOM内の消耗部品を順番に点検できます。',
       },
       faqs: [
         {
           q: {
             en: 'How do I inspect a hidden internal bearing or seal?',
-            id: 'Bagaimana memeriksa bantalan atau seal yang tersembunyi di dalam?',
+            id: 'Bagaimana cara memeriksa bantalan atau seal yang tersembunyi di dalam?',
             ja: '内部に隠れた軸受やシールを確認するには？',
           },
           a: {
             en: 'Either click X-Ray in the top bar, drag the Explode slider to 100%, or click the part directly in the right-hand Assembly Tree (BOM) and press Isolate.',
-            id: 'Aktifkan X-Ray di bilah atas, geser Explode ke 100%, atau klik langsung nama komponen di Daftar Komponen (BOM) kanan lalu tekan Isolasi.',
+            id: 'Aktifkan X-Ray di bilah atas, geser penggeser Bongkar ke 100%, atau klik langsung nama komponen di Daftar Komponen (BOM) sebelah kanan lalu tekan Isolasi.',
             ja: '上部バーの「透過(X-Ray)」を使うか、分解スライダーを100%にするか、右側の部品ツリー（BOM）から該当部品を選んで単独表示します。',
           },
           keywords: ['hidden', 'internal', 'bearing', 'seal', 'isolate', 'x-ray', 'tersembunyi'],
@@ -727,12 +727,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study assembly engineering notes, complete inspection tasks, and take the quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk membaca catatan teknik, menyelesaikan tugas inspeksi, dan mengerjakan kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari catatan teknik rakitan, menyelesaikan tugas inspeksi, dan mengerjakan kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で構造解説の確認から理解度チェックまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -755,7 +755,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -769,7 +769,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Click Start HV Test to energize the DC insulation test, Stop & Discharge to safely bleed capacitive charge back to 0 V, or Reset to clear the test timer.',
-        id: 'Klik Mulai Uji HV untuk menjalankan uji isolasi DC, Henti & Buang Muatan untuk membuang muatan kapasitif dengan aman, atau Reset untuk mengulang.',
+        id: 'Klik Mulai Uji HV untuk menjalankan uji isolasi DC, Henti & Buang Muatan untuk membuang muatan kapasitif dengan aman hingga 0 V, atau Reset untuk mengatur ulang pengatur waktu uji.',
         ja: '「高圧試験開始」でDC絶縁試験を開始し、「停止・放電」で静電容量の残留電荷を安全に放電、「リセット」でタイマーを初期化します。',
       },
       tip: {
@@ -789,12 +789,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Click directly on the tester dial, lead terminals, or test button in the SVG to switch DC voltage or move probes between stator phases (U, V, W) and Earth.',
-        id: 'Klik langsung selektor tegangan, terminal kabel, atau tombol uji pada SVG untuk mengubah tegangan DC atau memindahkan probe antar fasa stator (U, V, W) dan Ground.',
+        id: 'Klik langsung selektor tegangan, terminal kabel, atau tombol uji pada SVG untuk mengubah tegangan DC atau memindahkan probe antar fasa stator (U, V, W) dan Pembumian (Earth).',
         ja: '測定器SVG上の電圧ダイヤル・測定端子・テストボタンを直接クリックして試験電圧や巻線接続を切り替えられます。',
       },
       tip: {
         en: 'Testing U-to-Earth checks phase-to-ground insulation, while U-to-V checks phase-to-phase insulation.',
-        id: 'Uji U-ke-Earth memeriksa isolasi fasa-ke-ground, sedangkan U-ke-V memeriksa isolasi antar-fasa.',
+        id: 'Pengujian U-ke-Earth memeriksa isolasi fasa ke pembumian (ground), sedangkan U-ke-V memeriksa isolasi antarfasa.',
         ja: 'U-Earthは対地絶縁、U-Vは相間絶縁の健全性を確認します。',
       },
       targetSelector: '[data-tour="meg-svg"]',
@@ -849,12 +849,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Drag Winding Temperature (0–80 °C) to see how insulation resistance halves every +10 °C and how K_T40 normalizes your reading to the 40 °C IEEE 43 reference.',
-        id: 'Geser Suhu Belitan (0–80 °C) untuk melihat bagaimana tahanan isolasi berkurang separuh tiap +10 °C dan dinormalisasi oleh K_T40 ke referensi 40 °C.',
+        id: 'Atur penggeser Suhu Belitan (0–80 °C) untuk melihat bagaimana tahanan isolasi berkurang separuh tiap +10 °C dan bagaimana K_T40 menormalisasi pembacaan Anda ke referensi 40 °C IEEE 43.',
         ja: '巻線温度（0〜80 °C）スライダーで、+10 °Cごとに抵抗値が半減する特性とK_T40による40 °C基準補正を確認します。',
       },
       tip: {
         en: 'Never compare winter (15 °C) and summer (55 °C) readings without applying K_T40 correction first!',
-        id: 'Jangan pernah membandingkan hasil ukur musim dingin (15 °C) dan panas (55 °C) tanpa koreksi K_T40!',
+        id: 'Jangan pernah membandingkan hasil ukur musim dingin (15 °C) dan musim panas (55 °C) tanpa menerapkan koreksi K_T40 terlebih dahulu!',
         ja: '季節や運転直後で巻線温度が違う場合は、必ずK_T40補正後のR_c40値でトレンド比較してください。',
       },
       targetSelector: '[data-tour="meg-temp"]',
@@ -869,44 +869,44 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Inject different winding health states—Clean & Dry, Moisture/Humid, Carbonized/Contaminated, or Grounded Fault—to observe how each fault changes R(t), DAR, and PI.',
-        id: 'Suntikkan berbagai kondisi belitan—Bersih & Kering, Lembap, Terkontaminasi Karbon, atau Hubung Tanah—untuk melihat pengaruhnya pada R(t), DAR, dan PI.',
+        id: 'Simulasikan berbagai kondisi belitan—Bersih & Kering, Lembap, Terkontaminasi Karbon, atau Gangguan Hubung Tanah—untuk mengamati bagaimana setiap gangguan memengaruhi R(t), DAR, dan PI.',
         ja: '乾燥正常・吸湿・カーボン汚損・地絡故障などの状態を切り替えて、R(t)曲線やDAR・PIの変化を比較します。',
       },
       tip: {
         en: 'Moisture typically lowers PI (< 2.0) but can often be recovered by baking/drying the stator.',
-        id: 'Kelembapan menurunkan PI (< 2,0) namun sering kali dapat dipulihkan dengan pengeringan stator.',
+        id: 'Kelembapan umumnya menurunkan PI (< 2,0), namun sering kali dapat dipulihkan dengan pengeringan stator.',
         ja: '吸湿によるPI低下（< 2.0）は、巻線の乾燥処理（ベーキング）で回復できるケースが多いです。',
       },
       targetSelector: '[data-tour="meg-conditions"]',
     },
     {
       id: 'meg-verdict',
-      badge: { en: 'Feature 7 · Troubleshoot', id: 'Fitur 7 · Troubleshooting', ja: '機能7 · 合否判定' },
+      badge: { en: 'Feature 7 · Troubleshoot', id: 'Fitur 7 · Diagnosis Masalah', ja: '機能7 · 合否判定' },
       title: {
         en: 'IEEE 43 Verdict, R_c40, DAR & PI Diagnosis',
-        id: 'Diagnosis Banner IEEE 43, R_c40, DAR & PI',
+        id: 'Diagnosis Status IEEE 43, R_c40, DAR & PI',
         ja: 'IEEE 43 合否判定と R_c40・DAR・PI 診断',
       },
       description: {
         en: 'Troubleshoot motor insulation using this Verdict Banner and the 4 KPI cards below: PI < 2.0 or DAR < 1.25 signals moisture/contamination, while R_c40 < 5 MΩ warns of severe insulation breakdown.',
-        id: 'Diagnosis isolasi motor melalui Banner Status ini dan 4 kartu KPI di bawah: PI < 2,0 atau DAR < 1,25 menandakan lembap/kotor, sedangkan R_c40 < 5 MΩ memperingatkan kerusakan isolasi parah.',
+        id: 'Diagnosis isolasi motor melalui Panel Status ini dan 4 kartu KPI di bagian bawah: PI < 2,0 atau DAR < 1,25 menandakan isolasi lembap/terkontaminasi, sedangkan R_c40 < 5 MΩ memperingatkan kerusakan isolasi parah.',
         ja: 'IEEE 43判定バナーと下の4つのKPIで異常を切り分けます。PI < 2.0またはDAR < 1.25なら吸湿・汚損、R_c40 < 5 MΩなら絶縁破壊の危険を示します。',
       },
       tip: {
         en: 'Even if 1-minute R_c40 passes 100 MΩ, a PI below 2.0 still flags questionable insulation!',
-        id: 'Meski R_c40 1 menit lolos > 100 MΩ, nilai PI di bawah 2,0 tetap menandakan isolasi meragukan!',
+        id: 'Meskipun R_c40 1 menit melampaui 100 MΩ, nilai PI di bawah 2,0 tetap menandakan isolasi meragukan!',
         ja: '1分値R_c40が100 MΩ以上あっても、PIが2.0未満なら吸湿・汚損の疑いがあります。',
       },
       faqs: [
         {
           q: {
             en: 'What is the difference between DAR and PI?',
-            id: 'Apa perbedaan DAR dan PI?',
+            id: 'Apa perbedaan antara DAR dan PI?',
             ja: 'DARとPIの違いは何ですか？',
           },
           a: {
             en: 'DAR = R₆₀ₛ / R₃₀ₛ (quick 1-minute moisture check; ≥ 1.6 is good). PI = R₁₀ₘ / R₁ₘ (full 10-minute IEEE 43 polarization check; ≥ 2.0 is good).',
-            id: 'DAR = R₆₀ₛ / R₃₀ₛ (uji cepat 1 menit; ≥ 1,6 baik). PI = R₁₀ₘ / R₁ₘ (uji penuh 10 menit IEEE 43; ≥ 2,0 baik).',
+            id: 'DAR = R₆₀ₛ / R₃₀ₛ (uji cepat kelembapan 1 menit; ≥ 1,6 baik). PI = R₁₀ₘ / R₁ₘ (uji polarisasi penuh 10 menit IEEE 43; ≥ 2,0 baik).',
             ja: 'DARは1分間の簡易指標（R₆₀ₛ/R₃₀ₛ、1.6以上で良好）、PIは10分間のIEEE 43標準指標（R₁₀ₘ/R₁ₘ、2.0以上で良好）です。',
           },
           keywords: ['dar', 'pi', 'difference', 'ieee 43', 'perbedaan', '違い'],
@@ -919,12 +919,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to review IEEE 43 standards, run practice diagnostics, and complete the quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari standar IEEE 43, latihan diagnosis, dan kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari standar IEEE 43, menjalankan latihan diagnosis, dan menyelesaikan kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）でIEEE 43基準の復習と演習・クイズに取り組めます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -947,7 +947,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -961,12 +961,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Inspect the live motor cutaway, nameplate, and 6-stud terminal block. Click directly on the motor cutaway to pause/resume rotor spinning, or click the terminal box to toggle Star (Y) and Delta (Δ) jumper bars.',
-        id: 'Amati potongan motor, pelat nama, dan blok terminal 6-stud. Klik gambar motor untuk menjeda/memutar rotor, atau klik kotak terminal untuk mengubah jumper Star (Y) dan Delta (Δ).',
+        id: 'Amati potongan motor, pelat nama, dan blok terminal 6-stud. Klik langsung potongan motor untuk menjeda/melanjutkan putaran rotor, atau klik kotak terminal untuk mengubah batang jumper Star (Y) dan Delta (Δ).',
         ja: '断面図・銘板・6端子ブロックを確認できます。断面図をクリックするとロータ回転の停止/再開、端子箱をクリックするとスター(Y)／デルタ(Δ)短絡バーを切り替えられます。',
       },
       tip: {
         en: 'Watch the 3 copper jumper bars in the terminal block: horizontal bridges W2-U2-V2 for Star (Y), vertical bars for Delta (Δ).',
-        id: 'Perhatikan 3 batang tembaga di kotak terminal: horizontal (W2-U2-V2) untuk Star (Y), vertikal untuk Delta (Δ).',
+        id: 'Perhatikan 3 batang jumper tembaga di kotak terminal: penghubung horizontal (W2-U2-V2) untuk Star (Y), dan batang vertikal untuk Delta (Δ).',
         ja: '端子箱の3本の銅短絡バーに注目：横連結がスター(Y)、縦3本がデルタ(Δ)結線です。',
       },
       targetSelector: '[data-tour="motor-cutaway"]',
@@ -981,7 +981,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Compare Squirrel-Cage Induction, Slip-Ring Wound Rotor, IE3/IE4 High-Efficiency, and Inverter-Duty VFD motors. The left guide card below the cutaway updates with efficiency class and primary applications.',
-        id: 'Bandingkan motor Induksi Sangkar Tupai, Rotor Belitan, Efisiensi Tinggi IE3/IE4, dan Inverter-Duty VFD. Kartu panduan di bawah gambar akan memperbarui kelas efisiensi dan aplikasinya.',
+        id: 'Bandingkan motor Induksi Sangkar Tupai, Rotor Belitan (Slip-Ring), Efisiensi Tinggi IE3/IE4, dan Inverter-Duty VFD. Kartu panduan di sebelah kiri bawah gambar akan memperbarui kelas efisiensi dan aplikasi utamanya.',
         ja: 'かご形誘導電動機、巻線形、IE3/IE4高効率、インバータ駆動用などの種類を切り替えます。断面図下のガイドカードに効率クラスと用途が表示されます。',
       },
       tip: {
@@ -1053,20 +1053,20 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'mb-wiring',
-      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Troubleshooting', ja: '機能6 · 結線診断' },
+      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Diagnosis Masalah', ja: '機能6 · 結線診断' },
       title: {
         en: 'Telemetry & 400V Wiring Fault Prevention',
-        id: 'Telemetri & Pencegahan Salah Kabel 400V',
+        id: 'Telemetri & Pencegahan Kesalahan Pengkabelan 400V',
         ja: 'テレメトリ確認と400V誤結線トラブル防止',
       },
       description: {
         en: 'Inspect Sync/Rated RPM, Shaft Torque, Coil Phase Voltage, and Slip. Always troubleshoot nameplate voltage using the 400V Rule card: wiring a 230V Delta-rated winding across a 400V grid applies √3× overvoltage and burns out the stator.',
-        id: 'Periksa Putaran, Torsi, Tegangan Fasa, dan Slip. Selalu cek kartu Aturan 400V untuk mencegah salah kabel: menyambung belitan Delta 230V ke jaringan 400V memberi tegangan lebih √3× yang membakar stator.',
+        id: 'Periksa Putaran Sinkron/Terukur, Torsi Poros, Tegangan Fasa Kumparan, dan Slip. Selalu periksa kartu Aturan 400V untuk mencegah kesalahan pengkabelan: menyambung belitan berperingkat Delta 230V ke jaringan 400V memberikan tegangan lebih √3× yang membakar stator.',
         ja: '回転数・軸トルク・相電圧・すべりを確認し、下の「400V電源注意」カードで誤結線を防ぎます。230Vデルタ定格巻線を400V電源に直結すると√3倍の過電圧で焼損するため、スター(Y)結線が必要です。',
       },
       tip: {
         en: 'Before energizing any motor, verify nameplate "230/400V Δ/Y" matches your supply voltage and terminal jumper layout!',
-        id: 'Sebelum menyalakan motor, pastikan pelat nama "230/400V Δ/Y" sesuai dengan tegangan suplai dan susunan jumper!',
+        id: 'Sebelum menyalakan motor, pastikan pelat nama "230/400V Δ/Y" sesuai dengan tegangan suplai dan susunan jumper terminal!',
         ja: '通電前に必ず銘板の「230/400V Δ/Y」表記と電源電圧・端子箱短絡バーの一致を確認してください。',
       },
       faqs: [
@@ -1078,7 +1078,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
           },
           a: {
             en: 'Each coil rated for 230V receives full 400V (73% overvoltage), causing extreme magnetic saturation, overcurrent, and rapid winding burnout. It must be wired in Star (Y) on 400V.',
-            id: 'Setiap kumparan 230V menerima 400V penuh (tegangan lebih 73%), memicu arus berlebih dan belitan cepat terbakar. Pada 400V harus dipasang Star (Y).',
+            id: 'Setiap kumparan berperingkat 230V menerima 400V penuh (tegangan lebih 73%), memicu saturasi magnetik ekstrem, arus berlebih, dan belitan cepat terbakar. Pada jaringan 400V motor harus dipasang Star (Y).',
             ja: '230V定格のコイルに400V（約1.73倍）が直接印加され、過電流と急激な絶縁焼損を引き起こします。400Vでは必ずスター(Y)結線にします。',
           },
           keywords: ['400v', '230v', 'delta', 'burn', 'overvoltage', 'terbakar', '焼損'],
@@ -1091,12 +1091,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to review motor nameplate theory, complete wiring exercises, and test your knowledge.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari teori pelat nama motor, latihan pengkabelan, dan kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari teori pelat nama motor, menyelesaikan latihan pengkabelan, dan menguji pemahaman Anda.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で銘板規格の復習から演習・クイズまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -1119,7 +1119,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -1128,17 +1128,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 1 · Circuits', id: 'Fitur 1 · Sirkuit', ja: '機能1 · 回路選択' },
       title: {
         en: '6 Workbench Scenarios & Guided Faults',
-        id: '6 Skenario Meja Kerja & Cari Gangguan',
+        id: '6 Skenario Uji & Diagnosis Gangguan Terpandu',
         ja: '6つのベンチシナリオと故障診断モード',
       },
       description: {
         en: 'Select from 6 workbench scenarios (DC Voltage, Resistance/Potentiometer, Continuity/Diode, DC Current, AC Outlet, and Guided Fault Diagnosis). Each scenario unlocks dedicated circuit controls on the right.',
-        id: 'Pilih salah satu dari 6 skenario (Tegangan DC, Resistansi, Kontinuitas/Dioda, Arus DC, Stopkontak AC, dan Cari Gangguan). Setiap skenario membuka kontrol rangkaian khusus di panel kanan.',
+        id: 'Pilih salah satu dari 6 skenario uji (Tegangan DC, Resistansi/Potensiometer, Kontinuitas/Dioda, Arus DC, Stopkontak AC, dan Diagnosis Gangguan Terpandu). Setiap skenario membuka kontrol rangkaian khusus di panel kanan.',
         ja: '6つのシナリオタブ（DC電圧、抵抗、導通/ダイオード、DC電流、ACコンセント、故障診断）を切り替えます。シナリオごとに右パネルへ専用操作が現れます。',
       },
       tip: {
         en: 'Try the Fault Diagnosis tab last to test your troubleshooting skills on randomized hidden circuit faults.',
-        id: 'Coba tab Cari Gangguan terakhir untuk menguji keterampilan troubleshooting Anda pada gangguan tersembunyi.',
+        id: 'Coba tab Diagnosis Gangguan di bagian akhir untuk menguji keterampilan penanganan masalah Anda pada gangguan rangkaian tersembunyi yang diacak.',
         ja: '最後に「故障診断」タブで、ランダム出題される隠れ故障の特定に挑戦してみましょう。',
       },
       targetSelector: '[data-tour="dmm-scenarios"]',
@@ -1148,17 +1148,17 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 2 · Probes', id: 'Fitur 2 · Probe', ja: '機能2 · プローブ' },
       title: {
         en: 'Probe Placement, Lead Swap & Beeper',
-        id: 'Penempatan Probe, Tukar Lead & Buzzer',
+        id: 'Penempatan Probe, Tukar Kabel Uji & Buzzer',
         ja: 'プローブ移動・入替・ブザー操作',
       },
       description: {
         en: 'Use Move Red (+), Move Black (COM), Swap Leads, and Lift Both to place probes on circuit nodes, and toggle Beeper On / Muted for audible continuity checks.',
-        id: 'Gunakan Pindah Merah (+), Pindah Hitam (COM), Tukar Probe, dan Angkat Probe untuk mengukur titik uji rangkaian, serta aktifkan/bisukan Buzzer untuk uji kontinuitas.',
+        id: 'Gunakan Pindah Merah (+), Pindah Hitam (COM), Tukar Kabel, dan Angkat Kedua Probe untuk menempatkan probe pada titik uji rangkaian, serta aktifkan/bisukan Buzzer untuk uji kontinuitas.',
         ja: '「赤プローブ移動」「黒プローブ移動」「リード入替」「プローブ解除」で回路の測定点にプローブを当て、導通ブザーのON/ミュートを切り替えられます。',
       },
       tip: {
         en: 'Click Lift Both before switching from Voltage to Resistance or Current mode—just like safe field practice.',
-        id: 'Klik Angkat Probe sebelum berpindah dari mode Tegangan ke Resistansi atau Arus—sesuai prosedur keselamatan lapangan.',
+        id: 'Klik Angkat Kedua Probe sebelum berpindah dari mode Tegangan ke Resistansi atau Arus—sesuai prosedur keselamatan lapangan.',
         ja: '電圧測定から抵抗や電流測定へ切り替える前は「プローブ解除」で回路から離すのが安全の基本です。',
       },
       targetSelector: '[data-tour="dmm-probes"]',
@@ -1240,20 +1240,20 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'dmm-fault',
-      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Troubleshooting', ja: '機能6 · 故障診断' },
+      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Diagnosis Masalah', ja: '機能6 · 故障診断' },
       title: {
         en: 'Hazard Alerts & Guided Fault Diagnosis',
-        id: 'Peringatan Bahaya & Diagnosis Gangguan',
+        id: 'Peringatan Bahaya & Diagnosis Gangguan Terpandu',
         ja: '危険警告と故障診断トラブルシューティング',
       },
       description: {
         en: 'Watch this Diagnostic Readout Note for live hazard warnings (blown fuse, live-circuit resistance probe, or reverse polarity). In the Fault tab, probe TP1–TP4 to isolate the fault, select your diagnosis, and click Verify Diagnosis.',
-        id: 'Pantau Catatan Diagnostik ini untuk peringatan bahaya (sekring putus, ukur Ω pada sirkuit bertegangan, polaritas terbalik). Di tab Gangguan, ukur TP1–TP4 lalu klik Periksa Diagnosis.',
+        id: 'Pantau Catatan Pembacaan Diagnostik ini untuk peringatan bahaya waktu nyata (sekring putus, pengukuran Ω pada sirkuit bertegangan, atau polaritas terbalik). Di tab Gangguan, ukur TP1–TP4 untuk mengisolasi gangguan, pilih diagnosis Anda, lalu klik Periksa Diagnosis.',
         ja: 'この診断ノートでヒューズ溶断や活線抵抗測定などの危険警告を確認できます。「故障診断」タブではTP1〜TP4を測定して原因を特定し、「診断を確認」を押します。',
       },
       tip: {
         en: 'When troubleshooting TP1–TP4, measure voltage from ground (TP4) to each upstream node to pinpoint where voltage drops to 0 V.',
-        id: 'Saat memeriksa TP1–TP4, ukur tegangan terhadap ground (TP4) ke tiap titik hulu untuk melacak di mana tegangan hilang menjadi 0 V.',
+        id: 'Saat memeriksa TP1–TP4, ukur tegangan terhadap ground (TP4) ke tiap titik hulu untuk melacak lokasi jatuhnya tegangan menjadi 0 V.',
         ja: 'TP1〜TP4の診断では、基準点（TP4）から上流へ順に電圧を測り、電圧が途絶える箇所を特定します。',
       },
       targetSelector: '[data-tour="dmm-diagnostic-note"]',
@@ -1263,12 +1263,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study measurement safety, complete circuit labs, and pass the quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari keselamatan ukur, latihan sirkuit, dan kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari keselamatan pengukuran, menyelesaikan latihan sirkuit, dan mengikuti kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で測定安全の理論から演習・クイズまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -1291,7 +1291,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -1305,12 +1305,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Switch between Mode 1: Industrial Oil & Viscosity and Mode 2: Grease NLGI & Compatibility in the top bar, or click Reset Lab to restore the active mode to defaults.',
-        id: 'Beralih antara Mode 1: Jenis Oli & Viskositas dan Mode 2: Gemuk NLGI & Kompatibilitas di bilah atas, atau klik Reset Lab untuk mengatur ulang mode aktif.',
+        id: 'Beralihlah antara Mode 1: Oli Industri & Viskositas dan Mode 2: Gemuk NLGI & Kompatibilitas di bilah atas, atau klik Reset Lab untuk mengembalikan mode aktif ke pengaturan awal.',
         ja: '上部バーで「モード1: 産業用潤滑油と粘度」と「モード2: グリースちょう度と混和適合性」を切り替え、「ラボを初期化」で初期値に戻せます。',
       },
       tip: {
         en: 'Complete Mode 1 first to understand base oil viscosity, then switch to Mode 2 to test grease thickeners.',
-        id: 'Selesaikan Mode 1 dulu untuk memahami viskositas oli dasar, lalu beralih ke Mode 2 untuk menguji pengental gemuk.',
+        id: 'Selesaikan Mode 1 terlebih dahulu untuk memahami viskositas oli dasar, lalu beralih ke Mode 2 untuk menguji pengental gemuk.',
         ja: 'まずモード1で基油粘度の基本を学び、次にモード2でグリース増ちょう剤の相性を確認しましょう。',
       },
       targetSelector: '[data-tour="ogb-mode-bar"]',
@@ -1320,12 +1320,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 2 · Machine Helper', id: 'Fitur 2 · Panduan Mesin', ja: '機能2 · 推奨選定' },
       title: {
         en: 'Beginner Machine Helper (Auto-Select)',
-        id: 'Panduan Pemula: Oli Mana untuk Mesin Ini?',
+        id: 'Panduan Pemula: Pemilihan Oli per Mesin',
         ja: '初心者ガイド: 機械別推奨オイル自動選定',
       },
       description: {
         en: 'In Mode 1, click any industrial machine (Hydraulic Press, Spur Gearbox, Worm Gear, Air Compressor, etc.) to auto-load the OEM-recommended oil family, ISO VG grade, and engineering rationale.',
-        id: 'Di Mode 1, klik mesin industri apa saja untuk memuat otomatis jenis oli rekomendasi OEM, grade ISO VG, dan alasan teknik pemilihannya.',
+        id: 'Pada Mode 1, klik mesin industri apa saja (Pres Hidrolik, Gearbox Roda Gigi Lurus, Worm Gear, Kompresor Udara, dll.) untuk memuat otomatis kelompok oli rekomendasi OEM, grade ISO VG, dan alasan tekniknya.',
         ja: 'モード1で対象機械（油圧プレス、平歯車減速機、コンプレッサ等）をクリックすると、推奨潤滑油ファミリー・ISO VG・選定理由が自動設定されます。',
       },
       tip: {
@@ -1337,20 +1337,20 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'ogb-oil-family',
-      badge: { en: 'Feature 3 · Oil Family', id: 'Fitur 3 · Keluarga Oli', ja: '機能3 · 油種比較' },
+      badge: { en: 'Feature 3 · Oil Family', id: 'Fitur 3 · Kelompok Oli', ja: '機能3 · 油種比較' },
       title: {
         en: 'Industrial Oil Family (Mineral vs. Synthetic)',
-        id: 'Keluarga Oli Industri (Mineral vs. Sintetis)',
+        id: 'Kelompok Oli Industri (Mineral vs. Sintetis)',
         ja: '産業用潤滑油ファミリー（鉱油・合成油）',
       },
       description: {
         en: 'Compare Hydraulic AW, Gear EP, Synthetic PAO, and Turbine/Compressor oils. Notice how Synthetic PAO (VI 145) resists thinning at high temperature much better than standard Mineral oil (VI 98).',
-        id: 'Bandingkan oli Hidrolik AW, Gear EP, Sintetis PAO, dan Turbin/Kompresor. Amati bagaimana Sintetis PAO (VI 145) lebih tahan pengenceran suhu tinggi dibanding Mineral (VI 98).',
+        id: 'Bandingkan oli Hidrolik AW, Gear EP, Sintetis PAO, dan Turbin/Kompresor. Amati bagaimana Sintetis PAO (VI 145) jauh lebih tahan terhadap pengenceran pada suhu tinggi dibanding oli Mineral standar (VI 98).',
         ja: '耐摩耗性作動油(AW)、極圧ギヤ油(EP)、合成油(PAO)、タービン油を比較します。高VIのPAO合成油（VI 145）は高温時の粘度低下が小さいのが特長です。',
       },
       tip: {
         en: 'Never use Gear EP sulfur-phosphorus oil in yellow-metal (bronze) worm gears without checking corrosion compatibility!',
-        id: 'Jangan gunakan oli Gear EP sulfur-fosfor pada roda gigi cacing perunggu tanpa memastikan kompatibilitas korosinya!',
+        id: 'Jangan pernah menggunakan oli Gear EP sulfur-fosfor pada roda gigi cacing berbahan perunggu tanpa memeriksa kompatibilitas korosinya!',
         ja: 'リン・硫黄系の極圧(EP)ギヤ油は銅合金（青銅）ウォーム歯車を腐食させる場合があるため注意が必要です。',
       },
       targetSelector: '[data-tour="ogb-oil-family"]',
@@ -1365,12 +1365,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Drag Operating Temperature (10–90 °C, noting the ISO 40 °C REF badge) to watch Operating Viscosity (cSt) drop exponentially on heating and thicken sharply on cooling.',
-        id: 'Geser Suhu Operasi (10–90 °C, perhatikan label ISO 40 °C REF) untuk melihat Viskositas Operasi (cSt) turun drastis saat panas dan mengental saat dingin.',
+        id: 'Atur penggeser Suhu Operasi (10–90 °C, perhatikan label ISO 40 °C REF) untuk mengamati Viskositas Operasi (cSt) turun secara eksponensial saat dipanaskan dan mengental tajam saat didinginkan.',
         ja: '運転流体温度スライダー（10〜90 °C、40 °C基準バッジ表示）を動かすと、加熱による急激な低粘度化や低温での増粘をリアルタイムで確認できます。',
       },
       tip: {
         en: 'ISO VG numbers always equal kinematic viscosity in cSt at 40 °C—not at 100 °C like automotive SAE grades!',
-        id: 'Angka ISO VG selalu berarti viskositas kinematik (cSt) pada 40 °C—berbeda dengan SAE otomotif pada 100 °C!',
+        id: 'Angka ISO VG selalu menunjukkan viskositas kinematik dalam cSt pada 40 °C—bukan pada 100 °C seperti kelas SAE otomotif!',
         ja: 'ISO VG番号は常に40 °Cにおける動粘度(cSt)を示します（自動車用SAEの100 °C基準とは異なります）。',
       },
       targetSelector: '[data-tour="ogb-temp-slider"]',
@@ -1380,49 +1380,49 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Feature 5 · CAD Visuals', id: 'Fitur 5 · Visual CAD', ja: '機能5 · CAD可視化' },
       title: {
         en: '2D CAD Visualizer & Live Engineering Metrics',
-        id: 'Visualizer CAD 2D & Metrik Teknik Langsung',
+        id: 'Visualisasi CAD 2D & Metrik Teknik Waktu Nyata',
         ja: '2D CAD可視化とエンジニアリング指標',
       },
       description: {
         en: 'Observe the live Viscosity-Temperature curve / NLGI cone penetration visualizer and the 4 engineering KPI cards below (Operating Viscosity, ISO VG Benchmark, ISO 3448 Tolerance, Viscosity Index).',
-        id: 'Amati visualisasi kurva Viskositas-Suhu / penetrasi kerucut NLGI dan 4 kartu metrik teknik di bawahnya (Viskositas Operasi, Benchmark ISO VG, Toleransi ISO 3448, Indeks Viskositas).',
+        id: 'Amati visualisasi kurva Viskositas-Suhu / penetrasi kerucut NLGI dan 4 kartu KPI teknik di bagian bawah (Viskositas Operasi, Acuan ISO VG, Toleransi ISO 3448, Indeks Viskositas).',
         ja: '粘度-温度曲線／NLGI円錐針入度ビジュアライザと、下の4つのKPIカード（運転時動粘度、公称ISO VG、ISO 3448許容公差、粘度指数）を確認できます。',
       },
       tip: {
         en: 'In Mode 2, the CAD visualizer switches to an ASTM D217 cone penetrometer and 2-grease compatibility mixer.',
-        id: 'Di Mode 2, visualizer CAD berubah menjadi penetrometer kerucut ASTM D217 dan uji pencampuran 2 gemuk.',
+        id: 'Pada Mode 2, tampilan CAD beralih menjadi penetrometer kerucut ASTM D217 dan uji pencampuran 2 gemuk.',
         ja: 'モード2ではASTM D217円錐針入度試験機と2種グリース混和試験のCAD図に切り替わります。',
       },
       targetSelector: '[data-tour="ogb-viewport"]',
     },
     {
       id: 'ogb-diagnostic',
-      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Troubleshooting', ja: '機能6 · 異常診断' },
+      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Diagnosis Masalah', ja: '機能6 · 異常診断' },
       title: {
         en: 'Thermal Thinning & Grease Incompatibility Checks',
-        id: 'Cek Penipisan Suhu & Ketidakcocokan Gemuk',
+        id: 'Pemeriksaan Penipisan Suhu & Ketidakcocokan Gemuk',
         ja: '粘度低下とグリース混和不良のトラブル診断',
       },
       description: {
         en: 'Use this Technical Tip and the live cards to troubleshoot lubricant failures: in Mode 1, verify viscosity stays within machine limits above 70 °C; in Mode 2, test Grease 1 vs. Grease 2 thickeners to prevent Incompatible melting.',
-        id: 'Gunakan Tips Teknis ini dan kartu metrik untuk mendiagnosis kegagalan pelumas: di Mode 1 cek penipisan di atas 70 °C; di Mode 2 uji pengental Gemuk 1 vs. Gemuk 2 agar tidak meleleh akibat ketidakcocokan.',
+        id: 'Gunakan Tips Teknis ini dan kartu metrik waktu nyata untuk mendiagnosis kegagalan pelumas: pada Mode 1, pastikan viskositas tetap dalam batas mesin di atas 70 °C; pada Mode 2, uji pengental Gemuk 1 vs. Gemuk 2 untuk mencegah pelelehan akibat ketidakcocokan.',
         ja: 'この技術ヒントとメトリクスで潤滑トラブルを診断します。モード1では70 °C超での粘度低下を、モード2では増ちょう剤組合せによる混和不適合（軟化・流出）を検出します。',
       },
       tip: {
         en: 'Mixing Polyurea and Lithium Complex greases is a classic plant mistake that liquefies grease and starves bearings!',
-        id: 'Mencampur gemuk Polyurea dan Lithium Complex adalah kesalahan umum yang membuat gemuk mencair dan merusak bantalan!',
+        id: 'Mencampur gemuk Polyurea dan Lithium Complex adalah kesalahan umum di pabrik yang menyebabkan gemuk mencair dan merusak bantalan!',
         ja: 'ポリウレア系とリチウムコンプレックス系グリースの混合は、軟化流出を引き起こす代表的な現場トラブルです。',
       },
       faqs: [
         {
           q: {
             en: 'What happens if I mix incompatible grease thickeners?',
-            id: 'Apa akibat mencampur pengental gemuk yang tidak kompatibel?',
+            id: 'Apa akibatnya jika mencampur pengental gemuk yang tidak kompatibel?',
             ja: '不適合なグリース同士を混ぜるとどうなりますか？',
           },
           a: {
             en: 'The soap/thickener structure breaks down, causing the grease to either soften and leak out of the bearing (oil starvation) or harden into soap cakes that block grease passages.',
-            id: 'Struktur pengental rusak sehingga gemuk mencair dan bocor keluar dari bantalan, atau mengeras menyumbat jalur pelumasan.',
+            id: 'Struktur pengental rusak sehingga gemuk mencair dan bocor keluar dari bantalan (kekurangan oli), atau mengeras membentuk gumpalan yang menyumbat jalur pelumasan.',
             ja: '増ちょう剤の網目構造が破壊され、グリースが軟化・流出（油膜切れ）するか、逆に硬化して給脂経路を詰まらせます。',
           },
           keywords: ['mix', 'incompatible', 'grease', 'thickener', 'campur', 'gemuk', '混和'],
@@ -1435,12 +1435,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study lubricant standards, practice selection scenarios, and complete the quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari standar pelumas, latihan pemilihan, dan kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari standar pelumas, berlatih skenario pemilihan, dan menyelesaikan kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で潤滑規格の学習から演習・クイズまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -1463,7 +1463,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -1477,12 +1477,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Choose Pre-built Circuits (5 industrial presets) or Interactive Builder to wire custom ISO 1219 components. Toggle Compressor ON/OFF, adjust Supply (1–10 bar) and Bore (20–100 mm), or click Reset.',
-        id: 'Pilih Sirkuit Prasetel (5 rangkaian industri) atau Perakit Interaktif untuk merangkai komponen ISO 1219. Atur Kompresor ON/OFF, Suplai (1–10 bar), Bore (20–100 mm), atau Reset.',
+        id: 'Pilih Sirkuit Prasetel (5 rangkaian industri) atau Perakit Interaktif untuk merangkai komponen ISO 1219 secara khusus. Atur Kompresor ON/OFF, Suplai (1–10 bar), dan Bore (20–100 mm), atau klik Reset.',
         ja: '「プリセット回路」（5種の標準回路）または「回路ビルダー」を切り替え、コンプレッサON/OFF、供給圧（1〜10 bar）、内径（20〜100 mm）、リセットを操作できます。',
       },
       tip: {
         en: 'Remember to keep Compressor ON—if supply pressure is 0 bar, no valve pilot or cylinder will move!',
-        id: 'Pastikan Kompresor ON—jika tekanan suplai 0 bar, katup pilot dan silinder tidak akan bergerak!',
+        id: 'Pastikan Kompresor menyala (ON)—jika tekanan suplai 0 bar, katup pilot dan silinder tidak akan bergerak!',
         ja: 'コンプレッサがONになっていることを確認してください。供給圧が0 barだとパイロット弁もシリンダも作動しません。',
       },
       targetSelector: '[data-tour="pneu-toolbar"]',
@@ -1569,32 +1569,32 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
     },
     {
       id: 'pneu-faults',
-      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Troubleshooting', ja: '機能6 · 異常診断' },
+      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Diagnosis Masalah', ja: '機能6 · 異常診断' },
       title: {
         en: 'Plant Faults & Blind Fault Challenge',
-        id: 'Gangguan Pabrik & Tantangan Uji Buta',
+        id: 'Gangguan Pabrik & Tantangan Diagnosis Mandiri',
         ja: '設備異常とブラインド異常診断',
       },
       description: {
         en: 'Inject Healthy, Clogged FRL Filter, Leaking 5/2 Pilot Line, or Stuck Meter-Out FCV to study failure symptoms—or click Blind Fault Challenge to diagnose a hidden fault from FRL ΔP, spool response, and NL/min air flow.',
-        id: 'Aktifkan Normal, Filter FRL Tersumbat, Jalur Pilot 5/2 Bocor, atau FCV Meter-Out Macet untuk mengamati gejala—atau klik Tantangan Uji Buta untuk mendiagnosis gangguan tersembunyi.',
+        id: 'Simulasikan kondisi Normal, Filter FRL Tersumbat, Jalur Pilot 5/2 Bocor, atau FCV Meter-Out Macet untuk mempelajari gejala kegagalan—atau klik Tantangan Diagnosis Mandiri untuk mendiagnosis gangguan tersembunyi dari ΔP FRL, respons spool, dan aliran udara NL/min.',
         ja: '「正常」「FRLフィルタ詰まり」「5/2パイロット漏れ」「メータアウトFCV固着」を切り替えて症状を学ぶか、「ブラインド異常診断」で差圧・動作速度・空気消費量から故障原因を特定します。',
       },
       tip: {
         en: 'Diagnostic rule: High FRL ΔP = Clogged Filter; high idle NL/min + sluggish spool = Leaking Pilot; 0 ΔP + crawling cylinder = Stuck FCV.',
-        id: 'Aturan diagnosis: ΔP FRL tinggi = Filter Tersumbat; NL/min tinggi saat diam = Pilot Bocor; ΔP 0 + silinder lambat = FCV Macet.',
+        id: 'Kaidah diagnosis: ΔP FRL tinggi = Filter Tersumbat; NL/min tinggi saat diam = Pilot Bocor; ΔP 0 + silinder lambat = FCV Macet.',
         ja: '診断の目安：FRL差圧大＝フィルタ詰まり、待機時NL/min急増＝パイロット漏れ、差圧0で低速＝FCV固着です。',
       },
       faqs: [
         {
           q: {
             en: 'How do I tell Clogged FRL apart from Stuck FCV?',
-            id: 'Bagaimana membedakan Filter FRL Tersumbat vs. FCV Macet?',
+            id: 'Bagaimana cara membedakan Filter FRL Tersumbat dari FCV Macet?',
             ja: 'FRLフィルタ詰まりとFCV固着の見分け方は？',
           },
           a: {
             en: 'Check the FRL In → Out gauge in Air Consumption & Cost: a Clogged FRL drops downstream pressure > 50% (high ΔP) and weakens cylinder force, while a Stuck FCV shows 0 ΔP and normal force but choked ~10% speed.',
-            id: 'Periksa pengukur FRL Masuk → Keluar: FRL Tersumbat menurunkan tekanan hilir > 50% (ΔP tinggi) sehingga gaya lemah, sedangkan FCV Macet memiliki ΔP 0 namun kecepatan tercekik ~10%.',
+            id: 'Periksa pengukur FRL Masuk → Keluar pada Konsumsi Udara & Biaya: Filter FRL Tersumbat menurunkan tekanan hilir > 50% (ΔP tinggi) sehingga gaya silinder melemah, sedangkan FCV Macet menunjukkan ΔP 0 dengan gaya normal namun kecepatan terhambat hingga ~10%.',
             ja: 'FRLの入口→出口圧力を確認します。FRL詰まりは下流圧力が半減（ΔP大）して推力も落ちますが、FCV固着はΔP=0で推力は正常のまま速度だけが約10%に低下します。',
           },
           keywords: ['clogged', 'frl', 'stuck', 'fcv', 'delta p', 'tersumbat', 'macet', '詰まり'],
@@ -1607,12 +1607,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study ISO 1219 symbols, build circuits in Practice, and complete the Quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari simbol ISO 1219, merakit sirkuit di Practice, dan menyelesaikan Quiz.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari simbol ISO 1219, merakit sirkuit pada Practice, dan menyelesaikan Quiz.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）でISO 1219記号の学習から回路演習・クイズまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',
@@ -1635,7 +1635,7 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       tip: {
         en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
-        id: 'Gunakan Berikutnya / Sebelumnya atau tombol panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
         ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
       },
     },
@@ -1649,12 +1649,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Click any Scenarios preset in the top bar to jump straight to healthy BEP, cavitation, dead-head, low-flow, or runout states, or click Reset anytime to restore defaults.',
-        id: 'Klik prasetel Skenario di bilah atas untuk menguji kondisi BEP sehat, kavitasi, dead-head, aliran rendah, atau runout, atau klik Reset kapan saja untuk kembali ke awal.',
+        id: 'Klik prasetel Skenario di bilah atas untuk langsung menguji kondisi BEP sehat, kavitasi, dead-head, aliran rendah, atau runout, atau klik Reset kapan saja untuk mengembalikan pengaturan awal.',
         ja: '上部バーのシナリオボタンで正常BEP・キャビテーション・締切運転・低流量・過大流量を再現でき、「リセット」でいつでも初期値に戻せます。',
       },
       tip: {
         en: 'Load Cavitation or Dead-Head to see how the test rig visual, H-Q curve, and seal life react immediately.',
-        id: 'Muat skenario Kavitasi atau Dead-Head untuk melihat reaksi langsung pada rig uji, kurva H-Q, dan umur seal.',
+        id: 'Muat skenario Kavitasi atau Dead-Head untuk melihat reaksi langsung pada tampilan rig uji, kurva H-Q, dan umur seal.',
         ja: '「キャビテーション」や「締切運転」シナリオを読み込むと、試験装置・性能曲線・シール寿命の変化を即座に観察できます。',
       },
       targetSelector: '[data-tour="pump-scenarios"]',
@@ -1669,12 +1669,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Watch live impeller rotation, suction/discharge pressure gauges, fluid vapor-pressure (Pv) & density (ρ), and animated cavitation vapor bubbles forming at the impeller eye when NPSHa drops below NPSHr.',
-        id: 'Amati putaran impeler langsung, pengukur tekanan hisap/buang, tekanan uap fluida (Pv) & densitas (ρ), serta gelembung uap kavitasi saat NPSHa turun di bawah NPSHr.',
+        id: 'Amati putaran impeler langsung, pengukur tekanan hisap/buang, tekanan uap fluida (Pv) & densitas (ρ), serta animasi gelembung uap kavitasi di mata impeler saat NPSHa turun di bawah NPSHr.',
         ja: 'インペラ回転、吸込・吐出圧力計、流体蒸気圧(Pv)・密度(ρ)、およびNPSHa < NPSHr時にインペラ吸込口で発生するキャビテーション気泡を視覚的に確認できます。',
       },
       tip: {
         en: 'Bubble formation at the impeller eye implodes violently on the vanes—causing pitting noise and seal failure.',
-        id: 'Gelembung uap di mata impeler meledak keras di sudu—memicu suara berisik, erosi pitting, dan kerusakan seal.',
+        id: 'Gelembung uap yang terbentuk di mata impeler meledak keras pada sudu—memicu suara bising, erosi pitting, dan kegagalan seal.',
         ja: '吸込口で発生した気泡は羽根車内部で崩壊し、激しい振動・騒音とインペラ/シールの損傷を引き起こします。',
       },
       targetSelector: '[data-tour="pump-rig"]',
@@ -1689,12 +1689,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Toggle Single Pump (1×) vs. Parallel (2×), and adjust Impeller Speed (900–2900 RPM), Discharge Valve Opening (0–100%), Impeller Trim (85–100%), Suction Head (-4.5 to +6.0 m), and Fluid Temp (10–95 °C).',
-        id: 'Pilih Pompa Tunggal (1×) vs. Paralel (2×), lalu geser Kecepatan Impeler, Bukaan Katup Buang, Diameter Trim Impeler, Head Tangki Hisap, dan Suhu Fluida.',
+        id: 'Pilih Pompa Tunggal (1×) vs. Paralel (2×), lalu atur penggeser Kecepatan Impeler (900–2900 RPM), Bukaan Katup Buang (0–100%), Trim Impeler (85–100%), Head Hisap (-4,5 hingga +6,0 m), dan Suhu Fluida (10–95 °C).',
         ja: '「単独運転 (1×) / 並列運転 (2×)」を切り替え、インペラ回転数、吐出弁開度、インペラ外径トリム、吸込液位、流体温度を調整できます。',
       },
       tip: {
         en: 'Throttling the discharge valve wastes energy across the valve—using VFD speed control saves power via the cube affinity law (P ∝ N³)!',
-        id: 'Mencekik katup buang memboroskan energi—kontrol kecepatan VFD menghemat daya sesuai hukum afinitas kubik (P ∝ N³)!',
+        id: 'Menutup sebagian (throttling) katup buang memboroskan energi—kontrol kecepatan VFD menghemat daya sesuai hukum afinitas kubik (P ∝ N³)!',
         ja: '吐出弁の絞り制御は損失が大きいため、VFDによる回転数制御（軸動力∝N³）の方が大幅に省エネになります。',
       },
       targetSelector: '[data-tour="pump-controls"]',
@@ -1709,12 +1709,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Inspect the live Pump & System Curve canvas, enter a Target Flow (15–160 m³/h) or click a flow point on the curve, and click VFD Auto-Tune (POR) to set the optimal RPM with a 100% open valve and compare kW savings.',
-        id: 'Amati kanvas Kurva Pompa & Sistem, masukkan Target Aliran (15–160 m³/h) atau klik titik pada kurva, lalu tekan Auto-Tune VFD (POR) untuk menyetel RPM optimal dan melihat penghematan kW.',
+        id: 'Amati kanvas Kurva Pompa & Sistem, masukkan Target Aliran (15–160 m³/h) atau klik titik pada kurva, lalu tekan Auto-Tune VFD (POR) untuk menyetel RPM optimal pada katup terbuka 100% dan membandingkan penghematan kW.',
         ja: '性能曲線キャンバス上の流量点をクリックするか目標流量（15〜160 m³/h）を入力し、「VFD自動調整 (POR)」を押すと吐出弁全開での最適RPMと省エネkW削減効果が表示されます。',
       },
       tip: {
         en: 'Watch the green savings badge appear below the button showing exact kW and % energy saved vs. valve throttling.',
-        id: 'Perhatikan lencana hijau di bawah tombol yang menampilkan penghematan daya kW dan % dibanding cekikan katup.',
+        id: 'Perhatikan indikator penghematan hijau di bawah tombol yang menampilkan nilai penghematan kW dan % energi dibanding pencekikan katup.',
         ja: 'ボタン下の緑バッジに、弁絞り運転と比較した削減電力（kW）と省エネ率（%）が表示されます。',
       },
       targetSelector: '[data-tour="pump-curve"]',
@@ -1729,44 +1729,44 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       },
       description: {
         en: 'Monitor the In POR / Outside POR badge, Radial Shaft Load (%), Estimated Seal & Bearing Life Index (%), and the automatic API 682 Mechanical Seal Flush recommendation (Plan 11, Plan 21, or Plan 53).',
-        id: 'Pantau status Dalam/Di Luar POR, Beban Radial Poros (%), Indeks Estimasi Umur Seal & Bantalan (%), serta rekomendasi otomatis Rencana Flush Seal API 682 (Plan 11, Plan 21, atau Plan 53).',
+        id: 'Pantau status Dalam/Di Luar POR, Beban Radial Poros (%), Indeks Estimasi Umur Seal & Bantalan (%), serta rekomendasi otomatis Rencana Flush Seal Mekanis API 682 (Plan 11, Plan 21, atau Plan 53).',
         ja: 'POR範囲内/外バッジ、ラジアル軸荷重（%）、推定シール・軸受寿命指数（%）、および運転条件に応じたAPI 682フラッシュプラン（Plan 11 / 21 / 53）の自動判定を確認します。',
       },
       tip: {
         en: 'Operating inside the Preferred Operating Region (70–120% BEP) keeps radial shaft deflection minimal and maximizes seal life.',
-        id: 'Beroperasi di dalam Preferred Operating Region (70–120% BEP) menjaga defleksi poros minimal dan memaksimalkan umur seal.',
+        id: 'Beroperasi di dalam Preferred Operating Region (70–120% BEP) menjaga defleksi poros tetap minimal dan memaksimalkan umur seal.',
         ja: '推奨運転領域（POR: 70〜120% BEP）内で運転することで、ラジアル荷重と軸たわみを最小限に抑えられます。',
       },
       targetSelector: '[data-tour="pump-seal-life"]',
     },
     {
       id: 'pump-diagnostics',
-      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Troubleshooting', ja: '機能6 · 異常診断' },
+      badge: { en: 'Feature 6 · Troubleshoot', id: 'Fitur 6 · Diagnosis Masalah', ja: '機能6 · 異常診断' },
       title: {
         en: 'Troubleshooting Cavitation, Dead-Head & Runout',
-        id: 'Troubleshooting Kavitasi, Dead-Head & Runout',
+        id: 'Diagnosis Kavitasi, Dead-Head & Runout',
         ja: 'キャビテーション・締切・過大流量の診断',
       },
       description: {
         en: 'Watch this Diagnostic Alert Banner to troubleshoot hydraulic faults: raise Suction Head or cool Fluid Temp if Cavitation (NPSHa < NPSHr) triggers, open the valve for Dead-Head, or slow RPM / throttle for Runout (> 120% BEP).',
-        id: 'Pantau Banner Peringatan ini untuk mengatasi gangguan hidrolik: naikkan Head Hisap atau dinginkan Fluida saat Kavitasi (NPSHa < NPSHr), buka katup saat Dead-Head, atau turunkan RPM saat Runout.',
+        id: 'Pantau Panel Peringatan Diagnostik ini untuk mengatasi gangguan hidrolik: naikkan Head Hisap atau dinginkan Suhu Fluida saat Kavitasi (NPSHa < NPSHr) muncul, buka katup saat Dead-Head, atau turunkan RPM / cekik katup saat Runout (> 120% BEP).',
         ja: 'この診断アラートバナーで異常を切り分けます。キャビテーション(NPSHa < NPSHr)なら吸込液位上昇・流体冷却、締切運転なら吐出弁開放、過大流量(>120% BEP)なら減速で対処します。',
       },
       tip: {
         en: 'Hot water (> 70 °C) has much higher vapor pressure Pv, which eats up NPSHa—cool the fluid or pressurize the suction tank!',
-        id: 'Air panas (> 70 °C) memiliki tekanan uap Pv tinggi yang menggerus NPSHa—dinginkan fluida atau naikkan level tangki hisap!',
+        id: 'Air panas (> 70 °C) memiliki tekanan uap Pv yang jauh lebih tinggi sehingga menurunkan NPSHa—dinginkan fluida atau naikkan tekanan tangki hisap!',
         ja: '高温流体（70 °C超）は蒸気圧Pvが上昇してNPSHaが低下するため、流体冷却または吸込液位の確保が必要です。',
       },
       faqs: [
         {
           q: {
             en: 'How do I stop pump cavitation?',
-            id: 'Bagaimana menghentikan kavitasi pada pompa?',
+            id: 'Bagaimana cara menghentikan kavitasi pada pompa?',
             ja: 'ポンプのキャビテーションを止める方法は？',
           },
           a: {
             en: 'Increase NPSHa above NPSHr by raising Suction Tank Head (Hs), lowering Fluid Temperature (T), or reducing pump speed/flow so NPSHr drops.',
-            id: 'Tingkatkan NPSHa di atas NPSHr dengan menaikkan Head Tangki Hisap (Hs), menurunkan Suhu Fluida (T), atau mengurangi putaran/aliran.',
+            id: 'Tingkatkan NPSHa di atas NPSHr dengan menaikkan Head Tangki Hisap (Hs), menurunkan Suhu Fluida (T), atau mengurangi putaran/aliran pompa agar NPSHr turun.',
             ja: '吸込液位（Hs）を上げる、流体温度（T）を下げる、または回転数を落としてNPSHrを下げることで NPSHa > NPSHr を確保します。',
           },
           keywords: ['cavitation', 'npsha', 'npshr', 'stop', 'fix', 'kavitasi', 'キャビテーション'],
@@ -1779,12 +1779,12 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
       title: {
         en: 'Explore, Practice & Quiz Workflow',
-        id: 'Alur Explore, Practice & Quiz',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
         ja: '探索・演習・クイズの学習フロー',
       },
       description: {
         en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to review affinity laws and NPSH theory, solve practice scenarios, and pass the quiz.',
-        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari hukum afinitas dan NPSH, berlatih skenario, dan mengikuti kuis.',
+        id: 'Gunakan Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), dan Alt+4 (Quiz) untuk mempelajari hukum afinitas dan teori NPSH, menyelesaikan skenario latihan, dan mengikuti kuis.',
         ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で相似則・NPSH理論の学習から演習・クイズまで進められます。',
       },
       targetSelector: '[data-tour="mode-tabs"]',

@@ -75,7 +75,7 @@ export function getQuickQuestionsForStep(
 
   const defaults =
     lang === 'id'
-      ? ['Bagaimana cara menggunakannya?', 'Bagaimana cara troubleshoot jika salah?']
+      ? ['Bagaimana cara menggunakannya?', 'Bagaimana cara mengatasi kesalahan pembacaan?']
       : lang === 'ja'
         ? ['使い方を教えて', 'トラブル時の確認方法は？']
         : ['How do I use this feature?', 'How do I troubleshoot errors?'];
@@ -105,7 +105,7 @@ export function answerTutorialQuestion(params: {
     return {
       text: pickLang(language, {
         en: `Ask me anything about "${currentStep.title.en}" — how it works, how to operate it, or how to troubleshoot errors.`,
-        id: `Tanyakan apa saja tentang "${currentStep.title.id}" — cara kerja, cara menggunakan, atau cara troubleshoot masalah.`,
+        id: `Silakan tanyakan apa saja mengenai "${currentStep.title.id}" — mulai dari fungsi, cara penggunaan, hingga penanganan kendala.`,
         ja: `「${currentStep.title.ja}」について、使い方やトラブル対策など何でも質問してください。`,
       }),
     };
@@ -184,7 +184,7 @@ export function answerTutorialQuestion(params: {
     return {
       text: pickLang(language, {
         en: `For "${currentStep.title.en}": ${currentTip || baseDesc} Double-check your control inputs, reset to baseline if readings look off, and verify in the live readout panel.`,
-        id: `Untuk "${currentStep.title.id}": ${currentTip || baseDesc} Periksa ulang pengaturan kontrol Anda, reset ke kondisi awal jika pembacaan tampak meleset, lalu verifikasi di panel pembacaan.`,
+        id: `Untuk "${currentStep.title.id}": ${currentTip || baseDesc} Periksa kembali pengaturan Anda, kembalikan ke kondisi awal apabila hasil pembacaan tampak menyimpang, lalu pastikan nilainya pada panel pembacaan.`,
         ja: `「${currentStep.title.ja}」の確認ポイント: ${currentTip || baseDesc} 設定値を見直し、数値がずれている場合は基準状態にリセットして読取パネルで再確認してください。`,
       }),
     };

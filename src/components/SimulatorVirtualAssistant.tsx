@@ -62,7 +62,7 @@ export function SimulatorVirtualAssistant({
       ),
       pick(
         'How do I troubleshoot errors?',
-        'Bagaimana cara troubleshoot kesalahan?',
+        'Bagaimana cara mengatasi kesalahan pengukuran?',
         'エラーのトラブル対策は？'
       ),
     ];
@@ -163,13 +163,13 @@ export function SimulatorVirtualAssistant({
                   <span className="truncate text-xs font-extrabold text-[var(--md-on-surface)]">
                     {pick(
                       'Virtual Lab Assistant',
-                      'Asisten Lab Virtual',
+                      'Asisten Virtual Lab',
                       'バーチャルアシスタント'
                     )}
                   </span>
                   <span className="inline-flex items-center gap-0.5 rounded-full bg-[var(--md-secondary-container)] px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[var(--md-on-secondary-container)]">
                     <Sparkles className="h-2.5 w-2.5" />
-                    {pick('Help', 'Bantu', 'ヘルプ')}
+                    {pick('Help', 'Bantuan', 'ヘルプ')}
                   </span>
                 </div>
                 <p className="truncate text-[11px] text-[var(--md-on-surface-variant)]">
@@ -201,7 +201,7 @@ export function SimulatorVirtualAssistant({
                 <p className="text-[11px]">
                   {pick(
                     `Confused about any control or reading in ${meta.title}? Ask me anything, or tap a topic below!`,
-                    `Bingung dengan kontrol atau pembacaan di ${meta.title}? Tanyakan apa saja, atau pilih topik di bawah!`,
+                    `Ada bagian atau hasil pembacaan di ${meta.title} yang membingungkan? Silakan ajukan pertanyaan atau pilih topik cepat di bawah ini.`,
                     `${meta.title}の操作や数値の読み方で迷ったら、下のボタンか入力欄から質問してください！`
                   )}
                 </p>
@@ -255,7 +255,7 @@ export function SimulatorVirtualAssistant({
                       >
                         {pick(
                           'Show feature on screen',
-                          'Tunjukkan fitur di layar',
+                          'Sorot fitur di layar',
                           '画面でこの機能を表示'
                         )}
                         <ChevronRight className="h-3 w-3" />
@@ -280,7 +280,7 @@ export function SimulatorVirtualAssistant({
               onChange={(e) => setInput(e.target.value)}
               placeholder={pick(
                 'Ask about a feature or error...',
-                'Tanya fitur atau troubleshoot...',
+                'Tanyakan cara penggunaan atau kendala...',
                 '機能やエラーについて質問...'
               )}
               className="min-w-0 flex-1 rounded-full border border-[var(--md-outline-variant)]/70 bg-[var(--md-surface-container-highest)] px-3.5 py-2 text-xs text-[var(--md-on-surface)] placeholder:text-[var(--md-on-surface-variant)]/70 focus:border-[var(--md-primary)] focus:outline-none"
