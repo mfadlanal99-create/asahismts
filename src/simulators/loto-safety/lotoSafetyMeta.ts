@@ -8,7 +8,7 @@ export const lotoSafetyMeta: SimulatorMeta = {
   category: 'Diagnostic Instruments',
   difficulty: 'Beginner',
   description:
-    'Master OSHA 1910.147 hazardous energy isolation across electrical MCCs, hydraulic accumulators, pneumatic gravity rams, and dual-feed conveyors using personal padlocks, danger tags, Live-Dead-Live multimeter testing, and Start Try-Out verification.',
+    'Master OSHA 1910.147 plant maintenance Lockout/Tagout across 3-Phase Motor Drive (Main MCC/VFD Panel, 540 V DC bus, Local Control Station selector, Motor Field Isolator), Centrifugal Pump, Hydraulic Press Accumulator, and Dual-Feed Conveyor using personal padlocks, danger tags, Live-Dead-Live terminal probing, and Start Try-Out verification.',
   iconName: 'Zap',
   accentColor: 'amber',
   explore: [

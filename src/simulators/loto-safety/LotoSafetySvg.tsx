@@ -1,20 +1,55 @@
+import type { KeyboardEvent } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import type { LotoEvaluation, LotoStateInput } from './lotoData';
+import type { LotoEvaluation, LotoStateInput, SelectorMode } from './lotoData';
+
+export type LotoActionId =
+  | 'toggle-mcc-disconnect'
+  | 'toggle-mcc-lock'
+  | 'toggle-mcc-tag'
+  | 'discharge-capacitor'
+  | 'toggle-secondary-disconnect'
+  | 'toggle-secondary-lock'
+  | 'toggle-secondary-tag'
+  | 'set-selector-hand'
+  | 'set-selector-off'
+  | 'set-selector-auto'
+  | 'press-stop'
+  | 'toggle-lcs-lock'
+  | 'toggle-lcs-tag'
+  | 'toggle-motor-isolator'
+  | 'toggle-motor-isolator-lock'
+  | 'toggle-motor-isolator-tag'
+  | 'toggle-process-valve'
+  | 'toggle-process-valve-lock'
+  | 'toggle-bleed-valve'
+  | 'toggle-gravity-block'
+  | 'advance-ldl'
+  | 'perform-tryout';
 
 interface LotoSafetySvgProps {
   state: LotoStateInput;
   evaluation: LotoEvaluation;
+  onAction: (action: LotoActionId) => void;
 }
 
-export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
-  const { pick } = useLanguage();
+function handleSvgKeyDown(e: KeyboardEvent<SVGGElement>, action: () => void) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    action();
+  }
+}
+
+export function LotoSafetySvg({ state, evaluation, onAction }: LotoSafetySvgProps) {
+  const { language, pick } = useLanguage();
   const { scenario } = evaluation;
 
-  const primaryLive = evaluation.effectiveVoltageV > 0;
+  const mccLive = evaluation.effectiveMccVoltageV > 0;
   const secondaryLive = evaluation.effectiveSecondaryVoltageV > 0;
+  const terminalLive = evaluation.effectiveMotorTerminalVoltageV > 0;
   const pressureLive = evaluation.effectivePressureBar > 0;
   const capLive = evaluation.effectiveCapacitorV > 0;
-  const anyLive = primaryLive || secondaryLive || pressureLive || capLive || !evaluation.gravitySecured;
+  const anyLive =
+    mccLive || secondaryLive || terminalLive || pressureLive || capLive || !evaluation.gravitySecured;
 
   const statusColor =
     evaluation.safetyStatus === 'zero-energy-safe'
@@ -32,9 +67,9 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
         )
       : evaluation.safetyStatus === 'isolated-unverified'
         ? pick(
-            'ISOLATED — COMPLETE LOCK/TAG & VERIFICATION',
+            'ISOLATED — COMPLETE LOCK/TAG & TEST-BEFORE-TOUCH',
             'TERISOLASI — LENGKAPI GEMBOK/LABEL & VERIFIKASI',
-            '遮断済み — 施錠・タグ・検証を完了してください'
+            '遮断済み — 施錠・タグ・無電圧検証を完了してください'
           )
         : pick(
             'HAZARD: HAZARDOUS ENERGY PRESENT',
@@ -46,7 +81,7 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
     state.ldlStage === 'live-1' || state.ldlStage === 'live-2'
       ? `${scenario.nominalVoltageV}.0 V`
       : state.ldlStage === 'dead-test' || state.ldlStage === 'verified'
-        ? `${Math.max(evaluation.effectiveVoltageV, evaluation.effectiveSecondaryVoltageV).toFixed(1)} V`
+        ? `${evaluation.effectiveMotorTerminalVoltageV.toFixed(1)} V`
         : '--- V';
 
   const pressureAngleDeg =
@@ -54,15 +89,21 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
       ? -120 + (evaluation.effectivePressureBar / scenario.nominalPressureBar) * 240
       : -120;
 
+  const selectorAngleMap: Record<SelectorMode, number> = {
+    hand: -40,
+    off: 0,
+    auto: 40,
+  };
+
   return (
     <svg
-      viewBox="0 0 820 410"
+      viewBox="0 0 880 460"
       className="h-auto w-full select-none"
       role="img"
       aria-label={pick(
-        'LOTO Plant Isolation & Zero-Energy Verification Schematic',
-        'Skema Isolasi LOTO & Verifikasi Energi Nol',
-        'LOTO プラント遮断・ゼロエネルギー検証模式図'
+        'Interactive Industrial Plant LOTO Isolation Schematic',
+        'Skema Interaktif Isolasi LOTO Peralatan Pabrik',
+        'インタラクティブ LOTO プラント遮断模式図'
       )}
     >
       <defs>
@@ -83,13 +124,13 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
       </defs>
 
       {/* Background */}
-      <rect width="820" height="410" rx="20" fill="url(#loto-grid)" />
+      <rect width="880" height="460" rx="20" fill="url(#loto-grid)" />
 
-      {/* Top Header Strip */}
+      {/* Top Status Bar */}
       <rect
         x="16"
-        y="14"
-        width="788"
+        y="12"
+        width="848"
         height="34"
         rx="10"
         fill={statusColor}
@@ -97,15 +138,15 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
         stroke={statusColor}
         strokeWidth="1.5"
       />
-      <circle cx="34" cy="31" r="6" fill={statusColor}>
+      <circle cx="34" cy="29" r="6" fill={statusColor}>
         {anyLive && (
           <animate attributeName="opacity" values="1;0.35;1" dur="1.1s" repeatCount="indefinite" />
         )}
       </circle>
       <text
         x="48"
-        y="35"
-        fontSize="12"
+        y="33"
+        fontSize="11.5"
         fontWeight="700"
         fill={statusColor}
         fontFamily="ui-monospace, SFMono-Regular, monospace"
@@ -113,578 +154,1055 @@ export function LotoSafetySvg({ state, evaluation }: LotoSafetySvgProps) {
         {statusLabel}
       </text>
       <text
-        x="792"
-        y="35"
+        x="852"
+        y="33"
         textAnchor="end"
         fontSize="11"
-        fontWeight="600"
+        fontWeight="700"
         fill="currentColor"
         opacity="0.75"
         fontFamily="ui-monospace, SFMono-Regular, monospace"
       >
-        {evaluation.completedStepCount}/6 STEPS
+        {evaluation.completedStepCount}/6 {pick('STEPS', 'LANGKAH', '段階')}
       </text>
 
-      {/* ================= LEFT: MCC ELECTRICAL DISCONNECT ================= */}
-      <g transform="translate(20, 64)">
+      {/* ================= 1. LEFT: MAIN MCC / VFD PANEL ================= */}
+      <g transform="translate(16, 58)">
         <rect
           x="0"
           y="0"
-          width="210"
-          height="268"
+          width="216"
+          height="324"
           rx="16"
           fill="currentColor"
           fillOpacity="0.04"
           stroke="currentColor"
-          strokeOpacity="0.18"
+          strokeOpacity="0.2"
           strokeWidth="1.5"
         />
-        <text x="14" y="24" fontSize="11" fontWeight="700" fill="currentColor" opacity="0.85">
-          {pick('MCC DISCONNECT', 'PEMUTUS MCC', 'MCC 遮断器')}
+        <text x="12" y="22" fontSize="10.5" fontWeight="700" fill="currentColor" opacity="0.9">
+          {pick('MAIN MCC / VFD PANEL', 'PANEL MCC / VFD', '主 MCC / VFD 盤')}
         </text>
         <text
-          x="196"
-          y="24"
+          x="204"
+          y="22"
           textAnchor="end"
           fontSize="10"
           fontFamily="ui-monospace, monospace"
-          fill={primaryLive ? '#ef4444' : '#10b981'}
+          fill={mccLive ? '#ef4444' : '#10b981'}
           fontWeight="700"
         >
-          {primaryLive ? `${scenario.nominalVoltageV} V LIVE` : '0 V OPEN'}
+          {mccLive ? `${scenario.nominalVoltageV}V ON` : '0V OFF'}
         </text>
 
-        {/* Incoming 3-Phase Bus */}
-        <line x1="36" y1="42" x2="36" y2="80" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
-        <text x="48" y="64" fontSize="10" fill="#ef4444" fontWeight="700">
-          L1/L2/L3 ({scenario.nominalVoltageV}V)
-        </text>
-
-        {/* Knife Switch Blade */}
-        <circle cx="36" cy="84" r="5" fill="#ef4444" />
-        <circle cx="36" cy="136" r="5" fill={primaryLive ? '#ef4444' : '#64748b'} />
-        <line
-          x1="36"
-          y1="84"
-          x2={state.primaryBreakerOpen ? '74' : '36'}
-          y2={state.primaryBreakerOpen ? '122' : '136'}
-          stroke={state.primaryBreakerOpen ? '#10b981' : '#ef4444'}
-          strokeWidth="5"
-          strokeLinecap="round"
-        />
-        <text
-          x="84"
-          y="112"
-          fontSize="11"
-          fontWeight="700"
-          fill={state.primaryBreakerOpen ? '#10b981' : '#ef4444'}
+        {/* Clickable Rotary Disconnect Handle */}
+        <g
+          transform="translate(14, 34)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={pick('Toggle Main MCC Rotary Disconnect', 'Ubah Pemutus Utama MCC', '主MCC断路器を切替')}
+          onClick={() => onAction('toggle-mcc-disconnect')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-mcc-disconnect'))}
         >
-          {state.primaryBreakerOpen ? 'OPEN' : 'CLOSED'}
-        </text>
-
-        {/* Padlock Badge */}
-        <g transform="translate(16, 156)">
           <rect
             x="0"
             y="0"
-            width="84"
-            height="46"
-            rx="10"
-            fill={state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
-            fillOpacity="0.16"
-            stroke={state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            width="188"
+            height="72"
+            rx="12"
+            fill={state.mccDisconnectOpen ? '#10b981' : '#ef4444'}
+            fillOpacity="0.1"
+            stroke={state.mccDisconnectOpen ? '#10b981' : '#ef4444'}
             strokeWidth="1.5"
           />
-          {/* Padlock Shackle & Body */}
+          <circle cx="38" cy="36" r="22" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeOpacity="0.3" />
+          <g transform={`translate(38, 36) rotate(${state.mccDisconnectOpen ? -45 : 45})`}>
+            <rect x="-5" y="-18" width="10" height="36" rx="3" fill={state.mccDisconnectOpen ? '#10b981' : '#ef4444'} />
+          </g>
+          <text x="72" y="26" fontSize="10" fontWeight="700" fill="currentColor">
+            {pick('ROTARY DISCONNECT', 'SAKELAR PUTAR MCC', '回転式主断路器')}
+          </text>
+          <text
+            x="72"
+            y="43"
+            fontSize="12"
+            fontWeight="800"
+            fontFamily="ui-monospace, monospace"
+            fill={state.mccDisconnectOpen ? '#10b981' : '#ef4444'}
+          >
+            {state.mccDisconnectOpen ? 'OFF (OPEN)' : 'ON (LIVE)'}
+          </text>
+          <text x="72" y="59" fontSize="8.5" fill="currentColor" opacity="0.65">
+            {pick('Click handle to switch', 'Klik tuas untuk putar', 'クリックで操作')}
+          </text>
+        </g>
+
+        {/* Clickable MCC Padlock & Danger Tag */}
+        <g
+          transform="translate(14, 114)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={pick('Toggle MCC Padlock', 'Pasang/Lepas Gembok MCC', 'MCC南京錠を切替')}
+          onClick={() => onAction('toggle-mcc-lock')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-mcc-lock'))}
+        >
+          <rect
+            x="0"
+            y="0"
+            width="90"
+            height="48"
+            rx="10"
+            fill={state.mccLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            fillOpacity="0.16"
+            stroke={state.mccLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            strokeWidth="1.5"
+          />
           <path
-            d="M 18 20 v -5 a 6 6 0 0 1 12 0 v 5"
+            d="M 16 22 v -6 a 6 6 0 0 1 12 0 v 6"
             fill="none"
-            stroke={state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#94a3b8'}
+            stroke={state.mccLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#94a3b8'}
             strokeWidth="2.2"
           />
           <rect
-            x="15"
-            y="20"
+            x="13"
+            y="22"
             width="18"
             height="14"
             rx="3"
-            fill={state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#94a3b8'}
+            fill={state.mccLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#94a3b8'}
           />
-          <text x="40" y="21" fontSize="9.5" fontWeight="700" fill="currentColor">
-            PADLOCK
+          <text x="37" y="21" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('PADLOCK', 'GEMBOK', '南京錠')}
           </text>
           <text
-            x="40"
-            y="34"
+            x="37"
+            y="35"
             fontSize="9"
-            fontFamily="ui-monospace, monospace"
-            fill={state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#ef4444'}
             fontWeight="700"
+            fontFamily="ui-monospace, monospace"
+            fill={state.mccLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#ef4444'}
           >
-            {state.primaryLocked && state.faultId !== 'tag-only-no-lock' ? 'LOCKED' : 'NONE'}
+            {state.mccLocked && state.faultId !== 'tag-only-no-lock' ? 'LOCKED' : 'OPEN'}
           </text>
         </g>
 
-        {/* Danger Tag Badge */}
-        <g transform="translate(108, 156)">
+        <g
+          transform="translate(112, 114)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          aria-label={pick('Toggle MCC Danger Tag', 'Pasang/Lepas Label Bahaya MCC', 'MCC危険タグを切替')}
+          onClick={() => onAction('toggle-mcc-tag')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-mcc-tag'))}
+        >
           <rect
             x="0"
             y="0"
-            width="86"
-            height="46"
+            width="90"
+            height="48"
             rx="10"
-            fill={state.primaryTagged ? '#ef4444' : '#64748b'}
+            fill={state.mccTagged ? '#ef4444' : '#64748b'}
             fillOpacity="0.14"
-            stroke={state.primaryTagged ? '#ef4444' : '#64748b'}
+            stroke={state.mccTagged ? '#ef4444' : '#64748b'}
             strokeWidth="1.5"
           />
-          <rect x="10" y="9" width="16" height="28" rx="2" fill={state.primaryTagged ? '#ef4444' : '#94a3b8'} />
+          <rect x="10" y="9" width="16" height="28" rx="2" fill={state.mccTagged ? '#ef4444' : '#94a3b8'} />
           <rect x="12" y="13" width="12" height="6" fill="#ffffff" />
-          <text x="32" y="21" fontSize="9.5" fontWeight="700" fill="currentColor">
-            DANGER
+          <text x="32" y="21" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('DANGER', 'LABEL', '危険タグ')}
           </text>
           <text
             x="32"
-            y="34"
+            y="35"
             fontSize="9"
-            fontFamily="ui-monospace, monospace"
-            fill={state.primaryTagged ? '#ef4444' : '#64748b'}
             fontWeight="700"
+            fontFamily="ui-monospace, monospace"
+            fill={state.mccTagged ? '#ef4444' : '#64748b'}
           >
-            {state.primaryTagged ? 'TAGGED' : 'NO TAG'}
+            {state.mccTagged ? 'TAGGED' : 'NONE'}
           </text>
         </g>
 
-        {/* Secondary / Backfeed Indicator */}
-        {(scenario.hasDualFeed || state.faultId === 'dual-backfeed') && (
-          <g transform="translate(16, 214)">
+        {/* VFD DC Bus Capacitor Discharge */}
+        {scenario.hasCapacitor && (
+          <g
+            transform="translate(14, 172)"
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={pick('Discharge VFD DC Bus Capacitor', 'Kosongkan Kapasitor Bus DC VFD', 'VFD DCバスコンデンサ放電')}
+            onClick={() => onAction('discharge-capacitor')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('discharge-capacitor'))}
+          >
             <rect
               x="0"
               y="0"
-              width="178"
-              height="40"
+              width="188"
+              height="62"
+              rx="10"
+              fill={capLive ? '#f59e0b' : '#10b981'}
+              fillOpacity="0.14"
+              stroke={capLive ? '#f59e0b' : '#10b981'}
+              strokeWidth="1.5"
+            />
+            <text x="10" y="18" fontSize="9.5" fontWeight="700" fill="currentColor">
+              {pick('VFD DC BUS CAPACITOR', 'KAPASITOR BUS DC VFD', 'VFD DC バスコンデンサ')}
+            </text>
+            <text
+              x="10"
+              y="36"
+              fontSize="12"
+              fontWeight="800"
+              fontFamily="ui-monospace, monospace"
+              fill={capLive ? '#ef4444' : '#10b981'}
+            >
+              {evaluation.effectiveCapacitorV} V DC
+            </text>
+            <text x="10" y="52" fontSize="8.5" fill="currentColor" opacity="0.75">
+              {capLive
+                ? pick('Click to bleed 540V → 0V (5τ)', 'Klik untuk kuras 540V → 0V', 'クリックで放電 540V→0V')
+                : pick('Discharged Safe (0 V DC)', 'Kosong & Aman (0 V DC)', '放電完了 (0 V DC)')}
+            </text>
+          </g>
+        )}
+
+        {/* Secondary 120V Backfeed / Dual Feed */}
+        {(scenario.hasDualFeed || state.faultId === 'dual-backfeed') && (
+          <g
+            transform={`translate(14, ${scenario.hasCapacitor ? 244 : 172})`}
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={pick('Toggle Secondary 120V Disconnect', 'Ubah Pemutus Sekunder 120V', '補助120V断路器を切替')}
+            onClick={() => onAction('toggle-secondary-disconnect')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-secondary-disconnect'))}
+          >
+            <rect
+              x="0"
+              y="0"
+              width="188"
+              height="64"
               rx="10"
               fill={secondaryLive ? '#ef4444' : '#10b981'}
               fillOpacity="0.14"
               stroke={secondaryLive ? '#ef4444' : '#10b981'}
-              strokeWidth="1.4"
+              strokeWidth="1.5"
             />
-            <text x="10" y="16" fontSize="9.5" fontWeight="700" fill="currentColor">
-              {pick('2ND / BACKFEED (120V)', 'SUMBER KE-2 (120V)', '第2電源・逆潮流')}
+            <text x="10" y="18" fontSize="9.5" fontWeight="700" fill="currentColor">
+              {pick('2ND / BACKFEED (120 V)', 'SUMBER KE-2 (120 V)', '補助電源・逆潮流 (120 V)')}
             </text>
             <text
               x="10"
-              y="31"
-              fontSize="10"
-              fontFamily="ui-monospace, monospace"
+              y="36"
+              fontSize="10.5"
               fontWeight="700"
+              fontFamily="ui-monospace, monospace"
               fill={secondaryLive ? '#ef4444' : '#10b981'}
             >
               {secondaryLive
-                ? 'ENERGIZED (120 V)'
+                ? '120 V ENERGIZED'
                 : state.secondaryLocked && state.secondaryTagged
-                  ? 'ISOLATED + LOTO OK'
-                  : 'OPEN — ADD LOTO'}
+                  ? 'OFF + LOCKED ✓'
+                  : 'OFF — ADD LOTO'}
+            </text>
+            <text x="10" y="52" fontSize="8.5" fill="currentColor" opacity="0.7">
+              {pick('Click to open 120V feed', 'Klik untuk buka suplai 120V', 'クリックで120V遮断')}
             </text>
           </g>
         )}
       </g>
 
-      {/* Power Feed Line from MCC to Equipment */}
+      {/* Power Line: MCC -> Field Isolator */}
       <path
-        d="M 230 198 L 282 198"
-        stroke={primaryLive || secondaryLive ? 'url(#live-glow)' : '#64748b'}
-        strokeWidth={primaryLive || secondaryLive ? '4' : '2.5'}
-        strokeDasharray={primaryLive || secondaryLive ? '8 4' : '5 5'}
+        d="M 232 145 L 266 145"
+        stroke={mccLive ? 'url(#live-glow)' : '#64748b'}
+        strokeWidth={mccLive ? '4' : '2.5'}
+        strokeDasharray={mccLive ? '8 4' : '5 5'}
       >
-        {(primaryLive || secondaryLive) && (
+        {mccLive && (
           <animate attributeName="stroke-dashoffset" from="24" to="0" dur="0.7s" repeatCount="indefinite" />
         )}
       </path>
 
-      {/* ================= CENTER: PLANT EQUIPMENT & STORED ENERGY ================= */}
-      <g transform="translate(282, 64)">
+      {/* ================= 2. CENTER-TOP: LOCAL CONTROL STATION (LCS) ================= */}
+      <g transform="translate(266, 58)">
         <rect
           x="0"
           y="0"
-          width="302"
-          height="268"
+          width="344"
+          height="146"
           rx="16"
           fill="currentColor"
           fillOpacity="0.04"
           stroke="currentColor"
-          strokeOpacity="0.18"
+          strokeOpacity="0.2"
           strokeWidth="1.5"
         />
-        <text x="14" y="24" fontSize="11" fontWeight="700" fill="currentColor" opacity="0.85">
-          {scenario.name[pick('en', 'id', 'ja') as 'en' | 'id' | 'ja'].toUpperCase()}
+        <text x="14" y="22" fontSize="10.5" fontWeight="700" fill="currentColor" opacity="0.9">
+          {pick(
+            'LOCAL CONTROL STATION (LCS AT MOTOR)',
+            'STASIUN KONTROL LOKAL (SAKELAR SELEKTOR MOTOR)',
+            '現場操作盤（モータ近傍 LCS）'
+          )}
         </text>
 
-        {/* Motor / Drive Block */}
-        <rect
-          x="16"
-          y="44"
-          width="112"
-          height="68"
-          rx="12"
-          fill={primaryLive ? '#ef4444' : '#10b981'}
-          fillOpacity="0.1"
-          stroke={primaryLive ? '#ef4444' : '#10b981'}
-          strokeWidth="1.5"
-        />
-        <text x="72" y="72" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">
-          {pick('DRIVE MOTOR', 'MOTOR PENGGERAK', '駆動モータ')}
-        </text>
-        <text
-          x="72"
-          y="92"
-          textAnchor="middle"
-          fontSize="10"
-          fontFamily="ui-monospace, monospace"
-          fontWeight="700"
-          fill={state.equipmentStopped && !primaryLive ? '#10b981' : '#ef4444'}
+        {/* 3-Position Selector Switch HAND / OFF / AUTO */}
+        <g transform="translate(16, 36)">
+          <rect
+            x="0"
+            y="0"
+            width="136"
+            height="94"
+            rx="12"
+            fill="currentColor"
+            fillOpacity="0.05"
+            stroke={state.selectorMode === 'off' ? '#10b981' : '#f59e0b'}
+            strokeWidth="1.4"
+          />
+          <text x="68" y="16" textAnchor="middle" fontSize="9" fontWeight="700" fill="currentColor">
+            {pick('SELECTOR SWITCH', 'SAKELAR SELEKTOR', '切替スイッチ')}
+          </text>
+
+          {/* Clickable HAND / OFF / AUTO labels */}
+          <g
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => onAction('set-selector-hand')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('set-selector-hand'))}
+          >
+            <rect
+              x="8"
+              y="22"
+              width="38"
+              height="20"
+              rx="6"
+              fill={state.selectorMode === 'hand' ? '#f59e0b' : 'transparent'}
+              fillOpacity="0.25"
+            />
+            <text
+              x="27"
+              y="35"
+              textAnchor="middle"
+              fontSize="9"
+              fontWeight="800"
+              fill={state.selectorMode === 'hand' ? '#f59e0b' : 'currentColor'}
+            >
+              HAND
+            </text>
+          </g>
+
+          <g
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => onAction('set-selector-off')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('set-selector-off'))}
+          >
+            <rect
+              x="49"
+              y="22"
+              width="38"
+              height="20"
+              rx="6"
+              fill={state.selectorMode === 'off' ? '#10b981' : 'transparent'}
+              fillOpacity="0.25"
+            />
+            <text
+              x="68"
+              y="35"
+              textAnchor="middle"
+              fontSize="9"
+              fontWeight="800"
+              fill={state.selectorMode === 'off' ? '#10b981' : 'currentColor'}
+            >
+              OFF
+            </text>
+          </g>
+
+          <g
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => onAction('set-selector-auto')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('set-selector-auto'))}
+          >
+            <rect
+              x="90"
+              y="22"
+              width="38"
+              height="20"
+              rx="6"
+              fill={state.selectorMode === 'auto' ? '#ef4444' : 'transparent'}
+              fillOpacity="0.25"
+            />
+            <text
+              x="109"
+              y="35"
+              textAnchor="middle"
+              fontSize="9"
+              fontWeight="800"
+              fill={state.selectorMode === 'auto' ? '#ef4444' : 'currentColor'}
+            >
+              AUTO
+            </text>
+          </g>
+
+          {/* Rotary Knob */}
+          <circle cx="68" cy="66" r="18" fill="currentColor" fillOpacity="0.12" stroke="currentColor" strokeOpacity="0.35" />
+          <g transform={`translate(68, 66) rotate(${selectorAngleMap[state.selectorMode]})`}>
+            <rect
+              x="-3"
+              y="-15"
+              width="6"
+              height="24"
+              rx="2"
+              fill={state.selectorMode === 'off' ? '#10b981' : '#ef4444'}
+            />
+          </g>
+        </g>
+
+        {/* STOP & START (Try-Out) Pushbuttons */}
+        <g transform="translate(164, 36)">
+          <g
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={pick('Press STOP Pushbutton', 'Tekan Tombol STOP', '停止ボタンを押す')}
+            onClick={() => onAction('press-stop')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('press-stop'))}
+          >
+            <rect
+              x="0"
+              y="0"
+              width="78"
+              height="44"
+              rx="10"
+              fill={state.stopPressed ? '#10b981' : '#ef4444'}
+              fillOpacity="0.14"
+              stroke={state.stopPressed ? '#10b981' : '#ef4444'}
+              strokeWidth="1.4"
+            />
+            <circle cx="22" cy="22" r="11" fill="#ef4444" stroke="#ffffff" strokeWidth="1.5" />
+            <text x="40" y="20" fontSize="9.5" fontWeight="800" fill="currentColor">
+              STOP
+            </text>
+            <text x="40" y="33" fontSize="8.5" fontWeight="700" fill={state.stopPressed ? '#10b981' : '#ef4444'}>
+              {state.stopPressed ? 'PRESSED ✓' : 'PRESS'}
+            </text>
+          </g>
+
+          <g
+            transform="translate(0, 50)"
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={pick('Press START Try-Out Pushbutton', 'Tekan Tombol Start Try-Out', '起動試行(Try-Out)ボタンを押す')}
+            onClick={() => onAction('perform-tryout')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('perform-tryout'))}
+          >
+            <rect
+              x="0"
+              y="0"
+              width="78"
+              height="44"
+              rx="10"
+              fill={state.tryOutAttempted ? '#10b981' : '#3b82f6'}
+              fillOpacity="0.14"
+              stroke={state.tryOutAttempted ? '#10b981' : '#3b82f6'}
+              strokeWidth="1.4"
+            />
+            <circle cx="22" cy="22" r="11" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
+            <text x="38" y="19" fontSize="8.5" fontWeight="800" fill="currentColor">
+              START
+            </text>
+            <text x="38" y="32" fontSize="8" fontWeight="700" fill={state.tryOutAttempted ? '#10b981' : '#3b82f6'}>
+              {state.tryOutAttempted ? 'TRY-OUT ✓' : 'TRY-OUT'}
+            </text>
+          </g>
+        </g>
+
+        {/* LCS Padlock & Tag */}
+        <g
+          transform="translate(252, 36)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('toggle-lcs-lock')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-lcs-lock'))}
         >
-          {state.equipmentStopped ? (primaryLive ? 'STOPPED (LIVE)' : '0 RPM / DEAD') : 'RUNNING'}
+          <rect
+            x="0"
+            y="0"
+            width="78"
+            height="44"
+            rx="10"
+            fill={state.localSelectorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            fillOpacity="0.16"
+            stroke={state.localSelectorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            strokeWidth="1.4"
+          />
+          <text x="39" y="18" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('LCS LOCK', 'GEMBOK LCS', 'LCS施錠')}
+          </text>
+          <text
+            x="39"
+            y="34"
+            textAnchor="middle"
+            fontSize="9"
+            fontWeight="700"
+            fontFamily="ui-monospace, monospace"
+            fill={state.localSelectorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#ef4444'}
+          >
+            {state.localSelectorLocked && state.faultId !== 'tag-only-no-lock' ? 'LOCKED' : 'NONE'}
+          </text>
+        </g>
+
+        <g
+          transform="translate(252, 86)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('toggle-lcs-tag')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-lcs-tag'))}
+        >
+          <rect
+            x="0"
+            y="0"
+            width="78"
+            height="44"
+            rx="10"
+            fill={state.localSelectorTagged ? '#ef4444' : '#64748b'}
+            fillOpacity="0.14"
+            stroke={state.localSelectorTagged ? '#ef4444' : '#64748b'}
+            strokeWidth="1.4"
+          />
+          <text x="39" y="18" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('LCS TAG', 'LABEL LCS', 'LCSタグ')}
+          </text>
+          <text
+            x="39"
+            y="34"
+            textAnchor="middle"
+            fontSize="9"
+            fontWeight="700"
+            fontFamily="ui-monospace, monospace"
+            fill={state.localSelectorTagged ? '#ef4444' : '#64748b'}
+          >
+            {state.localSelectorTagged ? 'TAGGED' : 'NONE'}
+          </text>
+        </g>
+      </g>
+
+      {/* ================= 3. CENTER-BOTTOM: MOTOR FIELD ISOLATOR + MOTOR + PROCESS ================= */}
+      <g transform="translate(266, 214)">
+        <rect
+          x="0"
+          y="0"
+          width="344"
+          height="168"
+          rx="16"
+          fill="currentColor"
+          fillOpacity="0.04"
+          stroke="currentColor"
+          strokeOpacity="0.2"
+          strokeWidth="1.5"
+        />
+        <text x="14" y="22" fontSize="10.5" fontWeight="700" fill="currentColor" opacity="0.9">
+          {pick(
+            'FIELD MOTOR ISOLATOR & MACHINE',
+            'ISOLATOR LOKAL MOTOR & PERALATAN',
+            'モータ現場断路器 & 設備本体'
+          )}
         </text>
 
-        {/* Process Isolation & Bleed Valves (for pressure scenarios) */}
+        {/* Local Motor Disconnect Switch */}
+        <g
+          transform="translate(14, 34)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('toggle-motor-isolator')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-motor-isolator'))}
+        >
+          <rect
+            x="0"
+            y="0"
+            width="102"
+            height="68"
+            rx="10"
+            fill={state.motorIsolatorOpen ? '#10b981' : '#ef4444'}
+            fillOpacity="0.12"
+            stroke={state.motorIsolatorOpen ? '#10b981' : '#ef4444'}
+            strokeWidth="1.4"
+          />
+          <text x="51" y="17" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('MOTOR ISOLATOR', 'ISOLATOR MOTOR', '現場断路器')}
+          </text>
+          <text
+            x="51"
+            y="38"
+            textAnchor="middle"
+            fontSize="11.5"
+            fontWeight="800"
+            fontFamily="ui-monospace, monospace"
+            fill={state.motorIsolatorOpen ? '#10b981' : '#ef4444'}
+          >
+            {state.motorIsolatorOpen ? 'OFF' : 'ON'}
+          </text>
+          <text x="51" y="56" textAnchor="middle" fontSize="8" fill="currentColor" opacity="0.7">
+            {pick('Click to switch', 'Klik ubah', 'クリック操作')}
+          </text>
+        </g>
+
+        {/* Motor Isolator Lock & Tag */}
+        <g
+          transform="translate(14, 108)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('toggle-motor-isolator-lock')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-motor-isolator-lock'))}
+        >
+          <rect
+            x="0"
+            y="0"
+            width="49"
+            height="44"
+            rx="8"
+            fill={state.motorIsolatorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+            fillOpacity="0.16"
+            stroke={state.motorIsolatorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#64748b'}
+          />
+          <text x="24.5" y="18" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor">
+            LOCK
+          </text>
+          <text
+            x="24.5"
+            y="33"
+            textAnchor="middle"
+            fontSize="8.5"
+            fontWeight="700"
+            fill={state.motorIsolatorLocked && state.faultId !== 'tag-only-no-lock' ? '#10b981' : '#ef4444'}
+          >
+            {state.motorIsolatorLocked && state.faultId !== 'tag-only-no-lock' ? 'YES' : 'NO'}
+          </text>
+        </g>
+
+        <g
+          transform="translate(67, 108)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('toggle-motor-isolator-tag')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-motor-isolator-tag'))}
+        >
+          <rect
+            x="0"
+            y="0"
+            width="49"
+            height="44"
+            rx="8"
+            fill={state.motorIsolatorTagged ? '#ef4444' : '#64748b'}
+            fillOpacity="0.14"
+            stroke={state.motorIsolatorTagged ? '#ef4444' : '#64748b'}
+          />
+          <text x="24.5" y="18" textAnchor="middle" fontSize="8" fontWeight="700" fill="currentColor">
+            TAG
+          </text>
+          <text
+            x="24.5"
+            y="33"
+            textAnchor="middle"
+            fontSize="8.5"
+            fontWeight="700"
+            fill={state.motorIsolatorTagged ? '#ef4444' : '#64748b'}
+          >
+            {state.motorIsolatorTagged ? 'YES' : 'NO'}
+          </text>
+        </g>
+
+        {/* 3-Phase Motor & Terminal Box */}
+        <g transform="translate(128, 34)">
+          <rect
+            x="0"
+            y="0"
+            width="104"
+            height="72"
+            rx="12"
+            fill={terminalLive ? '#ef4444' : '#10b981'}
+            fillOpacity="0.1"
+            stroke={terminalLive ? '#ef4444' : '#10b981'}
+            strokeWidth="1.5"
+          />
+          <text x="52" y="20" textAnchor="middle" fontSize="9.5" fontWeight="700" fill="currentColor">
+            {pick('3-PH MOTOR', 'MOTOR 3-FASA', '三相モータ')}
+          </text>
+          <text
+            x="52"
+            y="40"
+            textAnchor="middle"
+            fontSize="10"
+            fontWeight="800"
+            fontFamily="ui-monospace, monospace"
+            fill={evaluation.motorRunning ? '#ef4444' : terminalLive ? '#f59e0b' : '#10b981'}
+          >
+            {evaluation.motorRunning
+              ? '1480 RPM'
+              : terminalLive
+                ? '0 RPM (LIVE)'
+                : '0 RPM / 0V'}
+          </text>
+          <text x="52" y="58" textAnchor="middle" fontSize="8" fill="currentColor" opacity="0.7">
+            {scenario.name[language].slice(0, 18)}
+          </text>
+
+          {/* Clickable Terminal Box for Probe */}
+          <g
+            transform="translate(0, 78)"
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => onAction('advance-ldl')}
+            onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('advance-ldl'))}
+          >
+            <rect
+              x="0"
+              y="0"
+              width="104"
+              height="40"
+              rx="8"
+              fill={state.ldlStage === 'verified' ? '#10b981' : '#3b82f6'}
+              fillOpacity="0.14"
+              stroke={state.ldlStage === 'verified' ? '#10b981' : '#3b82f6'}
+              strokeWidth="1.3"
+            />
+            <text x="52" y="16" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
+              {pick('TERMINAL BOX', 'KOTAK TERMINAL', 'モータ端子箱')}
+            </text>
+            <text
+              x="52"
+              y="31"
+              textAnchor="middle"
+              fontSize="8.5"
+              fontWeight="700"
+              fill={state.ldlStage === 'verified' ? '#10b981' : '#3b82f6'}
+            >
+              {state.ldlStage === 'verified' ? '0.0 V PROBED ✓' : pick('Click to Probe', 'Klik Uji Probe', 'クリック検電')}
+            </text>
+          </g>
+        </g>
+
+        {/* Right Side of Field Box: Process Valves / Pressure Gauge / Gravity Block */}
         {scenario.hasPressureSystem ? (
-          <g transform="translate(142, 42)">
-            {/* Pressure Gauge */}
+          <g transform="translate(242, 34)">
             <circle
-              cx="104"
-              cy="46"
-              r="34"
+              cx="44"
+              cy="30"
+              r="25"
               fill="currentColor"
               fillOpacity="0.06"
               stroke={pressureLive ? '#ef4444' : '#10b981'}
               strokeWidth="2"
             />
-            <g transform={`translate(104, 46) rotate(${pressureAngleDeg})`}>
-              <line x1="0" y1="4" x2="0" y2="-24" stroke={pressureLive ? '#ef4444' : '#10b981'} strokeWidth="2.5" strokeLinecap="round" />
+            <g transform={`translate(44, 30) rotate(${pressureAngleDeg})`}>
+              <line
+                x1="0"
+                y1="3"
+                x2="0"
+                y2="-18"
+                stroke={pressureLive ? '#ef4444' : '#10b981'}
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
             </g>
-            <circle cx="104" cy="46" r="4" fill="currentColor" />
+            <circle cx="44" cy="30" r="3" fill="currentColor" />
             <text
-              x="104"
-              y="96"
+              x="44"
+              y="66"
               textAnchor="middle"
-              fontSize="11"
+              fontSize="9.5"
+              fontWeight="800"
               fontFamily="ui-monospace, monospace"
-              fontWeight="700"
               fill={pressureLive ? '#ef4444' : '#10b981'}
             >
               {evaluation.effectivePressureBar.toFixed(1)} bar
             </text>
 
             {/* Isolation Valve */}
-            <rect
-              x="0"
-              y="6"
-              width="60"
-              height="36"
-              rx="8"
-              fill={state.processValveClosed ? '#10b981' : '#ef4444'}
-              fillOpacity="0.14"
-              stroke={state.processValveClosed ? '#10b981' : '#ef4444'}
-              strokeWidth="1.2"
-            />
-            <text x="30" y="21" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
-              ISOL VALVE
-            </text>
-            <text
-              x="30"
-              y="34"
-              textAnchor="middle"
-              fontSize="9"
-              fontWeight="700"
-              fill={state.processValveClosed ? '#10b981' : '#ef4444'}
+            <g
+              transform="translate(0, 74)"
+              className="cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onClick={() => onAction('toggle-process-valve')}
+              onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-process-valve'))}
             >
-              {state.processValveClosed ? 'SHUT' : 'OPEN'}
-            </text>
+              <rect
+                x="0"
+                y="0"
+                width="42"
+                height="24"
+                rx="6"
+                fill={state.processValveClosed ? '#10b981' : '#ef4444'}
+                fillOpacity="0.16"
+                stroke={state.processValveClosed ? '#10b981' : '#ef4444'}
+              />
+              <text x="21" y="15" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="currentColor">
+                {state.processValveClosed ? 'SHUT' : 'OPEN'}
+              </text>
+            </g>
 
-            {/* Bleed / Dump Valve */}
-            <rect
-              x="0"
-              y="50"
-              width="60"
-              height="36"
-              rx="8"
-              fill={state.bleedValveOpen ? '#10b981' : '#f59e0b'}
-              fillOpacity="0.14"
-              stroke={state.bleedValveOpen ? '#10b981' : '#f59e0b'}
-              strokeWidth="1.2"
-            />
-            <text x="30" y="65" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
-              BLEED/DUMP
-            </text>
-            <text
-              x="30"
-              y="78"
-              textAnchor="middle"
-              fontSize="9"
-              fontWeight="700"
-              fill={state.bleedValveOpen ? '#10b981' : '#f59e0b'}
+            {/* Bleed Valve */}
+            <g
+              transform="translate(46, 74)"
+              className="cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onClick={() => onAction('toggle-bleed-valve')}
+              onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-bleed-valve'))}
             >
-              {state.bleedValveOpen ? 'OPEN' : 'SHUT'}
-            </text>
+              <rect
+                x="0"
+                y="0"
+                width="42"
+                height="24"
+                rx="6"
+                fill={state.bleedValveOpen ? '#10b981' : '#64748b'}
+                fillOpacity="0.16"
+                stroke={state.bleedValveOpen ? '#10b981' : '#64748b'}
+              />
+              <text x="21" y="15" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="currentColor">
+                {state.bleedValveOpen ? 'BLEED' : 'VENT'}
+              </text>
+            </g>
+
+            {/* Gravity Block if Hydraulic Press */}
+            {scenario.hasGravityBlock && (
+              <g
+                transform="translate(0, 102)"
+                className="cursor-pointer"
+                role="button"
+                tabIndex={0}
+                onClick={() => onAction('toggle-gravity-block')}
+                onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('toggle-gravity-block'))}
+              >
+                <rect
+                  x="0"
+                  y="0"
+                  width="88"
+                  height="22"
+                  rx="6"
+                  fill={state.gravityBlockInstalled ? '#10b981' : '#ef4444'}
+                  fillOpacity="0.16"
+                  stroke={state.gravityBlockInstalled ? '#10b981' : '#ef4444'}
+                />
+                <text x="44" y="14" textAnchor="middle" fontSize="7.5" fontWeight="700" fill="currentColor">
+                  {state.gravityBlockInstalled ? 'RAM BLOCK IN ✓' : 'INSERT RAM BLOCK'}
+                </text>
+              </g>
+            )}
           </g>
         ) : (
-          /* Capacitor Bank for Dual-Feed VFD */
-          <g transform="translate(142, 44)">
+          <g transform="translate(242, 34)">
             <rect
               x="0"
               y="0"
-              width="144"
-              height="68"
-              rx="12"
-              fill={capLive ? '#ef4444' : '#10b981'}
-              fillOpacity="0.12"
-              stroke={capLive ? '#ef4444' : '#10b981'}
-              strokeWidth="1.5"
-            />
-            <text x="72" y="24" textAnchor="middle" fontSize="10" fontWeight="700" fill="currentColor">
-              VFD DC BUS CAP
-            </text>
-            <text
-              x="72"
-              y="48"
-              textAnchor="middle"
-              fontSize="13"
-              fontFamily="ui-monospace, monospace"
-              fontWeight="700"
-              fill={capLive ? '#ef4444' : '#10b981'}
-            >
-              {evaluation.effectiveCapacitorV} V DC
-            </text>
-          </g>
-        )}
-
-        {/* Gravity Ram & Mechanical Safety Block */}
-        {scenario.hasGravityBlock ? (
-          <g transform="translate(16, 152)">
-            <rect
-              x="0"
-              y="0"
-              width="270"
-              height="98"
-              rx="12"
+              width="88"
+              height="118"
+              rx="10"
               fill="currentColor"
-              fillOpacity="0.04"
+              fillOpacity="0.03"
               stroke="currentColor"
-              strokeOpacity="0.16"
+              strokeOpacity="0.15"
+              strokeDasharray="4 4"
             />
-            <text x="12" y="20" fontSize="10" fontWeight="700" fill="currentColor">
-              {pick('GRAVITY RAM & SAFETY BLOCK', 'RAM GRAVITASI & BLOK PENGAMAN', '重力ラム・落下防止ブロック')}
+            <text x="44" y="48" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor" opacity="0.7">
+              {pick('DIRECT COUPLED', 'KOPLING LANGSUNG', '直結駆動')}
             </text>
-            {/* Upper Platen */}
-            <rect x="24" y="30" width="90" height="20" rx="4" fill="#64748b" />
-            {/* Safety Block */}
-            <rect
-              x="54"
-              y="52"
-              width="30"
-              height="32"
-              rx="4"
-              fill={state.gravityBlockInstalled ? '#10b981' : 'none'}
-              stroke={state.gravityBlockInstalled ? '#10b981' : '#ef4444'}
-              strokeWidth="2"
-              strokeDasharray={state.gravityBlockInstalled ? 'none' : '4 3'}
-            />
-            {/* Lower Bed */}
-            <rect x="18" y="84" width="102" height="8" rx="2" fill="#475569" />
-            <text
-              x="130"
-              y="58"
-              fontSize="11"
-              fontWeight="700"
-              fill={state.gravityBlockInstalled ? '#10b981' : '#ef4444'}
-            >
-              {state.gravityBlockInstalled
-                ? pick('BLOCK INSTALLED', 'BLOK TERPASANG', 'ブロック設置済')
-                : pick('UNSUPPORTED!', 'TIDAK DIGANJAL!', '未支持・落下危険')}
-            </text>
-            <text x="130" y="76" fontSize="9.5" fill="currentColor" opacity="0.75">
-              {pick('Mechanical restraint', 'Penahan mekanis', '機械的拘束')}
-            </text>
-          </g>
-        ) : (
-          <g transform="translate(16, 152)">
-            <rect
-              x="0"
-              y="0"
-              width="270"
-              height="98"
-              rx="12"
-              fill="currentColor"
-              fillOpacity="0.04"
-              stroke="currentColor"
-              strokeOpacity="0.16"
-            />
-            <text x="14" y="24" fontSize="10" fontWeight="700" fill="currentColor">
-              {pick('STORED ENERGY SUMMARY', 'RINGKASAN ENERGI TERSIMPAN', '残留エネルギー状態')}
-            </text>
-            <text
-              x="14"
-              y="50"
-              fontSize="11"
-              fontFamily="ui-monospace, monospace"
-              fontWeight="700"
-              fill={evaluation.isStoredEnergyReleased ? '#10b981' : '#ef4444'}
-            >
-              {evaluation.isStoredEnergyReleased
-                ? pick('ALL STORED ENERGY = 0', 'SEMUA ENERGI TERSIMPAN = 0', '残留エネルギー = 0')
-                : pick('RESIDUAL ENERGY PRESENT', 'MASIH ADA ENERGI TERSISA', '残留エネルギーあり')}
-            </text>
-            <text x="14" y="74" fontSize="10" fill="currentColor" opacity="0.75">
-              {scenario.hasPressureSystem
-                ? `Pressure: ${evaluation.effectivePressureBar.toFixed(1)} bar`
-                : `DC Bus: ${evaluation.effectiveCapacitorV} V DC`}
+            <text x="44" y="66" textAnchor="middle" fontSize="8" fill="currentColor" opacity="0.55">
+              {pick('0.0 bar (No Fluid)', '0.0 bar (Tanpa Fluida)', '流体圧力なし')}
             </text>
           </g>
         )}
       </g>
 
-      {/* ================= RIGHT: LIVE-DEAD-LIVE & TRY-OUT ================= */}
-      <g transform="translate(600, 64)">
+      {/* ================= 4. RIGHT: MULTIMETER LIVE-DEAD-LIVE & TRY-OUT ================= */}
+      <g transform="translate(624, 58)">
         <rect
           x="0"
           y="0"
-          width="204"
-          height="268"
+          width="240"
+          height="324"
           rx="16"
           fill="currentColor"
           fillOpacity="0.04"
           stroke="currentColor"
-          strokeOpacity="0.18"
+          strokeOpacity="0.2"
           strokeWidth="1.5"
         />
-        <text x="14" y="24" fontSize="11" fontWeight="700" fill="currentColor" opacity="0.85">
-          {pick('ZERO-ENERGY TEST', 'UJI ENERGI NOL', 'ゼロエネルギー検証')}
+        <text x="14" y="22" fontSize="10.5" fontWeight="700" fill="currentColor" opacity="0.9">
+          {pick('TEST BEFORE TOUCH', 'VERIFIKASI TEGANGAN NOL', '無電圧検証 (LDL)')}
         </text>
 
-        {/* Multimeter Screen */}
-        <rect
-          x="14"
-          y="38"
-          width="176"
-          height="88"
-          rx="12"
-          fill="#0f172a"
-          stroke={evaluation.isLdlComplete ? '#10b981' : '#334155'}
-          strokeWidth="2"
-        />
-        <text x="24" y="56" fontSize="9.5" fill="#94a3b8" fontFamily="ui-monospace, monospace">
-          CAT IV MULTIMETER (LDL)
-        </text>
-        <text
-          x="102"
-          y="92"
-          textAnchor="middle"
-          fontSize="24"
-          fontWeight="700"
-          fontFamily="ui-monospace, monospace"
-          fill={
-            state.ldlStage === 'live-1' || state.ldlStage === 'live-2'
-              ? '#f59e0b'
-              : evaluation.effectiveVoltageV + evaluation.effectiveSecondaryVoltageV > 0
-                ? '#ef4444'
-                : '#10b981'
-          }
+        {/* Handheld Multimeter */}
+        <g
+          transform="translate(20, 34)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('advance-ldl')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('advance-ldl'))}
         >
-          {ldlDisplayVoltage}
-        </text>
-        <text
-          x="102"
-          y="114"
-          textAnchor="middle"
-          fontSize="9.5"
-          fontFamily="ui-monospace, monospace"
-          fill="#cbd5e1"
-        >
-          STAGE: {state.ldlStage.toUpperCase()}
-        </text>
+          <rect
+            x="0"
+            y="0"
+            width="200"
+            height="196"
+            rx="16"
+            fill="#f59e0b"
+            fillOpacity="0.16"
+            stroke="#f59e0b"
+            strokeWidth="1.8"
+          />
+          <rect x="14" y="14" width="172" height="58" rx="8" fill="#0f172a" />
+          <text
+            x="100"
+            y="42"
+            textAnchor="middle"
+            fontSize="20"
+            fontFamily="ui-monospace, monospace"
+            fontWeight="800"
+            fill={
+              state.ldlStage === 'verified' ||
+              (state.ldlStage === 'dead-test' && !terminalLive)
+                ? '#10b981'
+                : '#f59e0b'
+            }
+          >
+            {ldlDisplayVoltage}
+          </text>
+          <text
+            x="100"
+            y="62"
+            textAnchor="middle"
+            fontSize="9"
+            fontFamily="ui-monospace, monospace"
+            fill="#94a3b8"
+          >
+            CAT IV 600V • {state.ldlStage.toUpperCase()}
+          </text>
 
-        {/* Live-Dead-Live 3-Step Indicator Pills */}
-        <g transform="translate(14, 140)">
-          {(['live-1', 'dead-test', 'live-2'] as const).map((stage, idx) => {
-            const passed =
-              (stage === 'live-1' && state.ldlStage !== 'idle') ||
-              (stage === 'dead-test' &&
-                (state.ldlStage === 'dead-test' ||
-                  state.ldlStage === 'live-2' ||
-                  state.ldlStage === 'verified')) ||
-              (stage === 'live-2' &&
-                (state.ldlStage === 'live-2' || state.ldlStage === 'verified'));
+          {/* 3-Step LDL Indicator */}
+          {(
+            [
+              { key: 'live-1', label: '1. LIVE REF (480V)' },
+              { key: 'dead-test', label: '2. DEAD BOX (0.0V)' },
+              { key: 'live-2', label: '3. RE-TEST LIVE' },
+            ] as const
+          ).map((row, idx) => {
+            const stageOrder = ['idle', 'live-1', 'dead-test', 'live-2', 'verified'];
+            const active = stageOrder.indexOf(state.ldlStage) >= idx + 1;
             return (
-              <g key={stage} transform={`translate(${idx * 60}, 0)`}>
+              <g key={row.key} transform={`translate(14, ${82 + idx * 28})`}>
                 <rect
                   x="0"
                   y="0"
-                  width="54"
-                  height="32"
-                  rx="8"
-                  fill={passed ? '#10b981' : '#64748b'}
-                  fillOpacity="0.18"
-                  stroke={passed ? '#10b981' : '#64748b'}
+                  width="172"
+                  height="22"
+                  rx="6"
+                  fill={active ? '#10b981' : '#64748b'}
+                  fillOpacity={active ? 0.22 : 0.12}
                 />
                 <text
-                  x="27"
-                  y="20"
-                  textAnchor="middle"
+                  x="10"
+                  y="14.5"
                   fontSize="9.5"
                   fontWeight="700"
-                  fill={passed ? '#10b981' : 'currentColor'}
+                  fontFamily="ui-monospace, monospace"
+                  fill={active ? '#10b981' : 'currentColor'}
                 >
-                  {idx === 0 ? '1.LIVE' : idx === 1 ? '2.DEAD' : '3.LIVE'}
+                  {active ? '✓ ' : '○ '}
+                  {row.label}
                 </text>
               </g>
             );
           })}
+
+          <text x="100" y="182" textAnchor="middle" fontSize="8.5" fontWeight="700" fill="currentColor">
+            {pick('Click meter to advance LDL', 'Klik meter untuk lanjut LDL', 'クリックで検電ステップ進行')}
+          </text>
         </g>
 
-        {/* Try-Out Pushbutton Status */}
-        <g transform="translate(14, 188)">
+        {/* Try-Out Verification Box */}
+        <g
+          transform="translate(20, 242)"
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => onAction('perform-tryout')}
+          onKeyDown={(e) => handleSvgKeyDown(e, () => onAction('perform-tryout'))}
+        >
           <rect
             x="0"
             y="0"
-            width="176"
-            height="64"
+            width="200"
+            height="66"
             rx="12"
-            fill={evaluation.isTryOutComplete ? '#10b981' : '#64748b'}
+            fill={evaluation.isTryOutComplete ? '#10b981' : '#3b82f6'}
             fillOpacity="0.14"
-            stroke={evaluation.isTryOutComplete ? '#10b981' : '#64748b'}
-            strokeWidth="1.4"
+            stroke={evaluation.isTryOutComplete ? '#10b981' : '#3b82f6'}
+            strokeWidth="1.5"
           />
-          <circle
-            cx="30"
-            cy="32"
-            r="14"
-            fill={evaluation.isTryOutComplete ? '#10b981' : '#475569'}
-          />
-          <text x="54" y="28" fontSize="10.5" fontWeight="700" fill="currentColor">
-            START TRY-OUT
+          <text x="100" y="22" textAnchor="middle" fontSize="10" fontWeight="700" fill="currentColor">
+            {pick('START TRY-OUT CHECK', 'UJI COBA START (TRY-OUT)', '起動試行（Try-Out）確認')}
           </text>
           <text
-            x="54"
-            y="44"
-            fontSize="9.5"
+            x="100"
+            y="42"
+            textAnchor="middle"
+            fontSize="11"
+            fontWeight="800"
             fontFamily="ui-monospace, monospace"
-            fontWeight="700"
             fill={evaluation.isTryOutComplete ? '#10b981' : '#f59e0b'}
           >
-            {evaluation.isTryOutComplete ? 'VERIFIED (NO START)' : 'NOT TESTED'}
+            {evaluation.isTryOutComplete
+              ? 'ZERO START PASSED ✓'
+              : pick('CLICK TO TEST START', 'KLIK UJI START', 'クリックで起動確認')}
           </text>
         </g>
       </g>
 
-      {/* Bottom Legend */}
-      <text x="20" y="384" fontSize="11" fill="currentColor" opacity="0.7">
-        {pick(
-          'OSHA 1910.147 Control of Hazardous Energy • One Person, One Lock, One Key • Always Verify Zero Energy',
-          'OSHA 1910.147 Pengendalian Energi Berbahaya • Satu Orang, Satu Gembok, Satu Kunci • Selalu Verifikasi Energi Nol',
-          'OSHA 1910.147 危険エネルギー管理 • 一人一錠一鍵原則 • 必ずゼロエネルギーを検証'
-        )}
-      </text>
+      {/* Bottom Legend Bar */}
+      <g transform="translate(16, 396)">
+        <rect
+          x="0"
+          y="0"
+          width="848"
+          height="50"
+          rx="14"
+          fill="currentColor"
+          fillOpacity="0.04"
+          stroke="currentColor"
+          strokeOpacity="0.14"
+        />
+        <text x="16" y="21" fontSize="10" fontWeight="700" fill="currentColor">
+          {pick(
+            'DIRECT INTERACTION: Click any switch, padlock, danger tag, valve, multimeter, or Start/Stop button directly on the schematic.',
+            'INTERAKSI LANGSUNG: Klik langsung sakelar, gembok LOTO, label bahaya, katup, multimeter, atau tombol Start/Stop pada skema.',
+            '直接操作：図上の断路器・南京錠・危険タグ・バルブ・検電器・起動/停止ボタンを直接クリックして操作できます。'
+          )}
+        </text>
+        <text x="16" y="38" fontSize="9.5" fill="currentColor" opacity="0.75">
+          {pick(
+            'OSHA 1910.147 Rule: Lockout Padlock + Danger Tag required on all isolators • Cannot lock an ON switch • Test-Before-Touch before servicing.',
+            'Aturan OSHA 1910.147: Gembok LOTO + Label Bahaya wajib di setiap isolator • Tidak bisa mengunci sakelar ON • Wajib Test-Before-Touch.',
+            'OSHA 1910.147 規定：全遮断器に南京錠＋危険タグ必須 • ON状態の施錠不可 • 作業前の検電・起動試行必須。'
+          )}
+        </text>
+      </g>
     </svg>
   );
 }

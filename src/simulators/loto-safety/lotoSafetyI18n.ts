@@ -5,7 +5,7 @@ registerSimulatorTranslations('loto-safety', {
     title: 'Lab LOTO (Lockout / Tagout) & Verifikasi Energi Nol',
     shortTitle: 'LOTO & Energi Nol',
     description:
-      'Kuasai prosedur isolasi energi berbahaya OSHA 1910.147 pada panel MCC listrik, akumulator hidrolik, mesin pres pneumatik, dan konveyor sumber ganda menggunakan gembok pribadi, label bahaya, uji multimeter Live-Dead-Live, serta verifikasi Try-Out.',
+      'Kuasai prosedur isolasi energi berbahaya OSHA 1910.147 pada Panel MCC / VFD (bus DC 540 V), Sakelar Selektor Motor (HAND/OFF/AUTO), Isolator Lokal Motor, Pompa Sentrifugal, Akumulator Hidrolik, dan Konveyor Sumber Ganda menggunakan Gembok LOTO, Label Bahaya, Verifikasi Tegangan Nol (Live-Dead-Live), serta Uji Coba Start (Try-Out).',
     explore: [
       {
         title: 'Urutan Enam Langkah LOTO OSHA 1910.147',
@@ -216,7 +216,7 @@ registerSimulatorTranslations('loto-safety', {
     title: 'LOTO（ロックアウト・タグアウト）＆ゼロエネルギー検証ラボ',
     shortTitle: 'LOTO & ゼロエネルギー',
     description:
-      'OSHA 1910.147 に準拠し、電気 MCC・油圧アキュムレータ・重力ラム付空圧プレス・二系統電源コンベアにおける危険エネルギー遮断、個人用南京錠・危険タグ、Live-Dead-Live 検電試験、起動試行（Try-Out）を習得します。',
+      'OSHA 1910.147 に準拠し、三相モータ駆動（MCC/VFD盤・540 V DCバス・現場切替スイッチ・モータ現場断路器）・遠心ポンプ・油圧アキュムレータ・二系統コンベアにおける危険エネルギー遮断、個人用南京錠・危険タグ、Live-Dead-Live 検電試験、起動試行（Try-Out）を習得します。',
     explore: [
       {
         title: 'OSHA 1910.147 LOTO 6ステップ手順',
