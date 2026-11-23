@@ -1560,4 +1560,180 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       targetSelector: '[data-tour="mode-tabs"]',
     },
   ],
+  'loto-safety': [
+    {
+      id: 'loto-overview',
+      badge: { en: 'Overview', id: 'Ikhtisar', ja: '概要' },
+      title: {
+        en: 'LOTO (Lockout / Tagout) & Zero-Energy Verification Lab',
+        id: 'Laboratorium LOTO (Penguncian & Pelabelan) & Verifikasi Energi Nol',
+        ja: 'LOTO（ロックアウト・タグアウト）＆ゼロエネルギー確認ラボ',
+      },
+      description: {
+        en: 'Welcome! Practice OSHA 1910.147 hazardous energy isolation across electrical MCCs, hydraulic accumulators, pneumatic gravity rams, and dual-feed conveyors using personal padlocks, danger tags, Live-Dead-Live testing, and Start Try-Out.',
+        id: 'Selamat datang! Praktikkan isolasi energi berbahaya OSHA 1910.147 pada panel MCC listrik, akumulator hidrolik, ram pneumatik bergravitasi, dan konveyor suplai ganda menggunakan gembok pribadi, label bahaya, uji Live-Dead-Live, serta uji coba penyalaan (Try-Out).',
+        ja: 'ようこそ！OSHA 1910.147に基づき、電気MCC・油圧アキュムレータ・重力ラム・二重給電コンベヤの危険エネルギー遮断を個人南京錠・危険タグ・Live-Dead-Live検電・起動テストで習得します。',
+      },
+      tip: {
+        en: 'Use Next / Previous or ← / → arrow keys anytime to step through every safety control.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol keselamatan.',
+        ja: '「次へ / 前へ」または ← / → キーで各安全操作ガイドを順番に確認できます。',
+      },
+    },
+    {
+      id: 'loto-scenarios',
+      badge: { en: 'Feature 1 · Scenarios', id: 'Fitur 1 · Skenario Peralatan', ja: '機能1 · 設備シナリオ' },
+      title: {
+        en: 'Plant Equipment Isolation Scenarios',
+        id: 'Pilihan Skenario Isolasi Peralatan Pabrik',
+        ja: 'プラント設備アイソレーション・シナリオ選択',
+      },
+      description: {
+        en: 'Select from four realistic industrial systems—Centrifugal Pump MCC, Hydraulic Press with Accumulator, Pneumatic Press with Gravity Ram, or Dual-Feed Conveyor—each with distinct stored-energy hazards.',
+        id: 'Pilih satu dari empat sistem industri nyata—MCC Pompa Sentrifugal, Mesin Pres Hidrolik dengan Akumulator, Mesin Pres Pneumatik dengan Ram Gravitasi, atau Konveyor Suplai Ganda—masing-masing dengan bahaya energi tersimpan yang berbeda.',
+        ja: '遠心ポンプMCC、アキュムレータ付油圧プレス、重力ラム付空圧プレス、二重給電コンベヤの4つの現場シナリオから選択し、固有の残留エネルギー源を確認します。',
+      },
+      targetSelector: '[data-tour="loto-scenarios"]',
+    },
+    {
+      id: 'loto-workflow',
+      badge: { en: 'Feature 2 · 6-Step LOTO', id: 'Fitur 2 · Alur 6 Langkah', ja: '機能2 · 6段階手順' },
+      title: {
+        en: 'OSHA 6-Step LOTO Sequence Tracker',
+        id: 'Pelacak Urutan 6 Langkah LOTO OSHA',
+        ja: 'OSHA 6段階 LOTO手順トラッカー',
+      },
+      description: {
+        en: 'Follow the mandatory 6-step sequence: 1. Notify, 2. Shutdown, 3. Isolate, 4. Lock & Tag, 5. Bleed/Block Stored Energy, and 6. Verify Zero Energy. Each step updates live as you perform actions.',
+        id: 'Ikuti urutan wajib 6 langkah: 1. Pemberitahuan, 2. Penghentian Normal, 3. Isolasi Sumber Energi, 4. Penguncian & Pelabelan, 5. Pengurasan/Penahanan Energi Tersimpan, dan 6. Verifikasi Energi Nol.',
+        ja: '必須の6段階手順（1.通知 → 2.通常停止 → 3.エネルギー遮断 → 4.施錠・タグ取付 → 5.残留エネルギー放出/拘束 → 6.ゼロエネルギー確認）の進捗を確認します。',
+      },
+      tip: {
+        en: 'Always press normal Stop before opening a load-break MCC disconnect to prevent arc-flash under load.',
+        id: 'Selalu tekan tombol Henti normal sebelum membuka sakelar pemutus MCC untuk mencegah busur api listrik (arc-flash) saat berbeban.',
+        ja: '負荷運転中のアークフラッシュを防ぐため、MCC遮断器を開く前に必ず通常停止操作を行ってください。',
+      },
+      targetSelector: '[data-tour="loto-workflow"]',
+    },
+    {
+      id: 'loto-isolation-controls',
+      badge: { en: 'Feature 3 · Isolation', id: 'Fitur 3 · Kontrol Isolasi', ja: '機能3 · 遮断・施錠操作' },
+      title: {
+        en: 'Disconnects, Padlocks, Tags, Bleed Valves & Gravity Blocks',
+        id: 'Pemutus Daya, Gembok, Label, Katup Penguras & Penahan Gravitasi',
+        ja: '遮断器・南京錠・タグ・ブリード弁・落下防止ブロック操作',
+      },
+      description: {
+        en: 'Operate the MCC disconnect, attach your personal padlock and signed Danger Tag, close process isolation valves, open bleed/dump valves, insert mechanical gravity blocks, and allow VFD capacitors to discharge.',
+        id: 'Operasikan pemutus MCC, pasang gembok pribadi dan Label Bahaya bertanda tangan, tutup katup isolasi proses, buka katup penguras (bleed/dump), pasang penahan mekanis gravitasi, dan tunggu pengosongan kapasitor VFD.',
+        ja: 'MCC遮断器の開放、個人南京錠と署名入り危険タグの取付、プロセス弁の閉止、ブリード弁の開放、重力落下防止ブロックの挿入、VFDコンデンサ放電待機を行います。',
+      },
+      targetSelector: '[data-tour="loto-isolation-controls"]',
+    },
+    {
+      id: 'loto-schematic',
+      badge: { en: 'Feature 4 · Plant View', id: 'Fitur 4 · Skematik Pabrik', ja: '機能4 · 設備系統図' },
+      title: {
+        en: 'Live Energy-State Plant Schematic',
+        id: 'Skematik Pabrik dengan Status Energi Langsung',
+        ja: 'エネルギー状態リアルタイム設備系統図',
+      },
+      description: {
+        en: 'Inspect live energized vs. isolated paths on the schematic—including MCC breaker position, padlock/tag icons, accumulator pressure gauge, mechanical block, and secondary backfeed lines.',
+        id: 'Periksa jalur berenergi vs. terisolasi secara langsung pada skematik—termasuk posisi pemutus MCC, ikon gembok/label, pengukur tekanan akumulator, penahan mekanis, serta jalur umpan balik sekunder.',
+        ja: 'MCC遮断器状態、南京錠・タグ表示、アキュムレータ圧力計、機械ブロック、二次側逆給電ラインの通電・遮断状態を系統図で確認します。',
+      },
+      targetSelector: '[data-tour="loto-schematic"]',
+    },
+    {
+      id: 'loto-verification',
+      badge: { en: 'Feature 5 · Verify', id: 'Fitur 5 · Verifikasi Nol', ja: '機能5 · ゼロ確認試験' },
+      title: {
+        en: 'Live-Dead-Live Multimeter & Start Try-Out',
+        id: 'Uji Multimeter Live-Dead-Live & Uji Coba Penyalaan (Try-Out)',
+        ja: 'Live-Dead-Live検電・起動テスト（Try-Out）',
+      },
+      description: {
+        en: 'Complete the 3-step Live-Dead-Live test (Known Live → Target Dead 0 V → Re-test Known Live), verify 0.0 bar pressure, and press Start Try-Out to prove the equipment cannot start.',
+        id: 'Selesaikan uji 3-langkah Live-Dead-Live (Sumber Hidup → Target Mati 0 V → Uji Ulang Sumber Hidup), pastikan tekanan 0,0 bar, dan tekan Uji Coba Start (Try-Out) untuk membuktikan mesin tidak dapat menyala.',
+        ja: '3段階のLive-Dead-Live検電（既知活線確認→対象無電圧0V確認→再活線確認）、圧力0.0 bar確認、起動ボタン押下によるTry-Outを完了します。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why must I re-test the multimeter on a known live source after measuring 0 V?',
+            id: 'Mengapa multimeter harus diuji ulang pada sumber hidup setelah mengukur 0 V?',
+            ja: '対象で0 Vを確認した後、なぜ既知の活線で再度テスタを確認するのですか？',
+          },
+          a: {
+            en: 'A meter fuse could blow or a test lead could break during measurement, causing a false 0 V reading on a live circuit. Re-testing on a known live source proves the meter was working throughout.',
+            id: 'Sekering multimeter bisa putus atau kabel ukur dapat rusak saat pengukuran sehingga menampilkan pembacaan 0 V palsu pada sirkuit bertegangan. Menguji ulang pada sumber hidup membuktikan alat ukur tetap berfungsi baik.',
+            ja: '測定中にヒューズ切れやリード断線が起きると、活線でも誤って0 Vと表示されるためです。再確認により測定器が正常だったことを証明します。',
+          },
+          keywords: ['live-dead-live', 'multimeter', 're-test', '0 v', 'fuse', 'uji', '検電'],
+        },
+      ],
+      targetSelector: '[data-tour="loto-verification"]',
+    },
+    {
+      id: 'loto-hazard-audit',
+      badge: { en: 'Feature 6 · Hazard Audit', id: 'Fitur 6 · Audit Bahaya', ja: '機能6 · 危険監査モード' },
+      title: {
+        en: 'Fault & Hazard Audit Mode',
+        id: 'Mode Audit Gangguan & Bahaya Tersembunyi',
+        ja: '危険・違反監査モード',
+      },
+      description: {
+        en: 'Activate Hazard Audit faults—Trapped Accumulator Pressure, Dual Backfeed Source, Tag-Only Without Lock, or Skipped Try-Out—to practice spotting lethal LOTO violations before work begins.',
+        id: 'Aktifkan skenario Audit Bahaya—Tekanan Akumulator Terjebak, Sumber Umpan Balik Ganda, Label Tanpa Gembok (Tag-Only), atau Melewatkan Try-Out—untuk berlatih mendeteksi pelanggaran LOTO fatal sebelum pekerjaan dimulai.',
+        ja: '残留アキュムレータ圧力、二重逆給電、タグのみ（無施錠）、Try-Out省略などの危険状態を注入し、作業開始前に致命的なLOTO違反を見抜く訓練を行います。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why is Tag-Only isolation prohibited on a lockable disconnect?',
+            id: 'Mengapa isolasi dengan label saja (Tag-Only) dilarang pada pemutus yang dapat digembok?',
+            ja: '施錠可能な遮断器でタグのみ（Tag-Only）が禁止されている理由は？',
+          },
+          a: {
+            en: 'A paper tag is only a warning and cannot physically prevent someone from closing the breaker. OSHA 1910.147 requires a personal padlock whenever an energy-isolating device is capable of being locked out.',
+            id: 'Label kertas hanyalah peringatan dan tidak dapat mencegah seseorang menutup pemutus secara fisik. Standar OSHA 1910.147 mewajibkan gembok pribadi setiap kali perangkat isolasi dapat dikunci.',
+            ja: 'タグは警告表示に過ぎず、誤って遮断器を投入する行為を物理的に防げないためです。施錠可能な機器には必ず個人用南京錠が必要です。',
+          },
+          keywords: ['tag-only', 'padlock', 'lock', 'osha', 'violation', 'gembok', 'タグ'],
+        },
+      ],
+      targetSelector: '[data-tour="loto-hazard-audit"]',
+    },
+    {
+      id: 'loto-safety-banner',
+      badge: { en: 'Feature 7 · Safety Status', id: 'Fitur 7 · Status Keselamatan', ja: '機能7 · 安全状態バナー' },
+      title: {
+        en: 'Zero-Energy State & Permit-to-Work Banner',
+        id: 'Banner Status Energi Nol & Izin Kerja Aman',
+        ja: 'ゼロエネルギー状態・安全作業許可バナー',
+      },
+      description: {
+        en: 'Check this top status banner for live hazard warnings and confirmation of whether Zero-Energy State is verified so maintenance can safely begin.',
+        id: 'Periksa banner status teratas ini untuk melihat peringatan bahaya aktif dan konfirmasi apakah Kondisi Energi Nol telah terverifikasi sehingga pemeliharaan dapat dimulai dengan aman.',
+        ja: '上部の状態バナーで残留危険の警告や、ゼロエネルギー状態が検証済みで保守作業を開始できるかをリアルタイムで確認します。',
+      },
+      targetSelector: '[data-tour="loto-safety-banner"]',
+    },
+    {
+      id: 'loto-workflow-modes',
+      badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
+      title: {
+        en: 'Explore, Practice & Quiz Workflow',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
+        ja: '探索・演習・クイズの学習フロー',
+      },
+      description: {
+        en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to review OSHA 1910.147 rules, compute capacitor discharge and accumulator energy, and pass the LOTO certification quiz.',
+        id: 'Gunakan Alt+1 (Eksplorasi), Alt+2 (Simulasi), Alt+3 (Latihan), dan Alt+4 (Kuis) untuk mempelajari aturan OSHA 1910.147, menghitung pengosongan kapasitor dan energi akumulator, serta lulus kuis sertifikasi LOTO.',
+        ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）でOSHA 1910.147理論や放電時間計算の演習、LOTO認定クイズまで進められます。',
+      },
+      targetSelector: '[data-tour="mode-tabs"]',
+    },
+  ],
 };

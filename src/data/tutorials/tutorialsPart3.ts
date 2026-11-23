@@ -1790,4 +1790,188 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       targetSelector: '[data-tour="mode-tabs"]',
     },
   ],
+  'vfd-drive': [
+    {
+      id: 'vfd-overview',
+      badge: { en: 'Overview', id: 'Ikhtisar', ja: '概要' },
+      title: {
+        en: '3-Phase Motor & VFD (Inverter) Control Lab',
+        id: 'Laboratorium Kontrol Motor 3-Fasa & VFD (Inverter)',
+        ja: '三相誘導電動機・VFD（インバータ）制御ラボ',
+      },
+      description: {
+        en: 'Welcome! Compare Direct-On-Line (DOL), Star-Delta (Y-Δ), and Variable Frequency Drive (VFD) starting, explore constant V/f flux control and field weakening above base Hz, and diagnose DC bus and bearing faults.',
+        id: 'Selamat datang! Bandingkan pengasutan Direct-On-Line (DOL), Bintang-Segitiga (Y-Δ), dan Variable Frequency Drive (VFD), pelajari kontrol V/f konstan serta pelemahan medan di atas frekuensi dasar, dan diagnosis gangguan bus DC maupun bantalan.',
+        ja: 'ようこそ！直入始動（DOL）・スターデルタ始動（Y-Δ）・VFD（インバータ）始動を比較し、基底周波数以上の定V/f制御・弱め界磁やDCバス・軸受異常の診断を実習します。',
+      },
+      tip: {
+        en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
+      },
+    },
+    {
+      id: 'vfd-starter-mode',
+      badge: { en: 'Feature 1 · Starter Mode', id: 'Fitur 1 · Metode Asut', ja: '機能1 · 始動方式' },
+      title: {
+        en: 'Starter Comparison & Run Controls',
+        id: 'Perbandingan Metode Asut & Kontrol Operasi',
+        ja: '始動方式切替・運転操作',
+      },
+      description: {
+        en: 'Switch between DOL, Star-Delta (Y-Δ), and VFD Inverter modes, then press Start, Stop, or Emergency Stop to observe inrush current spikes, torque shock, and soft-ramp acceleration.',
+        id: 'Pilih mode DOL, Bintang-Segitiga (Y-Δ), atau Inverter VFD, lalu tekan Mulai, Henti, atau Henti Darurat untuk mengamati lonjakan arus asut, kejutan torsi, dan percepatan landai (soft-ramp).',
+        ja: 'DOL・スターデルタ（Y-Δ）・VFDインバータを切り替え、運転/停止/非常停止を押して突入電流・始動トルク衝撃・ソフトランプ加速の違いを比較します。',
+      },
+      tip: {
+        en: 'DOL draws 6×–7× rated current at start, Star-Delta cuts it to 1/3, and VFD holds starting current around 1.25× rated while delivering full torque.',
+        id: 'DOL menarik 6×–7× arus nominal saat asut, Bintang-Segitiga menurunkannya menjadi 1/3, sedangkan VFD menjaga arus asut sekitar 1,25× nominal dengan torsi penuh.',
+        ja: 'DOLは定格の6〜7倍の突入電流、Y-Δは1/3に低減、VFDは約1.25倍に抑えつつ定格トルクを維持します。',
+      },
+      targetSelector: '[data-tour="vfd-starter-mode"]',
+    },
+    {
+      id: 'vfd-freq-ramp',
+      badge: { en: 'Feature 2 · V/f & Ramps', id: 'Fitur 2 · Frekuensi & Ramp', ja: '機能2 · 周波数・加減速' },
+      title: {
+        en: 'Frequency Command, Base Hz & Accel/Decel Ramps',
+        id: 'Perintah Frekuensi, Frekuensi Dasar & Waktu Ramp',
+        ja: '指令周波数・基底周波数・加減速時間',
+      },
+      description: {
+        en: 'Set Target Frequency (5–90 Hz), Base Frequency (50/60 Hz), Motor Poles, and Accel/Decel Ramp Times. Above base frequency, voltage clamps at 400 V and the motor enters Field Weakening.',
+        id: 'Atur Frekuensi Target (5–90 Hz), Frekuensi Dasar (50/60 Hz), Jumlah Kutub Motor, serta Waktu Akselerasi/Deselerasi. Di atas frekuensi dasar, tegangan tertahan pada 400 V dan motor memasuki daerah Pelemahan Medan (Field Weakening).',
+        ja: '指令周波数（5〜90 Hz）・基底周波数（50/60 Hz）・極数・加減速時間を設定します。基底周波数を超えると出力電圧は400 Vで頭打ちとなり、弱め界磁領域に入ります。',
+      },
+      tip: {
+        en: 'Keep acceleration and deceleration ramps gradual on high-inertia fans or pumps to prevent overcurrent and DC bus overvoltage trips.',
+        id: 'Pertahankan waktu akselerasi dan deselerasi yang landai pada kipas atau pompa berinersia tinggi untuk mencegah trip arus lebih maupun tegangan lebih bus DC.',
+        ja: '大慣性のファンやポンプでは加減速時間を長めに設定し、過電流トリップやDCバス過電圧トリップを防ぎます。',
+      },
+      targetSelector: '[data-tour="vfd-freq-ramp"]',
+    },
+    {
+      id: 'vfd-load-carrier',
+      badge: { en: 'Feature 3 · Load & PWM', id: 'Fitur 3 · Beban & PWM', ja: '機能3 · 負荷・キャリア周波数' },
+      title: {
+        en: 'Mechanical Load, Carrier Frequency & Braking Resistor',
+        id: 'Beban Mekanis, Frekuensi Pembawa & Resistor Pengereman',
+        ja: '機械負荷・キャリア周波数・制動抵抗器',
+      },
+      description: {
+        en: 'Vary shaft Load Torque (%), IGBT PWM Carrier Frequency (2–16 kHz), and toggle the Dynamic Braking Resistor to see how switching frequency affects bearing EDM currents and how dynamic braking absorbs regenerative energy.',
+        id: 'Ubah Torsi Beban Poros (%), Frekuensi Pembawa PWM IGBT (2–16 kHz), dan aktifkan Resistor Pengereman Dinamis untuk melihat pengaruh frekuensi pensaklaran terhadap arus EDM bantalan serta penyerapan energi regeneratif.',
+        ja: '軸負荷トルク（%）、IGBT PWMキャリア周波数（2〜16 kHz）、制動抵抗器の有無を切り替え、スイッチング損失や軸受電食（EDM）電流、回生エネルギー吸収の変化を確認します。',
+      },
+      tip: {
+        en: 'Lower carrier frequency (4 kHz) reduces IGBT heating and shaft bearing EDM currents, whereas higher carrier frequency (12–16 kHz) reduces audible motor whine.',
+        id: 'Frekuensi pembawa yang lebih rendah (4 kHz) mengurangi pemanasan IGBT dan arus EDM bantalan, sedangkan frekuensi lebih tinggi (12–16 kHz) meredam dengung motor.',
+        ja: 'キャリア周波数を下げる（4 kHz）とIGBT発熱と軸受EDM電流が減り、上げる（12〜16 kHz）とモータの磁気騒音が低減します。',
+      },
+      targetSelector: '[data-tour="vfd-load-carrier"]',
+    },
+    {
+      id: 'vfd-fault-panel',
+      badge: { en: 'Feature 4 · Faults', id: 'Fitur 4 · Simulasi Gangguan', ja: '機能4 · 異常診断' },
+      title: {
+        en: 'Industrial Fault Injection & Troubleshooting',
+        id: 'Injeksi Gangguan Industri & Penanganan Masalah',
+        ja: '産業故障注入とトラブルシューティング',
+      },
+      description: {
+        en: 'Inject realistic drive faults—Single-Phasing (Phase Loss), DC Bus Overvoltage on Fast Decel, VFD Overcurrent / Locked Rotor, or Bearing Fluting (Shaft Current)—and observe how protection trips behave.',
+        id: 'Injeksikan gangguan nyata—Hilang Fasa (Single-Phasing), Tegangan Lebih Bus DC saat Deselerasi Cepat, Arus Lebih VFD / Rotor Terkunci, atau Erosi Bantalan (Fluting)—dan amati respons proteksi penggerak.',
+        ja: '欠相（シングルフェージング）、急減速時のDCバス過電圧、過電流/拘束ロータ、軸受電食（フルーティング）を注入し、保護トリップの挙動を診断します。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why does the VFD trip on DC Bus Overvoltage during fast deceleration?',
+            id: 'Mengapa VFD mengalami trip Tegangan Lebih Bus DC saat deselerasi cepat?',
+            ja: '急減速時にVFDがDCバス過電圧トリップするのはなぜですか？',
+          },
+          a: {
+            en: 'During rapid deceleration, rotor inertia drives the motor as a generator, pumping energy back into the DC bus capacitors past ~800 V DC. Lengthen the decel ramp time or enable a Dynamic Braking Resistor.',
+            id: 'Saat deselerasi cepat, inersia rotor memutar motor sebagai generator dan mengalirkan energi balik ke kapasitor bus DC hingga melampaui ~800 V DC. Perpanjang waktu ramp deselerasi atau aktifkan Resistor Pengereman Dinamis.',
+            ja: '急減速時は負荷慣性によりモータが発電機として動作し、回生エネルギーがDCバスコンデンサを約800 V DC以上に充電するためです。減速時間を延ばすか制動抵抗器を有効にしてください。',
+          },
+          keywords: ['overvoltage', 'dc bus', 'decel', 'braking', 'trip', 'tegangan lebih', '過電圧'],
+        },
+        {
+          q: {
+            en: 'How do I prevent VFD-induced bearing fluting?',
+            id: 'Bagaimana cara mencegah kerusakan fluting bantalan akibat VFD?',
+            ja: 'VFDによる軸受電食（フルーティング）を防ぐ方法は？',
+          },
+          a: {
+            en: 'Lower the PWM carrier frequency, install a shaft grounding brush/ring and insulated NDE bearing, and use shielded symmetric VFD motor cables.',
+            id: 'Turunkan frekuensi pembawa PWM, pasang sikat/cincin pentanahan poros dan bantalan NDE berisolasi, serta gunakan kabel motor VFD simetris berpelindung.',
+            ja: 'PWMキャリア周波数を下げ、軸接地ブラシ/リングや絶縁軸受を施工し、シールド付き対称VFDケーブルを使用します。',
+          },
+          keywords: ['bearing', 'fluting', 'edm', 'shaft current', 'carrier', 'bantalan', '電食'],
+        },
+      ],
+      targetSelector: '[data-tour="vfd-fault-panel"]',
+    },
+    {
+      id: 'vfd-schematic',
+      badge: { en: 'Feature 5 · Power Stage', id: 'Fitur 5 · Skematik Daya', ja: '機能5 · 主回路構成' },
+      title: {
+        en: 'Live 3-Phase Rectifier, DC Bus & Motor Schematic',
+        id: 'Skematik Langsung Penyearah 3-Fasa, Bus DC & Motor',
+        ja: '三相整流・DCバス・インバータ主回路アニメーション',
+      },
+      description: {
+        en: 'Watch animated 3-phase power flow from the MCC breaker through the diode rectifier, DC bus capacitors, IGBT inverter bridge, and rotating motor shaft with real-time fault indicators.',
+        id: 'Amati aliran daya 3-fasa dari pemutus MCC melewati penyearah dioda, kapasitor bus DC, jembatan inverter IGBT, hingga poros motor berputar beserta indikator gangguan langsung.',
+        ja: 'MCC遮断器からダイオード整流器、DCバス平滑コンデンサ、IGBTインバータ、回転軸までの電力フローと故障インジケータをリアルタイムで確認できます。',
+      },
+      targetSelector: '[data-tour="vfd-schematic"]',
+    },
+    {
+      id: 'vfd-chart',
+      badge: { en: 'Feature 6 · Curves', id: 'Fitur 6 · Kurva Karakteristik', ja: '機能6 · 特性グラフ' },
+      title: {
+        en: 'Torque-Speed, V/f Curve & PWM Waveforms',
+        id: 'Kurva Torsi-Kecepatan, Kurva V/f & Gelombang PWM',
+        ja: 'トルク-速度曲線・V/f特性・PWM波形',
+      },
+      description: {
+        en: 'Switch chart tabs to inspect the motor Torque-Speed operating point, the constant-torque vs. field-weakening V/f curve, and synthesized 3-phase PWM current/voltage waveforms.',
+        id: 'Beralihlah antar-tab grafik untuk memeriksa titik kerja Torsi-Kecepatan motor, kurva V/f torsi konstan vs. pelemahan medan, serta bentuk gelombang arus/tegangan PWM 3-fasa.',
+        ja: 'グラフタブを切り替えて、トルク-速度動作点、定トルク/弱め界磁のV/f曲線、三相PWM出力波形を詳しく確認します。',
+      },
+      targetSelector: '[data-tour="vfd-chart"]',
+    },
+    {
+      id: 'vfd-telemetry',
+      badge: { en: 'Feature 7 · Telemetry', id: 'Fitur 7 · Telemetri', ja: '機能7 · 運転テレメトリ' },
+      title: {
+        en: 'Live Electrical & Mechanical Telemetry',
+        id: 'Telemetri Kelistrikan & Mekanis Langsung',
+        ja: '電気・機械パラメータ計測値',
+      },
+      description: {
+        en: 'Monitor synchronous speed (Ns), rotor RPM, slip %, output voltage, DC bus voltage, phase current, shaft torque, and fault/trip status in real time.',
+        id: 'Pantau kecepatan sinkron (Ns), putaran rotor (RPM), slip %, tegangan keluaran, tegangan bus DC, arus fasa, torsi poros, dan status trip secara langsung.',
+        ja: '同期速度（Ns）、ロータ回転数（RPM）、滑り率、出力電圧、DCバス電圧、相電流、軸トルク、トリップ状態をリアルタイムで監視します。',
+      },
+      targetSelector: '[data-tour="vfd-telemetry"]',
+    },
+    {
+      id: 'vfd-workflow',
+      badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
+      title: {
+        en: 'Explore, Practice & Quiz Workflow',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
+        ja: '探索・演習・クイズの学習フロー',
+      },
+      description: {
+        en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study V/f equations, calculate slip and starting current, and complete the VFD assessment.',
+        id: 'Gunakan Alt+1 (Eksplorasi), Alt+2 (Simulasi), Alt+3 (Latihan), dan Alt+4 (Kuis) untuk mempelajari persamaan V/f, menghitung slip dan arus asut, serta menyelesaikan evaluasi VFD.',
+        ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）でV/f理論や滑り・始動電流の計算演習から理解度テストまで進められます。',
+      },
+      targetSelector: '[data-tour="mode-tabs"]',
+    },
+  ],
 };

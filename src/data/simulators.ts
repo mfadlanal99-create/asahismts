@@ -43,6 +43,8 @@ import { clampMeterMeta } from '../simulators/clamp-meter/clampMeterMeta';
 import { megohmmeterMeta } from '../simulators/megohmmeter/megohmmeterMeta';
 import { irThermometerMeta } from '../simulators/ir-thermometer/irThermometerMeta';
 import { laserTachometerMeta } from '../simulators/laser-tachometer/laserTachometerMeta';
+import { vfdDriveMeta } from '../simulators/vfd-drive/vfdDriveMeta';
+import { lotoSafetyMeta } from '../simulators/loto-safety/lotoSafetyMeta';
 
 export interface SimulatorRegistryEntry {
   meta: SimulatorMeta;
@@ -388,6 +390,22 @@ export const SIMULATOR_REGISTRY: SimulatorRegistryEntry[] = [
       import('../simulators/laser-tachometer/LaserTachometerSimulator').then(
         (m) => ({ default: m.LaserTachometerSimulator })
       )
+    ),
+  },
+  {
+    meta: vfdDriveMeta,
+    Component: lazy(() =>
+      import('../simulators/vfd-drive/VfdDriveSimulator').then((m) => ({
+        default: m.VfdDriveSimulator,
+      }))
+    ),
+  },
+  {
+    meta: lotoSafetyMeta,
+    Component: lazy(() =>
+      import('../simulators/loto-safety/LotoSafetySimulator').then((m) => ({
+        default: m.LotoSafetySimulator,
+      }))
     ),
   },
 ];
