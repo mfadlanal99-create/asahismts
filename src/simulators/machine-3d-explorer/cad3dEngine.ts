@@ -1,5 +1,6 @@
 import { PUMP_3D_PARTS, type Machine3DPartSpec } from './machine3dData';
 import { buildExtraMachineMesh } from './extraMachines3dMeshes';
+import { buildDynamicBucketElevatorBuckets } from './bucketElevator3dMeshes';
 
 export type Vec3 = [number, number, number];
 type RgbTuple = [number, number, number];
@@ -3683,8 +3684,21 @@ export function renderCadScene(
     const sinZ = rotatesAroundZ ? Math.sin(shaftAngleRad * zRotSpeed) : sinRot;
     const shininess = part.appearance.shininess;
     const specStr = part.appearance.specularStrength * 165;
+    const dynamicBeBuckets =
+      part.id === 'be-belt-buckets'
+        ? buildDynamicBucketElevatorBuckets(
+            shaftAngleRad,
+            part.appearance.baseHex
+          )
+        : null;
+    const meshFaces = dynamicBeBuckets
+      ? [...mesh.faces, ...dynamicBeBuckets.faces]
+      : mesh.faces;
+    const meshEdges = dynamicBeBuckets
+      ? [...mesh.edges, ...dynamicBeBuckets.edges]
+      : mesh.edges;
 
-    for (const face of mesh.faces) {
+    for (const face of meshFaces) {
       // Transform pre-computed unit normal into camera space (zero sqrt/cross calls per frame!)
       let nx = face.normal[0];
       let ny = face.normal[1];
@@ -3787,7 +3801,7 @@ export function renderCadScene(
           : 0.48;
     const edgeWidth = isSelected ? 1.8 : isHovered ? 1.4 : edgeAlpha > 0.5 ? 1.0 : 0.75;
 
-    for (const edge of mesh.edges) {
+    for (const edge of meshEdges) {
       let ax = edge.a[0];
       let ay = edge.a[1];
       let az = edge.a[2];

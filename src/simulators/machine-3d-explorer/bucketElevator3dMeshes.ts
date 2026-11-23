@@ -151,9 +151,7 @@ function buildBeBootSection(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Upper collar (y = 0..12, x = -19..+19, z = -11..+11)
   addBox(faces, edges, 0, 6, 0, 19, 6, 11, baseHex, true);
-  // Semicircular bottom trough (y = 0 down to -19, R = 19)
   addCylinderZ(faces, edges, -11, 11, 19, 19, 0, 0, 14, {
     cx: 0,
     cy: 0,
@@ -162,13 +160,10 @@ function buildBeBootSection(baseHex: string): PartMesh {
     thetaStart: Math.PI,
     thetaEnd: Math.PI * 2,
   });
-  // Steel pedestal skirt & anchor baseplate
   addBox(faces, edges, 0, -19, 0, 18, 2, 12, '#1E3A5F', true);
   addBox(faces, edges, 0, -22, 0, 22, 1.5, 14, '#0F172A', true);
-  // Top mating flange
   addBox(faces, edges, 0, 12.5, 0, 20.5, 1, 12.5, '#1E3A5F', true);
 
-  // 45-degree sloped inlet feed hopper on left ascending side
   addExtrudedPolyZ(
     faces,
     edges,
@@ -183,10 +178,8 @@ function buildBeBootSection(baseHex: string): PartMesh {
     '#4F7FA8',
     true
   );
-  // Inlet hopper flange rim
   addBox(faces, edges, -34.5, 11, 0, 1.2, 7, 9.5, '#1E3A5F', true);
 
-  // Cleanout slide gate on right side
   addBox(faces, edges, 19.5, -5, 0, 1, 5.5, 7.5, '#D97706', false);
   addBox(faces, edges, 21.5, -5, 0, 1.2, 1.2, 2.5, '#F59E0B', false);
 
@@ -197,20 +190,16 @@ function buildBeTrunkCasing(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Slender twin vertical legs with clear 13-unit open gap in center (x = ±12.5, hx = 6 -> ±6.5..±18.5)
   addBox(faces, edges, -12.5, 0, 0, 6, 31.5, 10, baseHex, true);
   addBox(faces, edges, 12.5, 0, 0, 6, 31.5, 10, baseHex, true);
 
-  // 3 sleek horizontal tie-channel struts connecting the two legs
   for (const ty of [-20, 0, 20]) {
     addBox(faces, edges, 0, ty, 0, 6.5, 1.2, 6, '#1E3A5F', false);
   }
-  // Crisp top & bottom mating flanges on each leg
   for (const fy of [-30.5, 30.5]) {
     addBox(faces, edges, -12.5, fy, 0, 7, 1, 11, '#1E3A5F', true);
     addBox(faces, edges, 12.5, fy, 0, 7, 1, 11, '#1E3A5F', true);
   }
-  // Hinged inspection hatch on front of left ascending leg
   addBox(faces, edges, -12.5, -8, 10.5, 4.2, 7.5, 0.8, '#D97706', false);
   addBox(faces, edges, -9.2, -8, 11.4, 0.8, 2.2, 0.6, '#F59E0B', false);
 
@@ -221,9 +210,7 @@ function buildBeHeadHood(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Lower split hood base (y = -12..0, x = -19..+19, z = -11..+11)
   addBox(faces, edges, 0, -6, 0, 19, 6, 11, baseHex, true);
-  // Semicircular curved head hood crown (y = 0..+19, R = 19)
   addCylinderZ(faces, edges, -11, 11, 19, 19, 0, 0, 16, {
     cx: 0,
     cy: 0,
@@ -232,13 +219,10 @@ function buildBeHeadHood(baseHex: string): PartMesh {
     thetaStart: 0,
     thetaEnd: Math.PI,
   });
-  // Split seam flange at pulley centerline
   addBox(faces, edges, 0, 0, 0, 20.5, 1, 12.5, '#1E3A5F', true);
-  // Top lifting lugs
   addBox(faces, edges, -10, 20, 0, 2, 2, 1.2, '#F59E0B', false);
   addBox(faces, edges, 10, 20, 0, 2, 2, 1.2, '#F59E0B', false);
 
-  // Sloped 35° tangential discharge throat on the right
   addExtrudedPolyZ(
     faces,
     edges,
@@ -253,7 +237,6 @@ function buildBeHeadHood(baseHex: string): PartMesh {
     '#4F7FA8',
     true
   );
-  // Discharge outlet flange
   addBox(faces, edges, 40.5, -16, 0, 1.2, 7, 9.5, '#1E3A5F', true);
 
   return compileMesh(faces, edges, [0, 0, 0], baseHex);
@@ -263,22 +246,25 @@ function buildBeHeadPulley(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Crowned rubber-lagged drum pulley
   addCylinderZ(faces, edges, -8, 8, 10.5, 10.5, 3, 3, 18, {
     colorHex: baseHex,
   });
-  // Steel end-discs
+  // Lagging tread bars so rotation is clearly visible
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    const lx = Math.cos(a) * 10.7;
+    const ly = Math.sin(a) * 10.7;
+    addBox(faces, edges, lx, ly, 0, 0.7, 0.7, 7.6, '#0F172A', false);
+  }
   addCylinderZ(faces, edges, -8, -6.8, 10.1, 10.1, 2.5, 2.5, 18, {
     colorHex: '#64748B',
   });
   addCylinderZ(faces, edges, 6.8, 8, 10.1, 10.1, 2.5, 2.5, 18, {
     colorHex: '#64748B',
   });
-  // 4140 alloy drive shaft extending to reducer on back (-Z)
   addCylinderZ(faces, edges, -22, 15, 2.8, 2.8, 0, 0, 12, {
     colorHex: '#CBD5E1',
   });
-  // Two compact pillow-block bearing housings
   addBox(faces, edges, 0, 0, 13, 4.5, 4, 2.2, '#1E293B', false);
   addBox(faces, edges, 0, 0, -13, 4.5, 4, 2.2, '#1E293B', false);
 
@@ -289,40 +275,115 @@ function buildBeDriveBackstop(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Tapered shaft-mounted helical reducer housing
-  addBox(faces, edges, -3, -3, 0, 7, 11, 4.5, '#334155', false);
-  // Safety-yellow sprag backstop clutch on outer face
-  addCylinderZ(faces, edges, -8, -4.5, 6, 6, 0, 0, 14, {
+  // 1. Contoured Shaft-Mounted Helical Reducer (output hub at 0,0 -> input barrel at -13,-11)
+  addCylinderZ(faces, edges, -4.5, 4.5, 5.5, 5.5, 2.6, 2.6, 16, {
     cx: 0,
     cy: 0,
-    colorHex: '#F59E0B',
+    colorHex: '#334155',
   });
-  // Torque arm bracket
-  addBox(faces, edges, -6, -16, 0, 2, 4, 1.2, '#D97706', false);
-
-  // Ribbed TEFC 3-phase drive motor
-  addCylinderZ(faces, edges, -5, 8, 6.5, 6.5, 0, 0, 16, {
-    cx: -17,
-    cy: -7,
-    colorHex: baseHex,
-  });
-  // Cooling fin rings on motor stator
-  for (let i = 0; i < 4; i++) {
-    const fz = -3.5 + i * 3;
-    addCylinderZ(faces, edges, fz, fz + 1, 7.2, 7.2, 6.3, 6.3, 16, {
-      cx: -17,
-      cy: -7,
-      colorHex: '#92400E',
-    });
-  }
-  // Motor fan cowl
-  addCylinderZ(faces, edges, -9.5, -5, 6.8, 6.8, 0, 0, 16, {
-    cx: -17,
-    cy: -7,
+  // Tapered cast-iron gearcase body connecting output hub to input pinion
+  addExtrudedPolyZ(
+    faces,
+    edges,
+    [
+      [-3.5, 4.5],
+      [3.5, 3.5],
+      [4.2, -3.5],
+      [-9.5, -15.5],
+      [-17.5, -14.0],
+      [-17.5, -6.5],
+    ],
+    -4.0,
+    4.0,
+    '#334155',
+    false
+  );
+  // Input pinion cylindrical boss
+  addCylinderZ(faces, edges, -5.5, 5.5, 5.0, 5.0, 0, 0, 14, {
+    cx: -13.5,
+    cy: -10.5,
     colorHex: '#475569',
   });
-  // Motor terminal box
-  addBox(faces, edges, -17, 1, 1, 2.8, 2.2, 2.8, '#1E293B', false);
+  // Safety-yellow sprag backstop clutch on rear face of input boss
+  addCylinderZ(faces, edges, -9.2, -5.5, 4.6, 4.6, 0, 0, 14, {
+    cx: -13.5,
+    cy: -10.5,
+    colorHex: '#F59E0B',
+  });
+  // Torque-arm clevis & turnbuckle rod anchoring reducer to elevator frame
+  addBox(faces, edges, -13.5, -18.5, 0, 1.4, 3.8, 1.4, '#CBD5E1', false);
+  addBox(faces, edges, -13.5, -22.5, 0, 2.4, 1.2, 2.0, '#1E293B', false);
+  // Breather cap & oil sight-glass on reducer
+  addBox(faces, edges, -4, 4.5, 0, 1.2, 1.4, 1.2, '#F59E0B', false);
+  addCylinderZ(faces, edges, 3.8, 4.5, 1.4, 1.4, 0, 0, 10, {
+    cx: -7,
+    cy: -6,
+    colorHex: '#10B981',
+  });
+
+  // 2. Tapered V-Belt Drive Guard (connecting reducer input -13.5,-10.5 to motor shaft -22,+6 at z = +5..+8.5)
+  addExtrudedPolyZ(
+    faces,
+    edges,
+    [
+      [-10.2, -12.5],
+      [-16.8, -12.5],
+      [-26.2, 6.0],
+      [-24.2, 9.8],
+      [-19.2, 9.8],
+      [-9.8, -8.5],
+    ],
+    4.8,
+    8.2,
+    '#D97706',
+    false
+  );
+
+  // 3. Top-Mounted Adjustable Motor Baseplate
+  addBox(faces, edges, -22, -0.5, -1.5, 7.5, 1.1, 7.0, '#1E293B', false);
+
+  // 4. Realistic Ribbed TEFC 3-Phase Induction Motor (centered at cx=-22, cy=+6)
+  // Stator barrel (z = -5..+5)
+  addCylinderZ(faces, edges, -5.2, 5.2, 5.8, 5.8, 0, 0, 18, {
+    cx: -22,
+    cy: 6,
+    colorHex: baseHex,
+  });
+  // Chamfered DE & NDE end-shields
+  addCylinderZ(faces, edges, 5.2, 7.0, 5.4, 4.2, 0, 0, 18, {
+    cx: -22,
+    cy: 6,
+    colorHex: '#475569',
+  });
+  addCylinderZ(faces, edges, -7.2, -5.2, 4.4, 5.6, 0, 0, 18, {
+    cx: -22,
+    cy: 6,
+    colorHex: '#475569',
+  });
+  // Perforated cooling fan cowl on NDE
+  addCylinderZ(faces, edges, -9.8, -6.8, 5.7, 5.7, 0, 0, 18, {
+    cx: -22,
+    cy: 6,
+    colorHex: '#334155',
+  });
+  // 8 longitudinal stator cooling fins around the motor frame
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const fx = -22 + Math.cos(a) * 6.0;
+    const fy = 6 + Math.sin(a) * 6.0;
+    addBox(faces, edges, fx, fy, 0, 0.55, 0.55, 4.6, '#92400E', false);
+  }
+  // Motor drive shaft extending into V-belt guard
+  addCylinderZ(faces, edges, 6.8, 8.0, 1.5, 1.5, 0, 0, 10, {
+    cx: -22,
+    cy: 6,
+    colorHex: '#CBD5E1',
+  });
+  // Cast mounting feet + top eye-bolt + side terminal box
+  addBox(faces, edges, -25.5, 0.8, 0, 1.4, 1.0, 4.2, '#475569', false);
+  addBox(faces, edges, -18.5, 0.8, 0, 1.4, 1.0, 4.2, '#475569', false);
+  addBox(faces, edges, -22, 12.6, 0, 1.0, 1.2, 1.0, '#CBD5E1', false);
+  addBox(faces, edges, -22, 9.2, -1.5, 2.6, 2.0, 2.6, '#1E293B', false);
 
   return compileMesh(faces, edges, [0, 0, 0], baseHex);
 }
@@ -331,21 +392,18 @@ function buildBeBootTakeup(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Central hub + shaft
   addCylinderZ(faces, edges, -7.5, 7.5, 4.2, 4.2, 0, 0, 12, {
     colorHex: '#475569',
   });
   addCylinderZ(faces, edges, -15, 15, 2.4, 2.4, 0, 0, 10, {
     colorHex: '#CBD5E1',
   });
-  // 8 radial self-cleaning wing bars
   for (let i = 0; i < 8; i++) {
     const a = (i / 8) * Math.PI * 2;
     const wx = Math.cos(a) * 7.5;
     const wy = Math.sin(a) * 7.5;
     addBox(faces, edges, wx, wy, 0, 2, 1, 7.5, baseHex, false);
   }
-  // Twin screw take-up slide frames & Acme tension rods
   addBox(faces, edges, 0, 0, 13, 4, 3.5, 2, '#1E293B', false);
   addBox(faces, edges, 0, 0, -13, 4, 3.5, 2, '#1E293B', false);
   addBox(faces, edges, 0, 7, 13, 0.9, 6.5, 0.9, '#F59E0B', false);
@@ -358,11 +416,11 @@ function buildBeBeltBuckets(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Vertical belt runs at x = ±11.2, hy = 44 -> spans exact y = -44..+44 inside trunking!
+  // Endless belt loop (vertical legs + head/boot pulley wrap arcs).
+  // Dynamic moving buckets + belt cleats are generated per-frame in buildDynamicBucketElevatorBuckets().
   addBox(faces, edges, -11.2, 0, 0, 0.7, 44, 7.2, '#1E293B', false);
   addBox(faces, edges, 11.2, 0, 0, 0.7, 44, 7.2, '#1E293B', false);
 
-  // Curved top belt arc over head pulley (y = +44, R = 10.6..11.9)
   addCylinderZ(faces, edges, -7.2, 7.2, 11.9, 11.9, 10.5, 10.5, 14, {
     cx: 0,
     cy: 44,
@@ -370,7 +428,6 @@ function buildBeBeltBuckets(baseHex: string): PartMesh {
     thetaStart: 0,
     thetaEnd: Math.PI,
   });
-  // Curved bottom belt arc around boot pulley (y = -44, R = 10.6..11.9)
   addCylinderZ(faces, edges, -7.2, 7.2, 11.9, 11.9, 10.5, 10.5, 14, {
     cx: 0,
     cy: -44,
@@ -379,39 +436,87 @@ function buildBeBeltBuckets(baseHex: string): PartMesh {
     thetaEnd: Math.PI * 2,
   });
 
-  // 6 angled CEMA scoop buckets on ascending leg (left, facing up, safely inside x = -18.5)
-  for (let i = 0; i < 6; i++) {
-    const by = -34 + i * 13.5;
-    addExtrudedPolyZ(
-      faces,
-      edges,
-      [
-        [-11.9, by - 2.6],
-        [-16.4, by + 2.2],
-        [-11.9, by + 2.6],
-      ],
-      -6,
-      6,
-      baseHex,
-      false
-    );
-  }
-  // 6 angled CEMA scoop buckets on descending leg (right, inverted)
-  for (let i = 0; i < 6; i++) {
-    const by = -34 + i * 13.5;
-    addExtrudedPolyZ(
-      faces,
-      edges,
-      [
-        [11.9, by + 2.6],
-        [16.4, by - 2.2],
-        [11.9, by - 2.6],
-      ],
-      -6,
-      6,
-      baseHex,
-      false
-    );
+  return compileMesh(faces, edges, [0, 0, 0], baseHex);
+}
+
+/**
+ * Generates the 12 moving CEMA scoop buckets + belt splice cleats along the closed
+ * vertical-leg + head/boot pulley loop driven by shaftAngleRad.
+ */
+export function buildDynamicBucketElevatorBuckets(
+  shaftAngleRad: number,
+  baseHex: string
+): PartMesh {
+  const faces: RawFaceDef[] = [];
+  const edges: EdgeDef[] = [];
+
+  const R = 11.9;
+  const topY = 44;
+  const botY = -44;
+  const straightLen = topY - botY; // 88
+  const arcLen = Math.PI * R;
+  const totalLen = 2 * straightLen + 2 * arcLen;
+  // Convert pulley rotation (rad) into linear belt travel (s = R * theta)
+  const travelS = (shaftAngleRad * R) % totalLen;
+
+  const bucketCount = 12;
+  for (let i = 0; i < bucketCount; i++) {
+    const rawS = (i / bucketCount) * totalLen + travelS;
+    const s = ((rawS % totalLen) + totalLen) % totalLen;
+
+    let bx = 0;
+    let by = 0;
+    let rotRad = 0; // 0 = upright on left ascending leg
+
+    if (s < straightLen) {
+      bx = -R;
+      by = botY + s;
+      rotRad = 0;
+    } else if (s < straightLen + arcLen) {
+      const u = (s - straightLen) / arcLen;
+      const theta = Math.PI - u * Math.PI; // PI -> 0
+      bx = R * Math.cos(theta);
+      by = topY + R * Math.sin(theta);
+      rotRad = -u * Math.PI; // smoothly tips clockwise over the head pulley
+    } else if (s < 2 * straightLen + arcLen) {
+      const u = (s - straightLen - arcLen) / straightLen;
+      bx = R;
+      by = topY - u * straightLen;
+      rotRad = -Math.PI;
+    } else {
+      const u = (s - 2 * straightLen - arcLen) / arcLen;
+      const theta = -u * Math.PI; // 0 -> -PI
+      bx = R * Math.cos(theta);
+      by = botY + R * Math.sin(theta);
+      rotRad = -Math.PI - u * Math.PI;
+    }
+
+    const c = Math.cos(rotRad);
+    const sn = Math.sin(rotRad);
+    const localPts: [number, number][] = [
+      [-0.2, -2.6],
+      [-4.8, 2.2],
+      [-0.2, 2.6],
+    ];
+    const worldPts: [number, number][] = localPts.map(([lx, ly]) => [
+      bx + lx * c - ly * sn,
+      by + lx * sn + ly * c,
+    ]);
+
+    addExtrudedPolyZ(faces, edges, worldPts, -5.8, 5.8, baseHex, false);
+
+    // Belt fastener cleat bar on opposite belt face to make belt travel unmistakable
+    const cleatPts: [number, number][] = [
+      [0.4, -0.7],
+      [-0.5, -0.7],
+      [-0.5, 0.7],
+      [0.4, 0.7],
+    ];
+    const cleatWorld: [number, number][] = cleatPts.map(([lx, ly]) => [
+      bx + lx * c - ly * sn,
+      by + lx * sn + ly * c,
+    ]);
+    addExtrudedPolyZ(faces, edges, cleatWorld, -6.6, 6.6, '#CBD5E1', false);
   }
 
   return compileMesh(faces, edges, [0, 0, 0], baseHex);
@@ -421,15 +526,12 @@ function buildBeZeroSpeedSensor(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // Compact IP67 junction box + mounting bracket
   addBox(faces, edges, 0, 0, 0, 3.5, 3.5, 2.5, baseHex, false);
-  // Inductive proximity sensor barrel pointing toward boot shaft
   addCylinderZ(faces, edges, -9, -2.5, 1.5, 1.5, 0, 0, 10, {
     cx: 0,
     cy: 0,
     colorHex: '#CBD5E1',
   });
-  // Amber LED status cap
   addBox(faces, edges, 0, 4.5, 0, 1.4, 1, 1.4, '#F59E0B', false);
 
   return compileMesh(faces, edges, [0, 0, 0], baseHex);
