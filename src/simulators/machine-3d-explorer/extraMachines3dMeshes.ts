@@ -8,6 +8,7 @@ import {
   type RawFaceDef,
   type Vec3,
 } from './cad3dEngine';
+import { buildBucketElevatorMesh } from './bucketElevator3dMeshes';
 
 // ---------------------------------------------------------------------------
 // Blueprint-Grade Parametric CAD Geometry Helpers (matches cad3dEngine.ts)
@@ -1213,6 +1214,6 @@ export function buildExtraMachineMesh(partId: string, baseHex: string): PartMesh
       return buildUrasTerminalBox(baseHex);
 
     default:
-      return null;
+      return buildBucketElevatorMesh(partId, baseHex);
   }
 }

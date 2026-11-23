@@ -3671,13 +3671,14 @@ export function renderCadScene(
       rotates &&
       (part.id.startsWith('belt-') ||
         part.id.startsWith('chain-') ||
-        part.id.startsWith('gb-'));
+        part.id.startsWith('gb-') ||
+        part.id.startsWith('be-'));
     // Belt pulleys & intermediate gearbox shaft spin in reverse; gearbox stages scale by ratio
     let zRotSpeed = 1;
     if (part.id === 'gb-input-pinion') zRotSpeed = 1.8;
     else if (part.id === 'gb-intermediate-shaft') zRotSpeed = -0.85;
     else if (part.id === 'gb-bull-gear-output') zRotSpeed = 0.38;
-    else if (part.id.startsWith('belt-')) zRotSpeed = -1;
+    else if (part.id.startsWith('belt-') || part.id.startsWith('be-')) zRotSpeed = -1;
     const cosZ = rotatesAroundZ ? Math.cos(shaftAngleRad * zRotSpeed) : cosRot;
     const sinZ = rotatesAroundZ ? Math.sin(shaftAngleRad * zRotSpeed) : sinRot;
     const shininess = part.appearance.shininess;

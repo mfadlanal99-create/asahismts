@@ -50,6 +50,10 @@ import {
   URAS_MOTOR_INFO,
 } from './urasMotor3dData';
 import {
+  BUCKET_ELEVATOR_3D_PARTS,
+  BUCKET_ELEVATOR_3D_INFO,
+} from './bucketElevator3dData';
+import {
   Machine3DViewport,
   type CameraPresetCommand,
 } from './Machine3DViewport';
@@ -63,7 +67,8 @@ type MachineId =
   | 'screw'
   | 'gearbox'
   | 'motor'
-  | 'uras';
+  | 'uras'
+  | 'bucket-elevator';
 
 const MACHINE_CONFIGS: {
   id: MachineId;
@@ -216,6 +221,22 @@ const MACHINE_CONFIGS: {
       ja: 'FCD450ダクタイル鋳鉄フレーム・位相可変偏心ウエイト・防振モールド端子箱。',
     },
     standardTag: 'URAS KEE / IP66',
+  },
+  {
+    id: 'bucket-elevator',
+    info: BUCKET_ELEVATOR_3D_INFO,
+    parts: BUCKET_ELEVATOR_3D_PARTS,
+    shortLabel: {
+      en: 'CEMA Centrifugal Bucket Elevator',
+      id: 'Bucket Elevator Sentrifugal CEMA',
+      ja: 'CEMA 遠心排出バケットエレベータ',
+    },
+    summary: {
+      en: 'Twin-leg enclosed casing, lagged head drive pulley, sprag backstop, wing boot take-up & 14 buckets.',
+      id: 'Casing tertutup dua jalur, puli kepala berpelapis karet, rem backstop, puli ekor sayap & 14 bucket.',
+      ja: '2列密閉ケーシング・ライニングヘッドプーリ・逆転防止装置・ウィングテールプーリ＆バケット。',
+    },
+    standardTag: 'CEMA / ISO 7119',
   },
 ];
 
