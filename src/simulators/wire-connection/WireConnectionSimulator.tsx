@@ -104,44 +104,45 @@ export function WireConnectionSimulator() {
     },
   ];
 
-  const methods: { id: TerminationMethodId; label: string }[] = (
-    [
-      {
-        id: 'crimped-ferrule-lug' as const,
-        label:
-          params.station === 'motor-lug' || params.station === 'grounding-pe'
-            ? pick('Ring Lug (Crimped)', 'Sepatu Kabel (Lug)', '丸形圧着端子')
-            : params.station === 'wire-splice'
-              ? pick('Butt Crimp Splice', 'Selongsong Crimp', '圧着スリーブ')
-              : pick('Bootlace Ferrule', 'Skun Ferrule', 'フェルール (棒端子)'),
-        stations: ['terminal-block', 'motor-lug', 'wire-splice', 'grounding-pe'],
-      },
-      {
-        id: 'wago-lever' as const,
-        label: pick('Wago Lever-Nut', 'Konektor Tuas Wago', 'レバーコネクタ'),
-        stations: ['wire-splice'],
-      },
-      {
-        id: 'bare-stranded' as const,
-        label: pick('Bare Stranded', 'Serabut Telanjang', '裸より線'),
-        stations: ['terminal-block', 'motor-lug', 'grounding-pe'],
-      },
-      {
-        id: 'solder-tinned' as const,
-        label: pick('Solder-Tinned', 'Lapis Timah Solder', '予備はんだ'),
-        stations: ['terminal-block', 'motor-lug', 'wire-splice'],
-      },
-      {
-        id: 'twisted-tape' as const,
-        label: pick('Twisted + PVC Tape', 'Puntir + Isolasi PVC', 'ねじり+テープ'),
-        stations: ['wire-splice'],
-      },
-    ] satisfies {
-      id: TerminationMethodId;
-      label: string;
-      stations: TerminationStationId[];
-    }[]
-  ).filter((m) => m.stations.includes(params.station));
+  const allMethods: {
+    id: TerminationMethodId;
+    label: string;
+    stations: TerminationStationId[];
+  }[] = [
+    {
+      id: 'crimped-ferrule-lug',
+      label:
+        params.station === 'motor-lug' || params.station === 'grounding-pe'
+          ? pick('Ring Lug (Crimped)', 'Sepatu Kabel (Lug)', '丸形圧着端子')
+          : params.station === 'wire-splice'
+            ? pick('Butt Crimp Splice', 'Selongsong Crimp', '圧着スリーブ')
+            : pick('Bootlace Ferrule', 'Skun Ferrule', 'フェルール (棒端子)'),
+      stations: ['terminal-block', 'motor-lug', 'wire-splice', 'grounding-pe'],
+    },
+    {
+      id: 'wago-lever',
+      label: pick('Wago Lever-Nut', 'Konektor Tuas Wago', 'レバーコネクタ'),
+      stations: ['wire-splice'],
+    },
+    {
+      id: 'bare-stranded',
+      label: pick('Bare Stranded', 'Serabut Telanjang', '裸より線'),
+      stations: ['terminal-block', 'motor-lug', 'grounding-pe'],
+    },
+    {
+      id: 'solder-tinned',
+      label: pick('Solder-Tinned', 'Lapis Timah Solder', '予備はんだ'),
+      stations: ['terminal-block', 'motor-lug', 'wire-splice'],
+    },
+    {
+      id: 'twisted-tape',
+      label: pick('Twisted + PVC Tape', 'Puntir + Isolasi PVC', 'ねじり+テープ'),
+      stations: ['wire-splice'],
+    },
+  ];
+  const methods = allMethods.filter((m) =>
+    m.stations.includes(params.station)
+  );
 
   const faults: { id: WireFaultId; label: string }[] = [
     {
