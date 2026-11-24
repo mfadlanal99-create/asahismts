@@ -1,6 +1,7 @@
 import { PUMP_3D_PARTS, type Machine3DPartSpec } from './machine3dData';
 import { buildExtraMachineMesh } from './extraMachines3dMeshes';
 import { buildDynamicBucketElevatorBuckets } from './bucketElevator3dMeshes';
+import { buildDynamicApronChainPans } from './apronConveyor3dMeshes';
 
 export type Vec3 = [number, number, number];
 type RgbTuple = [number, number, number];
@@ -3673,29 +3674,37 @@ export function renderCadScene(
       (part.id.startsWith('belt-') ||
         part.id.startsWith('chain-') ||
         part.id.startsWith('gb-') ||
-        part.id.startsWith('be-'));
+        part.id.startsWith('be-') ||
+        part.id.startsWith('apron-'));
     // Belt pulleys & intermediate gearbox shaft spin in reverse; gearbox stages scale by ratio
     let zRotSpeed = 1;
     if (part.id === 'gb-input-pinion') zRotSpeed = 1.8;
     else if (part.id === 'gb-intermediate-shaft') zRotSpeed = -0.85;
     else if (part.id === 'gb-bull-gear-output') zRotSpeed = 0.38;
-    else if (part.id.startsWith('belt-') || part.id.startsWith('be-')) zRotSpeed = -1;
+    else if (
+      part.id.startsWith('belt-') ||
+      part.id.startsWith('be-') ||
+      part.id.startsWith('apron-')
+    )
+      zRotSpeed = -1;
     const cosZ = rotatesAroundZ ? Math.cos(shaftAngleRad * zRotSpeed) : cosRot;
     const sinZ = rotatesAroundZ ? Math.sin(shaftAngleRad * zRotSpeed) : sinRot;
     const shininess = part.appearance.shininess;
     const specStr = part.appearance.specularStrength * 165;
-    const dynamicBeBuckets =
+    const dynamicExtra =
       part.id === 'be-belt-buckets'
         ? buildDynamicBucketElevatorBuckets(
             shaftAngleRad,
             part.appearance.baseHex
           )
-        : null;
-    const meshFaces = dynamicBeBuckets
-      ? [...mesh.faces, ...dynamicBeBuckets.faces]
+        : part.id === 'apron-chain-pans'
+          ? buildDynamicApronChainPans(shaftAngleRad, part.appearance.baseHex)
+          : null;
+    const meshFaces = dynamicExtra
+      ? [...mesh.faces, ...dynamicExtra.faces]
       : mesh.faces;
-    const meshEdges = dynamicBeBuckets
-      ? [...mesh.edges, ...dynamicBeBuckets.edges]
+    const meshEdges = dynamicExtra
+      ? [...mesh.edges, ...dynamicExtra.edges]
       : mesh.edges;
 
     for (const face of meshFaces) {

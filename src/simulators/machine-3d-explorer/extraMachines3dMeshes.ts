@@ -9,6 +9,7 @@ import {
   type Vec3,
 } from './cad3dEngine';
 import { buildBucketElevatorMesh } from './bucketElevator3dMeshes';
+import { buildApronConveyorMesh } from './apronConveyor3dMeshes';
 
 // ---------------------------------------------------------------------------
 // Blueprint-Grade Parametric CAD Geometry Helpers (matches cad3dEngine.ts)
@@ -1214,6 +1215,9 @@ export function buildExtraMachineMesh(partId: string, baseHex: string): PartMesh
       return buildUrasTerminalBox(baseHex);
 
     default:
-      return buildBucketElevatorMesh(partId, baseHex);
+      return (
+        buildBucketElevatorMesh(partId, baseHex) ??
+        buildApronConveyorMesh(partId, baseHex)
+      );
   }
 }

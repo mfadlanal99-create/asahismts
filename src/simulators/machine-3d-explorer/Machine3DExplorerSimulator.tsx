@@ -54,6 +54,10 @@ import {
   BUCKET_ELEVATOR_3D_INFO,
 } from './bucketElevator3dData';
 import {
+  APRON_CONVEYOR_3D_PARTS,
+  APRON_CONVEYOR_3D_INFO,
+} from './apronConveyor3dData';
+import {
   Machine3DViewport,
   type CameraPresetCommand,
 } from './Machine3DViewport';
@@ -68,7 +72,8 @@ type MachineId =
   | 'gearbox'
   | 'motor'
   | 'uras'
-  | 'bucket-elevator';
+  | 'bucket-elevator'
+  | 'apron-conveyor';
 
 const MACHINE_CONFIGS: {
   id: MachineId;
@@ -237,6 +242,22 @@ const MACHINE_CONFIGS: {
       ja: '2列密閉ケーシング・ライニングヘッドプーリ・逆転防止装置・ウィングテールプーリ＆バケット。',
     },
     standardTag: 'CEMA / ISO 7119',
+  },
+  {
+    id: 'apron-conveyor',
+    info: APRON_CONVEYOR_3D_INFO,
+    parts: APRON_CONVEYOR_3D_PARTS,
+    shortLabel: {
+      en: 'Heavy-Duty Apron Chain Conveyor',
+      id: 'Konveyor Rantai Apron Tugas Berat',
+      ja: '重荷重エプロンチェーンコンベヤ',
+    },
+    summary: {
+      en: 'Twin outboard roller chains, 24 overlapping beaded steel pans, skirtboards & helical-bevel gearmotor.',
+      id: 'Rantai rol ganda eksternal, 24 pelat apron baja tumpang-tindih, skirtboard & gearmotor heliks-bevel.',
+      ja: '両側アウトボードチェーン・24枚オーバーラップ鋼製パン・スカートボード・直交軸ギヤモータ。',
+    },
+    standardTag: 'CEMA / DIN 8175',
   },
 ];
 
