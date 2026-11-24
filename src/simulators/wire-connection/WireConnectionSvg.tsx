@@ -113,17 +113,71 @@ export function WireConnectionSvg({
           r={38 + heatRatio * 34}
           fill="url(#thermalGlow)"
           opacity={0.25 + heatRatio * 0.65}
-        />
+        >
+          <animate
+            attributeName="r"
+            values={`${34 + heatRatio * 28};${44 + heatRatio * 38};${34 + heatRatio * 28}`}
+            dur="1.4s"
+            repeatCount="indefinite"
+          />
+        </circle>
       )}
       {computed.arcingActive && (
-        <g stroke="#fde047" strokeWidth={1.8} strokeLinecap="round">
-          <path d={`M ${cx - 12} ${cy - 8} L ${cx - 4} ${cy - 18} L ${cx + 3} ${cy - 10}`} fill="none" />
-          <path d={`M ${cx + 10} ${cy + 6} L ${cx + 20} ${cy + 15} L ${cx + 12} ${cy + 20}`} fill="none" />
-          <circle cx={cx} cy={cy - 12} r={2.2} fill="#fef08a" stroke="none" />
+        <g stroke="#fde047" strokeWidth={2} strokeLinecap="round">
+          <path d={`M ${cx - 12} ${cy - 8} L ${cx - 4} ${cy - 18} L ${cx + 3} ${cy - 10}`} fill="none">
+            <animate attributeName="opacity" values="1;0.15;1;0.4;1" dur="0.45s" repeatCount="indefinite" />
+          </path>
+          <path d={`M ${cx + 10} ${cy + 6} L ${cx + 20} ${cy + 15} L ${cx + 12} ${cy + 20}`} fill="none">
+            <animate attributeName="opacity" values="0.2;1;0.1;1;0.2" dur="0.38s" repeatCount="indefinite" />
+          </path>
+          <circle cx={cx} cy={cy - 12} r={2.6} fill="#fef08a" stroke="none">
+            <animate attributeName="r" values="1.5;3.8;1.5" dur="0.35s" repeatCount="indefinite" />
+          </circle>
         </g>
       )}
     </g>
   );
+
+  const renderCurrentFlow = (x1: number, x2: number, y: number) => {
+    const blocked = insulationPinch;
+    const flowSpeed = Math.max(0.45, 2.2 - (params.loadCurrentA / 60) * 1.4);
+    return (
+      <g pointerEvents="none">
+        {!blocked ? (
+          <line
+            x1={x1}
+            y1={y}
+            x2={x2}
+            y2={y}
+            stroke={computed.verdict === 'PASS' ? '#38bdf8' : '#fbbf24'}
+            strokeWidth={2.2}
+            strokeDasharray="6 12"
+            strokeLinecap="round"
+            opacity={0.85}
+          >
+            <animate
+              attributeName="stroke-dashoffset"
+              from="36"
+              to="0"
+              dur={`${flowSpeed.toFixed(2)}s`}
+              repeatCount="indefinite"
+            />
+          </line>
+        ) : (
+          <text
+            x={(x1 + x2) / 2}
+            y={y - 14}
+            textAnchor="middle"
+            fontSize="9.5"
+            fontWeight="800"
+            fill="#fca5a5"
+          >
+            ✕ {pick('OPEN CIRCUIT — NO CURRENT!', 'RANGKAIAN TERPUTUS!', '断線状態 — 電流流れず!')}
+          </text>
+        )}
+      </g>
+    );
+  };
 
   const renderPullBadge = (x: number, y: number) => {
     if (!pullTestActive) return null;
@@ -607,7 +661,12 @@ export function WireConnectionSvg({
               </text>
             )}
             {renderThermalAndArcOverlay(316, 198)}
+            {renderCurrentFlow(70, 675, 198)}
             {renderPullBadge(152, 226)}
+            {/* Direct Component Callout Labels */}
+            <text x="380" y="76" textAnchor="middle" fontSize="9.5" fill="#94a3b8">
+              {pick('Slotted Screw & Brass Clamping Yoke', 'Sekrup & Penjepit Kuningan', 'ねじ＆真鍮クランプヨーク')}
+            </text>
           </g>
         )}
 
@@ -870,7 +929,11 @@ export function WireConnectionSvg({
               M6 Stud · {params.torqueNm.toFixed(1)} N·m
             </text>
             {renderThermalAndArcOverlay(380, 204)}
+            {renderCurrentFlow(80, 455, 206)}
             {renderPullBadge(152, 240)}
+            <text x="515" y="138" fontSize="9.5" fill="#94a3b8">
+              {pick('Hex Nut → Lock → Flat Washer → Lug → Busbar', 'Mur → Ring Per → Ring Datar → Skun → Busbar', 'ナット→ばね座金→平座金→端子→ブスバー')}
+            </text>
           </g>
         )}
 
@@ -1079,6 +1142,7 @@ export function WireConnectionSvg({
               {params.gaugeMm2} mm² · {params.loadCurrentA} A
             </text>
             {renderThermalAndArcOverlay(380, 195)}
+            {renderCurrentFlow(70, 685, 195)}
             {renderPullBadge(152, 232)}
           </g>
         )}

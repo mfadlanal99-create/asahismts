@@ -104,31 +104,44 @@ export function WireConnectionSimulator() {
     },
   ];
 
-  const methods: { id: TerminationMethodId; label: string }[] = [
-    {
-      id: 'crimped-ferrule-lug',
-      label:
-        params.station === 'motor-lug' || params.station === 'grounding-pe'
-          ? pick('Ring Lug (Crimped)', 'Sepatu Kabel (Lug)', '丸形圧着端子')
-          : pick('Bootlace Ferrule', 'Skun Ferrule', 'フェルール (棒端子)'),
-    },
-    {
-      id: 'bare-stranded',
-      label: pick('Bare Stranded', 'Serabut Telanjang', '裸より線'),
-    },
-    {
-      id: 'solder-tinned',
-      label: pick('Solder-Tinned', 'Lapis Timah Solder', '予備はんだ'),
-    },
-    {
-      id: 'wago-lever',
-      label: pick('Wago Lever-Nut', 'Konektor Tuas Wago', 'レバーコネクタ'),
-    },
-    {
-      id: 'twisted-tape',
-      label: pick('Twisted + PVC Tape', 'Puntir + Isolasi PVC', 'ねじり+テープ'),
-    },
-  ];
+  const methods: { id: TerminationMethodId; label: string }[] = (
+    [
+      {
+        id: 'crimped-ferrule-lug' as const,
+        label:
+          params.station === 'motor-lug' || params.station === 'grounding-pe'
+            ? pick('Ring Lug (Crimped)', 'Sepatu Kabel (Lug)', '丸形圧着端子')
+            : params.station === 'wire-splice'
+              ? pick('Butt Crimp Splice', 'Selongsong Crimp', '圧着スリーブ')
+              : pick('Bootlace Ferrule', 'Skun Ferrule', 'フェルール (棒端子)'),
+        stations: ['terminal-block', 'motor-lug', 'wire-splice', 'grounding-pe'],
+      },
+      {
+        id: 'wago-lever' as const,
+        label: pick('Wago Lever-Nut', 'Konektor Tuas Wago', 'レバーコネクタ'),
+        stations: ['wire-splice'],
+      },
+      {
+        id: 'bare-stranded' as const,
+        label: pick('Bare Stranded', 'Serabut Telanjang', '裸より線'),
+        stations: ['terminal-block', 'motor-lug', 'grounding-pe'],
+      },
+      {
+        id: 'solder-tinned' as const,
+        label: pick('Solder-Tinned', 'Lapis Timah Solder', '予備はんだ'),
+        stations: ['terminal-block', 'motor-lug', 'wire-splice'],
+      },
+      {
+        id: 'twisted-tape' as const,
+        label: pick('Twisted + PVC Tape', 'Puntir + Isolasi PVC', 'ねじり+テープ'),
+        stations: ['wire-splice'],
+      },
+    ] satisfies {
+      id: TerminationMethodId;
+      label: string;
+      stations: TerminationStationId[];
+    }[]
+  ).filter((m) => m.stations.includes(params.station));
 
   const faults: { id: WireFaultId; label: string }[] = [
     {
@@ -298,6 +311,60 @@ export function WireConnectionSimulator() {
       <div className="grid gap-5 lg:grid-cols-12 sim-equal-grid">
         {/* LEFT COLUMN: SVG STAGE + TELEMETRY + PULL TEST (7 cols) */}
         <div className="lg:col-span-7 space-y-4">
+          {/* Quick 1-Click Good vs Bad Comparison Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[var(--md-outline-variant)]/50 bg-[var(--md-surface-container-low)] px-3.5 py-2">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)]">
+              {pick('Quick Compare:', 'Bandingkan Cepat:', 'かんたん比較:')}
+            </span>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => {
+                  const recT = getRecommendedTorqueRange(
+                    params.station,
+                    params.gaugeMm2
+                  );
+                  const recS = getRecommendedStripRange(
+                    params.station,
+                    'crimped-ferrule-lug',
+                    params.gaugeMm2
+                  );
+                  setParams((prev) => ({
+                    ...prev,
+                    method:
+                      prev.station === 'wire-splice'
+                        ? 'wago-lever'
+                        : 'crimped-ferrule-lug',
+                    torqueNm: Number(((recT[0] + recT[1]) / 2).toFixed(1)),
+                    stripLengthMm: Math.round((recS[0] + recS[1]) / 2),
+                    washerStackCorrect: true,
+                    paintRemoved: true,
+                    emcShieldBonded: true,
+                    faultMode: 'none',
+                  }));
+                }}
+                className="inline-flex items-center gap-1 rounded-full bg-emerald-600/15 px-3 py-1 text-[11px] font-bold text-emerald-700 hover:bg-emerald-600/25 dark:text-emerald-300"
+              >
+                ✓ {pick('Show Proper Wiring', 'Tampilkan Sambungan Benar', '適正施工を表示')}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  handleFaultSelect(
+                    params.station === 'motor-lug'
+                      ? 'wrong-washer-order'
+                      : params.station === 'wire-splice'
+                        ? 'loose-torque'
+                        : 'insulation-pinch'
+                  )
+                }
+                className="inline-flex items-center gap-1 rounded-full bg-rose-600/15 px-3 py-1 text-[11px] font-bold text-rose-700 hover:bg-rose-600/25 dark:text-rose-300"
+              >
+                ✕ {pick('Show Bad Wiring', 'Tampilkan Sambungan Salah', '不良施工を表示')}
+              </button>
+            </div>
+          </div>
+
           <WireConnectionSvg
             params={params}
             computed={computed}
