@@ -45,7 +45,6 @@ import { irThermometerMeta } from '../simulators/ir-thermometer/irThermometerMet
 import { laserTachometerMeta } from '../simulators/laser-tachometer/laserTachometerMeta';
 import { vfdDriveMeta } from '../simulators/vfd-drive/vfdDriveMeta';
 import { lotoSafetyMeta } from '../simulators/loto-safety/lotoSafetyMeta';
-import { wireConnectionMeta } from '../simulators/wire-connection/wireConnectionMeta';
 
 export interface SimulatorRegistryEntry {
   meta: SimulatorMeta;
@@ -407,16 +406,6 @@ export const SIMULATOR_REGISTRY: SimulatorRegistryEntry[] = [
       import('../simulators/loto-safety/LotoSafetySimulator').then((m) => ({
         default: m.LotoSafetySimulator,
       }))
-    ),
-  },
-  {
-    meta: wireConnectionMeta,
-    Component: lazy(() =>
-      import('../simulators/wire-connection/WireConnectionSimulator').then(
-        (m) => ({
-          default: m.WireConnectionSimulator,
-        })
-      )
     ),
   },
 ];
