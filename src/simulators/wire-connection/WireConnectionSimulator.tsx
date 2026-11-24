@@ -689,19 +689,28 @@ export function WireConnectionSimulator() {
             )}
           </div>
 
-          {/* 4. FAULT AUDIT SCENARIOS */}
+          {/* 4. BAD WIRE CONNECTIONS (DO NOT DO THIS!) */}
           <div
             className="glass-panel rounded-[28px] p-4 space-y-2.5"
             data-tour="wire-faults"
           >
-            <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
-              <ShieldAlert className="h-4 w-4 text-rose-500" />
-              {pick(
-                'Fault Audit Scenarios',
-                'Skenario Audit Gangguan',
-                '施工不良・故障診断シナリオ'
-              )}
-            </span>
+            <div className="space-y-0.5">
+              <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                <ShieldAlert className="h-4 w-4 text-rose-500" />
+                {pick(
+                  'Bad Wire Connections (Do NOT Do This!)',
+                  'Contoh Sambungan Salah (Dilarang!)',
+                  '禁止される不良配線例（やってはいけない施工）'
+                )}
+              </span>
+              <p className="text-[11px] text-[var(--md-on-surface-variant)]">
+                {pick(
+                  'Select a prohibited practice below to see overheating, arcing, or pull-out failure.',
+                  'Pilih contoh pemasangan yang salah untuk melihat risiko panas berlebih, percikan api, atau kabel terlepas.',
+                  '下の不良例を選ぶと、過熱・アーク放電・引張抜けの危険性を確認できます。'
+                )}
+              </p>
+            </div>
 
             <div className="grid grid-cols-2 gap-1.5">
               {faults.map((f) => (

@@ -229,6 +229,51 @@ export function WireConnectionSvg({
         <rect width="760" height="390" fill="#090d16" />
         <rect width="760" height="390" fill="url(#wireGrid)" />
 
+        {/* Top-left Prohibited / Safe Status Stamp */}
+        <g transform="translate(24, 18)">
+          <rect
+            x="0"
+            y="0"
+            width={computed.verdict === 'PASS' ? 236 : 292}
+            height="26"
+            rx="13"
+            fill={
+              computed.verdict === 'PASS'
+                ? 'rgba(16,185,129,0.16)'
+                : computed.verdict === 'WARNING'
+                  ? 'rgba(245,158,11,0.18)'
+                  : 'rgba(239,68,68,0.22)'
+            }
+            stroke={verdictColor}
+            strokeWidth={1.2}
+          />
+          <text
+            x="14"
+            y="16.5"
+            fontSize="10"
+            fontWeight="800"
+            fill={verdictColor}
+          >
+            {computed.verdict === 'PASS'
+              ? pick(
+                  '✓ PROPER SAFE TERMINATION',
+                  '✓ SAMBUNGAN AMAN & STANDAR',
+                  '✓ 適正・安全な端子接続'
+                )
+              : computed.verdict === 'WARNING'
+                ? pick(
+                    '⚠ MARGINAL — IMPROVE TERMINATION',
+                    '⚠ KURANG OPTIMAL — PERBAIKI',
+                    '⚠ 要改善 — 接続を見直してください'
+                  )
+                : pick(
+                    '✕ PROHIBITED — DO NOT WIRE LIKE THIS!',
+                    '✕ DILARANG MEMASANG KABEL SEPERTI INI!',
+                    '✕ 禁止施工 — この接続は危険です!'
+                  )}
+          </text>
+        </g>
+
         {/* STATION 1: DIN-RAIL SCREW TERMINAL BLOCK (Phoenix Contact / Weidmuller Cutaway) */}
         {isBlock && (
           <g>
@@ -725,17 +770,26 @@ export function WireConnectionSvg({
                       />
                     </g>
                   ) : (
-                    /* Bare/Tinned/Improvised Hooked Strand around stud */
-                    <rect
-                      x={288 + slipOffset}
-                      y={lugTop + 1}
-                      width={108}
-                      height={lugHeight - 2}
-                      rx={2}
-                      fill={conductorFill}
-                      stroke="#78350f"
-                      strokeWidth={1}
-                    />
+                    /* Bare/Tinned/Improvised Hooked Strand around stud + stray whiskers */
+                    <g>
+                      <rect
+                        x={288 + slipOffset}
+                        y={lugTop + 1}
+                        width={108}
+                        height={lugHeight - 2}
+                        rx={2}
+                        fill={conductorFill}
+                        stroke="#78350f"
+                        strokeWidth={1}
+                      />
+                      {params.method === 'bare-stranded' && (
+                        <g stroke="#fbbf24" strokeWidth={1.2}>
+                          <line x1={388} y1={lugTop + 2} x2={418} y2={lugTop - 8} />
+                          <line x1={390} y1={lugTop + 5} x2={424} y2={lugTop + 6} />
+                          <line x1={386} y1={lugTop + 8} x2={416} y2={lugTop + 16} />
+                        </g>
+                      )}
+                    </g>
                   )}
 
                   {/* Flat Washer */}
