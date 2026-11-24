@@ -18,40 +18,42 @@ export function WireConnectionSvg({
   const { pick } = useLanguage();
 
   const isPe = params.station === 'grounding-pe';
-  const isStud =
-    params.station === 'motor-lug' || params.station === 'grounding-pe';
+  const isMotorLug = params.station === 'motor-lug';
   const isSplice = params.station === 'wire-splice';
   const isBlock = params.station === 'terminal-block';
 
-  // Wire thickness scales visually with cross-section
-  const wireHeight =
+  // Wire radius / half-height scaled by cross-section (1.5 - 10 mm2)
+  const wireH =
     params.gaugeMm2 === 1.5
-      ? 12
+      ? 11
       : params.gaugeMm2 === 2.5
-        ? 15
+        ? 13.5
         : params.gaugeMm2 === 4
-          ? 18
+          ? 16
           : params.gaugeMm2 === 6
-            ? 22
-            : 26;
+            ? 19
+            : 22;
 
-  // Strip length in SVG px (2–18 mm -> 14–108 px)
-  const stripPx = Math.round(params.stripLengthMm * 6);
+  const stripPx = Math.round(params.stripLengthMm * 5.2);
   const insulationPinch = computed.issues.includes('insulation-pinch');
   const oversizedStrip = computed.shockHazard;
 
-  // Pull-test visual slip offset
   const slipOffset =
     pullTestActive && !computed.pullTestPassed
-      ? -22
+      ? -24
       : pullTestActive
-        ? -4
+        ? -3
         : 0;
 
-  // Screw vertical travel based on torque (higher torque -> lower screw head)
-  const screwDrop = Math.min(18, Math.max(0, (params.torqueNm / 3.0) * 14));
+  // Torque ratio 0..1 relative to recommended max
+  const torqueRatio = Math.min(
+    1,
+    Math.max(0, params.torqueNm / (isBlock ? 1.4 : 4.2))
+  );
 
-  // Verdict colors
+  // Thermal intensity 0..1 above 40 C
+  const heatRatio = Math.min(1, Math.max(0, (computed.terminalTempC - 40) / 85));
+
   const verdictColor =
     computed.verdict === 'PASS'
       ? '#10b981'
@@ -59,827 +61,1165 @@ export function WireConnectionSvg({
         ? '#f59e0b'
         : '#ef4444';
 
-  const insulationColor = isPe ? '#eab308' : '#92400e';
-  const conductorColor =
-    params.method === 'solder-tinned' ? '#cbd5e1' : '#d97706';
+  const conductorFill =
+    params.method === 'solder-tinned' ? 'url(#tinGrad)' : 'url(#copperGrad)';
 
-  const renderConductorTip = (startX: number, centerY: number) => {
-    const copperEnd = startX + stripPx;
-    const isFerrule =
-      params.method === 'crimped-ferrule-lug' && !isStud;
-    const isRingLug =
-      params.method === 'crimped-ferrule-lug' && isStud;
+  const renderWireJacket = (
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+    peStripe = false
+  ) => (
+    <g>
+      <rect
+        x={x}
+        y={y - h / 2}
+        width={w}
+        height={h}
+        rx={2.5}
+        fill={peStripe ? '#16a34a' : 'url(#pvcBrownGrad)'}
+        stroke={peStripe ? '#14532d' : '#451a03'}
+        strokeWidth={1.1}
+      />
+      {peStripe && (
+        <rect
+          x={x + 1}
+          y={y - h * 0.22}
+          width={Math.max(0, w - 2)}
+          height={h * 0.44}
+          fill="#facc15"
+          opacity={0.92}
+        />
+      )}
+      <line
+        x1={x + 2}
+        y1={y - h * 0.3}
+        x2={x + w - 2}
+        y2={y - h * 0.3}
+        stroke="#ffffff"
+        strokeWidth={1}
+        opacity={0.22}
+      />
+    </g>
+  );
 
+  const renderThermalAndArcOverlay = (cx: number, cy: number) => (
+    <g pointerEvents="none">
+      {heatRatio > 0.08 && (
+        <circle
+          cx={cx}
+          cy={cy}
+          r={38 + heatRatio * 34}
+          fill="url(#thermalGlow)"
+          opacity={0.25 + heatRatio * 0.65}
+        />
+      )}
+      {computed.arcingActive && (
+        <g stroke="#fde047" strokeWidth={1.8} strokeLinecap="round">
+          <path d={`M ${cx - 12} ${cy - 8} L ${cx - 4} ${cy - 18} L ${cx + 3} ${cy - 10}`} fill="none" />
+          <path d={`M ${cx + 10} ${cy + 6} L ${cx + 20} ${cy + 15} L ${cx + 12} ${cy + 20}`} fill="none" />
+          <circle cx={cx} cy={cy - 12} r={2.2} fill="#fef08a" stroke="none" />
+        </g>
+      )}
+    </g>
+  );
+
+  const renderPullBadge = (x: number, y: number) => {
+    if (!pullTestActive) return null;
+    const pass = computed.pullTestPassed;
     return (
-      <g>
-        {/* Exposed copper / tinned conductor */}
-        {!isRingLug && (
-          <rect
-            x={startX}
-            y={centerY - wireHeight * 0.34}
-            width={Math.max(10, stripPx)}
-            height={wireHeight * 0.68}
-            rx={2}
-            fill={conductorColor}
-            stroke="#78350f"
-            strokeWidth={1}
-          />
-        )}
-
-        {/* Strands texture for bare-stranded */}
-        {params.method === 'bare-stranded' && (
-          <g stroke="#fbbf24" strokeWidth={1.1} opacity={0.85}>
-            <line
-              x1={startX + 2}
-              y1={centerY - wireHeight * 0.18}
-              x2={copperEnd + 6}
-              y2={centerY - wireHeight * 0.32}
-            />
-            <line
-              x1={startX + 2}
-              y1={centerY}
-              x2={copperEnd + 8}
-              y2={centerY}
-            />
-            <line
-              x1={startX + 2}
-              y1={centerY + wireHeight * 0.18}
-              x2={copperEnd + 5}
-              y2={centerY + wireHeight * 0.34}
-            />
-          </g>
-        )}
-
-        {/* Bootlace Ferrule (Skun Ferrule) */}
-        {isFerrule && (
-          <g>
-            {/* Plastic collar */}
-            <rect
-              x={startX - 10}
-              y={centerY - wireHeight * 0.56}
-              width={14}
-              height={wireHeight * 1.12}
-              rx={3}
-              fill="#2563eb"
-              stroke="#1e40af"
-              strokeWidth={1.2}
-            />
-            {/* Crimped tin-plated copper barrel */}
-            <rect
-              x={startX + 4}
-              y={centerY - wireHeight * 0.38}
-              width={Math.max(24, stripPx - 2)}
-              height={wireHeight * 0.76}
-              rx={1.5}
-              fill="#e2e8f0"
-              stroke="#64748b"
-              strokeWidth={1.2}
-            />
-            {/* Crimp ribs */}
-            <line
-              x1={startX + 12}
-              y1={centerY - wireHeight * 0.38}
-              x2={startX + 12}
-              y2={centerY + wireHeight * 0.38}
-              stroke="#475569"
-              strokeWidth={1.5}
-            />
-            <line
-              x1={startX + 20}
-              y1={centerY - wireHeight * 0.38}
-              x2={startX + 20}
-              y2={centerY + wireHeight * 0.38}
-              stroke="#475569"
-              strokeWidth={1.5}
-            />
-          </g>
-        )}
-
-        {/* Ring / Spade Lug (Sepatu Kabel) for Studs */}
-        {isRingLug && (
-          <g>
-            {/* Exposed copper inside barrel if oversized strip */}
-            {oversizedStrip && (
-              <rect
-                x={startX}
-                y={centerY - wireHeight * 0.34}
-                width={stripPx - 28}
-                height={wireHeight * 0.68}
-                fill={conductorColor}
-              />
-            )}
-            {/* Insulated crimp sleeve */}
-            <rect
-              x={startX + (oversizedStrip ? 18 : 0)}
-              y={centerY - wireHeight * 0.52}
-              width={22}
-              height={wireHeight * 1.04}
-              rx={3}
-              fill="#dc2626"
-              stroke="#991b1b"
-              strokeWidth={1.2}
-            />
-            {/* Tin-plated copper barrel + ring palm */}
-            <rect
-              x={startX + (oversizedStrip ? 40 : 22)}
-              y={centerY - wireHeight * 0.35}
-              width={44}
-              height={wireHeight * 0.7}
-              fill="#e2e8f0"
-              stroke="#64748b"
-              strokeWidth={1.2}
-            />
-            <circle
-              cx={startX + (oversizedStrip ? 96 : 78)}
-              cy={centerY}
-              r={18}
-              fill="#e2e8f0"
-              stroke="#64748b"
-              strokeWidth={1.5}
-            />
-            <circle
-              cx={startX + (oversizedStrip ? 96 : 78)}
-              cy={centerY}
-              r={8}
-              fill="#1e293b"
-            />
-          </g>
-        )}
-
-        {/* Solder-tinned creep indicator */}
-        {params.method === 'solder-tinned' && (
-          <g>
-            <rect
-              x={startX + 8}
-              y={centerY - wireHeight * 0.28}
-              width={Math.max(16, stripPx - 10)}
-              height={wireHeight * 0.56}
-              fill="#94a3b8"
-              opacity={0.7}
-            />
-            <text
-              x={startX + 10}
-              y={centerY - wireHeight * 0.65}
-              fill="#f59e0b"
-              fontSize="9"
-              fontWeight="700"
-            >
-              {pick('Solder Creep', 'Mulur Timah', 'はんだクリープ')}
-            </text>
-          </g>
-        )}
-
-        {/* Twisted & PVC Tape */}
-        {params.method === 'twisted-tape' && (
-          <g>
-            <rect
-              x={startX + 6}
-              y={centerY - wireHeight * 0.62}
-              width={Math.max(40, stripPx + 14)}
-              height={wireHeight * 1.24}
-              rx={6}
-              fill="#1e293b"
-              stroke="#475569"
-              strokeWidth={1.2}
-            />
-            {[0, 10, 20, 30].map((dx) => (
-              <line
-                key={dx}
-                x1={startX + 12 + dx}
-                y1={centerY - wireHeight * 0.6}
-                x2={startX + 18 + dx}
-                y2={centerY + wireHeight * 0.6}
-                stroke="#334155"
-                strokeWidth={2}
-              />
-            ))}
-          </g>
-        )}
+      <g transform={`translate(${x}, ${y})`}>
+        <path
+          d="M 0 0 L -28 0 M -28 0 L -20 -6 M -28 0 L -20 6"
+          stroke={pass ? '#34d399' : '#f87171'}
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+        <rect
+          x={-118}
+          y={-26}
+          width={112}
+          height={20}
+          rx={6}
+          fill={pass ? 'rgba(16,185,129,0.22)' : 'rgba(239,68,68,0.25)'}
+          stroke={pass ? '#10b981' : '#ef4444'}
+          strokeWidth={1}
+        />
+        <text
+          x={-62}
+          y={-12.5}
+          textAnchor="middle"
+          fontSize="9.5"
+          fontWeight="700"
+          fill={pass ? '#6ee7b7' : '#fca5a5'}
+        >
+          {pass
+            ? `${pick('HOLD', 'KUAT', '保持')}: ${computed.pullOutForceN.toFixed(0)} N`
+            : `${pick('SLIP!', 'LEPAS!', '抜け!')}: ${computed.pullOutForceN.toFixed(0)} N`}
+        </text>
       </g>
     );
   };
 
   return (
-    <div
-      className="glass-panel rounded-[28px] p-4 space-y-3"
-      data-tour="wire-stage"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface)]">
-          {pick(
-            'Interactive Cutaway & Thermal Inspection',
-            'Penampang Interaktif & Inspeksi Termal',
-            '断面図・熱分布インスペクション'
-          )}
-        </span>
-        <div className="flex items-center gap-2">
-          <span
-            className="rounded-full px-2.5 py-0.5 text-[11px] font-bold text-white"
-            style={{ backgroundColor: verdictColor }}
-          >
-            {computed.verdict} · {computed.terminalTempC}°C
-          </span>
-        </div>
-      </div>
-
+    <div className="relative w-full overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
       <svg
-        viewBox="0 0 640 360"
-        className="w-full h-auto rounded-2xl bg-slate-950/95 border border-slate-800/80 shadow-inner"
+        viewBox="0 0 760 390"
+        className="h-auto w-full select-none"
         role="img"
         aria-label={pick(
-          'Wire termination cutaway diagram',
-          'Diagram penampang terminasi kabel',
-          '電線終端接続の断面図'
+          'Electrical Wire Termination Cutaway',
+          'Penampang Terminasi Kabel Listrik',
+          '電気配線端子接続断面図'
         )}
       >
         <defs>
-          <radialGradient id="wireThermalGlow" cx="50%" cy="50%" r="50%">
-            <stop
-              offset="0%"
-              stopColor={computed.thermalSeverity > 0.55 ? '#ef4444' : '#f59e0b'}
-              stopOpacity={0.15 + computed.thermalSeverity * 0.65}
+          <pattern
+            id="wireGrid"
+            width="24"
+            height="24"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M 24 0 L 0 0 0 24"
+              fill="none"
+              stroke="rgba(148,163,184,0.08)"
+              strokeWidth="1"
             />
+          </pattern>
+          <linearGradient id="steelGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#cbd5e1" />
+            <stop offset="45%" stopColor="#94a3b8" />
+            <stop offset="100%" stopColor="#475569" />
+          </linearGradient>
+          <linearGradient id="brassGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fde68a" />
+            <stop offset="50%" stopColor="#d97706" />
+            <stop offset="100%" stopColor="#92400e" />
+          </linearGradient>
+          <linearGradient id="copperGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fdba74" />
+            <stop offset="50%" stopColor="#ea580c" />
+            <stop offset="100%" stopColor="#9a3412" />
+          </linearGradient>
+          <linearGradient id="tinGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#f1f5f9" />
+            <stop offset="55%" stopColor="#cbd5e1" />
+            <stop offset="100%" stopColor="#64748b" />
+          </linearGradient>
+          <linearGradient id="pvcBrownGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#b45309" />
+            <stop offset="55%" stopColor="#78350f" />
+            <stop offset="100%" stopColor="#451a03" />
+          </linearGradient>
+          <linearGradient id="housingGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#334155" />
+            <stop offset="100%" stopColor="#1e293b" />
+          </linearGradient>
+          <radialGradient id="thermalGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#ef4444" stopOpacity="0.9" />
+            <stop offset="50%" stopColor="#f97316" stopOpacity="0.45" />
             <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
           </radialGradient>
-          <pattern
-            id="peStripePattern"
-            width="16"
-            height="16"
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(45)"
-          >
-            <rect width="8" height="16" fill="#eab308" />
-            <rect x="8" width="8" height="16" fill="#16a34a" />
-          </pattern>
         </defs>
 
-        {/* Subtle engineering grid */}
-        <g stroke="#1e293b" strokeWidth="1">
-          {[80, 160, 240, 320, 400, 480, 560].map((x) => (
-            <line key={x} x1={x} y1={0} x2={x} y2={360} />
-          ))}
-          {[72, 144, 216, 288].map((y) => (
-            <line key={y} x1={0} y1={y} x2={640} y2={y} />
-          ))}
-        </g>
+        <rect width="760" height="390" fill="#090d16" />
+        <rect width="760" height="390" fill="url(#wireGrid)" />
 
-        {/* Thermal Glow Hotspot */}
-        {computed.thermalSeverity > 0.08 && (
-          <circle
-            cx={isStud ? 360 : 340}
-            cy={isStud ? 210 : 185}
-            r={65 + computed.thermalSeverity * 45}
-            fill="url(#wireThermalGlow)"
-          />
-        )}
-
-        {/* STATION 1: TERMINAL BLOCK */}
+        {/* STATION 1: DIN-RAIL SCREW TERMINAL BLOCK (Phoenix Contact / Weidmuller Cutaway) */}
         {isBlock && (
           <g>
-            {/* DIN Rail */}
-            <rect
-              x={270}
-              y={265}
-              width={150}
-              height={16}
-              rx={2}
-              fill="#64748b"
-              stroke="#94a3b8"
-              strokeWidth={1.5}
+            {/* 35mm Top-Hat DIN Rail Cross Section */}
+            <path
+              d="M 210 296 L 265 296 L 265 288 L 305 288 L 305 270 L 455 270 L 455 288 L 495 288 L 495 296 L 550 296 L 550 303 L 488 303 L 488 295 L 448 295 L 448 277 L 312 277 L 312 295 L 272 295 L 272 303 L 210 303 Z"
+              fill="url(#steelGrad)"
+              stroke="#64748b"
+              strokeWidth={1}
             />
             <text
-              x={345}
-              y={296}
+              x="380"
+              y="320"
               textAnchor="middle"
-              fill="#94a3b8"
               fontSize="10"
-              fontWeight="600"
+              fill="#94a3b8"
+              fontFamily="monospace"
             >
-              DIN Rail 35 mm
+              TS-35 DIN Rail (35 × 7.5 mm)
             </text>
 
-            {/* PA66 Terminal Housing Cutaway */}
+            {/* Molded Polyamide Terminal Housing Silhouette */}
             <path
-              d="M 250 95 L 440 95 L 440 265 L 250 265 Z"
-              fill="#334155"
-              fillOpacity={0.75}
+              d="M 255 110 L 350 110 L 350 86 L 410 86 L 410 110 L 505 110 L 505 245 L 458 245 L 458 270 L 302 270 L 302 245 L 255 245 Z"
+              fill="url(#housingGrad)"
+              stroke="#475569"
+              strokeWidth={1.6}
+            />
+            {/* DIN Rail Snap Foot */}
+            <rect
+              x="306"
+              y="262"
+              width="148"
+              height="9"
+              rx={2}
+              fill="#1e293b"
               stroke="#64748b"
-              strokeWidth={2}
+              strokeWidth={1}
             />
-            {/* Brass Busbar & Cage Clamp */}
-            <rect
-              x={275}
-              y={170}
-              width={140}
-              height={46}
-              rx={4}
-              fill="#b45309"
-              fillOpacity={0.35}
-              stroke="#f59e0b"
-              strokeWidth={1.8}
+            {/* Angled Wire Funnel Entry Left & Right */}
+            <polygon
+              points="255,172 288,184 288,216 255,228"
+              fill="#0f172a"
+              stroke="#475569"
+              strokeWidth={1}
             />
+            <polygon
+              points="505,172 472,184 472,216 505,228"
+              fill="#0f172a"
+              stroke="#475569"
+              strokeWidth={1}
+            />
+            {/* Central Jumper Bridge Channel */}
             <rect
-              x={280}
-              y={202}
-              width={130}
-              height={12}
-              fill="#d97706"
-              stroke="#fbbf24"
+              x="366"
+              y="90"
+              width="28"
+              height="48"
+              rx={3}
+              fill="#0f172a"
+              stroke="#475569"
+              strokeWidth={1}
+            />
+            {/* Left Screwdriver Access Shaft */}
+            <rect
+              x="300"
+              y="110"
+              width="32"
+              height="68"
+              fill="#0f172a"
+              stroke="#334155"
+              strokeWidth={1}
+            />
+            {/* Right Screwdriver Access Shaft */}
+            <rect
+              x="428"
+              y="110"
+              width="32"
+              height="68"
+              fill="#0f172a"
+              stroke="#334155"
               strokeWidth={1}
             />
 
-            {/* Clamping Screw (moves down with torque) */}
-            <g transform={`translate(0, ${screwDrop})`}>
+            {/* Internal Copper Current Bar */}
+            <rect
+              x="292"
+              y="206"
+              width="176"
+              height="10"
+              rx={2}
+              fill="url(#copperGrad)"
+              stroke="#7c2d12"
+              strokeWidth={1}
+            />
+
+            {/* Incoming Left Wire + Termination Tip */}
+            {(() => {
+              const jacketEnd = insulationPinch
+                ? 338 + slipOffset
+                : Math.min(286, 326 - stripPx) + slipOffset;
+              const tipStart = jacketEnd;
+              const tipLen = Math.max(24, stripPx);
+              const isFerrule = params.method === 'crimped-ferrule-lug';
+              return (
+                <g>
+                  {renderWireJacket(54, 198, Math.max(40, jacketEnd - 54), wireH)}
+                  {/* Exposed Copper / Solder-Tinned / Ferrule */}
+                  <rect
+                    x={tipStart}
+                    y={198 - wireH * 0.34}
+                    width={tipLen}
+                    height={wireH * 0.68}
+                    rx={1.5}
+                    fill={conductorFill}
+                    stroke="#78350f"
+                    strokeWidth={0.9}
+                  />
+                  {params.method === 'bare-stranded' && (
+                    <g stroke="#fbbf24" strokeWidth={1.1} opacity={0.9}>
+                      <line
+                        x1={tipStart + 2}
+                        y1={194}
+                        x2={tipStart + tipLen + 5}
+                        y2={190}
+                      />
+                      <line
+                        x1={tipStart + 2}
+                        y1={198}
+                        x2={tipStart + tipLen + 6}
+                        y2={198}
+                      />
+                      <line
+                        x1={tipStart + 2}
+                        y1={202}
+                        x2={tipStart + tipLen + 4}
+                        y2={206}
+                      />
+                    </g>
+                  )}
+                  {isFerrule && (
+                    <g>
+                      <rect
+                        x={tipStart - 11}
+                        y={198 - wireH * 0.56}
+                        width={13}
+                        height={wireH * 1.12}
+                        rx={2.5}
+                        fill="#2563eb"
+                        stroke="#1e40af"
+                        strokeWidth={1.1}
+                      />
+                      <rect
+                        x={tipStart + 2}
+                        y={198 - wireH * 0.38}
+                        width={Math.max(28, tipLen - 2)}
+                        height={wireH * 0.76}
+                        rx={1.5}
+                        fill="url(#tinGrad)"
+                        stroke="#64748b"
+                        strokeWidth={1}
+                      />
+                      {[10, 18, 26].map((dx) => (
+                        <line
+                          key={dx}
+                          x1={tipStart + dx}
+                          y1={198 - wireH * 0.35}
+                          x2={tipStart + dx}
+                          y2={198 + wireH * 0.35}
+                          stroke="#475569"
+                          strokeWidth={1.2}
+                        />
+                      ))}
+                    </g>
+                  )}
+                </g>
+              );
+            })()}
+
+            {/* Outgoing Right Load Wire (properly terminated with ferrule) */}
+            <g>
               <rect
-                x={328}
-                y={75}
-                width={34}
-                height={18}
-                rx={3}
-                fill="#94a3b8"
-                stroke="#cbd5e1"
-                strokeWidth={1.5}
-              />
-              <rect
-                x={338}
-                y={93}
-                width={14}
-                height={68}
-                fill="#cbd5e1"
+                x={434}
+                y={198 - wireH * 0.36}
+                width={38}
+                height={wireH * 0.72}
+                rx={1.5}
+                fill="url(#tinGrad)"
                 stroke="#64748b"
                 strokeWidth={1}
               />
-              {/* Screw pressure foot */}
               <rect
-                x={325}
-                y={158}
+                x={470}
+                y={198 - wireH * 0.56}
+                width={12}
+                height={wireH * 1.12}
+                rx={2.5}
+                fill="#2563eb"
+                stroke="#1e40af"
+                strokeWidth={1}
+              />
+              {renderWireJacket(482, 198, 210, wireH)}
+              <text
+                x="590"
+                y="182"
+                textAnchor="middle"
+                fontSize="10.5"
+                fontWeight="600"
+                fill="#94a3b8"
+              >
+                {pick('To Load', 'Ke Beban', '負荷側')} ({params.loadCurrentA} A)
+              </text>
+            </g>
+
+            {/* Left Brass Clamping Yoke + Animated M3.5 Screw (moves flush with torque!) */}
+            {(() => {
+              const screwY = 114 + torqueRatio * 14;
+              const clampTop = 178 + torqueRatio * (198 - wireH * 0.38 - 178);
+              return (
+                <g>
+                  {/* Brass Clamping Yoke */}
+                  <rect
+                    x={296}
+                    y={clampTop}
+                    width={40}
+                    height={38}
+                    rx={2.5}
+                    fill="none"
+                    stroke="url(#brassGrad)"
+                    strokeWidth={4}
+                  />
+                  {/* M3.5 Screw Head & Threaded Shaft */}
+                  <rect
+                    x={305}
+                    y={screwY}
+                    width={22}
+                    height={9}
+                    rx={2}
+                    fill="url(#steelGrad)"
+                    stroke="#475569"
+                    strokeWidth={1}
+                  />
+                  <line
+                    x1={316}
+                    y1={screwY + 2}
+                    x2={316}
+                    y2={screwY + 7}
+                    stroke="#0f172a"
+                    strokeWidth={2}
+                  />
+                  <rect
+                    x={311.5}
+                    y={screwY + 9}
+                    width={9}
+                    height={Math.max(10, clampTop - (screwY + 9) + 4)}
+                    fill="url(#steelGrad)"
+                    stroke="#475569"
+                    strokeWidth={0.9}
+                  />
+                </g>
+              );
+            })()}
+
+            {/* Right Clamping Yoke + Screw (Load Side) */}
+            <g>
+              <rect
+                x={424}
+                y={188}
                 width={40}
-                height={8}
+                height={34}
+                rx={2.5}
+                fill="none"
+                stroke="url(#brassGrad)"
+                strokeWidth={4}
+              />
+              <rect
+                x={433}
+                y={128}
+                width={22}
+                height={9}
                 rx={2}
-                fill="#e2e8f0"
+                fill="url(#steelGrad)"
                 stroke="#475569"
                 strokeWidth={1}
               />
+              <rect
+                x={439.5}
+                y={137}
+                width={9}
+                height={52}
+                fill="url(#steelGrad)"
+                stroke="#475569"
+                strokeWidth={0.9}
+              />
             </g>
 
-            {/* Outgoing load wire on right */}
-            <rect
-              x={405}
-              y={180}
-              width={35}
-              height={12}
-              fill="#d97706"
-            />
-            <rect
-              x={435}
-              y={176}
-              width={145}
-              height={20}
-              rx={3}
-              fill={insulationColor}
-              stroke="#451a03"
-              strokeWidth={1.2}
-            />
+            {/* Dimension Callouts */}
             <text
-              x={510}
-              y={166}
+              x="165"
+              y="176"
               textAnchor="middle"
-              fill="#94a3b8"
-              fontSize="10"
+              fontSize="10.5"
+              fontWeight="600"
+              fill="#e2e8f0"
             >
-              {pick('To Load', 'Ke Beban', '負荷側')} ({params.loadCurrentA} A)
+              {params.gaugeMm2} mm² · {pick('Strip', 'Kupas', '被覆剥き')}:{' '}
+              {params.stripLengthMm} mm
             </text>
+            {oversizedStrip && (
+              <text
+                x="235"
+                y="156"
+                textAnchor="middle"
+                fontSize="9.5"
+                fontWeight="700"
+                fill="#fca5a5"
+              >
+                ⚠ {pick('EXPOSED COPPER!', 'TEMBAGA TERBUKA!', '導体露出危険!')}
+              </text>
+            )}
+            {insulationPinch && (
+              <text
+                x="316"
+                y="260"
+                textAnchor="middle"
+                fontSize="9.5"
+                fontWeight="700"
+                fill="#fca5a5"
+              >
+                ⚠ {pick('CLAMPED ON PVC!', 'MENJEPIT ISOLASI!', '被覆噛み込み!')}
+              </text>
+            )}
+            {renderThermalAndArcOverlay(316, 198)}
+            {renderPullBadge(152, 226)}
           </g>
         )}
 
-        {/* STATION 2 & 4: MOTOR LUG & GROUNDING PE */}
-        {isStud && (
+        {/* STATION 2: 3-PHASE MOTOR TERMINAL BOX (U1/V1/W1 Stud + Ring Lug + Washer Stack) */}
+        {isMotorLug && (
           <g>
-            {/* Chassis / Motor Terminal Plate */}
+            {/* Cast Aluminum Motor Terminal Box Cutaway */}
             <rect
-              x={240}
-              y={252}
-              width={260}
-              height={28}
-              rx={4}
-              fill={isPe ? '#475569' : '#92400e'}
-              stroke="#94a3b8"
+              x="160"
+              y="72"
+              width="440"
+              height="240"
+              rx={14}
+              fill="#111827"
+              stroke="#475569"
+              strokeWidth={2}
+            />
+            {/* Bakelite / Phenolic 6-Stud Terminal Block Base */}
+            <rect
+              x="255"
+              y="224"
+              width="250"
+              height="68"
+              rx={6}
+              fill="#3b1d12"
+              stroke="#78350f"
               strokeWidth={1.5}
             />
-            {/* Paint / Powder Coat Layer on PE if paintRemoved === false */}
-            {isPe && !params.paintRemoved && (
-              <g>
-                <rect
-                  x={240}
-                  y={246}
-                  width={260}
-                  height={7}
-                  fill="#0284c7"
-                  stroke="#38bdf8"
-                  strokeWidth={1}
-                />
-                <text
-                  x={435}
-                  y={240}
-                  fill="#f87171"
-                  fontSize="10"
-                  fontWeight="700"
-                >
-                  {pick('Paint Insulating Layer!', 'Lapisan Cat Isolator!', '塗装絶縁膜あり！')}
-                </text>
-              </g>
-            )}
-            {isPe && params.paintRemoved && (
-              <text
-                x={435}
-                y={270}
-                fill="#34d399"
-                fontSize="10"
-                fontWeight="700"
-              >
-                {pick('Bare Metal Scraped', 'Logam Bersih (Terkupas)', '塗装剥離済み（導通良）')}
-              </text>
-            )}
+            <text
+              x="285"
+              y="278"
+              fontSize="10"
+              fontWeight="700"
+              fill="#fdba74"
+              fontFamily="monospace"
+            >
+              U1
+            </text>
+            <text
+              x="380"
+              y="278"
+              textAnchor="middle"
+              fontSize="10"
+              fontWeight="700"
+              fill="#fdba74"
+              fontFamily="monospace"
+            >
+              V1 (Active Inspection)
+            </text>
+            <text
+              x="475"
+              y="278"
+              textAnchor="end"
+              fontSize="10"
+              fontWeight="700"
+              fill="#fdba74"
+              fontFamily="monospace"
+            >
+              W1
+            </text>
 
-            {/* M6 Threaded Stud */}
+            {/* Copper Motor Winding Busbar sitting on Bakelite */}
             <rect
-              x={348}
-              y={115}
-              width={24}
-              height={137}
-              fill="#94a3b8"
-              stroke="#cbd5e1"
+              x="295"
+              y="210"
+              width="170"
+              height="14"
+              rx={2}
+              fill="url(#copperGrad)"
+              stroke="#9a3412"
               strokeWidth={1.2}
             />
-            {[125, 137, 149, 161, 173, 185, 197, 209, 221, 233].map((ty) => (
-              <line
-                key={ty}
-                x1={348}
-                y1={ty}
-                x2={372}
-                y2={ty + 4}
-                stroke="#475569"
-                strokeWidth={1.5}
-              />
-            ))}
 
-            {/* Washer Stack (Correct vs Wrong Order) */}
-            {params.washerStackCorrect ? (
-              <g>
-                {/* Flat Washer on top of lug */}
-                <rect
-                  x={330}
-                  y={178}
-                  width={60}
-                  height={6}
-                  rx={1}
-                  fill="#cbd5e1"
-                  stroke="#475569"
+            {/* M6 Threaded Brass Stud Rising Vertically at x=380 */}
+            <rect
+              x="368"
+              y="108"
+              width="24"
+              height="104"
+              rx={2}
+              fill="url(#brassGrad)"
+              stroke="#78350f"
+              strokeWidth={1.2}
+            />
+            {[116, 124, 132, 140, 148, 156, 164, 172, 180, 188, 196, 204].map(
+              (ty) => (
+                <line
+                  key={ty}
+                  x1={369}
+                  y1={ty}
+                  x2={391}
+                  y2={ty + 3}
+                  stroke="#78350f"
+                  strokeWidth={1.1}
+                  opacity={0.75}
                 />
-                {/* Spring / Star Lock Washer */}
-                <rect
-                  x={334}
-                  y={170}
-                  width={52}
-                  height={6}
-                  rx={1}
-                  fill="#fbbf24"
-                  stroke="#b45309"
-                />
-              </g>
-            ) : (
-              <g>
-                {/* Wrong: Lock washer placed UNDER lug! */}
-                <rect
-                  x={334}
-                  y={236}
-                  width={52}
-                  height={6}
-                  rx={1}
-                  fill="#ef4444"
-                  stroke="#991b1b"
-                />
-                <text
-                  x={405}
-                  y={175}
-                  fill="#f87171"
-                  fontSize="10"
-                  fontWeight="700"
-                >
-                  {pick('Wrong Washer Order!', 'Urutan Ring Salah!', 'ワッシャ順序誤り！')}
-                </text>
-              </g>
+              )
             )}
 
-            {/* Hex Nut (height adjusts with torque) */}
-            <g transform={`translate(0, ${Math.min(10, screwDrop * 0.6)})`}>
-              <rect
-                x={332}
-                y={142}
-                width={56}
-                height={22}
-                rx={3}
-                fill="#cbd5e1"
-                stroke="#475569"
-                strokeWidth={1.5}
-              />
-              <line
-                x1={348}
-                y1={142}
-                x2={348}
-                y2={164}
-                stroke="#64748b"
-                strokeWidth={1.2}
-              />
-              <line
-                x1={372}
-                y1={142}
-                x2={372}
-                y2={164}
-                stroke="#64748b"
-                strokeWidth={1.2}
-              />
-            </g>
+            {/* Stack Assembly on M6 Stud: Lug + Flat Washer + Spring Washer + Hex Nut */}
+            {(() => {
+              const busTop = 210;
+              const wrongOrder =
+                !params.washerStackCorrect ||
+                computed.issues.includes('wrong-washer');
+              // If wrongOrder, washer is placed UNDER the ring lug!
+              const lugBottom = wrongOrder ? busTop - 7 : busTop;
+              const lugHeight = 10;
+              const lugTop = lugBottom - lugHeight;
+              const nutGap = (1 - torqueRatio) * 14;
+              const flatWasherY = wrongOrder ? busTop - 6 : lugTop - 5;
+              const springWasherY = wrongOrder
+                ? lugTop - 5 - nutGap * 0.4
+                : flatWasherY - 5 - nutGap * 0.4;
+              const hexNutY = springWasherY - 14 - nutGap * 0.6;
 
-            {/* 360° EMC Shield Clamp on Grounding PE */}
-            {isPe && (
-              <g>
-                <rect
-                  x={155}
-                  y={235}
-                  width={36}
-                  height={20}
-                  rx={3}
-                  fill={params.emcShieldBonded ? '#10b981' : '#475569'}
-                  stroke={params.emcShieldBonded ? '#34d399' : '#f87171'}
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={173}
-                  y={272}
-                  textAnchor="middle"
-                  fill={params.emcShieldBonded ? '#34d399' : '#f87171'}
-                  fontSize="9"
-                  fontWeight="700"
-                >
-                  {params.emcShieldBonded
-                    ? pick('EMC 360° Bonded', 'Perisai EMC 360°', 'EMC 360°接地')
-                    : pick('EMC Unbonded', 'EMC Tidak Terhubung', 'EMC未接地')}
-                </text>
-              </g>
-            )}
+              return (
+                <g>
+                  {/* Incoming Power Cable + Crimped Ring Lug sitting flush on stud */}
+                  {renderWireJacket(
+                    68,
+                    lugBottom - lugHeight / 2,
+                    220 + slipOffset,
+                    wireH
+                  )}
+                  {params.method === 'crimped-ferrule-lug' ? (
+                    <g>
+                      {/* Red/Blue Heat-Shrink Strain Relief */}
+                      <rect
+                        x={280 + slipOffset}
+                        y={lugBottom - lugHeight / 2 - wireH * 0.48}
+                        width={22}
+                        height={wireH * 0.96}
+                        rx={2.5}
+                        fill="#dc2626"
+                        stroke="#991b1b"
+                        strokeWidth={1}
+                      />
+                      {/* Tinned Copper Crimp Barrel */}
+                      <rect
+                        x={302 + slipOffset}
+                        y={lugBottom - lugHeight + 1}
+                        width={42}
+                        height={lugHeight - 2}
+                        rx={1.5}
+                        fill="url(#tinGrad)"
+                        stroke="#64748b"
+                        strokeWidth={1}
+                      />
+                      {/* Flat Ring Palm around the M6 Stud */}
+                      <rect
+                        x={344 + slipOffset}
+                        y={lugTop}
+                        width={60}
+                        height={lugHeight}
+                        rx={3}
+                        fill="url(#tinGrad)"
+                        stroke="#475569"
+                        strokeWidth={1.2}
+                      />
+                    </g>
+                  ) : (
+                    /* Bare/Tinned/Improvised Hooked Strand around stud */
+                    <rect
+                      x={288 + slipOffset}
+                      y={lugTop + 1}
+                      width={108}
+                      height={lugHeight - 2}
+                      rx={2}
+                      fill={conductorFill}
+                      stroke="#78350f"
+                      strokeWidth={1}
+                    />
+                  )}
+
+                  {/* Flat Washer */}
+                  <rect
+                    x={354}
+                    y={flatWasherY}
+                    width={52}
+                    height={5}
+                    rx={1.5}
+                    fill="url(#steelGrad)"
+                    stroke="#334155"
+                    strokeWidth={1}
+                  />
+                  {/* Spring Lock Washer */}
+                  <rect
+                    x={358}
+                    y={springWasherY}
+                    width={44}
+                    height={5}
+                    rx={1.5}
+                    fill="#f59e0b"
+                    stroke="#92400e"
+                    strokeWidth={1}
+                  />
+                  {/* Hex Nut */}
+                  <g>
+                    <rect
+                      x={358}
+                      y={hexNutY}
+                      width={44}
+                      height={14}
+                      rx={2.5}
+                      fill="url(#steelGrad)"
+                      stroke="#334155"
+                      strokeWidth={1.2}
+                    />
+                    <line
+                      x1={369}
+                      y1={hexNutY}
+                      x2={369}
+                      y2={hexNutY + 14}
+                      stroke="#475569"
+                      strokeWidth={1}
+                    />
+                    <line
+                      x1={391}
+                      y1={hexNutY}
+                      x2={391}
+                      y2={hexNutY + 14}
+                      stroke="#475569"
+                      strokeWidth={1}
+                    />
+                  </g>
+
+                  {wrongOrder && (
+                    <text
+                      x="510"
+                      y="206"
+                      fontSize="10"
+                      fontWeight="700"
+                      fill="#fca5a5"
+                    >
+                      ⚠ {pick('WASHER UNDER LUG!', 'RING DI BAWAH SKUN!', '座金順序誤り!')}
+                    </text>
+                  )}
+                </g>
+              );
+            })()}
+
+            <text
+              x="185"
+              y="168"
+              textAnchor="middle"
+              fontSize="10.5"
+              fontWeight="600"
+              fill="#e2e8f0"
+            >
+              M6 Stud · {params.torqueNm.toFixed(1)} N·m
+            </text>
+            {renderThermalAndArcOverlay(380, 204)}
+            {renderPullBadge(152, 240)}
           </g>
         )}
 
-        {/* STATION 3: WIRE SPLICE (Wago Lever or Twisted Tape) */}
+        {/* STATION 3: INLINE WIRE SPLICE (Wago 221 Lever / Crimp Butt Splice / Twisted + Tape) */}
         {isSplice && (
           <g>
-            {params.method === 'wago-lever' ? (
+            {/* Left Supply Wire + Right Load Wire BOTH enter the splice body */}
+            {renderWireJacket(60, 195, 224 + slipOffset, wireH)}
+            {renderWireJacket(476, 195, 224, wireH)}
+
+            {/* Exposed Copper Cores Entering Splice Center */}
+            <rect
+              x={284 + slipOffset}
+              y={195 - wireH * 0.34}
+              width={94 - slipOffset}
+              height={wireH * 0.68}
+              rx={1.5}
+              fill={conductorFill}
+              stroke="#78350f"
+              strokeWidth={1}
+            />
+            <rect
+              x={382}
+              y={195 - wireH * 0.34}
+              width={94}
+              height={wireH * 0.68}
+              rx={1.5}
+              fill={conductorFill}
+              stroke="#78350f"
+              strokeWidth={1}
+            />
+
+            {/* Wago 221 Lever-Nut Transparent Housing + Copper Busbar + Orange Levers */}
+            {params.method === 'wago-lever' && (
               <g>
-                {/* Translucent Wago 221-style housing */}
                 <rect
-                  x={265}
-                  y={145}
-                  width={150}
+                  x={292}
+                  y={144}
+                  width={176}
                   height={82}
-                  rx={8}
-                  fill="#94a3b8"
-                  fillOpacity={0.28}
-                  stroke="#cbd5e1"
-                  strokeWidth={1.8}
+                  rx={10}
+                  fill="rgba(226,232,240,0.14)"
+                  stroke="#94a3b8"
+                  strokeWidth={2}
                 />
-                {/* Copper current bar */}
+                {/* Internal Tin-Plated Copper Busbar */}
                 <rect
-                  x={280}
-                  y={192}
-                  width={120}
+                  x={308}
+                  y={198}
+                  width={144}
                   height={10}
-                  fill="#d97706"
-                  stroke="#fbbf24"
+                  rx={2}
+                  fill="url(#tinGrad)"
+                  stroke="#64748b"
                   strokeWidth={1}
                 />
-                {/* Orange Lever */}
-                <path
-                  d="M 295 145 L 330 145 L 340 165 L 295 165 Z"
-                  fill="#f97316"
-                  stroke="#ea580c"
-                  strokeWidth={1.5}
-                />
-                <path
-                  d="M 355 145 L 390 145 L 390 165 L 345 165 Z"
-                  fill="#f97316"
-                  stroke="#ea580c"
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={340}
-                  y={245}
-                  textAnchor="middle"
-                  fill="#38bdf8"
-                  fontSize="10"
-                  fontWeight="600"
-                >
-                  {pick('Spring-Cage Lever Splice', 'Konektor Tuas Pegas', 'レバー式スプリングコネクタ')}
-                </text>
-              </g>
-            ) : (
-              <g>
-                {/* Junction Box outline */}
+                {/* Two Orange Hinged Wago Levers */}
                 <rect
-                  x={255}
-                  y={135}
-                  width={170}
-                  height={100}
-                  rx={10}
-                  fill="#1e293b"
-                  fillOpacity={0.6}
-                  stroke="#475569"
-                  strokeDasharray="5 4"
-                  strokeWidth={1.5}
+                  x={314}
+                  y={134}
+                  width={48}
+                  height={16}
+                  rx={3}
+                  fill="#ea580c"
+                  stroke="#9a3412"
+                  strokeWidth={1.2}
+                />
+                <rect
+                  x={398}
+                  y={134}
+                  width={48}
+                  height={16}
+                  rx={3}
+                  fill="#ea580c"
+                  stroke="#9a3412"
+                  strokeWidth={1.2}
                 />
                 <text
-                  x={340}
-                  y={252}
+                  x="380"
+                  y="246"
                   textAnchor="middle"
-                  fill="#94a3b8"
                   fontSize="10"
+                  fontWeight="700"
+                  fill="#fdba74"
                 >
-                  {pick('Junction Box Splice', 'Kotak Sambungan Kabel', 'ジャンクションボックス接続')}
+                  WAGO 221 Inline Lever Connector (IEC 60998)
                 </text>
               </g>
             )}
 
-            {/* Outgoing wire on right */}
+            {/* Insulated Crimp Butt Splice */}
+            {params.method === 'crimped-ferrule-lug' && (
+              <g>
+                {/* Translucent Blue/Yellow Nylon Sleeve */}
+                <rect
+                  x={296}
+                  y={170}
+                  width={168}
+                  height={50}
+                  rx={8}
+                  fill="rgba(37,99,235,0.28)"
+                  stroke="#60a5fa"
+                  strokeWidth={1.8}
+                />
+                {/* Seamless Tin-Plated Copper Crimp Barrel */}
+                <rect
+                  x={320}
+                  y={178}
+                  width={120}
+                  height={34}
+                  rx={3}
+                  fill="url(#tinGrad)"
+                  stroke="#475569"
+                  strokeWidth={1.4}
+                />
+                {/* Center Wire Stop Dimple & Dual Hex Crimp Indents */}
+                <line
+                  x1={380}
+                  y1={178}
+                  x2={380}
+                  y2={212}
+                  stroke="#334155"
+                  strokeWidth={2}
+                />
+                {[340, 355, 405, 420].map((cx) => (
+                  <rect
+                    key={cx}
+                    x={cx}
+                    y={177}
+                    width={5}
+                    height={36}
+                    fill="#475569"
+                  />
+                ))}
+                <text
+                  x="380"
+                  y="244"
+                  textAnchor="middle"
+                  fontSize="10"
+                  fontWeight="700"
+                  fill="#93c5fd"
+                >
+                  {pick(
+                    'Insulated Crimp Butt Splice (Double Hex Crimp)',
+                    'Sambungan Selongsong Crimp Berisolasi',
+                    '絶縁被覆付圧着スリーブ（両側六角圧着）'
+                  )}
+                </text>
+              </g>
+            )}
+
+            {/* Twisted + PVC Tape (Improvised / Weak Splice) */}
+            {(params.method === 'twisted-tape' ||
+              params.method === 'bare-stranded' ||
+              params.method === 'solder-tinned') && (
+              <g>
+                {/* Twisted Copper Helices */}
+                <g stroke="#f59e0b" strokeWidth={2.5} fill="none">
+                  <path d="M 335 188 Q 350 205 365 188 T 395 188 T 425 188" />
+                  <path d="M 335 202 Q 350 185 365 202 T 395 202 T 425 202" />
+                </g>
+                {params.method === 'twisted-tape' && (
+                  <g>
+                    {[322, 344, 366, 388, 410].map((tx, idx) => (
+                      <rect
+                        key={tx}
+                        x={tx}
+                        y={177}
+                        width={26}
+                        height={36}
+                        rx={3}
+                        fill={idx % 2 === 0 ? '#18181b' : '#27272a'}
+                        stroke="#52525b"
+                        strokeWidth={1.2}
+                        opacity={0.92}
+                      />
+                    ))}
+                  </g>
+                )}
+                <text
+                  x="380"
+                  y="244"
+                  textAnchor="middle"
+                  fontSize="10"
+                  fontWeight="700"
+                  fill="#fca5a5"
+                >
+                  ⚠{' '}
+                  {pick(
+                    'High Contact Resistance & Mechanical Slip Risk!',
+                    'Resistansi Kontak Tinggi & Berisiko Lepas Saat Ditarik!',
+                    '接触抵抗増大・引張抜けリスク大!'
+                  )}
+                </text>
+              </g>
+            )}
+
+            <text
+              x="165"
+              y="170"
+              textAnchor="middle"
+              fontSize="10.5"
+              fontWeight="600"
+              fill="#e2e8f0"
+            >
+              {params.gaugeMm2} mm² · {params.loadCurrentA} A
+            </text>
+            {renderThermalAndArcOverlay(380, 195)}
+            {renderPullBadge(152, 232)}
+          </g>
+        )}
+
+        {/* STATION 4: PROTECTIVE EARTH (PE) BONDING & VFD 360° EMC SHIELD CLAMP */}
+        {isPe && (
+          <g>
+            {/* Steel Enclosure Mounting Plate */}
             <rect
-              x={380}
-              y={180}
-              width={45}
-              height={12}
-              fill="#d97706"
+              x="155"
+              y="220"
+              width="450"
+              height="36"
+              rx={4}
+              fill="url(#steelGrad)"
+              stroke="#475569"
+              strokeWidth={1.5}
             />
+            {/* Paint Layer if paint is NOT removed */}
+            {(!params.paintRemoved ||
+              computed.issues.includes('paint-insulation')) && (
+              <rect
+                x="155"
+                y="214"
+                width="450"
+                height="8"
+                rx={2}
+                fill="#475569"
+                stroke="#94a3b8"
+                strokeWidth={1}
+              />
+            )}
+            <text
+              x="588"
+              y="242"
+              textAnchor="end"
+              fontSize="10"
+              fontWeight="700"
+              fill="#0f172a"
+            >
+              {!params.paintRemoved ||
+              computed.issues.includes('paint-insulation')
+                ? pick('PAINTED CHASSIS (HIGH Z!)', 'CAT PENGHALANG!', '塗装面（高インピーダンス!）')
+                : pick('BARE SCRAPED STEEL CHASSIS', 'PELAT BAJA BERSIH (KONTAK BAIK)', '素地露出鋼板')}
+            </text>
+
+            {/* M6 Grounding Stud on Left (x=290) */}
             <rect
-              x={420}
-              y={176}
-              width={150}
-              height={20}
-              rx={3}
-              fill={insulationColor}
-              stroke="#451a03"
+              x="279"
+              y="128"
+              width="22"
+              height="92"
+              rx={2}
+              fill="url(#brassGrad)"
+              stroke="#78350f"
               strokeWidth={1.2}
             />
-          </g>
-        )}
-
-        {/* INCOMING WIRE + INSULATION + STRIPPED CONDUCTOR */}
-        <g transform={`translate(${slipOffset}, 0)`}>
-          {/* PVC Insulation Jacket */}
-          <rect
-            x={40}
-            y={(isStud ? 210 : 185) - wireHeight * 0.55}
-            width={242}
-            height={wireHeight * 1.1}
-            rx={3}
-            fill={isPe ? 'url(#peStripePattern)' : insulationColor}
-            stroke="#451a03"
-            strokeWidth={1.5}
-          />
-          <text
-            x={135}
-            y={(isStud ? 210 : 185) - wireHeight * 0.8}
-            textAnchor="middle"
-            fill="#cbd5e1"
-            fontSize="10"
-            fontWeight="600"
-          >
-            {params.gaugeMm2} mm² · {pick('Strip', 'Kupas', '被覆剥き')}:{' '}
-            {params.stripLengthMm} mm
-          </text>
-
-          {/* Conductor Tip */}
-          {renderConductorTip(282, isStud ? 210 : 185)}
-
-          {/* Insulation Pinch Callout */}
-          {insulationPinch && (
-            <g>
-              <circle
-                cx={288}
-                cy={isStud ? 210 : 185}
-                r={14}
-                fill="none"
-                stroke="#ef4444"
-                strokeWidth={2}
-                strokeDasharray="3 2"
-              />
-              <text
-                x={240}
-                y={(isStud ? 210 : 185) + 34}
-                fill="#f87171"
-                fontSize="10"
-                fontWeight="700"
-              >
-                {pick('PVC Pinched Under Clamp!', 'Isolasi PVC Terjepit!', '被覆噛み込み！')}
-              </text>
-            </g>
-          )}
-
-          {/* Oversized Strip Shock Hazard Callout */}
-          {oversizedStrip && (
-            <text
-              x={275}
-              y={(isStud ? 210 : 185) + 34}
-              fill="#f87171"
-              fontSize="10"
-              fontWeight="700"
-            >
-              {pick('Exposed Copper Flashover Hazard!', 'Tembaga Terbuka: Bahaya Kejut!', '銅線露出：感電・短絡危険！')}
-            </text>
-          )}
-        </g>
-
-        {/* Micro-Arcing Sparks when Loose or Pinched under load */}
-        {computed.arcingActive && (
-          <g stroke="#fef08a" strokeWidth={2} strokeLinecap="round">
-            <path d="M 332 175 L 324 163 L 330 160 L 320 148" fill="none" />
-            <path d="M 355 182 L 366 170 L 360 166 L 372 156" fill="none" />
-            <circle cx={340} cy={178} r={4} fill="#fde047" />
-          </g>
-        )}
-
-        {/* Animated Pull-Test Tension Arrow */}
-        {pullTestActive && (
-          <g>
-            <line
-              x1={110}
-              y1={isStud ? 255 : 230}
-              x2={32}
-              y2={isStud ? 255 : 230}
-              stroke={computed.pullTestPassed ? '#10b981' : '#ef4444'}
-              strokeWidth={3.5}
+            {/* Green/Yellow PE Cable + Ring Lug + Star Lock Washer + Hex Nut */}
+            {renderWireJacket(60, 208, 178 + slipOffset, wireH, true)}
+            <rect
+              x={238 + slipOffset}
+              y={202}
+              width={74}
+              height={10}
+              rx={2.5}
+              fill={
+                params.method === 'crimped-ferrule-lug'
+                  ? 'url(#tinGrad)'
+                  : conductorFill
+              }
+              stroke="#475569"
+              strokeWidth={1.2}
             />
-            <polygon
-              points={`22,${isStud ? 255 : 230} 38,${isStud ? 247 : 222} 38,${isStud ? 263 : 238}`}
-              fill={computed.pullTestPassed ? '#10b981' : '#ef4444'}
+            {/* Star Lock Washer + Hex Nut */}
+            <rect
+              x={270}
+              y={197 - (1 - torqueRatio) * 8}
+              width={40}
+              height={5}
+              fill="#f59e0b"
+              stroke="#92400e"
+              strokeWidth={1}
             />
             <rect
-              x={36}
-              y={isStud ? 266 : 242}
-              width={165}
-              height={22}
-              rx={11}
-              fill={computed.pullTestPassed ? '#064e3b' : '#7f1d1d'}
-              stroke={computed.pullTestPassed ? '#10b981' : '#ef4444'}
+              x={270}
+              y={183 - (1 - torqueRatio) * 14}
+              width={40}
+              height={14}
+              rx={2}
+              fill="url(#steelGrad)"
+              stroke="#334155"
+              strokeWidth={1.2}
             />
-            <text
-              x={118}
-              y={isStud ? 281 : 257}
-              textAnchor="middle"
-              fill="#ffffff"
-              fontSize="10"
-              fontWeight="700"
-            >
-              {pick('PULL', 'TARIK', '引張')}: {computed.pullOutForceN} N (
-              {computed.pullTestPassed ? 'PASS' : 'SLIP!'})
-            </text>
+
+            {/* Right Side: VFD 360° EMC Shield Saddle Clamp vs Pigtail Drain */}
+            {params.emcShieldBonded ? (
+              <g>
+                {/* Shielded Cable Passing Under 360° Saddle Clamp */}
+                <rect
+                  x={435}
+                  y={203}
+                  width={130}
+                  height={16}
+                  rx={3}
+                  fill="#0f172a"
+                  stroke="#334155"
+                  strokeWidth={1}
+                />
+                {/* Braided Copper Mesh Band Exposed */}
+                <rect
+                  x={468}
+                  y={202}
+                  width={56}
+                  height={18}
+                  fill="url(#copperGrad)"
+                  stroke="#9a3412"
+                  strokeWidth={1}
+                />
+                {/* 360° Stainless Steel EMC Saddle Clamp */}
+                <path
+                  d="M 476 220 L 476 196 Q 496 184 516 196 L 516 220"
+                  fill="none"
+                  stroke="url(#steelGrad)"
+                  strokeWidth={6}
+                />
+                <text
+                  x="496"
+                  y="174"
+                  textAnchor="middle"
+                  fontSize="10"
+                  fontWeight="700"
+                  fill="#6ee7b7"
+                >
+                  ✓ {pick('360° EMC Shield Clamp', 'Klem Perisai EMC 360°', '360° EMCシールドクランプ')}
+                </text>
+              </g>
+            ) : (
+              <g>
+                {/* Thin High-Inductance Pigtail Drain Wire */}
+                <path
+                  d="M 465 208 C 465 162, 520 162, 520 214"
+                  fill="none"
+                  stroke="#94a3b8"
+                  strokeWidth={2.5}
+                />
+                <circle cx={520} cy={214} r={5} fill="url(#steelGrad)" />
+                <text
+                  x="496"
+                  y="156"
+                  textAnchor="middle"
+                  fontSize="10"
+                  fontWeight="700"
+                  fill="#fcd34d"
+                >
+                  ⚠ {pick('Pigtail = High HF Noise!', 'Pigtail = Gangguan EMI Tinggi!', 'ピグテール＝高周波ノイズ悪化!')}
+                </text>
+              </g>
+            )}
+
+            {renderThermalAndArcOverlay(290, 206)}
+            {renderPullBadge(152, 238)}
           </g>
         )}
 
-        {/* Bottom HUD Telemetry Strip inside SVG */}
-        <g transform="translate(16, 316)">
+        {/* Bottom HUD Telemetry Strip */}
+        <g transform="translate(24, 338)">
           <rect
-            x={0}
-            y={0}
-            width={608}
-            height={32}
-            rx={16}
-            fill="#0f172a"
-            stroke="#334155"
-            strokeWidth={1}
+            x="0"
+            y="0"
+            width="712"
+            height="36"
+            rx="12"
+            fill="rgba(15,23,42,0.9)"
+            stroke="rgba(148,163,184,0.22)"
           />
-          <text x={20} y={20} fill="#94a3b8" fontSize="11" fontWeight="600">
-            R_c:{' '}
-            <tspan fill="#f8fafc" fontWeight="700">
-              {computed.contactResistanceMohm} mΩ
-            </tspan>
+          <text x="20" y="22" fontSize="11" fontWeight="700" fill="#e2e8f0">
+            R_c: {computed.contactResistanceMohm.toFixed(2)} mΩ
           </text>
-          <text x={155} y={20} fill="#94a3b8" fontSize="11" fontWeight="600">
-            ΔV:{' '}
-            <tspan fill="#38bdf8" fontWeight="700">
-              {computed.voltageDropMv} mV
-            </tspan>
+          <text x="165" y="22" fontSize="11" fontWeight="700" fill="#93c5fd">
+            ΔV: {computed.voltageDropMv.toFixed(1)} mV
           </text>
-          <text x={285} y={20} fill="#94a3b8" fontSize="11" fontWeight="600">
-            P_loss:{' '}
-            <tspan fill="#fbbf24" fontWeight="700">
-              {computed.powerDissipationW} W
-            </tspan>
+          <text x="310" y="22" fontSize="11" fontWeight="700" fill="#fcd34d">
+            P_loss: {computed.powerDissipationW.toFixed(2)} W
           </text>
-          <text x={415} y={20} fill="#94a3b8" fontSize="11" fontWeight="600">
-            T_term:{' '}
-            <tspan fill={verdictColor} fontWeight="700">
-              {computed.terminalTempC} °C
-            </tspan>
+          <text x="455" y="22" fontSize="11" fontWeight="700" fill={verdictColor}>
+            T_term: {computed.terminalTempC.toFixed(1)} °C
           </text>
-          <text x={535} y={20} fill={verdictColor} fontSize="11" fontWeight="800">
+          <text
+            x="692"
+            y="22"
+            textAnchor="end"
+            fontSize="11"
+            fontWeight="800"
+            fill={verdictColor}
+          >
             [{computed.verdict}]
           </text>
         </g>
