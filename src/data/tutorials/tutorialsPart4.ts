@@ -1781,4 +1781,189 @@ export const TUTORIALS_PART_4: Record<string, TutorialStep[]> = {
       targetSelector: '[data-tour="mode-tabs"]',
     },
   ],
+
+  'wire-connection': [
+    {
+      id: 'wire-overview',
+      badge: { en: 'Overview', id: 'Ikhtisar', ja: '概要' },
+      title: {
+        en: 'Electrical Wire Connection & Termination Lab',
+        id: 'Lab Sambungan & Terminasi Kabel Listrik',
+        ja: '電線接続・端末処理ラボ',
+      },
+      description: {
+        en: 'Welcome! This lab models contact resistance, voltage drop, I²R terminal heating, and IEC 60999-1 pull-out retention across industrial wire terminations. Let’s walk through every control and diagnostic.',
+        id: 'Selamat datang! Laboratorium ini memodelkan tahanan kontak, drop tegangan, pemanasan terminal I²R, serta ketahanan gaya tarik IEC 60999-1 pada berbagai terminasi kabel industri. Mari telusuri setiap kontrol dan diagnostiknya.',
+        ja: 'ようこそ！本ラボでは産業用電線端末における接触抵抗、電圧降下、I²R発熱、IEC 60999-1引張保持力を解析します。各機能と診断項目を順番に確認しましょう。',
+      },
+      tip: {
+        en: 'Never tin stranded copper with solder before clamping in a screw terminal—solder creeps under pressure and loosens the joint over time.',
+        id: 'Jangan pernah melapisi kabel serabut dengan timah solder sebelum dijepit pada terminal sekrup—timah mengalami creep di bawah tekanan sehingga sambungan menjadi longgar seiring waktu.',
+        ja: 'ねじ締め端子に挿入するより線へのはんだ揚げ（予備はんだ）は厳禁です。はんだは圧縮下でクリープ変形し、経時的に緩んで発熱・焼損の原因になります。',
+      },
+    },
+    {
+      id: 'wire-stations',
+      badge: { en: 'Feature 1 · Stations', id: 'Fitur 1 · Stasiun', ja: '機能1 · 接続ステーション' },
+      title: {
+        en: 'Termination Station Selector & Reset',
+        id: 'Pemilih Stasiun Terminasi & Reset',
+        ja: '端末接続ステーション選択・リセット',
+      },
+      description: {
+        en: 'Switch between four industrial stations—DIN-Rail Terminal Block, Motor Terminal Box Lug, Inline Wire Splice, and Protective Earthing (PE) Bus—or click Reset to restore nominal defaults.',
+        id: 'Pilih salah satu dari empat stasiun industri—Blok Terminal Rel DIN, Sepatu Kabel (Lug) Motor, Sambungan Kabel Segaris (Splice), dan Bus Pembumian (PE)—atau klik Reset untuk mengembalikan setelan bawaan.',
+        ja: '4つの産業用ステーション（DINレール端子台、モーター端子箱丸型端子、電線中間接続、保護接地PEバス）を切り替え、リセットで標準条件に戻せます。',
+      },
+      targetSelector: '[data-tour="wire-stations"]',
+    },
+    {
+      id: 'wire-method',
+      badge: { en: 'Feature 2 · Method & Gauge', id: 'Fitur 2 · Metode & Penampang', ja: '機能2 · 端末工法と断面積' },
+      title: {
+        en: 'Termination Method & Wire Cross-Section',
+        id: 'Metode Terminasi & Luas Penampang Kabel',
+        ja: '端末処理工法と電線公称断面積',
+      },
+      description: {
+        en: 'Compare Crimped Ferrule / Ring Lug, Bare Stranded, Solder-Tinned, WAGO Lever Cage, and Twisted + Electrical Tape across 1.5 to 10 mm² copper conductors.',
+        id: 'Bandingkan metode Skun Ferrule / Sepatu Kabel (Lug) Pres, Serabut Polos, Lapis Timah Solder, Konektor Tuas WAGO, dan Pelintir + Isolasi PVC pada konduktor tembaga 1,5 hingga 10 mm².',
+        ja: '棒端子フェルール/圧着丸端子、裸より線、はんだ揚げ、WAGOレバークランプ、ねじり接続＋絶縁テープの5工法を、1.5〜10 mm²の銅線で比較します。',
+      },
+      targetSelector: '[data-tour="wire-method"]',
+    },
+    {
+      id: 'wire-params',
+      badge: { en: 'Feature 3 · Parameters', id: 'Fitur 3 · Parameter', ja: '機能3 · 施工・負荷パラメータ' },
+      title: {
+        en: 'Strip Length, Tightening Torque, Current & Hardware',
+        id: 'Panjang Kupas Isolasi, Torsi Pengencangan, Arus & Ring',
+        ja: '被覆剥き長さ・締付トルク・負荷電流・座金設定',
+      },
+      description: {
+        en: 'Adjust PVC Strip Length (2–18 mm), Tightening Torque (0.2–6.0 N·m), and Load Current (5–60 A), plus station-specific Washer Stack Order, Paint Removal, or EMC Shield options.',
+        id: 'Atur Panjang Kupas Isolasi PVC (2–18 mm), Torsi Pengencangan (0,2–6,0 N·m), dan Arus Beban (5–60 A), serta opsi Urutan Ring (Washer), Pengikisan Cat, atau Pelindung EMC sesuai stasiun.',
+        ja: 'PVC被覆剥き長さ（2〜18 mm）、締付トルク（0.2〜6.0 N·m）、負荷電流（5〜60 A）、およびステーション固有の座金順序・塗装剥離・EMCシールド設定を調整します。',
+      },
+      targetSelector: '[data-tour="wire-params"]',
+    },
+    {
+      id: 'wire-faults',
+      badge: { en: 'Feature 4 · Fault Audit', id: 'Fitur 4 · Audit Gangguan', ja: '機能4 · 不良モード診断' },
+      title: {
+        en: 'Termination Fault Audit Scenarios',
+        id: 'Skenario Audit Gangguan Terminasi',
+        ja: '端末施工不良シミュレーション',
+      },
+      description: {
+        en: 'Inject real-world workmanship defects—Loose Torque, Insulation Pinch, Solder-Tinned Creep, Wrong Washer Order, or Oversized Strip Length—to observe contact resistance spikes and thermal runaway.',
+        id: 'Aktifkan cacat pengerjaan nyata—Torsi Longgar, Isolasi Terjepit, Creep Timah Solder, Urutan Ring Salah, atau Kupasan Isolasi Berlebih—untuk mengamati lonjakan tahanan kontak dan panas berlebih.',
+        ja: '実務で発生しやすい施工不良（トルク不足、被覆噛み込み、はんだクリープ、座金順序誤り、剥き過ぎ）を注入し、接触抵抗の急増と過熱を確認します。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why does a wrong washer order on a motor lug overheat the terminal?',
+            id: 'Mengapa urutan ring (washer) yang salah pada sepatu kabel (lug) motor menyebabkan terminal terlalu panas?',
+            ja: 'モーター丸型端子で座金（ワッシャー）の順序を誤ると過熱するのはなぜですか？',
+          },
+          a: {
+            en: 'Placing a split lock washer or steel flat washer between the copper lug and the busbar forces current through high-resistivity steel instead of direct copper-to-copper contact, multiplying I²R heating.',
+            id: 'Menempatkan ring per atau ring pelat baja di antara sepatu kabel tembaga dan busbar memaksa arus melewati baja bertahanan jenis tinggi alih-alih kontak tembaga-ke-tembaga langsung, sehingga pemanasan I²R melonjak drastis.',
+            ja: '銅製圧着端子と銅バーの間に鋼製ばね座金や平座金を挟むと、電流が導電率の低い鋼材を通過することになり、接触抵抗とI²R発熱が急増します。',
+          },
+          keywords: ['washer', 'lug', 'overheat', 'ring', 'sepatu kabel', '座金', '発熱'],
+        },
+        {
+          q: {
+            en: 'What happens when PVC insulation is pinched under the terminal clamp?',
+            id: 'Apa akibatnya jika isolasi PVC terjepit di bawah penjepit terminal?',
+            ja: '端子クランプにPVC被覆を噛み込むとどうなりますか？',
+          },
+          a: {
+            en: 'The clamp presses on compressible PVC instead of bare copper strands, reducing contact area, spiking resistance, and risking both thermal charring and pull-out failure.',
+            id: 'Penjepit menekan isolasi PVC yang lunak alih-alih serabut tembaga, sehingga luas kontak menyusut, tahanan melonjak, dan berisiko terbakar maupun terlepas saat ditarik.',
+            ja: 'クランプが銅線ではなく柔らかいPVC被覆を挟むため、接触面積が激減して接触抵抗が跳ね上がり、焼損や電線抜け落ちの原因になります。',
+          },
+          keywords: ['insulation', 'pinch', 'pvc', 'strip', 'isolasi', 'terjepit', '被覆'],
+        },
+      ],
+      targetSelector: '[data-tour="wire-faults"]',
+    },
+    {
+      id: 'wire-stage',
+      badge: { en: 'Feature 5 · Cutaway SVG', id: 'Fitur 5 · Penampang SVG', ja: '機能5 · 断面図と熱可視化' },
+      title: {
+        en: 'Interactive Cutaway & Thermal Inspection Stage',
+        id: 'Tampilan Penampang Interaktif & Inspeksi Termal',
+        ja: 'インタラクティブ断面・発熱可視化ステージ',
+      },
+      description: {
+        en: 'Inspect the live cutaway of the active termination—showing copper strand seating, ferrule/lug/lever geometry, washer stack order, thermal glow, and micro-arcing when loose or overloaded.',
+        id: 'Amati penampang langsung terminasi yang aktif—menampilkan dudukan serabut tembaga, geometri skun ferrule/lug/tuas, urutan tumpukan ring, pendaran panas, serta percikan busur mikro saat longgar atau beban berlebih.',
+        ja: '選択中ステーションのライブ断面図で、素線の着座、フェルール/丸型端子/レバー形状、座金配置、発熱グロー、緩みや過負荷時のマイクロアークを観察できます。',
+      },
+      targetSelector: '[data-tour="wire-stage"]',
+    },
+    {
+      id: 'wire-pull-test',
+      badge: { en: 'Feature 6 · Pull-Test', id: 'Fitur 6 · Uji Tarik', ja: '機能6 · 引張試験' },
+      title: {
+        en: 'IEC 60999-1 Mechanical Pull-Test',
+        id: 'Uji Tarik Mekanis (Pull-Test) IEC 60999-1',
+        ja: 'IEC 60999-1 機械的引張試験',
+      },
+      description: {
+        en: 'Click Run Pull-Test to apply standard axial tension to the conductor and verify whether mechanical retention exceeds the IEC 60999-1 minimum pull-out threshold (N) for the selected cross-section.',
+        id: 'Klik Jalankan Uji Tarik untuk memberikan gaya tarik aksial standar pada konduktor dan memastikan ketahanan mekanisnya melampaui ambang batas minimum IEC 60999-1 (N) sesuai penampang kabel.',
+        ja: '「引張試験を実行」を押すと電線に軸方向張力をかけ、選択した断面積に対するIEC 60999-1最小引抜力基準（N）を満たすか検証できます。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why perform a mechanical pull-test after crimping or tightening?',
+            id: 'Mengapa uji tarik mekanis (pull-test) wajib dilakukan setelah mengepres atau mengencangkan terminal?',
+            ja: '圧着やねじ締め後に引張試験（プルテスト）を行う理由は？',
+          },
+          a: {
+            en: 'A joint can show low resistance at rest yet slip out under vibration or thermal cycling. Pull-testing verifies genuine mechanical cold-welding or clamping force per IEC 60999-1.',
+            id: 'Sambungan dapat menunjukkan tahanan rendah saat diam tetapi terlepas akibat getaran atau siklus panas. Uji tarik membuktikan kekuatan jepitan mekanis atau cold-weld sesuai IEC 60999-1.',
+            ja: '静止状態で抵抗が低くても、振動や熱サイクルで抜ける不良があるためです。引張試験によりIEC 60999-1準拠の機械的保持力を確認できます。',
+          },
+          keywords: ['pull-test', 'iec', '60999', 'force', 'uji tarik', '引張'],
+        },
+      ],
+      targetSelector: '[data-tour="wire-pull-test"]',
+    },
+    {
+      id: 'wire-telemetry',
+      badge: { en: 'Feature 7 · Telemetry', id: 'Fitur 7 · Telemetri', ja: '機能7 · 電気・熱テレメトリ' },
+      title: {
+        en: 'Electrical & Thermal Telemetry Verdict',
+        id: 'Pembacaan Telemetri Kelistrikan & Termal',
+        ja: '電気・熱テレメトリと合否判定',
+      },
+      description: {
+        en: 'Monitor Contact Resistance (mΩ), Voltage Drop (mV), Power Loss (W), Terminal Temperature (°C), and the overall PASS / WARNING / FAIL safety verdict in real time.',
+        id: 'Pantau Tahanan Kontak (mΩ), Drop Tegangan (mV), Rugi Daya (W), Suhu Terminal (°C), serta status keselamatan LULUS / PERINGATAN / GAGAL secara langsung.',
+        ja: '接触抵抗（mΩ）、電圧降下（mV）、電力損失（W）、端子温度（°C）、および総合判定（PASS / WARNING / FAIL）をリアルタイムで確認します。',
+      },
+      targetSelector: '[data-tour="wire-telemetry"]',
+    },
+    {
+      id: 'wire-workflow-modes',
+      badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
+      title: {
+        en: 'Explore, Simulate, Practice & Quiz',
+        id: 'Eksplorasi, Simulasi, Latihan & Kuis',
+        ja: '探索・シミュレート・演習・クイズ',
+      },
+      description: {
+        en: 'Use the top mode tabs (or Alt+1..4) to review termination standards in Explore, run hands-on diagnostics in Simulate, solve I²R & voltage-drop calculations in Practice, and complete the Quiz.',
+        id: 'Gunakan tab mode di bagian atas (atau Alt+1..4) untuk mempelajari standar terminasi pada Eksplorasi, melakukan diagnostik pada Simulasi, menyelesaikan hitungan I²R & drop tegangan pada Latihan, serta mengerjakan Kuis.',
+        ja: '上部のモードタブ（または Alt+1〜4）で「探索」「シミュレート」「演習」「クイズ」を切り替え、端末施工の理論と計算を習得しましょう。',
+      },
+      targetSelector: '[data-tour="mode-tabs"]',
+    },
+  ],
 };
