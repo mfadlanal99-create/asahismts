@@ -1,5 +1,6 @@
 import {
   addBox,
+  addCylinderSection,
   compileMesh,
   type EdgeDef,
   type PartMesh,
@@ -275,115 +276,62 @@ function buildBeDriveBackstop(baseHex: string): PartMesh {
   const faces: RawFaceDef[] = [];
   const edges: EdgeDef[] = [];
 
-  // 1. Contoured Shaft-Mounted Helical Reducer (output hub at 0,0 -> input barrel at -13,-11)
-  addCylinderZ(faces, edges, -4.5, 4.5, 5.5, 5.5, 2.6, 2.6, 16, {
+  // 1. SEW KA107T Right-Angle Hollow-Shaft Helical-Bevel Gearcase
+  // Hollow-shaft output hub centered at (0,0,0) on the head pulley shaft
+  addCylinderZ(faces, edges, -5.2, 5.2, 5.4, 5.4, 2.7, 2.7, 16, {
     cx: 0,
     cy: 0,
     colorHex: '#334155',
   });
-  // Tapered cast-iron gearcase body connecting output hub to input pinion
-  addExtrudedPolyZ(
-    faces,
-    edges,
-    [
-      [-3.5, 4.5],
-      [3.5, 3.5],
-      [4.2, -3.5],
-      [-9.5, -15.5],
-      [-17.5, -14.0],
-      [-17.5, -6.5],
-    ],
-    -4.0,
-    4.0,
-    '#334155',
-    false
-  );
-  // Input pinion cylindrical boss
-  addCylinderZ(faces, edges, -5.5, 5.5, 5.0, 5.0, 0, 0, 14, {
-    cx: -13.5,
-    cy: -10.5,
-    colorHex: '#475569',
+  // Outer shrink-disc clamping collar on rear (-Z)
+  addCylinderZ(faces, edges, -6.8, -5.2, 4.6, 4.6, 2.7, 2.7, 16, {
+    cx: 0,
+    cy: 0,
+    colorHex: '#94A3B8',
   });
-  // Safety-yellow sprag backstop clutch on rear face of input boss
-  addCylinderZ(faces, edges, -9.2, -5.5, 4.6, 4.6, 0, 0, 14, {
-    cx: -13.5,
-    cy: -10.5,
-    colorHex: '#F59E0B',
-  });
-  // Torque-arm clevis & turnbuckle rod anchoring reducer to elevator frame
-  addBox(faces, edges, -13.5, -18.5, 0, 1.4, 3.8, 1.4, '#CBD5E1', false);
-  addBox(faces, edges, -13.5, -22.5, 0, 2.4, 1.2, 2.0, '#1E293B', false);
-  // Breather cap & oil sight-glass on reducer
-  addBox(faces, edges, -4, 4.5, 0, 1.2, 1.4, 1.2, '#F59E0B', false);
-  addCylinderZ(faces, edges, 3.8, 4.5, 1.4, 1.4, 0, 0, 10, {
-    cx: -7,
-    cy: -6,
+  // Main cast-iron KA107 bevel-helical gearhouse extending along -X
+  addBox(faces, edges, -7, 0, 0, 8.5, 6.2, 4.6, '#334155', false);
+  // Bevel stage chamfered ribs & oil sight-glass + breather
+  addBox(faces, edges, -7, 6.5, 0, 6.5, 0.8, 3.8, '#475569', false);
+  addBox(faces, edges, -4, 7.6, 0, 1.0, 1.0, 1.0, '#F59E0B', false);
+  addCylinderZ(faces, edges, 4.4, 5.0, 1.2, 1.2, 0, 0, 10, {
+    cx: -8,
+    cy: -2,
     colorHex: '#10B981',
   });
+  // Torque Arm (T) clevis & rubber-bushed anchor bracket beneath KA107
+  addBox(faces, edges, -3.5, -8.5, 0, 2.0, 3.2, 1.8, '#64748B', false);
+  addBox(faces, edges, -3.5, -12.2, 0, 3.2, 1.2, 2.4, '#1E293B', false);
 
-  // 2. Tapered V-Belt Drive Guard (connecting reducer input -13.5,-10.5 to motor shaft -22,+6 at z = +5..+8.5)
-  addExtrudedPolyZ(
-    faces,
-    edges,
-    [
-      [-10.2, -12.5],
-      [-16.8, -12.5],
-      [-26.2, 6.0],
-      [-24.2, 9.8],
-      [-19.2, 9.8],
-      [-9.8, -8.5],
-    ],
-    4.8,
-    8.2,
-    '#D97706',
-    false
-  );
+  // 2. /RS Mechanical Sprag Backstop Housing (between KA107 input & DRN180M4 flange)
+  addCylinderSection(faces, edges, -18.5, -15.5, 5.6, 5.6, 0, 0, 16, {
+    colorHex: '#F59E0B',
+  });
 
-  // 3. Top-Mounted Adjustable Motor Baseplate
-  addBox(faces, edges, -22, -0.5, -1.5, 7.5, 1.1, 7.0, '#1E293B', false);
-
-  // 4. Realistic Ribbed TEFC 3-Phase Induction Motor (centered at cx=-22, cy=+6)
-  // Stator barrel (z = -5..+5)
-  addCylinderZ(faces, edges, -5.2, 5.2, 5.8, 5.8, 0, 0, 18, {
-    cx: -22,
-    cy: 6,
+  // 3. SEW DRN180M4 (22 kW, 4-Pole) TEFC Motor mounted at 90° along -X
+  // Heavy IEC B5 mounting flange
+  addCylinderSection(faces, edges, -20.5, -18.5, 7.4, 6.2, 0, 0, 18, {
+    colorHex: '#475569',
+  });
+  // DRN180M4 cast-iron ribbed stator barrel (x = -34.5..-20.5)
+  addCylinderSection(faces, edges, -34.5, -20.5, 6.8, 6.8, 0, 0, 18, {
     colorHex: baseHex,
   });
-  // Chamfered DE & NDE end-shields
-  addCylinderZ(faces, edges, 5.2, 7.0, 5.4, 4.2, 0, 0, 18, {
-    cx: -22,
-    cy: 6,
-    colorHex: '#475569',
-  });
-  addCylinderZ(faces, edges, -7.2, -5.2, 4.4, 5.6, 0, 0, 18, {
-    cx: -22,
-    cy: 6,
-    colorHex: '#475569',
-  });
-  // Perforated cooling fan cowl on NDE
-  addCylinderZ(faces, edges, -9.8, -6.8, 5.7, 5.7, 0, 0, 18, {
-    cx: -22,
-    cy: 6,
-    colorHex: '#334155',
-  });
-  // 8 longitudinal stator cooling fins around the motor frame
+  // 8 longitudinal cooling fins along X around the DRN180M4 frame
   for (let i = 0; i < 8; i++) {
     const a = (i / 8) * Math.PI * 2;
-    const fx = -22 + Math.cos(a) * 6.0;
-    const fy = 6 + Math.sin(a) * 6.0;
-    addBox(faces, edges, fx, fy, 0, 0.55, 0.55, 4.6, '#92400E', false);
+    const fy = Math.cos(a) * 7.1;
+    const fz = Math.sin(a) * 7.1;
+    addBox(faces, edges, -27.5, fy, fz, 6.2, 0.55, 0.55, '#92400E', false);
   }
-  // Motor drive shaft extending into V-belt guard
-  addCylinderZ(faces, edges, 6.8, 8.0, 1.5, 1.5, 0, 0, 10, {
-    cx: -22,
-    cy: 6,
-    colorHex: '#CBD5E1',
+  // NDE sheet-steel cooling fan cowl (x = -39.5..-34.5)
+  addCylinderSection(faces, edges, -39.5, -34.5, 6.9, 6.9, 0, 0, 18, {
+    colorHex: '#334155',
   });
-  // Cast mounting feet + top eye-bolt + side terminal box
-  addBox(faces, edges, -25.5, 0.8, 0, 1.4, 1.0, 4.2, '#475569', false);
-  addBox(faces, edges, -18.5, 0.8, 0, 1.4, 1.0, 4.2, '#475569', false);
-  addBox(faces, edges, -22, 12.6, 0, 1.0, 1.2, 1.0, '#CBD5E1', false);
-  addBox(faces, edges, -22, 9.2, -1.5, 2.6, 2.0, 2.6, '#1E293B', false);
+  // Top-mounted rotatable SEW terminal box + cable gland + lifting eye
+  addBox(faces, edges, -24.5, 8.0, 0, 3.2, 2.0, 3.2, '#1E293B', false);
+  addBox(faces, edges, -24.5, 8.0, 3.6, 0.9, 0.9, 1.0, '#94A3B8', false);
+  addBox(faces, edges, -31.5, 7.8, 0, 1.0, 1.2, 1.0, '#CBD5E1', false);
 
   return compileMesh(faces, edges, [0, 0, 0], baseHex);
 }
