@@ -1974,4 +1974,226 @@ export const TUTORIALS_PART_3: Record<string, TutorialStep[]> = {
       targetSelector: '[data-tour="mode-tabs"]',
     },
   ],
+  'fanuc-m900ib': [
+    {
+      id: 'fanuc-overview',
+      badge: { en: 'Overview', id: 'Ringkasan', ja: '概要' },
+      title: {
+        en: 'FANUC M-900iB/700 Robot & R-30iB iPendant',
+        id: 'Robot FANUC M-900iB/700 & iPendant R-30iB',
+        ja: 'FANUC M-900iB/700 ロボット & R-30iB iPendant',
+      },
+      description: {
+        en: 'Welcome! Operate a 6-axis heavy-payload industrial robot (700 kg capacity, 2832 mm reach) using an authentic FANUC R-30iB iPendant. Practice JOINT and WORLD jogging, Teach Pendant (TP) pick-and-place execution, wrist singularity avoidance, and SRVO/MOTN alarm diagnostics.',
+        id: 'Selamat datang! Operasikan robot industri 6-sumbu bermuatan berat (kapasitas 700 kg, jangkauan 2832 mm) menggunakan iPendant FANUC R-30iB. Latih penggerakan JOINT dan WORLD, eksekusi program Teach Pendant (TP), pencegahan singularitas pergelangan, serta diagnosis alarm SRVO/MOTN.',
+        ja: 'ようこそ！可搬質量 700 kg・最大リーチ 2832 mm の6軸大型産業用ロボットを R-30iB iPendant で操作します。JOINT/WORLD ジョグ、TPプログラム実行、手首特異点回避、SRVO/MOTN アラーム診断を実習しましょう。',
+      },
+      tip: {
+        en: 'Use Next / Previous or ← / → arrow keys anytime to step through every control.',
+        id: 'Gunakan tombol Berikutnya / Sebelumnya atau panah ← / → kapan saja untuk menelusuri setiap kontrol.',
+        ja: '「次へ / 前へ」または ← / → キーで各機能のガイドを順番に確認できます。',
+      },
+    },
+    {
+      id: 'fanuc-stage',
+      badge: { en: 'Feature 1 · Robot Cell', id: 'Fitur 1 · Sel Robot', ja: '機能1 · ロボットセル' },
+      title: {
+        en: 'Animated M-900iB/700 Kinematics & Work Envelope',
+        id: 'Kinematika & Ruang Jangkauan M-900iB/700',
+        ja: 'M-900iB/700 運動学と動作領域ステージ',
+      },
+      description: {
+        en: 'Observe the FANUC M-900iB/700 articulated arm, J2/J3 parallel linkage, hydropneumatic counterbalance cylinder, ISO wrist gripper, workpiece/pallet station, 2832 mm reach envelope arc, and live TCP motion trail.',
+        id: 'Amati lengan artikulasi FANUC M-900iB/700, mekanisme tautan paralel J2/J3, silinder penyeimbang hidropneumatik, pencengkeram pergelangan ISO, stasiun palet benda kerja, busur jangkauan 2832 mm, serta jejak gerak TCP langsung.',
+        ja: 'M-900iB/700 のJ2/J3平行リンク機構、ハイドロニューマチック・バランサ、ISO手首グリッパ、ワーク/パレット、2832 mm リーチ境界、リアルタイムTCP軌跡を確認できます。',
+      },
+      tip: {
+        en: 'Watch the hydropneumatic counterbalance cylinder on the J2 shoulder—it offsets static gravity torque as the arm extends horizontally.',
+        id: 'Perhatikan silinder penyeimbang hidropneumatik pada bahu J2 yang menyeimbangkan torsi gravitasi statis saat lengan memanjang secara horizontal.',
+        ja: 'J2肩部のバランサシリンダは、アーム水平伸長時の静的重力トルクを補償してサーボ負荷を低減します。',
+      },
+      targetSelector: '[data-tour="fanuc-stage"]',
+    },
+    {
+      id: 'fanuc-pendant',
+      badge: { en: 'Feature 2 · R-30iB iPendant', id: 'Fitur 2 · iPendant R-30iB', ja: '機能2 · R-30iB iPendant' },
+      title: {
+        en: 'Hardware Safety Interlocks: E-Stop, TP Switch & Deadman',
+        id: 'Interlock Keselamatan: E-Stop, Sakelar TP & Deadman',
+        ja: '安全インタロック（非常停止・TPスイッチ・デッドマン）',
+      },
+      description: {
+        en: 'Before jogging or running a program, release the red Emergency Stop (E-Stop) mushroom button, turn the TP key switch ON, and hold/enable the Deadman switch. Click RESET to clear latched servo alarms once the fault condition is resolved.',
+        id: 'Sebelum menggerakkan robot atau menjalankan program, bebaskan tombol henti darurat (E-Stop) merah, putar sakelar TP ke posisi ON, dan aktifkan sakelar pengaman Deadman. Klik RESET untuk menghapus alarm servo setelah penyebab gangguan diatasi.',
+        ja: 'ジョグやプログラム実行の前に、赤色の非常停止（E-Stop）を解除し、TPスイッチをON、デッドマンスイッチを有効にしてください。要因解消後は RESET でアラームを解除します。',
+      },
+      tip: {
+        en: 'On a real FANUC R-30iB controller, releasing or squeezing the 3-position Deadman switch too hard immediately drops servo power (SRVO-001/002).',
+        id: 'Pada pengendali FANUC R-30iB asli, melepas atau menekan sakelar Deadman 3-posisi terlalu keras akan langsung memutus daya servo.',
+        ja: '実機のR-30iBでは、3ポジションデッドマンスイッチを離すか強く握りすぎると直ちにサーボ電源が遮断されます。',
+      },
+      targetSelector: '[data-tour="fanuc-pendant"]',
+    },
+    {
+      id: 'fanuc-pendant-screen',
+      badge: { en: 'Feature 3 · LCD Screen', id: 'Fitur 3 · Layar LCD', ja: '機能3 · iPendant画面' },
+      title: {
+        en: 'iPendant Color LCD: Coordinates, Speed % & Status',
+        id: 'Layar LCD Berwarna iPendant: Koordinat, Kecepatan % & Status',
+        ja: 'iPendantカラーLCD：座標・速度オーバーライド・状態表示',
+      },
+      description: {
+        en: 'Read live JOINT angles (J1–J6 in degrees) or WORLD Cartesian coordinates (X, Y, Z, W, P, R in mm and degrees), active coordinate frame, speed override percentage, and controller alarm banner directly on the iPendant screen.',
+        id: 'Baca sudut sendi JOINT (J1–J6 dalam derajat) atau koordinat Kartesius WORLD (X, Y, Z, W, P, R dalam mm dan derajat), sistem koordinat aktif, persentase kecepatan, serta bilah alarm langsung pada layar iPendant.',
+        ja: 'JOINT各軸角度（J1〜J6）またはWORLD直交座標（X, Y, Z, W, P, R）、現在の座標系、速度オーバーライド（%）、アラームバナーを画面上でリアルタイム確認できます。',
+      },
+      targetSelector: '[data-tour="fanuc-pendant-screen"]',
+    },
+    {
+      id: 'fanuc-tp-program',
+      badge: { en: 'Feature 4 · TP Program', id: 'Fitur 4 · Program TP', ja: '機能4 · TPプログラム' },
+      title: {
+        en: 'Teach Pendant (TP) Program Execution & Touchup',
+        id: 'Eksekusi Program Teach Pendant (TP) & Touchup Titik',
+        ja: 'TPプログラム実行（FWD/HOLD/STEP）と教示点修正',
+      },
+      description: {
+        en: 'Select any line in the 5-line pick-and-place TP program (P[1]–P[4] and gripper DO[1]), step through with STEP + FWD, run continuously with FWD, pause with HOLD, or overwrite the active point coordinates with RECORD (Touchup).',
+        id: 'Pilih baris pada program TP 5-baris (P[1]–P[4] dan keluaran pencengkeram DO[1]), jalankan per langkah dengan STEP + FWD, jalankan penuh dengan FWD, jeda dengan HOLD, atau perbarui koordinat titik aktif dengan RECORD (Touchup).',
+        ja: '5行のピック＆プレースTPプログラム（P[1]〜P[4]、ハンド出力DO[1]）から行を選択し、STEP＋FWDで単ステップ実行、FWDで連続実行、HOLDで一時停止、RECORDで現在位置への教示点修正（Touchup）が可能です。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'What is the difference between J (Joint) and L (Linear) motion in a TP program?',
+            id: 'Apa perbedaan gerak J (Joint) dan L (Linear) pada program Teach Pendant?',
+            ja: 'TPプログラムにおける J（各軸補間）と L（直線補間）の違いは何ですか？',
+          },
+          a: {
+            en: 'J (Joint) moves all axes simultaneously along the fastest curved path between points and avoids wrist singularities. L (Linear) drives the TCP along an exact straight Cartesian line, which is required when approaching or lifting parts out of a fixture.',
+            id: 'Gerak J (Joint) menggerakkan seluruh sumbu secara serempak melalui lintasan tercepat dan terhindar dari singularitas. Gerak L (Linear) menggerakkan TCP tepat lurus secara Kartesius, penting saat mendekati atau mengangkat benda kerja dari ragum/palet.',
+            ja: 'J（各軸補間）は最短時間で曲線的に移動し特異点を回避しやすい動作です。L（直線補間）はTCPを厳密な直線軌道で動かすため、ワークの接近・抜取り工程で必須となります。',
+          },
+          keywords: ['joint', 'linear', 'tp', 'program', 'motion', 'gerak', '直線'],
+        },
+        {
+          q: {
+            en: 'When should I use FINE vs. CNT100 termination?',
+            id: 'Kapan harus menggunakan terminasi FINE dibandingkan CNT100?',
+            ja: '位置決めタイプ FINE と CNT100 はどのように使い分けますか？',
+          },
+          a: {
+            en: 'Use FINE at pick, place, or inspection points where the robot must come to a complete, exact stop before actuating the gripper. Use CNT100 (continuous) at intermediate approach/via points to blend corners smoothly and shorten cycle time.',
+            id: 'Gunakan FINE pada titik ambil, letak, atau inspeksi saat robot wajib berhenti tepat sebelum mengaktifkan pencengkeram. Gunakan CNT100 (kontinu) pada titik antara agar lintasan membelok mulus dan waktu siklus lebih singkat.',
+            ja: 'FINEは把持・解放など厳密な停止が必要な点で使用し、CNT100は経由点で減速せず滑らかにコーナー通過してサイクルタイムを短縮したい場合に使用します。',
+          },
+          keywords: ['fine', 'cnt', 'cnt100', 'termination', 'cycle', 'terminasi', '位置決め'],
+        },
+      ],
+      targetSelector: '[data-tour="fanuc-tp-program"]',
+    },
+    {
+      id: 'fanuc-jog-keys',
+      badge: { en: 'Feature 5 · Jog Keys', id: 'Fitur 5 · Tombol Jog', ja: '機能5 · ジョグキー' },
+      title: {
+        en: 'COORD, Speed % & Press-and-Hold Axis/Cartesian Jogging',
+        id: 'COORD, Kecepatan % & Penggerakan Sumbu / Kartesius',
+        ja: '座標切替（COORD）・速度調整・±軸/直交ジョグ操作',
+      },
+      description: {
+        en: 'Toggle COORD between JOINT and WORLD, adjust jog speed with +% / -%, and press-and-hold ±J1..±J6 (in JOINT) or ±X/±Y/±Z/±W/±P/±R (in WORLD) to manually position the robot.',
+        id: 'Alihkan COORD antara mode JOINT dan WORLD, atur persentase kecepatan dengan +% / -%, lalu tekan-tahan ±J1..±J6 (mode JOINT) atau ±X/±Y/±Z/±W/±P/±R (mode WORLD) untuk memosisikan robot secara manual.',
+        ja: 'COORDキーでJOINTとWORLDを切り替え、+% / -% で速度を調整し、±J1〜±J6（または±X〜±R）ボタンを押し続けて手動ジョグを行います。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'Why does a wrist singularity warning appear when |J5| < 5°?',
+            id: 'Mengapa peringatan singularitas pergelangan muncul saat |J5| < 5°?',
+            ja: '|J5| < 5° 付近で手首特異点（Wrist Singularity）の警告が出るのはなぜですか？',
+          },
+          a: {
+            en: 'When J5 approaches 0°, the J4 and J6 rotation axes become collinear. During Cartesian WORLD/Linear moves near this posture, the inverse kinematics require extreme J4/J6 angular velocities. Tilt J5 away from 0° or jog in JOINT mode.',
+            id: 'Saat sudut J5 mendekati 0°, sumbu putar J4 dan J6 menjadi segaris (kolinear). Pada gerak Kartesius WORLD/Linear di dekat posisi ini, kinematika balik menuntut kecepatan sudut J4/J6 yang ekstrem. Miringkan J5 menjauhi 0° atau gerakkan dalam mode JOINT.',
+            ja: 'J5が0°に近づくとJ4軸とJ6軸が一直線上に重なり、直交（WORLD/L）動作時に逆運動学がJ4/J6へ過大な角速度を要求するためです。J5を傾けるかJOINTモードで通過してください。',
+          },
+          keywords: ['singularity', 'j5', 'j4', 'j6', 'wrist', 'singularitas', '特異点'],
+        },
+      ],
+      targetSelector: '[data-tour="fanuc-jog-keys"]',
+    },
+    {
+      id: 'fanuc-payload-faults',
+      badge: { en: 'Feature 6 · Payload & Alarms', id: 'Fitur 6 · Muatan & Alarm', ja: '機能6 · 可搬質量・異常診断' },
+      title: {
+        en: 'Wrist Payload Slider, Reset Cell & Fault Injection',
+        id: 'Penggeser Muatan Pergelangan, Reset Sel & Injeksi Gangguan',
+        ja: '可搬質量設定・セル初期化・故障アラーム注入',
+      },
+      description: {
+        en: 'Adjust Wrist Payload (0–850 kg against the 700 kg rated limit), reset the cell to Home, or inject industrial FANUC alarms (SRVO-050 Collision Detect, SRVO-062 BZAL, MOTN-017 Limit Error) to inspect controller protection behavior.',
+        id: 'Atur Muatan Pergelangan (0–850 kg terhadap batas nominal 700 kg), kembalikan sel ke posisi Awal, atau simulasikan alarm industri FANUC (SRVO-050 Collision Detect, SRVO-062 BZAL, MOTN-017 Limit Error) untuk mengamati proteksi pengendali.',
+        ja: '手首可搬質量（0〜850 kg、定格700 kg）の調整、セル初期化、または代表アラーム（SRVO-050 衝突検出、SRVO-062 バッテリー/マスタリング異常、MOTN-017 限界エラー）を模擬して保護動作を確認します。',
+      },
+      faqs: [
+        {
+          q: {
+            en: 'What causes SRVO-050 Collision Detect and how do I recover?',
+            id: 'Apa penyebab alarm SRVO-050 Collision Detect dan bagaimana pemulihannya?',
+            ja: 'SRVO-050（衝突検出）の原因と復旧手順は？',
+          },
+          a: {
+            en: 'SRVO-050 trips when actual αiS servo disturbance torque exceeds the collision threshold—commonly due to physical impact, an overloaded wrist (>700 kg), or wrong payload schedule settings. Clear the obstruction, reduce payload within 700 kg, press RESET on the iPendant, and jog away carefully.',
+            id: 'SRVO-050 muncul ketika torsi gangguan servo αiS melampaui ambang batas akibat benturan fisik, kelebihan muatan (>700 kg), atau pengaturan data beban yang salah. Singkirkan hambatan, turunkan beban ≤700 kg, tekan RESET pada iPendant, lalu gerakkan menjauh secara perlahan.',
+            ja: '物理的な衝突や700 kg超の過負荷、負荷設定ミスによりαiSサーボの推定外乱トルクがしきい値を超えると発生します。障害物除去と負荷適正化の後、iPendantのRESETで解除し安全方向へ退避します。',
+          },
+          keywords: ['srvo-050', 'collision', 'payload', '700', 'torque', 'benturan', '衝突'],
+        },
+        {
+          q: {
+            en: 'What does SRVO-062 BZAL mean on a FANUC controller?',
+            id: 'Apa arti alarm SRVO-062 BZAL pada pengendali FANUC?',
+            ja: 'FANUC制御装置の SRVO-062 BZAL アラームとは何ですか？',
+          },
+          a: {
+            en: 'BZAL (Battery Zero Alarm) indicates the absolute pulsecoder backup battery voltage dropped to 0 V while powered off, losing axis mastering data. Replace the controller/robot base batteries with power ON, reset BZAL/pulse coder, and perform Zero Position Mastering.',
+            id: 'BZAL (Battery Zero Alarm) menandakan tegangan baterai cadangan pulsecoder absolut turun ke 0 V saat daya mati sehingga data mastering sumbu hilang. Ganti baterai saat daya ON, reset alarm pulsecoder, lalu lakukan Zero Position Mastering.',
+            ja: '電源遮断中に絶対位置パルスコーダのバックアップ電池電圧が0 Vになり、マスタリングデータが消失した状態です。電源ONのまま電池交換し、パルスコーダリセット後にゼロ点マスタリングを実施します。',
+          },
+          keywords: ['srvo-062', 'bzal', 'battery', 'mastering', 'pulsecoder', 'baterai', 'マスタリング'],
+        },
+      ],
+      targetSelector: '[data-tour="fanuc-payload-faults"]',
+    },
+    {
+      id: 'fanuc-telemetry',
+      badge: { en: 'Feature 7 · Telemetry', id: 'Fitur 7 · Telemetri', ja: '機能7 · 運転テレメトリ' },
+      title: {
+        en: 'Live Servo Torque, Reach & Singularity Telemetry',
+        id: 'Telemetri Torsi Servo, Jangkauan & Singularitas Langsung',
+        ja: 'サーボトルク・リーチ・特異点リアルタイム計測',
+      },
+      description: {
+        en: 'Monitor real-time TCP coordinates (X, Y, Z), horizontal reach vs. 2832 mm limit, J2 shoulder torque and αiS servo load %, wrist singularity margin (|J5|), and gripper/program status.',
+        id: 'Pantau koordinat TCP langsung (X, Y, Z), jarak jangkauan horizontal terhadap batas 2832 mm, torsi bahu J2 dan beban servo αiS %, margin singularitas pergelangan (|J5|), serta status pencengkeram dan program.',
+        ja: 'TCP位置（X, Y, Z）、2832 mm 上限に対する水平リーチ、J2肩部トルクとαiSサーボ負荷率、手首特異点余裕（|J5|）、グリッパ・プログラム状態をリアルタイムで監視します。',
+      },
+      targetSelector: '[data-tour="fanuc-telemetry"]',
+    },
+    {
+      id: 'fanuc-workflow',
+      badge: { en: 'Lab Modes', id: 'Mode Lab', ja: '学習モード' },
+      title: {
+        en: 'Explore, Practice & Quiz Workflow',
+        id: 'Alur Eksplorasi, Latihan & Kuis',
+        ja: '探索・演習・クイズの学習フロー',
+      },
+      description: {
+        en: 'Use Alt+1 (Explore), Alt+2 (Simulate), Alt+3 (Practice), and Alt+4 (Quiz) to study M-900iB/700 kinematics equations, compute payload torque and reach, and complete the robotics assessment.',
+        id: 'Gunakan Alt+1 (Eksplorasi), Alt+2 (Simulasi), Alt+3 (Latihan), dan Alt+4 (Kuis) untuk mempelajari persamaan kinematika M-900iB/700, menghitung torsi muatan dan jangkauan, serta menyelesaikan evaluasi robotika.',
+        ja: 'Alt+1（探索）、Alt+2（シミュレート）、Alt+3（演習）、Alt+4（クイズ）で運動学・負荷トルク計算の演習から理解度テストまで進められます。',
+      },
+      targetSelector: '[data-tour="mode-tabs"]',
+    },
+  ],
 };
