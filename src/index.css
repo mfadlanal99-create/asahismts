@@ -955,6 +955,25 @@ html.dark[data-pixel-seed="amber"] {
   }
 }
 
+/* ==================================================================== */
+/* HARDWARE REPLICA ISOLATION (1:1 FANUC iPendant & 3D Viewport)        */
+/* ==================================================================== */
+.pixel-sim-workspace .fanuc-hw-scope.fanuc-hw-scope button.hw-key.hw-key {
+  border-radius: 4px !important;
+}
+.pixel-sim-workspace .fanuc-hw-scope.fanuc-hw-scope button.hw-softkey.hw-softkey {
+  border-radius: 3px !important;
+}
+.pixel-sim-workspace .fanuc-hw-scope.fanuc-hw-scope button.hw-line.hw-line {
+  border-radius: 2px !important;
+}
+.pixel-sim-workspace .fanuc-hw-scope.fanuc-hw-scope button.hw-round.hw-round {
+  border-radius: 9999px !important;
+}
+.pixel-sim-workspace .fanuc-hw-scope.fanuc-hw-scope .hw-box.hw-box {
+  border-radius: 6px !important;
+}
+
 @keyframes view-enter {
   from {
     opacity: 0;

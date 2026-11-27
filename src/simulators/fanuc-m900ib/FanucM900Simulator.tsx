@@ -93,12 +93,19 @@ export function FanucM900Simulator() {
         const last = prev[prev.length - 1];
         if (
           last &&
-          Math.hypot(last.r - nextFk.tcpPos.r, last.z - nextFk.tcpPos.z) < 18
+          Math.hypot(
+            (last.x ?? last.r) - nextFk.x,
+            (last.y ?? 0) - nextFk.y,
+            last.z - nextFk.z
+          ) < 18
         ) {
           return prev;
         }
-        const next = [...prev, { r: nextFk.tcpPos.r, z: nextFk.tcpPos.z }];
-        return next.length > 48 ? next.slice(next.length - 48) : next;
+        const next = [
+          ...prev,
+          { r: nextFk.tcpPos.r, z: nextFk.tcpPos.z, x: nextFk.x, y: nextFk.y },
+        ];
+        return next.length > 64 ? next.slice(next.length - 64) : next;
       });
     },
     [payloadKg]
@@ -355,6 +362,17 @@ export function FanucM900Simulator() {
             onHoldStop={handleHoldStop}
             onSelectLine={(lineNum) => setActiveLine(lineNum)}
             onJogStep={handleJogStep}
+            onToggleGripper={() => {
+              setGripperOn((prev) => {
+                const next = !prev;
+                if (next && kinematics.z < 920) {
+                  setWorkpieceState('carried');
+                } else if (!next && workpieceState === 'carried') {
+                  setWorkpieceState(joints.j1 > 10 ? 'pallet' : 'infeed');
+                }
+                return next;
+              });
+            }}
             labels={{
               pendantTitle: pick('iPendant R-30iB', 'iPendant R-30iB', 'iPendant R-30iB'),
               eStop: 'E-STOP',
