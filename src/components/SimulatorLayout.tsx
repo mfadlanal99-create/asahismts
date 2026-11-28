@@ -1,7 +1,22 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowLeft, HelpCircle, Printer } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import {
+  Activity,
+  ArrowLeft,
+  BookMarked,
+  BookOpen,
+  CheckSquare,
+  ClipboardCheck,
+  HelpCircle,
+  Layers,
+  Moon,
+  Printer,
+  Search,
+  Sliders,
+  Sun,
+} from 'lucide-react';
+import { useLanguage, type Language } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
+import { useTheme } from '../context/ThemeContext';
 import {
   getSimulatorTutorial,
   shouldAutoOpenTutorial,
@@ -15,6 +30,25 @@ import { SimulatorIcon } from './SimulatorIcon';
 import { SimulatorTutorialModal } from './SimulatorTutorialModal';
 import { SimulatorVirtualAssistant } from './SimulatorVirtualAssistant';
 import { TopRibbon } from './TopRibbon';
+
+const LANGUAGE_OPTIONS: { id: Language; label: string; title: string }[] = [
+  { id: 'en', label: 'EN', title: 'English' },
+  { id: 'id', label: 'ID', title: 'Bahasa Indonesia' },
+  { id: 'ja', label: 'JA', title: '日本語' },
+];
+
+const SIMULATOR_MODES: {
+  id: SimulatorMode;
+  en: string;
+  idLabel: string;
+  ja: string;
+  icon: typeof Sliders;
+}[] = [
+  { id: 'simulate', en: 'Simulate', idLabel: 'Simulasi', ja: 'シミュレート', icon: Sliders },
+  { id: 'explore', en: 'Explore', idLabel: 'Materi', ja: '理論学習', icon: BookOpen },
+  { id: 'practice', en: 'Practice', idLabel: 'Latihan', ja: '演習', icon: ClipboardCheck },
+  { id: 'quiz', en: 'Quiz', idLabel: 'Kuis', ja: 'クイズ', icon: CheckSquare },
+];
 
 interface SimulatorLayoutProps {
   meta: SimulatorMeta;
@@ -41,8 +75,9 @@ export function SimulatorLayout({
   const [tutorialOpen, setTutorialOpen] = useState(false);
   const [tutorialInitialStep, setTutorialInitialStep] = useState(0);
   const [prevSimId, setPrevSimId] = useState(meta.id);
-  const { language, pick } = useLanguage();
+  const { language, setLanguage, pick } = useLanguage();
   const { markVisited } = useProgress();
+  const { theme, toggleTheme, uiStyle, toggleUiStyle } = useTheme();
   const tutorialSteps = getSimulatorTutorial(meta.id);
 
   if (prevSimId !== meta.id) {
@@ -105,6 +140,350 @@ export function SimulatorLayout({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // =========================================================================
+  // ASAHIMAS DATA BANK (PORT 5180) UI/UX — THREADS RAIL + KESTREL BENTO
+  // =========================================================================
+  if (uiStyle === 'databank') {
+    return (
+      <div className="th-shell">
+        {/* Floating Left Icon Rail */}
+        <aside className="th-rail print:hidden" aria-label="Simulator Navigation">
+          <div className="th-rail-top">
+            <button
+              type="button"
+              className="th-brand-mark"
+              onClick={onBack}
+              title="Back to Asahimas Data Bank Command Center"
+            >
+              ADB
+            </button>
+
+            <div className="th-rail-pill">
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={onBack}
+                aria-label="Command Center (All Labs)"
+              >
+                <Activity size={17} />
+                <span className="th-rail-tooltip">
+                  {pick('Command Center (All Labs)', 'Pusat Komando (Semua Lab)', 'コマンドセンター')}
+                </span>
+              </button>
+
+              {SIMULATOR_MODES.map((m, idx) => {
+                const ModeIcon = m.icon;
+                const active = mode === m.id;
+                const label = pick(m.en, m.idLabel, m.ja);
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    className={`th-rail-btn ${active ? 'active' : ''}`}
+                    onClick={() => setMode(m.id)}
+                    aria-label={label}
+                  >
+                    <ModeIcon size={17} />
+                    <span className="th-rail-tooltip">
+                      {label} (Alt+{idx + 1})
+                    </span>
+                  </button>
+                );
+              })}
+
+              {tutorialSteps.length > 0 && (
+                <button
+                  type="button"
+                  className="th-rail-btn"
+                  onClick={() => {
+                    setTutorialInitialStep(0);
+                    setTutorialOpen(true);
+                  }}
+                  aria-label="Interactive Tutorial"
+                >
+                  <HelpCircle size={17} />
+                  <span className="th-rail-tooltip">
+                    {pick('Interactive Tutorial', 'Tutorial Interaktif', '操作チュートリアル')}
+                  </span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={() => window.print()}
+                aria-label="Print Lab Sheet"
+              >
+                <Printer size={17} />
+                <span className="th-rail-tooltip">
+                  {pick('Print Lab Sheet', 'Cetak Lembar Lab', '実習シート印刷')}
+                </span>
+              </button>
+
+              {onOpenHandbook && (
+                <button
+                  type="button"
+                  className="th-rail-btn"
+                  onClick={onOpenHandbook}
+                  aria-label="Engineering Handbook"
+                >
+                  <BookMarked size={17} />
+                  <span className="th-rail-tooltip">
+                    {pick('Engineering Handbook', 'Buku Panduan', 'ハンドブック')}
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="th-rail-pill">
+            {onOpenCommandPalette && (
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={onOpenCommandPalette}
+                aria-label="Quick Search (Ctrl+K)"
+              >
+                <Search size={17} />
+                <span className="th-unread-dot" />
+                <span className="th-rail-tooltip">Quick Search (Ctrl+K)</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              className="th-rail-btn"
+              onClick={toggleUiStyle}
+              aria-label="Switch to Classic Pixel UI (Backup)"
+            >
+              <Layers size={17} />
+              <span className="th-rail-tooltip">
+                Switch to Classic Pixel UI (Backup)
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="th-rail-btn"
+              onClick={toggleTheme}
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+              <span className="th-rail-tooltip">
+                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="th-avatar-btn"
+              onClick={onOpenWelcome}
+              title="M. Fadlan Alamsyah"
+            >
+              FA
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Workspace Container */}
+        <div className="th-main">
+          {/* Print-Only Lab Worksheet Header */}
+          <div className="hidden border-b border-slate-300 px-4 pb-3 pt-2 print:block">
+            <div className="flex items-center justify-between text-xs text-slate-600">
+              <span className="font-bold uppercase tracking-wider text-slate-900">
+                {pick(
+                  'Asahi-SMTS — Technician Lab Worksheet',
+                  'Asahi-SMTS — Lembar Kerja Lab Teknisi',
+                  'Asahi-SMTS — 技術者実習ワークシート'
+                )}
+              </span>
+              <span>
+                {pick('Mode', 'Mode', 'モード')}: {mode.toUpperCase()}
+              </span>
+            </div>
+          </div>
+
+          {/* Top Header Bar (.th-header) */}
+          <header className="th-header print:hidden">
+            <div>
+              <div className="th-date">
+                {translateCategory(meta.category, language)} ·{' '}
+                {translateDifficulty(meta.difficulty, language)} · TAG:{' '}
+                <span style={{ fontFamily: 'var(--font-mono)' }}>
+                  {meta.id.toUpperCase()}
+                </span>
+              </div>
+              <h1 className="th-greeting">{meta.title}</h1>
+            </div>
+
+            <div className="th-header-right">
+              {/* Quick Lab Switcher Select */}
+              <select
+                aria-label="Switch Simulator"
+                value={meta.id}
+                onChange={(e) => onSelectSimulator(e.target.value)}
+                className="gm-select"
+                style={{
+                  width: 'auto',
+                  maxWidth: 215,
+                  borderRadius: 999,
+                  padding: '6px 14px',
+                  fontSize: 12,
+                  fontWeight: 600,
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-card)',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
+                {simulators.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.shortTitle}
+                  </option>
+                ))}
+              </select>
+
+              {/* Language Switcher Pill */}
+              <div
+                role="group"
+                aria-label="Language"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: 3,
+                  borderRadius: 999,
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-card)',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
+                {LANGUAGE_OPTIONS.map((opt) => {
+                  const active = language === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setLanguage(opt.id)}
+                      style={{
+                        border: 'none',
+                        borderRadius: 999,
+                        padding: '4px 9px',
+                        fontSize: 11,
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        background: active ? 'var(--ink-900)' : 'transparent',
+                        color: active ? 'var(--bg-surface)' : 'var(--text-secondary)',
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {tutorialSteps.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setTutorialInitialStep(0);
+                    setTutorialOpen(true);
+                  }}
+                  className="gm-btn gm-btn-tonal gm-btn-sm"
+                >
+                  <HelpCircle size={14} />
+                  <span>{pick('Tutorial', 'Tutorial', 'ガイド')}</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={onBack}
+                className="gm-btn gm-btn-aurora gm-btn-sm"
+              >
+                <ArrowLeft size={14} />
+                <span>{pick('Back to Labs', 'Kembali ke Lab', 'ラボ一覧へ')}</span>
+              </button>
+            </div>
+          </header>
+
+          {/* Kestrel Sub-Header Toolbar: 4 Mode Chips + Description Summary */}
+          <div className="ks-card print:hidden" style={{ padding: '14px 18px' }}>
+            <div className="gm-toolbar">
+              <div data-tour="mode-tabs" className="gm-chips">
+                {SIMULATOR_MODES.map((m, idx) => {
+                  const ModeIcon = m.icon;
+                  const active = mode === m.id;
+                  const label = pick(m.en, m.idLabel, m.ja);
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => setMode(m.id)}
+                      title={`${label} (Alt+${idx + 1})`}
+                      className={`gm-chip ${active ? 'active' : ''}`}
+                    >
+                      <ModeIcon size={14} />
+                      <span>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div
+                style={{
+                  fontSize: 12.5,
+                  color: 'var(--text-secondary)',
+                  maxWidth: 680,
+                }}
+              >
+                {meta.description}
+              </div>
+            </div>
+          </div>
+
+          {/* Main Simulator Content */}
+          <main className="pixel-sim-workspace relative w-full flex-1 pb-8">
+            <div key={mode} className="animate-view-enter">
+              {mode === 'simulate' && children}
+              {mode === 'explore' && <ExploreTab sections={meta.explore} />}
+              {mode === 'practice' && (
+                <PracticeTab
+                  simulatorId={meta.id}
+                  problems={meta.practice}
+                  onGoToQuiz={() => setMode('quiz')}
+                />
+              )}
+              {mode === 'quiz' && (
+                <QuizTab simulatorId={meta.id} questions={meta.quiz} />
+              )}
+            </div>
+          </main>
+
+          <SimulatorVirtualAssistant
+            meta={meta}
+            steps={tutorialSteps}
+            isTutorialOpen={tutorialOpen}
+            onJumpToTutorialStep={(idx) => {
+              setTutorialInitialStep(idx);
+              setTutorialOpen(true);
+            }}
+          />
+
+          <SimulatorTutorialModal
+            isOpen={tutorialOpen}
+            meta={meta}
+            steps={tutorialSteps}
+            initialStepIndex={tutorialInitialStep}
+            onClose={() => setTutorialOpen(false)}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // BACKUP: CLASSIC PIXEL UI SIMULATOR LAYOUT (1-Click Instant Switch Back)
+  // =========================================================================
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip bg-[var(--md-surface)] text-[var(--md-on-surface)] glass-mesh-light dark:glass-mesh-dark">
       {/* Android 17 Floating System Bar */}

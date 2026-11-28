@@ -1,8 +1,10 @@
 import { useMemo, useRef, useState } from 'react';
 import {
+  Activity,
   ArrowRight,
   Atom,
   Award,
+  BookMarked,
   BookOpen,
   Box,
   Calendar,
@@ -11,17 +13,27 @@ import {
   ChevronLeft,
   ChevronRight,
   ClipboardCheck,
+  Cog,
+  Droplets,
+  Gauge,
+  Info,
+  Layers,
+  Moon,
+  Ruler,
   Search,
   ShieldCheck,
   Sliders,
   Sparkles,
+  Sun,
   SunMedium,
+  Wrench,
   X,
 } from 'lucide-react';
 import { SimulatorIcon } from '../components/SimulatorIcon';
 import { TopRibbon } from '../components/TopRibbon';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage, type Language } from '../context/LanguageContext';
 import { useProgress } from '../context/ProgressContext';
+import { useTheme } from '../context/ThemeContext';
 import { translateCategory, translateDifficulty } from '../i18n/simulatorRegistry';
 import type { SimulatorCategory, SimulatorMeta } from '../types/simulator';
 
@@ -36,6 +48,70 @@ interface HomePageProps {
 
 const ITEMS_PER_PAGE = 8;
 
+const LANGUAGE_OPTIONS: { id: Language; label: string; title: string }[] = [
+  { id: 'en', label: 'EN', title: 'English' },
+  { id: 'id', label: 'ID', title: 'Bahasa Indonesia' },
+  { id: 'ja', label: 'JA', title: '日本語' },
+];
+
+const DATABANK_CATEGORIES: {
+  id: 'All' | SimulatorCategory;
+  en: string;
+  idLabel: string;
+  ja: string;
+  icon: typeof Activity;
+  accentHex: string;
+}[] = [
+  {
+    id: 'All',
+    en: 'Command Center',
+    idLabel: 'Pusat Komando',
+    ja: 'コマンドセンター',
+    icon: Activity,
+    accentHex: '#e84d28',
+  },
+  {
+    id: 'Precision Measurement',
+    en: 'Precision Measurement',
+    idLabel: 'Pengukuran Presisi',
+    ja: '精密測定',
+    icon: Ruler,
+    accentHex: '#6366f1',
+  },
+  {
+    id: 'Diagnostic Instruments',
+    en: 'Diagnostic Instruments',
+    idLabel: 'Instrumen Diagnostik',
+    ja: '診断計測器',
+    icon: Gauge,
+    accentHex: '#e84d28',
+  },
+  {
+    id: 'Rotating Equipment',
+    en: 'Rotating Equipment',
+    idLabel: 'Peralatan Putar',
+    ja: '回転機械',
+    icon: Cog,
+    accentHex: '#10b981',
+  },
+  {
+    id: 'Machine Elements',
+    en: 'Machine Elements',
+    idLabel: 'Elemen Mesin',
+    ja: '機械要素',
+    icon: Wrench,
+    accentHex: '#f59e0b',
+  },
+  {
+    id: 'Fluid Power',
+    en: 'Fluid Power',
+    idLabel: 'Tenaga Fluida',
+    ja: '流体動力',
+    icon: Droplets,
+    accentHex: '#0ea5e9',
+  },
+];
+
 export function HomePage({
   simulators,
   onSelectSimulator,
@@ -49,19 +125,24 @@ export function HomePage({
     'All' | SimulatorCategory
   >('All');
   const [currentPage, setCurrentPage] = useState(1);
+  const [inspectedSimId, setInspectedSimId] = useState<string>(
+    () => simulators[0]?.id ?? 'fanuc-m900ib'
+  );
   const [todayDate] = useState(() => new Date());
   const gridTopRef = useRef<HTMLDivElement | null>(null);
-  const { language, pick } = useLanguage();
+  const { language, setLanguage, pick } = useLanguage();
   const { getSimulatorProgress, isSimulatorMastered } = useProgress();
+  const { theme, toggleTheme, uiStyle, toggleUiStyle } = useTheme();
 
   const atAGlanceDate = useMemo(() => {
     const locale =
       language === 'id' ? 'id-ID' : language === 'ja' ? 'ja-JP' : 'en-US';
     try {
       return new Intl.DateTimeFormat(locale, {
-        weekday: 'short',
+        weekday: 'long',
         month: 'short',
         day: 'numeric',
+        year: 'numeric',
       }).format(todayDate);
     } catch {
       return todayDate.toDateString();
@@ -152,6 +233,1078 @@ export function HomePage({
         )
       : 0;
 
+  // =========================================================================
+  // ASAHIMAS DATA BANK (PORT 5180) UI/UX — THREADS RAIL + KESTREL BENTO
+  // =========================================================================
+  if (uiStyle === 'databank') {
+    const inspectedSim =
+      filteredSimulators.find((s) => s.id === inspectedSimId) ??
+      filteredSimulators[0] ??
+      simulators[0];
+    const inspectedProg = inspectedSim
+      ? getSimulatorProgress(inspectedSim.id)
+      : null;
+    const inspectedMastered = inspectedSim
+      ? isSimulatorMastered(inspectedSim)
+      : false;
+    const inspectedQuizDenom =
+      inspectedSim && inspectedProg
+        ? inspectedProg.quizTotal > 0
+          ? inspectedProg.quizTotal
+          : inspectedSim.quiz.length
+        : 0;
+    const inspectedQuizPct =
+      inspectedProg &&
+      inspectedProg.bestQuizScore !== null &&
+      inspectedQuizDenom > 0
+        ? Math.round((inspectedProg.bestQuizScore / inspectedQuizDenom) * 100)
+        : null;
+
+    const miniBars = [64, 72, 70, 82, 86, 91, Math.max(25, overallReadinessPct)];
+    const rotCount = categoryCounts['Rotating Equipment'] ?? 0;
+    const diagCount = categoryCounts['Diagnostic Instruments'] ?? 0;
+    const otherCount = Math.max(0, simulators.length - rotCount - diagCount);
+    const totalSimSafe = Math.max(1, simulators.length);
+    const rotPct = Math.round((rotCount / totalSimSafe) * 100);
+    const diagPct = Math.round((diagCount / totalSimSafe) * 100);
+    const otherPct = Math.max(0, 100 - rotPct - diagPct);
+
+    const practicePct =
+      totalPractice > 0 ? Math.round((solvedPractice / totalPractice) * 100) : 0;
+
+    return (
+      <div className="th-shell">
+        {/* Floating Left Icon Rail (Exact Asahimas Data Bank port 5180 layout) */}
+        <aside className="th-rail" aria-label="Primary Navigation">
+          <div className="th-rail-top">
+            <button
+              type="button"
+              className="th-brand-mark"
+              onClick={() => {
+                handleSelectCategory('All');
+                setSearchQuery('');
+              }}
+              title="Asahimas Smart Maintenance Data Bank"
+            >
+              ADB
+            </button>
+
+            <div className="th-rail-pill">
+              {DATABANK_CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                const active = selectedCategory === cat.id;
+                const label = pick(cat.en, cat.idLabel, cat.ja);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    className={`th-rail-btn ${active ? 'active' : ''}`}
+                    onClick={() => handleSelectCategory(cat.id)}
+                    aria-label={label}
+                  >
+                    <Icon size={17} />
+                    <span className="th-rail-tooltip">
+                      {label} ({categoryCounts[cat.id] ?? 0})
+                    </span>
+                  </button>
+                );
+              })}
+
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={() => onSelectSimulator('machine-3d-explorer')}
+                aria-label="3D CAD Machine Explorer"
+              >
+                <Box size={17} />
+                <span className="th-rail-tooltip">3D CAD Machine Explorer</span>
+              </button>
+
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={() => onSelectSimulator('fanuc-m900ib')}
+                aria-label="FANUC M-900iB/700 3D Robot"
+              >
+                <Cog size={17} />
+                <span className="th-rail-tooltip">FANUC M-900iB/700 3D Robot</span>
+              </button>
+
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={onOpenCompetency}
+                aria-label="Competency Report"
+              >
+                <ShieldCheck size={17} />
+                <span className="th-rail-tooltip">
+                  {pick('Competency Report', 'Laporan Kompetensi', '習熟度レポート')}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                className="th-rail-btn"
+                onClick={onOpenHandbook}
+                aria-label="Engineering Handbook"
+              >
+                <BookMarked size={17} />
+                <span className="th-rail-tooltip">
+                  {pick('Engineering Handbook', 'Buku Panduan Teknik', '技術ハンドブック')}
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div className="th-rail-pill">
+            <button
+              type="button"
+              className="th-rail-btn"
+              onClick={onOpenCommandPalette}
+              aria-label="AI Command Search (Ctrl+K)"
+            >
+              <Search size={17} />
+              <span className="th-unread-dot" />
+              <span className="th-rail-tooltip">Quick Search (Ctrl+K)</span>
+            </button>
+
+            <button
+              type="button"
+              className="th-rail-btn"
+              onClick={toggleUiStyle}
+              aria-label="Switch to Classic Pixel UI (Backup)"
+            >
+              <Layers size={17} />
+              <span className="th-rail-tooltip">
+                Switch to Classic Pixel UI (Backup)
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="th-rail-btn"
+              onClick={toggleTheme}
+              aria-label="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+              <span className="th-rail-tooltip">
+                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              className="th-avatar-btn"
+              onClick={onOpenWelcome}
+              title="M. Fadlan Alamsyah — Asahi-SMTS"
+            >
+              FA
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Workspace Container */}
+        <main className="th-main">
+          {/* Top Header Bar (Exact Asahimas Data Bank port 5180 layout) */}
+          <header className="th-header">
+            <div>
+              <div className="th-date">
+                {atAGlanceDate} · Shift A · Asahimas Maintenance Data Bank
+              </div>
+              <h1 className="th-greeting">
+                {selectedCategory === 'All'
+                  ? pick(
+                      'Command Center · Smart Maintenance Simulators',
+                      'Pusat Komando · Simulator Pemeliharaan Cerdas',
+                      'コマンドセンター · スマート保全シミュレータ'
+                    )
+                  : translateCategory(selectedCategory, language)}
+              </h1>
+            </div>
+
+            <div className="th-header-right">
+              <div className="th-plant-pill">
+                <span className="th-plant-circle">AS</span>
+                <div style={{ lineHeight: 1.2 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600 }}>
+                    Asahimas Plant
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                    {simulators.length} Maintenance Labs
+                  </div>
+                </div>
+              </div>
+
+              <div
+                role="group"
+                aria-label="Language"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: 3,
+                  borderRadius: 999,
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-card)',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
+                {LANGUAGE_OPTIONS.map((opt) => {
+                  const active = language === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setLanguage(opt.id)}
+                      style={{
+                        border: 'none',
+                        borderRadius: 999,
+                        padding: '4px 10px',
+                        fontSize: 11,
+                        fontFamily: 'var(--font-mono)',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        background: active ? 'var(--ink-900)' : 'transparent',
+                        color: active ? 'var(--bg-surface)' : 'var(--text-secondary)',
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                className="gm-btn gm-btn-tonal gm-btn-sm"
+                onClick={toggleUiStyle}
+                title="Switch back to Classic Pixel UI"
+              >
+                <Layers size={14} />
+                <span>{pick('Pixel UI', 'Pixel UI', 'Pixel UI')}</span>
+              </button>
+            </div>
+          </header>
+
+          {/* Row 1: Top Kestrel KPI Strip — 4 Equal-Height White Cards */}
+          <div className="ks-row-1">
+            {/* KPI 1: Training Readiness / Fleet Mastery */}
+            <button
+              type="button"
+              className="ks-card ks-kpi-card"
+              onClick={onOpenCompetency}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {pick('Training Readiness', 'Kesiapan Pelatihan', '訓練習熟度')}
+                </span>
+                <span className="status-chip chip-ok">
+                  {masteredCount}/{simulators.length} {pick('Mastered', 'Dikuasai', '習得')}
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                  width: '100%',
+                }}
+              >
+                <div className="ks-kpi-val">{overallReadinessPct}%</div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    gap: 3,
+                    height: 28,
+                  }}
+                >
+                  {miniBars.map((v, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        width: 5,
+                        height: `${Math.max(20, v)}%`,
+                        borderRadius: 3,
+                        background:
+                          i === miniBars.length - 1
+                            ? 'linear-gradient(180deg, #FB7185 0%, var(--accent-coral) 100%)'
+                            : 'var(--ink-150)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </button>
+
+            {/* KPI 2: Active Maintenance Simulators */}
+            <button
+              type="button"
+              className="ks-card ks-kpi-card"
+              onClick={() => handleSelectCategory('All')}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {pick('Active Simulators', 'Simulator Aktif', '稼働シミュレータ')}
+                </span>
+                <span className="status-chip chip-warn">
+                  {visitedCount} {pick('Visited', 'Dikunjungi', '受講済')}
+                </span>
+              </div>
+              <div className="ks-kpi-val">{simulators.length}</div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 3,
+                  height: 8,
+                  width: '100%',
+                  borderRadius: 999,
+                  overflow: 'hidden',
+                  background: 'var(--bg-subtile)',
+                }}
+              >
+                <div
+                  style={{
+                    width: `${rotPct}%`,
+                    height: '100%',
+                    borderRadius: 999,
+                    background: '#10B981',
+                  }}
+                />
+                <div
+                  style={{
+                    width: `${diagPct}%`,
+                    height: '100%',
+                    borderRadius: 999,
+                    background: '#E84D28',
+                  }}
+                />
+                <div
+                  style={{
+                    width: `${otherPct}%`,
+                    height: '100%',
+                    borderRadius: 999,
+                    background: '#6366F1',
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: 'var(--text-muted)',
+                  width: '100%',
+                }}
+              >
+                <span>
+                  {rotCount} Rotating · {diagCount} Diagnostics
+                </span>
+                <span>{otherCount} Elements/Fluids</span>
+              </div>
+            </button>
+
+            {/* KPI 3: Hands-On Practice Drills */}
+            <button
+              type="button"
+              className="ks-card ks-kpi-card"
+              onClick={onOpenCompetency}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {pick('Practice Compliance', 'Penyelesaian Latihan', '演習達成率')}
+                </span>
+                <span className="status-chip chip-info">
+                  {solvedPractice}/{totalPractice}
+                </span>
+              </div>
+              <div className="ks-kpi-val">{practicePct}%</div>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 3,
+                  height: 8,
+                  width: '100%',
+                  borderRadius: 999,
+                  overflow: 'hidden',
+                  background: 'var(--bg-subtile)',
+                }}
+              >
+                <div
+                  style={{
+                    width: `${Math.max(8, practicePct)}%`,
+                    height: '100%',
+                    borderRadius: 999,
+                    background: '#10B981',
+                  }}
+                />
+                <div
+                  style={{
+                    width: `${Math.max(0, 100 - Math.max(8, practicePct))}%`,
+                    height: '100%',
+                    borderRadius: 999,
+                    background: '#0EA5E9',
+                    opacity: 0.25,
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: 'var(--text-muted)',
+                  width: '100%',
+                }}
+              >
+                <span>{solvedPractice} Solved</span>
+                <span>{totalPractice - solvedPractice} Remaining</span>
+              </div>
+            </button>
+
+            {/* KPI 4: Average Quiz Score & 3D Lab Access */}
+            <button
+              type="button"
+              className="ks-card ks-kpi-card"
+              onClick={() => onSelectSimulator('machine-3d-explorer')}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {pick('Avg Quiz Competency', 'Rata-rata Kuis', '平均クイズスコア')}
+                </span>
+                <span className="status-chip chip-ok">3D CAD Ready</span>
+              </div>
+              <div className="ks-kpi-val">{avgQuizPct}%</div>
+              <div className="gm-progress-track">
+                <div
+                  className="gm-progress-fill"
+                  style={{ width: `${Math.max(10, avgQuizPct)}%` }}
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  fontSize: 11,
+                  color: 'var(--text-muted)',
+                  width: '100%',
+                }}
+              >
+                <span>ISO 10816 · ISO 281 · ASME</span>
+                <span>Launch 3D Explorer →</span>
+              </div>
+            </button>
+          </div>
+
+          {/* Filter & Search Toolbar (Exact Asahimas Data Bank .gm-toolbar) */}
+          <div ref={gridTopRef} className="gm-toolbar">
+            <div className="gm-chips">
+              {DATABANK_CATEGORIES.map((cat) => {
+                const active = selectedCategory === cat.id;
+                const count = categoryCounts[cat.id] ?? 0;
+                const label =
+                  cat.id === 'All'
+                    ? pick('All Labs', 'Semua Lab', '全ラボ')
+                    : pick(cat.en, cat.idLabel, cat.ja);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => handleSelectCategory(cat.id)}
+                    className={`gm-chip ${active ? 'active' : ''}`}
+                  >
+                    <span>{label}</span>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 11,
+                        opacity: 0.85,
+                      }}
+                    >
+                      ({count})
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div className="th-search-bar" style={{ minWidth: 270 }}>
+                <Search size={15} style={{ color: 'var(--text-muted)' }} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  placeholder={pick(
+                    'Search simulators, tools, tags...',
+                    'Cari simulator, alat, kode...',
+                    'シミュレータ・機器タグを検索...'
+                  )}
+                  className="th-search-input"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setCurrentPage(1);
+                    }}
+                    style={{
+                      border: 'none',
+                      background: 'transparent',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      padding: 2,
+                    }}
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={onOpenCommandPalette}
+                className="gm-btn gm-btn-tonal gm-btn-sm"
+                title="AI Command Search (Ctrl+K)"
+              >
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11 }}>
+                  Ctrl+K
+                </span>
+              </button>
+            </div>
+          </div>
+
+          {/* Sub-view Split Pattern (.ag-split-view): 2-Col Kestrel Cards + Sticky Right Inspector */}
+          {filteredSimulators.length === 0 ? (
+            <div className="ks-card" style={{ textAlign: 'center', padding: 48 }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
+                No maintenance simulators match &ldquo;{searchQuery}&rdquo;.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  handleSelectCategory('All');
+                }}
+                className="gm-btn gm-btn-aurora gm-btn-sm"
+                style={{ marginTop: 12 }}
+              >
+                Clear Filters
+              </button>
+            </div>
+          ) : (
+            <div className="ag-split-view">
+              {/* Left: 2-Column Kestrel Cards + Pagination */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <div className="ks-cards-2col">
+                  {paginatedSimulators.map((sim, idx) => {
+                    const sp = getSimulatorProgress(sim.id);
+                    const mastered = isSimulatorMastered(sim);
+                    const isSelected = inspectedSim?.id === sim.id;
+                    const globalNum = String(pageStartIdx + idx + 1).padStart(
+                      2,
+                      '0'
+                    );
+
+                    return (
+                      <div
+                        key={sim.id}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => setInspectedSimId(sim.id)}
+                        onDoubleClick={() => onSelectSimulator(sim.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            onSelectSimulator(sim.id);
+                          }
+                        }}
+                        className={`ks-item-card clickable ${
+                          isSelected ? 'selected' : ''
+                        }`}
+                      >
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: 8,
+                          }}
+                        >
+                          <span className="gm-tag">LAB-{globalNum}</span>
+
+                          <span
+                            className={`status-chip ${
+                              mastered
+                                ? 'chip-ok'
+                                : sim.difficulty === 'Advanced'
+                                ? 'chip-err'
+                                : sim.difficulty === 'Intermediate'
+                                ? 'chip-warn'
+                                : 'chip-info'
+                            }`}
+                          >
+                            {mastered
+                              ? pick('Mastered', 'Dikuasai', '習得済')
+                              : translateDifficulty(sim.difficulty, language)}
+                          </span>
+                        </div>
+
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 12,
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 38,
+                              height: 38,
+                              borderRadius: 11,
+                              background: 'var(--bg-tonal)',
+                              color: 'var(--text-primary)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0,
+                              border: '1px solid var(--border-hairline)',
+                            }}
+                          >
+                            <SimulatorIcon
+                              iconName={sim.iconName}
+                              className="h-4 w-4"
+                            />
+                          </div>
+
+                          <div style={{ minWidth: 0 }}>
+                            <div
+                              style={{
+                                fontSize: 14.5,
+                                fontWeight: 600,
+                                color: 'var(--text-primary)',
+                                lineHeight: 1.25,
+                              }}
+                            >
+                              {sim.shortTitle}
+                            </div>
+                            <div
+                              style={{
+                                fontSize: 12,
+                                color: 'var(--text-muted)',
+                                marginTop: 2,
+                              }}
+                            >
+                              {translateCategory(sim.category, language)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <p
+                          style={{
+                            fontSize: 12.5,
+                            color: 'var(--text-secondary)',
+                            lineHeight: 1.45,
+                            margin: 0,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {sim.description}
+                        </p>
+
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            paddingTop: 4,
+                            borderTop: '1px solid var(--border-hairline)',
+                            fontSize: 11.5,
+                            color: 'var(--text-muted)',
+                          }}
+                        >
+                          <span style={{ fontFamily: 'var(--font-mono)' }}>
+                            {sp.solvedPracticeIds.length}/{sim.practice.length}{' '}
+                            {pick('drills', 'latihan', '演習')} · {sim.quiz.length}{' '}
+                            {pick('quiz', 'kuis', 'クイズ')}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onSelectSimulator(sim.id);
+                            }}
+                            style={{
+                              border: 'none',
+                              background: 'transparent',
+                              color: 'var(--text-primary)',
+                              fontWeight: 600,
+                              fontSize: 12,
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: 4,
+                              padding: 0,
+                            }}
+                          >
+                            <span>{pick('Open', 'Buka', '開く')}</span>
+                            <ArrowRight size={13} />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Pagination Bar */}
+                {totalPages > 1 && (
+                  <div
+                    className="ks-card"
+                    style={{
+                      padding: '12px 18px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      flexWrap: 'wrap',
+                      gap: 12,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: 12.5,
+                        color: 'var(--text-secondary)',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {pick(
+                        `Showing ${pageStartIdx + 1}–${Math.min(
+                          pageStartIdx + ITEMS_PER_PAGE,
+                          filteredSimulators.length
+                        )} of ${filteredSimulators.length} labs`,
+                        `Menampilkan ${pageStartIdx + 1}–${Math.min(
+                          pageStartIdx + ITEMS_PER_PAGE,
+                          filteredSimulators.length
+                        )} dari ${filteredSimulators.length} lab`,
+                        `${filteredSimulators.length}件中 ${pageStartIdx + 1}–${Math.min(
+                          pageStartIdx + ITEMS_PER_PAGE,
+                          filteredSimulators.length
+                        )}件を表示`
+                      )}
+                    </span>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <button
+                        type="button"
+                        onClick={() => handlePageChange(safePage - 1)}
+                        disabled={safePage === 1}
+                        className="gm-btn gm-btn-tonal gm-btn-sm"
+                      >
+                        <ChevronLeft size={14} />
+                        {pick('Prev', 'Sebelumnya', '前へ')}
+                      </button>
+
+                      {Array.from({ length: totalPages }, (_, idx) => idx + 1).map(
+                        (pageNum) => (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => handlePageChange(pageNum)}
+                            className={`gm-chip ${
+                              pageNum === safePage ? 'active' : ''
+                            }`}
+                            style={{ padding: '5px 11px', fontWeight: 600 }}
+                          >
+                            {pageNum}
+                          </button>
+                        )
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => handlePageChange(safePage + 1)}
+                        disabled={safePage === totalPages}
+                        className="gm-btn gm-btn-tonal gm-btn-sm"
+                      >
+                        {pick('Next', 'Berikutnya', '次へ')}
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right: Sticky Asset / Simulator Inspector (.ag-inspector) */}
+              {inspectedSim && (
+                <aside className="ag-inspector">
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 8,
+                    }}
+                  >
+                    <span className="gm-tag">
+                      {inspectedSim.id.toUpperCase()}
+                    </span>
+                    <span
+                      className={`status-chip ${
+                        inspectedMastered ? 'chip-ok' : 'chip-warn'
+                      }`}
+                    >
+                      {inspectedMastered
+                        ? pick('Verified Mastered', 'Kompeten', '習得完了')
+                        : translateDifficulty(inspectedSim.difficulty, language)}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div
+                      style={{
+                        width: 46,
+                        height: 46,
+                        borderRadius: 14,
+                        background: 'var(--bg-tonal)',
+                        color: 'var(--accent-coral)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <SimulatorIcon
+                        iconName={inspectedSim.iconName}
+                        className="h-6 w-6"
+                      />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 17, fontWeight: 600 }}>
+                        {inspectedSim.title}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: 'var(--text-muted)',
+                          marginTop: 2,
+                        }}
+                      >
+                        {translateCategory(inspectedSim.category, language)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <p
+                    style={{
+                      fontSize: 13,
+                      color: 'var(--text-secondary)',
+                      lineHeight: 1.55,
+                      margin: 0,
+                    }}
+                  >
+                    {inspectedSim.description}
+                  </p>
+
+                  {/* 3-Column Count Subtiles */}
+                  <div className="ks-3col-tiles">
+                    <div className="ks-count-tile">
+                      <span
+                        style={{
+                          fontSize: 11,
+                          color: 'var(--text-muted)',
+                          fontWeight: 500,
+                        }}
+                      >
+                        Theory
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 600,
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        {inspectedSim.explore.length}
+                      </span>
+                    </div>
+                    <div className="ks-count-tile">
+                      <span
+                        style={{
+                          fontSize: 11,
+                          color: 'var(--text-muted)',
+                          fontWeight: 500,
+                        }}
+                      >
+                        Practice
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 600,
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        {inspectedProg?.solvedPracticeIds.length ?? 0}/
+                        {inspectedSim.practice.length}
+                      </span>
+                    </div>
+                    <div className="ks-count-tile">
+                      <span
+                        style={{
+                          fontSize: 11,
+                          color: 'var(--text-muted)',
+                          fontWeight: 500,
+                        }}
+                      >
+                        Best Quiz
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 600,
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        {inspectedQuizPct !== null ? `${inspectedQuizPct}%` : '—'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="ag-inspector-section">
+                    <div
+                      style={{
+                        fontSize: 11.5,
+                        fontWeight: 600,
+                        color: 'var(--text-muted)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em',
+                      }}
+                    >
+                      {pick(
+                        'Engineering Curriculum Modules',
+                        'Modul Kurikulum Teknik',
+                        'エンジニアリング学習項目'
+                      )}
+                    </div>
+                    {inspectedSim.explore.slice(0, 3).map((sec, i) => (
+                      <div key={i} className="ks-subtile" style={{ padding: '9px 12px' }}>
+                        <div style={{ fontSize: 12.5, fontWeight: 600 }}>
+                          {sec.title}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: 'var(--text-muted)',
+                            fontFamily: 'var(--font-mono)',
+                          }}
+                        >
+                          {sec.equations.length} Equations
+                          {sec.workedExample ? ' · Worked Example' : ''}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="ag-inspector-section">
+                    <div className="ag-kv-row">
+                      <span className="ag-kv-label">Plant Division</span>
+                      <span className="ag-kv-val">Asahimas Flat Glass · Maintenance</span>
+                    </div>
+                    <div className="ag-kv-row">
+                      <span className="ag-kv-label">Training Mode</span>
+                      <span className="ag-kv-val">Simulate · Explore · Practice · Quiz</span>
+                    </div>
+                    <div className="ag-kv-row">
+                      <span className="ag-kv-label">Author</span>
+                      <span className="ag-kv-val">M. Fadlan Alamsyah</span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => onSelectSimulator(inspectedSim.id)}
+                    className="gm-btn gm-btn-aurora"
+                    style={{ width: '100%', padding: '11px 18px' }}
+                  >
+                    <span>
+                      {pick(
+                        'Launch Interactive Simulator',
+                        'Buka Simulator Interaktif',
+                        'シミュレータを起動'
+                      )}
+                    </span>
+                    <ArrowRight size={15} />
+                  </button>
+                </aside>
+              )}
+            </div>
+          )}
+        </main>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // BACKUP: CLASSIC PIXEL LAUNCHER UI (1-Click Instant Switch Back)
+  // =========================================================================
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-clip bg-[var(--md-surface)] text-[var(--md-on-surface)] glass-mesh-light dark:glass-mesh-dark">
       {/* Android 17 Floating System Bar */}
@@ -377,7 +1530,6 @@ export function HomePage({
 
             {/* 2x2 Android 17 Quick Settings Tiles */}
             <div className="grid grid-cols-2 gap-3">
-              {/* Tile 1: Active Primary Tile */}
               <div className="flex flex-col justify-between rounded-[24px] bg-[var(--md-primary)] p-4 text-[var(--md-on-primary)] shadow-2xs">
                 <div className="flex items-center justify-between gap-2">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--md-on-primary)]/18">
@@ -404,7 +1556,6 @@ export function HomePage({
                 </div>
               </div>
 
-              {/* Tile 2: Secondary Container Tile */}
               <div className="flex flex-col justify-between rounded-[24px] bg-[var(--md-secondary-container)] p-4 text-[var(--md-on-secondary-container)] shadow-2xs">
                 <div className="flex items-center justify-between gap-2">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--md-on-secondary-container)]/12">
@@ -431,7 +1582,6 @@ export function HomePage({
                 </div>
               </div>
 
-              {/* Tile 3: Surface Container High Tile */}
               <div className="m3-qs-tile flex flex-col justify-between border border-[var(--md-outline-variant)]/45 p-4">
                 <div className="flex items-center justify-between gap-2">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
@@ -458,7 +1608,6 @@ export function HomePage({
                 </div>
               </div>
 
-              {/* Tile 4: Tertiary Container Tile */}
               <div className="flex flex-col justify-between rounded-[24px] bg-[var(--md-tertiary-container)] p-4 text-[var(--md-on-tertiary-container)] shadow-2xs">
                 <div className="flex items-center justify-between gap-2">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--md-on-tertiary-container)]/12">
@@ -725,6 +1874,8 @@ export function HomePage({
           <span className="hidden sm:block" aria-hidden="true" />
         </div>
       </footer>
+
+      < Info className="hidden" />
     </div>
   );
 }

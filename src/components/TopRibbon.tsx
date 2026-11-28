@@ -94,7 +94,7 @@ export type TopRibbonProps = HomeRibbonProps | SimulatorRibbonProps;
 
 export function TopRibbon(props: TopRibbonProps) {
   const { language, setLanguage, pick } = useLanguage();
-  const { seed, setSeed } = useTheme();
+  const { seed, setSeed, toggleUiStyle } = useTheme();
   const [labMenuOpen, setLabMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -404,6 +404,15 @@ export function TopRibbon(props: TopRibbonProps) {
           </div>
 
           <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={toggleUiStyle}
+            title="Switch to Asahimas Data Bank UI"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-[#e84d28] px-3 text-xs font-bold text-white shadow-xs transition hover:brightness-110"
+          >
+            <span>Data Bank UI</span>
+          </button>
         </div>
       </div>
     </div>
